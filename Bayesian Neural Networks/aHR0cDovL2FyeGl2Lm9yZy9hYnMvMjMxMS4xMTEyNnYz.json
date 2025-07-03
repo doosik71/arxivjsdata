@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2311.11126v3",
+  "title": "Bayesian Neural Networks: A Min-Max Game Framework",
+  "authors": "Junping Hong, Ercan Engin Kuruoglu",
+  "year": 2023,
+  "abstract": "In deep learning, Bayesian neural networks (BNN) provide the role of\nrobustness analysis, and the minimax method is used to be a conservative choice\nin the traditional Bayesian field. In this paper, we study a conservative BNN\nwith the minimax method and formulate a two-player game between a deterministic\nneural network $f$ and a sampling stochastic neural network $f + r*\\xi$. From\nthis perspective, we understand the closed-loop neural networks with the\nminimax loss and reveal their connection to the BNN. We test the models on\nsimple data sets, study their robustness under noise perturbation, and report\nsome issues for searching $r$."
+}

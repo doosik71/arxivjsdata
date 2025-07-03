@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2404.09556v2",
+  "title": "nnU-Net Revisited: A Call for Rigorous Validation in 3D Medical Image\n  Segmentation",
+  "authors": "Fabian Isensee, Tassilo Wald, Constantin Ulrich, Michael Baumgartner, Saikat Roy, Klaus Maier-Hein, Paul F. Jaeger",
+  "year": 2024,
+  "abstract": "The release of nnU-Net marked a paradigm shift in 3D medical image\nsegmentation, demonstrating that a properly configured U-Net architecture could\nstill achieve state-of-the-art results. Despite this, the pursuit of novel\narchitectures, and the respective claims of superior performance over the U-Net\nbaseline, continued. In this study, we demonstrate that many of these recent\nclaims fail to hold up when scrutinized for common validation shortcomings,\nsuch as the use of inadequate baselines, insufficient datasets, and neglected\ncomputational resources. By meticulously avoiding these pitfalls, we conduct a\nthorough and comprehensive benchmarking of current segmentation methods\nincluding CNN-based, Transformer-based, and Mamba-based approaches. In contrast\nto current beliefs, we find that the recipe for state-of-the-art performance is\n1) employing CNN-based U-Net models, including ResNet and ConvNeXt variants, 2)\nusing the nnU-Net framework, and 3) scaling models to modern hardware\nresources. These results indicate an ongoing innovation bias towards novel\narchitectures in the field and underscore the need for more stringent\nvalidation standards in the quest for scientific progress."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2403.04810v3",
+  "title": "Restricted Bayesian Neural Network",
+  "authors": "Sourav Ganguly, Saprativa Bhattacharjee",
+  "year": 2024,
+  "abstract": "Modern deep learning tools are remarkably effective in addressing intricate\nproblems. However, their operation as black-box models introduces increased\nuncertainty in predictions. Additionally, they contend with various challenges,\nincluding the need for substantial storage space in large networks, issues of\noverfitting, underfitting, vanishing gradients, and more. This study explores\nthe concept of Bayesian Neural Networks, presenting a novel architecture\ndesigned to significantly alleviate the storage space complexity of a network.\nFurthermore, we introduce an algorithm adept at efficiently handling\nuncertainties, ensuring robust convergence values without becoming trapped in\nlocal optima, particularly when the objective function lacks perfect convexity."
+}
