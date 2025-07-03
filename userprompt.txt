@@ -15,7 +15,7 @@ Please follow these formatting rules:
     - List the core findings and novel contributions as bullet points.
   - `## Methodology`
     - Describe the approach or algorithm used, preferably with steps or bullet points.
-  - `## Results (if available)`
+  - `## Results`
     - Summarize quantitative or qualitative results briefly.
 - Use **bold** for emphasis and `inline code` for method names or technical terms.
 - If there are equations or mathematical expressions, use `$...$` or `$$...$$` for LaTeX-style math (MathJax compatible).

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2211.01770v1",
+  "title": "Exploring Explainability Methods for Graph Neural Networks",
+  "authors": "Harsh Patel, Shivam Sahni",
+  "year": 2022,
+  "abstract": "With the growing use of deep learning methods, particularly graph neural\nnetworks, which encode intricate interconnectedness information, for a variety\nof real tasks, there is a necessity for explainability in such settings. In\nthis paper, we demonstrate the applicability of popular explainability\napproaches on Graph Attention Networks (GAT) for a graph-based super-pixel\nimage classification task. We assess the qualitative and quantitative\nperformance of these techniques on three different datasets and describe our\nfindings. The results shed a fresh light on the notion of explainability in\nGNNs, particularly GATs."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2503.11486v1",
+  "title": "A Review of DeepSeek Models' Key Innovative Techniques",
+  "authors": "Chengen Wang, Murat Kantarcioglu",
+  "year": 2025,
+  "abstract": "DeepSeek-V3 and DeepSeek-R1 are leading open-source Large Language Models\n(LLMs) for general-purpose tasks and reasoning, achieving performance\ncomparable to state-of-the-art closed-source models from companies like OpenAI\nand Anthropic -- while requiring only a fraction of their training costs.\nUnderstanding the key innovative techniques behind DeepSeek's success is\ncrucial for advancing LLM research. In this paper, we review the core\ntechniques driving the remarkable effectiveness and efficiency of these models,\nincluding refinements to the transformer architecture, innovations such as\nMulti-Head Latent Attention and Mixture of Experts, Multi-Token Prediction, the\nco-design of algorithms, frameworks, and hardware, the Group Relative Policy\nOptimization algorithm, post-training with pure reinforcement learning and\niterative training alternating between supervised fine-tuning and reinforcement\nlearning. Additionally, we identify several open questions and highlight\npotential research opportunities in this rapidly advancing field."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2501.03229v1",
+  "title": "Gaussian Masked Autoencoders",
+  "authors": "Jathushan Rajasegaran, Xinlei Chen, Rulilong Li, Christoph Feichtenhofer, Jitendra Malik, Shiry Ginosar",
+  "year": 2025,
+  "abstract": "This paper explores Masked Autoencoders (MAE) with Gaussian Splatting. While\nreconstructive self-supervised learning frameworks such as MAE learns good\nsemantic abstractions, it is not trained for explicit spatial awareness. Our\napproach, named Gaussian Masked Autoencoder, or GMAE, aims to learn semantic\nabstractions and spatial understanding jointly. Like MAE, it reconstructs the\nimage end-to-end in the pixel space, but beyond MAE, it also introduces an\nintermediate, 3D Gaussian-based representation and renders images via\nsplatting. We show that GMAE can enable various zero-shot learning capabilities\nof spatial understanding (e.g., figure-ground segmentation, image layering,\nedge detection, etc.) while preserving the high-level semantics of\nself-supervised representation quality from MAE. To our knowledge, we are the\nfirst to employ Gaussian primitives in an image representation learning\nframework beyond optimization-based single-scene reconstructions. We believe\nGMAE will inspire further research in this direction and contribute to\ndeveloping next-generation techniques for modeling high-fidelity visual data.\nMore details at https://brjathu.github.io/gmae"
+}

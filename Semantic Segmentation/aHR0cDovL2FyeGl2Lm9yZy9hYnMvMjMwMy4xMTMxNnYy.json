@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2303.11316v2",
+  "title": "Generative Semantic Segmentation",
+  "authors": "Jiaqi Chen, Jiachen Lu, Xiatian Zhu, Li Zhang",
+  "year": 2023,
+  "abstract": "We present Generative Semantic Segmentation (GSS), a generative learning\napproach for semantic segmentation. Uniquely, we cast semantic segmentation as\nan image-conditioned mask generation problem. This is achieved by replacing the\nconventional per-pixel discriminative learning with a latent prior learning\nprocess. Specifically, we model the variational posterior distribution of\nlatent variables given the segmentation mask. To that end, the segmentation\nmask is expressed with a special type of image (dubbed as maskige). This\nposterior distribution allows to generate segmentation masks unconditionally.\nTo achieve semantic segmentation on a given image, we further introduce a\nconditioning network. It is optimized by minimizing the divergence between the\nposterior distribution of maskige (i.e., segmentation masks) and the latent\nprior distribution of input training images. Extensive experiments on standard\nbenchmarks show that our GSS can perform competitively to prior art\nalternatives in the standard semantic segmentation setting, whilst achieving a\nnew state of the art in the more challenging cross-domain setting."
+}
