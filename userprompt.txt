@@ -20,11 +20,9 @@ Please follow these formatting rules:
     - Summarize quantitative or qualitative results briefly.
 
 - Guidelines for writing in Markdown format:
-  1. Use bold formatting only for the main text, not for parentheses or their contents.
-  2. Escape underscores in subscripts with a backslash to prevent them from being rendered as italic.
-  3. Use braces around multi-character subscripts or superscripts in MathJax to avoid rendering errors.
-  4. Use $...$ for inline math and $$...$$ for block math to ensure compatibility with MathJax.
-  5. Do not use backticks (`) for math; use dollar signs ($) to allow proper MathJax rendering.
+  1. Use braces around multi-character subscripts or superscripts in MathJax to avoid rendering errors.
+  2. Use $...$ for inline math and $$...$$ for block math to ensure compatibility with MathJax.
+  3. Do not use backticks (`) for math; use dollar signs ($) to allow proper MathJax rendering.
 
 Here is the paper content:
 
