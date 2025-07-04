@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1710.02534v1",
+  "title": "Contrastive Learning for Image Captioning",
+  "authors": "Bo Dai, Dahua Lin",
+  "year": 2017,
+  "abstract": "Image captioning, a popular topic in computer vision, has achieved\nsubstantial progress in recent years. However, the distinctiveness of natural\ndescriptions is often overlooked in previous work. It is closely related to the\nquality of captions, as distinctive captions are more likely to describe images\nwith their unique aspects. In this work, we propose a new learning method,\nContrastive Learning (CL), for image captioning. Specifically, via two\nconstraints formulated on top of a reference model, the proposed method can\nencourage distinctiveness, while maintaining the overall quality of the\ngenerated captions. We tested our method on two challenging datasets, where it\nimproves the baseline model by significant margins. We also showed in our\nstudies that the proposed method is generic and can be used for models with\nvarious structures."
+}

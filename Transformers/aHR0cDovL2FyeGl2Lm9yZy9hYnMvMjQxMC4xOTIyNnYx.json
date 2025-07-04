@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2410.19226v1",
+  "title": "Deep Transformation Model",
+  "authors": "Tong Wang, Shunqin Zhang, Sanguo Zhang, Jian Huang, Shuangge Ma",
+  "year": 2024,
+  "abstract": "There has been a significant recent surge in deep neural network (DNN)\ntechniques. Most of the existing DNN techniques have restricted model\nformats/assumptions. To overcome their limitations, we propose the\nnonparametric transformation model, which encompasses many popular models as\nspecial cases and hence is less sensitive to model mis-specification. This\nmodel also has the potential of accommodating heavy-tailed errors, a robustness\nproperty not broadly shared. Accordingly, a new loss function, which\nfundamentally differs from the existing ones, is developed. For computational\nfeasibility, we further develop a double rectified linear unit (DReLU)-based\nestimator. To accommodate the scenario with a diverging number of input\nvariables and/or noises, we propose variable selection based on group\npenalization. We further expand the scope to coherently accommodate censored\nsurvival data. The estimation and variable selection properties are rigorously\nestablished. Extensive numerical studies, including simulations and data\nanalyses, establish the satisfactory practical utility of the proposed methods."
+}

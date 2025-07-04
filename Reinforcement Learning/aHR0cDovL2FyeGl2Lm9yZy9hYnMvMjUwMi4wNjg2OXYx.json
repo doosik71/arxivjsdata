@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2502.06869v1",
+  "title": "A Survey on Explainable Deep Reinforcement Learning",
+  "authors": "Zelei Cheng, Jiahao Yu, Xinyu Xing",
+  "year": 2025,
+  "abstract": "Deep Reinforcement Learning (DRL) has achieved remarkable success in\nsequential decision-making tasks across diverse domains, yet its reliance on\nblack-box neural architectures hinders interpretability, trust, and deployment\nin high-stakes applications. Explainable Deep Reinforcement Learning (XRL)\naddresses these challenges by enhancing transparency through feature-level,\nstate-level, dataset-level, and model-level explanation techniques. This survey\nprovides a comprehensive review of XRL methods, evaluates their qualitative and\nquantitative assessment frameworks, and explores their role in policy\nrefinement, adversarial robustness, and security. Additionally, we examine the\nintegration of reinforcement learning with Large Language Models (LLMs),\nparticularly through Reinforcement Learning from Human Feedback (RLHF), which\noptimizes AI alignment with human preferences. We conclude by highlighting open\nresearch challenges and future directions to advance the development of\ninterpretable, reliable, and accountable DRL systems."
+}

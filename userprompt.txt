@@ -1,6 +1,7 @@
 Please summarize the following paper.
 
 The summary **must be written in Korean** and **must follow Markdown syntax** using a clear hierarchical structure with headings, bullet points, and formatting where appropriate.
+Ensure the content is **concise, accurate, and easy to understand** for a technical but general audience.
 
 Please follow these formatting rules:
 
@@ -17,11 +18,13 @@ Please follow these formatting rules:
     - Describe the approach or algorithm used, preferably with steps or bullet points.
   - ## Results
     - Summarize quantitative or qualitative results briefly.
-- Use **bold** for emphasis and `inline code` for method names or technical terms.
-  - When encountering bold markdown that includes parentheses, such as **text(in parentheses)**, split the bold formatting so that only the main sentence and the parenthetical part are each emphasized separately.
-  - For example, convert **sentence(group of words)** into **sentence**(**group of words**).
-- If there are equations or mathematical expressions, use "$...$" or "$$...$$" for LaTeX-style math (MathJax compatible).
-- Ensure the content is **concise, accurate, and easy to understand** for a technical but general audience.
+
+- Guidelines for writing in Markdown format:
+  1. Use bold formatting only for the main text, not for parentheses or their contents.
+  2. Escape underscores in subscripts with a backslash to prevent them from being rendered as italic.
+  3. Use braces around multi-character subscripts or superscripts in MathJax to avoid rendering errors.
+  4. Use $...$ for inline math and $$...$$ for block math to ensure compatibility with MathJax.
+  5. Do not use backticks (`) for math; use dollar signs ($) to allow proper MathJax rendering.
 
 Here is the paper content:
 

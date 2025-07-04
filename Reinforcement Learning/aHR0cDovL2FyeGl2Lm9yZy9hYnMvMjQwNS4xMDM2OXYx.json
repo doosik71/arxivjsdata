@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2405.10369v1",
+  "title": "Reinforcement learning",
+  "authors": "Sarod Yatawatta",
+  "year": 2024,
+  "abstract": "Observing celestial objects and advancing our scientific knowledge about them\ninvolves tedious planning, scheduling, data collection and data\npost-processing. Many of these operational aspects of astronomy are guided and\nexecuted by expert astronomers. Reinforcement learning is a mechanism where we\n(as humans and astronomers) can teach agents of artificial intelligence to\nperform some of these tedious tasks. In this paper, we will present a state of\nthe art overview of reinforcement learning and how it can benefit astronomy."
+}

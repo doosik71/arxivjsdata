@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2504.12501v2",
+  "title": "Reinforcement Learning from Human Feedback",
+  "authors": "Nathan Lambert",
+  "year": 2025,
+  "abstract": "Reinforcement learning from human feedback (RLHF) has become an important\ntechnical and storytelling tool to deploy the latest machine learning systems.\nIn this book, we hope to give a gentle introduction to the core methods for\npeople with some level of quantitative background. The book starts with the\norigins of RLHF -- both in recent literature and in a convergence of disparate\nfields of science in economics, philosophy, and optimal control. We then set\nthe stage with definitions, problem formulation, data collection, and other\ncommon math used in the literature. The core of the book details every\noptimization stage in using RLHF, from starting with instruction tuning to\ntraining a reward model and finally all of rejection sampling, reinforcement\nlearning, and direct alignment algorithms. The book concludes with advanced\ntopics -- understudied research questions in synthetic data and evaluation --\nand open questions for the field."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2408.07712v3",
+  "title": "Introduction to Reinforcement Learning",
+  "authors": "Majid Ghasemi, Dariush Ebrahimi",
+  "year": 2024,
+  "abstract": "Reinforcement Learning (RL), a subfield of Artificial Intelligence (AI),\nfocuses on training agents to make decisions by interacting with their\nenvironment to maximize cumulative rewards. This paper provides an overview of\nRL, covering its core concepts, methodologies, and resources for further\nlearning. It offers a thorough explanation of fundamental components such as\nstates, actions, policies, and reward signals, ensuring readers develop a solid\nfoundational understanding. Additionally, the paper presents a variety of RL\nalgorithms, categorized based on the key factors such as model-free,\nmodel-based, value-based, policy-based, and other key factors. Resources for\nlearning and implementing RL, such as books, courses, and online communities\nare also provided. By offering a clear, structured introduction, this paper\naims to simplify the complexities of RL for beginners, providing a\nstraightforward pathway to understanding."
+}

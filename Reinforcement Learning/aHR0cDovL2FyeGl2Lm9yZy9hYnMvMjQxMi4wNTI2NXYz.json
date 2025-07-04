@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2412.05265v3",
+  "title": "Reinforcement Learning: An Overview",
+  "authors": "Kevin Murphy",
+  "year": 2024,
+  "abstract": "This manuscript gives a big-picture, up-to-date overview of the field of\n(deep) reinforcement learning and sequential decision making, covering\nvalue-based methods, policy-based methods, model-based methods, multi-agent RL,\nLLMs and RL, and various other topics (e.g., offline RL, hierarchical RL,\nintrinsic reward)."
+}
