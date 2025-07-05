@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2104.14726v1",
+  "title": "MOOD: Multi-level Out-of-distribution Detection",
+  "authors": "Ziqian Lin, Sreya Dutta Roy, Yixuan Li",
+  "year": 2021,
+  "abstract": "Out-of-distribution (OOD) detection is essential to prevent anomalous inputs\nfrom causing a model to fail during deployment. While improved OOD detection\nmethods have emerged, they often rely on the final layer outputs and require a\nfull feedforward pass for any given input. In this paper, we propose a novel\nframework, multi-level out-of-distribution detection MOOD, which exploits\nintermediate classifier outputs for dynamic and efficient OOD inference. We\nexplore and establish a direct relationship between the OOD data complexity and\noptimal exit level, and show that easy OOD examples can be effectively detected\nearly without propagating to deeper layers. At each exit, the OOD examples can\nbe distinguished through our proposed adjusted energy score, which is both\nempirically and theoretically suitable for networks with multiple classifiers.\nWe extensively evaluate MOOD across 10 OOD datasets spanning a wide range of\ncomplexities. Experiments demonstrate that MOOD achieves up to 71.05%\ncomputational reduction in inference, while maintaining competitive OOD\ndetection performance."
+}
