@@ -10,14 +10,20 @@ Please follow these formatting rules:
   - The **author list** on the second line as plain text (comma-separated), below the title.
 
 - Then use the following summary structure:
-  - ## Problem to Solve
+  - ## 🧩 Problem to Solve
     - Clearly describe the main research problem or question the paper aims to address.
-  - ## Key Contributions
+  - ## ✨ Key Contributions
     - List the core findings and novel contributions as bullet points.
-  - ## Methodology
+  - ## 📎 Related Works
+    - Mention key prior works referenced in the paper.
+  - ## 🛠️ Methodology
     - Describe the approach or algorithm used, preferably with steps or bullet points.
-  - ## Results
+  - ## 📊 Results
     - Summarize quantitative or qualitative results briefly.
+  - ## 🧠 Insights & Discussion
+    - Explain the implications, any limitations, or significance of the results.
+  - ## 📌 TL;DR
+    - Provide a TL;DR summary of this paper, highlighting the main problem, proposed method, and key findings.
 
 - Guidelines for writing in Markdown format:
   1. Use braces around multi-character subscripts or superscripts in MathJax to avoid rendering errors.

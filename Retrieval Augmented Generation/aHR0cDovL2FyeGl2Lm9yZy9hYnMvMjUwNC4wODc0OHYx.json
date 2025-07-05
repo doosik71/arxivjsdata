@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2504.08748v1",
+  "title": "A Survey of Multimodal Retrieval-Augmented Generation",
+  "authors": "Lang Mei, Siyu Mo, Zhihan Yang, Chong Chen",
+  "year": 2025,
+  "abstract": "Multimodal Retrieval-Augmented Generation (MRAG) enhances large language\nmodels (LLMs) by integrating multimodal data (text, images, videos) into\nretrieval and generation processes, overcoming the limitations of text-only\nRetrieval-Augmented Generation (RAG). While RAG improves response accuracy by\nincorporating external textual knowledge, MRAG extends this framework to\ninclude multimodal retrieval and generation, leveraging contextual information\nfrom diverse data types. This approach reduces hallucinations and enhances\nquestion-answering systems by grounding responses in factual, multimodal\nknowledge. Recent studies show MRAG outperforms traditional RAG, especially in\nscenarios requiring both visual and textual understanding. This survey reviews\nMRAG's essential components, datasets, evaluation methods, and limitations,\nproviding insights into its construction and improvement. It also identifies\nchallenges and future research directions, highlighting MRAG's potential to\nrevolutionize multimodal information retrieval and generation. By offering a\ncomprehensive perspective, this work encourages further exploration into this\npromising paradigm."
+}
