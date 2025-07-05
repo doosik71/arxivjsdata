@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2004.14231v2",
+  "title": "Image Captioning through Image Transformer",
+  "authors": "Sen He, Wentong Liao, Hamed R. Tavakoli, Michael Yang, Bodo Rosenhahn, Nicolas Pugeault",
+  "year": 2020,
+  "abstract": "Automatic captioning of images is a task that combines the challenges of\nimage analysis and text generation. One important aspect in captioning is the\nnotion of attention: How to decide what to describe and in which order.\nInspired by the successes in text analysis and translation, previous work have\nproposed the \\textit{transformer} architecture for image captioning. However,\nthe structure between the \\textit{semantic units} in images (usually the\ndetected regions from object detection model) and sentences (each single word)\nis different. Limited work has been done to adapt the transformer's internal\narchitecture to images. In this work, we introduce the \\textbf{\\textit{image\ntransformer}}, which consists of a modified encoding transformer and an\nimplicit decoding transformer, motivated by the relative spatial relationship\nbetween image regions. Our design widen the original transformer layer's inner\narchitecture to adapt to the structure of images. With only regions feature as\ninputs, our model achieves new state-of-the-art performance on both MSCOCO\noffline and online testing benchmarks."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2504.04276v1",
+  "title": "A Comparative Study of Explainable AI Methods: Model-Agnostic vs.\n  Model-Specific Approaches",
+  "authors": "Keerthi Devireddy",
+  "year": 2025,
+  "abstract": "This paper compares model-agnostic and model-specific approaches to\nexplainable AI (XAI) in deep learning image classification. I examine how LIME\nand SHAP (model-agnostic methods) differ from Grad-CAM and Guided\nBackpropagation (model-specific methods) when interpreting ResNet50 predictions\nacross diverse image categories. Through extensive testing with various species\nfrom dogs and birds to insects I found that each method reveals different\naspects of the models decision-making process. Model-agnostic techniques\nprovide broader feature attribution that works across different architectures,\nwhile model-specific approaches excel at highlighting precise activation\nregions with greater computational efficiency. My analysis shows there is no\n\"one-size-fits-all\" solution for model interpretability. Instead, combining\nmultiple XAI methods offers the most comprehensive understanding of complex\nmodels particularly valuable in high-stakes domains like healthcare, autonomous\nvehicles, and financial services where transparency is crucial. This\ncomparative framework provides practical guidance for selecting appropriate\ninterpretability techniques based on specific application needs and\ncomputational constraints."
+}

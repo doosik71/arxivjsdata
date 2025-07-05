@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2505.07005v1",
+  "title": "Explainable AI the Latest Advancements and New Trends",
+  "authors": "Bowen Long, Enjie Liu, Renxi Qiu, Yanqing Duan",
+  "year": 2025,
+  "abstract": "In recent years, Artificial Intelligence technology has excelled in various\napplications across all domains and fields. However, the various algorithms in\nneural networks make it difficult to understand the reasons behind decisions.\nFor this reason, trustworthy AI techniques have started gaining popularity. The\nconcept of trustworthiness is cross-disciplinary; it must meet societal\nstandards and principles, and technology is used to fulfill these requirements.\nIn this paper, we first surveyed developments from various countries and\nregions on the ethical elements that make AI algorithms trustworthy; and then\nfocused our survey on the state of the art research into the interpretability\nof AI. We have conducted an intensive survey on technologies and techniques\nused in making AI explainable. Finally, we identified new trends in achieving\nexplainable AI. In particular, we elaborate on the strong link between the\nexplainability of AI and the meta-reasoning of autonomous systems. The concept\nof meta-reasoning is 'reason the reasoning', which coincides with the intention\nand goal of explainable Al. The integration of the approaches could pave the\nway for future interpretable AI systems."
+}
