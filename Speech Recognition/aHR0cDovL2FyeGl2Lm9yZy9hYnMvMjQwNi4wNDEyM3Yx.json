@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2406.04123v1",
+  "title": "Helsinki Speech Challenge 2024",
+  "authors": "Martin Ludvigsen, Elli Karvonen, Markus Juvonen, Samuli Siltanen",
+  "year": 2024,
+  "abstract": "The Helsinki Speech Challenge 2024 (HSC2024) invites researchers to enhance\nand deconvolve speech audio recordings. We recorded a dataset that challenges\nparticipants to apply speech enhancement and inverse problems techniques to\nrecorded speech data. This dataset includes paired samples of AI-generated\nclean speech and corresponding recordings, which feature varying levels of\ncorruption, including frequency attenuation and reverberation. The challenge\nfocuses on developing innovative deconvolution methods to accurately recover\nthe original audio. The effectiveness of these methods will be quantitatively\nassessed using a speech recognition model, providing a relevant metric for\nevaluating enhancements in real-world scenarios."
+}

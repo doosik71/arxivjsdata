@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2411.18320v1",
+  "title": "Continual Learning in Machine Speech Chain Using Gradient Episodic\n  Memory",
+  "authors": "Geoffrey Tyndall, Kurniawati Azizah, Dipta Tanaya, Ayu Purwarianti, Dessi Puji Lestari, Sakriani Sakti",
+  "year": 2024,
+  "abstract": "Continual learning for automatic speech recognition (ASR) systems poses a\nchallenge, especially with the need to avoid catastrophic forgetting while\nmaintaining performance on previously learned tasks. This paper introduces a\nnovel approach leveraging the machine speech chain framework to enable\ncontinual learning in ASR using gradient episodic memory (GEM). By\nincorporating a text-to-speech (TTS) component within the machine speech chain,\nwe support the replay mechanism essential for GEM, allowing the ASR model to\nlearn new tasks sequentially without significant performance degradation on\nearlier tasks. Our experiments, conducted on the LJ Speech dataset, demonstrate\nthat our method outperforms traditional fine-tuning and multitask learning\napproaches, achieving a substantial error rate reduction while maintaining high\nperformance across varying noise conditions. We showed the potential of our\nsemi-supervised machine speech chain approach for effective and efficient\ncontinual learning in speech recognition."
+}

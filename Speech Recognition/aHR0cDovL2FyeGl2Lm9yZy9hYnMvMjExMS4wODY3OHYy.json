@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2111.08678v2",
+  "title": "Unsupervised Speech Enhancement with speech recognition embedding and\n  disentanglement losses",
+  "authors": "Viet Anh Trinh, Sebastian Braun",
+  "year": 2021,
+  "abstract": "Speech enhancement has recently achieved great success with various deep\nlearning methods. However, most conventional speech enhancement systems are\ntrained with supervised methods that impose two significant challenges. First,\na majority of training datasets for speech enhancement systems are synthetic.\nWhen mixing clean speech and noisy corpora to create the synthetic datasets,\ndomain mismatches occur between synthetic and real-world recordings of noisy\nspeech or audio. Second, there is a trade-off between increasing speech\nenhancement performance and degrading speech recognition (ASR) performance.\nThus, we propose an unsupervised loss function to tackle those two problems.\nOur function is developed by extending the MixIT loss function with speech\nrecognition embedding and disentanglement loss. Our results show that the\nproposed function effectively improves the speech enhancement performance\ncompared to a baseline trained in a supervised way on the noisy VoxCeleb\ndataset. While fully unsupervised training is unable to exceed the\ncorresponding baseline, with joint super- and unsupervised training, the system\nis able to achieve similar speech quality and better ASR performance than the\nbest supervised baseline."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2309.10795v1",
+  "title": "Exploring Speech Enhancement for Low-resource Speech Synthesis",
+  "authors": "Zhaoheng Ni, Sravya Popuri, Ning Dong, Kohei Saijo, Xiaohui Zhang, Gael Le Lan, Yangyang Shi, Vikas Chandra, Changhan Wang",
+  "year": 2023,
+  "abstract": "High-quality and intelligible speech is essential to text-to-speech (TTS)\nmodel training, however, obtaining high-quality data for low-resource languages\nis challenging and expensive. Applying speech enhancement on Automatic Speech\nRecognition (ASR) corpus mitigates the issue by augmenting the training data,\nwhile how the nonlinear speech distortion brought by speech enhancement models\naffects TTS training still needs to be investigated. In this paper, we train a\nTF-GridNet speech enhancement model and apply it to low-resource datasets that\nwere collected for the ASR task, then train a discrete unit based TTS model on\nthe enhanced speech. We use Arabic datasets as an example and show that the\nproposed pipeline significantly improves the low-resource TTS system compared\nwith other baseline methods in terms of ASR WER metric. We also run empirical\nanalysis on the correlation between speech enhancement and TTS performances."
+}

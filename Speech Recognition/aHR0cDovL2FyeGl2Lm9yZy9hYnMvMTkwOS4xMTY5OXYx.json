@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1909.11699v1",
+  "title": "Speech Recognition with Augmented Synthesized Speech",
+  "authors": "Andrew Rosenberg, Yu Zhang, Bhuvana Ramabhadran, Ye Jia, Pedro Moreno, Yonghui Wu, Zelin Wu",
+  "year": 2019,
+  "abstract": "Recent success of the Tacotron speech synthesis architecture and its variants\nin producing natural sounding multi-speaker synthesized speech has raised the\nexciting possibility of replacing expensive, manually transcribed,\ndomain-specific, human speech that is used to train speech recognizers. The\nmulti-speaker speech synthesis architecture can learn latent embedding spaces\nof prosody, speaker and style variations derived from input acoustic\nrepresentations thereby allowing for manipulation of the synthesized speech. In\nthis paper, we evaluate the feasibility of enhancing speech recognition\nperformance using speech synthesis using two corpora from different domains. We\nexplore algorithms to provide the necessary acoustic and lexical diversity\nneeded for robust speech recognition. Finally, we demonstrate the feasibility\nof this approach as a data augmentation strategy for domain-transfer.\n  We find that improvements to speech recognition performance is achievable by\naugmenting training data with synthesized material. However, there remains a\nsubstantial gap in performance between recognizers trained on human speech\nthose trained on synthesized speech."
+}

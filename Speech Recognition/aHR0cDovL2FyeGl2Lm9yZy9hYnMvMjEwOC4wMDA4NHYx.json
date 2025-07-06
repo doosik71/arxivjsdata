@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2108.00084v1",
+  "title": "The History of Speech Recognition to the Year 2030",
+  "authors": "Awni Hannun",
+  "year": 2021,
+  "abstract": "The decade from 2010 to 2020 saw remarkable improvements in automatic speech\nrecognition. Many people now use speech recognition on a daily basis, for\nexample to perform voice search queries, send text messages, and interact with\nvoice assistants like Amazon Alexa and Siri by Apple. Before 2010 most people\nrarely used speech recognition. Given the remarkable changes in the state of\nspeech recognition over the previous decade, what can we expect over the coming\ndecade? I attempt to forecast the state of speech recognition research and\napplications by the year 2030. While the changes to general speech recognition\naccuracy will not be as dramatic as in the previous decade, I suggest we have\nan exciting decade of progress in speech technology ahead of us."
+}

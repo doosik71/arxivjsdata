@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1707.04879v1",
+  "title": "Listening while Speaking: Speech Chain by Deep Learning",
+  "authors": "Andros Tjandra, Sakriani Sakti, Satoshi Nakamura",
+  "year": 2017,
+  "abstract": "Despite the close relationship between speech perception and production,\nresearch in automatic speech recognition (ASR) and text-to-speech synthesis\n(TTS) has progressed more or less independently without exerting much mutual\ninfluence on each other. In human communication, on the other hand, a\nclosed-loop speech chain mechanism with auditory feedback from the speaker's\nmouth to her ear is crucial. In this paper, we take a step further and develop\na closed-loop speech chain model based on deep learning. The\nsequence-to-sequence model in close-loop architecture allows us to train our\nmodel on the concatenation of both labeled and unlabeled data. While ASR\ntranscribes the unlabeled speech features, TTS attempts to reconstruct the\noriginal speech waveform based on the text from ASR. In the opposite direction,\nASR also attempts to reconstruct the original text transcription given the\nsynthesized speech. To the best of our knowledge, this is the first deep\nlearning model that integrates human speech perception and production\nbehaviors. Our experimental results show that the proposed approach\nsignificantly improved the performance more than separate systems that were\nonly trained with labeled data."
+}

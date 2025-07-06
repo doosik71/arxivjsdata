@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1710.10628v3",
+  "title": "Variational Continual Learning",
+  "authors": "Cuong V. Nguyen, Yingzhen Li, Thang D. Bui, Richard E. Turner",
+  "year": 2017,
+  "abstract": "This paper develops variational continual learning (VCL), a simple but\ngeneral framework for continual learning that fuses online variational\ninference (VI) and recent advances in Monte Carlo VI for neural networks. The\nframework can successfully train both deep discriminative models and deep\ngenerative models in complex continual learning settings where existing tasks\nevolve over time and entirely new tasks emerge. Experimental results show that\nVCL outperforms state-of-the-art continual learning methods on a variety of\ntasks, avoiding catastrophic forgetting in a fully automatic way."
+}
