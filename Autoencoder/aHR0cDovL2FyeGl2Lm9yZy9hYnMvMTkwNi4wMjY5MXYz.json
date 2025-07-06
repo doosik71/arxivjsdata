@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1906.02691v3",
+  "title": "An Introduction to Variational Autoencoders",
+  "authors": "Diederik P. Kingma, Max Welling",
+  "year": 2019,
+  "abstract": "Variational autoencoders provide a principled framework for learning deep\nlatent-variable models and corresponding inference models. In this work, we\nprovide an introduction to variational autoencoders and some important\nextensions."
+}
