@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2504.18738v1",
+  "title": "A Review of 3D Object Detection with Vision-Language Models",
+  "authors": "Ranjan Sapkota, Konstantinos I Roumeliotis, Rahul Harsha Cheppally, Marco Flores Calero, Manoj Karkee",
+  "year": 2025,
+  "abstract": "This review provides a systematic analysis of comprehensive survey of 3D\nobject detection with vision-language models(VLMs) , a rapidly advancing area\nat the intersection of 3D vision and multimodal AI. By examining over 100\nresearch papers, we provide the first systematic analysis dedicated to 3D\nobject detection with vision-language models. We begin by outlining the unique\nchallenges of 3D object detection with vision-language models, emphasizing\ndifferences from 2D detection in spatial reasoning and data complexity.\nTraditional approaches using point clouds and voxel grids are compared to\nmodern vision-language frameworks like CLIP and 3D LLMs, which enable\nopen-vocabulary detection and zero-shot generalization. We review key\narchitectures, pretraining strategies, and prompt engineering methods that\nalign textual and 3D features for effective 3D object detection with\nvision-language models. Visualization examples and evaluation benchmarks are\ndiscussed to illustrate performance and behavior. Finally, we highlight current\nchallenges, such as limited 3D-language datasets and computational demands, and\npropose future research directions to advance 3D object detection with\nvision-language models. >Object Detection, Vision-Language Models, Agents,\nVLMs, LLMs, AI"
+}
