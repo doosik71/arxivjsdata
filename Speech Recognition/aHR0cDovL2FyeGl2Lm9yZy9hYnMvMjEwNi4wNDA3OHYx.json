@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2106.04078v1",
+  "title": "End-to-End Speaker Diarization Conditioned on Speech Activity and\n  Overlap Detection",
+  "authors": "Yuki Takashima, Yusuke Fujita, Shinji Watanabe, Shota Horiguchi, Paola García, Kenji Nagamatsu",
+  "year": 2021,
+  "abstract": "In this paper, we present a conditional multitask learning method for\nend-to-end neural speaker diarization (EEND). The EEND system has shown\npromising performance compared with traditional clustering-based methods,\nespecially in the case of overlapping speech. In this paper, to further improve\nthe performance of the EEND system, we propose a novel multitask learning\nframework that solves speaker diarization and a desired subtask while\nexplicitly considering the task dependency. We optimize speaker diarization\nconditioned on speech activity and overlap detection that are subtasks of\nspeaker diarization, based on the probabilistic chain rule. Experimental\nresults show that our proposed method can leverage a subtask to effectively\nmodel speaker diarization, and outperforms conventional EEND systems in terms\nof diarization error rate."
+}

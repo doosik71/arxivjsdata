@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2302.10790v1",
+  "title": "Federated Learning for ASR based on Wav2vec 2.0",
+  "authors": "Tuan Nguyen, Salima Mdhaffar, Natalia Tomashenko, Jean-François Bonastre, Yannick Estève",
+  "year": 2023,
+  "abstract": "This paper presents a study on the use of federated learning to train an ASR\nmodel based on a wav2vec 2.0 model pre-trained by self supervision. Carried out\non the well-known TED-LIUM 3 dataset, our experiments show that such a model\ncan obtain, with no use of a language model, a word error rate of 10.92% on the\nofficial TED-LIUM 3 test set, without sharing any data from the different\nusers. We also analyse the ASR performance for speakers depending to their\nparticipation to the federated learning. Since federated learning was first\nintroduced for privacy purposes, we also measure its ability to protect speaker\nidentity. To do that, we exploit an approach to analyze information contained\nin exchanged models based on a neural network footprint on an indicator\ndataset. This analysis is made layer-wise and shows which layers in an\nexchanged wav2vec 2.0 based model bring the speaker identity information."
+}

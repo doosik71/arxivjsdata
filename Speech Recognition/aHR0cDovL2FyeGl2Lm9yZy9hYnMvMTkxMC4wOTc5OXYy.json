@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1910.09799v2",
+  "title": "Transformer-based Acoustic Modeling for Hybrid Speech Recognition",
+  "authors": "Yongqiang Wang, Abdelrahman Mohamed, Duc Le, Chunxi Liu, Alex Xiao, Jay Mahadeokar, Hongzhao Huang, Andros Tjandra, Xiaohui Zhang, Frank Zhang, Christian Fuegen, Geoffrey Zweig, Michael L. Seltzer",
+  "year": 2019,
+  "abstract": "We propose and evaluate transformer-based acoustic models (AMs) for hybrid\nspeech recognition. Several modeling choices are discussed in this work,\nincluding various positional embedding methods and an iterated loss to enable\ntraining deep transformers. We also present a preliminary study of using\nlimited right context in transformer models, which makes it possible for\nstreaming applications. We demonstrate that on the widely used Librispeech\nbenchmark, our transformer-based AM outperforms the best published hybrid\nresult by 19% to 26% relative when the standard n-gram language model (LM) is\nused. Combined with neural network LM for rescoring, our proposed approach\nachieves state-of-the-art results on Librispeech. Our findings are also\nconfirmed on a much larger internal dataset."
+}
