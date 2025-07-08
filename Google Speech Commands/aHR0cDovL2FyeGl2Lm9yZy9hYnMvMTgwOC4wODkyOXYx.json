@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1808.08929v1",
+  "title": "A neural attention model for speech command recognition",
+  "authors": "Douglas Coimbra de Andrade, Sabato Leo, Martin Loesener Da Silva Viana, Christoph Bernkopf",
+  "year": 2018,
+  "abstract": "This paper introduces a convolutional recurrent network with attention for\nspeech command recognition. Attention models are powerful tools to improve\nperformance on natural language, image captioning and speech tasks. The\nproposed model establishes a new state-of-the-art accuracy of 94.1% on Google\nSpeech Commands dataset V1 and 94.5% on V2 (for the 20-commands recognition\ntask), while still keeping a small footprint of only 202K trainable parameters.\nResults are compared with previous convolutional implementations on 5 different\ntasks (20 commands recognition (V1 and V2), 12 commands recognition (V1), 35\nword recognition (V1) and left-right (V1)). We show detailed performance\nresults and demonstrate that the proposed attention mechanism not only improves\nperformance but also allows inspecting what regions of the audio were taken\ninto consideration by the network when outputting a given category."
+}

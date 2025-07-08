@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1909.12205v3",
+  "title": "Adaptive Binary-Ternary Quantization",
+  "authors": "Ryan Razani, Grégoire Morin, Vahid Partovi Nia, Eyyüb Sari",
+  "year": 2019,
+  "abstract": "Neural network models are resource hungry. It is difficult to deploy such\ndeep networks on devices with limited resources, like smart wearables,\ncellphones, drones, and autonomous vehicles. Low bit quantization such as\nbinary and ternary quantization is a common approach to alleviate this resource\nrequirements. Ternary quantization provides a more flexible model and\noutperforms binary quantization in terms of accuracy, however doubles the\nmemory footprint and increases the computational cost. Contrary to these\napproaches, mixed quantized models allow a trade-off between accuracy and\nmemory footprint. In such models, quantization depth is often chosen manually,\nor is tuned using a separate optimization routine. The latter requires training\na quantized network multiple times. Here, we propose an adaptive combination of\nbinary and ternary quantization, namely Smart Quantization (SQ), in which the\nquantization depth is modified directly via a regularization function, so that\nthe model is trained only once. Our experimental results show that the proposed\nmethod adapts quantization depth successfully while keeping the model accuracy\nhigh on MNIST and CIFAR10 benchmarks."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1710.08377v1",
+  "title": "Listening to the World Improves Speech Command Recognition",
+  "authors": "Brian McMahan, Delip Rao",
+  "year": 2017,
+  "abstract": "We study transfer learning in convolutional network architectures applied to\nthe task of recognizing audio, such as environmental sound events and speech\ncommands. Our key finding is that not only is it possible to transfer\nrepresentations from an unrelated task like environmental sound classification\nto a voice-focused task like speech command recognition, but also that doing so\nimproves accuracies significantly. We also investigate the effect of increased\nmodel capacity for transfer learning audio, by first validating known results\nfrom the field of Computer Vision of achieving better accuracies with\nincreasingly deeper networks on two audio datasets: UrbanSound8k and the newly\nreleased Google Speech Commands dataset. Then we propose a simple multiscale\ninput representation using dilated convolutions and show that it is able to\naggregate larger contexts and increase classification performance. Further, the\nmodels trained using a combination of transfer learning and multiscale input\nrepresentations need only 40% of the training data to achieve similar\naccuracies as a freshly trained model with 100% of the training data. Finally,\nwe demonstrate a positive interaction effect for the multiscale input and\ntransfer learning, making a case for the joint application of the two\ntechniques."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1809.10463v1",
+  "title": "Learning to Train a Binary Neural Network",
+  "authors": "Joseph Bethge, Haojin Yang, Christian Bartz, Christoph Meinel",
+  "year": 2018,
+  "abstract": "Convolutional neural networks have achieved astonishing results in different\napplication areas. Various methods which allow us to use these models on mobile\nand embedded devices have been proposed. Especially binary neural networks seem\nto be a promising approach for these devices with low computational power.\nHowever, understanding binary neural networks and training accurate models for\npractical applications remains a challenge. In our work, we focus on increasing\nour understanding of the training process and making it accessible to everyone.\nWe publish our code and models based on BMXNet for everyone to use. Within this\nframework, we systematically evaluated different network architectures and\nhyperparameters to provide useful insights on how to train a binary neural\nnetwork. Further, we present how we improved accuracy by increasing the number\nof connections in the network."
+}

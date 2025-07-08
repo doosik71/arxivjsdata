@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1911.07190v2",
+  "title": "Loss Aware Post-training Quantization",
+  "authors": "Yury Nahshan, Brian Chmiel, Chaim Baskin, Evgenii Zheltonozhskii, Ron Banner, Alex M. Bronstein, Avi Mendelson",
+  "year": 2019,
+  "abstract": "Neural network quantization enables the deployment of large models on\nresource-constrained devices. Current post-training quantization methods fall\nshort in terms of accuracy for INT4 (or lower) but provide reasonable accuracy\nfor INT8 (or above). In this work, we study the effect of quantization on the\nstructure of the loss landscape. Additionally, we show that the structure is\nflat and separable for mild quantization, enabling straightforward\npost-training quantization methods to achieve good results. We show that with\nmore aggressive quantization, the loss landscape becomes highly non-separable\nwith steep curvature, making the selection of quantization parameters more\nchallenging. Armed with this understanding, we design a method that quantizes\nthe layer parameters jointly, enabling significant accuracy improvement over\ncurrent post-training quantization methods. Reference implementation is\navailable at\nhttps://github.com/ynahshan/nn-quantization-pytorch/tree/master/lapq"
+}

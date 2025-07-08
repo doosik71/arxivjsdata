@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2203.16085v2",
+  "title": "Combination of Time-domain, Frequency-domain, and Cepstral-domain\n  Acoustic Features for Speech Commands Classification",
+  "authors": "Yikang Wang, Hiromitsu Nishizaki",
+  "year": 2022,
+  "abstract": "In speech-related classification tasks, frequency-domain acoustic features\nsuch as logarithmic Mel-filter bank coefficients (FBANK) and cepstral-domain\nacoustic features such as Mel-frequency cepstral coefficients (MFCC) are often\nused. However, time-domain features perform more effectively in some sound\nclassification tasks which contain non-vocal or weakly speech-related sounds.\nWe previously proposed a feature called bit sequence representation (BSR),\nwhich is a time-domain binary acoustic feature based on the raw waveform.\nCompared with MFCC, BSR performed better in environmental sound detection and\nshowed comparable accuracy performance in limited-vocabulary speech recognition\ntasks. In this paper, we propose a novel improvement BSR feature called\nBSR-float16 to represent floating-point values more precisely. We\nexperimentally demonstrated the complementarity among time-domain,\nfrequency-domain, and cepstral-domain features using a dataset called Speech\nCommands proposed by Google. Therefore, we used a simple back-end score fusion\nmethod to improve the final classification accuracy. The fusion results also\nshowed better noise robustness."
+}

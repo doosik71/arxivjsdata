@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/0904.4587v1",
+  "title": "Adaptive Learning with Binary Neurons",
+  "authors": "Juan-Manuel Torres-Moreno, Mirta B. Gordon",
+  "year": 2009,
+  "abstract": "A efficient incremental learning algorithm for classification tasks, called\nNetLines, well adapted for both binary and real-valued input patterns is\npresented. It generates small compact feedforward neural networks with one\nhidden layer of binary units and binary output units. A convergence theorem\nensures that solutions with a finite number of hidden units exist for both\nbinary and real-valued input patterns. An implementation for problems with more\nthan two classes, valid for any binary classifier, is proposed. The\ngeneralization error and the size of the resulting networks are compared to the\nbest published results on well-known classification benchmarks. Early stopping\nis shown to decrease overfitting, without improving the generalization\nperformance."
+}
