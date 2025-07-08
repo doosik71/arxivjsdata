@@ -1,0 +1,7 @@
+{
+  "title": "Latency Control for Keyword Spotting",
+  "authors": "Christin Jose, Joseph Wang, Grant P. Strimel, Mohammad Omar Khursheed, Yuriy Mishchenko, Brian Kulis",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2206.07261v1",
+  "abstract": "Conversational agents commonly utilize keyword spotting (KWS) to initiate\nvoice interaction with the user. For user experience and privacy\nconsiderations, existing approaches to KWS largely focus on accuracy, which can\noften come at the expense of introduced latency. To address this tradeoff, we\npropose a novel approach to control KWS model latency and which generalizes to\nany loss function without explicit knowledge of the keyword endpoint. Through a\nsingle, tunable hyperparameter, our approach enables one to balance detection\nlatency and accuracy for the targeted application. Empirically, we show that\nour approach gives superior performance under latency constraints when compared\nto existing methods. Namely, we make a substantial 25\\% relative false accepts\nimprovement for a fixed latency target when compared to the baseline\nstate-of-the-art. We also show that when our approach is used in conjunction\nwith a max-pooling loss, we are able to improve relative false accepts by 25 %\nat a fixed latency when compared to cross entropy loss."
+}

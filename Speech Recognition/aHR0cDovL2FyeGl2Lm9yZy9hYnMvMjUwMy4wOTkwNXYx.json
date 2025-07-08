@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2503.09905v1",
+  "title": "Quantization for OpenAI's Whisper Models: A Comparative Analysis",
+  "authors": "Allison Andreyev",
+  "year": 2025,
+  "abstract": "Automated speech recognition (ASR) models have gained prominence for\napplications such as captioning, speech translation, and live transcription.\nThis paper studies Whisper and two model variants: one optimized for live\nspeech streaming and another for offline transcription. Notably, these models\nhave been found to generate hallucinated content, reducing transcription\nreliability. Furthermore, larger model variants exhibit increased latency and\npose challenges for deployment on resource-constrained devices. This study\nanalyzes the similarities and differences between three Whisper models,\nqualitatively examining their distinct capabilities. Next, this study\nquantifies the impact of model quantization on latency and evaluates its\nviability for edge deployment. Using the open source LibriSpeech dataset, this\npaper evaluates the word error rate (WER) along with latency analysis of\nwhispercpp using 3 quantization methods (INT4, INT5, INT8). Results show that\nquantization reduces latency by 19\\% and model size by 45\\%, while preserving\ntranscription accuracy. These findings provide insights into the optimal use\ncases of different Whisper models and edge device deployment possibilities. All\ncode, datasets, and implementation details are available in a public GitHub\nrepository: https://github.com/allisonandreyev/WhisperQuantization.git"
+}

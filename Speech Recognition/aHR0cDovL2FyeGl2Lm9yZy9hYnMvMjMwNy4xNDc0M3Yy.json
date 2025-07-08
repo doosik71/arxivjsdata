@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2307.14743v2",
+  "title": "Turning Whisper into Real-Time Transcription System",
+  "authors": "Dominik Macháček, Raj Dabre, Ondřej Bojar",
+  "year": 2023,
+  "abstract": "Whisper is one of the recent state-of-the-art multilingual speech recognition\nand translation models, however, it is not designed for real time\ntranscription. In this paper, we build on top of Whisper and create\nWhisper-Streaming, an implementation of real-time speech transcription and\ntranslation of Whisper-like models. Whisper-Streaming uses local agreement\npolicy with self-adaptive latency to enable streaming transcription. We show\nthat Whisper-Streaming achieves high quality and 3.3 seconds latency on\nunsegmented long-form speech transcription test set, and we demonstrate its\nrobustness and practical usability as a component in live transcription service\nat a multilingual conference."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2110.06877v1",
+  "title": "A Review on Human Pose Estimation",
+  "authors": "Rohit Josyula, Sarah Ostadabbas",
+  "year": 2021,
+  "abstract": "The phenomenon of Human Pose Estimation (HPE) is a problem that has been\nexplored over the years, particularly in computer vision. But what exactly is\nit? To answer this, the concept of a pose must first be understood. Pose can be\ndefined as the arrangement of human joints in a specific manner. Therefore, we\ncan define the problem of Human Pose Estimation as the localization of human\njoints or predefined landmarks in images and videos. There are several types of\npose estimation, including body, face, and hand, as well as many aspects to it.\nThis paper will cover them, starting with the classical approaches to HPE to\nthe Deep Learning based models."
+}
