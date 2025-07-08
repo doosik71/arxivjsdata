@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2104.01454v4",
+  "title": "Few-Shot Keyword Spotting in Any Language",
+  "authors": "Mark Mazumder, Colby Banbury, Josh Meyer, Pete Warden, Vijay Janapa Reddi",
+  "year": 2021,
+  "abstract": "We introduce a few-shot transfer learning method for keyword spotting in any\nlanguage. Leveraging open speech corpora in nine languages, we automate the\nextraction of a large multilingual keyword bank and use it to train an\nembedding model. With just five training examples, we fine-tune the embedding\nmodel for keyword spotting and achieve an average F1 score of 0.75 on keyword\nclassification for 180 new keywords unseen by the embedding model in these nine\nlanguages. This embedding model also generalizes to new languages. We achieve\nan average F1 score of 0.65 on 5-shot models for 260 keywords sampled across 13\nnew languages unseen by the embedding model. We investigate streaming accuracy\nfor our 5-shot models in two contexts: keyword spotting and keyword search.\nAcross 440 keywords in 22 languages, we achieve an average streaming keyword\nspotting accuracy of 87.4% with a false acceptance rate of 4.3%, and observe\npromising initial results on keyword search."
+}
