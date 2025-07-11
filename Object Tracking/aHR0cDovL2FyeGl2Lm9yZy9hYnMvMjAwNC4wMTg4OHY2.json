@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2004.01888v6",
+  "title": "FairMOT: On the Fairness of Detection and Re-Identification in Multiple\n  Object Tracking",
+  "authors": "Yifu Zhang, Chunyu Wang, Xinggang Wang, Wenjun Zeng, Wenyu Liu",
+  "year": 2020,
+  "abstract": "Multi-object tracking (MOT) is an important problem in computer vision which\nhas a wide range of applications. Formulating MOT as multi-task learning of\nobject detection and re-ID in a single network is appealing since it allows\njoint optimization of the two tasks and enjoys high computation efficiency.\nHowever, we find that the two tasks tend to compete with each other which need\nto be carefully addressed. In particular, previous works usually treat re-ID as\na secondary task whose accuracy is heavily affected by the primary detection\ntask. As a result, the network is biased to the primary detection task which is\nnot fair to the re-ID task. To solve the problem, we present a simple yet\neffective approach termed as FairMOT based on the anchor-free object detection\narchitecture CenterNet. Note that it is not a naive combination of CenterNet\nand re-ID. Instead, we present a bunch of detailed designs which are critical\nto achieve good tracking results by thorough empirical studies. The resulting\napproach achieves high accuracy for both detection and tracking. The approach\noutperforms the state-of-the-art methods by a large margin on several public\ndatasets. The source code and pre-trained models are released at\nhttps://github.com/ifzhang/FairMOT."
+}

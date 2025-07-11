@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2411.15811v3",
+  "title": "FastTrackTr:Towards Fast Multi-Object Tracking with Transformers",
+  "authors": "Pan Liao, Feng Yang, Di Wu, Jinwen Yu, Wenhui Zhao, Bo Liu",
+  "year": 2024,
+  "abstract": "Transformer-based multi-object tracking (MOT) methods have captured the\nattention of many researchers in recent years. However, these models often\nsuffer from slow inference speeds due to their structure or other issues. To\naddress this problem, we revisited the Joint Detection and Tracking (JDT)\nmethod by looking back at past approaches. By integrating the original JDT\napproach with some advanced theories, this paper employs an efficient method of\ninformation transfer between frames on the DETR, constructing a fast and novel\nJDT-type MOT framework: FastTrackTr. Thanks to the superiority of this\ninformation transfer method, our approach not only reduces the number of\nqueries required during tracking but also avoids the excessive introduction of\nnetwork structures, ensuring model simplicity. Experimental results indicate\nthat our method has the potential to achieve real-time tracking and exhibits\ncompetitive tracking accuracy across multiple datasets."
+}

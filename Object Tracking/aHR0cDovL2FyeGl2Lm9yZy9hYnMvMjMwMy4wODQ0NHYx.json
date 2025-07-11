@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2303.08444v1",
+  "title": "Real-time Multi-Object Tracking Based on Bi-directional Matching",
+  "authors": "Huilan Luo, Zehua Zeng",
+  "year": 2023,
+  "abstract": "In recent years, anchor-free object detection models combined with matching\nalgorithms are used to achieve real-time muti-object tracking and also ensure\nhigh tracking accuracy. However, there are still great challenges in\nmulti-object tracking. For example, when most part of a target is occluded or\nthe target just disappears from images temporarily, it often leads to tracking\ninterruptions for most of the existing tracking algorithms. Therefore, this\nstudy offers a bi-directional matching algorithm for multi-object tracking that\nmakes advantage of bi-directional motion prediction information to improve\nocclusion handling. A stranded area is used in the matching algorithm to\ntemporarily store the objects that fail to be tracked. When objects recover\nfrom occlusions, our method will first try to match them with objects in the\nstranded area to avoid erroneously generating new identities, thus forming a\nmore continuous trajectory. Experiments show that our approach can improve the\nmulti-object tracking performance in the presence of occlusions. In addition,\nthis study provides an attentional up-sampling module that not only assures\ntracking accuracy but also accelerates training speed. In the MOT17 challenge,\nthe proposed algorithm achieves 63.4% MOTA, 55.3% IDF1, and 20.1 FPS tracking\nspeed."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1703.07402v1",
+  "title": "Simple Online and Realtime Tracking with a Deep Association Metric",
+  "authors": "Nicolai Wojke, Alex Bewley, Dietrich Paulus",
+  "year": 2017,
+  "abstract": "Simple Online and Realtime Tracking (SORT) is a pragmatic approach to\nmultiple object tracking with a focus on simple, effective algorithms. In this\npaper, we integrate appearance information to improve the performance of SORT.\nDue to this extension we are able to track objects through longer periods of\nocclusions, effectively reducing the number of identity switches. In spirit of\nthe original framework we place much of the computational complexity into an\noffline pre-training stage where we learn a deep association metric on a\nlarge-scale person re-identification dataset. During online application, we\nestablish measurement-to-track associations using nearest neighbor queries in\nvisual appearance space. Experimental evaluation shows that our extensions\nreduce the number of identity switches by 45%, achieving overall competitive\nperformance at high frame rates."
+}

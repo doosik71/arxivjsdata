@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1812.11703v1",
+  "title": "SiamRPN++: Evolution of Siamese Visual Tracking with Very Deep Networks",
+  "authors": "Bo Li, Wei Wu, Qiang Wang, Fangyi Zhang, Junliang Xing, Junjie Yan",
+  "year": 2018,
+  "abstract": "Siamese network based trackers formulate tracking as convolutional feature\ncross-correlation between target template and searching region. However,\nSiamese trackers still have accuracy gap compared with state-of-the-art\nalgorithms and they cannot take advantage of feature from deep networks, such\nas ResNet-50 or deeper. In this work we prove the core reason comes from the\nlack of strict translation invariance. By comprehensive theoretical analysis\nand experimental validations, we break this restriction through a simple yet\neffective spatial aware sampling strategy and successfully train a\nResNet-driven Siamese tracker with significant performance gain. Moreover, we\npropose a new model architecture to perform depth-wise and layer-wise\naggregations, which not only further improves the accuracy but also reduces the\nmodel size. We conduct extensive ablation studies to demonstrate the\neffectiveness of the proposed tracker, which obtains currently the best results\non four large tracking benchmarks, including OTB2015, VOT2018, UAV123, and\nLaSOT. Our model will be released to facilitate further studies based on this\nproblem."
+}

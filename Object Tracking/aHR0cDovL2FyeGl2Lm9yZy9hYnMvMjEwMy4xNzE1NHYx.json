@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2103.17154v1",
+  "title": "Learning Spatio-Temporal Transformer for Visual Tracking",
+  "authors": "Bin Yan, Houwen Peng, Jianlong Fu, Dong Wang, Huchuan Lu",
+  "year": 2021,
+  "abstract": "In this paper, we present a new tracking architecture with an encoder-decoder\ntransformer as the key component. The encoder models the global spatio-temporal\nfeature dependencies between target objects and search regions, while the\ndecoder learns a query embedding to predict the spatial positions of the target\nobjects. Our method casts object tracking as a direct bounding box prediction\nproblem, without using any proposals or predefined anchors. With the\nencoder-decoder transformer, the prediction of objects just uses a simple\nfully-convolutional network, which estimates the corners of objects directly.\nThe whole method is end-to-end, does not need any postprocessing steps such as\ncosine window and bounding box smoothing, thus largely simplifying existing\ntracking pipelines. The proposed tracker achieves state-of-the-art performance\non five challenging short-term and long-term benchmarks, while running at\nreal-time speed, being 6x faster than Siam R-CNN. Code and models are\nopen-sourced at https://github.com/researchmm/Stark."
+}

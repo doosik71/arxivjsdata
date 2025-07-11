@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1704.06036v1",
+  "title": "End-to-end representation learning for Correlation Filter based tracking",
+  "authors": "Jack Valmadre, Luca Bertinetto, João F. Henriques, Andrea Vedaldi, Philip H. S. Torr",
+  "year": 2017,
+  "abstract": "The Correlation Filter is an algorithm that trains a linear template to\ndiscriminate between images and their translations. It is well suited to object\ntracking because its formulation in the Fourier domain provides a fast\nsolution, enabling the detector to be re-trained once per frame. Previous works\nthat use the Correlation Filter, however, have adopted features that were\neither manually designed or trained for a different task. This work is the\nfirst to overcome this limitation by interpreting the Correlation Filter\nlearner, which has a closed-form solution, as a differentiable layer in a deep\nneural network. This enables learning deep features that are tightly coupled to\nthe Correlation Filter. Experiments illustrate that our method has the\nimportant practical benefit of allowing lightweight architectures to achieve\nstate-of-the-art performance at high framerates."
+}
