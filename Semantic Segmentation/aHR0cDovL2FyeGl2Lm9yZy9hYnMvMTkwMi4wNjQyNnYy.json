@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1902.06426v2",
+  "title": "2017 Robotic Instrument Segmentation Challenge",
+  "authors": "Max Allan, Alex Shvets, Thomas Kurmann, Zichen Zhang, Rahul Duggal, Yun-Hsuan Su, Nicola Rieke, Iro Laina, Niveditha Kalavakonda, Sebastian Bodenstedt, Luis Herrera, Wenqi Li, Vladimir Iglovikov, Huoling Luo, Jian Yang, Danail Stoyanov, Lena Maier-Hein, Stefanie Speidel, Mahdi Azizian",
+  "year": 2019,
+  "abstract": "In mainstream computer vision and machine learning, public datasets such as\nImageNet, COCO and KITTI have helped drive enormous improvements by enabling\nresearchers to understand the strengths and limitations of different algorithms\nvia performance comparison. However, this type of approach has had limited\ntranslation to problems in robotic assisted surgery as this field has never\nestablished the same level of common datasets and benchmarking methods. In 2015\na sub-challenge was introduced at the EndoVis workshop where a set of robotic\nimages were provided with automatically generated annotations from robot\nforward kinematics. However, there were issues with this dataset due to the\nlimited background variation, lack of complex motion and inaccuracies in the\nannotation. In this work we present the results of the 2017 challenge on\nrobotic instrument segmentation which involved 10 teams participating in\nbinary, parts and type based segmentation of articulated da Vinci robotic\ninstruments."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1904.04552v2",
+  "title": "BoLTVOS: Box-Level Tracking for Video Object Segmentation",
+  "authors": "Paul Voigtlaender, Jonathon Luiten, Bastian Leibe",
+  "year": 2019,
+  "abstract": "We approach video object segmentation (VOS) by splitting the task into two\nsub-tasks: bounding box level tracking, followed by bounding box segmentation.\nFollowing this paradigm, we present BoLTVOS (Box-Level Tracking for VOS), which\nconsists of an R-CNN detector conditioned on the first-frame bounding box to\ndetect the object of interest, a temporal consistency rescoring algorithm, and\na Box2Seg network that converts bounding boxes to segmentation masks. BoLTVOS\nperforms VOS using only the firstframe bounding box without the mask. We\nevaluate our approach on DAVIS 2017 and YouTube-VOS, and show that it\noutperforms all methods that do not perform first-frame fine-tuning. We further\npresent BoLTVOS-ft, which learns to segment the object in question using the\nfirst-frame mask while it is being tracked, without increasing the runtime.\nBoLTVOS-ft outperforms PReMVOS, the previously best performing VOS method on\nDAVIS 2016 and YouTube-VOS, while running up to 45 times faster. Our bounding\nbox tracker also outperforms all previous short-term and longterm trackers on\nthe bounding box level tracking datasets OTB 2015 and LTB35. A newer version of\nthis work can be found at arXiv:1911.12836."
+}

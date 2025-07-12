@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1904.10620v1",
+  "title": "Bidirectional Learning for Domain Adaptation of Semantic Segmentation",
+  "authors": "Yunsheng Li, Lu Yuan, Nuno Vasconcelos",
+  "year": 2019,
+  "abstract": "Domain adaptation for semantic image segmentation is very necessary since\nmanually labeling large datasets with pixel-level labels is expensive and time\nconsuming. Existing domain adaptation techniques either work on limited\ndatasets, or yield not so good performance compared with supervised learning.\nIn this paper, we propose a novel bidirectional learning framework for domain\nadaptation of segmentation. Using the bidirectional learning, the image\ntranslation model and the segmentation adaptation model can be learned\nalternatively and promote to each other. Furthermore, we propose a\nself-supervised learning algorithm to learn a better segmentation adaptation\nmodel and in return improve the image translation model. Experiments show that\nour method is superior to the state-of-the-art methods in domain adaptation of\nsegmentation with a big margin. The source code is available at\nhttps://github.com/liyunsheng13/BDL."
+}

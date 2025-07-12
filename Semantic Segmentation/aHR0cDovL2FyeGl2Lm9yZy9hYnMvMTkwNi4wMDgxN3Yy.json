@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1906.00817v2",
+  "title": "Zero-Shot Semantic Segmentation",
+  "authors": "Maxime Bucher, Tuan-Hung Vu, Matthieu Cord, Patrick Pérez",
+  "year": 2019,
+  "abstract": "Semantic segmentation models are limited in their ability to scale to large\nnumbers of object classes. In this paper, we introduce the new task of\nzero-shot semantic segmentation: learning pixel-wise classifiers for never-seen\nobject categories with zero training examples. To this end, we present a novel\narchitecture, ZS3Net, combining a deep visual segmentation model with an\napproach to generate visual representations from semantic word embeddings. By\nthis way, ZS3Net addresses pixel classification tasks where both seen and\nunseen categories are faced at test time (so called \"generalized\" zero-shot\nclassification). Performance is further improved by a self-training step that\nrelies on automatic pseudo-labeling of pixels from unseen classes. On the two\nstandard segmentation datasets, Pascal-VOC and Pascal-Context, we propose\nzero-shot benchmarks and set competitive baselines. For complex scenes as ones\nin the Pascal-Context dataset, we extend our approach by using a graph-context\nencoding to fully leverage spatial context priors coming from class-wise\nsegmentation maps."
+}

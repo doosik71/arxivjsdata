@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1810.04377v1",
+  "title": "Learning Deep Representations for Semantic Image Parsing: a\n  Comprehensive Overview",
+  "authors": "Lili Huang, Jiefeng Peng, Ruimao Zhang, Guanbin Li, Liang Lin",
+  "year": 2018,
+  "abstract": "Semantic image parsing, which refers to the process of decomposing images\ninto semantic regions and constructing the structure representation of the\ninput, has recently aroused widespread interest in the field of computer\nvision. The recent application of deep representation learning has driven this\nfield into a new stage of development. In this paper, we summarize three\naspects of the progress of research on semantic image parsing, i.e.,\ncategory-level semantic segmentation, instance-level semantic segmentation, and\nbeyond segmentation. Specifically, we first review the general frameworks for\neach task and introduce the relevant variants. The advantages and limitations\nof each method are also discussed. Moreover, we present a comprehensive\ncomparison of different benchmark datasets and evaluation metrics. Finally, we\nexplore the future trends and challenges of semantic image parsing."
+}

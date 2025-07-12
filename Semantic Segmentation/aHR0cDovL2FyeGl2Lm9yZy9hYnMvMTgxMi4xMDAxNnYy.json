@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1812.10016v2",
+  "title": "A Unified Framework for Mutual Improvement of SLAM and Semantic\n  Segmentation",
+  "authors": "Kai Wang, Yimin Lin, Luowei Wang, Liming Han, Minjie Hua, Xiang Wang, Shiguo Lian, Bill Huang",
+  "year": 2018,
+  "abstract": "This paper presents a novel framework for simultaneously implementing\nlocalization and segmentation, which are two of the most important vision-based\ntasks for robotics. While the goals and techniques used for them were\nconsidered to be different previously, we show that by making use of the\nintermediate results of the two modules, their performance can be enhanced at\nthe same time. Our framework is able to handle both the instantaneous motion\nand long-term changes of instances in localization with the help of the\nsegmentation result, which also benefits from the refined 3D pose information.\nWe conduct experiments on various datasets, and prove that our framework works\neffectively on improving the precision and robustness of the two tasks and\noutperforms existing localization and segmentation algorithms."
+}

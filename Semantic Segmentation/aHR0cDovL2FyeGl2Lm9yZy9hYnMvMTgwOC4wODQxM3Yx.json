@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1808.08413v1",
+  "title": "A Brief Survey and an Application of Semantic Image Segmentation for\n  Autonomous Driving",
+  "authors": "Çağrı Kaymak, Ayşegül Uçar",
+  "year": 2018,
+  "abstract": "Deep learning is a fast-growing machine learning approach to perceive and\nunderstand large amounts of data. In this paper, general information about the\ndeep learning approach which is attracted much attention in the field of\nmachine learning is given in recent years and an application about semantic\nimage segmentation is carried out in order to help autonomous driving of\nautonomous vehicles. This application is implemented with Fully Convolutional\nNetwork (FCN) architectures obtained by modifying the Convolutional Neural\nNetwork (CNN) architectures based on deep learning. Experimental studies for\nthe application are utilized 4 different FCN architectures named\nFCN-AlexNet,FCN-8s, FCN-16s and FCN-32s. For the experimental studies, FCNs are\nfirst trained separately and validation accuracies of these trained network\nmodels on the used dataset is compared. In addition, image segmentation\ninferences are visualized to take account of how precisely FCN architectures\ncan segment objects."
+}
