@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1802.02611v3",
+  "title": "Encoder-Decoder with Atrous Separable Convolution for Semantic Image\n  Segmentation",
+  "authors": "Liang-Chieh Chen, Yukun Zhu, George Papandreou, Florian Schroff, Hartwig Adam",
+  "year": 2018,
+  "abstract": "Spatial pyramid pooling module or encode-decoder structure are used in deep\nneural networks for semantic segmentation task. The former networks are able to\nencode multi-scale contextual information by probing the incoming features with\nfilters or pooling operations at multiple rates and multiple effective\nfields-of-view, while the latter networks can capture sharper object boundaries\nby gradually recovering the spatial information. In this work, we propose to\ncombine the advantages from both methods. Specifically, our proposed model,\nDeepLabv3+, extends DeepLabv3 by adding a simple yet effective decoder module\nto refine the segmentation results especially along object boundaries. We\nfurther explore the Xception model and apply the depthwise separable\nconvolution to both Atrous Spatial Pyramid Pooling and decoder modules,\nresulting in a faster and stronger encoder-decoder network. We demonstrate the\neffectiveness of the proposed model on PASCAL VOC 2012 and Cityscapes datasets,\nachieving the test set performance of 89.0\\% and 82.1\\% without any\npost-processing. Our paper is accompanied with a publicly available reference\nimplementation of the proposed models in Tensorflow at\n\\url{https://github.com/tensorflow/models/tree/master/research/deeplab}."
+}
