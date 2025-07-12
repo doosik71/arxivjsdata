@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2204.06626v1",
+  "title": "Adaptive Memory Management for Video Object Segmentation",
+  "authors": "Ali Pourganjalikhan, Charalambos Poullis",
+  "year": 2022,
+  "abstract": "Matching-based networks have achieved state-of-the-art performance for video\nobject segmentation (VOS) tasks by storing every-k frames in an external memory\nbank for future inference. Storing the intermediate frames' predictions\nprovides the network with richer cues for segmenting an object in the current\nframe. However, the size of the memory bank gradually increases with the length\nof the video, which slows down inference speed and makes it impractical to\nhandle arbitrary length videos.\n  This paper proposes an adaptive memory bank strategy for matching-based\nnetworks for semi-supervised video object segmentation (VOS) that can handle\nvideos of arbitrary length by discarding obsolete features. Features are\nindexed based on their importance in the segmentation of the objects in\nprevious frames. Based on the index, we discard unimportant features to\naccommodate new features. We present our experiments on DAVIS 2016, DAVIS 2017,\nand Youtube-VOS that demonstrate that our method outperforms state-of-the-art\nthat employ first-and-latest strategy with fixed-sized memory banks and\nachieves comparable performance to the every-k strategy with increasing-sized\nmemory banks. Furthermore, experiments show that our method increases inference\nspeed by up to 80% over the every-k and 35% over first-and-latest strategies."
+}

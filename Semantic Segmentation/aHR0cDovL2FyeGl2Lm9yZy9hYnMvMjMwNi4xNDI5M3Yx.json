@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2306.14293v1",
+  "title": "Multi-Scale Cross Contrastive Learning for Semi-Supervised Medical Image\n  Segmentation",
+  "authors": "Qianying Liu, Xiao Gu, Paul Henderson, Fani Deligianni",
+  "year": 2023,
+  "abstract": "Semi-supervised learning has demonstrated great potential in medical image\nsegmentation by utilizing knowledge from unlabeled data. However, most existing\napproaches do not explicitly capture high-level semantic relations between\ndistant regions, which limits their performance. In this paper, we focus on\nrepresentation learning for semi-supervised learning, by developing a novel\nMulti-Scale Cross Supervised Contrastive Learning (MCSC) framework, to segment\nstructures in medical images. We jointly train CNN and Transformer models,\nregularising their features to be semantically consistent across different\nscales. Our approach contrasts multi-scale features based on ground-truth and\ncross-predicted labels, in order to extract robust feature representations that\nreflect intra- and inter-slice relationships across the whole dataset. To\ntackle class imbalance, we take into account the prevalence of each class to\nguide contrastive learning and ensure that features adequately capture\ninfrequent classes. Extensive experiments on two multi-structure medical\nsegmentation datasets demonstrate the effectiveness of MCSC. It not only\noutperforms state-of-the-art semi-supervised methods by more than 3.0% in Dice,\nbut also greatly reduces the performance gap with fully supervised methods."
+}

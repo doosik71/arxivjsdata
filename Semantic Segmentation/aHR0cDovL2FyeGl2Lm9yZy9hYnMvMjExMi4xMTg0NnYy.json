@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2112.11846v2",
+  "title": "A Discriminative Single-Shot Segmentation Network for Visual Object\n  Tracking",
+  "authors": "Alan Lukežič, Jiří Matas, Matej Kristan",
+  "year": 2021,
+  "abstract": "Template-based discriminative trackers are currently the dominant tracking\nparadigm due to their robustness, but are restricted to bounding box tracking\nand a limited range of transformation models, which reduces their localization\naccuracy. We propose a discriminative single-shot segmentation tracker -- D3S2,\nwhich narrows the gap between visual object tracking and video object\nsegmentation. A single-shot network applies two target models with\ncomplementary geometric properties, one invariant to a broad range of\ntransformations, including non-rigid deformations, the other assuming a rigid\nobject to simultaneously achieve robust online target segmentation. The overall\ntracking reliability is further increased by decoupling the object and feature\nscale estimation. Without per-dataset finetuning, and trained only for\nsegmentation as the primary output, D3S2 outperforms all published trackers on\nthe recent short-term tracking benchmark VOT2020 and performs very close to the\nstate-of-the-art trackers on the GOT-10k, TrackingNet, OTB100 and LaSoT. D3S2\noutperforms the leading segmentation tracker SiamMask on video object\nsegmentation benchmarks and performs on par with top video object segmentation\nalgorithms."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2505.18052v1",
+  "title": "BOTM: Echocardiography Segmentation via Bi-directional Optimal Token\n  Matching",
+  "authors": "Zhihua Liu, Lei Tong, Xilin He, Che Liu, Rossella Arcucci, Chen Jin, Huiyu Zhou",
+  "year": 2025,
+  "abstract": "Existed echocardiography segmentation methods often suffer from anatomical\ninconsistency challenge caused by shape variation, partial observation and\nregion ambiguity with similar intensity across 2D echocardiographic sequences,\nresulting in false positive segmentation with anatomical defeated structures in\nchallenging low signal-to-noise ratio conditions. To provide a strong\nanatomical guarantee across different echocardiographic frames, we propose a\nnovel segmentation framework named BOTM (Bi-directional Optimal Token Matching)\nthat performs echocardiography segmentation and optimal anatomy transportation\nsimultaneously. Given paired echocardiographic images, BOTM learns to match two\nsets of discrete image tokens by finding optimal correspondences from a novel\nanatomical transportation perspective. We further extend the token matching\ninto a bi-directional cross-transport attention proxy to regulate the preserved\nanatomical consistency within the cardiac cyclic deformation in temporal\ndomain. Extensive experimental results show that BOTM can generate stable and\naccurate segmentation outcomes (e.g. -1.917 HD on CAMUS2H LV, +1.9% Dice on\nTED), and provide a better matching interpretation with anatomical consistency\nguarantee."
+}

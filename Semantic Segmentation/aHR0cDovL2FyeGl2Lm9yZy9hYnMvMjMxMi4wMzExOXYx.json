@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2312.03119v1",
+  "title": "AI-SAM: Automatic and Interactive Segment Anything Model",
+  "authors": "Yimu Pan, Sitao Zhang, Alison D. Gernand, Jeffery A. Goldstein, James Z. Wang",
+  "year": 2023,
+  "abstract": "Semantic segmentation is a core task in computer vision. Existing methods are\ngenerally divided into two categories: automatic and interactive. Interactive\napproaches, exemplified by the Segment Anything Model (SAM), have shown promise\nas pre-trained models. However, current adaptation strategies for these models\ntend to lean towards either automatic or interactive approaches. Interactive\nmethods depend on prompts user input to operate, while automatic ones bypass\nthe interactive promptability entirely. Addressing these limitations, we\nintroduce a novel paradigm and its first model: the Automatic and Interactive\nSegment Anything Model (AI-SAM). In this paradigm, we conduct a comprehensive\nanalysis of prompt quality and introduce the pioneering Automatic and\nInteractive Prompter (AI-Prompter) that automatically generates initial point\nprompts while accepting additional user inputs. Our experimental results\ndemonstrate AI-SAM's effectiveness in the automatic setting, achieving\nstate-of-the-art performance. Significantly, it offers the flexibility to\nincorporate additional user prompts, thereby further enhancing its performance.\nThe project page is available at https://github.com/ymp5078/AI-SAM."
+}

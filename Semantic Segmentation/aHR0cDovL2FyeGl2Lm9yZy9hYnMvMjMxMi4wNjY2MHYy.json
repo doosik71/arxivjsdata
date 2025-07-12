@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2312.06660v2",
+  "title": "EdgeSAM: Prompt-In-the-Loop Distillation for On-Device Deployment of SAM",
+  "authors": "Chong Zhou, Xiangtai Li, Chen Change Loy, Bo Dai",
+  "year": 2023,
+  "abstract": "This paper presents EdgeSAM, an accelerated variant of the Segment Anything\nModel (SAM), optimized for efficient execution on edge devices with minimal\ncompromise in performance. Our approach involves distilling the original\nViT-based SAM image encoder into a purely CNN-based architecture, better suited\nfor edge devices. We carefully benchmark various distillation strategies and\ndemonstrate that taskagnostic encoder distillation fails to capture the full\nknowledge embodied in SAM. To overcome this bottleneck, we include both the\nprompt encoder and mask decoder in the distillation process, with box and point\nprompts in the loop, so that the distilled model can accurately capture the\nintricate dynamics between user input and mask generation. To mitigate dataset\nbias issues stemming from point prompt distillation, we incorporate a\nlightweight module within the encoder. As a result, EdgeSAM achieves a 37-fold\nspeed increase compared to the original SAM, and it also outperforms\nMobileSAM/EfficientSAM, being over 7 times as fast when deployed on edge\ndevices while enhancing the mIoUs on COCO and LVIS by 2.3/1.5 and 3.1/1.6,\nrespectively. It is also the first SAM variant that can run at over 30 FPS on\nan iPhone 14. Code and demo are available at\nhttps://www.mmlab-ntu.com/project/edgesam."
+}

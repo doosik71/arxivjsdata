@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2307.13974v1",
+  "title": "Tracking Anything in High Quality",
+  "authors": "Jiawen Zhu, Zhenyu Chen, Zeqi Hao, Shijie Chang, Lu Zhang, Dong Wang, Huchuan Lu, Bin Luo, Jun-Yan He, Jin-Peng Lan, Hanyuan Chen, Chenyang Li",
+  "year": 2023,
+  "abstract": "Visual object tracking is a fundamental video task in computer vision.\nRecently, the notably increasing power of perception algorithms allows the\nunification of single/multiobject and box/mask-based tracking. Among them, the\nSegment Anything Model (SAM) attracts much attention. In this report, we\npropose HQTrack, a framework for High Quality Tracking anything in videos.\nHQTrack mainly consists of a video multi-object segmenter (VMOS) and a mask\nrefiner (MR). Given the object to be tracked in the initial frame of a video,\nVMOS propagates the object masks to the current frame. The mask results at this\nstage are not accurate enough since VMOS is trained on several closeset video\nobject segmentation (VOS) datasets, which has limited ability to generalize to\ncomplex and corner scenes. To further improve the quality of tracking masks, a\npretrained MR model is employed to refine the tracking results. As a compelling\ntestament to the effectiveness of our paradigm, without employing any tricks\nsuch as test-time data augmentations and model ensemble, HQTrack ranks the 2nd\nplace in the Visual Object Tracking and Segmentation (VOTS2023) challenge. Code\nand models are available at https://github.com/jiawen-zhu/HQTrack."
+}

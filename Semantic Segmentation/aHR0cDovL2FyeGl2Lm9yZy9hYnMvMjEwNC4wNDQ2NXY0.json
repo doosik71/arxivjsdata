@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2104.04465v4",
+  "title": "Bootstrapping Semantic Segmentation with Regional Contrast",
+  "authors": "Shikun Liu, Shuaifeng Zhi, Edward Johns, Andrew J. Davison",
+  "year": 2021,
+  "abstract": "We present ReCo, a contrastive learning framework designed at a regional\nlevel to assist learning in semantic segmentation. ReCo performs\nsemi-supervised or supervised pixel-level contrastive learning on a sparse set\nof hard negative pixels, with minimal additional memory footprint. ReCo is easy\nto implement, being built on top of off-the-shelf segmentation networks, and\nconsistently improves performance in both semi-supervised and supervised\nsemantic segmentation methods, achieving smoother segmentation boundaries and\nfaster convergence. The strongest effect is in semi-supervised learning with\nvery few labels. With ReCo, we achieve high-quality semantic segmentation\nmodels, requiring only 5 examples of each semantic class. Code is available at\nhttps://github.com/lorenmt/reco."
+}

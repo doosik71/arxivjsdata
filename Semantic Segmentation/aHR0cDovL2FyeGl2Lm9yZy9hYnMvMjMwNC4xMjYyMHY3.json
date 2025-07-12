@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2304.12620v7",
+  "title": "Medical SAM Adapter: Adapting Segment Anything Model for Medical Image\n  Segmentation",
+  "authors": "Junde Wu, Wei Ji, Yuanpei Liu, Huazhu Fu, Min Xu, Yanwu Xu, Yueming Jin",
+  "year": 2023,
+  "abstract": "The Segment Anything Model (SAM) has recently gained popularity in the field\nof image segmentation due to its impressive capabilities in various\nsegmentation tasks and its prompt-based interface. However, recent studies and\nindividual experiments have shown that SAM underperforms in medical image\nsegmentation, since the lack of the medical specific knowledge. This raises the\nquestion of how to enhance SAM's segmentation capability for medical images. In\nthis paper, instead of fine-tuning the SAM model, we propose the Medical SAM\nAdapter (Med-SA), which incorporates domain-specific medical knowledge into the\nsegmentation model using a light yet effective adaptation technique. In Med-SA,\nwe propose Space-Depth Transpose (SD-Trans) to adapt 2D SAM to 3D medical\nimages and Hyper-Prompting Adapter (HyP-Adpt) to achieve prompt-conditioned\nadaptation. We conduct comprehensive evaluation experiments on 17 medical image\nsegmentation tasks across various image modalities. Med-SA outperforms several\nstate-of-the-art (SOTA) medical image segmentation methods, while updating only\n2\\% of the parameters. Our code is released at\nhttps://github.com/KidsWithTokens/Medical-SAM-Adapter."
+}

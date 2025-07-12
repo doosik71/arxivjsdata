@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2104.01893v2",
+  "title": "Adaptive Prototype Learning and Allocation for Few-Shot Segmentation",
+  "authors": "Gen Li, Varun Jampani, Laura Sevilla-Lara, Deqing Sun, Jonghyun Kim, Joongkyu Kim",
+  "year": 2021,
+  "abstract": "Prototype learning is extensively used for few-shot segmentation. Typically,\na single prototype is obtained from the support feature by averaging the global\nobject information. However, using one prototype to represent all the\ninformation may lead to ambiguities. In this paper, we propose two novel\nmodules, named superpixel-guided clustering (SGC) and guided prototype\nallocation (GPA), for multiple prototype extraction and allocation.\nSpecifically, SGC is a parameter-free and training-free approach, which\nextracts more representative prototypes by aggregating similar feature vectors,\nwhile GPA is able to select matched prototypes to provide more accurate\nguidance. By integrating the SGC and GPA together, we propose the Adaptive\nSuperpixel-guided Network (ASGNet), which is a lightweight model and adapts to\nobject scale and shape variation. In addition, our network can easily\ngeneralize to k-shot segmentation with substantial improvement and no\nadditional computational cost. In particular, our evaluations on COCO\ndemonstrate that ASGNet surpasses the state-of-the-art method by 5% in 5-shot\nsegmentation."
+}

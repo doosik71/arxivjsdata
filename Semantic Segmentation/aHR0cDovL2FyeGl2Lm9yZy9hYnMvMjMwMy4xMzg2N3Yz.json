@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2303.13867v3",
+  "title": "Few Shot Medical Image Segmentation with Cross Attention Transformer",
+  "authors": "Yi Lin, Yufan Chen, Kwang-Ting Cheng, Hao Chen",
+  "year": 2023,
+  "abstract": "Medical image segmentation has made significant progress in recent years.\nDeep learning-based methods are recognized as data-hungry techniques, requiring\nlarge amounts of data with manual annotations. However, manual annotation is\nexpensive in the field of medical image analysis, which requires\ndomain-specific expertise. To address this challenge, few-shot learning has the\npotential to learn new classes from only a few examples. In this work, we\npropose a novel framework for few-shot medical image segmentation, termed\nCAT-Net, based on cross masked attention Transformer. Our proposed network\nmines the correlations between the support image and query image, limiting them\nto focus only on useful foreground information and boosting the representation\ncapacity of both the support prototype and query features. We further design an\niterative refinement framework that refines the query image segmentation\niteratively and promotes the support feature in turn. We validated the proposed\nmethod on three public datasets: Abd-CT, Abd-MRI, and Card-MRI. Experimental\nresults demonstrate the superior performance of our method compared to\nstate-of-the-art methods and the effectiveness of each component. Code:\nhttps://github.com/hust-linyi/CAT-Net."
+}

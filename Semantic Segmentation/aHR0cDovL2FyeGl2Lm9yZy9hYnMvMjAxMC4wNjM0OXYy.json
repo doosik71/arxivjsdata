@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2010.06349v2",
+  "title": "Collaborative Video Object Segmentation by Multi-Scale\n  Foreground-Background Integration",
+  "authors": "Zongxin Yang, Yunchao Wei, Yi Yang",
+  "year": 2020,
+  "abstract": "This paper investigates the principles of embedding learning to tackle the\nchallenging semi-supervised video object segmentation. Unlike previous\npractices that focus on exploring the embedding learning of foreground object\n(s), we consider background should be equally treated. Thus, we propose a\nCollaborative video object segmentation by Foreground-Background Integration\n(CFBI) approach. CFBI separates the feature embedding into the foreground\nobject region and its corresponding background region, implicitly promoting\nthem to be more contrastive and improving the segmentation results accordingly.\nMoreover, CFBI performs both pixel-level matching processes and instance-level\nattention mechanisms between the reference and the predicted sequence, making\nCFBI robust to various object scales. Based on CFBI, we introduce a multi-scale\nmatching structure and propose an Atrous Matching strategy, resulting in a more\nrobust and efficient framework, CFBI+. We conduct extensive experiments on two\npopular benchmarks, i.e., DAVIS and YouTube-VOS. Without applying any simulated\ndata for pre-training, our CFBI+ achieves the performance (J&F) of 82.9% and\n82.8%, outperforming all the other state-of-the-art methods. Code:\nhttps://github.com/z-x-yang/CFBI."
+}
