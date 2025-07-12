@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2107.14209v1",
+  "title": "A Unified Efficient Pyramid Transformer for Semantic Segmentation",
+  "authors": "Fangrui Zhu, Yi Zhu, Li Zhang, Chongruo Wu, Yanwei Fu, Mu Li",
+  "year": 2021,
+  "abstract": "Semantic segmentation is a challenging problem due to difficulties in\nmodeling context in complex scenes and class confusions along boundaries. Most\nliterature either focuses on context modeling or boundary refinement, which is\nless generalizable in open-world scenarios. In this work, we advocate a unified\nframework(UN-EPT) to segment objects by considering both context information\nand boundary artifacts. We first adapt a sparse sampling strategy to\nincorporate the transformer-based attention mechanism for efficient context\nmodeling. In addition, a separate spatial branch is introduced to capture image\ndetails for boundary refinement. The whole model can be trained in an\nend-to-end manner. We demonstrate promising performance on three popular\nbenchmarks for semantic segmentation with low memory footprint. Code will be\nreleased soon."
+}

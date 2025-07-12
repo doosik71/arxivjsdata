@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1707.05537v1",
+  "title": "Beyond Forward Shortcuts: Fully Convolutional Master-Slave Networks\n  (MSNets) with Backward Skip Connections for Semantic Segmentation",
+  "authors": "Abrar H. Abdulnabi, Stefan Winkler, Gang Wang",
+  "year": 2017,
+  "abstract": "Recent deep CNNs contain forward shortcut connections; i.e. skip connections\nfrom low to high layers. Reusing features from lower layers that have higher\nresolution (location information) benefit higher layers to recover lost details\nand mitigate information degradation. However, during inference the lower\nlayers do not know about high layer features, although they contain contextual\nhigh semantics that benefit low layers to adaptively extract informative\nfeatures for later layers. In this paper, we study the influence of backward\nskip connections which are in the opposite direction to forward shortcuts, i.e.\npaths from high layers to low layers. To achieve this -- which indeed runs\ncounter to the nature of feed-forward networks -- we propose a new fully\nconvolutional model that consists of a pair of networks. A `Slave' network is\ndedicated to provide the backward connections from its top layers to the\n`Master' network's bottom layers. The Master network is used to produce the\nfinal label predictions. In our experiments we validate the proposed FCN model\non ADE20K (ImageNet scene parsing), PASCAL-Context, and PASCAL VOC 2011\ndatasets."
+}

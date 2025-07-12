@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2107.01153v4",
+  "title": "A Survey on Deep Learning Technique for Video Segmentation",
+  "authors": "Tianfei Zhou, Fatih Porikli, David Crandall, Luc Van Gool, Wenguan Wang",
+  "year": 2021,
+  "abstract": "Video segmentation -- partitioning video frames into multiple segments or\nobjects -- plays a critical role in a broad range of practical applications,\nfrom enhancing visual effects in movie, to understanding scenes in autonomous\ndriving, to creating virtual background in video conferencing. Recently, with\nthe renaissance of connectionism in computer vision, there has been an influx\nof deep learning based approaches for video segmentation that have delivered\ncompelling performance. In this survey, we comprehensively review two basic\nlines of research -- generic object segmentation (of unknown categories) in\nvideos, and video semantic segmentation -- by introducing their respective task\nsettings, background concepts, perceived need, development history, and main\nchallenges. We also offer a detailed overview of representative literature on\nboth methods and datasets. We further benchmark the reviewed methods on several\nwell-known datasets. Finally, we point out open issues in this field, and\nsuggest opportunities for further research. We also provide a public website to\ncontinuously track developments in this fast advancing field:\nhttps://github.com/tfzhou/VS-Survey."
+}

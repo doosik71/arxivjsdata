@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1706.09364v2",
+  "title": "Online Adaptation of Convolutional Neural Networks for Video Object\n  Segmentation",
+  "authors": "Paul Voigtlaender, Bastian Leibe",
+  "year": 2017,
+  "abstract": "We tackle the task of semi-supervised video object segmentation, i.e.\nsegmenting the pixels belonging to an object in the video using the ground\ntruth pixel mask for the first frame. We build on the recently introduced\none-shot video object segmentation (OSVOS) approach which uses a pretrained\nnetwork and fine-tunes it on the first frame. While achieving impressive\nperformance, at test time OSVOS uses the fine-tuned network in unchanged form\nand is not able to adapt to large changes in object appearance. To overcome\nthis limitation, we propose Online Adaptive Video Object Segmentation (OnAVOS)\nwhich updates the network online using training examples selected based on the\nconfidence of the network and the spatial configuration. Additionally, we add a\npretraining step based on objectness, which is learned on PASCAL. Our\nexperiments show that both extensions are highly effective and improve the\nstate of the art on DAVIS to an intersection-over-union score of 85.7%."
+}

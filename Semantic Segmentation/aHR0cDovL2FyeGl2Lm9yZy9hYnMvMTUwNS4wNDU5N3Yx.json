@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1505.04597v1",
+  "title": "U-Net: Convolutional Networks for Biomedical Image Segmentation",
+  "authors": "Olaf Ronneberger, Philipp Fischer, Thomas Brox",
+  "year": 2015,
+  "abstract": "There is large consent that successful training of deep networks requires\nmany thousand annotated training samples. In this paper, we present a network\nand training strategy that relies on the strong use of data augmentation to use\nthe available annotated samples more efficiently. The architecture consists of\na contracting path to capture context and a symmetric expanding path that\nenables precise localization. We show that such a network can be trained\nend-to-end from very few images and outperforms the prior best method (a\nsliding-window convolutional network) on the ISBI challenge for segmentation of\nneuronal structures in electron microscopic stacks. Using the same network\ntrained on transmitted light microscopy images (phase contrast and DIC) we won\nthe ISBI cell tracking challenge 2015 in these categories by a large margin.\nMoreover, the network is fast. Segmentation of a 512x512 image takes less than\na second on a recent GPU. The full implementation (based on Caffe) and the\ntrained networks are available at\nhttp://lmb.informatik.uni-freiburg.de/people/ronneber/u-net ."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1811.12833v2",
+  "title": "ADVENT: Adversarial Entropy Minimization for Domain Adaptation in\n  Semantic Segmentation",
+  "authors": "Tuan-Hung Vu, Himalaya Jain, Maxime Bucher, Matthieu Cord, Patrick Pérez",
+  "year": 2018,
+  "abstract": "Semantic segmentation is a key problem for many computer vision tasks. While\napproaches based on convolutional neural networks constantly break new records\non different benchmarks, generalizing well to diverse testing environments\nremains a major challenge. In numerous real world applications, there is indeed\na large gap between data distributions in train and test domains, which results\nin severe performance loss at run-time. In this work, we address the task of\nunsupervised domain adaptation in semantic segmentation with losses based on\nthe entropy of the pixel-wise predictions. To this end, we propose two novel,\ncomplementary methods using (i) entropy loss and (ii) adversarial loss\nrespectively. We demonstrate state-of-the-art performance in semantic\nsegmentation on two challenging \"synthetic-2-real\" set-ups and show that the\napproach can also be used for detection."
+}

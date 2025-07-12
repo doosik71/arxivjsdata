@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1411.4038v2",
+  "title": "Fully Convolutional Networks for Semantic Segmentation",
+  "authors": "Jonathan Long, Evan Shelhamer, Trevor Darrell",
+  "year": 2014,
+  "abstract": "Convolutional networks are powerful visual models that yield hierarchies of\nfeatures. We show that convolutional networks by themselves, trained\nend-to-end, pixels-to-pixels, exceed the state-of-the-art in semantic\nsegmentation. Our key insight is to build \"fully convolutional\" networks that\ntake input of arbitrary size and produce correspondingly-sized output with\nefficient inference and learning. We define and detail the space of fully\nconvolutional networks, explain their application to spatially dense prediction\ntasks, and draw connections to prior models. We adapt contemporary\nclassification networks (AlexNet, the VGG net, and GoogLeNet) into fully\nconvolutional networks and transfer their learned representations by\nfine-tuning to the segmentation task. We then define a novel architecture that\ncombines semantic information from a deep, coarse layer with appearance\ninformation from a shallow, fine layer to produce accurate and detailed\nsegmentations. Our fully convolutional network achieves state-of-the-art\nsegmentation of PASCAL VOC (20% relative improvement to 62.2% mean IU on 2012),\nNYUDv2, and SIFT Flow, while inference takes one third of a second for a\ntypical image."
+}

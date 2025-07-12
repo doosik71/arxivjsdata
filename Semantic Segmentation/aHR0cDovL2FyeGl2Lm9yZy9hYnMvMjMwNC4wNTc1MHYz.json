@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2304.05750v3",
+  "title": "Segment Anything Is Not Always Perfect: An Investigation of SAM on\n  Different Real-world Applications",
+  "authors": "Wei Ji, Jingjing Li, Qi Bi, Tingwei Liu, Wenbo Li, Li Cheng",
+  "year": 2023,
+  "abstract": "Recently, Meta AI Research approaches a general, promptable Segment Anything\nModel (SAM) pre-trained on an unprecedentedly large segmentation dataset\n(SA-1B). Without a doubt, the emergence of SAM will yield significant benefits\nfor a wide array of practical image segmentation applications. In this study,\nwe conduct a series of intriguing investigations into the performance of SAM\nacross various applications, particularly in the fields of natural images,\nagriculture, manufacturing, remote sensing, and healthcare. We analyze and\ndiscuss the benefits and limitations of SAM, while also presenting an outlook\non its future development in segmentation tasks. By doing so, we aim to give a\ncomprehensive understanding of SAM's practical applications. This work is\nexpected to provide insights that facilitate future research activities toward\ngeneric segmentation. Source code is publicly available."
+}

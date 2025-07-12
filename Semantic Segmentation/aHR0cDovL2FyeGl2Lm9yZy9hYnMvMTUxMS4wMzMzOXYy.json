@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1511.03339v2",
+  "title": "Attention to Scale: Scale-aware Semantic Image Segmentation",
+  "authors": "Liang-Chieh Chen, Yi Yang, Jiang Wang, Wei Xu, Alan L. Yuille",
+  "year": 2015,
+  "abstract": "Incorporating multi-scale features in fully convolutional neural networks\n(FCNs) has been a key element to achieving state-of-the-art performance on\nsemantic image segmentation. One common way to extract multi-scale features is\nto feed multiple resized input images to a shared deep network and then merge\nthe resulting features for pixelwise classification. In this work, we propose\nan attention mechanism that learns to softly weight the multi-scale features at\neach pixel location. We adapt a state-of-the-art semantic image segmentation\nmodel, which we jointly train with multi-scale input images and the attention\nmodel. The proposed attention model not only outperforms average- and\nmax-pooling, but allows us to diagnostically visualize the importance of\nfeatures at different positions and scales. Moreover, we show that adding extra\nsupervision to the output at each scale is essential to achieving excellent\nperformance when merging multi-scale features. We demonstrate the effectiveness\nof our model with extensive experiments on three challenging datasets,\nincluding PASCAL-Person-Part, PASCAL VOC 2012 and a subset of MS-COCO 2014."
+}

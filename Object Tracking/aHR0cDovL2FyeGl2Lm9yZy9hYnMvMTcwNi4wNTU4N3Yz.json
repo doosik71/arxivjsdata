@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1706.05587v3",
+  "title": "Rethinking Atrous Convolution for Semantic Image Segmentation",
+  "authors": "Liang-Chieh Chen, George Papandreou, Florian Schroff, Hartwig Adam",
+  "year": 2017,
+  "abstract": "In this work, we revisit atrous convolution, a powerful tool to explicitly\nadjust filter's field-of-view as well as control the resolution of feature\nresponses computed by Deep Convolutional Neural Networks, in the application of\nsemantic image segmentation. To handle the problem of segmenting objects at\nmultiple scales, we design modules which employ atrous convolution in cascade\nor in parallel to capture multi-scale context by adopting multiple atrous\nrates. Furthermore, we propose to augment our previously proposed Atrous\nSpatial Pyramid Pooling module, which probes convolutional features at multiple\nscales, with image-level features encoding global context and further boost\nperformance. We also elaborate on implementation details and share our\nexperience on training our system. The proposed `DeepLabv3' system\nsignificantly improves over our previous DeepLab versions without DenseCRF\npost-processing and attains comparable performance with other state-of-art\nmodels on the PASCAL VOC 2012 semantic image segmentation benchmark."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1505.04366v1",
+  "title": "Learning Deconvolution Network for Semantic Segmentation",
+  "authors": "Hyeonwoo Noh, Seunghoon Hong, Bohyung Han",
+  "year": 2015,
+  "abstract": "We propose a novel semantic segmentation algorithm by learning a\ndeconvolution network. We learn the network on top of the convolutional layers\nadopted from VGG 16-layer net. The deconvolution network is composed of\ndeconvolution and unpooling layers, which identify pixel-wise class labels and\npredict segmentation masks. We apply the trained network to each proposal in an\ninput image, and construct the final semantic segmentation map by combining the\nresults from all proposals in a simple manner. The proposed algorithm mitigates\nthe limitations of the existing methods based on fully convolutional networks\nby integrating deep deconvolution network and proposal-wise prediction; our\nsegmentation method typically identifies detailed structures and handles\nobjects in multiple scales naturally. Our network demonstrates outstanding\nperformance in PASCAL VOC 2012 dataset, and we achieve the best accuracy\n(72.5%) among the methods trained with no external data through ensemble with\nthe fully convolutional network."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1411.5752v2",
+  "title": "Hypercolumns for Object Segmentation and Fine-grained Localization",
+  "authors": "Bharath Hariharan, Pablo Arbeláez, Ross Girshick, Jitendra Malik",
+  "year": 2014,
+  "abstract": "Recognition algorithms based on convolutional networks (CNNs) typically use\nthe output of the last layer as feature representation. However, the\ninformation in this layer may be too coarse to allow precise localization. On\nthe contrary, earlier layers may be precise in localization but will not\ncapture semantics. To get the best of both worlds, we define the hypercolumn at\na pixel as the vector of activations of all CNN units above that pixel. Using\nhypercolumns as pixel descriptors, we show results on three fine-grained\nlocalization tasks: simultaneous detection and segmentation[22], where we\nimprove state-of-the-art from 49.7[22] mean AP^r to 60.0, keypoint\nlocalization, where we get a 3.3 point boost over[20] and part labeling, where\nwe show a 6.6 point gain over a strong baseline."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1412.0774v1",
+  "title": "Feedforward semantic segmentation with zoom-out features",
+  "authors": "Mohammadreza Mostajabi, Payman Yadollahpour, Gregory Shakhnarovich",
+  "year": 2014,
+  "abstract": "We introduce a purely feed-forward architecture for semantic segmentation. We\nmap small image elements (superpixels) to rich feature representations\nextracted from a sequence of nested regions of increasing extent. These regions\nare obtained by \"zooming out\" from the superpixel all the way to scene-level\nresolution. This approach exploits statistical structure in the image and in\nthe label space without setting up explicit structured prediction mechanisms,\nand thus avoids complex and expensive inference. Instead superpixels are\nclassified by a feedforward multilayer network. Our architecture achieves new\nstate of the art performance in semantic segmentation, obtaining 64.4% average\naccuracy on the PASCAL VOC 2012 test set."
+}

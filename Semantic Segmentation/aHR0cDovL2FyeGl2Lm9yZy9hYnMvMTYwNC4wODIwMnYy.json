@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1604.08202v2",
+  "title": "Amodal Instance Segmentation",
+  "authors": "Ke Li, Jitendra Malik",
+  "year": 2016,
+  "abstract": "We consider the problem of amodal instance segmentation, the objective of\nwhich is to predict the region encompassing both visible and occluded parts of\neach object. Thus far, the lack of publicly available amodal segmentation\nannotations has stymied the development of amodal segmentation methods. In this\npaper, we sidestep this issue by relying solely on standard modal instance\nsegmentation annotations to train our model. The result is a new method for\namodal instance segmentation, which represents the first such method to the\nbest of our knowledge. We demonstrate the proposed method's effectiveness both\nqualitatively and quantitatively."
+}

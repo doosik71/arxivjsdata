@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1506.03648v2",
+  "title": "Constrained Convolutional Neural Networks for Weakly Supervised\n  Segmentation",
+  "authors": "Deepak Pathak, Philipp Krähenbühl, Trevor Darrell",
+  "year": 2015,
+  "abstract": "We present an approach to learn a dense pixel-wise labeling from image-level\ntags. Each image-level tag imposes constraints on the output labeling of a\nConvolutional Neural Network (CNN) classifier. We propose Constrained CNN\n(CCNN), a method which uses a novel loss function to optimize for any set of\nlinear constraints on the output space (i.e. predicted label distribution) of a\nCNN. Our loss formulation is easy to optimize and can be incorporated directly\ninto standard stochastic gradient descent optimization. The key idea is to\nphrase the training objective as a biconvex optimization for linear models,\nwhich we then relax to nonlinear deep networks. Extensive experiments\ndemonstrate the generality of our new learning framework. The constrained loss\nyields state-of-the-art results on weakly supervised semantic image\nsegmentation. We further demonstrate that adding slightly more supervision can\ngreatly improve the performance of the learning algorithm."
+}

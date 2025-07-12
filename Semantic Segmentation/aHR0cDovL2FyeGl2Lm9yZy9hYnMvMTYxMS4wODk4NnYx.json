@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1611.08986v1",
+  "title": "Improving Fully Convolution Network for Semantic Segmentation",
+  "authors": "Bing Shuai, Ting Liu, Gang Wang",
+  "year": 2016,
+  "abstract": "Fully Convolution Networks (FCN) have achieved great success in dense\nprediction tasks including semantic segmentation. In this paper, we start from\ndiscussing FCN by understanding its architecture limitations in building a\nstrong segmentation network. Next, we present our Improved Fully Convolution\nNetwork (IFCN). In contrast to FCN, IFCN introduces a context network that\nprogressively expands the receptive fields of feature maps. In addition, dense\nskip connections are added so that the context network can be effectively\noptimized. More importantly, these dense skip connections enable IFCN to fuse\nrich-scale context to make reliable predictions. Empirically, those\narchitecture modifications are proven to be significant to enhance the\nsegmentation performance. Without engaging any contextual post-processing, IFCN\nsignificantly advances the state-of-the-arts on ADE20K (ImageNet scene\nparsing), Pascal Context, Pascal VOC 2012 and SUN-RGBD segmentation datasets."
+}

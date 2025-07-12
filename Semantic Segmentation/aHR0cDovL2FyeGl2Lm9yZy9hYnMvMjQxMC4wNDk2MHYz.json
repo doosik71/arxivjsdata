@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2410.04960v3",
+  "title": "On Efficient Variants of Segment Anything Model: A Survey",
+  "authors": "Xiaorui Sun, Jun Liu, Heng Tao Shen, Xiaofeng Zhu, Ping Hu",
+  "year": 2024,
+  "abstract": "The Segment Anything Model (SAM) is a foundational model for image\nsegmentation tasks, known for its strong generalization across diverse\napplications. However, its impressive performance comes with significant\ncomputational and resource demands, making it challenging to deploy in\nresource-limited environments such as edge devices. To address this, a variety\nof SAM variants have been proposed to enhance efficiency while keeping\naccuracy. This survey provides the first comprehensive review of these\nefficient SAM variants. We begin by exploring the motivations driving this\nresearch. We then present core techniques used in SAM and model acceleration.\nThis is followed by a detailed exploration of SAM acceleration strategies,\ncategorized by approach, and a discussion of several future research\ndirections. Finally, we offer a unified and extensive evaluation of these\nmethods across various hardware, assessing their efficiency and accuracy on\nrepresentative benchmarks, and providing a clear comparison of their overall\nperformance."
+}

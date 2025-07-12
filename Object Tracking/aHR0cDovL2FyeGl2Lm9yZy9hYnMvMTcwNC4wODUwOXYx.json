@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1704.08509v1",
+  "title": "No More Discrimination: Cross City Adaptation of Road Scene Segmenters",
+  "authors": "Yi-Hsin Chen, Wei-Yu Chen, Yu-Ting Chen, Bo-Cheng Tsai, Yu-Chiang Frank Wang, Min Sun",
+  "year": 2017,
+  "abstract": "Despite the recent success of deep-learning based semantic segmentation,\ndeploying a pre-trained road scene segmenter to a city whose images are not\npresented in the training set would not achieve satisfactory performance due to\ndataset biases. Instead of collecting a large number of annotated images of\neach city of interest to train or refine the segmenter, we propose an\nunsupervised learning approach to adapt road scene segmenters across different\ncities. By utilizing Google Street View and its time-machine feature, we can\ncollect unannotated images for each road scene at different times, so that the\nassociated static-object priors can be extracted accordingly. By advancing a\njoint global and class-specific domain adversarial learning framework,\nadaptation of pre-trained segmenters to that city can be achieved without the\nneed of any user annotation or interaction. We show that our method improves\nthe performance of semantic segmentation in multiple cities across continents,\nwhile it performs favorably against state-of-the-art approaches requiring\nannotated training data."
+}

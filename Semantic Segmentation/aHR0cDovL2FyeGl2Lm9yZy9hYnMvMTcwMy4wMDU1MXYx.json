@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1703.00551v1",
+  "title": "Label Refinement Network for Coarse-to-Fine Semantic Segmentation",
+  "authors": "Md Amirul Islam, Shujon Naha, Mrigank Rochan, Neil Bruce, Yang Wang",
+  "year": 2017,
+  "abstract": "We consider the problem of semantic image segmentation using deep\nconvolutional neural networks. We propose a novel network architecture called\nthe label refinement network that predicts segmentation labels in a\ncoarse-to-fine fashion at several resolutions. The segmentation labels at a\ncoarse resolution are used together with convolutional features to obtain finer\nresolution segmentation labels. We define loss functions at several stages in\nthe network to provide supervisions at different stages. Our experimental\nresults on several standard datasets demonstrate that the proposed model\nprovides an effective way of producing pixel-wise dense image labeling."
+}

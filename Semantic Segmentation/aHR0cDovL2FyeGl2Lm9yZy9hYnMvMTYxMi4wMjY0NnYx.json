@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1612.02646v1",
+  "title": "Learning Video Object Segmentation from Static Images",
+  "authors": "Anna Khoreva, Federico Perazzi, Rodrigo Benenson, Bernt Schiele, Alexander Sorkine-Hornung",
+  "year": 2016,
+  "abstract": "Inspired by recent advances of deep learning in instance segmentation and\nobject tracking, we introduce video object segmentation problem as a concept of\nguided instance segmentation. Our model proceeds on a per-frame basis, guided\nby the output of the previous frame towards the object of interest in the next\nframe. We demonstrate that highly accurate object segmentation in videos can be\nenabled by using a convnet trained with static images only. The key ingredient\nof our approach is a combination of offline and online learning strategies,\nwhere the former serves to produce a refined mask from the previous frame\nestimate and the latter allows to capture the appearance of the specific object\ninstance. Our method can handle different types of input annotations: bounding\nboxes and segments, as well as incorporate multiple annotated frames, making\nthe system suitable for diverse applications. We obtain competitive results on\nthree different datasets, independently from the type of input annotation."
+}

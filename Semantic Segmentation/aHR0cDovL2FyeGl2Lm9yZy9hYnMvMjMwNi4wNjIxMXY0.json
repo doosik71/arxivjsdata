@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2306.06211v4",
+  "title": "A Survey on Segment Anything Model (SAM): Vision Foundation Model Meets\n  Prompt Engineering",
+  "authors": "Chaoning Zhang, Joseph Cho, Fachrina Dewi Puspitasari, Sheng Zheng, Chenghao Li, Yu Qiao, Taegoo Kang, Xinru Shan, Chenshuang Zhang, Caiyan Qin, Francois Rameau, Lik-Hang Lee, Sung-Ho Bae, Choong Seon Hong",
+  "year": 2023,
+  "abstract": "The Segment Anything Model (SAM), developed by Meta AI Research, represents a\nsignificant breakthrough in computer vision, offering a robust framework for\nimage and video segmentation. This survey provides a comprehensive exploration\nof the SAM family, including SAM and SAM 2, highlighting their advancements in\ngranularity and contextual understanding. Our study demonstrates SAM's\nversatility across a wide range of applications while identifying areas where\nimprovements are needed, particularly in scenarios requiring high granularity\nand in the absence of explicit prompts. By mapping the evolution and\ncapabilities of SAM models, we offer insights into their strengths and\nlimitations and suggest future research directions, including domain-specific\nadaptations and enhanced memory and propagation mechanisms. We believe that\nthis survey comprehensively covers the breadth of SAM's applications and\nchallenges, setting the stage for ongoing advancements in segmentation\ntechnology."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1706.02135v2",
+  "title": "BiSeg: Simultaneous Instance Segmentation and Semantic Segmentation with\n  Fully Convolutional Networks",
+  "authors": "Viet-Quoc Pham, Satoshi Ito, Tatsuo Kozakaya",
+  "year": 2017,
+  "abstract": "We present a simple and effective framework for simultaneous semantic\nsegmentation and instance segmentation with Fully Convolutional Networks\n(FCNs). The method, called BiSeg, predicts instance segmentation as a posterior\nin Bayesian inference, where semantic segmentation is used as a prior. We\nextend the idea of position-sensitive score maps used in recent methods to a\nfusion of multiple score maps at different scales and partition modes, and\nadopt it as a robust likelihood for instance segmentation inference. As both\nBayesian inference and map fusion are performed per pixel, BiSeg is a fully\nconvolutional end-to-end solution that inherits all the advantages of FCNs. We\ndemonstrate state-of-the-art instance segmentation accuracy on PASCAL VOC."
+}

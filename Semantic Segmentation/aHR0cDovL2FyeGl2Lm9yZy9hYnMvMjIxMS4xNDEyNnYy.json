@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2211.14126v2",
+  "title": "A Strong Baseline for Generalized Few-Shot Semantic Segmentation",
+  "authors": "Sina Hajimiri, Malik Boudiaf, Ismail Ben Ayed, Jose Dolz",
+  "year": 2022,
+  "abstract": "This paper introduces a generalized few-shot segmentation framework with a\nstraightforward training process and an easy-to-optimize inference phase. In\nparticular, we propose a simple yet effective model based on the well-known\nInfoMax principle, where the Mutual Information (MI) between the learned\nfeature representations and their corresponding predictions is maximized. In\naddition, the terms derived from our MI-based formulation are coupled with a\nknowledge distillation term to retain the knowledge on base classes. With a\nsimple training process, our inference model can be applied on top of any\nsegmentation network trained on base classes. The proposed inference yields\nsubstantial improvements on the popular few-shot segmentation benchmarks,\nPASCAL-$5^i$ and COCO-$20^i$. Particularly, for novel classes, the improvement\ngains range from 7% to 26% (PASCAL-$5^i$) and from 3% to 12% (COCO-$20^i$) in\nthe 1-shot and 5-shot scenarios, respectively. Furthermore, we propose a more\nchallenging setting, where performance gaps are further exacerbated. Our code\nis publicly available at https://github.com/sinahmr/DIaM."
+}
