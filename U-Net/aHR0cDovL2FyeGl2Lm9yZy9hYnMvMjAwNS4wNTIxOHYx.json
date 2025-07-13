@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2005.05218v1",
+  "title": "Medical Image Segmentation Using a U-Net type of Architecture",
+  "authors": "Eshal Zahra, Bostan Ali, Wajahat Siddique",
+  "year": 2020,
+  "abstract": "Deep convolutional neural networks have been proven to be very effective in\nimage related analysis and tasks, such as image segmentation, image\nclassification, image generation, etc. Recently many sophisticated CNN based\narchitectures have been proposed for the purpose of image segmentation. Some of\nthese newly designed networks are used for the specific purpose of medical\nimage segmentation, models like V-Net, U-Net and their variants. It has been\nshown that U-Net produces very promising results in the domain of medical image\nsegmentation.However, in this paper, we argue that the architecture of U-Net,\nwhen combined with a supervised training strategy at the bottleneck layer, can\nproduce comparable results with the original U-Net architecture. More\nspecifically, we introduce a fully supervised FC layers based pixel-wise loss\nat the bottleneck of the encoder branch of U-Net. The two layer based FC\nsub-net will train the bottleneck representation to contain more semantic\ninformation, which will be used by the decoder layers to predict the final\nsegmentation map. The FC layer based sub-net is trained by employing the\npixel-wise cross entropy loss, while the U-Net architectures trained by using\nL1 loss."
+}
