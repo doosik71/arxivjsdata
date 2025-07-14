@@ -1,0 +1,7 @@
+{
+  "title": "End-to-end feature fusion siamese network for adaptive visual tracking",
+  "authors": "Dongyan Guo, Jun Wang, Weixuan Zhao, Ying Cui, Zhenhua Wang, Shengyong Chen",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1902.01057v1",
+  "abstract": "According to observations, different visual objects have different salient\nfeatures in different scenarios. Even for the same object, its salient shape\nand appearance features may change greatly from time to time in a long-term\ntracking task. Motivated by them, we proposed an end-to-end feature fusion\nframework based on Siamese network, named FF-Siam, which can effectively fuse\ndifferent features for adaptive visual tracking. The framework consists of four\nlayers. A feature extraction layer is designed to extract the different\nfeatures of the target region and search region. The extracted features are\nthen put into a weight generation layer to obtain the channel weights, which\nindicate the importance of different feature channels. Both features and the\nchannel weights are utilized in a template generation layer to generate a\ndiscriminative template. Finally, the corresponding response maps created by\nthe convolution of the search region features and the template are applied with\na fusion layer to obtain the final response map for locating the target.\nExperimental results demonstrate that the proposed framework achieves\nstate-of-the-art performance on the popular Temple-Color, OTB50 and UAV123\nbenchmarks."
+}

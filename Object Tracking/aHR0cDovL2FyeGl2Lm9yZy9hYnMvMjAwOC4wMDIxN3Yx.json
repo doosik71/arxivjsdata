@@ -1,0 +1,7 @@
+{
+  "title": "Efficient Adversarial Attacks for Visual Object Tracking",
+  "authors": "Siyuan Liang, Xingxing Wei, Siyuan Yao, Xiaochun Cao",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.00217v1",
+  "abstract": "Visual object tracking is an important task that requires the tracker to find\nthe objects quickly and accurately. The existing state-ofthe-art object\ntrackers, i.e., Siamese based trackers, use DNNs to attain high accuracy.\nHowever, the robustness of visual tracking models is seldom explored. In this\npaper, we analyze the weakness of object trackers based on the Siamese network\nand then extend adversarial examples to visual object tracking. We present an\nend-to-end network FAN (Fast Attack Network) that uses a novel drift loss\ncombined with the embedded feature loss to attack the Siamese network based\ntrackers. Under a single GPU, FAN is efficient in the training speed and has a\nstrong attack performance. The FAN can generate an adversarial example at 10ms,\nachieve effective targeted attack (at least 40% drop rate on OTB) and\nuntargeted attack (at least 70% drop rate on OTB)."
+}

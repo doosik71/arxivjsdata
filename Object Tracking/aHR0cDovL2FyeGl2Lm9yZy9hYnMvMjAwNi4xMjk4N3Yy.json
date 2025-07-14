@@ -1,0 +1,7 @@
+{
+  "title": "Exemplar Loss for Siamese Network in Visual Tracking",
+  "authors": "Shuo Chang, YiFan Zhang, Sai Huang, Yuanyuan Yao, Zhiyong Feng",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.12987v2",
+  "abstract": "Visual tracking plays an important role in perception system, which is a\ncrucial part of intelligent transportation. Recently, Siamese network is a hot\ntopic for visual tracking to estimate moving targets' trajectory, due to its\nsuperior accuracy and simple framework. In general, Siamese tracking\nalgorithms, supervised by logistic loss and triplet loss, increase the value of\ninner product between exemplar template and positive sample while reduce the\nvalue of inner product with background sample. However, the distractors from\ndifferent exemplars are not considered by mentioned loss functions, which limit\nthe feature models' discrimination. In this paper, a new exemplar loss\nintegrated with logistic loss is proposed to enhance the feature model's\ndiscrimination by reducing inner products among exemplars. Without the bells\nand whistles, the proposed algorithm outperforms the methods supervised by\nlogistic loss or triplet loss. Numerical results suggest that the newly\ndeveloped algorithm achieves comparable performance in public benchmarks."
+}

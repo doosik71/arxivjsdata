@@ -1,0 +1,7 @@
+{
+  "title": "Dual Convolutional LSTM Network for Referring Image Segmentation",
+  "authors": "Linwei Ye, Zhi Liu, Yang Wang",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2001.11561v1",
+  "abstract": "We consider referring image segmentation. It is a problem at the intersection\nof computer vision and natural language understanding. Given an input image and\na referring expression in the form of a natural language sentence, the goal is\nto segment the object of interest in the image referred by the linguistic\nquery. To this end, we propose a dual convolutional LSTM (ConvLSTM) network to\ntackle this problem. Our model consists of an encoder network and a decoder\nnetwork, where ConvLSTM is used in both encoder and decoder networks to capture\nspatial and sequential information. The encoder network extracts visual and\nlinguistic features for each word in the expression sentence, and adopts an\nattention mechanism to focus on words that are more informative in the\nmultimodal interaction. The decoder network integrates the features generated\nby the encoder network at multiple levels as its input and produces the final\nprecise segmentation mask. Experimental results on four challenging datasets\ndemonstrate that the proposed network achieves superior segmentation\nperformance compared with other state-of-the-art methods."
+}

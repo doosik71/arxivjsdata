@@ -1,0 +1,7 @@
+{
+  "title": "Transformer Meets Tracker: Exploiting Temporal Context for Robust Visual\n  Tracking",
+  "authors": "Ning Wang, Wengang Zhou, Jie Wang, Houqaing Li",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2103.11681v2",
+  "abstract": "In video object tracking, there exist rich temporal contexts among successive\nframes, which have been largely overlooked in existing trackers. In this work,\nwe bridge the individual video frames and explore the temporal contexts across\nthem via a transformer architecture for robust object tracking. Different from\nclassic usage of the transformer in natural language processing tasks, we\nseparate its encoder and decoder into two parallel branches and carefully\ndesign them within the Siamese-like tracking pipelines. The transformer encoder\npromotes the target templates via attention-based feature reinforcement, which\nbenefits the high-quality tracking model generation. The transformer decoder\npropagates the tracking cues from previous templates to the current frame,\nwhich facilitates the object searching process. Our transformer-assisted\ntracking framework is neat and trained in an end-to-end manner. With the\nproposed transformer, a simple Siamese matching approach is able to outperform\nthe current top-performing trackers. By combining our transformer with the\nrecent discriminative tracking pipeline, our method sets several new\nstate-of-the-art records on prevalent tracking benchmarks."
+}

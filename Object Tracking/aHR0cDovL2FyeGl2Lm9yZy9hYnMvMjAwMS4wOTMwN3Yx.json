@@ -1,0 +1,7 @@
+{
+  "title": "IG-TRACK: IOU Guided Siamese Networks for visual object tracking",
+  "authors": "Mohana Murali Dasari, Rama Krishna Sai Subrahmanyam Gorthi",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2001.09307v1",
+  "abstract": "Recently Deep Learning based Siamese Networks with region proposals for\nvisual object tracking becoming more popular. These networks, while testing,\nperform extra computations on output if trained network, to predict the\nbounding box. This however hampering the precision of bounding box. In this\nwork, the authors have proposed a network guided by Intersection Over\nUnion(IOU) while training, to predict precise bounding box. This is achieved by\nadding new loss function in training the network, to maximize IOU of the\npredicted bounding box with ground truth. While testing on VOT2018, GOT-10k\ntracking benchmarks,the proposed approach out-performed the base approach by\nmore than 10% in terms of precision."
+}

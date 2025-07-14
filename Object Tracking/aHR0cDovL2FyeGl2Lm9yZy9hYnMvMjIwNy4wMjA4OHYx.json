@@ -1,0 +1,7 @@
+{
+  "title": "SiamMask: A Framework for Fast Online Object Tracking and Segmentation",
+  "authors": "Weiming Hu, Qiang Wang, Li Zhang, Luca Bertinetto, Philip H. S. Torr",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2207.02088v1",
+  "abstract": "In this paper we introduce SiamMask, a framework to perform both visual\nobject tracking and video object segmentation, in real-time, with the same\nsimple method. We improve the offline training procedure of popular\nfully-convolutional Siamese approaches by augmenting their losses with a binary\nsegmentation task. Once the offline training is completed, SiamMask only\nrequires a single bounding box for initialization and can simultaneously carry\nout visual object tracking and segmentation at high frame-rates. Moreover, we\nshow that it is possible to extend the framework to handle multiple object\ntracking and segmentation by simply re-using the multi-task model in a cascaded\nfashion. Experimental results show that our approach has high processing\nefficiency, at around 55 frames per second. It yields real-time\nstate-of-the-art results on visual-object tracking benchmarks, while at the\nsame time demonstrating competitive performance at a high speed for video\nobject segmentation benchmarks."
+}

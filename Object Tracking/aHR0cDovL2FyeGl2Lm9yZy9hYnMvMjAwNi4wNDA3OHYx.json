@@ -1,0 +1,7 @@
+{
+  "title": "Siamese Keypoint Prediction Network for Visual Object Tracking",
+  "authors": "Qiang Li, Zekui Qin, Wenbo Zhang, Wen Zheng",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.04078v1",
+  "abstract": "Visual object tracking aims to estimate the location of an arbitrary target\nin a video sequence given its initial bounding box. By utilizing offline\nfeature learning, the siamese paradigm has recently been the leading framework\nfor high performance tracking. However, current existing siamese trackers\neither heavily rely on complicated anchor-based detection networks or lack the\nability to resist to distractors. In this paper, we propose the Siamese\nkeypoint prediction network (SiamKPN) to address these challenges. Upon a\nSiamese backbone for feature embedding, SiamKPN benefits from a cascade heatmap\nstrategy for coarse-to-fine prediction modeling. In particular, the strategy is\nimplemented by sequentially shrinking the coverage of the label heatmap along\nthe cascade to apply loose-to-strict intermediate supervisions. During\ninference, we find the predicted heatmaps of successive stages to be gradually\nconcentrated to the target and reduced to the distractors. SiamKPN performs\nwell against state-of-the-art trackers for visual object tracking on four\nbenchmark datasets including OTB-100, VOT2018, LaSOT and GOT-10k, while running\nat real-time speed."
+}

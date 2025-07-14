@@ -1,0 +1,7 @@
+{
+  "title": "Anomaly Detection in Graph Structured Data: A Survey",
+  "authors": "Prabin B Lamichhane, William Eberle",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.06172v1",
+  "abstract": "Real-world graphs are complex to process for performing effective analysis,\nsuch as anomaly detection. However, recently, there have been several research\nefforts addressing the issues surrounding graph-based anomaly detection. In\nthis paper, we discuss a comprehensive overview of anomaly detection techniques\non graph data. We also discuss the various application domains which use those\nanomaly detection techniques. We present a new taxonomy that categorizes the\ndifferent state-of-the-art anomaly detection methods based on assumptions and\ntechniques. Within each category, we discuss the fundamental research ideas\nthat have been done to improve anomaly detection. We further discuss the\nadvantages and disadvantages of current anomaly detection techniques. Finally,\nwe present potential future research directions in anomaly detection on\ngraph-structured data."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2107.02319v2",
+  "title": "Exploring Deep Learning Methods for Real-Time Surgical Instrument\n  Segmentation in Laparoscopy",
+  "authors": "Debesh Jha, Sharib Ali, Nikhil Kumar Tomar, Michael A. Riegler, Dag Johansen, Håvard D. Johansen, Pål Halvorsen",
+  "year": 2021,
+  "abstract": "Minimally invasive surgery is a surgical intervention used to examine the\norgans inside the abdomen and has been widely used due to its effectiveness\nover open surgery. Due to the hardware improvements such as high definition\ncameras, this procedure has significantly improved and new software methods\nhave demonstrated potential for computer-assisted procedures. However, there\nexists challenges and requirements to improve detection and tracking of the\nposition of the instruments during these surgical procedures. To this end, we\nevaluate and compare some popular deep learning methods that can be explored\nfor the automated segmentation of surgical instruments in laparoscopy, an\nimportant step towards tool tracking. Our experimental results exhibit that the\nDual decoder attention network (DDANet) produces a superior result compared to\nother recent deep learning methods. DDANet yields a Dice coefficient of 0.8739\nand mean intersection-over-union of 0.8183 for the Robust Medical Instrument\nSegmentation (ROBUST-MIS) Challenge 2019 dataset, at a real-time speed of\n101.36 frames-per-second that is critical for such procedures."
+}

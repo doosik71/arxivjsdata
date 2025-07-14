@@ -1,0 +1,7 @@
+{
+  "title": "Research and application of Transformer based anomaly detection model: A\n  literature review",
+  "authors": "Mingrui Ma, Lansheng Han, Chunjie Zhou",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.08975v1",
+  "abstract": "Transformer, as one of the most advanced neural network models in Natural\nLanguage Processing (NLP), exhibits diverse applications in the field of\nanomaly detection. To inspire research on Transformer-based anomaly detection,\nthis review offers a fresh perspective on the concept of anomaly detection. We\nexplore the current challenges of anomaly detection and provide detailed\ninsights into the operating principles of Transformer and its variants in\nanomaly detection tasks. Additionally, we delineate various application\nscenarios for Transformer-based anomaly detection models and discuss the\ndatasets and evaluation metrics employed. Furthermore, this review highlights\nthe key challenges in Transformer-based anomaly detection research and conducts\na comprehensive analysis of future research trends in this domain. The review\nincludes an extensive compilation of over 100 core references related to\nTransformer-based anomaly detection. To the best of our knowledge, this is the\nfirst comprehensive review that focuses on the research related to Transformer\nin the context of anomaly detection. We hope that this paper can provide\ndetailed technical information to researchers interested in Transformer-based\nanomaly detection tasks."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Surgical Phase Recognition in Laparoscopic Cholecystectomy",
+  "authors": "Yunfan Li, Vinayak Shenoy, Prateek Prasanna, I. V. Ramakrishnan, Haibin Ling, Himanshu Gupta",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2206.07198v1",
+  "abstract": "Automatic recognition of surgical phases in surgical videos is a fundamental\ntask in surgical workflow analysis. In this report, we propose a\nTransformer-based method that utilizes calibrated confidence scores for a\n2-stage inference pipeline, which dynamically switches between a baseline model\nand a separately trained transition model depending on the calibrated\nconfidence level. Our method outperforms the baseline model on the Cholec80\ndataset, and can be applied to a variety of action segmentation methods."
+}

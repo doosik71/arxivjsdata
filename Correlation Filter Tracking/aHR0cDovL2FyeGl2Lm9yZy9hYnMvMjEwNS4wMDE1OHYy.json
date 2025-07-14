@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2105.00158v2",
+  "title": "Equivalence of Correlation Filter and Convolution Filter in Visual\n  Tracking",
+  "authors": "Shuiwang Li, Qijun Zhao, Ziliang Feng, Li Lu",
+  "year": 2021,
+  "abstract": "(Discriminative) Correlation Filter has been successfully applied to visual\ntracking and has advanced the field significantly in recent years. Correlation\nfilter-based trackers consider visual tracking as a problem of matching the\nfeature template of the object and candidate regions in the detection sample,\nin which correlation filter provides the means to calculate the similarities.\nIn contrast, convolution filter is usually used for blurring, sharpening,\nembossing, edge detection, etc in image processing. On the surface, correlation\nfilter and convolution filter are usually used for different purposes. In this\npaper, however, we proves, for the first time, that correlation filter and\nconvolution filter are equivalent in the sense that their minimum mean-square\nerrors (MMSEs) in visual tracking are equal, under the condition that the\noptimal solutions exist and the ideal filter response is Gaussian and\ncentrosymmetric. This result gives researchers the freedom to choose\ncorrelation or convolution in formulating their trackers. It also suggests that\nthe explanation of the ideal response in terms of similarities is not\nessential."
+}

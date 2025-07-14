@@ -1,0 +1,7 @@
+{
+  "title": "TeCNO: Surgical Phase Recognition with Multi-Stage Temporal\n  Convolutional Networks",
+  "authors": "Tobias Czempiel, Magdalini Paschali, Matthias Keicher, Walter Simson, Hubertus Feussner, Seong Tae Kim, Nassir Navab",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2003.10751v1",
+  "abstract": "Automatic surgical phase recognition is a challenging and crucial task with\nthe potential to improve patient safety and become an integral part of\nintra-operative decision-support systems. In this paper, we propose, for the\nfirst time in workflow analysis, a Multi-Stage Temporal Convolutional Network\n(MS-TCN) that performs hierarchical prediction refinement for surgical phase\nrecognition. Causal, dilated convolutions allow for a large receptive field and\nonline inference with smooth predictions even during ambiguous transitions. Our\nmethod is thoroughly evaluated on two datasets of laparoscopic cholecystectomy\nvideos with and without the use of additional surgical tool information.\nOutperforming various state-of-the-art LSTM approaches, we verify the\nsuitability of the proposed causal MS-TCN for surgical phase recognition."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Games for Artificial Intelligence Research: A Review and Perspectives",
+  "authors": "Chengpeng Hu, Yunlong Zhao, Ziqi Wang, Haocheng Du, Jialin Liu",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.13269v4",
+  "abstract": "Games have been the perfect test-beds for artificial intelligence research\nfor the characteristics that widely exist in real-world scenarios. Learning and\noptimisation, decision making in dynamic and uncertain environments, game\ntheory, planning and scheduling, design and education are common research areas\nshared between games and real-world problems. Numerous open-source games or\ngame-based environments have been implemented for studying artificial\nintelligence. In addition to single- or multi-player, collaborative or\nadversarial games, there has also been growing interest in implementing\nplatforms for creative design in recent years. Those platforms provide ideal\nbenchmarks for exploring and comparing artificial intelligence ideas and\ntechniques. This paper reviews the games and game-based platforms for\nartificial intelligence research, provides guidance on matching particular\ntypes of artificial intelligence with suitable games for testing and matching\nparticular needs in games with suitable artificial intelligence techniques,\ndiscusses the research trend induced by the evolution of those games and\nplatforms, and gives an outlook."
+}

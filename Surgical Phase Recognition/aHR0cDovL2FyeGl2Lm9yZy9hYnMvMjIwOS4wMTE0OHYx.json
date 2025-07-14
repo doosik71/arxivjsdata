@@ -1,0 +1,7 @@
+{
+  "title": "ARST: Auto-Regressive Surgical Transformer for Phase Recognition from\n  Laparoscopic Videos",
+  "authors": "Xiaoyang Zou, Wenyong Liu, Junchen Wang, Rong Tao, Guoyan Zheng",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2209.01148v1",
+  "abstract": "Phase recognition plays an essential role for surgical workflow analysis in\ncomputer assisted intervention. Transformer, originally proposed for sequential\ndata modeling in natural language processing, has been successfully applied to\nsurgical phase recognition. Existing works based on transformer mainly focus on\nmodeling attention dependency, without introducing auto-regression. In this\nwork, an Auto-Regressive Surgical Transformer, referred as ARST, is first\nproposed for on-line surgical phase recognition from laparoscopic videos,\nmodeling the inter-phase correlation implicitly by conditional probability\ndistribution. To reduce inference bias and to enhance phase consistency, we\nfurther develop a consistency constraint inference strategy based on\nauto-regression. We conduct comprehensive validations on a well-known public\ndataset Cholec80. Experimental results show that our method outperforms the\nstate-of-the-art methods both quantitatively and qualitatively, and achieves an\ninference rate of 66 frames per second (fps)."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Dual Cross-Attention for Medical Image Segmentation",
+  "authors": "Gorkem Can Ates, Prasoon Mohan, Emrah Celik",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2303.17696v1",
+  "abstract": "We propose Dual Cross-Attention (DCA), a simple yet effective attention\nmodule that is able to enhance skip-connections in U-Net-based architectures\nfor medical image segmentation. DCA addresses the semantic gap between encoder\nand decoder features by sequentially capturing channel and spatial dependencies\nacross multi-scale encoder features. First, the Channel Cross-Attention (CCA)\nextracts global channel-wise dependencies by utilizing cross-attention across\nchannel tokens of multi-scale encoder features. Then, the Spatial\nCross-Attention (SCA) module performs cross-attention to capture spatial\ndependencies across spatial tokens. Finally, these fine-grained encoder\nfeatures are up-sampled and connected to their corresponding decoder parts to\nform the skip-connection scheme. Our proposed DCA module can be integrated into\nany encoder-decoder architecture with skip-connections such as U-Net and its\nvariants. We test our DCA module by integrating it into six U-Net-based\narchitectures such as U-Net, V-Net, R2Unet, ResUnet++, DoubleUnet and\nMultiResUnet. Our DCA module shows Dice Score improvements up to 2.05% on GlaS,\n2.74% on MoNuSeg, 1.37% on CVC-ClinicDB, 1.12% on Kvasir-Seg and 1.44% on\nSynapse datasets. Our codes are available at:\nhttps://github.com/gorkemcanates/Dual-Cross-Attention"
+}

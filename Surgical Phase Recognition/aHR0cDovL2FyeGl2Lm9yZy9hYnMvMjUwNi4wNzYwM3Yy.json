@@ -1,0 +1,7 @@
+{
+  "title": "SurgBench: A Unified Large-Scale Benchmark for Surgical Video Analysis",
+  "authors": "Jianhui Wei, Zikai Xiao, Danyu Sun, Luqi Gong, Zongxin Yang, Zuozhu Liu, Jian Wu",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.07603v2",
+  "abstract": "Surgical video understanding is pivotal for enabling automated intraoperative\ndecision-making, skill assessment, and postoperative quality improvement.\nHowever, progress in developing surgical video foundation models (FMs) remains\nhindered by the scarcity of large-scale, diverse datasets for pretraining and\nsystematic evaluation. In this paper, we introduce \\textbf{SurgBench}, a\nunified surgical video benchmarking framework comprising a pretraining dataset,\n\\textbf{SurgBench-P}, and an evaluation benchmark, \\textbf{SurgBench-E}.\nSurgBench offers extensive coverage of diverse surgical scenarios, with\nSurgBench-P encompassing 53 million frames across 22 surgical procedures and 11\nspecialties, and SurgBench-E providing robust evaluation across six categories\n(phase classification, camera motion, tool recognition, disease diagnosis,\naction classification, and organ detection) spanning 72 fine-grained tasks.\nExtensive experiments reveal that existing video FMs struggle to generalize\nacross varied surgical video analysis tasks, whereas pretraining on SurgBench-P\nyields substantial performance improvements and superior cross-domain\ngeneralization to unseen procedures and modalities. Our dataset and code are\navailable upon request."
+}

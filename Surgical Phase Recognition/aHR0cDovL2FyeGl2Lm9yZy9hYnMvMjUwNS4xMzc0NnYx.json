@@ -1,0 +1,7 @@
+{
+  "title": "ReSW-VL: Representation Learning for Surgical Workflow Analysis Using\n  Vision-Language Model",
+  "authors": "Satoshi Kondo",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.13746v1",
+  "abstract": "Surgical phase recognition from video is a technology that automatically\nclassifies the progress of a surgical procedure and has a wide range of\npotential applications, including real-time surgical support, optimization of\nmedical resources, training and skill assessment, and safety improvement.\nRecent advances in surgical phase recognition technology have focused primarily\non Transform-based methods, although methods that extract spatial features from\nindividual frames using a CNN and video features from the resulting time series\nof spatial features using time series modeling have shown high performance.\nHowever, there remains a paucity of research on training methods for CNNs\nemployed for feature extraction or representation learning in surgical phase\nrecognition. In this study, we propose a method for representation learning in\nsurgical workflow analysis using a vision-language model (ReSW-VL). Our\nproposed method involves fine-tuning the image encoder of a CLIP (Convolutional\nLanguage Image Model) vision-language model using prompt learning for surgical\nphase recognition. The experimental results on three surgical phase recognition\ndatasets demonstrate the effectiveness of the proposed method in comparison to\nconventional methods."
+}

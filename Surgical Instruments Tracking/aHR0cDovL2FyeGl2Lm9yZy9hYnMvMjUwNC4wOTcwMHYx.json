@@ -1,0 +1,7 @@
+{
+  "title": "ToolTipNet: A Segmentation-Driven Deep Learning Baseline for Surgical\n  Instrument Tip Detection",
+  "authors": "Zijian Wu, Shuojue Yang, Yueming Jin, Septimiu E Salcudean",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2504.09700v1",
+  "abstract": "In robot-assisted laparoscopic radical prostatectomy (RALP), the location of\nthe instrument tip is important to register the ultrasound frame with the\nlaparoscopic camera frame. A long-standing limitation is that the instrument\ntip position obtained from the da Vinci API is inaccurate and requires hand-eye\ncalibration. Thus, directly computing the position of the tool tip in the\ncamera frame using the vision-based method becomes an attractive solution.\nBesides, surgical instrument tip detection is the key component of other tasks,\nlike surgical skill assessment and surgery automation. However, this task is\nchallenging due to the small size of the tool tip and the articulation of the\nsurgical instrument. Surgical instrument segmentation becomes relatively easy\ndue to the emergence of the Segmentation Foundation Model, i.e., Segment\nAnything. Based on this advancement, we explore the deep learning-based\nsurgical instrument tip detection approach that takes the part-level instrument\nsegmentation mask as input. Comparison experiments with a hand-crafted\nimage-processing approach demonstrate the superiority of the proposed method on\nsimulated and real datasets."
+}

@@ -1,7 +1,7 @@
 {
+  "url": "http://arxiv.org/abs/2306.01567v2",
   "title": "Segment Anything in High Quality",
   "authors": "Lei Ke, Mingqiao Ye, Martin Danelljan, Yifan Liu, Yu-Wing Tai, Chi-Keung Tang, Fisher Yu",
   "year": 2023,
-  "url": "http://arxiv.org/abs/2306.01567v2",
   "abstract": "The recent Segment Anything Model (SAM) represents a big leap in scaling up\nsegmentation models, allowing for powerful zero-shot capabilities and flexible\nprompting. Despite being trained with 1.1 billion masks, SAM's mask prediction\nquality falls short in many cases, particularly when dealing with objects that\nhave intricate structures. We propose HQ-SAM, equipping SAM with the ability to\naccurately segment any object, while maintaining SAM's original promptable\ndesign, efficiency, and zero-shot generalizability. Our careful design reuses\nand preserves the pre-trained model weights of SAM, while only introducing\nminimal additional parameters and computation. We design a learnable\nHigh-Quality Output Token, which is injected into SAM's mask decoder and is\nresponsible for predicting the high-quality mask. Instead of only applying it\non mask-decoder features, we first fuse them with early and final ViT features\nfor improved mask details. To train our introduced learnable parameters, we\ncompose a dataset of 44K fine-grained masks from several sources. HQ-SAM is\nonly trained on the introduced detaset of 44k masks, which takes only 4 hours\non 8 GPUs. We show the efficacy of HQ-SAM in a suite of 10 diverse segmentation\ndatasets across different downstream tasks, where 8 out of them are evaluated\nin a zero-shot transfer protocol. Our code and pretrained models are at\nhttps://github.com/SysCV/SAM-HQ."
 }

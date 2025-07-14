@@ -1,0 +1,7 @@
+{
+  "title": "Particle filter re-detection for visual tracking via correlation filters",
+  "authors": "Di Yuan, Xiaohuan Lu, Donghao Li, Yingyi Liang, Xinming Zhang",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1711.10069v3",
+  "abstract": "Most of the correlation filter based tracking algorithms can achieve good\nperformance and maintain fast computational speed. However, in some complicated\ntracking scenes, there is a fatal defect that causes the object to be located\ninaccurately. In order to address this problem, we propose a particle filter\nredetection based tracking approach for accurate object localization. During\nthe tracking process, the kernelized correlation filter (KCF) based tracker\nlocates the object by relying on the maximum response value of the response\nmap; when the response map becomes ambiguous, the KCF tracking result becomes\nunreliable. Our method can provide more candidates by particle resampling to\ndetect the object accordingly. Additionally, we give a new object scale\nevaluation mechanism, which merely considers the differences between the\nmaximum response values in consecutive frames. Extensive experiments on OTB2013\nand OTB2015 datasets demonstrate that the proposed tracker performs favorably\nin relation to the state-of-the-art methods."
+}

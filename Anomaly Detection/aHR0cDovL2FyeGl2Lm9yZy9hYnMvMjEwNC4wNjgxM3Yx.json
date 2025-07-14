@@ -1,0 +1,7 @@
+{
+  "title": "Global Information Guided Video Anomaly Detection",
+  "authors": "Hui Lv, Chunyan Xu, Zhen Cui",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2104.06813v1",
+  "abstract": "Video anomaly detection (VAD) is currently a challenging task due to the\ncomplexity of anomaly as well as the lack of labor-intensive temporal\nannotations. In this paper, we propose an end-to-end Global Information Guided\n(GIG) anomaly detection framework for anomaly detection using the video-level\nannotations (i.e., weak labels). We propose to first mine the global pattern\ncues by leveraging the weak labels in a GIG module. Then we build a spatial\nreasoning module to measure the relevance between vectors in spatial domain\nwith the global cue vectors, and select the most related feature vectors for\ntemporal anomaly detection. The experimental results on the CityScene challenge\ndemonstrate the effectiveness of our model."
+}

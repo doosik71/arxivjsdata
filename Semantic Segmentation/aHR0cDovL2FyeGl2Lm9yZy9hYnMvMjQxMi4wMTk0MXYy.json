@@ -1,0 +1,7 @@
+{
+  "title": "Global Average Feature Augmentation for Robust Semantic Segmentation\n  with Transformers",
+  "authors": "Alberto Gonzalo Rodriguez Salgado, Maying Shen, Philipp Harzig, Peter Mayer, Jose M. Alvarez",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.01941v2",
+  "abstract": "Robustness to out-of-distribution data is crucial for deploying modern neural\nnetworks. Recently, Vision Transformers, such as SegFormer for semantic\nsegmentation, have shown impressive robustness to visual corruptions like blur\nor noise affecting the acquisition device. In this paper, we propose Channel\nWise Feature Augmentation (CWFA), a simple yet efficient feature augmentation\ntechnique to improve the robustness of Vision Transformers for semantic\nsegmentation. CWFA applies a globally estimated perturbation per encoder with\nminimal compute overhead during training. Extensive evaluations on Cityscapes\nand ADE20K, with three state-of-the-art Vision Transformer architectures :\nSegFormer, Swin Transformer, and Twins demonstrate that CWFA-enhanced models\nsignificantly improve robustness without affecting clean data performance. For\ninstance, on Cityscapes, a CWFA-augmented SegFormer-B1 model yields up to 27.7%\nmIoU robustness gain on impulse noise compared to the non-augmented\nSegFormer-B1. Furthermore, CWFA-augmented SegFormer-B5 achieves a new\nstate-of-the-art 84.3% retention rate, a 0.7% improvement over the recently\npublished FAN+STL."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Metrics Matter in Surgical Phase Recognition",
+  "authors": "Isabel Funke, Dominik Rivoir, Stefanie Speidel",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.13961v1",
+  "abstract": "Surgical phase recognition is a basic component for different context-aware\napplications in computer- and robot-assisted surgery. In recent years, several\nmethods for automatic surgical phase recognition have been proposed, showing\npromising results. However, a meaningful comparison of these methods is\ndifficult due to differences in the evaluation process and incomplete reporting\nof evaluation details. In particular, the details of metric computation can\nvary widely between different studies. To raise awareness of potential\ninconsistencies, this paper summarizes common deviations in the evaluation of\nphase recognition algorithms on the Cholec80 benchmark. In addition, a\nstructured overview of previously reported evaluation results on Cholec80 is\nprovided, taking known differences in evaluation protocols into account.\nGreater attention to evaluation details could help achieve more consistent and\ncomparable results on the surgical phase recognition task, leading to more\nreliable conclusions about advancements in the field and, finally, translation\ninto clinical practice."
+}

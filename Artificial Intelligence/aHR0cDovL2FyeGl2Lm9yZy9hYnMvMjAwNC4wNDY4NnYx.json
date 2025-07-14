@@ -1,0 +1,7 @@
+{
+  "title": "Machine Learning in Artificial Intelligence: Towards a Common\n  Understanding",
+  "authors": "Niklas Kühl, Marc Goutier, Robin Hirt, Gerhard Satzger",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2004.04686v1",
+  "abstract": "The application of \"machine learning\" and \"artificial intelligence\" has\nbecome popular within the last decade. Both terms are frequently used in\nscience and media, sometimes interchangeably, sometimes with different\nmeanings. In this work, we aim to clarify the relationship between these terms\nand, in particular, to specify the contribution of machine learning to\nartificial intelligence. We review relevant literature and present a conceptual\nframework which clarifies the role of machine learning to build (artificial)\nintelligent agents. Hence, we seek to provide more terminological clarity and a\nstarting point for (interdisciplinary) discussions and future research."
+}

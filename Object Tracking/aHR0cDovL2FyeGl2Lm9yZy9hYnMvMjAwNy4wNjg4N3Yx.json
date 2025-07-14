@@ -1,0 +1,7 @@
+{
+  "title": "Visual Tracking by TridentAlign and Context Embedding",
+  "authors": "Janghoon Choi, Junseok Kwon, Kyoung Mu Lee",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.06887v1",
+  "abstract": "Recent advances in Siamese network-based visual tracking methods have enabled\nhigh performance on numerous tracking benchmarks. However, extensive scale\nvariations of the target object and distractor objects with similar categories\nhave consistently posed challenges in visual tracking. To address these\npersisting issues, we propose novel TridentAlign and context embedding modules\nfor Siamese network-based visual tracking methods. The TridentAlign module\nfacilitates adaptability to extensive scale variations and large deformations\nof the target, where it pools the feature representation of the target object\ninto multiple spatial dimensions to form a feature pyramid, which is then\nutilized in the region proposal stage. Meanwhile, context embedding module aims\nto discriminate the target from distractor objects by accounting for the global\ncontext information among objects. The context embedding module extracts and\nembeds the global context information of a given frame into a local feature\nrepresentation such that the information can be utilized in the final\nclassification stage. Experimental results obtained on multiple benchmark\ndatasets show that the performance of the proposed tracker is comparable to\nthat of state-of-the-art trackers, while the proposed tracker runs at real-time\nspeed."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "OperA: Attention-Regularized Transformers for Surgical Phase Recognition",
+  "authors": "Tobias Czempiel, Magdalini Paschali, Daniel Ostler, Seong Tae Kim, Benjamin Busam, Nassir Navab",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2103.03873v1",
+  "abstract": "In this paper we introduce OperA, a transformer-based model that accurately\npredicts surgical phases from long video sequences. A novel attention\nregularization loss encourages the model to focus on high-quality frames during\ntraining. Moreover, the attention weights are utilized to identify\ncharacteristic high attention frames for each surgical phase, which could\nfurther be used for surgery summarization. OperA is thoroughly evaluated on two\ndatasets of laparoscopic cholecystectomy videos, outperforming various\nstate-of-the-art temporal refinement approaches."
+}

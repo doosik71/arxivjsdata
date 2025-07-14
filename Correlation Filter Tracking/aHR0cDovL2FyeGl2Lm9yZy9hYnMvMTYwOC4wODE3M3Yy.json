@@ -1,0 +1,7 @@
+{
+  "title": "Real-Time Visual Tracking: Promoting the Robustness of Correlation\n  Filter Learning",
+  "authors": "Yao Sui, Ziming Zhang, Guanghui Wang, Yafei Tang, Li Zhang",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1608.08173v2",
+  "abstract": "Correlation filtering based tracking model has received lots of attention and\nachieved great success in real-time tracking, however, the lost function in\ncurrent correlation filtering paradigm could not reliably response to the\nappearance changes caused by occlusion and illumination variations. This study\nintends to promote the robustness of the correlation filter learning. By\nexploiting the anisotropy of the filter response, three sparsity related loss\nfunctions are proposed to alleviate the overfitting issue of previous methods\nand improve the overall tracking performance. As a result, three real-time\ntrackers are implemented. Extensive experiments in various challenging\nsituations demonstrate that the robustness of the learned correlation filter\nhas been greatly improved via the designed loss functions. In addition, the\nstudy reveals, from an experimental perspective, how different loss functions\nessentially influence the tracking performance. An important conclusion is that\nthe sensitivity of the peak values of the filter in successive frames is\nconsistent with the tracking performance. This is a useful reference criterion\nin designing a robust correlation filter for visual tracking."
+}

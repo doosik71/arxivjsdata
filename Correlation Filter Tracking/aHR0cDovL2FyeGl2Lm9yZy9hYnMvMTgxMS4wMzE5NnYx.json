@@ -1,0 +1,7 @@
+{
+  "title": "Correlation Filter Selection for Visual Tracking Using Reinforcement\n  Learning",
+  "authors": "Yanchun Xie, Jimin Xiao, Kaizhu Huang, Jeyarajan Thiyagalingam, Yao Zhao",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1811.03196v1",
+  "abstract": "Correlation filter has been proven to be an effective tool for a number of\napproaches in visual tracking, particularly for seeking a good balance between\ntracking accuracy and speed. However, correlation filter based models are\nsusceptible to wrong updates stemming from inaccurate tracking results. To\ndate, little effort has been devoted towards handling the correlation filter\nupdate problem. In this paper, we propose a novel approach to address the\ncorrelation filter update problem. In our approach, we update and maintain\nmultiple correlation filter models in parallel, and we use deep reinforcement\nlearning for the selection of an optimal correlation filter model among them.\nTo facilitate the decision process in an efficient manner, we propose a\ndecision-net to deal target appearance modeling, which is trained through\nhundreds of challenging videos using proximal policy optimization and a\nlightweight learning network. An exhaustive evaluation of the proposed approach\non the OTB100 and OTB2013 benchmarks show that the approach is effective enough\nto achieve the average success rate of 62.3% and the average precision score of\n81.2%, both exceeding the performance of traditional correlation filter based\ntrackers."
+}

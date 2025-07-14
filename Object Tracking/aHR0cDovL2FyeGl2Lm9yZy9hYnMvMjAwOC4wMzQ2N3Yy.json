@@ -1,0 +1,7 @@
+{
+  "title": "RPT: Learning Point Set Representation for Siamese Visual Tracking",
+  "authors": "Ziang Ma, Linyuan Wang, Haitao Zhang, Wei Lu, Jun Yin",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.03467v2",
+  "abstract": "While remarkable progress has been made in robust visual tracking, accurate\ntarget state estimation still remains a highly challenging problem. In this\npaper, we argue that this issue is closely related to the prevalent bounding\nbox representation, which provides only a coarse spatial extent of object. Thus\nan effcient visual tracking framework is proposed to accurately estimate the\ntarget state with a finer representation as a set of representative points. The\npoint set is trained to indicate the semantically and geometrically significant\npositions of target region, enabling more fine-grained localization and\nmodeling of object appearance. We further propose a multi-level aggregation\nstrategy to obtain detailed structure information by fusing hierarchical\nconvolution layers. Extensive experiments on several challenging benchmarks\nincluding OTB2015, VOT2018, VOT2019 and GOT-10k demonstrate that our method\nachieves new state-of-the-art performance while running at over 20 FPS."
+}

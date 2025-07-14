@@ -1,0 +1,7 @@
+{
+  "title": "SiamCAR: Siamese Fully Convolutional Classification and Regression for\n  Visual Tracking",
+  "authors": "Dongyan Guo, Jun Wang, Ying Cui, Zhenhua Wang, Shengyong Chen",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1911.07241v2",
+  "abstract": "By decomposing the visual tracking task into two subproblems as\nclassification for pixel category and regression for object bounding box at\nthis pixel, we propose a novel fully convolutional Siamese network to solve\nvisual tracking end-to-end in a per-pixel manner. The proposed framework\nSiamCAR consists of two simple subnetworks: one Siamese subnetwork for feature\nextraction and one classification-regression subnetwork for bounding box\nprediction. Our framework takes ResNet-50 as backbone. Different from\nstate-of-the-art trackers like Siamese-RPN, SiamRPN++ and SPM, which are based\non region proposal, the proposed framework is both proposal and anchor free.\nConsequently, we are able to avoid the tricky hyper-parameter tuning of anchors\nand reduce human intervention. The proposed framework is simple, neat and\neffective. Extensive experiments and comparisons with state-of-the-art trackers\nare conducted on many challenging benchmarks like GOT-10K, LaSOT, UAV123 and\nOTB-50. Without bells and whistles, our SiamCAR achieves the leading\nperformance with a considerable real-time speed."
+}

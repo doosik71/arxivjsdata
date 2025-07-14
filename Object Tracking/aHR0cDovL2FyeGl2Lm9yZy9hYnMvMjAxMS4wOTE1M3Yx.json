@@ -1,0 +1,7 @@
+{
+  "title": "RSINet: Rotation-Scale Invariant Network for Online Visual Tracking",
+  "authors": "Yang Fang, Geun-Sik Jo, Chang-Hee Lee",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2011.09153v1",
+  "abstract": "Most Siamese network-based trackers perform the tracking process without\nmodel update, and cannot learn targetspecific variation adaptively. Moreover,\nSiamese-based trackers infer the new state of tracked objects by generating\naxis-aligned bounding boxes, which contain extra background noise, and are\nunable to accurately estimate the rotation and scale transformation of moving\nobjects, thus potentially reducing tracking performance. In this paper, we\npropose a novel Rotation-Scale Invariant Network (RSINet) to address the above\nproblem. Our RSINet tracker consists of a target-distractor discrimination\nbranch and a rotation-scale estimation branch, the rotation and scale knowledge\ncan be explicitly learned by a multi-task learning method in an end-to-end\nmanner. In addtion, the tracking model is adaptively optimized and updated\nunder spatio-temporal energy control, which ensures model stability and\nreliability, as well as high tracking efficiency. Comprehensive experiments on\nOTB-100, VOT2018, and LaSOT benchmarks demonstrate that our proposed RSINet\ntracker yields new state-of-the-art performance compared with recent trackers,\nwhile running at real-time speed about 45 FPS."
+}

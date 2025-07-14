@@ -1,0 +1,7 @@
+{
+  "title": "Real-time Anomaly Detection for Multivariate Data Streams",
+  "authors": "Kenneth Odoh",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2209.12398v1",
+  "abstract": "We present a real-time multivariate anomaly detection algorithm for data\nstreams based on the Probabilistic Exponentially Weighted Moving Average\n(PEWMA). Our formulation is resilient to (abrupt transient, abrupt\ndistributional, and gradual distributional) shifts in the data. The novel\nanomaly detection routines utilize an incremental online algorithm to handle\nstreams. Furthermore, our proposed anomaly detection algorithm works in an\nunsupervised manner eliminating the need for labeled examples. Our algorithm\nperforms well and is resilient in the face of concept drifts."
+}

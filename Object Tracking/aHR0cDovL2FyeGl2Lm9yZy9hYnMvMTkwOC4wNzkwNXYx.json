@@ -1,0 +1,7 @@
+{
+  "title": "DomainSiam: Domain-Aware Siamese Network for Visual Object Tracking",
+  "authors": "Mohamed H. Abdelpakey, Mohamed S. Shehata",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1908.07905v1",
+  "abstract": "Visual object tracking is a fundamental task in the field of computer vision.\nRecently, Siamese trackers have achieved state-of-the-art performance on recent\nbenchmarks. However, Siamese trackers do not fully utilize semantic and\nobjectness information from pre-trained networks that have been trained on the\nimage classification task. Furthermore, the pre-trained Siamese architecture is\nsparsely activated by the category label which leads to unnecessary\ncalculations and overfitting. In this paper, we propose to learn a\nDomain-Aware, that is fully utilizing semantic and objectness information while\nproducing a class-agnostic using a ridge regression network. Moreover, to\nreduce the sparsity problem, we solve the ridge regression problem with a\ndifferentiable weighted-dynamic loss function. Our tracker, dubbed DomainSiam,\nimproves the feature learning in the training phase and generalization\ncapability to other domains. Extensive experiments are performed on five\ntracking benchmarks including OTB2013 and OTB2015 for a validation set; as well\nas the VOT2017, VOT2018, LaSOT, TrackingNet, and GOT10k for a testing set.\nDomainSiam achieves state-of-the-art performance on these benchmarks while\nrunning at 53 FPS."
+}

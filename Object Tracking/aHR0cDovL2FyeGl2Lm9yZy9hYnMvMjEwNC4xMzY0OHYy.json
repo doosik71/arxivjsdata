@@ -1,0 +1,7 @@
+{
+  "title": "Two stages for visual object tracking",
+  "authors": "Fei Chen, Fuhan Zhang, Xiaodong Wang",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2104.13648v2",
+  "abstract": "Siamese-based trackers have achived promising performance on visual object\ntracking tasks. Most existing Siamese-based trackers contain two separate\nbranches for tracking, including classification branch and bounding box\nregression branch. In addition, image segmentation provides an alternative way\nto obetain the more accurate target region. In this paper, we propose a novel\ntracker with two-stages: detection and segmentation. The detection stage is\ncapable of locating the target by Siamese networks. Then more accurate tracking\nresults are obtained by segmentation module given the coarse state estimation\nin the first stage. We conduct experiments on four benchmarks. Our approach\nachieves state-of-the-art results, with the EAO of 52.6$\\%$ on VOT2016,\n51.3$\\%$ on VOT2018, and 39.0$\\%$ on VOT2019 datasets, respectively."
+}

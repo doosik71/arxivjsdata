@@ -1,0 +1,7 @@
+{
+  "title": "SUPR-GAN: SUrgical PRediction GAN for Event Anticipation in Laparoscopic\n  and Robotic Surgery",
+  "authors": "Yutong Ban, Guy Rosman, Jennifer A. Eckhoff, Thomas M. Ward, Daniel A. Hashimoto, Taisei Kondo, Hidekazu Iwaki, Ozanan R. Meireles, Daniela Rus",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2105.04642v2",
+  "abstract": "Comprehension of surgical workflow is the foundation upon which artificial\nintelligence (AI) and machine learning (ML) holds the potential to assist\nintraoperative decision-making and risk mitigation. In this work, we move\nbeyond mere identification of past surgical phases, into the prediction of\nfuture surgical steps and specification of the transitions between them. We use\na novel Generative Adversarial Network (GAN) formulation to sample future\nsurgical phases trajectories conditioned on past video frames from laparoscopic\ncholecystectomy (LC) videos and compare it to state-of-the-art approaches for\nsurgical video analysis and alternative prediction methods. We demonstrate the\nGAN formulation's effectiveness through inferring and predicting the progress\nof LC videos. We quantify the horizon-accuracy trade-off and explored average\nperformance, as well as the performance on the more challenging, and clinically\nrelevant transitions between phases. Furthermore, we conduct a survey, asking\n16 surgeons of different specialties and educational levels to qualitatively\nevaluate predicted surgery phases."
+}

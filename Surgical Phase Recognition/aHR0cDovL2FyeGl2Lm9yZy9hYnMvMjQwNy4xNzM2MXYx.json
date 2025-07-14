@@ -1,0 +1,7 @@
+{
+  "title": "MuST: Multi-Scale Transformers for Surgical Phase Recognition",
+  "authors": "Alejandra Pérez, Santiago Rodríguez, Nicolás Ayobi, Nicolás Aparicio, Eugénie Dessevres, Pablo Arbeláez",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2407.17361v1",
+  "abstract": "Phase recognition in surgical videos is crucial for enhancing computer-aided\nsurgical systems as it enables automated understanding of sequential procedural\nstages. Existing methods often rely on fixed temporal windows for video\nanalysis to identify dynamic surgical phases. Thus, they struggle to\nsimultaneously capture short-, mid-, and long-term information necessary to\nfully understand complex surgical procedures. To address these issues, we\npropose Multi-Scale Transformers for Surgical Phase Recognition (MuST), a novel\nTransformer-based approach that combines a Multi-Term Frame encoder with a\nTemporal Consistency Module to capture information across multiple temporal\nscales of a surgical video. Our Multi-Term Frame Encoder computes\ninterdependencies across a hierarchy of temporal scales by sampling sequences\nat increasing strides around the frame of interest. Furthermore, we employ a\nlong-term Transformer encoder over the frame embeddings to further enhance\nlong-term reasoning. MuST achieves higher performance than previous\nstate-of-the-art methods on three different public benchmarks."
+}

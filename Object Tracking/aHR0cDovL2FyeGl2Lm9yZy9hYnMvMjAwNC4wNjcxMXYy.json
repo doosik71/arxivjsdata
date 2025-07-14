@@ -1,0 +1,7 @@
+{
+  "title": "Deformable Siamese Attention Networks for Visual Object Tracking",
+  "authors": "Yuechen Yu, Yilei Xiong, Weilin Huang, Matthew R. Scott",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2004.06711v2",
+  "abstract": "Siamese-based trackers have achieved excellent performance on visual object\ntracking. However, the target template is not updated online, and the features\nof the target template and search image are computed independently in a Siamese\narchitecture. In this paper, we propose Deformable Siamese Attention Networks,\nreferred to as SiamAttn, by introducing a new Siamese attention mechanism that\ncomputes deformable self-attention and cross-attention. The self attention\nlearns strong context information via spatial attention, and selectively\nemphasizes interdependent channel-wise features with channel attention. The\ncross-attention is capable of aggregating rich contextual inter-dependencies\nbetween the target template and the search image, providing an implicit manner\nto adaptively update the target template. In addition, we design a region\nrefinement module that computes depth-wise cross correlations between the\nattentional features for more accurate tracking. We conduct experiments on six\nbenchmarks, where our method achieves new state of-the-art results,\noutperforming the strong baseline, SiamRPN++ [24], by 0.464->0.537 and\n0.415->0.470 EAO on VOT 2016 and 2018. Our code is available at:\nhttps://github.com/msight-tech/research-siamattn."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Towards Intelligent Speech Assistants in Operating Rooms: A Multimodal\n  Model for Surgical Workflow Analysis",
+  "authors": "Kubilay Can Demir, Belen Lojo Rodriguez, Tobias Weise, Andreas Maier, Seung Hee Yang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.14576v1",
+  "abstract": "To develop intelligent speech assistants and integrate them seamlessly with\nintra-operative decision-support frameworks, accurate and efficient surgical\nphase recognition is a prerequisite. In this study, we propose a multimodal\nframework based on Gated Multimodal Units (GMU) and Multi-Stage Temporal\nConvolutional Networks (MS-TCN) to recognize surgical phases of port-catheter\nplacement operations. Our method merges speech and image models and uses them\nseparately in different surgical phases. Based on the evaluation of 28\noperations, we report a frame-wise accuracy of 92.65 $\\pm$ 3.52% and an\nF1-score of 92.30 $\\pm$ 3.82%. Our results show approximately 10% improvement\nin both metrics over previous work and validate the effectiveness of\nintegrating multimodal data for the surgical phase recognition task. We further\ninvestigate the contribution of individual data channels by comparing\nmono-modal models with multimodal models."
+}

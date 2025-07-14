@@ -1,0 +1,7 @@
+{
+  "title": "Optimisation of a Siamese Neural Network for Real-Time Energy Efficient\n  Object Tracking",
+  "authors": "Dominika Przewlocka, Mateusz Wasala, Hubert Szolc, Krzysztof Blachut, Tomasz Kryjak",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.00491v1",
+  "abstract": "In this paper the research on optimisation of visual object tracking using a\nSiamese neural network for embedded vision systems is presented. It was assumed\nthat the solution shall operate in real-time, preferably for a high resolution\nvideo stream, with the lowest possible energy consumption. To meet these\nrequirements, techniques such as the reduction of computational precision and\npruning were considered. Brevitas, a tool dedicated for optimisation and\nquantisation of neural networks for FPGA implementation, was used. A number of\ntraining scenarios were tested with varying levels of optimisations - from\ninteger uniform quantisation with 16 bits to ternary and binary networks. Next,\nthe influence of these optimisations on the tracking performance was evaluated.\nIt was possible to reduce the size of the convolutional filters up to 10 times\nin relation to the original network. The obtained results indicate that using\nquantisation can significantly reduce the memory and computational complexity\nof the proposed network while still enabling precise tracking, thus allow to\nuse it in embedded vision systems. Moreover, quantisation of weights positively\naffects the network training by decreasing overfitting."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Learning Rotation for Kernel Correlation Filter",
+  "authors": "Abdullah Hamdi, Bernard Ghanem",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1708.03698v1",
+  "abstract": "Kernel Correlation Filters have shown a very promising scheme for visual\ntracking in terms of speed and accuracy on several benchmarks. However it\nsuffers from problems that affect its performance like occlusion, rotation and\nscale change. This paper tries to tackle the problem of rotation by\nreformulating the optimization problem for learning the correlation filter.\nThis modification (RKCF) includes learning rotation filter that utilizes\ncirculant structure of HOG feature to guesstimate rotation from one frame to\nanother and enhance the detection of KCF. Hence it gains boost in overall\naccuracy in many of OBT50 detest videos with minimal additional computation."
+}

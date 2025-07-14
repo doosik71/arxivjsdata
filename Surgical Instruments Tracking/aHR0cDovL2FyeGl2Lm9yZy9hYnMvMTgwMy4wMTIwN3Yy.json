@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1803.01207v2",
+  "title": "Automatic Instrument Segmentation in Robot-Assisted Surgery Using Deep\n  Learning",
+  "authors": "Alexey Shvets, Alexander Rakhlin, Alexandr A. Kalinin, Vladimir Iglovikov",
+  "year": 2018,
+  "abstract": "Semantic segmentation of robotic instruments is an important problem for the\nrobot-assisted surgery. One of the main challenges is to correctly detect an\ninstrument's position for the tracking and pose estimation in the vicinity of\nsurgical scenes. Accurate pixel-wise instrument segmentation is needed to\naddress this challenge. In this paper we describe our winning solution for\nMICCAI 2017 Endoscopic Vision SubChallenge: Robotic Instrument Segmentation.\nOur approach demonstrates an improvement over the state-of-the-art results\nusing several novel deep neural network architectures. It addressed the binary\nsegmentation problem, where every pixel in an image is labeled as an instrument\nor background from the surgery video feed. In addition, we solve a multi-class\nsegmentation problem, where we distinguish different instruments or different\nparts of an instrument from the background. In this setting, our approach\noutperforms other methods in every task subcategory for automatic instrument\nsegmentation thereby providing state-of-the-art solution for this problem. The\nsource code for our solution is made publicly available at\nhttps://github.com/ternaus/robot-surgery-segmentation"
+}

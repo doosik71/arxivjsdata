@@ -1,0 +1,7 @@
+{
+  "title": "Trans-SVNet: Accurate Phase Recognition from Surgical Videos via Hybrid\n  Embedding Aggregation Transformer",
+  "authors": "Xiaojie Gao, Yueming Jin, Yonghao Long, Qi Dou, Pheng-Ann Heng",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2103.09712v2",
+  "abstract": "Real-time surgical phase recognition is a fundamental task in modern\noperating rooms. Previous works tackle this task relying on architectures\narranged in spatio-temporal order, however, the supportive benefits of\nintermediate spatial features are not considered. In this paper, we introduce,\nfor the first time in surgical workflow analysis, Transformer to reconsider the\nignored complementary effects of spatial and temporal features for accurate\nsurgical phase recognition. Our hybrid embedding aggregation Transformer fuses\ncleverly designed spatial and temporal embeddings by allowing for active\nqueries based on spatial information from temporal embedding sequences. More\nimportantly, our framework processes the hybrid embeddings in parallel to\nachieve a high inference speed. Our method is thoroughly validated on two large\nsurgical video datasets, i.e., Cholec80 and M2CAI16 Challenge datasets, and\noutperforms the state-of-the-art approaches at a processing speed of 91 fps."
+}

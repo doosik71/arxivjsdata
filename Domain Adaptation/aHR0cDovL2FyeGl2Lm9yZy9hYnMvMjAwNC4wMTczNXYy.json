@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2004.01735v2",
+  "title": "Unsupervised Domain Adaptation with Progressive Domain Augmentation",
+  "authors": "Kevin Hua, Yuhong Guo",
+  "year": 2020,
+  "abstract": "Domain adaptation aims to exploit a label-rich source domain for learning\nclassifiers in a different label-scarce target domain. It is particularly\nchallenging when there are significant divergences between the two domains. In\nthe paper, we propose a novel unsupervised domain adaptation method based on\nprogressive domain augmentation. The proposed method generates virtual\nintermediate domains via domain interpolation, progressively augments the\nsource domain and bridges the source-target domain divergence by conducting\nmultiple subspace alignment on the Grassmann manifold. We conduct experiments\non multiple domain adaptation tasks and the results shows the proposed method\nachieves the state-of-the-art performance."
+}

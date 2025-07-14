@@ -1,0 +1,7 @@
+{
+  "title": "Self-supervised Object Tracking with Cycle-consistent Siamese Networks",
+  "authors": "Weihao Yuan, Michael Yu Wang, Qifeng Chen",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.00637v1",
+  "abstract": "Self-supervised learning for visual object tracking possesses valuable\nadvantages compared to supervised learning, such as the non-necessity of\nlaborious human annotations and online training. In this work, we exploit an\nend-to-end Siamese network in a cycle-consistent self-supervised framework for\nobject tracking. Self-supervision can be performed by taking advantage of the\ncycle consistency in the forward and backward tracking. To better leverage the\nend-to-end learning of deep networks, we propose to integrate a Siamese region\nproposal and mask regression network in our tracking framework so that a fast\nand more accurate tracker can be learned without the annotation of each frame.\nThe experiments on the VOT dataset for visual object tracking and on the DAVIS\ndataset for video object segmentation propagation show that our method\noutperforms prior approaches on both tasks."
+}

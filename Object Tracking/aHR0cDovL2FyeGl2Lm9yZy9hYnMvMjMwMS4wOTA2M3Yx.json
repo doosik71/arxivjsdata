@@ -1,0 +1,7 @@
+{
+  "title": "DASTSiam: Spatio-Temporal Fusion and Discriminative Augmentation for\n  Improved Siamese Tracking",
+  "authors": "Yucheng Huang, Eksan Firkat, Ziwang Xiao, Jihong Zhu, Askar Hamdulla",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2301.09063v1",
+  "abstract": "Tracking tasks based on deep neural networks have greatly improved with the\nemergence of Siamese trackers. However, the appearance of targets often changes\nduring tracking, which can reduce the robustness of the tracker when facing\nchallenges such as aspect ratio change, occlusion, and scale variation. In\naddition, cluttered backgrounds can lead to multiple high response points in\nthe response map, leading to incorrect target positioning. In this paper, we\nintroduce two transformer-based modules to improve Siamese tracking called\nDASTSiam: the spatio-temporal (ST) fusion module and the Discriminative\nAugmentation (DA) module. The ST module uses cross-attention based accumulation\nof historical cues to improve robustness against object appearance changes,\nwhile the DA module associates semantic information between the template and\nsearch region to improve target discrimination. Moreover, Modifying the label\nassignment of anchors also improves the reliability of the object location. Our\nmodules can be used with all Siamese trackers and show improved performance on\nseveral public datasets through comparative and ablation experiments."
+}

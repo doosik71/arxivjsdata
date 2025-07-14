@@ -1,0 +1,7 @@
+{
+  "title": "Self-Supervised Representation Learning for Visual Anomaly Detection",
+  "authors": "Rabia Ali, Muhammad Umar Karim Khan, Chong Min Kyung",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.09654v1",
+  "abstract": "Self-supervised learning allows for better utilization of unlabelled data.\nThe feature representation obtained by self-supervision can be used in\ndownstream tasks such as classification, object detection, segmentation, and\nanomaly detection. While classification, object detection, and segmentation\nhave been investigated with self-supervised learning, anomaly detection needs\nmore attention. We consider the problem of anomaly detection in images and\nvideos, and present a new visual anomaly detection technique for videos.\nNumerous seminal and state-of-the-art self-supervised methods are evaluated for\nanomaly detection on a variety of image datasets. The best performing\nimage-based self-supervised representation learning method is then used for\nvideo anomaly detection to see the importance of spatial features in visual\nanomaly detection in videos. We also propose a simple self-supervision approach\nfor learning temporal coherence across video frames without the use of any\noptical flow information. At its core, our method identifies the frame indices\nof a jumbled video sequence allowing it to learn the spatiotemporal features of\nthe video. This intuitive approach shows superior performance of visual anomaly\ndetection compared to numerous methods for images and videos on UCF101 and\nILSVRC2015 video datasets."
+}

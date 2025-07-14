@@ -1,0 +1,7 @@
+{
+  "title": "A Definition of Artificial Intelligence",
+  "authors": "Dimiter Dobrev",
+  "year": 2012,
+  "url": "http://arxiv.org/abs/1210.1568v1",
+  "abstract": "In this paper we offer a formal definition of Artificial Intelligence and\nthis directly gives us an algorithm for construction of this object. Really,\nthis algorithm is useless due to the combinatory explosion.\n  The main innovation in our definition is that it does not include the\nknowledge as a part of the intelligence. So according to our definition a newly\nborn baby also is an Intellect. Here we differs with Turing's definition which\nsuggests that an Intellect is a person with knowledge gained through the years."
+}

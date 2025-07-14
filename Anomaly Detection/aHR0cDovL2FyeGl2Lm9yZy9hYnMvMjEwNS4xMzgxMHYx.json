@@ -1,0 +1,7 @@
+{
+  "title": "A Survey on Anomaly Detection for Technical Systems using LSTM Networks",
+  "authors": "Benjamin Lindemann, Benjamin Maschler, Nada Sahlab, Michael Weyrich",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2105.13810v1",
+  "abstract": "Anomalies represent deviations from the intended system operation and can\nlead to decreased efficiency as well as partial or complete system failure. As\nthe causes of anomalies are often unknown due to complex system dynamics,\nefficient anomaly detection is necessary. Conventional detection approaches\nrely on statistical and time-invariant methods that fail to address the complex\nand dynamic nature of anomalies. With advances in artificial intelligence and\nincreasing importance for anomaly detection and prevention in various domains,\nartificial neural network approaches enable the detection of more complex\nanomaly types while considering temporal and contextual characteristics. In\nthis article, a survey on state-of-the-art anomaly detection using deep neural\nand especially long short-term memory networks is conducted. The investigated\napproaches are evaluated based on the application scenario, data and anomaly\ntypes as well as further metrics. To highlight the potential of upcoming\nanomaly detection techniques, graph-based and transfer learning approaches are\nalso included in the survey, enabling the analysis of heterogeneous data as\nwell as compensating for its shortage and improving the handling of dynamic\nprocesses."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Accurate Anchor Free Tracking",
+  "authors": "Shengyun Peng, Yunxuan Yu, Kun Wang, Lei He",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.07560v1",
+  "abstract": "Visual object tracking is an important application of computer vision.\nRecently, Siamese based trackers have achieved good accuracy. However, most of\nSiamese based trackers are not efficient, as they exhaustively search potential\nobject locations to define anchors and then classify each anchor (i.e., a\nbounding box). This paper develops the first Anchor Free Siamese Network\n(AFSN). Specifically, a target object is defined by a bounding box center,\ntracking offset, and object size. All three are regressed by Siamese network\nwith no additional classification or regional proposal, and performed once for\neach frame. We also tune the stride and receptive field for Siamese network,\nand further perform ablation experiments to quantitatively illustrate the\neffectiveness of our AFSN. We evaluate AFSN using five most commonly used\nbenchmarks and compare to the best anchor-based trackers with source codes\navailable for each benchmark. AFSN is 3-425 times faster than these best anchor\nbased trackers. AFSN is also 5.97% to 12.4% more accurate in terms of all\nmetrics for benchmark sets OTB2015, VOT2015, VOT2016, VOT2018 and TrackingNet,\nexcept that SiamRPN++ is 4% better than AFSN in terms of Expected Average\nOverlap (EAO) on VOT2018 (but SiamRPN++ is 3.9 times slower)."
+}

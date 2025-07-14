@@ -1,0 +1,7 @@
+{
+  "title": "Learning Cascaded Siamese Networks for High Performance Visual Tracking",
+  "authors": "Peng Gao, Yipeng Ma, Ruyue Yuan, Liyi Xiao, Fei Wang",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1905.02857v1",
+  "abstract": "Visual tracking is one of the most challenging computer vision problems. In\norder to achieve high performance visual tracking in various negative\nscenarios, a novel cascaded Siamese network is proposed and developed based on\ntwo different deep learning networks: a matching subnetwork and a\nclassification subnetwork. The matching subnetwork is a fully convolutional\nSiamese network. According to the similarity score between the exemplar image\nand the candidate image, it aims to search possible object positions and crop\nscaled candidate patches. The classification subnetwork is designed to further\nevaluate the cropped candidate patches and determine the optimal tracking\nresults based on the classification score. The matching subnetwork is trained\noffline and fixed online, while the classification subnetwork performs\nstochastic gradient descent online to learn more target-specific information.\nTo improve the tracking performance further, an effective classification\nsubnetwork update method based on both similarity and classification scores is\nutilized for updating the classification subnetwork. Extensive experimental\nresults demonstrate that our proposed approach achieves state-of-the-art\nperformance in recent benchmarks."
+}

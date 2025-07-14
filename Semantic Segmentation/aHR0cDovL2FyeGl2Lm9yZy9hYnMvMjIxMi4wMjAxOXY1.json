@@ -1,0 +1,7 @@
+{
+  "title": "SASFormer: Transformers for Sparsely Annotated Semantic Segmentation",
+  "authors": "Hui Su, Yue Ye, Wei Hua, Lechao Cheng, Mingli Song",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2212.02019v5",
+  "abstract": "Semantic segmentation based on sparse annotation has advanced in recent\nyears. It labels only part of each object in the image, leaving the remainder\nunlabeled. Most of the existing approaches are time-consuming and often\nnecessitate a multi-stage training strategy. In this work, we propose a simple\nyet effective sparse annotated semantic segmentation framework based on\nsegformer, dubbed SASFormer, that achieves remarkable performance.\nSpecifically, the framework first generates hierarchical patch attention maps,\nwhich are then multiplied by the network predictions to produce correlated\nregions separated by valid labels. Besides, we also introduce the affinity loss\nto ensure consistency between the features of correlation results and network\npredictions. Extensive experiments showcase that our proposed approach is\nsuperior to existing methods and achieves cutting-edge performance. The source\ncode is available at \\url{https://github.com/su-hui-zz/SASFormer}."
+}
