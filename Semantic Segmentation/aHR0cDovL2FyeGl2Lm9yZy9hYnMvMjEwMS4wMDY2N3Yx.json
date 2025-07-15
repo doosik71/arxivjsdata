@@ -1,0 +1,7 @@
+{
+  "title": "Weakly Supervised Multi-Object Tracking and Segmentation",
+  "authors": "Idoia Ruiz, Lorenzo Porzi, Samuel Rota Bulò, Peter Kontschieder, Joan Serrat",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2101.00667v1",
+  "abstract": "We introduce the problem of weakly supervised Multi-Object Tracking and\nSegmentation, i.e. joint weakly supervised instance segmentation and\nmulti-object tracking, in which we do not provide any kind of mask annotation.\nTo address it, we design a novel synergistic training strategy by taking\nadvantage of multi-task learning, i.e. classification and tracking tasks guide\nthe training of the unsupervised instance segmentation. For that purpose, we\nextract weak foreground localization information, provided by Grad-CAM\nheatmaps, to generate a partial ground truth to learn from. Additionally, RGB\nimage level information is employed to refine the mask prediction at the edges\nof the objects. We evaluate our method on KITTI MOTS, the most representative\nbenchmark for this task, reducing the performance gap on the MOTSP metric\nbetween the fully supervised and weakly supervised approach to just 12% and\n12.7% for cars and pedestrians, respectively."
+}

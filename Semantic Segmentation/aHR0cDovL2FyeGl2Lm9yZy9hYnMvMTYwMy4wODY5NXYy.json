@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1603.08695v2",
+  "title": "Learning to Refine Object Segments",
+  "authors": "Pedro O. Pinheiro, Tsung-Yi Lin, Ronan Collobert, Piotr Dollàr",
+  "year": 2016,
+  "abstract": "Object segmentation requires both object-level information and low-level\npixel data. This presents a challenge for feedforward networks: lower layers in\nconvolutional nets capture rich spatial information, while upper layers encode\nobject-level knowledge but are invariant to factors such as pose and\nappearance. In this work we propose to augment feedforward nets for object\nsegmentation with a novel top-down refinement approach. The resulting\nbottom-up/top-down architecture is capable of efficiently generating\nhigh-fidelity object masks. Similarly to skip connections, our approach\nleverages features at all layers of the net. Unlike skip connections, our\napproach does not attempt to output independent predictions at each layer.\nInstead, we first output a coarse `mask encoding' in a feedforward pass, then\nrefine this mask encoding in a top-down pass utilizing features at successively\nlower layers. The approach is simple, fast, and effective. Building on the\nrecent DeepMask network for generating object proposals, we show accuracy\nimprovements of 10-20% in average recall for various setups. Additionally, by\noptimizing the overall network architecture, our approach, which we call\nSharpMask, is 50% faster than the original DeepMask network (under .8s per\nimage)."
+}

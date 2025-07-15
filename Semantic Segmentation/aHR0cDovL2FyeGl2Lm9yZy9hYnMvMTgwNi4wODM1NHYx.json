@@ -1,0 +1,7 @@
+{
+  "title": "Learning Instance Segmentation by Interaction",
+  "authors": "Deepak Pathak, Yide Shentu, Dian Chen, Pulkit Agrawal, Trevor Darrell, Sergey Levine, Jitendra Malik",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1806.08354v1",
+  "abstract": "We present an approach for building an active agent that learns to segment\nits visual observations into individual objects by interacting with its\nenvironment in a completely self-supervised manner. The agent uses its current\nsegmentation model to infer pixels that constitute objects and refines the\nsegmentation model by interacting with these pixels. The model learned from\nover 50K interactions generalizes to novel objects and backgrounds. To deal\nwith noisy training signal for segmenting objects obtained by self-supervised\ninteractions, we propose robust set loss. A dataset of robot's interactions\nalong-with a few human labeled examples is provided as a benchmark for future\nresearch. We test the utility of the learned segmentation model by providing\nresults on a downstream vision-based control task of rearranging multiple\nobjects into target configurations from visual inputs alone. Videos, code, and\nrobotic interaction dataset are available at\nhttps://pathak22.github.io/seg-by-interaction/"
+}

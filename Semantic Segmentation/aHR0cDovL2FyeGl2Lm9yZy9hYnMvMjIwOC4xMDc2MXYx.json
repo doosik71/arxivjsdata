@@ -1,0 +1,7 @@
+{
+  "title": "CRCNet: Few-shot Segmentation with Cross-Reference and Region-Global\n  Conditional Networks",
+  "authors": "Weide Liu, Chi Zhang, Guosheng Lin, Fayao Liu",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2208.10761v1",
+  "abstract": "Few-shot segmentation aims to learn a segmentation model that can be\ngeneralized to novel classes with only a few training images. In this paper, we\npropose a Cross-Reference and Local-Global Conditional Networks (CRCNet) for\nfew-shot segmentation. Unlike previous works that only predict the query\nimage's mask, our proposed model concurrently makes predictions for both the\nsupport image and the query image. Our network can better find the co-occurrent\nobjects in the two images with a cross-reference mechanism, thus helping the\nfew-shot segmentation task. To further improve feature comparison, we develop a\nlocal-global conditional module to capture both global and local relations. We\nalso develop a mask refinement module to refine the prediction of the\nforeground regions recurrently. Experiments on the PASCAL VOC 2012, MS COCO,\nand FSS-1000 datasets show that our network achieves new state-of-the-art\nperformance."
+}

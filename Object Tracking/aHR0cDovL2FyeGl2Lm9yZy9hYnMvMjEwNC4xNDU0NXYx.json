@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2104.14545v1",
+  "title": "LightTrack: Finding Lightweight Neural Networks for Object Tracking via\n  One-Shot Architecture Search",
+  "authors": "Bin Yan, Houwen Peng, Kan Wu, Dong Wang, Jianlong Fu, Huchuan Lu",
+  "year": 2021,
+  "abstract": "Object tracking has achieved significant progress over the past few years.\nHowever, state-of-the-art trackers become increasingly heavy and expensive,\nwhich limits their deployments in resource-constrained applications. In this\nwork, we present LightTrack, which uses neural architecture search (NAS) to\ndesign more lightweight and efficient object trackers. Comprehensive\nexperiments show that our LightTrack is effective. It can find trackers that\nachieve superior performance compared to handcrafted SOTA trackers, such as\nSiamRPN++ and Ocean, while using much fewer model Flops and parameters.\nMoreover, when deployed on resource-constrained mobile chipsets, the discovered\ntrackers run much faster. For example, on Snapdragon 845 Adreno GPU, LightTrack\nruns $12\\times$ faster than Ocean, while using $13\\times$ fewer parameters and\n$38\\times$ fewer Flops. Such improvements might narrow the gap between academic\nmodels and industrial deployments in object tracking task. LightTrack is\nreleased at https://github.com/researchmm/LightTrack."
+}

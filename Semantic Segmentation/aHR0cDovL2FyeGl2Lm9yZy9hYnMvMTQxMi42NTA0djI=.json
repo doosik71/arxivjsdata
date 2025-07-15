@@ -1,0 +1,7 @@
+{
+  "title": "Learning to Segment Moving Objects in Videos",
+  "authors": "Katerina Fragkiadaki, Pablo Arbelaez, Panna Felsen, Jitendra Malik",
+  "year": 2014,
+  "url": "http://arxiv.org/abs/1412.6504v2",
+  "abstract": "We segment moving objects in videos by ranking spatio-temporal segment\nproposals according to \"moving objectness\": how likely they are to contain a\nmoving object. In each video frame, we compute segment proposals using multiple\nfigure-ground segmentations on per frame motion boundaries. We rank them with a\nMoving Objectness Detector trained on image and motion fields to detect moving\nobjects and discard over/under segmentations or background parts of the scene.\nWe extend the top ranked segments into spatio-temporal tubes using random\nwalkers on motion affinities of dense point trajectories. Our final tube\nranking consistently outperforms previous segmentation methods in the two\nlargest video segmentation benchmarks currently available, for any number of\nproposals. Further, our per frame moving object proposals increase the\ndetection rate up to 7\\% over previous state-of-the-art static proposal\nmethods."
+}

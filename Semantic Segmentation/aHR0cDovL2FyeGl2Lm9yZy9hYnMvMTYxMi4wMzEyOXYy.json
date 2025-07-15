@@ -1,0 +1,7 @@
+{
+  "title": "Boundary-aware Instance Segmentation",
+  "authors": "Zeeshan Hayder, Xuming He, Mathieu Salzmann",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1612.03129v2",
+  "abstract": "We address the problem of instance-level semantic segmentation, which aims at\njointly detecting, segmenting and classifying every individual object in an\nimage. In this context, existing methods typically propose candidate objects,\nusually as bounding boxes, and directly predict a binary mask within each such\nproposal. As a consequence, they cannot recover from errors in the object\ncandidate generation process, such as too small or shifted boxes.\n  In this paper, we introduce a novel object segment representation based on\nthe distance transform of the object masks. We then design an object mask\nnetwork (OMN) with a new residual-deconvolution architecture that infers such a\nrepresentation and decodes it into the final binary object mask. This allows us\nto predict masks that go beyond the scope of the bounding boxes and are thus\nrobust to inaccurate object candidates. We integrate our OMN into a Multitask\nNetwork Cascade framework, and learn the resulting boundary-aware instance\nsegmentation (BAIS) network in an end-to-end manner. Our experiments on the\nPASCAL VOC 2012 and the Cityscapes datasets demonstrate the benefits of our\napproach, which outperforms the state-of-the-art in both object proposal\ngeneration and instance segmentation."
+}
