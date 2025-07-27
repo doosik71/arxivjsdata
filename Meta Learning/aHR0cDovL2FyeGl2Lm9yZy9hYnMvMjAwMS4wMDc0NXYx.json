@@ -1,0 +1,7 @@
+{
+  "title": "Automated Relational Meta-learning",
+  "authors": "Huaxiu Yao, Xian Wu, Zhiqiang Tao, Yaliang Li, Bolin Ding, Ruirui Li, Zhenhui Li",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2001.00745v1",
+  "abstract": "In order to efficiently learn with small amount of data on new tasks,\nmeta-learning transfers knowledge learned from previous tasks to the new ones.\nHowever, a critical challenge in meta-learning is the task heterogeneity which\ncannot be well handled by traditional globally shared meta-learning methods. In\naddition, current task-specific meta-learning methods may either suffer from\nhand-crafted structure design or lack the capability to capture complex\nrelations between tasks. In this paper, motivated by the way of knowledge\norganization in knowledge bases, we propose an automated relational\nmeta-learning (ARML) framework that automatically extracts the cross-task\nrelations and constructs the meta-knowledge graph. When a new task arrives, it\ncan quickly find the most relevant structure and tailor the learned structure\nknowledge to the meta-learner. As a result, the proposed framework not only\naddresses the challenge of task heterogeneity by a learned meta-knowledge\ngraph, but also increases the model interpretability. We conduct extensive\nexperiments on 2D toy regression and few-shot image classification and the\nresults demonstrate the superiority of ARML over state-of-the-art baselines."
+}

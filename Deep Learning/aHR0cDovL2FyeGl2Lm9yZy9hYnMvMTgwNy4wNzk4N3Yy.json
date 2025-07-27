@@ -1,0 +1,7 @@
+{
+  "title": "Deep Learning",
+  "authors": "Nicholas G. Polson, Vadim O. Sokolov",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1807.07987v2",
+  "abstract": "Deep learning (DL) is a high dimensional data reduction technique for\nconstructing high-dimensional predictors in input-output models. DL is a form\nof machine learning that uses hierarchical layers of latent features. In this\narticle, we review the state-of-the-art of deep learning from a modeling and\nalgorithmic perspective. We provide a list of successful areas of applications\nin Artificial Intelligence (AI), Image Processing, Robotics and Automation.\nDeep learning is predictive in its nature rather then inferential and can be\nviewed as a black-box methodology for high-dimensional function estimation."
+}

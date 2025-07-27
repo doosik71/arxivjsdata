@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1712.04741v1",
+  "title": "Mathematics of Deep Learning",
+  "authors": "Rene Vidal, Joan Bruna, Raja Giryes, Stefano Soatto",
+  "year": 2017,
+  "abstract": "Recently there has been a dramatic increase in the performance of recognition\nsystems due to the introduction of deep architectures for representation\nlearning and classification. However, the mathematical reasons for this success\nremain elusive. This tutorial will review recent work that aims to provide a\nmathematical justification for several properties of deep networks, such as\nglobal optimality, geometric stability, and invariance of the learned\nrepresentations."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Low-Rank Knowledge Decomposition for Medical Foundation Models",
+  "authors": "Yuhang Zhou, Haolin Li, Siyuan Du, Jiangchao Yao, Ya Zhang, Yanfeng Wang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.17184v1",
+  "abstract": "The popularity of large-scale pre-training has promoted the development of\nmedical foundation models. However, some studies have shown that although\nfoundation models exhibit strong general feature extraction capabilities, their\nperformance on specific tasks is still inferior to task-specific methods. In\nthis paper, we explore a new perspective called ``Knowledge Decomposition'' to\nimprove the performance on specific medical tasks, which deconstruct the\nfoundation model into multiple lightweight expert models, each dedicated to a\nparticular task, with the goal of improving specialization while concurrently\nmitigating resource expenditure. To accomplish the above objective, we design a\nnovel framework named Low-Rank Knowledge Decomposition (LoRKD), which\nexplicitly separates graidents by incorporating low-rank expert modules and the\nefficient knowledge separation convolution. Extensive experimental results\ndemonstrate that the decomposed models perform well in terms of performance and\ntransferability, even surpassing the original foundation models."
+}

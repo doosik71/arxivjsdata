@@ -1,0 +1,7 @@
+{
+  "title": "Machine learning and deep learning",
+  "authors": "Christian Janiesch, Patrick Zschech, Kai Heinrich",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2104.05314v2",
+  "abstract": "Today, intelligent systems that offer artificial intelligence capabilities\noften rely on machine learning. Machine learning describes the capacity of\nsystems to learn from problem-specific training data to automate the process of\nanalytical model building and solve associated tasks. Deep learning is a\nmachine learning concept based on artificial neural networks. For many\napplications, deep learning models outperform shallow machine learning models\nand traditional data analysis approaches. In this article, we summarize the\nfundamentals of machine learning and deep learning to generate a broader\nunderstanding of the methodical underpinning of current intelligent systems. In\nparticular, we provide a conceptual distinction between relevant terms and\nconcepts, explain the process of automated analytical model building through\nmachine learning and deep learning, and discuss the challenges that arise when\nimplementing such intelligent systems in the field of electronic markets and\nnetworked business. These naturally go beyond technological aspects and\nhighlight issues in human-machine interaction and artificial intelligence\nservitization."
+}

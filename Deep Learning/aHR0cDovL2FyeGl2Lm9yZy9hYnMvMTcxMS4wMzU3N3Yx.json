@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1711.03577v1",
+  "title": "What Really is Deep Learning Doing?",
+  "authors": "Chuyu Xiong",
+  "year": 2017,
+  "abstract": "Deep learning has achieved a great success in many areas, from computer\nvision to natural language processing, to game playing, and much more. Yet,\nwhat deep learning is really doing is still an open question. There are a lot\nof works in this direction. For example, [5] tried to explain deep learning by\ngroup renormalization, and [6] tried to explain deep learning from the view of\nfunctional approximation. In order to address this very crucial question, here\nwe see deep learning from perspective of mechanical learning and learning\nmachine (see [1], [2]). From this particular angle, we can see deep learning\nmuch better and answer with confidence: What deep learning is really doing? why\nit works well, how it works, and how much data is necessary for learning. We\nalso will discuss advantages and disadvantages of deep learning at the end of\nthis work."
+}

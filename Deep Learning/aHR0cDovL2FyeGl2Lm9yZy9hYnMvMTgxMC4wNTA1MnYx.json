@@ -1,0 +1,7 @@
+{
+  "title": "Deep Learning for Image Denoising: A Survey",
+  "authors": "Chunwei Tian, Yong Xu, Lunke Fei, Ke Yan",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1810.05052v1",
+  "abstract": "Since the proposal of big data analysis and Graphic Processing Unit (GPU),\nthe deep learning technology has received a great deal of attention and has\nbeen widely applied in the field of imaging processing. In this paper, we have\nan aim to completely review and summarize the deep learning technologies for\nimage denoising proposed in recent years. Morever, we systematically analyze\nthe conventional machine learning methods for image denoising. Finally, we\npoint out some research directions for the deep learning technologies in image\ndenoising."
+}

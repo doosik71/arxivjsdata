@@ -1,0 +1,7 @@
+{
+  "title": "Implicit Regularization in Deep Learning",
+  "authors": "Behnam Neyshabur",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1709.01953v2",
+  "abstract": "In an attempt to better understand generalization in deep learning, we study\nseveral possible explanations. We show that implicit regularization induced by\nthe optimization method is playing a key role in generalization and success of\ndeep learning models. Motivated by this view, we study how different complexity\nmeasures can ensure generalization and explain how optimization algorithms can\nimplicitly regularize complexity measures. We empirically investigate the\nability of these measures to explain different observed phenomena in deep\nlearning. We further study the invariances in neural networks, suggest\ncomplexity measures and optimization algorithms that have similar invariances\nto those in neural networks and evaluate them on a number of learning tasks."
+}

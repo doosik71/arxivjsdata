@@ -1,0 +1,7 @@
+{
+  "title": "Low-Rank Adaptation for Foundation Models: A Comprehensive Review",
+  "authors": "Menglin Yang, Jialin Chen, Yifei Zhang, Jiahong Liu, Jiasheng Zhang, Qiyao Ma, Harshit Verma, Qianru Zhang, Min Zhou, Irwin King, Rex Ying",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2501.00365v1",
+  "abstract": "The rapid advancement of foundation modelslarge-scale neural networks trained\non diverse, extensive datasetshas revolutionized artificial intelligence,\nenabling unprecedented advancements across domains such as natural language\nprocessing, computer vision, and scientific discovery. However, the substantial\nparameter count of these models, often reaching billions or trillions, poses\nsignificant challenges in adapting them to specific downstream tasks. Low-Rank\nAdaptation (LoRA) has emerged as a highly promising approach for mitigating\nthese challenges, offering a parameter-efficient mechanism to fine-tune\nfoundation models with minimal computational overhead. This survey provides the\nfirst comprehensive review of LoRA techniques beyond large Language Models to\ngeneral foundation models, including recent techniques foundations, emerging\nfrontiers and applications of low-rank adaptation across multiple domains.\nFinally, this survey discusses key challenges and future research directions in\ntheoretical understanding, scalability, and robustness. This survey serves as a\nvaluable resource for researchers and practitioners working with efficient\nfoundation model adaptation."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Ensemble deep learning: A review",
+  "authors": "M. A. Ganaie, Minghui Hu, A. K. Malik, M. Tanveer, P. N. Suganthan",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2104.02395v3",
+  "abstract": "Ensemble learning combines several individual models to obtain better\ngeneralization performance. Currently, deep learning architectures are showing\nbetter performance compared to the shallow or traditional models. Deep ensemble\nlearning models combine the advantages of both the deep learning models as well\nas the ensemble learning such that the final model has better generalization\nperformance. This paper reviews the state-of-art deep ensemble models and hence\nserves as an extensive summary for the researchers. The ensemble models are\nbroadly categorised into bagging, boosting, stacking, negative correlation\nbased deep ensemble models, explicit/implicit ensembles,\nhomogeneous/heterogeneous ensemble, decision fusion strategies based deep\nensemble models. Applications of deep ensemble models in different domains are\nalso briefly discussed. Finally, we conclude this paper with some potential\nfuture research directions."
+}

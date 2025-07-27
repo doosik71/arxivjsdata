@@ -1,0 +1,7 @@
+{
+  "title": "learn2learn: A Library for Meta-Learning Research",
+  "authors": "Sébastien M. R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner, Konstantinos Saitas Zarkias",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.12284v2",
+  "abstract": "Meta-learning researchers face two fundamental issues in their empirical\nwork: prototyping and reproducibility. Researchers are prone to make mistakes\nwhen prototyping new algorithms and tasks because modern meta-learning methods\nrely on unconventional functionalities of machine learning frameworks. In turn,\nreproducing existing results becomes a tedious endeavour -- a situation\nexacerbated by the lack of standardized implementations and benchmarks. As a\nresult, researchers spend inordinate amounts of time on implementing software\nrather than understanding and developing new ideas.\n  This manuscript introduces learn2learn, a library for meta-learning research\nfocused on solving those prototyping and reproducibility issues. learn2learn\nprovides low-level routines common across a wide-range of meta-learning\ntechniques (e.g. meta-descent, meta-reinforcement learning, few-shot learning),\nand builds standardized interfaces to algorithms and benchmarks on top of them.\nIn releasing learn2learn under a free and open source license, we hope to\nfoster a community around standardized software for meta-learning research."
+}

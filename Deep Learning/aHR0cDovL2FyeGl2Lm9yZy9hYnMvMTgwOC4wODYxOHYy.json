@@ -1,0 +1,7 @@
+{
+  "title": "Deep Learning: Computational Aspects",
+  "authors": "Nicholas Polson, Vadim Sokolov",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1808.08618v2",
+  "abstract": "In this article we review computational aspects of Deep Learning (DL). Deep\nlearning uses network architectures consisting of hierarchical layers of latent\nvariables to construct predictors for high-dimensional input-output models.\nTraining a deep learning architecture is computationally intensive, and\nefficient linear algebra libraries is the key for training and inference.\nStochastic gradient descent (SGD) optimization and batch sampling are used to\nlearn from massive data sets."
+}

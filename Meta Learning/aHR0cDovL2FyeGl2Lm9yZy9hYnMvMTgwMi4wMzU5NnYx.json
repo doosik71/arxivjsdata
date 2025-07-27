@@ -1,0 +1,7 @@
+{
+  "title": "Deep Meta-Learning: Learning to Learn in the Concept Space",
+  "authors": "Fengwei Zhou, Bin Wu, Zhenguo Li",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1802.03596v1",
+  "abstract": "Few-shot learning remains challenging for meta-learning that learns a\nlearning algorithm (meta-learner) from many related tasks. In this work, we\nargue that this is due to the lack of a good representation for meta-learning,\nand propose deep meta-learning to integrate the representation power of deep\nlearning into meta-learning. The framework is composed of three modules, a\nconcept generator, a meta-learner, and a concept discriminator, which are\nlearned jointly. The concept generator, e.g. a deep residual net, extracts a\nrepresentation for each instance that captures its high-level concept, on which\nthe meta-learner performs few-shot learning, and the concept discriminator\nrecognizes the concepts. By learning to learn in the concept space rather than\nin the complicated instance space, deep meta-learning can substantially improve\nvanilla meta-learning, which is demonstrated on various few-shot image\nrecognition problems. For example, on 5-way-1-shot image recognition on\nCIFAR-100 and CUB-200, it improves Matching Nets from 50.53% and 56.53% to\n58.18% and 63.47%, improves MAML from 49.28% and 50.45% to 56.65% and 64.63%,\nand improves Meta-SGD from 53.83% and 53.34% to 61.62% and 66.95%,\nrespectively."
+}

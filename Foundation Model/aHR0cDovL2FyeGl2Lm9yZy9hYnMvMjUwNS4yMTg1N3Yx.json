@@ -1,0 +1,7 @@
+{
+  "title": "Revisiting Bayesian Model Averaging in the Era of Foundation Models",
+  "authors": "Mijung Park",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.21857v1",
+  "abstract": "We revisit the classical, full-fledged Bayesian model averaging (BMA)\nparadigm to ensemble pre-trained and/or lightly-finetuned foundation models to\nenhance the classification performance on image and text data. To make BMA\ntractable under foundation models, we introduce trainable linear classifiers\nthat take frozen features from the pre-trained foundation models as inputs. The\nmodel posteriors over the linear classifiers tell us which linear heads and\nfrozen features are better suited for a given dataset, resulting in a\nprincipled model ensembling method. Furthermore, we propose a computationally\ncheaper, optimizable model averaging scheme (OMA). In OMA, we directly optimize\nthe model ensemble weights, just like those weights based on model posterior\ndistributions in BMA, by reducing the amount of surprise (expected entropy of\nthe predictions) we get from predictions of ensembled models. With the rapid\ndevelopment of foundation models, these approaches will enable the\nincorporation of future, possibly significantly better foundation models to\nenhance the performance of challenging classification tasks."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "A Brief Survey of Associations Between Meta-Learning and General AI",
+  "authors": "Huimin Peng",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2101.04283v1",
+  "abstract": "This paper briefly reviews the history of meta-learning and describes its\ncontribution to general AI. Meta-learning improves model generalization\ncapacity and devises general algorithms applicable to both in-distribution and\nout-of-distribution tasks potentially. General AI replaces task-specific models\nwith general algorithmic systems introducing higher level of automation in\nsolving diverse tasks using AI. We summarize main contributions of\nmeta-learning to the developments in general AI, including memory module,\nmeta-learner, coevolution, curiosity, forgetting and AI-generating algorithm.\nWe present connections between meta-learning and general AI and discuss how\nmeta-learning can be used to formulate general AI algorithms."
+}

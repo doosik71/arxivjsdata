@@ -1,0 +1,7 @@
+{
+  "title": "Biomedical Foundation Model: A Survey",
+  "authors": "Xiangrui Liu, Yuanyuan Zhang, Yingzhou Lu, Changchang Yin, Xiaoling Hu, Xiaoou Liu, Lulu Chen, Sheng Wang, Alexander Rodriguez, Huaxiu Yao, Yezhou Yang, Ping Zhang, Jintai Chen, Tianfan Fu, Xiao Wang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.02104v1",
+  "abstract": "Foundation models, first introduced in 2021, are large-scale pre-trained\nmodels (e.g., large language models (LLMs) and vision-language models (VLMs))\nthat learn from extensive unlabeled datasets through unsupervised methods,\nenabling them to excel in diverse downstream tasks. These models, like GPT, can\nbe adapted to various applications such as question answering and visual\nunderstanding, outperforming task-specific AI models and earning their name due\nto broad applicability across fields. The development of biomedical foundation\nmodels marks a significant milestone in leveraging artificial intelligence (AI)\nto understand complex biological phenomena and advance medical research and\npractice. This survey explores the potential of foundation models across\ndiverse domains within biomedical fields, including computational biology, drug\ndiscovery and development, clinical informatics, medical imaging, and public\nhealth. The purpose of this survey is to inspire ongoing research in the\napplication of foundation models to health science."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "An Overview of Deep Semi-Supervised Learning",
+  "authors": "Yassine Ouali, Céline Hudelot, Myriam Tami",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.05278v2",
+  "abstract": "Deep neural networks demonstrated their ability to provide remarkable\nperformances on a wide range of supervised learning tasks (e.g., image\nclassification) when trained on extensive collections of labeled data (e.g.,\nImageNet). However, creating such large datasets requires a considerable amount\nof resources, time, and effort. Such resources may not be available in many\npractical cases, limiting the adoption and the application of many deep\nlearning methods. In a search for more data-efficient deep learning methods to\novercome the need for large annotated datasets, there is a rising research\ninterest in semi-supervised learning and its applications to deep neural\nnetworks to reduce the amount of labeled data required, by either developing\nnovel methods or adopting existing semi-supervised learning frameworks for a\ndeep learning setting. In this paper, we provide a comprehensive overview of\ndeep semi-supervised learning, starting with an introduction to the field,\nfollowed by a summarization of the dominant semi-supervised approaches in deep\nlearning."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Introduction to deep learning",
+  "authors": "Lihi Shiloh-Perl, Raja Giryes",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2003.03253v1",
+  "abstract": "Deep Learning (DL) has made a major impact on data science in the last\ndecade. This chapter introduces the basic concepts of this field. It includes\nboth the basic structures used to design deep neural networks and a brief\nsurvey of some of its popular use cases."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "A History of Meta-gradient: Gradient Methods for Meta-learning",
+  "authors": "Richard S. Sutton",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.09701v1",
+  "abstract": "The history of meta-learning methods based on gradient descent is reviewed,\nfocusing primarily on methods that adapt step-size (learning rate)\nmeta-parameters."
+}

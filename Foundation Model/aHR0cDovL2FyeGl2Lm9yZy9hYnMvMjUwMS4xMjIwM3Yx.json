@@ -1,0 +1,7 @@
+{
+  "title": "Explainability for Vision Foundation Models: A Survey",
+  "authors": "Rémi Kazmierczak, Eloïse Berthier, Goran Frehse, Gianni Franchi",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2501.12203v1",
+  "abstract": "As artificial intelligence systems become increasingly integrated into daily\nlife, the field of explainability has gained significant attention. This trend\nis particularly driven by the complexity of modern AI models and their\ndecision-making processes. The advent of foundation models, characterized by\ntheir extensive generalization capabilities and emergent uses, has further\ncomplicated this landscape. Foundation models occupy an ambiguous position in\nthe explainability domain: their complexity makes them inherently challenging\nto interpret, yet they are increasingly leveraged as tools to construct\nexplainable models. In this survey, we explore the intersection of foundation\nmodels and eXplainable AI (XAI) in the vision domain. We begin by compiling a\ncomprehensive corpus of papers that bridge these fields. Next, we categorize\nthese works based on their architectural characteristics. We then discuss the\nchallenges faced by current research in integrating XAI within foundation\nmodels. Furthermore, we review common evaluation methodologies for these\ncombined approaches. Finally, we present key observations and insights from our\nsurvey, offering directions for future research in this rapidly evolving field."
+}

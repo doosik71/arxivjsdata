@@ -1,0 +1,7 @@
+{
+  "title": "Few-shot Learning with Meta Metric Learners",
+  "authors": "Yu Cheng, Mo Yu, Xiaoxiao Guo, Bowen Zhou",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1901.09890v1",
+  "abstract": "Few-shot Learning aims to learn classifiers for new classes with only a few\ntraining examples per class. Existing meta-learning or metric-learning based\nfew-shot learning approaches are limited in handling diverse domains with\nvarious number of labels. The meta-learning approaches train a meta learner to\npredict weights of homogeneous-structured task-specific networks, requiring a\nuniform number of classes across tasks. The metric-learning approaches learn\none task-invariant metric for all the tasks, and they fail if the tasks\ndiverge. We propose to deal with these limitations with meta metric learning.\nOur meta metric learning approach consists of task-specific learners, that\nexploit metric learning to handle flexible labels, and a meta learner, that\ndiscovers good parameters and gradient decent to specify the metrics in\ntask-specific learners. Thus the proposed model is able to handle unbalanced\nclasses as well as to generate task-specific metrics. We test our approach in\nthe `$k$-shot $N$-way' few-shot learning setting used in previous work and new\nrealistic few-shot setting with diverse multi-domain tasks and flexible label\nnumbers. Experiments show that our approach attains superior performances in\nboth settings."
+}

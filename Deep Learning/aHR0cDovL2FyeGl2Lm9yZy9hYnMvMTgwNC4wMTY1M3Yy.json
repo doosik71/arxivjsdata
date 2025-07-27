@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1804.01653v2",
+  "title": "Review of Deep Learning",
+  "authors": "Rong Zhang, Weiping Li, Tong Mo",
+  "year": 2018,
+  "abstract": "In recent years, China, the United States and other countries, Google and\nother high-tech companies have increased investment in artificial intelligence.\nDeep learning is one of the current artificial intelligence research's key\nareas. This paper analyzes and summarizes the latest progress and future\nresearch directions of deep learning. Firstly, three basic models of deep\nlearning are outlined, including multilayer perceptrons, convolutional neural\nnetworks, and recurrent neural networks. On this basis, we further analyze the\nemerging new models of convolution neural networks and recurrent neural\nnetworks. This paper then summarizes deep learning's applications in many areas\nof artificial intelligence, including speech processing, computer vision,\nnatural language processing and so on. Finally, this paper discusses the\nexisting problems of deep learning and gives the corresponding possible\nsolutions."
+}

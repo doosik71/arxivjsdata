@@ -1,0 +1,7 @@
+{
+  "title": "What In-Context Learning \"Learns\" In-Context: Disentangling Task\n  Recognition and Task Learning",
+  "authors": "Jane Pan, Tianyu Gao, Howard Chen, Danqi Chen",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.09731v1",
+  "abstract": "Large language models (LLMs) exploit in-context learning (ICL) to solve tasks\nwith only a few demonstrations, but its mechanisms are not yet well-understood.\nSome works suggest that LLMs only recall already learned concepts from\npre-training, while others hint that ICL performs implicit learning over\ndemonstrations. We characterize two ways through which ICL leverages\ndemonstrations. Task recognition (TR) captures the extent to which LLMs can\nrecognize a task through demonstrations -- even without ground-truth labels --\nand apply their pre-trained priors, whereas task learning (TL) is the ability\nto capture new input-label mappings unseen in pre-training. Using a wide range\nof classification datasets and three LLM families (GPT-3, LLaMA and OPT), we\ndesign controlled experiments to disentangle the roles of TR and TL in ICL. We\nshow that (1) models can achieve non-trivial performance with only TR, and TR\ndoes not further improve with larger models or more demonstrations; (2) LLMs\nacquire TL as the model scales, and TL's performance consistently improves with\nmore demonstrations in context. Our findings unravel two different forces\nbehind ICL and we advocate for discriminating them in future ICL research due\nto their distinct nature."
+}

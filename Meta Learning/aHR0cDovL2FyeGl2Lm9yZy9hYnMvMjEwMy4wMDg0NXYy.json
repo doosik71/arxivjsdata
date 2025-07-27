@@ -1,0 +1,7 @@
+{
+  "title": "A Brief Summary of Interactions Between Meta-Learning and\n  Self-Supervised Learning",
+  "authors": "Huimin Peng",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2103.00845v2",
+  "abstract": "This paper briefly reviews the connections between meta-learning and\nself-supervised learning. Meta-learning can be applied to improve model\ngeneralization capability and to construct general AI algorithms.\nSelf-supervised learning utilizes self-supervision from original data and\nextracts higher-level generalizable features through unsupervised pre-training\nor optimization of contrastive loss objectives. In self-supervised learning,\ndata augmentation techniques are widely applied and data labels are not\nrequired since pseudo labels can be estimated from trained models on similar\ntasks. Meta-learning aims to adapt trained deep models to solve diverse tasks\nand to develop general AI algorithms. We review the associations of\nmeta-learning with both generative and contrastive self-supervised learning\nmodels. Unlabeled data from multiple sources can be jointly considered even\nwhen data sources are vastly different. We show that an integration of\nmeta-learning and self-supervised learning models can best contribute to the\nimprovement of model generalization capability. Self-supervised learning guided\nby meta-learner and general meta-learning algorithms under self-supervision are\nboth examples of possible combinations."
+}

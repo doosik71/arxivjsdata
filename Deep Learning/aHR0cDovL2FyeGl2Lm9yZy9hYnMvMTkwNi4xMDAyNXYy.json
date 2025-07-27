@@ -1,0 +1,7 @@
+{
+  "title": "Modern Deep Reinforcement Learning Algorithms",
+  "authors": "Sergey Ivanov, Alexander D'yakonov",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1906.10025v2",
+  "abstract": "Recent advances in Reinforcement Learning, grounded on combining classical\ntheoretical results with Deep Learning paradigm, led to breakthroughs in many\nartificial intelligence tasks and gave birth to Deep Reinforcement Learning\n(DRL) as a field of research. In this work latest DRL algorithms are reviewed\nwith a focus on their theoretical justification, practical limitations and\nobserved empirical properties."
+}

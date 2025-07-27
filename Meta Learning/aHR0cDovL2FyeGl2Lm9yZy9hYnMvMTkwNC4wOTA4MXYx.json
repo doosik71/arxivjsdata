@@ -1,0 +1,7 @@
+{
+  "title": "Hierarchical Meta Learning",
+  "authors": "Yingtian Zou, Jiashi Feng",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1904.09081v1",
+  "abstract": "Meta learning is a promising solution to few-shot learning problems. However,\nexisting meta learning methods are restricted to the scenarios where training\nand application tasks share the same out-put structure. To obtain a meta model\napplicable to the tasks with new structures, it is required to collect new\ntraining data and repeat the time-consuming meta training procedure. This makes\nthem inefficient or even inapplicable in learning to solve heterogeneous\nfew-shot learning tasks. We thus develop a novel and principled\nHierarchicalMeta Learning (HML) method. Different from existing methods that\nonly focus on optimizing the adaptability of a meta model to similar tasks, HML\nalso explicitly optimizes its generalizability across heterogeneous tasks. To\nthis end, HML first factorizes a set of similar training tasks into\nheterogeneous ones and trains the meta model over them at two levels to\nmaximize adaptation and generalization performance respectively. The resultant\nmodel can then directly generalize to new tasks. Extensive experiments on\nfew-shot classification and regression problems clearly demonstrate the\nsuperiority of HML over fine-tuning and state-of-the-art meta learning\napproaches in terms of generalization across heterogeneous tasks."
+}

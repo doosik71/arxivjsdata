@@ -1,0 +1,7 @@
+{
+  "title": "Deep Learning in Software Engineering",
+  "authors": "Xiaochen Li, He Jiang, Zhilei Ren, Ge Li, Jingxuan Zhang",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1805.04825v1",
+  "abstract": "Recent years, deep learning is increasingly prevalent in the field of\nSoftware Engineering (SE). However, many open issues still remain to be\ninvestigated. How do researchers integrate deep learning into SE problems?\nWhich SE phases are facilitated by deep learning? Do practitioners benefit from\ndeep learning? The answers help practitioners and researchers develop practical\ndeep learning models for SE tasks. To answer these questions, we conduct a\nbibliography analysis on 98 research papers in SE that use deep learning\ntechniques. We find that 41 SE tasks in all SE phases have been facilitated by\ndeep learning integrated solutions. In which, 84.7% papers only use standard\ndeep learning models and their variants to solve SE problems. The\npracticability becomes a concern in utilizing deep learning techniques. How to\nimprove the effectiveness, efficiency, understandability, and testability of\ndeep learning based solutions may attract more SE researchers in the future."
+}

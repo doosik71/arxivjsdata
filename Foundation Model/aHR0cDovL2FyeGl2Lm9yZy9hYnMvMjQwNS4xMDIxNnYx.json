@@ -1,0 +1,7 @@
+{
+  "title": "Low-Rank Adaptation of Time Series Foundational Models for Out-of-Domain\n  Modality Forecasting",
+  "authors": "Divij Gupta, Anubhav Bhatti, Suraj Parmar, Chen Dan, Yuwei Liu, Bingjie Shen, San Lee",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.10216v1",
+  "abstract": "Low-Rank Adaptation (LoRA) is a widely used technique for fine-tuning large\npre-trained or foundational models across different modalities and tasks.\nHowever, its application to time series data, particularly within foundational\nmodels, remains underexplored. This paper examines the impact of LoRA on\ncontemporary time series foundational models: Lag-Llama, MOIRAI, and Chronos.\nWe demonstrate LoRA's fine-tuning potential for forecasting the vital signs of\nsepsis patients in intensive care units (ICUs), emphasizing the models'\nadaptability to previously unseen, out-of-domain modalities. Integrating LoRA\naims to enhance forecasting performance while reducing inefficiencies\nassociated with fine-tuning large models on limited domain-specific data. Our\nexperiments show that LoRA fine-tuning of time series foundational models\nsignificantly improves forecasting, achieving results comparable to\nstate-of-the-art models trained from scratch on similar modalities. We conduct\ncomprehensive ablation studies to demonstrate the trade-offs between the number\nof tunable parameters and forecasting performance and assess the impact of\nvarying LoRA matrix ranks on model performance."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "A Reference Architecture for Designing Foundation Model based Systems",
+  "authors": "Qinghua Lu, Liming Zhu, Xiwei Xu, Zhenchang Xing, Jon Whittle",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.11090v5",
+  "abstract": "The release of ChatGPT, Gemini, and other large language model has drawn huge\ninterests on foundations models. There is a broad consensus that foundations\nmodels will be the fundamental building blocks for future AI systems. However,\nthere is a lack of systematic guidance on the architecture design.\nParticularly, the the rapidly growing capabilities of foundations models can\neventually absorb other components of AI systems, posing challenges of moving\nboundary and interface evolution in architecture design. Furthermore,\nincorporating foundations models into AI systems raises significant concerns\nabout responsible and safe AI due to their opaque nature and rapidly advancing\nintelligence. To address these challenges, the paper first presents an\narchitecture evolution of AI systems in the era of foundation models,\ntransitioning from \"foundation-model-as-a-connector\" to\n\"foundation-model-as-a-monolithic architecture\". The paper then identifies key\ndesign decisions and proposes a pattern-oriented reference architecture for\ndesigning responsible foundation-model-based systems. The patterns can enable\nthe potential of foundation models while ensuring associated risks."
+}

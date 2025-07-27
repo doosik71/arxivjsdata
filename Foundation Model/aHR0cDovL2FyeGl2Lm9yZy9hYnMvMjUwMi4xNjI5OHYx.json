@@ -1,0 +1,7 @@
+{
+  "title": "voc2vec: A Foundation Model for Non-Verbal Vocalization",
+  "authors": "Alkis Koudounas, Moreno La Quatra, Marco Sabato Siniscalchi, Elena Baralis",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.16298v1",
+  "abstract": "Speech foundation models have demonstrated exceptional capabilities in\nspeech-related tasks. Nevertheless, these models often struggle with non-verbal\naudio data, such as vocalizations, baby crying, etc., which are critical for\nvarious real-world applications. Audio foundation models well handle non-speech\ndata but also fail to capture the nuanced features of non-verbal human sounds.\nIn this work, we aim to overcome the above shortcoming and propose a novel\nfoundation model, termed voc2vec, specifically designed for non-verbal human\ndata leveraging exclusively open-source non-verbal audio datasets. We employ a\ncollection of 10 datasets covering around 125 hours of non-verbal audio.\nExperimental results prove that voc2vec is effective in non-verbal vocalization\nclassification, and it outperforms conventional speech and audio foundation\nmodels. Moreover, voc2vec consistently outperforms strong baselines, namely\nOpenSmile and emotion2vec, on six different benchmark datasets. To the best of\nthe authors' knowledge, voc2vec is the first universal representation model for\nvocalization tasks."
+}

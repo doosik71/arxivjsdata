@@ -1,0 +1,7 @@
+{
+  "title": "Human-like Affective Cognition in Foundation Models",
+  "authors": "Kanishk Gandhi, Zoe Lynch, Jan-Philipp Fränken, Kayla Patterson, Sharon Wambu, Tobias Gerstenberg, Desmond C. Ong, Noah D. Goodman",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.11733v2",
+  "abstract": "Understanding emotions is fundamental to human interaction and experience.\nHumans easily infer emotions from situations or facial expressions, situations\nfrom emotions, and do a variety of other affective cognition. How adept is\nmodern AI at these inferences? We introduce an evaluation framework for testing\naffective cognition in foundation models. Starting from psychological theory,\nwe generate 1,280 diverse scenarios exploring relationships between appraisals,\nemotions, expressions, and outcomes. We evaluate the abilities of foundation\nmodels (GPT-4, Claude-3, Gemini-1.5-Pro) and humans (N = 567) across carefully\nselected conditions. Our results show foundation models tend to agree with\nhuman intuitions, matching or exceeding interparticipant agreement. In some\nconditions, models are ``superhuman'' -- they better predict modal human\njudgements than the average human. All models benefit from chain-of-thought\nreasoning. This suggests foundation models have acquired a human-like\nunderstanding of emotions and their influence on beliefs and behavior."
+}

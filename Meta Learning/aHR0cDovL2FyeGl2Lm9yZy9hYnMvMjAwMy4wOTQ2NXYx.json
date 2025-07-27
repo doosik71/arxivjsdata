@@ -1,0 +1,7 @@
+{
+  "title": "Weighted Meta-Learning",
+  "authors": "Diana Cai, Rishit Sheth, Lester Mackey, Nicolo Fusi",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2003.09465v1",
+  "abstract": "Meta-learning leverages related source tasks to learn an initialization that\ncan be quickly fine-tuned to a target task with limited labeled examples.\nHowever, many popular meta-learning algorithms, such as model-agnostic\nmeta-learning (MAML), only assume access to the target samples for fine-tuning.\nIn this work, we provide a general framework for meta-learning based on\nweighting the loss of different source tasks, where the weights are allowed to\ndepend on the target samples. In this general setting, we provide upper bounds\non the distance of the weighted empirical risk of the source tasks and expected\ntarget risk in terms of an integral probability metric (IPM) and Rademacher\ncomplexity, which apply to a number of meta-learning settings including MAML\nand a weighted MAML variant. We then develop a learning algorithm based on\nminimizing the error bound with respect to an empirical IPM, including a\nweighted MAML algorithm, $\\alpha$-MAML. Finally, we demonstrate empirically on\nseveral regression problems that our weighted meta-learning algorithm is able\nto find better initializations than uniformly-weighted meta-learning\nalgorithms, such as MAML."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Foundation Models Meet Visualizations: Challenges and Opportunities",
+  "authors": "Weikai Yang, Mengchen Liu, Zheng Wang, Shixia Liu",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2310.05771v1",
+  "abstract": "Recent studies have indicated that foundation models, such as BERT and GPT,\nexcel in adapting to a variety of downstream tasks. This adaptability has\nestablished them as the dominant force in building artificial intelligence (AI)\nsystems. As visualization techniques intersect with these models, a new\nresearch paradigm emerges. This paper divides these intersections into two main\nareas: visualizations for foundation models (VIS4FM) and foundation models for\nvisualizations (FM4VIS). In VIS4FM, we explore the primary role of\nvisualizations in understanding, refining, and evaluating these intricate\nmodels. This addresses the pressing need for transparency, explainability,\nfairness, and robustness. Conversely, within FM4VIS, we highlight how\nfoundation models can be utilized to advance the visualization field itself.\nThe confluence of foundation models and visualizations holds great promise, but\nit also comes with its own set of challenges. By highlighting these challenges\nand the growing opportunities, this paper seeks to provide a starting point for\ncontinued exploration in this promising avenue."
+}

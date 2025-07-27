@@ -1,0 +1,7 @@
+{
+  "title": "Continuous Meta-Learning without Tasks",
+  "authors": "James Harrison, Apoorva Sharma, Chelsea Finn, Marco Pavone",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1912.08866v2",
+  "abstract": "Meta-learning is a promising strategy for learning to efficiently learn\nwithin new tasks, using data gathered from a distribution of tasks. However,\nthe meta-learning literature thus far has focused on the task segmented\nsetting, where at train-time, offline data is assumed to be split according to\nthe underlying task, and at test-time, the algorithms are optimized to learn in\na single task. In this work, we enable the application of generic meta-learning\nalgorithms to settings where this task segmentation is unavailable, such as\ncontinual online learning with a time-varying task. We present meta-learning\nvia online changepoint analysis (MOCA), an approach which augments a\nmeta-learning algorithm with a differentiable Bayesian changepoint detection\nscheme. The framework allows both training and testing directly on time series\ndata without segmenting it into discrete tasks. We demonstrate the utility of\nthis approach on a nonlinear meta-regression benchmark as well as two\nmeta-image-classification benchmarks."
+}

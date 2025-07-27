@@ -1,0 +1,7 @@
+{
+  "title": "A Selective Overview of Deep Learning",
+  "authors": "Jianqing Fan, Cong Ma, Yiqiao Zhong",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1904.05526v2",
+  "abstract": "Deep learning has arguably achieved tremendous success in recent years. In\nsimple words, deep learning uses the composition of many nonlinear functions to\nmodel the complex dependency between input features and labels. While neural\nnetworks have a long history, recent advances have greatly improved their\nperformance in computer vision, natural language processing, etc. From the\nstatistical and scientific perspective, it is natural to ask: What is deep\nlearning? What are the new characteristics of deep learning, compared with\nclassical methods? What are the theoretical foundations of deep learning? To\nanswer these questions, we introduce common neural network models (e.g.,\nconvolutional neural nets, recurrent neural nets, generative adversarial nets)\nand training techniques (e.g., stochastic gradient descent, dropout, batch\nnormalization) from a statistical point of view. Along the way, we highlight\nnew characteristics of deep learning (including depth and over-parametrization)\nand explain their practical and theoretical benefits. We also sample recent\nresults on theories of deep learning, many of which are only suggestive. While\na complete understanding of deep learning remains elusive, we hope that our\nperspectives and discussions serve as a stimulus for new statistical research."
+}

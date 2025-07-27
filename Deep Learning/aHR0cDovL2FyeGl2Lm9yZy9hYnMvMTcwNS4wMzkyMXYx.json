@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1705.03921v1",
+  "title": "Why & When Deep Learning Works: Looking Inside Deep Learnings",
+  "authors": "Ronny Ronen",
+  "year": 2017,
+  "abstract": "The Intel Collaborative Research Institute for Computational Intelligence\n(ICRI-CI) has been heavily supporting Machine Learning and Deep Learning\nresearch from its foundation in 2012. We have asked six leading ICRI-CI Deep\nLearning researchers to address the challenge of \"Why & When Deep Learning\nworks\", with the goal of looking inside Deep Learning, providing insights on\nhow deep networks function, and uncovering key observations on their\nexpressiveness, limitations, and potential. The output of this challenge\nresulted in five papers that address different facets of deep learning. These\ndifferent facets include a high-level understating of why and when deep\nnetworks work (and do not work), the impact of geometry on the expressiveness\nof deep networks, and making deep networks interpretable."
+}
