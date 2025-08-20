@@ -1,0 +1,7 @@
+{
+  "title": "Tracking without Label: Unsupervised Multiple Object Tracking via\n  Contrastive Similarity Learning",
+  "authors": "Sha Meng, Dian Shao, Jiacheng Guo, Shan Gao",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.00942v1",
+  "abstract": "Unsupervised learning is a challenging task due to the lack of labels.\nMultiple Object Tracking (MOT), which inevitably suffers from mutual object\ninterference, occlusion, etc., is even more difficult without label\nsupervision. In this paper, we explore the latent consistency of sample\nfeatures across video frames and propose an Unsupervised Contrastive Similarity\nLearning method, named UCSL, including three contrast modules: self-contrast,\ncross-contrast, and ambiguity contrast. Specifically, i) self-contrast uses\nintra-frame direct and inter-frame indirect contrast to obtain discriminative\nrepresentations by maximizing self-similarity. ii) Cross-contrast aligns cross-\nand continuous-frame matching results, mitigating the persistent negative\neffect caused by object occlusion. And iii) ambiguity contrast matches\nambiguous objects with each other to further increase the certainty of\nsubsequent object association through an implicit manner. On existing\nbenchmarks, our method outperforms the existing unsupervised methods using only\nlimited help from ReID head, and even provides higher accuracy than lots of\nfully supervised methods."
+}

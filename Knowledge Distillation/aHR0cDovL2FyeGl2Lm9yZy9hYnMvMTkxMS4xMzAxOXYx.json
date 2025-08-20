@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1911.13019v1",
+  "title": "Towards Oracle Knowledge Distillation with Neural Architecture Search",
+  "authors": "Minsoo Kang, Jonghwan Mun, Bohyung Han",
+  "year": 2019,
+  "abstract": "We present a novel framework of knowledge distillation that is capable of\nlearning powerful and efficient student models from ensemble teacher networks.\nOur approach addresses the inherent model capacity issue between teacher and\nstudent and aims to maximize benefit from teacher models during distillation by\nreducing their capacity gap. Specifically, we employ a neural architecture\nsearch technique to augment useful structures and operations, where the\nsearched network is appropriate for knowledge distillation towards student\nmodels and free from sacrificing its performance by fixing the network\ncapacity. We also introduce an oracle knowledge distillation loss to facilitate\nmodel search and distillation using an ensemble-based teacher model, where a\nstudent network is learned to imitate oracle performance of the teacher. We\nperform extensive experiments on the image classification datasets---CIFAR-100\nand TinyImageNet---using various networks. We also show that searching for a\nnew student model is effective in both accuracy and memory size and that the\nsearched models often outperform their teacher models thanks to neural\narchitecture search with oracle knowledge distillation."
+}

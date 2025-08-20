@@ -1,0 +1,7 @@
+{
+  "title": "Deep Siamese Networks with Bayesian non-Parametrics for Video Object\n  Tracking",
+  "authors": "Anthony D. Rhodes, Manan Goel",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1811.07386v1",
+  "abstract": "We present a novel algorithm utilizing a deep Siamese neural network as a\ngeneral object similarity function in combination with a Bayesian optimization\n(BO) framework to encode spatio-temporal information for efficient object\ntracking in video. In particular, we treat the video tracking problem as a\ndynamic (i.e. temporally-evolving) optimization problem. Using Gaussian Process\npriors, we model a dynamic objective function representing the location of a\ntracked object in each frame. By exploiting temporal correlations, the proposed\nmethod queries the search space in a statistically principled and efficient\nway, offering several benefits over current state of the art video tracking\nmethods."
+}

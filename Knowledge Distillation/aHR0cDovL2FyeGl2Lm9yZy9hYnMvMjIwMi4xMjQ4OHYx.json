@@ -1,0 +1,7 @@
+{
+  "title": "Learn From the Past: Experience Ensemble Knowledge Distillation",
+  "authors": "Chaofei Wang, Shaowei Zhang, Shiji Song, Gao Huang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.12488v1",
+  "abstract": "Traditional knowledge distillation transfers \"dark knowledge\" of a\npre-trained teacher network to a student network, and ignores the knowledge in\nthe training process of the teacher, which we call teacher's experience.\nHowever, in realistic educational scenarios, learning experience is often more\nimportant than learning results. In this work, we propose a novel knowledge\ndistillation method by integrating the teacher's experience for knowledge\ntransfer, named experience ensemble knowledge distillation (EEKD). We save a\nmoderate number of intermediate models from the training process of the teacher\nmodel uniformly, and then integrate the knowledge of these intermediate models\nby ensemble technique. A self-attention module is used to adaptively assign\nweights to different intermediate models in the process of knowledge transfer.\nThree principles of constructing EEKD on the quality, weights and number of\nintermediate models are explored. A surprising conclusion is found that strong\nensemble teachers do not necessarily produce strong students. The experimental\nresults on CIFAR-100 and ImageNet show that EEKD outperforms the mainstream\nknowledge distillation methods and achieves the state-of-the-art. In\nparticular, EEKD even surpasses the standard ensemble distillation on the\npremise of saving training cost."
+}

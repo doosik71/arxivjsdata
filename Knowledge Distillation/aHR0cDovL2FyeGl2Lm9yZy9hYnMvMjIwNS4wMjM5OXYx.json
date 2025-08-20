@@ -1,0 +1,7 @@
+{
+  "title": "Spot-adaptive Knowledge Distillation",
+  "authors": "Jie Song, Ying Chen, Jingwen Ye, Mingli Song",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2205.02399v1",
+  "abstract": "Knowledge distillation (KD) has become a well established paradigm for\ncompressing deep neural networks. The typical way of conducting knowledge\ndistillation is to train the student network under the supervision of the\nteacher network to harness the knowledge at one or multiple spots (i.e.,\nlayers) in the teacher network. The distillation spots, once specified, will\nnot change for all the training samples, throughout the whole distillation\nprocess. In this work, we argue that distillation spots should be adaptive to\ntraining samples and distillation epochs. We thus propose a new distillation\nstrategy, termed spot-adaptive KD (SAKD), to adaptively determine the\ndistillation spots in the teacher network per sample, at every training\niteration during the whole distillation period. As SAKD actually focuses on\n\"where to distill\" instead of \"what to distill\" that is widely investigated by\nmost existing works, it can be seamlessly integrated into existing distillation\nmethods to further improve their performance. Extensive experiments with 10\nstate-of-the-art distillers are conducted to demonstrate the effectiveness of\nSAKD for improving their distillation performance, under both homogeneous and\nheterogeneous distillation settings. Code is available at\nhttps://github.com/zju-vipa/spot-adaptive-pytorch"
+}

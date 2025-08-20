@@ -1,0 +1,7 @@
+{
+  "title": "AudioLM: a Language Modeling Approach to Audio Generation",
+  "authors": "Zalán Borsos, Raphaël Marinier, Damien Vincent, Eugene Kharitonov, Olivier Pietquin, Matt Sharifi, Dominik Roblek, Olivier Teboul, David Grangier, Marco Tagliasacchi, Neil Zeghidour",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2209.03143v2",
+  "abstract": "We introduce AudioLM, a framework for high-quality audio generation with\nlong-term consistency. AudioLM maps the input audio to a sequence of discrete\ntokens and casts audio generation as a language modeling task in this\nrepresentation space. We show how existing audio tokenizers provide different\ntrade-offs between reconstruction quality and long-term structure, and we\npropose a hybrid tokenization scheme to achieve both objectives. Namely, we\nleverage the discretized activations of a masked language model pre-trained on\naudio to capture long-term structure and the discrete codes produced by a\nneural audio codec to achieve high-quality synthesis. By training on large\ncorpora of raw audio waveforms, AudioLM learns to generate natural and coherent\ncontinuations given short prompts. When trained on speech, and without any\ntranscript or annotation, AudioLM generates syntactically and semantically\nplausible speech continuations while also maintaining speaker identity and\nprosody for unseen speakers. Furthermore, we demonstrate how our approach\nextends beyond speech by generating coherent piano music continuations, despite\nbeing trained without any symbolic representation of music."
+}

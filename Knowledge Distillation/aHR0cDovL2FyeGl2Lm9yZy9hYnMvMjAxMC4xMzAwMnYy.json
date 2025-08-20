@@ -1,0 +1,7 @@
+{
+  "title": "Pre-trained Summarization Distillation",
+  "authors": "Sam Shleifer, Alexander M. Rush",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2010.13002v2",
+  "abstract": "Recent state-of-the-art approaches to summarization utilize large pre-trained\nTransformer models. Distilling these models to smaller student models has\nbecome critically important for practical use; however there are many different\ndistillation methods proposed by the NLP literature. Recent work on distilling\nBERT for classification and regression tasks shows strong performance using\ndirect knowledge distillation. Alternatively, machine translation practitioners\ndistill using pseudo-labeling, where a small model is trained on the\ntranslations of a larger model. A third, simpler approach is to 'shrink and\nfine-tune' (SFT), which avoids any explicit distillation by copying parameters\nto a smaller student model and then fine-tuning. We compare these three\napproaches for distillation of Pegasus and BART, the current and former state\nof the art, pre-trained summarization models, and find that SFT outperforms\nknowledge distillation and pseudo-labeling on the CNN/DailyMail dataset, but\nunder-performs pseudo-labeling on the more abstractive XSUM dataset. PyTorch\nCode and checkpoints of different sizes are available through Hugging Face\ntransformers here http://tiny.cc/4iy0tz."
+}

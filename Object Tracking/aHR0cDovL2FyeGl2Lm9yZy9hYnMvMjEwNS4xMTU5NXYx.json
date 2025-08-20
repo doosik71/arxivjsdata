@@ -1,0 +1,7 @@
+{
+  "title": "SiamMOT: Siamese Multi-Object Tracking",
+  "authors": "Bing Shuai, Andrew Berneshawi, Xinyu Li, Davide Modolo, Joseph Tighe",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2105.11595v1",
+  "abstract": "In this paper, we focus on improving online multi-object tracking (MOT). In\nparticular, we introduce a region-based Siamese Multi-Object Tracking network,\nwhich we name SiamMOT. SiamMOT includes a motion model that estimates the\ninstance's movement between two frames such that detected instances are\nassociated. To explore how the motion modelling affects its tracking\ncapability, we present two variants of Siamese tracker, one that implicitly\nmodels motion and one that models it explicitly. We carry out extensive\nquantitative experiments on three different MOT datasets: MOT17, TAO-person and\nCaltech Roadside Pedestrians, showing the importance of motion modelling for\nMOT and the ability of SiamMOT to substantially outperform the\nstate-of-the-art. Finally, SiamMOT also outperforms the winners of ACM MM'20\nHiEve Grand Challenge on HiEve dataset. Moreover, SiamMOT is efficient, and it\nruns at 17 FPS for 720P videos on a single modern GPU. Codes are available in\n\\url{https://github.com/amazon-research/siam-mot}."
+}

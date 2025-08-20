@@ -1,0 +1,7 @@
+{
+  "title": "Tree-structured Auxiliary Online Knowledge Distillation",
+  "authors": "Wenye Lin, Yangning Li, Yifeng Ding, Hai-Tao Zheng",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2208.10068v1",
+  "abstract": "Traditional knowledge distillation adopts a two-stage training process in\nwhich a teacher model is pre-trained and then transfers the knowledge to a\ncompact student model. To overcome the limitation, online knowledge\ndistillation is proposed to perform one-stage distillation when the teacher is\nunavailable. Recent researches on online knowledge distillation mainly focus on\nthe design of the distillation objective, including attention or gate\nmechanism. Instead, in this work, we focus on the design of the global\narchitecture and propose Tree-Structured Auxiliary online knowledge\ndistillation (TSA), which adds more parallel peers for layers close to the\noutput hierarchically to strengthen the effect of knowledge distillation.\nDifferent branches construct different views of the inputs, which can be the\nsource of the knowledge. The hierarchical structure implies that the knowledge\ntransfers from general to task-specific with the growth of the layers.\nExtensive experiments on 3 computer vision and 4 natural language processing\ndatasets show that our method achieves state-of-the-art performance without\nbells and whistles. To the best of our knowledge, we are the first to\ndemonstrate the effectiveness of online knowledge distillation for machine\ntranslation tasks."
+}

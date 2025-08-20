@@ -1,0 +1,7 @@
+{
+  "title": "Medical Pathologies Prediction : Systematic Review and Proposed Approach",
+  "authors": "Chaimae Taoussi, Imad Hafidi, Abdelmoutalib Metrane",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.00311v1",
+  "abstract": "The healthcare sector is an important pillar of every community, numerous\nresearch studies have been carried out in this context to optimize medical\nprocesses and improve care quality and facilitate patient management. In this\narticle we have analyzed and examined different works concerning the\nexploitation of the most recent technologies such as big data, artificial\nintelligence, machine learning, and deep learning for the improvement of health\ncare, which enabled us to propose our general approach concentrating on the\ncollection, preprocessing and clustering of medical data to facilitate access,\nafter analysis, to the patients and health professionals to predict the most\nfrequent pathologies with better precision within a notable timeframe.\n  keywords: Healthcare, big data, artificial intelligence, automatic language\nprocessing, data mining, predictive models."
+}

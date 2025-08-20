@@ -1,0 +1,7 @@
+{
+  "title": "Learning to Track Objects from Unlabeled Videos",
+  "authors": "Jilai Zheng, Chao Ma, Houwen Peng, Xiaokang Yang",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2108.12711v1",
+  "abstract": "In this paper, we propose to learn an Unsupervised Single Object Tracker\n(USOT) from scratch. We identify that three major challenges, i.e., moving\nobject discovery, rich temporal variation exploitation, and online update, are\nthe central causes of the performance bottleneck of existing unsupervised\ntrackers. To narrow the gap between unsupervised trackers and supervised\ncounterparts, we propose an effective unsupervised learning approach composed\nof three stages. First, we sample sequentially moving objects with unsupervised\noptical flow and dynamic programming, instead of random cropping. Second, we\ntrain a naive Siamese tracker from scratch using single-frame pairs. Third, we\ncontinue training the tracker with a novel cycle memory learning scheme, which\nis conducted in longer temporal spans and also enables our tracker to update\nonline. Extensive experiments show that the proposed USOT learned from\nunlabeled videos performs well over the state-of-the-art unsupervised trackers\nby large margins, and on par with recent supervised deep trackers. Code is\navailable at https://github.com/VISION-SJTU/USOT."
+}

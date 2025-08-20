@@ -1,0 +1,7 @@
+{
+  "title": "A Comprehensive Review of Knowledge Distillation in Computer Vision",
+  "authors": "Gousia Habib, Tausifa jan Saleem, Sheikh Musa Kaleem, Tufail Rouf, Brejesh Lall",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.00936v4",
+  "abstract": "Deep learning techniques have been demonstrated to surpass preceding\ncutting-edge machine learning techniques in recent years, with computer vision\nbeing one of the most prominent examples. However, deep learning models suffer\nfrom significant drawbacks when deployed in resource-constrained environments\ndue to their large model size and high complexity. Knowledge Distillation is\none of the prominent solutions to overcome this challenge. This review paper\nexamines the current state of research on knowledge distillation, a technique\nfor compressing complex models into smaller and simpler ones. The paper\nprovides an overview of the major principles and techniques associated with\nknowledge distillation and reviews the applications of knowledge distillation\nin the domain of computer vision. The review focuses on the benefits of\nknowledge distillation, as well as the problems that must be overcome to\nimprove its effectiveness."
+}

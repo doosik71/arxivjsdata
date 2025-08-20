@@ -1,0 +1,7 @@
+{
+  "title": "GradNet: Gradient-Guided Network for Visual Object Tracking",
+  "authors": "Peixia Li, Boyu Chen, Wanli Ouyang, Dong Wang, Xiaoyun Yang, Huchuan Lu",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1909.06800v1",
+  "abstract": "The fully-convolutional siamese network based on template matching has shown\ngreat potentials in visual tracking. During testing, the template is fixed with\nthe initial target feature and the performance totally relies on the general\nmatching ability of the siamese network. However, this manner cannot capture\nthe temporal variations of targets or background clutter. In this work, we\npropose a novel gradient-guided network to exploit the discriminative\ninformation in gradients and update the template in the siamese network through\nfeed-forward and backward operations. Our algorithm performs feed-forward and\nbackward operations to exploit the discriminative informaiton in gradients and\ncapture the core attention of the target. To be specific, the algorithm can\nutilize the information from the gradient to update the template in the current\nframe. In addition, a template generalization training method is proposed to\nbetter use gradient information and avoid overfitting. To our knowledge, this\nwork is the first attempt to exploit the information in the gradient for\ntemplate update in siamese-based trackers. Extensive experiments on recent\nbenchmarks demonstrate that our method achieves better performance than other\nstate-of-the-art trackers."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "M2KD: Multi-model and Multi-level Knowledge Distillation for Incremental\n  Learning",
+  "authors": "Peng Zhou, Long Mai, Jianming Zhang, Ning Xu, Zuxuan Wu, Larry S. Davis",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1904.01769v2",
+  "abstract": "Incremental learning targets at achieving good performance on new categories\nwithout forgetting old ones. Knowledge distillation has been shown critical in\npreserving the performance on old classes. Conventional methods, however,\nsequentially distill knowledge only from the last model, leading to performance\ndegradation on the old classes in later incremental learning steps. In this\npaper, we propose a multi-model and multi-level knowledge distillation\nstrategy. Instead of sequentially distilling knowledge only from the last\nmodel, we directly leverage all previous model snapshots. In addition, we\nincorporate an auxiliary distillation to further preserve knowledge encoded at\nthe intermediate feature levels. To make the model more memory efficient, we\nadapt mask based pruning to reconstruct all previous models with a small memory\nfootprint. Experiments on standard incremental learning benchmarks show that\nour method preserves the knowledge on old classes better and improves the\noverall performance over standard distillation techniques."
+}

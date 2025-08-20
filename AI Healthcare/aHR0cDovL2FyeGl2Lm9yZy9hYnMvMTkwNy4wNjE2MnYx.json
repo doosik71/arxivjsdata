@@ -1,0 +1,7 @@
+{
+  "title": "Modeling the Uncertainty in Electronic Health Records: a Bayesian Deep\n  Learning Approach",
+  "authors": "Riyi Qiu, Yugang Jia, Mirsad Hadzikadic, Michael Dulin, Xi Niu, Xin Wang",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1907.06162v1",
+  "abstract": "Deep learning models have exhibited superior performance in predictive tasks\nwith the explosively increasing Electronic Health Records (EHR). However, due\nto the lack of transparency, behaviors of deep learning models are difficult to\ninterpret. Without trustworthiness, deep learning models will not be able to\nassist in the real-world decision-making process of healthcare issues. We\npropose a deep learning model based on Bayesian Neural Networks (BNN) to\npredict uncertainty induced by data noise. The uncertainty is introduced to\nprovide model predictions with an extra level of confidence. Our experiments\nverify that instances with high uncertainty are harmful to model performance.\nMoreover, by investigating the distributions of model prediction and\nuncertainty, we show that it is possible to identify a group of patients for\ntimely intervention, such that decreasing data noise will benefit more on the\nprediction accuracy for these patients."
+}

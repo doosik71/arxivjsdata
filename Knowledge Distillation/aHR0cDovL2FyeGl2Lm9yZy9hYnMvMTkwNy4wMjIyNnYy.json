@@ -1,0 +1,7 @@
+{
+  "title": "Graph-based Knowledge Distillation by Multi-head Attention Network",
+  "authors": "Seunghyun Lee, Byung Cheol Song",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1907.02226v2",
+  "abstract": "Knowledge distillation (KD) is a technique to derive optimal performance from\na small student network (SN) by distilling knowledge of a large teacher network\n(TN) and transferring the distilled knowledge to the small SN. Since a role of\nconvolutional neural network (CNN) in KD is to embed a dataset so as to perform\na given task well, it is very important to acquire knowledge that considers\nintra-data relations. Conventional KD methods have concentrated on distilling\nknowledge in data units. To our knowledge, any KD methods for distilling\ninformation in dataset units have not yet been proposed. Therefore, this paper\nproposes a novel method that enables distillation of dataset-based knowledge\nfrom the TN using an attention network. The knowledge of the embedding\nprocedure of the TN is distilled to graph by multi-head attention (MHA), and\nmulti-task learning is performed to give relational inductive bias to the SN.\nThe MHA can provide clear information about the source dataset, which can\ngreatly improves the performance of the SN. Experimental results show that the\nproposed method is 7.05% higher than the SN alone for CIFAR100, which is 2.46%\nhigher than the state-of-the-art."
+}

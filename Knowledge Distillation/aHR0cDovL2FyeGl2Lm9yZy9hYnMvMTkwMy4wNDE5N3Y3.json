@@ -1,0 +1,7 @@
+{
+  "title": "Structured Knowledge Distillation for Dense Prediction",
+  "authors": "Yifan Liu, Changyong Shun, Jingdong Wang, Chunhua Shen",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1903.04197v7",
+  "abstract": "In this work, we consider transferring the structure information from large\nnetworks to compact ones for dense prediction tasks in computer vision.\nPrevious knowledge distillation strategies used for dense prediction tasks\noften directly borrow the distillation scheme for image classification and\nperform knowledge distillation for each pixel separately, leading to\nsub-optimal performance. Here we propose to distill structured knowledge from\nlarge networks to compact networks, taking into account the fact that dense\nprediction is a structured prediction problem. Specifically, we study two\nstructured distillation schemes: i) pair-wise distillation that distills the\npair-wise similarities by building a static graph; and ii) holistic\ndistillation that uses adversarial training to distill holistic knowledge. The\neffectiveness of our knowledge distillation approaches is demonstrated by\nexperiments on three dense prediction tasks: semantic segmentation, depth\nestimation and object detection. Code is available at: https://git.io/StructKD"
+}

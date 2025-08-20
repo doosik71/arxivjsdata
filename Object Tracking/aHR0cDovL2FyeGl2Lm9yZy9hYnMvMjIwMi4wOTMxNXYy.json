@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2202.09315v2",
+  "title": "Unsupervised Multiple-Object Tracking with a Dynamical Variational\n  Autoencoder",
+  "authors": "Xiaoyu Lin, Laurent Girin, Xavier Alameda-Pineda",
+  "year": 2022,
+  "abstract": "In this paper, we present an unsupervised probabilistic model and associated\nestimation algorithm for multi-object tracking (MOT) based on a dynamical\nvariational autoencoder (DVAE), called DVAE-UMOT. The DVAE is a latent-variable\ndeep generative model that can be seen as an extension of the variational\nautoencoder for the modeling of temporal sequences. It is included in DVAE-UMOT\nto model the objects' dynamics, after being pre-trained on an unlabeled\nsynthetic dataset of single-object trajectories. Then the distributions and\nparameters of DVAE-UMOT are estimated on each multi-object sequence to track\nusing the principles of variational inference: Definition of an approximate\nposterior distribution of the latent variables and maximization of the\ncorresponding evidence lower bound of the data likehood function. DVAE-UMOT is\nshown experimentally to compete well with and even surpass the performance of\ntwo state-of-the-art probabilistic MOT models. Code and data are publicly\navailable."
+}

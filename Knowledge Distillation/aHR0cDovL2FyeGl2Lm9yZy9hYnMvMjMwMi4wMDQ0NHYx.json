@@ -1,0 +1,7 @@
+{
+  "title": "Improved Knowledge Distillation for Pre-trained Language Models via\n  Knowledge Selection",
+  "authors": "Chenglong Wang, Yi Lu, Yongyu Mu, Yimin Hu, Tong Xiao, Jingbo Zhu",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.00444v1",
+  "abstract": "Knowledge distillation addresses the problem of transferring knowledge from a\nteacher model to a student model. In this process, we typically have multiple\ntypes of knowledge extracted from the teacher model. The problem is to make\nfull use of them to train the student model. Our preliminary study shows that:\n(1) not all of the knowledge is necessary for learning a good student model,\nand (2) knowledge distillation can benefit from certain knowledge at different\ntraining steps. In response to these, we propose an actor-critic approach to\nselecting appropriate knowledge to transfer during the process of knowledge\ndistillation. In addition, we offer a refinement of the training algorithm to\nease the computational burden. Experimental results on the GLUE datasets show\nthat our method outperforms several strong knowledge distillation baselines\nsignificantly."
+}

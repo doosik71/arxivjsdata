@@ -1,0 +1,7 @@
+{
+  "title": "Similarity-Preserving Knowledge Distillation",
+  "authors": "Frederick Tung, Greg Mori",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1907.09682v2",
+  "abstract": "Knowledge distillation is a widely applicable technique for training a\nstudent neural network under the guidance of a trained teacher network. For\nexample, in neural network compression, a high-capacity teacher is distilled to\ntrain a compact student; in privileged learning, a teacher trained with\nprivileged data is distilled to train a student without access to that data.\nThe distillation loss determines how a teacher's knowledge is captured and\ntransferred to the student. In this paper, we propose a new form of knowledge\ndistillation loss that is inspired by the observation that semantically similar\ninputs tend to elicit similar activation patterns in a trained network.\nSimilarity-preserving knowledge distillation guides the training of a student\nnetwork such that input pairs that produce similar (dissimilar) activations in\nthe teacher network produce similar (dissimilar) activations in the student\nnetwork. In contrast to previous distillation methods, the student is not\nrequired to mimic the representation space of the teacher, but rather to\npreserve the pairwise similarities in its own representation space. Experiments\non three public datasets demonstrate the potential of our approach."
+}

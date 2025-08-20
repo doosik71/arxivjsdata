@@ -1,0 +1,7 @@
+{
+  "title": "Adaptive Knowledge Distillation between Text and Speech Pre-trained\n  Models",
+  "authors": "Jinjie Ni, Yukun Ma, Wen Wang, Qian Chen, Dianwen Ng, Han Lei, Trung Hieu Nguyen, Chong Zhang, Bin Ma, Erik Cambria",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2303.03600v1",
+  "abstract": "Learning on a massive amount of speech corpus leads to the recent success of\nmany self-supervised speech models. With knowledge distillation, these models\nmay also benefit from the knowledge encoded by language models that are\npre-trained on rich sources of texts. The distillation process, however, is\nchallenging due to the modal disparity between textual and speech embedding\nspaces. This paper studies metric-based distillation to align the embedding\nspace of text and speech with only a small amount of data without modifying the\nmodel structure. Since the semantic and granularity gap between text and speech\nhas been omitted in literature, which impairs the distillation, we propose the\nPrior-informed Adaptive knowledge Distillation (PAD) that adaptively leverages\ntext/speech units of variable granularity and prior distributions to achieve\nbetter global and local alignments between text and speech pre-trained models.\nWe evaluate on three spoken language understanding benchmarks to show that PAD\nis more effective in transferring linguistic knowledge than other metric-based\ndistillation approaches."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "DSRRTracker: Dynamic Search Region Refinement for Attention-based\n  Siamese Multi-Object Tracking",
+  "authors": "JiaXu Wan, Hong Zhang, Jin Zhang, Yuan Ding, Yifan Yang, Yan Li, Xuliang Li",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2203.10729v2",
+  "abstract": "Many multi-object tracking (MOT) methods follow the framework of \"tracking by\ndetection\", which associates the target objects-of-interest based on the\ndetection results. However, due to the separate models for detection and\nassociation, the tracking results are not optimal.Moreover, the speed is\nlimited by some cumbersome association methods to achieve high tracking\nperformance. In this work, we propose an end-to-end MOT method, with a Gaussian\nfilter-inspired dynamic search region refinement module to dynamically filter\nand refine the search region by considering both the template information from\nthe past frames and the detection results from the current frame with little\ncomputational burden, and a lightweight attention-based tracking head to\nachieve the effective fine-grained instance association. Extensive experiments\nand ablation study on MOT17 and MOT20 datasets demonstrate that our method can\nachieve the state-of-the-art performance with reasonable speed."
+}

@@ -1,7 +1,7 @@
 {
+  "url": "http://arxiv.org/abs/1907.10586v3",
   "title": "Distilled Siamese Networks for Visual Tracking",
   "authors": "Jianbing Shen, Yuanpei Liu, Xingping Dong, Xiankai Lu, Fahad Shahbaz Khan, Steven Hoi",
   "year": 2019,
-  "url": "http://arxiv.org/abs/1907.10586v3",
   "abstract": "In recent years, Siamese network based trackers have significantly advanced\nthe state-of-the-art in real-time tracking. Despite their success, Siamese\ntrackers tend to suffer from high memory costs, which restrict their\napplicability to mobile devices with tight memory budgets. To address this\nissue, we propose a distilled Siamese tracking framework to learn small, fast\nand accurate trackers (students), which capture critical knowledge from large\nSiamese trackers (teachers) by a teacher-students knowledge distillation model.\nThis model is intuitively inspired by the one teacher vs. multiple students\nlearning method typically employed in schools. In particular, our model\ncontains a single teacher-student distillation module and a student-student\nknowledge sharing mechanism. The former is designed using a tracking-specific\ndistillation strategy to transfer knowledge from a teacher to students. The\nlatter is utilized for mutual learning between students to enable in-depth\nknowledge understanding. Extensive empirical evaluations on several popular\nSiamese trackers demonstrate the generality and effectiveness of our framework.\nMoreover, the results on five tracking benchmarks show that the proposed\ndistilled trackers achieve compression rates of up to 18$\\times$ and\nframe-rates of $265$ FPS, while obtaining comparable tracking accuracy compared\nto base models."
 }

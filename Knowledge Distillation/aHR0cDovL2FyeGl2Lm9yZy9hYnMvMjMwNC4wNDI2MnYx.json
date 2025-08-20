@@ -1,0 +1,7 @@
+{
+  "title": "A Comprehensive Survey on Knowledge Distillation of Diffusion Models",
+  "authors": "Weijian Luo",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.04262v1",
+  "abstract": "Diffusion Models (DMs), also referred to as score-based diffusion models,\nutilize neural networks to specify score functions. Unlike most other\nprobabilistic models, DMs directly model the score functions, which makes them\nmore flexible to parametrize and potentially highly expressive for\nprobabilistic modeling. DMs can learn fine-grained knowledge, i.e., marginal\nscore functions, of the underlying distribution. Therefore, a crucial research\ndirection is to explore how to distill the knowledge of DMs and fully utilize\ntheir potential. Our objective is to provide a comprehensible overview of the\nmodern approaches for distilling DMs, starting with an introduction to DMs and\na discussion of the challenges involved in distilling them into neural vector\nfields. We also provide an overview of the existing works on distilling DMs\ninto both stochastic and deterministic implicit generators. Finally, we review\nthe accelerated diffusion sampling algorithms as a training-free method for\ndistillation. Our tutorial is intended for individuals with a basic\nunderstanding of generative models who wish to apply DM's distillation or\nembark on a research project in this field."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Zero-shot audio captioning with audio-language model guidance and audio\n  context keywords",
+  "authors": "Leonard Salewski, Stefan Fauth, A. Sophia Koepke, Zeynep Akata",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.08396v1",
+  "abstract": "Zero-shot audio captioning aims at automatically generating descriptive\ntextual captions for audio content without prior training for this task.\nDifferent from speech recognition which translates audio content that contains\nspoken language into text, audio captioning is commonly concerned with ambient\nsounds, or sounds produced by a human performing an action. Inspired by\nzero-shot image captioning methods, we propose ZerAuCap, a novel framework for\nsummarising such general audio signals in a text caption without requiring\ntask-specific training. In particular, our framework exploits a pre-trained\nlarge language model (LLM) for generating the text which is guided by a\npre-trained audio-language model to produce captions that describe the audio\ncontent. Additionally, we use audio context keywords that prompt the language\nmodel to generate text that is broadly relevant to sounds. Our proposed\nframework achieves state-of-the-art results in zero-shot audio captioning on\nthe AudioCaps and Clotho datasets. Our code is available at\nhttps://github.com/ExplainableML/ZerAuCap."
+}

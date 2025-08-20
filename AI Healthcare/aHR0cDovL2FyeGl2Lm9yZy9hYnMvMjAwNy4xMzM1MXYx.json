@@ -1,0 +1,7 @@
+{
+  "title": "A Simple and Interpretable Predictive Model for Healthcare",
+  "authors": "Subhadip Maji, Raghav Bali, Sree Harsha Ankem, Kishore V Ayyadevara",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.13351v1",
+  "abstract": "Deep Learning based models are currently dominating most state-of-the-art\nsolutions for disease prediction. Existing works employ RNNs along with\nmultiple levels of attention mechanisms to provide interpretability. These deep\nlearning models, with trainable parameters running into millions, require huge\namounts of compute and data to train and deploy. These requirements are\nsometimes so huge that they render usage of such models as unfeasible. We\naddress these challenges by developing a simpler yet interpretable non-deep\nlearning based model for application to EHR data. We model and showcase our\nwork's results on the task of predicting first occurrence of a diagnosis, often\noverlooked in existing works. We push the capabilities of a tree based model\nand come up with a strong baseline for more sophisticated models. Its\nperformance shows an improvement over deep learning based solutions (both, with\nand without the first-occurrence constraint) all the while maintaining\ninterpretability."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "A hybrid deep learning approach for medical relation extraction",
+  "authors": "Veera Raghavendra Chikka, Kamalakar Karlapalem",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1806.11189v1",
+  "abstract": "Mining relationships between treatment(s) and medical problem(s) is vital in\nthe biomedical domain. This helps in various applications, such as decision\nsupport system, safety surveillance, and new treatment discovery. We propose a\ndeep learning approach that utilizes both word level and sentence-level\nrepresentations to extract the relationships between treatment and problem.\nWhile deep learning techniques demand a large amount of data for training, we\nmake use of a rule-based system particularly for relationship classes with\nfewer samples. Our final relations are derived by jointly combining the results\nfrom deep learning and rule-based models. Our system achieved a promising\nperformance on the relationship classes of I2b2 2010 relation extraction task."
+}

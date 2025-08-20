@@ -1,0 +1,7 @@
+{
+  "title": "Norm-Bounded Low-Rank Adaptation",
+  "authors": "Ruigang Wang, Krishnamurthy Dvijotham, Ian R. Manchester",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2501.19050v3",
+  "abstract": "In this work, we propose norm-bounded low-rank adaptation (NB-LoRA) for\nparameter-efficient fine tuning. NB-LoRA is a novel parameterization of\nlow-rank weight adaptations that admits explicit bounds on each singular value\nof the adaptation matrix, which can thereby satisfy any prescribed unitarily\ninvariant norm bound, including the Schatten norms (e.g., nuclear, Frobenius,\nspectral norm). The proposed parameterization is unconstrained, smooth, and\ncomplete, i.e. it covers all matrices satisfying the prescribed rank and\nsingular-value bounds. Comparative experiments on large language models show\nthat NB-LoRA achieves superior adaptation performance and faster training over\na range of models, tasks and ranks. Vision fine-tuning experiments show that\nNB-LoRA can achieve strong adaptation performance while avoiding model\ncatastrophic forgetting, and compared to existing approaches it is\nsubstantially more robust to a hyper-parameters such as including adaptation\nrank, learning rate and number of training epochs."
+}

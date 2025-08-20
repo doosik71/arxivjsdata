@@ -1,0 +1,7 @@
+{
+  "title": "Distilling HuBERT with LSTMs via Decoupled Knowledge Distillation",
+  "authors": "Danilo de Oliveira, Timo Gerkmann",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.09920v1",
+  "abstract": "Much research effort is being applied to the task of compressing the\nknowledge of self-supervised models, which are powerful, yet large and memory\nconsuming. In this work, we show that the original method of knowledge\ndistillation (and its more recently proposed extension, decoupled knowledge\ndistillation) can be applied to the task of distilling HuBERT. In contrast to\nmethods that focus on distilling internal features, this allows for more\nfreedom in the network architecture of the compressed model. We thus propose to\ndistill HuBERT's Transformer layers into an LSTM-based distilled model that\nreduces the number of parameters even below DistilHuBERT and at the same time\nshows improved performance in automatic speech recognition."
+}

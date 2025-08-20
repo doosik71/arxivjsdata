@@ -1,0 +1,7 @@
+{
+  "title": "ALoRA: Allocating Low-Rank Adaptation for Fine-tuning Large Language\n  Models",
+  "authors": "Zequan Liu, Jiawen Lyn, Wei Zhu, Xing Tian, Yvette Graham",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.16187v2",
+  "abstract": "Parameter-efficient fine-tuning (PEFT) is widely studied for its\neffectiveness and efficiency in the era of large language models. Low-rank\nadaptation (LoRA) has demonstrated commendable performance as a popular and\nrepresentative method. However, it is implemented with a fixed intrinsic rank\nthat might not be the ideal setting for the downstream tasks. Recognizing the\nneed for more flexible downstream task adaptation, we extend the methodology of\nLoRA to an innovative approach we call allocating low-rank adaptation (ALoRA)\nthat enables dynamic adjustments to the intrinsic rank during the adaptation\nprocess. First, we propose a novel method, AB-LoRA, that can effectively\nestimate the importance score of each LoRA rank. Second, guided by AB-LoRA, we\ngradually prune abundant and negatively impacting LoRA ranks and allocate the\npruned LoRA budgets to important Transformer modules needing higher ranks. We\nhave conducted experiments on various tasks, and the experimental results\ndemonstrate that our ALoRA method can outperform the recent baselines with\ncomparable tunable parameters."
+}

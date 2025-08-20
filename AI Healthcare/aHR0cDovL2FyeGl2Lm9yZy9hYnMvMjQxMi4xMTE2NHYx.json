@@ -1,0 +1,7 @@
+{
+  "title": "Missing data imputation for noisy time-series data and applications in\n  healthcare",
+  "authors": "Lien P. Le, Xuan-Hien Nguyen Thi, Thu Nguyen, Michael A. Riegler, Pål Halvorsen, Binh T. Nguyen",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.11164v1",
+  "abstract": "Healthcare time series data is vital for monitoring patient activity but\noften contains noise and missing values due to various reasons such as sensor\nerrors or data interruptions. Imputation, i.e., filling in the missing values,\nis a common way to deal with this issue. In this study, we compare imputation\nmethods, including Multiple Imputation with Random Forest (MICE-RF) and\nadvanced deep learning approaches (SAITS, BRITS, Transformer) for noisy,\nmissing time series data in terms of MAE, F1-score, AUC, and MCC, across\nmissing data rates (10 % - 80 %). Our results show that MICE-RF can effectively\nimpute missing data compared to deep learning methods and the improvement in\nclassification of data imputed indicates that imputation can have denoising\neffects. Therefore, using an imputation algorithm on time series with missing\ndata can, at the same time, offer denoising effects."
+}

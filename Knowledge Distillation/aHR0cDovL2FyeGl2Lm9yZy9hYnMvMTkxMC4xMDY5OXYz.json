@@ -1,0 +1,7 @@
+{
+  "title": "Contrastive Representation Distillation",
+  "authors": "Yonglong Tian, Dilip Krishnan, Phillip Isola",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1910.10699v3",
+  "abstract": "Often we wish to transfer representational knowledge from one neural network\nto another. Examples include distilling a large network into a smaller one,\ntransferring knowledge from one sensory modality to a second, or ensembling a\ncollection of models into a single estimator. Knowledge distillation, the\nstandard approach to these problems, minimizes the KL divergence between the\nprobabilistic outputs of a teacher and student network. We demonstrate that\nthis objective ignores important structural knowledge of the teacher network.\nThis motivates an alternative objective by which we train a student to capture\nsignificantly more information in the teacher's representation of the data. We\nformulate this objective as contrastive learning. Experiments demonstrate that\nour resulting new objective outperforms knowledge distillation and other\ncutting-edge distillers on a variety of knowledge transfer tasks, including\nsingle model compression, ensemble distillation, and cross-modal transfer. Our\nmethod sets a new state-of-the-art in many transfer tasks, and sometimes even\noutperforms the teacher network when combined with knowledge distillation.\nCode: http://github.com/HobbitLong/RepDistiller."
+}

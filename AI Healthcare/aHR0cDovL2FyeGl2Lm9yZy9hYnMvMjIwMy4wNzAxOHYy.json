@@ -1,0 +1,7 @@
+{
+  "title": "A review of Generative Adversarial Networks for Electronic Health\n  Records: applications, evaluation measures and data sources",
+  "authors": "Ghadeer Ghosheh, Jin Li, Tingting Zhu",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2203.07018v2",
+  "abstract": "Electronic Health Records (EHRs) are a valuable asset to facilitate clinical\nresearch and point of care applications; however, many challenges such as data\nprivacy concerns impede its optimal utilization. Deep generative models,\nparticularly, Generative Adversarial Networks (GANs) show great promise in\ngenerating synthetic EHR data by learning underlying data distributions while\nachieving excellent performance and addressing these challenges. This work aims\nto review the major developments in various applications of GANs for EHRs and\nprovides an overview of the proposed methodologies. For this purpose, we\ncombine perspectives from healthcare applications and machine learning\ntechniques in terms of source datasets and the fidelity and privacy evaluation\nof the generated synthetic datasets. We also compile a list of the metrics and\ndatasets used by the reviewed works, which can be utilized as benchmarks for\nfuture research in the field. We conclude by discussing challenges in GANs for\nEHRs development and proposing recommended practices. We hope that this work\nmotivates novel research development directions in the intersection of\nhealthcare and machine learning."
+}

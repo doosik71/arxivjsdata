@@ -1,0 +1,7 @@
+{
+  "title": "ElaLoRA: Elastic & Learnable Low-Rank Adaptation for Efficient Model\n  Fine-Tuning",
+  "authors": "Huandong Chang, Zicheng Ma, Mingyuan Ma, Zhenting Qi, Andrew Sabot, Hong Jiang, H. T. Kung",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2504.00254v1",
+  "abstract": "Low-Rank Adaptation (LoRA) has become a widely adopted technique for\nfine-tuning large-scale pre-trained models with minimal parameter updates.\nHowever, existing methods rely on fixed ranks or focus solely on either rank\npruning or expansion, failing to adapt ranks dynamically to match the\nimportance of different layers during training. In this work, we propose\nElaLoRA, an adaptive low-rank adaptation framework that dynamically prunes and\nexpands ranks based on gradient-derived importance scores. To the best of our\nknowledge, ElaLoRA is the first method that enables both rank pruning and\nexpansion during fine-tuning. Experiments across multiple benchmarks\ndemonstrate that ElaLoRA consistently outperforms existing PEFT methods across\ndifferent parameter budgets. Furthermore, our studies validate that layers\nreceiving higher rank allocations contribute more significantly to model\nperformance, providing theoretical justification for our adaptive strategy. By\nintroducing a principled and adaptive rank allocation mechanism, ElaLoRA offers\na scalable and efficient fine-tuning solution, particularly suited for\nresource-constrained environments."
+}

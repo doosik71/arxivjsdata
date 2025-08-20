@@ -1,7 +1,7 @@
 {
+  "url": "http://arxiv.org/abs/1707.00569v2",
   "title": "An In-Depth Analysis of Visual Tracking with Siamese Neural Networks",
   "authors": "Roman Pflugfelder",
   "year": 2017,
-  "url": "http://arxiv.org/abs/1707.00569v2",
   "abstract": "This survey presents a deep analysis of the learning and inference\ncapabilities in nine popular trackers. It is neither intended to study the\nwhole literature nor is it an attempt to review all kinds of neural networks\nproposed for visual tracking. We focus instead on Siamese neural networks which\nare a promising starting point for studying the challenging problem of\ntracking. These networks integrate efficiently feature learning and the\ntemporal matching and have so far shown state-of-the-art performance. In\nparticular, the branches of Siamese networks, their layers connecting these\nbranches, specific aspects of training and the embedding of these networks into\nthe tracker are highlighted. Quantitative results from existing papers are\ncompared with the conclusion that the current evaluation methodology shows\nproblems with the reproducibility and the comparability of results. The paper\nproposes a novel Lisp-like formalism for a better comparison of trackers. This\nassumes a certain functional design and functional decomposition of trackers.\nThe paper tries to give foundation for tracker design by a formulation of the\nproblem based on the theory of machine learning and by the interpretation of a\ntracker as a decision function. The work concludes with promising lines of\nresearch and suggests future work."
 }

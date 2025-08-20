@@ -1,0 +1,7 @@
+{
+  "title": "Show, Attend and Distill:Knowledge Distillation via Attention-based\n  Feature Matching",
+  "authors": "Mingi Ji, Byeongho Heo, Sungrae Park",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2102.02973v1",
+  "abstract": "Knowledge distillation extracts general knowledge from a pre-trained teacher\nnetwork and provides guidance to a target student network. Most studies\nmanually tie intermediate features of the teacher and student, and transfer\nknowledge through pre-defined links. However, manual selection often constructs\nineffective links that limit the improvement from the distillation. There has\nbeen an attempt to address the problem, but it is still challenging to identify\neffective links under practical scenarios. In this paper, we introduce an\neffective and efficient feature distillation method utilizing all the feature\nlevels of the teacher without manually selecting the links. Specifically, our\nmethod utilizes an attention-based meta-network that learns relative\nsimilarities between features, and applies identified similarities to control\ndistillation intensities of all possible pairs. As a result, our method\ndetermines competent links more efficiently than the previous approach and\nprovides better performance on model compression and transfer learning tasks.\nFurther qualitative analyses and ablative studies describe how our method\ncontributes to better distillation. The implementation code is available at\ngithub.com/clovaai/attention-feature-distillation."
+}

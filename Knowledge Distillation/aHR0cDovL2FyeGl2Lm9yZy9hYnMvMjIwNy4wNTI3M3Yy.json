@@ -1,0 +1,7 @@
+{
+  "title": "Cross-Architecture Knowledge Distillation",
+  "authors": "Yufan Liu, Jiajiong Cao, Bing Li, Weiming Hu, Jingting Ding, Liang Li",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2207.05273v2",
+  "abstract": "Transformer attracts much attention because of its ability to learn global\nrelations and superior performance. In order to achieve higher performance, it\nis natural to distill complementary knowledge from Transformer to convolutional\nneural network (CNN). However, most existing knowledge distillation methods\nonly consider homologous-architecture distillation, such as distilling\nknowledge from CNN to CNN. They may not be suitable when applying to\ncross-architecture scenarios, such as from Transformer to CNN. To deal with\nthis problem, a novel cross-architecture knowledge distillation method is\nproposed. Specifically, instead of directly mimicking output/intermediate\nfeatures of the teacher, partially cross attention projector and group-wise\nlinear projector are introduced to align the student features with the\nteacher's in two projected feature spaces. And a multi-view robust training\nscheme is further presented to improve the robustness and stability of the\nframework. Extensive experiments show that the proposed method outperforms 14\nstate-of-the-arts on both small-scale and large-scale datasets."
+}

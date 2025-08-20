@@ -1,0 +1,7 @@
+{
+  "title": "Towards a Better Match in Siamese Network Based Visual Object Tracker",
+  "authors": "Anfeng He, Chong Luo, Xinmei Tian, Wenjun Zeng",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1809.01368v1",
+  "abstract": "Recently, Siamese network based trackers have received tremendous interest\nfor their fast tracking speed and high performance. Despite the great success,\nthis tracking framework still suffers from several limitations. First, it\ncannot properly handle large object rotation. Second, tracking gets easily\ndistracted when the background contains salient objects. In this paper, we\npropose two simple yet effective mechanisms, namely angle estimation and\nspatial masking, to address these issues. The objective is to extract more\nrepresentative features so that a better match can be obtained between the same\nobject from different frames. The resulting tracker, named Siam-BM, not only\nsignificantly improves the tracking performance, but more importantly maintains\nthe realtime capability. Evaluations on the VOT2017 dataset show that Siam-BM\nachieves an EAO of 0.335, which makes it the best-performing realtime tracker\nto date."
+}

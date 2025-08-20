@@ -1,0 +1,7 @@
+{
+  "title": "AdaKD: Dynamic Knowledge Distillation of ASR models using Adaptive Loss\n  Weighting",
+  "authors": "Shreyan Ganguly, Roshan Nayak, Rakshith Rao, Ujan Deb, Prathosh AP",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.08019v1",
+  "abstract": "Knowledge distillation, a widely used model compression technique, works on\nthe basis of transferring knowledge from a cumbersome teacher model to a\nlightweight student model. The technique involves jointly optimizing the task\nspecific and knowledge distillation losses with a weight assigned to them.\nDespite these weights playing a crucial role in the performance of the\ndistillation process, current methods provide equal weight to both losses,\nleading to suboptimal performance. In this paper, we propose Adaptive Knowledge\nDistillation, a novel technique inspired by curriculum learning to adaptively\nweigh the losses at instance level. This technique goes by the notion that\nsample difficulty increases with teacher loss. Our method follows a\nplug-and-play paradigm that can be applied on top of any task-specific and\ndistillation objectives. Experiments show that our method performs better than\nconventional knowledge distillation method and existing instance-level loss\nfunctions."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "GUSOT: Green and Unsupervised Single Object Tracking for Long Video\n  Sequences",
+  "authors": "Zhiruo Zhou, Hongyu Fu, Suya You, C. -C. Jay Kuo",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2207.07629v1",
+  "abstract": "Supervised and unsupervised deep trackers that rely on deep learning\ntechnologies are popular in recent years. Yet, they demand high computational\ncomplexity and a high memory cost. A green unsupervised single-object tracker,\ncalled GUSOT, that aims at object tracking for long videos under a\nresource-constrained environment is proposed in this work. Built upon a\nbaseline tracker, UHP-SOT++, which works well for short-term tracking, GUSOT\ncontains two additional new modules: 1) lost object recovery, and 2)\ncolor-saliency-based shape proposal. They help resolve the tracking loss\nproblem and offer a more flexible object proposal, respectively. Thus, they\nenable GUSOT to achieve higher tracking accuracy in the long run. We conduct\nexperiments on the large-scale dataset LaSOT with long video sequences, and\nshow that GUSOT offers a lightweight high-performance tracking solution that\nfinds applications in mobile and edge computing platforms."
+}

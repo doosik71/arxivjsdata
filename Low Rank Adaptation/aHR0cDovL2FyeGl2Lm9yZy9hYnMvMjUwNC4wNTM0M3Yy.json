@@ -1,0 +1,7 @@
+{
+  "title": "AROMA: Autonomous Rank-one Matrix Adaptation",
+  "authors": "Hao Nan Sheng, Zhi-yong Wang, Mingrui Yang, Hing Cheung So",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2504.05343v2",
+  "abstract": "As large language models continue to grow in size, parameter-efficient\nfine-tuning (PEFT) has become increasingly crucial. While low-rank adaptation\n(LoRA) offers a solution through low-rank updates, its static rank allocation\nmay yield suboptimal results. Adaptive low-rank adaptation (AdaLoRA) improves\nthis with dynamic allocation but remains sensitive to initial and target rank\nconfigurations. We introduce AROMA, a framework that automatically constructs\nlayer-specific updates by iteratively building up rank-one components with very\nfew trainable parameters that gradually diminish to zero. Unlike existing\nmethods that employ rank reduction mechanisms, AROMA introduces a dual-loop\narchitecture for rank growth. The inner loop extracts information from each\nrank-one subspace, while the outer loop determines the number of rank-one\nsubspaces, i.e., the optimal rank. We reset optimizer states to maintain\nsubspace independence. AROMA significantly reduces parameters compared to LoRA\nand AdaLoRA while achieving superior performance on natural language\nunderstanding and commonsense reasoning tasks, offering new insights into\nadaptive PEFT. The code is available at\n\\href{https://github.com/ShuDun23/AROMA}{AROMA}."
+}

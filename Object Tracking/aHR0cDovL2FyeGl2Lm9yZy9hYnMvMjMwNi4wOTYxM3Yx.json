@@ -1,0 +1,7 @@
+{
+  "title": "UTOPIA: Unconstrained Tracking Objects without Preliminary Examination\n  via Cross-Domain Adaptation",
+  "authors": "Pha Nguyen, Kha Gia Quach, John Gauch, Samee U. Khan, Bhiksha Raj, Khoa Luu",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.09613v1",
+  "abstract": "Multiple Object Tracking (MOT) aims to find bounding boxes and identities of\ntargeted objects in consecutive video frames. While fully-supervised MOT\nmethods have achieved high accuracy on existing datasets, they cannot\ngeneralize well on a newly obtained dataset or a new unseen domain. In this\nwork, we first address the MOT problem from the cross-domain point of view,\nimitating the process of new data acquisition in practice. Then, a new\ncross-domain MOT adaptation from existing datasets is proposed without any\npre-defined human knowledge in understanding and modeling objects. It can also\nlearn and update itself from the target data feedback. The intensive\nexperiments are designed on four challenging settings, including MOTSynth to\nMOT17, MOT17 to MOT20, MOT17 to VisDrone, and MOT17 to DanceTrack. We then\nprove the adaptability of the proposed self-supervised learning strategy. The\nexperiments also show superior performance on tracking metrics MOTA and IDF1,\ncompared to fully supervised, unsupervised, and self-supervised\nstate-of-the-art methods."
+}

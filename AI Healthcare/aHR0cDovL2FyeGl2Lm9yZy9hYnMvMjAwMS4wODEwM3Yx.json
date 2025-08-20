@@ -1,0 +1,7 @@
+{
+  "title": "Secure and Robust Machine Learning for Healthcare: A Survey",
+  "authors": "Adnan Qayyum, Junaid Qadir, Muhammad Bilal, Ala Al-Fuqaha",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2001.08103v1",
+  "abstract": "Recent years have witnessed widespread adoption of machine learning (ML)/deep\nlearning (DL) techniques due to their superior performance for a variety of\nhealthcare applications ranging from the prediction of cardiac arrest from\none-dimensional heart signals to computer-aided diagnosis (CADx) using\nmulti-dimensional medical images. Notwithstanding the impressive performance of\nML/DL, there are still lingering doubts regarding the robustness of ML/DL in\nhealthcare settings (which is traditionally considered quite challenging due to\nthe myriad security and privacy issues involved), especially in light of recent\nresults that have shown that ML/DL are vulnerable to adversarial attacks. In\nthis paper, we present an overview of various application areas in healthcare\nthat leverage such techniques from security and privacy point of view and\npresent associated challenges. In addition, we present potential methods to\nensure secure and privacy-preserving ML for healthcare applications. Finally,\nwe provide insight into the current research challenges and promising\ndirections for future research."
+}

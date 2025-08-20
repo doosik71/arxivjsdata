@@ -1,0 +1,7 @@
+{
+  "title": "Decoupled Knowledge Distillation",
+  "authors": "Borui Zhao, Quan Cui, Renjie Song, Yiyu Qiu, Jiajun Liang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2203.08679v2",
+  "abstract": "State-of-the-art distillation methods are mainly based on distilling deep\nfeatures from intermediate layers, while the significance of logit distillation\nis greatly overlooked. To provide a novel viewpoint to study logit\ndistillation, we reformulate the classical KD loss into two parts, i.e., target\nclass knowledge distillation (TCKD) and non-target class knowledge distillation\n(NCKD). We empirically investigate and prove the effects of the two parts: TCKD\ntransfers knowledge concerning the \"difficulty\" of training samples, while NCKD\nis the prominent reason why logit distillation works. More importantly, we\nreveal that the classical KD loss is a coupled formulation, which (1)\nsuppresses the effectiveness of NCKD and (2) limits the flexibility to balance\nthese two parts. To address these issues, we present Decoupled Knowledge\nDistillation (DKD), enabling TCKD and NCKD to play their roles more efficiently\nand flexibly. Compared with complex feature-based methods, our DKD achieves\ncomparable or even better results and has better training efficiency on\nCIFAR-100, ImageNet, and MS-COCO datasets for image classification and object\ndetection tasks. This paper proves the great potential of logit distillation,\nand we hope it will be helpful for future research. The code is available at\nhttps://github.com/megvii-research/mdistiller."
+}

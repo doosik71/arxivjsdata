@@ -1,0 +1,7 @@
+{
+  "title": "A Rank Stabilization Scaling Factor for Fine-Tuning with LoRA",
+  "authors": "Damjan Kalajdzievski",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.03732v1",
+  "abstract": "As large language models (LLMs) have become increasingly compute and memory\nintensive, parameter-efficient fine-tuning (PEFT) methods are now a common\nstrategy to fine-tune LLMs. A popular PEFT method is Low-Rank Adapters (LoRA),\nwhich adds trainable low-rank \"adapters\" to selected layers. Each adapter\nconsists of a low-rank matrix product, multiplicatively scaled by a\nrank-dependent factor. This scaling factor, which divides adapters by a factor\nof the rank, results in slowed learning and stunted performance for LoRA with\nhigher-rank adapters. Consequently, the use of LoRA in practice has generally\nbeen limited to very low ranks. In this work, we study the impact of the\nscaling factor on the learning process and prove that LoRA adapters should be\ndivided by a factor of the square root of the rank. Modifying LoRA with the\nappropriate scaling factor, which we call the rank-stabilized LoRA (rsLoRA)\nmethod, easily provides for a fine-tuning compute/performance trade-off, where\nlarger ranks can be used to trade off increased computational resources during\ntraining for better fine-tuning performance, with no change in inference\ncomputing cost."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "FouRA: Fourier Low Rank Adaptation",
+  "authors": "Shubhankar Borse, Shreya Kadambi, Nilesh Prasad Pandey, Kartikeya Bhardwaj, Viswanath Ganapathy, Sweta Priyadarshi, Risheek Garrepalli, Rafael Esteves, Munawar Hayat, Fatih Porikli",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.08798v1",
+  "abstract": "While Low-Rank Adaptation (LoRA) has proven beneficial for efficiently\nfine-tuning large models, LoRA fine-tuned text-to-image diffusion models lack\ndiversity in the generated images, as the model tends to copy data from the\nobserved training samples. This effect becomes more pronounced at higher values\nof adapter strength and for adapters with higher ranks which are fine-tuned on\nsmaller datasets. To address these challenges, we present FouRA, a novel\nlow-rank method that learns projections in the Fourier domain along with\nlearning a flexible input-dependent adapter rank selection strategy. Through\nextensive experiments and analysis, we show that FouRA successfully solves the\nproblems related to data copying and distribution collapse while significantly\nimproving the generated image quality. We demonstrate that FouRA enhances the\ngeneralization of fine-tuned models thanks to its adaptive rank selection. We\nfurther show that the learned projections in the frequency domain are\ndecorrelated and prove effective when merging multiple adapters. While FouRA is\nmotivated for vision tasks, we also demonstrate its merits for language tasks\non the GLUE benchmark."
+}

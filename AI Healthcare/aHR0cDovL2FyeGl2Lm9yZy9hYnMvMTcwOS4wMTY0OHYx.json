@@ -1,0 +1,7 @@
+{
+  "title": "Boosting Deep Learning Risk Prediction with Generative Adversarial\n  Networks for Electronic Health Records",
+  "authors": "Zhengping Che, Yu Cheng, Shuangfei Zhai, Zhaonan Sun, Yan Liu",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1709.01648v1",
+  "abstract": "The rapid growth of Electronic Health Records (EHRs), as well as the\naccompanied opportunities in Data-Driven Healthcare (DDH), has been attracting\nwidespread interests and attentions. Recent progress in the design and\napplications of deep learning methods has shown promising results and is\nforcing massive changes in healthcare academia and industry, but most of these\nmethods rely on massive labeled data. In this work, we propose a general deep\nlearning framework which is able to boost risk prediction performance with\nlimited EHR data. Our model takes a modified generative adversarial network\nnamely ehrGAN, which can provide plausible labeled EHR data by mimicking real\npatient records, to augment the training dataset in a semi-supervised learning\nmanner. We use this generative model together with a convolutional neural\nnetwork (CNN) based prediction model to improve the onset prediction\nperformance. Experiments on two real healthcare datasets demonstrate that our\nproposed framework produces realistic data samples and achieves significant\nimprovements on classification tasks with the generated data over several\nstat-of-the-art baselines."
+}

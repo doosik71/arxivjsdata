@@ -1,0 +1,7 @@
+{
+  "title": "Deep reinforcement learning in medical imaging: A literature review",
+  "authors": "S. Kevin Zhou, Hoang Ngan Le, Khoa Luu, Hien V. Nguyen, Nicholas Ayache",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2103.05115v1",
+  "abstract": "Deep reinforcement learning (DRL) augments the reinforcement learning\nframework, which learns a sequence of actions that maximizes the expected\nreward, with the representative power of deep neural networks. Recent works\nhave demonstrated the great potential of DRL in medicine and healthcare. This\npaper presents a literature review of DRL in medical imaging. We start with a\ncomprehensive tutorial of DRL, including the latest model-free and model-based\nalgorithms. We then cover existing DRL applications for medical imaging, which\nare roughly divided into three main categories: (I) parametric medical image\nanalysis tasks including landmark detection, object/lesion detection,\nregistration, and view plane localization; (ii) solving optimization tasks\nincluding hyperparameter tuning, selecting augmentation strategies, and neural\narchitecture search; and (iii) miscellaneous applications including surgical\ngesture segmentation, personalized mobile health intervention, and\ncomputational model personalization. The paper concludes with discussions of\nfuture perspectives."
+}

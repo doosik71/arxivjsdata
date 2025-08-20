@@ -1,0 +1,7 @@
+{
+  "title": "Unsupervised Deep Representation Learning for Real-Time Tracking",
+  "authors": "Ning Wang, Wengang Zhou, Yibing Song, Chao Ma, Wei Liu, Houqiang Li",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.11984v1",
+  "abstract": "The advancement of visual tracking has continuously been brought by deep\nlearning models. Typically, supervised learning is employed to train these\nmodels with expensive labeled data. In order to reduce the workload of manual\nannotations and learn to track arbitrary objects, we propose an unsupervised\nlearning method for visual tracking. The motivation of our unsupervised\nlearning is that a robust tracker should be effective in bidirectional\ntracking. Specifically, the tracker is able to forward localize a target object\nin successive frames and backtrace to its initial position in the first frame.\nBased on such a motivation, in the training process, we measure the consistency\nbetween forward and backward trajectories to learn a robust tracker from\nscratch merely using unlabeled videos. We build our framework on a Siamese\ncorrelation filter network, and propose a multi-frame validation scheme and a\ncost-sensitive loss to facilitate unsupervised learning. Without bells and\nwhistles, the proposed unsupervised tracker achieves the baseline accuracy as\nclassic fully supervised trackers while achieving a real-time speed.\nFurthermore, our unsupervised framework exhibits a potential in leveraging more\nunlabeled or weakly labeled data to further improve the tracking accuracy."
+}

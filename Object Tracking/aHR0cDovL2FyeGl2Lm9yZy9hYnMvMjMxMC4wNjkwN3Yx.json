@@ -1,0 +1,7 @@
+{
+  "title": "Self-supervised Object-Centric Learning for Videos",
+  "authors": "Görkay Aydemir, Weidi Xie, Fatma Güney",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2310.06907v1",
+  "abstract": "Unsupervised multi-object segmentation has shown impressive results on images\nby utilizing powerful semantics learned from self-supervised pretraining. An\nadditional modality such as depth or motion is often used to facilitate the\nsegmentation in video sequences. However, the performance improvements observed\nin synthetic sequences, which rely on the robustness of an additional cue, do\nnot translate to more challenging real-world scenarios. In this paper, we\npropose the first fully unsupervised method for segmenting multiple objects in\nreal-world sequences. Our object-centric learning framework spatially binds\nobjects to slots on each frame and then relates these slots across frames. From\nthese temporally-aware slots, the training objective is to reconstruct the\nmiddle frame in a high-level semantic feature space. We propose a masking\nstrategy by dropping a significant portion of tokens in the feature space for\nefficiency and regularization. Additionally, we address over-clustering by\nmerging slots based on similarity. Our method can successfully segment multiple\ninstances of complex and high-variety classes in YouTube videos."
+}

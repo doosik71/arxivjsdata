@@ -1,0 +1,7 @@
+{
+  "title": "Unsupervised Deep Tracking",
+  "authors": "Ning Wang, Yibing Song, Chao Ma, Wengang Zhou, Wei Liu, Houqiang Li",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1904.01828v1",
+  "abstract": "We propose an unsupervised visual tracking method in this paper. Different\nfrom existing approaches using extensive annotated data for supervised\nlearning, our CNN model is trained on large-scale unlabeled videos in an\nunsupervised manner. Our motivation is that a robust tracker should be\neffective in both the forward and backward predictions (i.e., the tracker can\nforward localize the target object in successive frames and backtrace to its\ninitial position in the first frame). We build our framework on a Siamese\ncorrelation filter network, which is trained using unlabeled raw videos.\nMeanwhile, we propose a multiple-frame validation method and a cost-sensitive\nloss to facilitate unsupervised learning. Without bells and whistles, the\nproposed unsupervised tracker achieves the baseline accuracy of fully\nsupervised trackers, which require complete and accurate labels during\ntraining. Furthermore, unsupervised framework exhibits a potential in\nleveraging unlabeled or weakly labeled data to further improve the tracking\naccuracy."
+}

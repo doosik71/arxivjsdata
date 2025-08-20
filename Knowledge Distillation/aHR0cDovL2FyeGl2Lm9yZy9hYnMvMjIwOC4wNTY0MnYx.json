@@ -1,0 +1,7 @@
+{
+  "title": "Self-Knowledge Distillation via Dropout",
+  "authors": "Hyoje Lee, Yeachan Park, Hyun Seo, Myungjoo Kang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2208.05642v1",
+  "abstract": "To boost the performance, deep neural networks require deeper or wider\nnetwork structures that involve massive computational and memory costs. To\nalleviate this issue, the self-knowledge distillation method regularizes the\nmodel by distilling the internal knowledge of the model itself. Conventional\nself-knowledge distillation methods require additional trainable parameters or\nare dependent on the data. In this paper, we propose a simple and effective\nself-knowledge distillation method using a dropout (SD-Dropout). SD-Dropout\ndistills the posterior distributions of multiple models through a dropout\nsampling. Our method does not require any additional trainable modules, does\nnot rely on data, and requires only simple operations. Furthermore, this simple\nmethod can be easily combined with various self-knowledge distillation\napproaches. We provide a theoretical and experimental analysis of the effect of\nforward and reverse KL-divergences in our work. Extensive experiments on\nvarious vision tasks, i.e., image classification, object detection, and\ndistribution shift, demonstrate that the proposed method can effectively\nimprove the generalization of a single network. Further experiments show that\nthe proposed method also improves calibration performance, adversarial\nrobustness, and out-of-distribution detection ability."
+}

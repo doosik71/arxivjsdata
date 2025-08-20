@@ -1,0 +1,7 @@
+{
+  "title": "Tracking Holistic Object Representations",
+  "authors": "Axel Sauer, Elie Aljalbout, Sami Haddadin",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1907.12920v2",
+  "abstract": "Recent advances in visual tracking are based on siamese feature extractors\nand template matching. For this category of trackers, latest research focuses\non better feature embeddings and similarity measures. In this work, we focus on\nbuilding holistic object representations for tracking. We propose a framework\nthat is designed to be used on top of previous trackers without any need for\nfurther training of the siamese network. The framework leverages the idea of\nobtaining additional object templates during the tracking process. Since the\nnumber of stored templates is limited, our method only keeps the most diverse\nones. We achieve this by providing a new diversity measure in the space of\nsiamese features. The obtained representation contains information beyond the\nground truth object location provided to the system. It is then useful for\ntracking itself but also for further tasks which require a visual understanding\nof objects. Strong empirical results on tracking benchmarks indicate that our\nmethod can improve the performance and robustness of the underlying trackers\nwhile barely reducing their speed. In addition, our method is able to match\ncurrent state-of-the-art results, while using a simpler and older network\narchitecture and running three times faster."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "The Expressive Power of Low-Rank Adaptation",
+  "authors": "Yuchen Zeng, Kangwook Lee",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2310.17513v3",
+  "abstract": "Low-Rank Adaptation (LoRA), a parameter-efficient fine-tuning method that\nleverages low-rank adaptation of weight matrices, has emerged as a prevalent\ntechnique for fine-tuning pre-trained models such as large language models and\ndiffusion models. Despite its huge success in practice, the theoretical\nunderpinnings of LoRA have largely remained unexplored. This paper takes the\nfirst step to bridge this gap by theoretically analyzing the expressive power\nof LoRA. We prove that, for fully connected neural networks, LoRA can adapt any\nmodel $f$ to accurately represent any smaller target model $\\overline{f}$ if\nLoRA-rank $\\geq(\\text{width of }f) \\times \\frac{\\text{depth of\n}\\overline{f}}{\\text{depth of }f}$. We also quantify the approximation error\nwhen LoRA-rank is lower than the threshold. For Transformer networks, we show\nany model can be adapted to a target model of the same size with\nrank-$(\\frac{\\text{embedding size}}{2})$ LoRA adapters."
+}

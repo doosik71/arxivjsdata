@@ -1,0 +1,7 @@
+{
+  "title": "CLIP-Embed-KD: Computationally Efficient Knowledge Distillation Using\n  Embeddings as Teachers",
+  "authors": "Lakshmi Nair",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.06170v1",
+  "abstract": "Contrastive Language-Image Pre-training (CLIP) has been shown to improve\nzero-shot generalization capabilities of language and vision models. In this\npaper, we extend CLIP for efficient knowledge distillation, by utilizing\nembeddings as teachers. Typical knowledge distillation frameworks require\nrunning forward passes through a teacher model, which is often prohibitive in\nthe case of billion or trillion parameter teachers. In these cases, using only\nthe embeddings of the teacher models to guide the distillation can yield\nsignificant computational savings. Our preliminary findings show that\nCLIP-based knowledge distillation with embeddings can outperform full scale\nknowledge distillation using $9\\times$ less memory and $8\\times$ less training\ntime. Code available at: https://github.com/lnairGT/CLIP-Distillation/"
+}

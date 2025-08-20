@@ -1,0 +1,7 @@
+{
+  "title": "Self-Supervision by Prediction for Object Discovery in Videos",
+  "authors": "Beril Besbinar, Pascal Frossard",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2103.05669v1",
+  "abstract": "Despite their irresistible success, deep learning algorithms still heavily\nrely on annotated data. On the other hand, unsupervised settings pose many\nchallenges, especially about determining the right inductive bias in diverse\nscenarios. One scalable solution is to make the model generate the supervision\nfor itself by leveraging some part of the input data, which is known as\nself-supervised learning. In this paper, we use the prediction task as\nself-supervision and build a novel object-centric model for image sequence\nrepresentation. In addition to disentangling the notion of objects and the\nmotion dynamics, our compositional structure explicitly handles occlusion and\ninpaints inferred objects and background for the composition of the predicted\nframe. With the aid of auxiliary loss functions that promote spatially and\ntemporally consistent object representations, our self-supervised framework can\nbe trained without the help of any manual annotation or pretrained network.\nInitial experiments confirm that the proposed pipeline is a promising step\ntowards object-centric video prediction."
+}

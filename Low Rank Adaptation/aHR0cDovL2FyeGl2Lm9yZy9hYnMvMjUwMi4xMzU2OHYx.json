@@ -1,0 +1,7 @@
+{
+  "title": "LSR-Adapt: Ultra-Efficient Parameter Tuning with Matrix Low Separation\n  Rank Kernel Adaptation",
+  "authors": "Xin Li, Anand Sarwate",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.13568v1",
+  "abstract": "Imposing an effective structural assumption on neural network weight matrices\nhas been the major paradigm for designing Parameter-Efficient Fine-Tuning\n(PEFT) systems for adapting modern large pre-trained models to various\ndownstream tasks. However, low rank based adaptation has become increasingly\nchallenging due to the sheer scale of modern large language models. In this\npaper, we propose an effective kernelization to further reduce the number of\nparameters required for adaptation tasks. Specifically, from the classical idea\nin numerical analysis regarding matrix Low-Separation-Rank (LSR)\nrepresentations, we develop a kernel using this representation for the low rank\nadapter matrices of the linear layers from large networks, named the Low\nSeparation Rank Adaptation (LSR-Adapt) kernel. With the ultra-efficient kernel\nrepresentation of the low rank adapter matrices, we manage to achieve\nstate-of-the-art performance with even higher accuracy with almost half the\nnumber of parameters as compared to conventional low rank based methods. This\nstructural assumption also opens the door to further GPU-side optimizations due\nto the highly parallelizable nature of Kronecker computations."
+}

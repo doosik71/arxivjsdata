@@ -1,0 +1,7 @@
+{
+  "title": "Visual Interpretable and Explainable Deep Learning Models for Brain\n  Tumor MRI and COVID-19 Chest X-ray Images",
+  "authors": "Yusuf Brima, Marcellin Atemkeng",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2208.00953v2",
+  "abstract": "Deep learning shows promise for medical image analysis but lacks\ninterpretability, hindering adoption in healthcare. Attribution techniques that\nexplain model reasoning may increase trust in deep learning among clinical\nstakeholders. This paper aimed to evaluate attribution methods for illuminating\nhow deep neural networks analyze medical images. Using adaptive path-based\ngradient integration, we attributed predictions from brain tumor MRI and\nCOVID-19 chest X-ray datasets made by recent deep convolutional neural network\nmodels. The technique highlighted possible biomarkers, exposed model biases,\nand offered insights into the links between input and prediction. Our analysis\ndemonstrates the method's ability to elucidate model reasoning on these\ndatasets. The resulting attributions show promise for improving deep learning\ntransparency for domain experts by revealing the rationale behind predictions.\nThis study advances model interpretability to increase trust in deep learning\namong healthcare stakeholders."
+}

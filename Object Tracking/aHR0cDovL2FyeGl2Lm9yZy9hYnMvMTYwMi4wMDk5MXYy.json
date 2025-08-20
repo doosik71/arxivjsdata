@@ -1,0 +1,7 @@
+{
+  "title": "Deep Tracking: Seeing Beyond Seeing Using Recurrent Neural Networks",
+  "authors": "Peter Ondruska, Ingmar Posner",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1602.00991v2",
+  "abstract": "This paper presents to the best of our knowledge the first end-to-end object\ntracking approach which directly maps from raw sensor input to object tracks in\nsensor space without requiring any feature engineering or system identification\nin the form of plant or sensor models. Specifically, our system accepts a\nstream of raw sensor data at one end and, in real-time, produces an estimate of\nthe entire environment state at the output including even occluded objects. We\nachieve this by framing the problem as a deep learning task and exploit\nsequence models in the form of recurrent neural networks to learn a mapping\nfrom sensor measurements to object tracks. In particular, we propose a learning\nmethod based on a form of input dropout which allows learning in an\nunsupervised manner, only based on raw, occluded sensor data without access to\nground-truth annotations. We demonstrate our approach using a synthetic dataset\ndesigned to mimic the task of tracking objects in 2D laser data -- as commonly\nencountered in robotics applications -- and show that it learns to track many\ndynamic objects despite occlusions and the presence of sensor noise."
+}

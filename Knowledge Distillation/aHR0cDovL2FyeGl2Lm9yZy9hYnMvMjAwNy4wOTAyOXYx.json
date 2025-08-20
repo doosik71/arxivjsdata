@@ -1,0 +1,7 @@
+{
+  "title": "Knowledge Distillation in Deep Learning and its Applications",
+  "authors": "Abdolmaged Alkhulaifi, Fahad Alsahli, Irfan Ahmad",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.09029v1",
+  "abstract": "Deep learning based models are relatively large, and it is hard to deploy\nsuch models on resource-limited devices such as mobile phones and embedded\ndevices. One possible solution is knowledge distillation whereby a smaller\nmodel (student model) is trained by utilizing the information from a larger\nmodel (teacher model). In this paper, we present a survey of knowledge\ndistillation techniques applied to deep learning models. To compare the\nperformances of different techniques, we propose a new metric called\ndistillation metric. Distillation metric compares different knowledge\ndistillation algorithms based on sizes and accuracy scores. Based on the\nsurvey, some interesting conclusions are drawn and presented in this paper."
+}

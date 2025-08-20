@@ -1,0 +1,7 @@
+{
+  "title": "MoR: Mixture of Ranks for Low-Rank Adaptation Tuning",
+  "authors": "Chuanyu Tang, Yilong Chen, Zhenyu Zhang, Junyuan Shang, Wenyuan Zhang, Yong Huang, Tingwen Liu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.13408v2",
+  "abstract": "Low-Rank Adaptation (LoRA) drives research to align its performance with full\nfine-tuning. However, significant challenges remain: (1) Simply increasing the\nrank size of LoRA does not effectively capture high-rank information, which\nleads to a performance bottleneck.(2) MoE-style LoRA methods substantially\nincrease parameters and inference latency, contradicting the goals of efficient\nfine-tuning and ease of application. To address these challenges, we introduce\nMixture of Ranks (MoR), which learns rank-specific information for different\ntasks based on input and efficiently integrates multi-rank information. We\nfirstly propose a new framework that equates the integration of multiple LoRAs\nto expanding the rank of LoRA. Moreover, we hypothesize that low-rank LoRA\nalready captures sufficient intrinsic information, and MoR can derive high-rank\ninformation through mathematical transformations of the low-rank components.\nThus, MoR can reduces the learning difficulty of LoRA and enhances its\nmulti-task capabilities. MoR achieves impressive results, with MoR delivering a\n1.31\\% performance improvement while using only 93.93\\% of the parameters\ncompared to baseline methods."
+}

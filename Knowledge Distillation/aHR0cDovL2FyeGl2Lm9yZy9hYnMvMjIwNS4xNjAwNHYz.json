@@ -1,0 +1,7 @@
+{
+  "title": "What Knowledge Gets Distilled in Knowledge Distillation?",
+  "authors": "Utkarsh Ojha, Yuheng Li, Anirudh Sundara Rajan, Yingyu Liang, Yong Jae Lee",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2205.16004v3",
+  "abstract": "Knowledge distillation aims to transfer useful information from a teacher\nnetwork to a student network, with the primary goal of improving the student's\nperformance for the task at hand. Over the years, there has a been a deluge of\nnovel techniques and use cases of knowledge distillation. Yet, despite the\nvarious improvements, there seems to be a glaring gap in the community's\nfundamental understanding of the process. Specifically, what is the knowledge\nthat gets distilled in knowledge distillation? In other words, in what ways\ndoes the student become similar to the teacher? Does it start to localize\nobjects in the same way? Does it get fooled by the same adversarial samples?\nDoes its data invariance properties become similar? Our work presents a\ncomprehensive study to try to answer these questions. We show that existing\nmethods can indeed indirectly distill these properties beyond improving task\nperformance. We further study why knowledge distillation might work this way,\nand show that our findings have practical implications as well."
+}

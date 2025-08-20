@@ -1,0 +1,7 @@
+{
+  "title": "CAKD: A Correlation-Aware Knowledge Distillation Framework Based on\n  Decoupling Kullback-Leibler Divergence",
+  "authors": "Zao Zhang, Huaming Chen, Pei Ning, Nan Yang, Dong Yuan",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.14741v1",
+  "abstract": "In knowledge distillation, a primary focus has been on transforming and\nbalancing multiple distillation components. In this work, we emphasize the\nimportance of thoroughly examining each distillation component, as we observe\nthat not all elements are equally crucial. From this perspective,we decouple\nthe Kullback-Leibler (KL) divergence into three unique elements: Binary\nClassification Divergence (BCD), Strong Correlation Divergence (SCD), and Weak\nCorrelation Divergence (WCD). Each of these elements presents varying degrees\nof influence. Leveraging these insights, we present the Correlation-Aware\nKnowledge Distillation (CAKD) framework. CAKD is designed to prioritize the\nfacets of the distillation components that have the most substantial influence\non predictions, thereby optimizing knowledge transfer from teacher to student\nmodels. Our experiments demonstrate that adjusting the effect of each element\nenhances the effectiveness of knowledge transformation. Furthermore, evidence\nshows that our novel CAKD framework consistently outperforms the baseline\nacross diverse models and datasets. Our work further highlights the importance\nand effectiveness of closely examining the impact of different parts of\ndistillation process."
+}

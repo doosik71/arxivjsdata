@@ -1,0 +1,7 @@
+{
+  "title": "A New Interpretable Neural Network-Based Rule Model for Healthcare\n  Decision Making",
+  "authors": "Adrien Benamira, Tristan Guerand, Thomas Peyrin",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.11101v1",
+  "abstract": "In healthcare applications, understanding how machine/deep learning models\nmake decisions is crucial. In this study, we introduce a neural network\nframework, $\\textit{Truth Table rules}$ (TT-rules), that combines the global\nand exact interpretability properties of rule-based models with the high\nperformance of deep neural networks. TT-rules is built upon $\\textit{Truth\nTable nets}$ (TTnet), a family of deep neural networks initially developed for\nformal verification. By extracting the necessary and sufficient rules\n$\\mathcal{R}$ from the trained TTnet model (global interpretability) to yield\nthe same output as the TTnet (exact interpretability), TT-rules effectively\ntransforms the neural network into a rule-based model. This rule-based model\nsupports binary classification, multi-label classification, and regression\ntasks for small to large tabular datasets. After outlining the framework, we\nevaluate TT-rules' performance on healthcare applications and compare it to\nstate-of-the-art rule-based methods. Our results demonstrate that TT-rules\nachieves equal or higher performance compared to other interpretable methods.\nNotably, TT-rules presents the first accurate rule-based model capable of\nfitting large tabular datasets, including two real-life DNA datasets with over\n20K features."
+}

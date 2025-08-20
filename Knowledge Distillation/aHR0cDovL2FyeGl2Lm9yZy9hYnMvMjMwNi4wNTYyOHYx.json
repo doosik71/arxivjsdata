@@ -1,0 +1,7 @@
+{
+  "title": "Quantifying the Knowledge in GNNs for Reliable Distillation into MLPs",
+  "authors": "Lirong Wu, Haitao Lin, Yufei Huang, Stan Z. Li",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.05628v1",
+  "abstract": "To bridge the gaps between topology-aware Graph Neural Networks (GNNs) and\ninference-efficient Multi-Layer Perceptron (MLPs), GLNN proposes to distill\nknowledge from a well-trained teacher GNN into a student MLP. Despite their\ngreat progress, comparatively little work has been done to explore the\nreliability of different knowledge points (nodes) in GNNs, especially their\nroles played during distillation. In this paper, we first quantify the\nknowledge reliability in GNN by measuring the invariance of their information\nentropy to noise perturbations, from which we observe that different knowledge\npoints (1) show different distillation speeds (temporally); (2) are\ndifferentially distributed in the graph (spatially). To achieve reliable\ndistillation, we propose an effective approach, namely Knowledge-inspired\nReliable Distillation (KRD), that models the probability of each node being an\ninformative and reliable knowledge point, based on which we sample a set of\nadditional reliable knowledge points as supervision for training student MLPs.\nExtensive experiments show that KRD improves over the vanilla MLPs by 12.62%\nand outperforms its corresponding teacher GNNs by 2.16% averaged over 7\ndatasets and 3 GNN architectures."
+}

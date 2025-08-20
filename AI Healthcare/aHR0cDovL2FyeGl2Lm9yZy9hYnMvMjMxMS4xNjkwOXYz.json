@@ -1,0 +1,7 @@
+{
+  "title": "Multinomial belief networks for healthcare data",
+  "authors": "H. C. Donker, D. Neijzen, J. de Jong, G. A. Lunter",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.16909v3",
+  "abstract": "Healthcare data from patient or population cohorts are often characterized by\nsparsity, high missingness and relatively small sample sizes. In addition,\nbeing able to quantify uncertainty is often important in a medical context. To\naddress these analytical requirements we propose a deep generative Bayesian\nmodel for multinomial count data. We develop a collapsed Gibbs sampling\nprocedure that takes advantage of a series of augmentation relations, inspired\nby the Zhou$\\unicode{x2013}$Cong$\\unicode{x2013}$Chen model. We visualise the\nmodel's ability to identify coherent substructures in the data using a dataset\nof handwritten digits. We then apply it to a large experimental dataset of DNA\nmutations in cancer and show that we can identify biologically meaningful\nclusters of mutational signatures in a fully data-driven way."
+}

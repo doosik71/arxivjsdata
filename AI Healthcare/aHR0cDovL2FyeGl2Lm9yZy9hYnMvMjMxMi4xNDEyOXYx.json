@@ -1,0 +1,7 @@
+{
+  "title": "WellFactor: Patient Profiling using Integrative Embedding of Healthcare\n  Data",
+  "authors": "Dongjin Choi, Andy Xiang, Ozgur Ozturk, Deep Shrestha, Barry Drake, Hamid Haidarian, Faizan Javed, Haesun Park",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.14129v1",
+  "abstract": "In the rapidly evolving healthcare industry, platforms now have access to not\nonly traditional medical records, but also diverse data sets encompassing\nvarious patient interactions, such as those from healthcare web portals. To\naddress this rich diversity of data, we introduce WellFactor: a method that\nderives patient profiles by integrating information from these sources. Central\nto our approach is the utilization of constrained low-rank approximation.\nWellFactor is optimized to handle the sparsity that is often inherent in\nhealthcare data. Moreover, by incorporating task-specific label information,\nour method refines the embedding results, offering a more informed perspective\non patients. One important feature of WellFactor is its ability to compute\nembeddings for new, previously unobserved patient data instantaneously,\neliminating the need to revisit the entire data set or recomputing the\nembedding. Comprehensive evaluations on real-world healthcare data demonstrate\nWellFactor's effectiveness. It produces better results compared to other\nexisting methods in classification performance, yields meaningful clustering of\npatients, and delivers consistent results in patient similarity searches and\npredictions."
+}

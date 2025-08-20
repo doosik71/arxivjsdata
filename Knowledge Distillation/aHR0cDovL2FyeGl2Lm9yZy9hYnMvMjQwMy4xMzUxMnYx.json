@@ -1,0 +1,7 @@
+{
+  "title": "Scale Decoupled Distillation",
+  "authors": "Shicai Wei Chunbo Luo Yang Luo",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.13512v1",
+  "abstract": "Logit knowledge distillation attracts increasing attention due to its\npracticality in recent studies. However, it often suffers inferior performance\ncompared to the feature knowledge distillation. In this paper, we argue that\nexisting logit-based methods may be sub-optimal since they only leverage the\nglobal logit output that couples multiple semantic knowledge. This may transfer\nambiguous knowledge to the student and mislead its learning. To this end, we\npropose a simple but effective method, i.e., Scale Decoupled Distillation\n(SDD), for logit knowledge distillation. SDD decouples the global logit output\ninto multiple local logit outputs and establishes distillation pipelines for\nthem. This helps the student to mine and inherit fine-grained and unambiguous\nlogit knowledge. Moreover, the decoupled knowledge can be further divided into\nconsistent and complementary logit knowledge that transfers the semantic\ninformation and sample ambiguity, respectively. By increasing the weight of\ncomplementary parts, SDD can guide the student to focus more on ambiguous\nsamples, improving its discrimination ability. Extensive experiments on several\nbenchmark datasets demonstrate the effectiveness of SDD for wide\nteacher-student pairs, especially in the fine-grained classification task. Code\nis available at: https://github.com/shicaiwei123/SDD-CVPR2024"
+}

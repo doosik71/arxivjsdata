@@ -1,0 +1,7 @@
+{
+  "title": "On Self-Distilling Graph Neural Network",
+  "authors": "Yuzhao Chen, Yatao Bian, Xi Xiao, Yu Rong, Tingyang Xu, Junzhou Huang",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2011.02255v2",
+  "abstract": "Recently, the teacher-student knowledge distillation framework has\ndemonstrated its potential in training Graph Neural Networks (GNNs). However,\ndue to the difficulty of training over-parameterized GNN models, one may not\neasily obtain a satisfactory teacher model for distillation. Furthermore, the\ninefficient training process of teacher-student knowledge distillation also\nimpedes its applications in GNN models. In this paper, we propose the first\nteacher-free knowledge distillation method for GNNs, termed GNN\nSelf-Distillation (GNN-SD), that serves as a drop-in replacement of the\nstandard training process. The method is built upon the proposed neighborhood\ndiscrepancy rate (NDR), which quantifies the non-smoothness of the embedded\ngraph in an efficient way. Based on this metric, we propose the adaptive\ndiscrepancy retaining (ADR) regularizer to empower the transferability of\nknowledge that maintains high neighborhood discrepancy across GNN layers. We\nalso summarize a generic GNN-SD framework that could be exploited to induce\nother distillation strategies. Experiments further prove the effectiveness and\ngeneralization of our approach, as it brings: 1) state-of-the-art GNN\ndistillation performance with less training cost, 2) consistent and\nconsiderable performance enhancement for various popular backbones."
+}

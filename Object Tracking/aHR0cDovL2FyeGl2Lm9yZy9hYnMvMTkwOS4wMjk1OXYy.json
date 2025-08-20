@@ -1,0 +1,7 @@
+{
+  "title": "Discriminative and Robust Online Learning for Siamese Visual Tracking",
+  "authors": "Jinghao Zhou, Peng Wang, Haoyang Sun",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1909.02959v2",
+  "abstract": "The problem of visual object tracking has traditionally been handled by\nvariant tracking paradigms, either learning a model of the object's appearance\nexclusively online or matching the object with the target in an offline-trained\nembedding space. Despite the recent success, each method agonizes over its\nintrinsic constraint. The online-only approaches suffer from a lack of\ngeneralization of the model they learn thus are inferior in target regression,\nwhile the offline-only approaches (e.g., convolutional siamese trackers) lack\nthe target-specific context information thus are not discriminative enough to\nhandle distractors, and robust enough to deformation. Therefore, we propose an\nonline module with an attention mechanism for offline siamese networks to\nextract target-specific features under L2 error. We further propose a filter\nupdate strategy adaptive to treacherous background noises for discriminative\nlearning, and a template update strategy to handle large target deformations\nfor robust learning. Effectiveness can be validated in the consistent\nimprovement over three siamese baselines: SiamFC, SiamRPN++, and SiamMask.\nBeyond that, our model based on SiamRPN++ obtains the best results over six\npopular tracking benchmarks and can operate beyond real-time."
+}

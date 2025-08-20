@@ -1,0 +1,7 @@
+{
+  "title": "Unsupervised Multiple Person Tracking using AutoEncoder-Based Lifted\n  Multicuts",
+  "authors": "Kalun Ho, Janis Keuper, Margret Keuper",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2002.01192v1",
+  "abstract": "Multiple Object Tracking (MOT) is a long-standing task in computer vision.\nCurrent approaches based on the tracking by detection paradigm either require\nsome sort of domain knowledge or supervision to associate data correctly into\ntracks. In this work, we present an unsupervised multiple object tracking\napproach based on visual features and minimum cost lifted multicuts. Our method\nis based on straight-forward spatio-temporal cues that can be extracted from\nneighboring frames in an image sequences without superivison. Clustering based\non these cues enables us to learn the required appearance invariances for the\ntracking task at hand and train an autoencoder to generate suitable latent\nrepresentation. Thus, the resulting latent representations can serve as robust\nappearance cues for tracking even over large temporal distances where no\nreliable spatio-temporal features could be extracted. We show that, despite\nbeing trained without using the provided annotations, our model provides\ncompetitive results on the challenging MOT Benchmark for pedestrian tracking."
+}

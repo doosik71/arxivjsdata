@@ -1,0 +1,7 @@
+{
+  "title": "Life-long Learning for Multilingual Neural Machine Translation with\n  Knowledge Distillation",
+  "authors": "Yang Zhao, Junnan Zhu, Lu Xiang, Jiajun Zhang, Yu Zhou, Feifei Zhai, Chengqing Zong",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2212.02800v1",
+  "abstract": "A common scenario of Multilingual Neural Machine Translation (MNMT) is that\neach translation task arrives in a sequential manner, and the training data of\nprevious tasks is unavailable. In this scenario, the current methods suffer\nheavily from catastrophic forgetting (CF). To alleviate the CF, we investigate\nknowledge distillation based life-long learning methods. Specifically, in\none-tomany scenario, we propose a multilingual distillation method to make the\nnew model (student) jointly learn multilingual output from old model (teacher)\nand new task. In many-to one scenario, we find that direct distillation faces\nthe extreme partial distillation problem, and we propose two different methods\nto address it: pseudo input distillation and reverse teacher distillation. The\nexperimental results on twelve translation tasks show that the proposed methods\ncan better consolidate the previous knowledge and sharply alleviate the CF."
+}

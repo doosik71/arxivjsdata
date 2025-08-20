@@ -1,0 +1,7 @@
+{
+  "title": "RaSA: Rank-Sharing Low-Rank Adaptation",
+  "authors": "Zhiwei He, Zhaopeng Tu, Xing Wang, Xingyu Chen, Zhijie Wang, Jiahao Xu, Tian Liang, Wenxiang Jiao, Zhuosheng Zhang, Rui Wang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.12576v1",
+  "abstract": "Low-rank adaptation (LoRA) has been prominently employed for\nparameter-efficient fine-tuning of large language models (LLMs). However, the\nlimited expressive capacity of LoRA, stemming from the low-rank constraint, has\nbeen recognized as a bottleneck, particularly in rigorous tasks like code\ngeneration and mathematical reasoning. To address this limitation, we introduce\nRank-Sharing Low-Rank Adaptation (RaSA), an innovative extension that enhances\nthe expressive capacity of LoRA by leveraging partial rank sharing across\nlayers. By forming a shared rank pool and applying layer-specific weighting,\nRaSA effectively increases the number of ranks without augmenting parameter\noverhead. Our theoretically grounded and empirically validated approach\ndemonstrates that RaSA not only maintains the core advantages of LoRA but also\nsignificantly boosts performance in challenging code and math tasks. Code, data\nand scripts are available at: https://github.com/zwhe99/RaSA."
+}

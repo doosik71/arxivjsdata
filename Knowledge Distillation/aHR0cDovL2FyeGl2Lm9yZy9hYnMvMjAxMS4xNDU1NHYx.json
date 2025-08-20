@@ -1,0 +1,7 @@
+{
+  "title": "A Selective Survey on Versatile Knowledge Distillation Paradigm for\n  Neural Network Models",
+  "authors": "Jeong-Hoe Ku, JiHun Oh, YoungYoon Lee, Gaurav Pooniwala, SangJeong Lee",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2011.14554v1",
+  "abstract": "This paper aims to provide a selective survey about knowledge\ndistillation(KD) framework for researchers and practitioners to take advantage\nof it for developing new optimized models in the deep neural network field. To\nthis end, we give a brief overview of knowledge distillation and some related\nworks including learning using privileged information(LUPI) and generalized\ndistillation(GD). Even though knowledge distillation based on the\nteacher-student architecture was initially devised as a model compression\ntechnique, it has found versatile applications over various frameworks.\n  In this paper, we review the characteristics of knowledge distillation from\nthe hypothesis that the three important ingredients of knowledge distillation\nare distilled knowledge and loss,teacher-student paradigm, and the distillation\nprocess. In addition, we survey the versatility of the knowledge distillation\nby studying its direct applications and its usage in combination with other\ndeep learning paradigms. Finally we present some future works in knowledge\ndistillation including explainable knowledge distillation where the analytical\nanalysis of the performance gain is studied and the self-supervised learning\nwhich is a hot research topic in deep learning community."
+}

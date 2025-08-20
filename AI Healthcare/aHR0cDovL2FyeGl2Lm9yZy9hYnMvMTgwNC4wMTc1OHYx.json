@@ -1,0 +1,7 @@
+{
+  "title": "Processing of Electronic Health Records using Deep Learning: A review",
+  "authors": "Venet Osmani, Li Li, Matteo Danieletto, Benjamin Glicksberg, Joel Dudley, Oscar Mayora",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1804.01758v1",
+  "abstract": "Availability of large amount of clinical data is opening up new research\navenues in a number of fields. An exciting field in this respect is healthcare,\nwhere secondary use of healthcare data is beginning to revolutionize\nhealthcare. Except for availability of Big Data, both medical data from\nhealthcare institutions (such as EMR data) and data generated from health and\nwellbeing devices (such as personal trackers), a significant contribution to\nthis trend is also being made by recent advances on machine learning,\nspecifically deep learning algorithms."
+}

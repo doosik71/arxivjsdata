@@ -1,0 +1,7 @@
+{
+  "title": "UHP-SOT: An Unsupervised High-Performance Single Object Tracker",
+  "authors": "Zhiruo Zhou, Hongyu Fu, Suya You, Christoph C. Borel-Donohue, C. -C. Jay Kuo",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2110.01812v1",
+  "abstract": "An unsupervised online object tracking method that exploits both foreground\nand background correlations is proposed and named UHP-SOT (Unsupervised\nHigh-Performance Single Object Tracker) in this work. UHP-SOT consists of three\nmodules: 1) appearance model update, 2) background motion modeling, and 3)\ntrajectory-based box prediction. A state-of-the-art discriminative correlation\nfilters (DCF) based tracker is adopted by UHP-SOT as the first module. We point\nout shortcomings of using the first module alone such as failure in recovering\nfrom tracking loss and inflexibility in object box adaptation and then propose\nthe second and third modules to overcome them. Both are novel in single object\ntracking (SOT). We test UHP-SOT on two popular object tracking benchmarks,\nTB-50 and TB-100, and show that it outperforms all previous unsupervised SOT\nmethods, achieves a performance comparable with the best supervised\ndeep-learning-based SOT methods, and operates at a fast speed (i.e. 22.7-32.0\nFPS on a CPU)."
+}

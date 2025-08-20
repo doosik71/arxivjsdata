@@ -1,0 +1,7 @@
+{
+  "title": "DOT: A Distillation-Oriented Trainer",
+  "authors": "Borui Zhao, Quan Cui, Renjie Song, Jiajun Liang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2307.08436v1",
+  "abstract": "Knowledge distillation transfers knowledge from a large model to a small one\nvia task and distillation losses. In this paper, we observe a trade-off between\ntask and distillation losses, i.e., introducing distillation loss limits the\nconvergence of task loss. We believe that the trade-off results from the\ninsufficient optimization of distillation loss. The reason is: The teacher has\na lower task loss than the student, and a lower distillation loss drives the\nstudent more similar to the teacher, then a better-converged task loss could be\nobtained. To break the trade-off, we propose the Distillation-Oriented Trainer\n(DOT). DOT separately considers gradients of task and distillation losses, then\napplies a larger momentum to distillation loss to accelerate its optimization.\nWe empirically prove that DOT breaks the trade-off, i.e., both losses are\nsufficiently optimized. Extensive experiments validate the superiority of DOT.\nNotably, DOT achieves a +2.59% accuracy improvement on ImageNet-1k for the\nResNet50-MobileNetV1 pair. Conclusively, DOT greatly benefits the student's\noptimization properties in terms of loss convergence and model generalization.\nCode will be made publicly available."
+}

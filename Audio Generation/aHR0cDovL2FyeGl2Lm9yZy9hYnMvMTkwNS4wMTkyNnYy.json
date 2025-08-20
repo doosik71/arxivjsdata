@@ -1,0 +1,7 @@
+{
+  "title": "Zero-Shot Audio Classification Based on Class Label Embeddings",
+  "authors": "Huang Xie, Tuomas Virtanen",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1905.01926v2",
+  "abstract": "This paper proposes a zero-shot learning approach for audio classification\nbased on the textual information about class labels without any audio samples\nfrom target classes. We propose an audio classification system built on the\nbilinear model, which takes audio feature embeddings and semantic class label\nembeddings as input, and measures the compatibility between an audio feature\nembedding and a class label embedding. We use VGGish to extract audio feature\nembeddings from audio recordings. We treat textual labels as semantic side\ninformation of audio classes, and use Word2Vec to generate class label\nembeddings. Results on the ESC-50 dataset show that the proposed system can\nperform zero-shot audio classification with small training dataset. It can\nachieve accuracy (26 % on average) better than random guess (10 %) on each\naudio category. Particularly, it reaches up to 39.7 % for the category of\nnatural audio classes."
+}

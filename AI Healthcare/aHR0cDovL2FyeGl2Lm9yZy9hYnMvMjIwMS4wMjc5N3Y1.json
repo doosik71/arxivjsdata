@@ -1,0 +1,7 @@
+{
+  "title": "A Unified Review of Deep Learning for Automated Medical Coding",
+  "authors": "Shaoxiong Ji, Wei Sun, Xiaobo Li, Hang Dong, Ara Taalas, Yijia Zhang, Honghan Wu, Esa Pitkänen, Pekka Marttinen",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2201.02797v5",
+  "abstract": "Automated medical coding, an essential task for healthcare operation and\ndelivery, makes unstructured data manageable by predicting medical codes from\nclinical documents. Recent advances in deep learning and natural language\nprocessing have been widely applied to this task. However, deep learning-based\nmedical coding lacks a unified view of the design of neural network\narchitectures. This review proposes a unified framework to provide a general\nunderstanding of the building blocks of medical coding models and summarizes\nrecent advanced models under the proposed framework. Our unified framework\ndecomposes medical coding into four main components, i.e., encoder modules for\ntext feature extraction, mechanisms for building deep encoder architectures,\ndecoder modules for transforming hidden representations into medical codes, and\nthe usage of auxiliary information. Finally, we introduce the benchmarks and\nreal-world usage and discuss key research challenges and future directions."
+}

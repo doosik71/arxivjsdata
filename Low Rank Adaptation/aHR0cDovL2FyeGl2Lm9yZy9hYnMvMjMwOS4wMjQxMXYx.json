@@ -1,0 +1,7 @@
+{
+  "title": "Delta-LoRA: Fine-Tuning High-Rank Parameters with the Delta of Low-Rank\n  Matrices",
+  "authors": "Bojia Zi, Xianbiao Qi, Lingzhi Wang, Jianan Wang, Kam-Fai Wong, Lei Zhang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.02411v1",
+  "abstract": "In this paper, we present Delta-LoRA, which is a novel parameter-efficient\napproach to fine-tune large language models (LLMs). In contrast to LoRA and\nother low-rank adaptation methods such as AdaLoRA, Delta-LoRA not only updates\nthe low-rank matrices $\\bA$ and $\\bB$, but also propagate the learning to the\npre-trained weights $\\bW$ via updates utilizing the delta of the product of two\nlow-rank matrices ($\\bA^{(t+1)}\\bB^{(t+1)} - \\bA^{(t)}\\bB^{(t)}$). Such a\nstrategy effectively addresses the limitation that the incremental update of\nlow-rank matrices is inadequate for learning representations capable for\ndownstream tasks. Moreover, as the update of $\\bW$ does not need to compute the\ngradients of $\\bW$ and store their momentums, Delta-LoRA shares comparable\nmemory requirements and computational costs with LoRA. Extensive experiments\nshow that Delta-LoRA significantly outperforms existing low-rank adaptation\nmethods. We further support these results with comprehensive analyses that\nunderscore the effectiveness of Delta-LoRA."
+}

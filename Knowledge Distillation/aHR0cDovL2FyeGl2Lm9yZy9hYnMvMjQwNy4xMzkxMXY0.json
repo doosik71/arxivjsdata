@@ -1,0 +1,7 @@
+{
+  "title": "Continual Distillation Learning: Knowledge Distillation in Prompt-based\n  Continual Learning",
+  "authors": "Qifan Zhang, Yunhui Guo, Yu Xiang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2407.13911v4",
+  "abstract": "We introduce the problem of continual distillation learning (CDL) in order to\nuse knowledge distillation (KD) to improve prompt-based continual learning (CL)\nmodels. The CDL problem is valuable to study since the use of a larger vision\ntransformer (ViT) leads to better performance in prompt-based continual\nlearning. The distillation of knowledge from a large ViT to a small ViT\nimproves the inference efficiency for prompt-based CL models. We empirically\nfound that existing KD methods such as logit distillation and feature\ndistillation cannot effectively improve the student model in the CDL setup. To\naddress this issue, we introduce a novel method named Knowledge Distillation\nbased on Prompts (KDP), in which globally accessible prompts specifically\ndesigned for knowledge distillation are inserted into the frozen ViT backbone\nof the student model. We demonstrate that our KDP method effectively enhances\nthe distillation performance in comparison to existing KD methods in the CDL\nsetup."
+}

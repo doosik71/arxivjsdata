@@ -1,0 +1,7 @@
+{
+  "title": "Domain Adaptive Knowledge Distillation for Driving Scene Semantic\n  Segmentation",
+  "authors": "Divya Kothandaraman, Athira Nambiar, Anurag Mittal",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2011.08007v2",
+  "abstract": "Practical autonomous driving systems face two crucial challenges: memory\nconstraints and domain gap issues. In this paper, we present a novel approach\nto learn domain adaptive knowledge in models with limited memory, thus\nbestowing the model with the ability to deal with these issues in a\ncomprehensive manner. We term this as \"Domain Adaptive Knowledge Distillation\"\nand address the same in the context of unsupervised domain-adaptive semantic\nsegmentation by proposing a multi-level distillation strategy to effectively\ndistil knowledge at different levels. Further, we introduce a novel cross\nentropy loss that leverages pseudo labels from the teacher. These pseudo\nteacher labels play a multifaceted role towards: (i) knowledge distillation\nfrom the teacher network to the student network & (ii) serving as a proxy for\nthe ground truth for target domain images, where the problem is completely\nunsupervised. We introduce four paradigms for distilling domain adaptive\nknowledge and carry out extensive experiments and ablation studies on\nreal-to-real as well as synthetic-to-real scenarios. Our experiments\ndemonstrate the profound success of our proposed method."
+}

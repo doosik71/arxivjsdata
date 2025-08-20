@@ -1,0 +1,7 @@
+{
+  "title": "Emotion Recognition for Healthcare Surveillance Systems Using Neural\n  Networks: A Survey",
+  "authors": "Marwan Dhuheir, Abdullatif Albaseer, Emna Baccour, Aiman Erbad, Mohamed Abdallah, Mounir Hamdi",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2107.05989v1",
+  "abstract": "Recognizing the patient's emotions using deep learning techniques has\nattracted significant attention recently due to technological advancements.\nAutomatically identifying the emotions can help build smart healthcare centers\nthat can detect depression and stress among the patients in order to start the\nmedication early. Using advanced technology to identify emotions is one of the\nmost exciting topics as it defines the relationships between humans and\nmachines. Machines learned how to predict emotions by adopting various methods.\nIn this survey, we present recent research in the field of using neural\nnetworks to recognize emotions. We focus on studying emotions' recognition from\nspeech, facial expressions, and audio-visual input and show the different\ntechniques of deploying these algorithms in the real world. These three emotion\nrecognition techniques can be used as a surveillance system in healthcare\ncenters to monitor patients. We conclude the survey with a presentation of the\nchallenges and the related future work to provide an insight into the\napplications of using emotion recognition."
+}

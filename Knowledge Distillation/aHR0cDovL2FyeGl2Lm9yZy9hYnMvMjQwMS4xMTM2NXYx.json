@@ -1,0 +1,7 @@
+{
+  "title": "Confidence Preservation Property in Knowledge Distillation Abstractions",
+  "authors": "Dmitry Vengertsev, Elena Sherman",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2401.11365v1",
+  "abstract": "Social media platforms prevent malicious activities by detecting harmful\ncontent of posts and comments. To that end, they employ large-scale deep neural\nnetwork language models for sentiment analysis and content understanding. Some\nmodels, like BERT, are complex, and have numerous parameters, which makes them\nexpensive to operate and maintain. To overcome these deficiencies, industry\nexperts employ a knowledge distillation compression technique, where a\ndistilled model is trained to reproduce the classification behavior of the\noriginal model. The distillation processes terminates when the distillation\nloss function reaches the stopping criteria. This function is mainly designed\nto ensure that the original and the distilled models exhibit alike\nclassification behaviors. However, besides classification accuracy, there are\nadditional properties of the original model that the distilled model should\npreserve to be considered as an appropriate abstraction. In this work, we\nexplore whether distilled TinyBERT models preserve confidence values of the\noriginal BERT models, and investigate how this confidence preservation property\ncould guide tuning hyperparameters of the distillation process."
+}

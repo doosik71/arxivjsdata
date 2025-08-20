@@ -1,0 +1,7 @@
+{
+  "title": "PC-LoRA: Low-Rank Adaptation for Progressive Model Compression with\n  Knowledge Distillation",
+  "authors": "Injoon Hwang, Haewon Park, Youngwan Lee, Jooyoung Yang, SunJae Maeng",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.09117v1",
+  "abstract": "Low-rank adaption (LoRA) is a prominent method that adds a small number of\nlearnable parameters to the frozen pre-trained weights for parameter-efficient\nfine-tuning. Prompted by the question, ``Can we make its representation enough\nwith LoRA weights solely at the final phase of finetuning without the\npre-trained weights?'' In this work, we introduce Progressive Compression\nLoRA~(PC-LoRA), which utilizes low-rank adaptation (LoRA) to simultaneously\nperform model compression and fine-tuning. The PC-LoRA method gradually removes\nthe pre-trained weights during the training process, eventually leaving only\nthe low-rank adapters in the end. Thus, these low-rank adapters replace the\nwhole pre-trained weights, achieving the goals of compression and fine-tuning\nat the same time. Empirical analysis across various models demonstrates that\nPC-LoRA achieves parameter and FLOPs compression rates of 94.36%/89.1% for\nvision models, e.g., ViT-B, and 93.42%/84.2% parameters and FLOPs compressions\nfor language models, e.g., BERT."
+}

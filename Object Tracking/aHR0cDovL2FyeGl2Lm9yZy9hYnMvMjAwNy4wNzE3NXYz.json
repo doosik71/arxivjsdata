@@ -1,0 +1,7 @@
+{
+  "title": "Unsupervised Spatio-temporal Latent Feature Clustering for\n  Multiple-object Tracking and Segmentation",
+  "authors": "Abubakar Siddique, Reza Jalil Mozhdehi, Henry Medeiros",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.07175v3",
+  "abstract": "Assigning consistent temporal identifiers to multiple moving objects in a\nvideo sequence is a challenging problem. A solution to that problem would have\nimmediate ramifications in multiple object tracking and segmentation problems.\nWe propose a strategy that treats the temporal identification task as a\nspatio-temporal clustering problem. We propose an unsupervised learning\napproach using a convolutional and fully connected autoencoder, which we call\ndeep heterogeneous autoencoder, to learn discriminative features from\nsegmentation masks and detection bounding boxes. We extract masks and their\ncorresponding bounding boxes from a pretrained instance segmentation network\nand train the autoencoders jointly using task-dependent uncertainty weights to\ngenerate common latent features. We then construct constraints graphs that\nencourage associations among objects that satisfy a set of known temporal\nconditions. The feature vectors and the constraints graphs are then provided to\nthe kmeans clustering algorithm to separate the corresponding data points in\nthe latent space. We evaluate the performance of our method using challenging\nsynthetic and real-world multiple-object video datasets. Our results show that\nour technique outperforms several state-of-the-art methods."
+}
