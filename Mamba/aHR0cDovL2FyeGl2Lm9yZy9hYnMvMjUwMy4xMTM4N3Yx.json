@@ -1,0 +1,7 @@
+{
+  "title": "Hierarchical Information-Guided Spatio-Temporal Mamba for Stock Time\n  Series Forecasting",
+  "authors": "Wenbo Yan, Shurui Wang, Ying Tan",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.11387v1",
+  "abstract": "Mamba has demonstrated excellent performance in various time series\nforecasting tasks due to its superior selection mechanism. Nevertheless,\nconventional Mamba-based models encounter significant challenges in accurately\npredicting stock time series, as they fail to adequately capture both the\noverarching market dynamics and the intricate interdependencies among\nindividual stocks. To overcome these constraints, we introduce the Hierarchical\nInformation-Guided Spatio-Temporal Mamba (HIGSTM) framework. HIGSTM introduces\nIndex-Guided Frequency Filtering Decomposition to extract commonality and\nspecificity from time series. The model architecture features a meticulously\ndesigned hierarchical framework that systematically captures both temporal\ndynamic patterns and global static relationships within the stock market.\nFurthermore, we propose an Information-Guided Mamba that integrates macro\ninformations into the sequence selection process, thereby facilitating more\nmarket-conscious decision-making. Comprehensive experimental evaluations\nconducted on the CSI500, CSI800 and CSI1000 datasets demonstrate that HIGSTM\nachieves state-of-the-art performance."
+}

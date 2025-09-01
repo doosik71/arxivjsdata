@@ -1,0 +1,7 @@
+{
+  "title": "Audio Mamba: Pretrained Audio State Space Model For Audio Tagging",
+  "authors": "Jiaju Lin, Haoxuan Hu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.13636v1",
+  "abstract": "Audio tagging is an important task of mapping audio samples to their\ncorresponding categories. Recently endeavours that exploit transformer models\nin this field have achieved great success. However, the quadratic\nself-attention cost limits the scaling of audio transformer models and further\nconstrains the development of more universal audio models. In this paper, we\nattempt to solve this problem by proposing Audio Mamba, a self-attention-free\napproach that captures long audio spectrogram dependency with state space\nmodels. Our experimental results on two audio-tagging datasets demonstrate the\nparameter efficiency of Audio Mamba, it achieves comparable results to SOTA\naudio spectrogram transformers with one third parameters."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Decision Mamba Architectures",
+  "authors": "André Correia, Luís A. Alexandre",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.07943v2",
+  "abstract": "Recent advancements in imitation learning have been largely fueled by the\nintegration of sequence models, which provide a structured flow of information\nto effectively mimic task behaviours. Currently, Decision Transformer (DT) and\nsubsequently, the Hierarchical Decision Transformer (HDT), presented\nTransformer-based approaches to learn task policies. Recently, the Mamba\narchitecture has shown to outperform Transformers across various task domains.\nIn this work, we introduce two novel methods, Decision Mamba (DM) and\nHierarchical Decision Mamba (HDM), aimed at enhancing the performance of the\nTransformer models. Through extensive experimentation across diverse\nenvironments such as OpenAI Gym and D4RL, leveraging varying demonstration data\nsets, we demonstrate the superiority of Mamba models over their Transformer\ncounterparts in a majority of tasks. Results show that DM outperforms other\nmethods in most settings. The code can be found at\nhttps://github.com/meowatthemoon/DecisionMamba."
+}

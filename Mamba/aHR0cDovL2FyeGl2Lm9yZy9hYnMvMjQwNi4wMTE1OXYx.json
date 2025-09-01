@@ -1,0 +1,7 @@
+{
+  "title": "Dimba: Transformer-Mamba Diffusion Models",
+  "authors": "Zhengcong Fei, Mingyuan Fan, Changqian Yu, Debang Li, Youqiang Zhang, Junshi Huang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.01159v1",
+  "abstract": "This paper unveils Dimba, a new text-to-image diffusion model that employs a\ndistinctive hybrid architecture combining Transformer and Mamba elements.\nSpecifically, Dimba sequentially stacked blocks alternate between Transformer\nand Mamba layers, and integrate conditional information through the\ncross-attention layer, thus capitalizing on the advantages of both\narchitectural paradigms. We investigate several optimization strategies,\nincluding quality tuning, resolution adaption, and identify critical\nconfigurations necessary for large-scale image generation. The model's flexible\ndesign supports scenarios that cater to specific resource constraints and\nobjectives. When scaled appropriately, Dimba offers substantial throughput and\na reduced memory footprint relative to conventional pure Transformers-based\nbenchmarks. Extensive experiments indicate that Dimba achieves comparable\nperformance compared with benchmarks in terms of image quality, artistic\nrendering, and semantic control. We also report several intriguing properties\nof architecture discovered during evaluation and release checkpoints in\nexperiments. Our findings emphasize the promise of large-scale hybrid\nTransformer-Mamba architectures in the foundational stage of diffusion models,\nsuggesting a bright future for text-to-image generation."
+}

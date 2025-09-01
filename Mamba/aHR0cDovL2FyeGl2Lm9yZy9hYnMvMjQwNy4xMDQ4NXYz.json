@@ -1,0 +1,7 @@
+{
+  "title": "MM-Tracker: Motion Mamba with Margin Loss for UAV-platform Multiple\n  Object Tracking",
+  "authors": "Mufeng Yao, Jinlong Peng, Qingdong He, Bo Peng, Hao Chen, Mingmin Chi, Chao Liu, Jon Atli Benediktsson",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2407.10485v3",
+  "abstract": "Multiple object tracking (MOT) from unmanned aerial vehicle (UAV) platforms\nrequires efficient motion modeling. This is because UAV-MOT faces both local\nobject motion and global camera motion. Motion blur also increases the\ndifficulty of detecting large moving objects. Previous UAV motion modeling\napproaches either focus only on local motion or ignore motion blurring effects,\nthus limiting their tracking performance and speed. To address these issues, we\npropose the Motion Mamba Module, which explores both local and global motion\nfeatures through cross-correlation and bi-directional Mamba Modules for better\nmotion modeling. To address the detection difficulties caused by motion blur,\nwe also design motion margin loss to effectively improve the detection accuracy\nof motion blurred objects. Based on the Motion Mamba module and motion margin\nloss, our proposed MM-Tracker surpasses the state-of-the-art in two widely\nopen-source UAV-MOT datasets. Code will be available."
+}

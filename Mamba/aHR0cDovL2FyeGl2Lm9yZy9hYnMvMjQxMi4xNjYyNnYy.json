@@ -1,0 +1,7 @@
+{
+  "title": "Mamba-SEUNet: Mamba UNet for Monaural Speech Enhancement",
+  "authors": "Junyu Wang, Zizhen Lin, Tianrui Wang, Meng Ge, Longbiao Wang, Jianwu Dang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.16626v2",
+  "abstract": "In recent speech enhancement (SE) research, transformer and its variants have\nemerged as the predominant methodologies. However, the quadratic complexity of\nthe self-attention mechanism imposes certain limitations on practical\ndeployment. Mamba, as a novel state-space model (SSM), has gained widespread\napplication in natural language processing and computer vision due to its\nstrong capabilities in modeling long sequences and relatively low computational\ncomplexity. In this work, we introduce Mamba-SEUNet, an innovative architecture\nthat integrates Mamba with U-Net for SE tasks. By leveraging bidirectional\nMamba to model forward and backward dependencies of speech signals at different\nresolutions, and incorporating skip connections to capture multi-scale\ninformation, our approach achieves state-of-the-art (SOTA) performance.\nExperimental results on the VCTK+DEMAND dataset indicate that Mamba-SEUNet\nattains a PESQ score of 3.59, while maintaining low computational complexity.\nWhen combined with the Perceptual Contrast Stretching technique, Mamba-SEUNet\nfurther improves the PESQ score to 3.73."
+}

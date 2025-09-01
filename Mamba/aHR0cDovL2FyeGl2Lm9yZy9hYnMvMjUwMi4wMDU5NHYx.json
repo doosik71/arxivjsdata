@@ -1,0 +1,7 @@
+{
+  "title": "Fast Vision Mamba: Pooling Spatial Dimensions for Accelerated Processing",
+  "authors": "Saarthak Kapse, Robin Betz, Srinivasan Sivanandan",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.00594v1",
+  "abstract": "State Space Models (SSMs) with selective scan (Mamba) have been adapted into\nefficient vision models. Mamba, unlike Vision Transformers, achieves linear\ncomplexity for token interactions through a recurrent hidden state process.\nThis sequential processing is enhanced by a parallel scan algorithm, which\nreduces the computational time of recurrent steps from $L$ sequential steps to\n$log(L)$ parallel steps with respect to the number of input tokens ($L$). In\nthis work, we propose Fast Vision Mamba (FastVim), that further reduces the\ncomputational time of the SSM block by reducing the number of recurrent steps\nin Vision Mamba models while still retaining model performance. By alternately\npooling tokens along image dimensions across Mamba blocks, we obtain a\n2$\\times$ reduction in the number of parallel steps in SSM block. Our model\noffers up to $72.5\\%$ speedup in inference speed compared to baseline Vision\nMamba models on high resolution (2048$\\times$2048) images. Our experiments\ndemonstrate state-of-the-art performance with dramatically improved throughput\nin a range of tasks such as image classification, cell perturbation prediction,\nsegmentation, and object detection. Code is made available at\nhttps://github.com/insitro/FastVim"
+}

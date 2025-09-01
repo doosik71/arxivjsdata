@@ -1,0 +1,7 @@
+{
+  "title": "SepMamba: State-space models for speaker separation using Mamba",
+  "authors": "Thor Højhus Avenstrup, Boldizsár Elek, István László Mádi, András Bence Schin, Morten Mørup, Bjørn Sand Jensen, Kenny Falkær Olsen",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.20997v1",
+  "abstract": "Deep learning-based single-channel speaker separation has improved\nsignificantly in recent years largely due to the introduction of the\ntransformer-based attention mechanism. However, these improvements come at the\nexpense of intense computational demands, precluding their use in many\npractical applications. As a computationally efficient alternative with similar\nmodeling capabilities, Mamba was recently introduced. We propose SepMamba, a\nU-Net-based architecture composed primarily of bidirectional Mamba layers. We\nfind that our approach outperforms similarly-sized prominent models - including\ntransformer-based models - on the WSJ0 2-speaker dataset while enjoying a\nsignificant reduction in computational cost, memory usage, and forward pass\ntime. We additionally report strong results for causal variants of SepMamba.\nOur approach provides a computationally favorable alternative to\ntransformer-based architectures for deep speech separation."
+}

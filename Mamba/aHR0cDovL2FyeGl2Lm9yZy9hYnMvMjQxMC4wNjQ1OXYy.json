@@ -1,0 +1,7 @@
+{
+  "title": "Mamba-based Segmentation Model for Speaker Diarization",
+  "authors": "Alexis Plaquet, Naohiro Tawara, Marc Delcroix, Shota Horiguchi, Atsushi Ando, Shoko Araki",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.06459v2",
+  "abstract": "Mamba is a newly proposed architecture which behaves like a recurrent neural\nnetwork (RNN) with attention-like capabilities. These properties are promising\nfor speaker diarization, as attention-based models have unsuitable memory\nrequirements for long-form audio, and traditional RNN capabilities are too\nlimited. In this paper, we propose to assess the potential of Mamba for\ndiarization by comparing the state-of-the-art neural segmentation of the\npyannote pipeline with our proposed Mamba-based variant. Mamba's stronger\nprocessing capabilities allow usage of longer local windows, which\nsignificantly improve diarization quality by making the speaker embedding\nextraction more reliable. We find Mamba to be a superior alternative to both\ntraditional RNN and the tested attention-based model. Our proposed Mamba-based\nsystem achieves state-of-the-art performance on three widely used diarization\ndatasets."
+}

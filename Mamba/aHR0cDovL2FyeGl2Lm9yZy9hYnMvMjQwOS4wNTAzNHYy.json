@@ -1,0 +1,7 @@
+{
+  "title": "TF-Mamba: A Time-Frequency Network for Sound Source Localization",
+  "authors": "Yang Xiao, Rohan Kumar Das",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.05034v2",
+  "abstract": "Sound source localization (SSL) determines the position of sound sources\nusing multi-channel audio data. It is commonly used to improve speech\nenhancement and separation. Extracting spatial features is crucial for SSL,\nespecially in challenging acoustic environments. Recently, a novel structure\nreferred to as Mamba demonstrated notable performance across various\nsequence-based modalities. This study introduces the Mamba for SSL tasks. We\nconsider the Mamba-based model to analyze spatial features from speech signals\nby fusing both time and frequency features, and we develop an SSL system called\nTF-Mamba. This system integrates time and frequency fusion, with Bidirectional\nMamba managing both time-wise and frequency-wise processing. We conduct the\nexperiments on the simulated and real datasets. Experiments show that TF-Mamba\nsignificantly outperforms other advanced methods. The code will be publicly\nreleased in due course."
+}

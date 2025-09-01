@@ -1,0 +1,7 @@
+{
+  "title": "Bi-Mamba: Towards Accurate 1-Bit State Space Models",
+  "authors": "Shengkun Tang, Liqun Ma, Haonan Li, Mingjie Sun, Zhiqiang Shen",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.11843v1",
+  "abstract": "The typical selective state-space model (SSM) of Mamba addresses several\nlimitations of Transformers, such as quadratic computational complexity with\nsequence length and significant inference-time memory requirements due to the\nkey-value cache. However, the growing size of Mamba models continues to pose\ntraining and deployment challenges and raises environmental concerns due to\nconsiderable energy consumption. In this work, we introduce Bi-Mamba, a\nscalable and powerful 1-bit Mamba architecture designed for more efficient\nlarge language models with multiple sizes across 780M, 1.3B, and 2.7B. Bi-Mamba\nmodels are trained from scratch on data volume as regular LLM pertaining using\nan autoregressive distillation loss. Extensive experimental results on language\nmodeling demonstrate that Bi-Mamba achieves performance comparable to its\nfull-precision counterparts (e.g., FP16 or BF16) and much better accuracy than\npost-training-binarization (PTB) Mamba baselines, while significantly reducing\nmemory footprint and energy consumption compared to the original Mamba model.\nOur study pioneers a new linear computational complexity LLM framework under\nlow-bit representation and facilitates the future design of specialized\nhardware tailored for efficient 1-bit Mamba-based LLMs."
+}

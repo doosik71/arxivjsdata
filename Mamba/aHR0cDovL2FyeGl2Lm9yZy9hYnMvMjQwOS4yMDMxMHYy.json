@@ -1,0 +1,7 @@
+{
+  "title": "A SSM is Polymerized from Multivariate Time Series",
+  "authors": "Haixiang Wu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.20310v2",
+  "abstract": "For multivariate time series (MTS) tasks, previous state space models (SSMs)\nfollowed the modeling paradigm of Transformer-based methods. However, none of\nthem explicitly model the complex dependencies of MTS: the Channel Dependency\nvariations with Time (CDT). In view of this, we delve into the derivation of\nSSM, which involves approximating continuously updated functions by orthogonal\nfunction basis. We then develop Poly-Mamba, a novel method for MTS forecasting.\nIts core concept is to expand the original orthogonal function basis space into\na multivariate orthogonal function space containing variable mixing terms, and\nmake a projection on this space so as to explicitly describe the CDT by\nweighted coefficients. In Poly-Mamba, we propose the Multivariate Orthogonal\nPolynomial Approximation (MOPA) as a simplified implementation of this concept.\nFor the simple linear relationship between channels, we propose Linear Channel\nMixing (LCM) and generate CDT patterns adaptively for different channels\nthrough a proposed Order Combining method. Experiments on six real-world\ndatasets demonstrate that Poly-Mamba outperforms the SOTA methods, especially\nwhen dealing with datasets having a large number of channels and complex\ncorrelations. The codes and log files will be released at:\nhttps://github.com/Joeland4/Poly-Mamba."
+}

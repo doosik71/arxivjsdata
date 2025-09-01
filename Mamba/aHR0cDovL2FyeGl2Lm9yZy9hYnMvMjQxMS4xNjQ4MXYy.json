@@ -1,0 +1,7 @@
+{
+  "title": "Deformable Mamba for Wide Field of View Segmentation",
+  "authors": "Jie Hu, Junwei Zheng, Jiale Wei, Jiaming Zhang, Rainer Stiefelhagen",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.16481v2",
+  "abstract": "Recent advancements in the Mamba architecture, with its linear computational\ncomplexity, being a promising alternative to transformer architectures\nsuffering from quadratic complexity. While existing works primarily focus on\nadapting Mamba as vision encoders, the critical role of task-specific Mamba\ndecoders remains under-explored, particularly for distortion-prone dense\nprediction tasks. This paper addresses two interconnected challenges: (1) The\ndesign of a Mamba-based decoder that seamlessly adapts to various architectures\n(e.g., CNN-, Transformer-, and Mamba-based backbones), and (2) The performance\ndegradation in decoders lacking distortion-aware capability when processing\nwide-FoV images (e.g., 180{\\deg} fisheye and 360{\\deg} panoramic settings). We\npropose the Deformable Mamba Decoder, an efficient distortion-aware decoder\nthat integrates Mamba's computational efficiency with adaptive distortion\nawareness. Comprehensive experiments on five wide-FoV segmentation benchmarks\nvalidate its effectiveness. Notably, our decoder achieves a +2.5% performance\nimprovement on the 360{\\deg} Stanford2D3D segmentation benchmark while reducing\n72% parameters and 97% FLOPs, as compared to the widely-used decoder heads."
+}

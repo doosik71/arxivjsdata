@@ -1,0 +1,7 @@
+{
+  "title": "CU-Mamba: Selective State Space Models with Channel Learning for Image\n  Restoration",
+  "authors": "Rui Deng, Tianpei Gu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.11778v1",
+  "abstract": "Reconstructing degraded images is a critical task in image processing.\nAlthough CNN and Transformer-based models are prevalent in this field, they\nexhibit inherent limitations, such as inadequate long-range dependency modeling\nand high computational costs. To overcome these issues, we introduce the\nChannel-Aware U-Shaped Mamba (CU-Mamba) model, which incorporates a dual State\nSpace Model (SSM) framework into the U-Net architecture. CU-Mamba employs a\nSpatial SSM module for global context encoding and a Channel SSM component to\npreserve channel correlation features, both in linear computational complexity\nrelative to the feature map size. Extensive experimental results validate\nCU-Mamba's superiority over existing state-of-the-art methods, underscoring the\nimportance of integrating both spatial and channel contexts in image\nrestoration."
+}

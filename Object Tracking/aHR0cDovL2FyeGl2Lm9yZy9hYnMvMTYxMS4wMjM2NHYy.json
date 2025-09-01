@@ -1,0 +1,7 @@
+{
+  "title": "Multiple Object Tracking with Kernelized Correlation Filters in Urban\n  Mixed Traffic",
+  "authors": "Yuebin Yang, Guillaume-Alexandre Bilodeau",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1611.02364v2",
+  "abstract": "Recently, the Kernelized Correlation Filters tracker (KCF) achieved\ncompetitive performance and robustness in visual object tracking. On the other\nhand, visual trackers are not typically used in multiple object tracking. In\nthis paper, we investigate how a robust visual tracker like KCF can improve\nmultiple object tracking. Since KCF is a fast tracker, many can be used in\nparallel and still result in fast tracking. We build a multiple object tracking\nsystem based on KCF and background subtraction. Background subtraction is\napplied to extract moving objects and get their scale and size in combination\nwith KCF outputs, while KCF is used for data association and to handle\nfragmentation and occlusion problems. As a result, KCF and background\nsubtraction help each other to take tracking decision at every frame. Sometimes\nKCF outputs are the most trustworthy (e.g. during occlusion), while in some\nother case, it is the background subtraction outputs. To validate the\neffectiveness of our system, the algorithm is demonstrated on four urban video\nrecordings from a standard dataset. Results show that our method is competitive\nwith state-of-the-art trackers even if we use a much simpler data association\nstep."
+}

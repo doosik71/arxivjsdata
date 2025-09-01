@@ -1,0 +1,7 @@
+{
+  "title": "Object Tracking in Videos: Approaches and Issues",
+  "authors": "Duc Phu Chau, François Bremond, Monique Thonnat",
+  "year": 2013,
+  "url": "http://arxiv.org/abs/1304.5212v1",
+  "abstract": "Mobile object tracking has an important role in the computer vision\napplications. In this paper, we use a tracked target-based taxonomy to present\nthe object tracking algorithms. The tracked targets are divided into three\ncategories: points of interest, appearance and silhouette of mobile objects.\nAdvantages and limitations of the tracking approaches are also analyzed to find\nthe future directions in the object tracking domain."
+}

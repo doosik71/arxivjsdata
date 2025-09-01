@@ -1,0 +1,7 @@
+{
+  "title": "CLIP-Mamba: CLIP Pretrained Mamba Models with OOD and Hessian Evaluation",
+  "authors": "Weiquan Huang, Yifei Shen, Yifan Yang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.19394v1",
+  "abstract": "State space models and Mamba-based models have been increasingly applied\nacross various domains, achieving state-of-the-art performance. This technical\nreport introduces the first attempt to train a transferable Mamba model\nutilizing contrastive language-image pretraining (CLIP). We have trained Mamba\nmodels of varying sizes and undertaken comprehensive evaluations of these\nmodels on 26 zero-shot classification datasets and 16 out-of-distribution (OOD)\ndatasets. Our findings reveal that a Mamba model with 67 million parameters is\non par with a 307 million-parameter Vision Transformer (ViT) model in zero-shot\nclassification tasks, highlighting the parameter efficiency of Mamba models. In\ntests of OOD generalization, Mamba-based models exhibit exceptional performance\nin conditions of OOD image contrast or when subjected to high-pass filtering.\nHowever, a Hessian analysis indicates that Mamba models feature a sharper and\nmore non-convex landscape compared to ViT-based models, making them more\nchallenging to train. The source code is available at\nhttps://github.com/raytrun/mamba-clip."
+}

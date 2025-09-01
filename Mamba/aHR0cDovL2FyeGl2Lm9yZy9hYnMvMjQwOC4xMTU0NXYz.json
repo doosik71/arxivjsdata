@@ -1,0 +1,7 @@
+{
+  "title": "UNetMamba: An Efficient UNet-Like Mamba for Semantic Segmentation of\n  High-Resolution Remote Sensing Images",
+  "authors": "Enze Zhu, Zhan Chen, Dingkai Wang, Hanru Shi, Xiaoxuan Liu, Lei Wang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2408.11545v3",
+  "abstract": "Semantic segmentation of high-resolution remote sensing images is vital in\ndownstream applications such as land-cover mapping, urban planning and disaster\nassessment.Existing Transformer-based methods suffer from the constraint\nbetween accuracy and efficiency, while the recently proposed Mamba is renowned\nfor being efficient. Therefore, to overcome the dilemma, we propose UNetMamba,\na UNet-like semantic segmentation model based on Mamba. It incorporates a mamba\nsegmentation decoder (MSD) that can efficiently decode the complex information\nwithin high-resolution images, and a local supervision module (LSM), which is\ntrain-only but can significantly enhance the perception of local contents.\nExtensive experiments demonstrate that UNetMamba outperforms the\nstate-of-the-art methods with mIoU increased by 0.87% on LoveDA and 0.39% on\nISPRS Vaihingen, while achieving high efficiency through the lightweight\ndesign, less memory footprint and reduced computational cost. The source code\nis available at https://github.com/EnzeZhu2001/UNetMamba."
+}

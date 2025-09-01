@@ -1,0 +1,7 @@
+{
+  "title": "MambaIRv2: Attentive State Space Restoration",
+  "authors": "Hang Guo, Yong Guo, Yaohua Zha, Yulun Zhang, Wenbo Li, Tao Dai, Shu-Tao Xia, Yawei Li",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.15269v2",
+  "abstract": "The Mamba-based image restoration backbones have recently demonstrated\nsignificant potential in balancing global reception and computational\nefficiency. However, the inherent causal modeling limitation of Mamba, where\neach token depends solely on its predecessors in the scanned sequence,\nrestricts the full utilization of pixels across the image and thus presents new\nchallenges in image restoration. In this work, we propose MambaIRv2, which\nequips Mamba with the non-causal modeling ability similar to ViTs to reach the\nattentive state space restoration model. Specifically, the proposed attentive\nstate-space equation allows to attend beyond the scanned sequence and\nfacilitate image unfolding with just one single scan. Moreover, we further\nintroduce a semantic-guided neighboring mechanism to encourage interaction\nbetween distant but similar pixels. Extensive experiments show our MambaIRv2\noutperforms SRFormer by even 0.35dB PSNR for lightweight SR even with 9.3\\%\nless parameters and suppresses HAT on classic SR by up to 0.29dB. Code is\navailable at https://github.com/csguoh/MambaIR."
+}

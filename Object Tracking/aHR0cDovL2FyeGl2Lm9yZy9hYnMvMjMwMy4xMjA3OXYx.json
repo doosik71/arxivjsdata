@@ -1,0 +1,7 @@
+{
+  "title": "OmniTracker: Unifying Object Tracking by Tracking-with-Detection",
+  "authors": "Junke Wang, Dongdong Chen, Zuxuan Wu, Chong Luo, Xiyang Dai, Lu Yuan, Yu-Gang Jiang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2303.12079v1",
+  "abstract": "Object tracking (OT) aims to estimate the positions of target objects in a\nvideo sequence. Depending on whether the initial states of target objects are\nspecified by provided annotations in the first frame or the categories, OT\ncould be classified as instance tracking (e.g., SOT and VOS) and category\ntracking (e.g., MOT, MOTS, and VIS) tasks. Combing the advantages of the best\npractices developed in both communities, we propose a novel\ntracking-with-detection paradigm, where tracking supplements appearance priors\nfor detection and detection provides tracking with candidate bounding boxes for\nassociation. Equipped with such a design, a unified tracking model,\nOmniTracker, is further presented to resolve all the tracking tasks with a\nfully shared network architecture, model weights, and inference pipeline.\nExtensive experiments on 7 tracking datasets, including LaSOT, TrackingNet,\nDAVIS16-17, MOT17, MOTS20, and YTVIS19, demonstrate that OmniTracker achieves\non-par or even better results than both task-specific and unified tracking\nmodels."
+}

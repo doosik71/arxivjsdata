@@ -1,0 +1,7 @@
+{
+  "title": "MambaVision: A Hybrid Mamba-Transformer Vision Backbone",
+  "authors": "Ali Hatamizadeh, Jan Kautz",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2407.08083v2",
+  "abstract": "We propose a novel hybrid Mamba-Transformer backbone, MambaVision,\nspecifically tailored for vision applications. Our core contribution includes\nredesigning the Mamba formulation to enhance its capability for efficient\nmodeling of visual features. Through a comprehensive ablation study, we\ndemonstrate the feasibility of integrating Vision Transformers (ViT) with\nMamba. Our results show that equipping the Mamba architecture with\nself-attention blocks in the final layers greatly improves its capacity to\ncapture long-range spatial dependencies. Based on these findings, we introduce\na family of MambaVision models with a hierarchical architecture to meet various\ndesign criteria. For classification on the ImageNet-1K dataset, MambaVision\nvariants achieve state-of-the-art (SOTA) performance in terms of both Top-1\naccuracy and throughput. In downstream tasks such as object detection, instance\nsegmentation, and semantic segmentation on MS COCO and ADE20K datasets,\nMambaVision outperforms comparably sized backbones while demonstrating\nfavorable performance. Code: https://github.com/NVlabs/MambaVision"
+}

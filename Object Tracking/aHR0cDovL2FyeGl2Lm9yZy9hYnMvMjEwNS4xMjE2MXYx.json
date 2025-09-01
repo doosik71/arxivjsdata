@@ -1,0 +1,7 @@
+{
+  "title": "Occlusion Aware Kernel Correlation Filter Tracker using RGB-D",
+  "authors": "Srishti Yadav",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2105.12161v1",
+  "abstract": "Unlike deep learning which requires large training datasets, correlation\nfilter-based trackers like Kernelized Correlation Filter (KCF) uses implicit\nproperties of tracked images (circulant matrices) for training in real-time.\nDespite their practical application in tracking, a need for a better\nunderstanding of the fundamentals associated with KCF in terms of\ntheoretically, mathematically, and experimentally exists. This thesis first\ndetails the workings prototype of the tracker and investigates its\neffectiveness in real-time applications and supporting visualizations. We\nfurther address some of the drawbacks of the tracker in cases of occlusions,\nscale changes, object rotation, out-of-view and model drift with our novel\nRGB-D Kernel Correlation tracker. We also study the use of particle filters to\nimprove trackers' accuracy. Our results are experimentally evaluated using a)\nstandard dataset and b) real-time using the Microsoft Kinect V2 sensor. We\nbelieve this work will set the basis for a better understanding of the\neffectiveness of kernel-based correlation filter trackers and to further define\nsome of its possible advantages in tracking."
+}

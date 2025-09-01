@@ -1,0 +1,7 @@
+{
+  "title": "MambaTrack: Exploiting Dual-Enhancement for Night UAV Tracking",
+  "authors": "Chunhui Zhang, Li Liu, Hao Wen, Xi Zhou, Yanfeng Wang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.15761v2",
+  "abstract": "Night unmanned aerial vehicle (UAV) tracking is impeded by the challenges of\npoor illumination, with previous daylight-optimized methods demonstrating\nsuboptimal performance in low-light conditions, limiting the utility of UAV\napplications. To this end, we propose an efficient mamba-based tracker,\nleveraging dual enhancement techniques to boost night UAV tracking. The\nmamba-based low-light enhancer, equipped with an illumination estimator and a\ndamage restorer, achieves global image enhancement while preserving the details\nand structure of low-light images. Additionally, we advance a cross-modal mamba\nnetwork to achieve efficient interactive learning between vision and language\nmodalities. Extensive experiments showcase that our method achieves advanced\nperformance and exhibits significantly improved computation and memory\nefficiency. For instance, our method is 2.8$\\times$ faster than CiteTracker and\nreduces 50.2$\\%$ GPU memory. Our codes are available at\n\\url{https://github.com/983632847/Awesome-Multimodal-Object-Tracking}."
+}

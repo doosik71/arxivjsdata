@@ -1,0 +1,7 @@
+{
+  "title": "Mamba-X: An End-to-End Vision Mamba Accelerator for Edge Computing\n  Devices",
+  "authors": "Dongho Yoon, Gungyu Lee, Jaewon Chang, Yunjae Lee, Dongjae Lee, Minsoo Rhu",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2508.02977v1",
+  "abstract": "Transformers have proven effective in language modeling but are limited by\nhigh computational and memory demands that grow quadratically with input\nsequence length. State space models (SSMs) offer a promising alternative by\nreducing attention complexity from $O(L^2)$ to $O(L)$ while also lowering\noverall memory consumption. Vision Mamba adapts the SSM approach for computer\nvision tasks, achieving lower latency and memory consumption than traditional\ntransformer models. However, deploying Vision Mamba on edge devices is\nchallenging due to its sequential scan operations, which hinder GPU efficiency.\nWe propose Mamba-X, an end-to-end Vision Mamba accelerator that includes a\nsystolic scan array to maximize parallelism and minimize memory traffic, along\nwith a hybrid, hardware-friendly quantization technique to reduce memory usage\nand improve hardware efficiency without sacrificing accuracy."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "ReMamber: Referring Image Segmentation with Mamba Twister",
+  "authors": "Yuhuan Yang, Chaofan Ma, Jiangchao Yao, Zhun Zhong, Ya Zhang, Yanfeng Wang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.17839v2",
+  "abstract": "Referring Image Segmentation~(RIS) leveraging transformers has achieved great\nsuccess on the interpretation of complex visual-language tasks. However, the\nquadratic computation cost makes it resource-consuming in capturing long-range\nvisual-language dependencies. Fortunately, Mamba addresses this with efficient\nlinear complexity in processing. However, directly applying Mamba to\nmulti-modal interactions presents challenges, primarily due to inadequate\nchannel interactions for the effective fusion of multi-modal data. In this\npaper, we propose ReMamber, a novel RIS architecture that integrates the power\nof Mamba with a multi-modal Mamba Twister block. The Mamba Twister explicitly\nmodels image-text interaction, and fuses textual and visual features through\nits unique channel and spatial twisting mechanism. We achieve competitive\nresults on three challenging benchmarks with a simple and efficient\narchitecture. Moreover, we conduct thorough analyses of ReMamber and discuss\nother fusion designs using Mamba. These provide valuable perspectives for\nfuture research. The code has been released at:\nhttps://github.com/yyh-rain-song/ReMamber."
+}

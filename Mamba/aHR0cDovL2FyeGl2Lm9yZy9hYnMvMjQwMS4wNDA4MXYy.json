@@ -1,0 +1,7 @@
+{
+  "title": "MoE-Mamba: Efficient Selective State Space Models with Mixture of\n  Experts",
+  "authors": "Maciej Pióro, Kamil Ciebiera, Krystian Król, Jan Ludziejewski, Michał Krutul, Jakub Krajewski, Szymon Antoniak, Piotr Miłoś, Marek Cygan, Sebastian Jaszczur",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2401.04081v2",
+  "abstract": "State Space Models (SSMs) have become serious contenders in the field of\nsequential modeling, challenging the dominance of Transformers. At the same\ntime, Mixture of Experts (MoE) has significantly improved Transformer-based\nLarge Language Models, including recent state-of-the-art open models. We\npropose that to unlock the potential of SSMs for scaling, they should be\ncombined with MoE. We showcase this on Mamba, a recent SSM-based model that\nachieves remarkable performance. Our model, MoE-Mamba, outperforms both Mamba\nand baseline Transformer-MoE. In particular, MoE-Mamba reaches the same\nperformance as Mamba in $2.35\\times$ fewer training steps while preserving the\ninference performance gains of Mamba against Transformer."
+}

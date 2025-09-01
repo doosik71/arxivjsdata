@@ -1,0 +1,7 @@
+{
+  "title": "Rethinking Mamba in Speech Processing by Self-Supervised Models",
+  "authors": "Xiangyu Zhang, Jianbo Ma, Mostafa Shahin, Beena Ahmed, Julien Epps",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.07273v1",
+  "abstract": "The Mamba-based model has demonstrated outstanding performance across tasks\nin computer vision, natural language processing, and speech processing.\nHowever, in the realm of speech processing, the Mamba-based model's performance\nvaries across different tasks. For instance, in tasks such as speech\nenhancement and spectrum reconstruction, the Mamba model performs well when\nused independently. However, for tasks like speech recognition, additional\nmodules are required to surpass the performance of attention-based models. We\npropose the hypothesis that the Mamba-based model excels in \"reconstruction\"\ntasks within speech processing. However, for \"classification tasks\" such as\nSpeech Recognition, additional modules are necessary to accomplish the\n\"reconstruction\" step. To validate our hypothesis, we analyze the previous\nMamba-based Speech Models from an information theory perspective. Furthermore,\nwe leveraged the properties of HuBERT in our study. We trained a Mamba-based\nHuBERT model, and the mutual information patterns, along with the model's\nperformance metrics, confirmed our assumptions."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "U-Shape Mamba: State Space Model for faster diffusion",
+  "authors": "Alex Ergasti, Filippo Botti, Tomaso Fontanini, Claudio Ferrari, Massimo Bertozzi, Andrea Prati",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2504.13499v2",
+  "abstract": "Diffusion models have become the most popular approach for high-quality image\ngeneration, but their high computational cost still remains a significant\nchallenge. To address this problem, we propose U-Shape Mamba (USM), a novel\ndiffusion model that leverages Mamba-based layers within a U-Net-like\nhierarchical structure. By progressively reducing sequence length in the\nencoder and restoring it in the decoder through Mamba blocks, USM significantly\nlowers computational overhead while maintaining strong generative capabilities.\nExperimental results against Zigma, which is currently the most efficient\nMamba-based diffusion model, demonstrate that USM achieves one-third the\nGFlops, requires less memory and is faster, while outperforming Zigma in image\nquality. Frechet Inception Distance (FID) is improved by 15.3, 0.84 and 2.7\npoints on AFHQ, CelebAHQ and COCO datasets, respectively. These findings\nhighlight USM as a highly efficient and scalable solution for diffusion-based\ngenerative models, making high-quality image synthesis more accessible to the\nresearch community while reducing computational costs."
+}

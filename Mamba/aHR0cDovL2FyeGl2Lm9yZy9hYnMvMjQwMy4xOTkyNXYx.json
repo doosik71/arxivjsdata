@@ -1,0 +1,7 @@
+{
+  "title": "Decision Mamba: Reinforcement Learning via Sequence Modeling with\n  Selective State Spaces",
+  "authors": "Toshihiro Ota",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.19925v1",
+  "abstract": "Decision Transformer, a promising approach that applies Transformer\narchitectures to reinforcement learning, relies on causal self-attention to\nmodel sequences of states, actions, and rewards. While this method has shown\ncompetitive results, this paper investigates the integration of the Mamba\nframework, known for its advanced capabilities in efficient and effective\nsequence modeling, into the Decision Transformer architecture, focusing on the\npotential performance enhancements in sequential decision-making tasks. Our\nstudy systematically evaluates this integration by conducting a series of\nexperiments across various decision-making environments, comparing the modified\nDecision Transformer, Decision Mamba, with its traditional counterpart. This\nwork contributes to the advancement of sequential decision-making models,\nsuggesting that the architecture and training methodology of neural networks\ncan significantly impact their performance in complex tasks, and highlighting\nthe potential of Mamba as a valuable tool for improving the efficacy of\nTransformer-based models in reinforcement learning scenarios."
+}

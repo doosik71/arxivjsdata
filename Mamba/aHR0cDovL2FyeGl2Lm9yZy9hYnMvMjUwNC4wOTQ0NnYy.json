@@ -1,0 +1,7 @@
+{
+  "title": "Sparse Deformable Mamba for Hyperspectral Image Classification",
+  "authors": "Lincoln Linlin Xu, Yimin Zhu, Zack Dewis, Zhengsen Xu, Motasem Alkayid, Mabel Heffring, Saeid Taleghanidoozdoozan",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2504.09446v2",
+  "abstract": "Although Mamba models significantly improve hyperspectral image (HSI)\nclassification, one critical challenge is the difficulty in building the\nsequence of Mamba tokens efficiently. This paper presents a Sparse Deformable\nMamba (SDMamba) approach for enhanced HSI classification, with the following\ncontributions. First, to enhance Mamba sequence, an efficient Sparse Deformable\nSequencing (SDS) approach is designed to adaptively learn the ''optimal\"\nsequence, leading to sparse and deformable Mamba sequence with increased detail\npreservation and decreased computations. Second, to boost spatial-spectral\nfeature learning, based on SDS, a Sparse Deformable Spatial Mamba Module\n(SDSpaM) and a Sparse Deformable Spectral Mamba Module (SDSpeM) are designed\nfor tailored modeling of the spatial information spectral information. Last, to\nimprove the fusion of SDSpaM and SDSpeM, an attention based feature fusion\napproach is designed to integrate the outputs of the SDSpaM and SDSpeM. The\nproposed method is tested on several benchmark datasets with many\nstate-of-the-art approaches, demonstrating that the proposed approach can\nachieve higher accuracy with less computation, and better detail small-class\npreservation capability."
+}

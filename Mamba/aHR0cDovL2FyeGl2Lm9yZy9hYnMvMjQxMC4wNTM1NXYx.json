@@ -1,0 +1,7 @@
+{
+  "title": "Falcon Mamba: The First Competitive Attention-free 7B Language Model",
+  "authors": "Jingwei Zuo, Maksim Velikanov, Dhia Eddine Rhaiem, Ilyas Chahed, Younes Belkada, Guillaume Kunsch, Hakim Hacid",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.05355v1",
+  "abstract": "In this technical report, we present Falcon Mamba 7B, a new base large\nlanguage model based on the novel Mamba architecture. Falcon Mamba 7B is\ntrained on 5.8 trillion tokens with carefully selected data mixtures. As a pure\nMamba-based model, Falcon Mamba 7B surpasses leading open-weight models based\non Transformers, such as Mistral 7B, Llama3.1 8B, and Falcon2 11B. It is on par\nwith Gemma 7B and outperforms models with different architecture designs, such\nas RecurrentGemma 9B and RWKV-v6 Finch 7B/14B. Currently, Falcon Mamba 7B is\nthe best-performing Mamba model in the literature at this scale, surpassing\nboth existing Mamba and hybrid Mamba-Transformer models, according to the Open\nLLM Leaderboard. Due to its architecture, Falcon Mamba 7B is significantly\nfaster at inference and requires substantially less memory for long sequence\ngeneration. Despite recent studies suggesting that hybrid Mamba-Transformer\nmodels outperform pure architecture designs, we demonstrate that even the pure\nMamba design can achieve similar, or even superior results compared to the\nTransformer and hybrid designs. We make the weights of our implementation of\nFalcon Mamba 7B publicly available on\nhttps://huggingface.co/tiiuae/falcon-mamba-7b, under a permissive license."
+}

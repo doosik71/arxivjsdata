@@ -1,0 +1,7 @@
+{
+  "title": "VideoMAP: Toward Scalable Mamba-based Video Autoregressive Pretraining",
+  "authors": "Yunze Liu, Peiran Wu, Cheng Liang, Junxiao Shen, Limin Wang, Li Yi",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.12332v1",
+  "abstract": "Recent Mamba-based architectures for video understanding demonstrate\npromising computational efficiency and competitive performance, yet struggle\nwith overfitting issues that hinder their scalability. To overcome this\nchallenge, we introduce VideoMAP, a Hybrid Mamba-Transformer framework\nfeaturing a novel pre-training approach. VideoMAP uses a 4:1\nMamba-to-Transformer ratio, effectively balancing computational cost and model\ncapacity. This architecture, combined with our proposed frame-wise masked\nautoregressive pre-training strategy, delivers significant performance gains\nwhen scaling to larger models. Additionally, VideoMAP exhibits impressive\nsample efficiency, significantly outperforming existing methods with less\ntraining data. Experiments show that VideoMAP outperforms existing models\nacross various datasets, including Kinetics-400, Something-Something V2,\nBreakfast, and COIN. Furthermore, we demonstrate the potential of VideoMAP as a\nvisual encoder for multimodal large language models, highlighting its ability\nto reduce memory usage and enable the processing of longer video sequences. The\ncode is open-source at https://github.com/yunzeliu/MAP"
+}

@@ -1,0 +1,7 @@
+{
+  "title": "GlobalMamba: Global Image Serialization for Vision Mamba",
+  "authors": "Chengkun Wang, Wenzhao Zheng, Jie Zhou, Jiwen Lu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.10316v1",
+  "abstract": "Vision mambas have demonstrated strong performance with linear complexity to\nthe number of vision tokens. Their efficiency results from processing image\ntokens sequentially. However, most existing methods employ patch-based image\ntokenization and then flatten them into 1D sequences for causal processing,\nwhich ignore the intrinsic 2D structural correlations of images. It is also\ndifficult to extract global information by sequential processing of local\npatches. In this paper, we propose a global image serialization method to\ntransform the image into a sequence of causal tokens, which contain global\ninformation of the 2D image. We first convert the image from the spatial domain\nto the frequency domain using Discrete Cosine Transform (DCT) and then arrange\nthe pixels with corresponding frequency ranges. We further transform each set\nwithin the same frequency band back to the spatial domain to obtain a series of\nimages before tokenization. We construct a vision mamba model, GlobalMamba,\nwith a causal input format based on the proposed global image serialization,\nwhich can better exploit the causal relations among image sequences. Extensive\nexperiments demonstrate the effectiveness of our GlobalMamba, including image\nclassification on ImageNet-1K, object detection on COCO, and semantic\nsegmentation on ADE20K."
+}

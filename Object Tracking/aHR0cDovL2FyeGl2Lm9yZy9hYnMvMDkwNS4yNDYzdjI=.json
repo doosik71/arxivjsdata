@@ -1,0 +1,7 @@
+{
+  "title": "Generalized Kernel-based Visual Tracking",
+  "authors": "Chunhua Shen, Junae Kim, Hanzi Wang",
+  "year": 2009,
+  "url": "http://arxiv.org/abs/0905.2463v2",
+  "abstract": "In this work we generalize the plain MS trackers and attempt to overcome\nstandard mean shift trackers' two limitations.\n  It is well known that modeling and maintaining a representation of a target\nobject is an important component of a successful visual tracker.\n  However, little work has been done on building a robust template model for\nkernel-based MS tracking. In contrast to building a template from a single\nframe, we train a robust object representation model from a large amount of\ndata. Tracking is viewed as a binary classification problem, and a\ndiscriminative classification rule is learned to distinguish between the object\nand background. We adopt a support vector machine (SVM) for training. The\ntracker is then implemented by maximizing the classification score. An\niterative optimization scheme very similar to MS is derived for this purpose."
+}

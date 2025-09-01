@@ -1,0 +1,7 @@
+{
+  "title": "Differential Mamba",
+  "authors": "Nadav Schneider, Itamar Zimerman, Eliya Nachmani",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2507.06204v1",
+  "abstract": "Sequence models like Transformers and RNNs often overallocate attention to\nirrelevant context, leading to noisy intermediate representations. This\ndegrades LLM capabilities by promoting hallucinations, weakening long-range and\nretrieval abilities, and reducing robustness. Recent work has shown that\ndifferential design can mitigate this issue in Transformers, improving their\neffectiveness across various applications. In this paper, we explore whether\nthese techniques, originally developed for Transformers, can be applied to\nMamba, a recent architecture based on selective state-space layers that\nachieves Transformer-level performance with greater efficiency. We show that a\nnaive adaptation of differential design to Mamba is insufficient and requires\ncareful architectural modifications. To address this, we introduce a novel\ndifferential mechanism for Mamba, empirically validated on language modeling\nbenchmarks, demonstrating improved retrieval capabilities and superior\nperformance over vanilla Mamba. Finally, we conduct extensive ablation studies\nand empirical analyses to justify our design choices and provide evidence that\nour approach effectively mitigates the overallocation problem in Mamba-based\nmodels. Our code is publicly available."
+}

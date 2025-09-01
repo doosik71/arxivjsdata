@@ -1,0 +1,7 @@
+{
+  "title": "MambaByte: Token-free Selective State Space Model",
+  "authors": "Junxiong Wang, Tushaar Gangavarapu, Jing Nathan Yan, Alexander M. Rush",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2401.13660v3",
+  "abstract": "Token-free language models learn directly from raw bytes and remove the\ninductive bias of subword tokenization. Operating on bytes, however, results in\nsignificantly longer sequences. In this setting, standard autoregressive\nTransformers scale poorly as the effective memory required grows with sequence\nlength. The recent development of the Mamba state space model (SSM) offers an\nappealing alternative approach with a fixed-sized memory state and efficient\ndecoding. We propose MambaByte, a token-free adaptation of the Mamba SSM\ntrained autoregressively on byte sequences. In terms of modeling, we show\nMambaByte to be competitive with, and even to outperform, state-of-the-art\nsubword Transformers on language modeling tasks while maintaining the benefits\nof token-free language models, such as robustness to noise. In terms of\nefficiency, we develop an adaptation of speculative decoding with tokenized\ndrafting and byte-level verification. This results in a $2.6\\times$ inference\nspeedup to the standard MambaByte implementation, showing similar decoding\nefficiency as the subword Mamba. These findings establish the viability of SSMs\nin enabling token-free language modeling."
+}

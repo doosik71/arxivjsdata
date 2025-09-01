@@ -1,0 +1,7 @@
+{
+  "title": "Mamba State-Space Models Are Lyapunov-Stable Learners",
+  "authors": "John T. Halloran, Manbir Gulati, Paul F. Roysdon",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.00209v3",
+  "abstract": "Mamba state-space models (SSMs) have recently outperformed state-of-the-art\n(SOTA) Transformer large language models (LLMs) in various tasks and been\nwidely adapted. However, a major concern for stable learning in recurrent-based\ndeep models (such as SSMs) is the sensitivity of their recurrent dynamics.\nDespite widespread adaptation, the sensitivity of Mamba's recurrent dynamics\nunder common fine-tuning methods-e.g., mixed-precision fine-tuning (MPFT) and\nparameter-efficient fine-tuning (PEFT)-remains unexplored. Empirically, we show\nthat Mamba LLMs are extremely stable to changes introduced by combinations of\nMPFT and PEFT, in stark contrast to Transformer LLMs, which we demonstrate may\ndrastically diverge from their respective full-precision counterparts under\ndifferent combinations of MPFT and PEFT (despite the near-ubiquitous adaptation\nof these fine-tuning frameworks for attention-based models). The demonstrated\nrobustness of Mamba LLMs are due to their recurrent dynamics, which we prove\nare guaranteed to be stable using dynamical systems theory (in particular,\nLyapunov stability). We conclude by using MPFT and PEFT to novelly study Mamba\nLLMs' in-context learning (ICL) abilities on natural language tasks, thus\nsupplementing other recent work."
+}

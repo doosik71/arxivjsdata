@@ -1,0 +1,7 @@
+{
+  "title": "How Effective are State Space Models for Machine Translation?",
+  "authors": "Hugo Pitorro, Pavlo Vasylenko, Marcos Treviso, André F. T. Martins",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2407.05489v1",
+  "abstract": "Transformers are the current architecture of choice for NLP, but their\nattention layers do not scale well to long contexts. Recent works propose to\nreplace attention with linear recurrent layers -- this is the case for state\nspace models, which enjoy efficient training and inference. However, it remains\nunclear whether these models are competitive with transformers in machine\ntranslation (MT). In this paper, we provide a rigorous and comprehensive\nexperimental comparison between transformers and linear recurrent models for\nMT. Concretely, we experiment with RetNet, Mamba, and hybrid versions of Mamba\nwhich incorporate attention mechanisms. Our findings demonstrate that Mamba is\nhighly competitive with transformers on sentence and paragraph-level datasets,\nwhere in the latter both models benefit from shifting the training distribution\ntowards longer sequences. Further analysis show that integrating attention into\nMamba improves translation quality, robustness to sequence length\nextrapolation, and the ability to recall named entities."
+}

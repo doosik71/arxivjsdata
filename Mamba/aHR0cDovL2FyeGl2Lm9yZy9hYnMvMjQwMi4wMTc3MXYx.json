@@ -1,0 +1,7 @@
+{
+  "title": "BlackMamba: Mixture of Experts for State-Space Models",
+  "authors": "Quentin Anthony, Yury Tokpanov, Paolo Glorioso, Beren Millidge",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.01771v1",
+  "abstract": "State-space models (SSMs) have recently demonstrated competitive performance\nto transformers at large-scale language modeling benchmarks while achieving\nlinear time and memory complexity as a function of sequence length. Mamba, a\nrecently released SSM model, shows impressive performance in both language\nmodeling and long sequence processing tasks. Simultaneously, mixture-of-expert\n(MoE) models have shown remarkable performance while significantly reducing the\ncompute and latency costs of inference at the expense of a larger memory\nfootprint. In this paper, we present BlackMamba, a novel architecture that\ncombines the Mamba SSM with MoE to obtain the benefits of both. We demonstrate\nthat BlackMamba performs competitively against both Mamba and transformer\nbaselines, and outperforms in inference and training FLOPs. We fully train and\nopen-source 340M/1.5B and 630M/2.8B BlackMamba models on 300B tokens of a\ncustom dataset. We show that BlackMamba inherits and combines both of the\nbenefits of SSM and MoE architectures, combining linear-complexity generation\nfrom SSM with cheap and fast inference from MoE. We release all weights,\ncheckpoints, and inference code open-source. Inference code at:\nhttps://github.com/Zyphra/BlackMamba"
+}

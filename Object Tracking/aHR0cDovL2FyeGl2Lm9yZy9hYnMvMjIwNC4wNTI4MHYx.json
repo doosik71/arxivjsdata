@@ -1,0 +1,7 @@
+{
+  "title": "MONCE Tracking Metrics: a comprehensive quantitative performance\n  evaluation methodology for object tracking",
+  "authors": "Kenneth Rapko, Wanlin Xie, Andrew Walsh",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2204.05280v1",
+  "abstract": "Evaluating tracking model performance is a complicated task, particularly for\nnon-contiguous, multi-object trackers that are crucial in defense applications.\nWhile there are various excellent tracking benchmarks available, this work\nexpands them to quantify the performance of long-term, non-contiguous,\nmulti-object and detection model assisted trackers. We propose a suite of MONCE\n(Multi-Object Non-Contiguous Entities) image tracking metrics that provide both\nobjective tracking model performance benchmarks as well as diagnostic insight\nfor driving tracking model development in the form of Expected Average Overlap,\nShort/Long Term Re-Identification, Tracking Recall, Tracking Precision,\nLongevity, Localization and Absence Prediction."
+}

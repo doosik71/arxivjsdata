@@ -1,0 +1,7 @@
+{
+  "title": "JamMa: Ultra-lightweight Local Feature Matching with Joint Mamba",
+  "authors": "Xiaoyong Lu, Songlin Du",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.03437v1",
+  "abstract": "Existing state-of-the-art feature matchers capture long-range dependencies\nwith Transformers but are hindered by high spatial complexity, leading to\ndemanding training and highlatency inference. Striking a better balance between\nperformance and efficiency remains a challenge in feature matching. Inspired by\nthe linear complexity O(N) of Mamba, we propose an ultra-lightweight\nMamba-based matcher, named JamMa, which converges on a single GPU and achieves\nan impressive performance-efficiency balance in inference. To unlock the\npotential of Mamba for feature matching, we propose Joint Mamba with a\nscan-merge strategy named JEGO, which enables: (1) Joint scan of two images to\nachieve high-frequency mutual interaction, (2) Efficient scan with skip steps\nto reduce sequence length, (3) Global receptive field, and (4) Omnidirectional\nfeature representation. With the above properties, the JEGO strategy\nsignificantly outperforms the scan-merge strategies proposed in VMamba and\nEVMamba in the feature matching task. Compared to attention-based sparse and\nsemi-dense matchers, JamMa demonstrates a superior balance between performance\nand efficiency, delivering better performance with less than 50% of the\nparameters and FLOPs."
+}

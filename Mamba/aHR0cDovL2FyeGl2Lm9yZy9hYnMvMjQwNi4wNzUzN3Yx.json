@@ -1,0 +1,7 @@
+{
+  "title": "Autoregressive Pretraining with Mamba in Vision",
+  "authors": "Sucheng Ren, Xianhang Li, Haoqin Tu, Feng Wang, Fangxun Shu, Lei Zhang, Jieru Mei, Linjie Yang, Peng Wang, Heng Wang, Alan Yuille, Cihang Xie",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.07537v1",
+  "abstract": "The vision community has started to build with the recently developed state\nspace model, Mamba, as the new backbone for a range of tasks. This paper shows\nthat Mamba's visual capability can be significantly enhanced through\nautoregressive pretraining, a direction not previously explored.\nEfficiency-wise, the autoregressive nature can well capitalize on the Mamba's\nunidirectional recurrent structure, enabling faster overall training speed\ncompared to other training strategies like mask modeling. Performance-wise,\nautoregressive pretraining equips the Mamba architecture with markedly higher\naccuracy over its supervised-trained counterparts and, more importantly,\nsuccessfully unlocks its scaling potential to large and even huge model sizes.\nFor example, with autoregressive pretraining, a base-size Mamba attains 83.2\\%\nImageNet accuracy, outperforming its supervised counterpart by 2.0\\%; our\nhuge-size Mamba, the largest Vision Mamba to date, attains 85.0\\% ImageNet\naccuracy (85.5\\% when finetuned with $384\\times384$ inputs), notably surpassing\nall other Mamba variants in vision. The code is available at\n\\url{https://github.com/OliverRensu/ARM}."
+}

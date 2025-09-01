@@ -1,0 +1,7 @@
+{
+  "title": "MambaPEFT: Exploring Parameter-Efficient Fine-Tuning for Mamba",
+  "authors": "Masakazu Yoshimura, Teruaki Hayashi, Yota Maeda",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.03855v3",
+  "abstract": "An ecosystem of Transformer-based models has been established by building\nlarge models with extensive data. Parameter-efficient fine-tuning (PEFT) is a\ncrucial technology for deploying these models to downstream tasks with minimal\ncost while achieving effective performance. Recently, Mamba, a State Space\nModel (SSM)-based model, has attracted attention as a potential alternative to\nTransformers. While many large-scale Mamba-based models have been proposed,\nefficiently adapting pre-trained Mamba-based models to downstream tasks remains\nunexplored. In this paper, we conduct an exploratory analysis of PEFT methods\nfor Mamba. We investigate the effectiveness of existing PEFT methods for\nTransformers when applied to Mamba. We also modify these methods to better\nalign with the Mamba architecture. Additionally, we propose new Mamba-specific\nPEFT methods that leverage the distinctive structure of Mamba. Our experiments\nindicate that PEFT performs more effectively for Mamba than Transformers.\nLastly, we demonstrate how to effectively combine multiple PEFT methods and\nprovide a framework that outperforms previous works. To ensure reproducibility,\nwe will release the code after publication."
+}

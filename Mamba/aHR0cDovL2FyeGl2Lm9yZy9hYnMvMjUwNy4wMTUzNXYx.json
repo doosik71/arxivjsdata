@@ -1,0 +1,7 @@
+{
+  "title": "TrackingMiM: Efficient Mamba-in-Mamba Serialization for Real-time UAV\n  Object Tracking",
+  "authors": "Bingxi Liu, Calvin Chen, Junhao Li, Guyang Yu, Haoqian Song, Xuchen Liu, Jinqiang Cui, Hong Zhang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2507.01535v1",
+  "abstract": "The Vision Transformer (ViT) model has long struggled with the challenge of\nquadratic complexity, a limitation that becomes especially critical in unmanned\naerial vehicle (UAV) tracking systems, where data must be processed in real\ntime. In this study, we explore the recently proposed State-Space Model, Mamba,\nleveraging its computational efficiency and capability for long-sequence\nmodeling to effectively process dense image sequences in tracking tasks. First,\nwe highlight the issue of temporal inconsistency in existing Mamba-based\nmethods, specifically the failure to account for temporal continuity in the\nMamba scanning mechanism. Secondly, building upon this insight,we propose\nTrackingMiM, a Mamba-in-Mamba architecture, a minimal-computation burden model\nfor handling image sequence of tracking problem. In our framework, the mamba\nscan is performed in a nested way while independently process temporal and\nspatial coherent patch tokens. While the template frame is encoded as query\ntoken and utilized for tracking in every scan. Extensive experiments conducted\non five UAV tracking benchmarks confirm that the proposed TrackingMiM achieves\nstate-of-the-art precision while offering noticeable higher speed in UAV\ntracking."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Recall with Reasoning: Chain-of-Thought Distillation for Mamba's\n  Long-Context Memory and Extrapolation",
+  "authors": "Junyu Ma, Tianqing Fang, Zhisong Zhang, Hongming Zhang, Haitao Mi, Dong Yu",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.03320v2",
+  "abstract": "Mamba's theoretical infinite-context potential is limited in practice when\nsequences far exceed training lengths. This work explores unlocking Mamba's\nlong-context memory ability by a simple-yet-effective method, Recall with\nReasoning (RwR), by distilling chain-of-thought (CoT) summarization from a\nteacher model. Specifically, RwR prepends these summarization as CoT prompts\nduring fine-tuning, teaching Mamba to actively recall and reason over long\ncontexts. Experiments on LONGMEMEVAL and HELMET show RwR boosts Mamba's\nlong-context performance against comparable Transformer/hybrid baselines under\nsimilar pretraining conditions, while preserving short-context capabilities,\nall without architectural changes."
+}
