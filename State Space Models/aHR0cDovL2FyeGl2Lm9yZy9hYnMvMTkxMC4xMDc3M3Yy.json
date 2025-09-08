@@ -1,0 +1,7 @@
+{
+  "title": "Learning While Navigating: A Practical System Based on Variational\n  Gaussian Process State-Space Model and Smartphone Sensory Data",
+  "authors": "Ang Xie, Feng Yin, Bo Ai, Shuguang Cui",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1910.10773v2",
+  "abstract": "We implement a wireless indoor navigation system based on the variational\nGaussian process state-space model (GPSSM) with smartphone-collected WiFi\nreceived signal strength (RSS) and inertial measurement unit (IMU) readings. We\nadapt the existing variational GPSSM framework to wireless navigation\nscenarios, and provide a practical learning procedure for the variational\nGPSSM. The proposed system explores both the expressive power of the\nnon-parametric Gaussian process model and its natural mechanism for integrating\nthe state-of-the-art navigation techniques designed upon state-space model.\nExperimental results obtained from a real office environment validate the\noutstanding performance of the variational GPSSM in comparison with the\ntraditional parametric state-space model in terms of navigation accuracy."
+}

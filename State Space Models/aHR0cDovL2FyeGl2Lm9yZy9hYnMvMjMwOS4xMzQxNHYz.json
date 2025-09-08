@@ -1,0 +1,7 @@
+{
+  "title": "State-space Models with Layer-wise Nonlinearity are Universal\n  Approximators with Exponential Decaying Memory",
+  "authors": "Shida Wang, Beichen Xue",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.13414v3",
+  "abstract": "State-space models have gained popularity in sequence modelling due to their\nsimple and efficient network structures. However, the absence of nonlinear\nactivation along the temporal direction limits the model's capacity. In this\npaper, we prove that stacking state-space models with layer-wise nonlinear\nactivation is sufficient to approximate any continuous sequence-to-sequence\nrelationship. Our findings demonstrate that the addition of layer-wise\nnonlinear activation enhances the model's capacity to learn complex sequence\npatterns. Meanwhile, it can be seen both theoretically and empirically that the\nstate-space models do not fundamentally resolve the issue of exponential\ndecaying memory. Theoretical results are justified by numerical verifications."
+}

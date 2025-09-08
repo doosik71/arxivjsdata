@@ -1,0 +1,7 @@
+{
+  "title": "Adaptive State-Space Mamba for Real-Time Sensor Data Anomaly Detection",
+  "authors": "Alice Zhang, Chao Li",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.22743v2",
+  "abstract": "State-space modeling has emerged as a powerful paradigm for sequence analysis\nin various tasks such as natural language processing, time-series forecasting,\nand signal processing. In this work, we propose an \\emph{Adaptive State-Space\nMamba} (\\textbf{ASSM}) framework for real-time sensor data anomaly detection.\nWhile state-space models have been previously employed for image processing\napplications (e.g., style transfer \\cite{wang2024stylemamba}), our approach\nleverages the core idea of sequential hidden states to tackle a significantly\ndifferent domain: detecting anomalies on streaming sensor data.\n  In particular, we introduce an adaptive gating mechanism that dynamically\nmodulates the hidden state update based on contextual and learned statistical\ncues. This design ensures that our model remains computationally efficient and\nscalable, even under rapid data arrival rates. Extensive experiments on\nreal-world and synthetic sensor datasets demonstrate that our method achieves\nsuperior detection performance compared to existing baselines. Our approach is\neasily extensible to other time-series tasks that demand rapid and reliable\ndetection capabilities."
+}

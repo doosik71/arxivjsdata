@@ -1,0 +1,7 @@
+{
+  "title": "Graphical State Space Model",
+  "authors": "Shaolin Lü",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2107.01602v4",
+  "abstract": "In this paper, a new framework, named as graphical state space model, is\nproposed for the real time optimal estimation of a class of nonlinear state\nspace model. By discretizing this kind of system model as an equation which can\nnot be solved by Extended Kalman filter, factor graph optimization can\noutperform Extended Kalman filter in some cases. A simple nonlinear example is\ngiven to demonstrate the efficiency of this framework."
+}

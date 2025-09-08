@@ -1,0 +1,7 @@
+{
+  "title": "An algorithm for non-parametric estimation in state-space models",
+  "authors": "Thi Tuyet Trang Chau, Pierre Ailliot, Valérie Monbet",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.09525v1",
+  "abstract": "State-space models are ubiquitous in the statistical literature since they\nprovide a flexible and interpretable framework for analyzing many time series.\nIn most practical applications, the state-space model is specified through a\nparametric model. However, the specification of such a parametric model may\nrequire an important modeling effort or may lead to models which are not\nflexible enough to reproduce all the complexity of the phenomenon of interest.\nIn such situations, an appealing alternative consists in inferring the\nstate-space model directly from the data using a non-parametric framework. The\nrecent developments of powerful simulation techniques have permitted to improve\nthe statistical inference for parametric state-space models. It is proposed to\ncombine two of these techniques, namely the Stochastic Expectation-Maximization\n(SEM) algorithm and Sequential Monte Carlo (SMC) approaches, for non-parametric\nestimation in state-space models. The performance of the proposed algorithm is\nassessed through simulations on toy models and an application to environmental\ndata is discussed."
+}

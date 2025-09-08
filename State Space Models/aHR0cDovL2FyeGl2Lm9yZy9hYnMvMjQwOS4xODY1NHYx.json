@@ -1,0 +1,7 @@
+{
+  "title": "Speech-Mamba: Long-Context Speech Recognition with Selective State\n  Spaces Models",
+  "authors": "Xiaoxue Gao, Nancy F. Chen",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.18654v1",
+  "abstract": "Current automatic speech recognition systems struggle with modeling long\nspeech sequences due to high quadratic complexity of Transformer-based models.\nSelective state space models such as Mamba has performed well on long-sequence\nmodeling in natural language processing and computer vision tasks. However,\nresearch endeavors in speech technology tasks has been under-explored. We\npropose Speech-Mamba, which incorporates selective state space modeling in\nTransformer neural architectures. Long sequence representations with selective\nstate space models in Speech-Mamba is complemented with lower-level\nrepresentations from Transformer-based modeling. Speech-mamba achieves better\ncapacity to model long-range dependencies, as it scales near-linearly with\nsequence length."
+}

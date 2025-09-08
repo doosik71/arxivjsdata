@@ -1,0 +1,7 @@
+{
+  "title": "Descriptor State Space Modeling of Power Systems",
+  "authors": "Yitong Li, Timothy C. Green, Yunjie Gu",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2303.01701v1",
+  "abstract": "State space is widely used for modeling power systems and analyzing their\ndynamics but it is limited to representing causal and proper systems in which\nthe number of zeros does not exceed the number of poles. In other words, the\nsystem input, output, and state can not be freely selected. This limits how\nflexibly models are constructed, and in some circumstances, can introduce\nerrors because of the addition of virtual elements in order to connect the\nmismatched ports of subsystem models. An extension known as descriptor state\nspace can model both proper and improper systems and is a promising candidate\nfor solving the noted problems. It facilitates a modular construction of power\nsystem models with flexible choice of ports of subsystems. Algorithms for\nmathematical manipulation of descriptor state space models are derived such as\npreforming inverse, connection, and transform. Corresponding physical\ninterpretations are also given. Importantly, the proposed algorithms preserve\nthe subsystem states in the whole system model, which therefore enables the\nanalysis of root causes of instability and mode participation. Theoretical\nadvances are validated by example power systems of varied scales including a\nsingle-inductor or -capacitor system, two-inductor or -capacitor system, and a\nmodified IEEE 14-bus generator-inverter-composite system."
+}

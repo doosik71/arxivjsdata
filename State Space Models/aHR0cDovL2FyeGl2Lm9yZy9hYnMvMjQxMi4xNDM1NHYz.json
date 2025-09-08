@@ -1,0 +1,7 @@
+{
+  "title": "State Space Models are Strong Text Rerankers",
+  "authors": "Zhichao Xu, Jinghua Yan, Ashim Gupta, Vivek Srikumar",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.14354v3",
+  "abstract": "Transformers dominate NLP and IR; but their inference inefficiencies and\nchallenges in extrapolating to longer contexts have sparked interest in\nalternative model architectures. Among these, state space models (SSMs) like\nMamba offer promising advantages, particularly $O(1)$ time complexity in\ninference. Despite their potential, SSMs' effectiveness at text reranking -- a\ntask requiring fine-grained query-document interaction and long-context\nunderstanding -- remains underexplored. This study benchmarks SSM-based\narchitectures (specifically, Mamba-1 and Mamba-2) against transformer-based\nmodels across various scales, architectures, and pre-training objectives,\nfocusing on performance and efficiency in text reranking tasks. We find that\n(1) Mamba architectures achieve competitive text ranking performance,\ncomparable to transformer-based models of similar size; (2) they are less\nefficient in training and inference compared to transformers with flash\nattention; and (3) Mamba-2 outperforms Mamba-1 in both performance and\nefficiency. These results underscore the potential of state space models as a\ntransformer alternative and highlight areas for improvement in future IR\napplications."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Graph state-space models",
+  "authors": "Daniele Zambon, Andrea Cini, Lorenzo Livi, Cesare Alippi",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2301.01741v1",
+  "abstract": "State-space models constitute an effective modeling tool to describe\nmultivariate time series and operate by maintaining an updated representation\nof the system state from which predictions are made. Within this framework,\nrelational inductive biases, e.g., associated with functional dependencies\nexisting among signals, are not explicitly exploited leaving unattended great\nopportunities for effective modeling approaches. The manuscript aims, for the\nfirst time, at filling this gap by matching state-space modeling and\nspatio-temporal data where the relational information, say the functional graph\ncapturing latent dependencies, is learned directly from data and is allowed to\nchange over time. Within a probabilistic formulation that accounts for the\nuncertainty in the data-generating process, an encoder-decoder architecture is\nproposed to learn the state-space model end-to-end on a downstream task. The\nproposed methodological framework generalizes several state-of-the-art methods\nand demonstrates to be effective in extracting meaningful relational\ninformation while achieving optimal forecasting performance in controlled\nenvironments."
+}
