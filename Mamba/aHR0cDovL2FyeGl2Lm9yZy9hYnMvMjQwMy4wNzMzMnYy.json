@@ -1,7 +1,7 @@
 {
+  "url": "http://arxiv.org/abs/2403.07332v2",
   "title": "LKM-UNet: Large Kernel Vision Mamba UNet for Medical Image Segmentation",
   "authors": "Jinhong Wang, Jintai Chen, Danny Chen, Jian Wu",
   "year": 2024,
-  "url": "http://arxiv.org/abs/2403.07332v2",
   "abstract": "In clinical practice, medical image segmentation provides useful information\non the contours and dimensions of target organs or tissues, facilitating\nimproved diagnosis, analysis, and treatment. In the past few years,\nconvolutional neural networks (CNNs) and Transformers have dominated this area,\nbut they still suffer from either limited receptive fields or costly long-range\nmodeling. Mamba, a State Space Sequence Model (SSM), recently emerged as a\npromising paradigm for long-range dependency modeling with linear complexity.\nIn this paper, we introduce a Large Kernel Vision Mamba U-shape Network, or\nLKM-UNet, for medical image segmentation. A distinguishing feature of our\nLKM-UNet is its utilization of large Mamba kernels, excelling in locally\nspatial modeling compared to small kernel-based CNNs and Transformers, while\nmaintaining superior efficiency in global modeling compared to self-attention\nwith quadratic complexity. Additionally, we design a novel hierarchical and\nbidirectional Mamba block to further enhance Mamba's global and neighborhood\nspatial modeling capability for vision inputs. Comprehensive experiments\ndemonstrate the feasibility and the effectiveness of using large-size Mamba\nkernels to achieve large receptive fields. Codes are available at\nhttps://github.com/wjh892521292/LKM-UNet."
 }
