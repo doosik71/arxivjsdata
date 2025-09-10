@@ -1,0 +1,7 @@
+{
+  "title": "Unraveling Meta-Learning: Understanding Feature Representations for\n  Few-Shot Tasks",
+  "authors": "Micah Goldblum, Steven Reich, Liam Fowl, Renkun Ni, Valeriia Cherepanova, Tom Goldstein",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2002.06753v3",
+  "abstract": "Meta-learning algorithms produce feature extractors which achieve\nstate-of-the-art performance on few-shot classification. While the literature\nis rich with meta-learning methods, little is known about why the resulting\nfeature extractors perform so well. We develop a better understanding of the\nunderlying mechanics of meta-learning and the difference between models trained\nusing meta-learning and models which are trained classically. In doing so, we\nintroduce and verify several hypotheses for why meta-learned models perform\nbetter. Furthermore, we develop a regularizer which boosts the performance of\nstandard training routines for few-shot classification. In many cases, our\nroutine outperforms meta-learning while simultaneously running an order of\nmagnitude faster."
+}

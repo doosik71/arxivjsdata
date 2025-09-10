@@ -1,0 +1,7 @@
+{
+  "title": "Anomaly Detection in Human Language via Meta-Learning: A Few-Shot\n  Approach",
+  "authors": "Saurav Singla, Aarav Singla, Advik Gupta, Parnika Gupta",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2507.20019v1",
+  "abstract": "We propose a meta learning framework for detecting anomalies in human\nlanguage across diverse domains with limited labeled data. Anomalies in\nlanguage ranging from spam and fake news to hate speech pose a major challenge\ndue to their sparsity and variability. We treat anomaly detection as a few shot\nbinary classification problem and leverage meta-learning to train models that\ngeneralize across tasks. Using datasets from domains such as SMS spam, COVID-19\nfake news, and hate speech, we evaluate model generalization on unseen tasks\nwith minimal labeled anomalies. Our method combines episodic training with\nprototypical networks and domain resampling to adapt quickly to new anomaly\ndetection tasks. Empirical results show that our method outperforms strong\nbaselines in F1 and AUC scores. We also release the code and benchmarks to\nfacilitate further research in few-shot text anomaly detection."
+}

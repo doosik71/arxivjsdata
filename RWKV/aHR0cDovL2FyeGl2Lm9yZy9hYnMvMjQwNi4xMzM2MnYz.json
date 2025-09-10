@@ -1,0 +1,7 @@
+{
+  "title": "VisualRWKV: Exploring Recurrent Neural Networks for Visual Language\n  Models",
+  "authors": "Haowen Hou, Peigen Zeng, Fei Ma, Fei Richard Yu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.13362v3",
+  "abstract": "Visual Language Models (VLMs) have rapidly progressed with the recent success\nof large language models. However, there have been few attempts to incorporate\nefficient linear Recurrent Neural Networks (RNNs) architectures into VLMs. In\nthis study, we introduce VisualRWKV, the first application of a linear RNN\nmodel to multimodal learning tasks, leveraging the pre-trained RWKV language\nmodel. We propose a data-dependent recurrence and sandwich prompts to enhance\nour modeling capabilities, along with a 2D image scanning mechanism to enrich\nthe processing of visual sequences. Extensive experiments demonstrate that\nVisualRWKV achieves competitive performance compared to Transformer-based\nmodels like LLaVA-1.5 on various benchmarks. Compared to LLaVA-1.5, VisualRWKV\nhas a speed advantage of 3.98 times and can save 54% of GPU memory when\nreaching an inference length of 24K tokens. To facilitate further research and\nanalysis, we have made the checkpoints and the associated code publicly\naccessible at the following GitHub repository: see\nhttps://github.com/howard-hou/VisualRWKV."
+}

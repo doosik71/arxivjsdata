@@ -1,0 +1,7 @@
+{
+  "title": "Online Meta-Critic Learning for Off-Policy Actor-Critic Methods",
+  "authors": "Wei Zhou, Yiying Li, Yongxin Yang, Huaimin Wang, Timothy M. Hospedales",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2003.05334v2",
+  "abstract": "Off-Policy Actor-Critic (Off-PAC) methods have proven successful in a variety\nof continuous control tasks. Normally, the critic's action-value function is\nupdated using temporal-difference, and the critic in turn provides a loss for\nthe actor that trains it to take actions with higher expected return. In this\npaper, we introduce a novel and flexible meta-critic that observes the learning\nprocess and meta-learns an additional loss for the actor that accelerates and\nimproves actor-critic learning. Compared to the vanilla critic, the meta-critic\nnetwork is explicitly trained to accelerate the learning process; and compared\nto existing meta-learning algorithms, meta-critic is rapidly learned online for\na single task, rather than slowly over a family of tasks. Crucially, our\nmeta-critic framework is designed for off-policy based learners, which\ncurrently provide state-of-the-art reinforcement learning sample efficiency. We\ndemonstrate that online meta-critic learning leads to improvements in avariety\nof continuous control environments when combined with contemporary Off-PAC\nmethods DDPG, TD3 and the state-of-the-art SAC."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "From Learning to Meta-Learning: Reduced Training Overhead and Complexity\n  for Communication Systems",
+  "authors": "Osvaldo Simeone, Sangwoo Park, Joonhyuk Kang",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2001.01227v1",
+  "abstract": "Machine learning methods adapt the parameters of a model, constrained to lie\nin a given model class, by using a fixed learning procedure based on data or\nactive observations. Adaptation is done on a per-task basis, and retraining is\nneeded when the system configuration changes. The resulting inefficiency in\nterms of data and training time requirements can be mitigated, if domain\nknowledge is available, by selecting a suitable model class and learning\nprocedure, collectively known as inductive bias. However, it is generally\ndifficult to encode prior knowledge into an inductive bias, particularly with\nblack-box model classes such as neural networks. Meta-learning provides a way\nto automatize the selection of an inductive bias. Meta-learning leverages data\nor active observations from tasks that are expected to be related to future,\nand a priori unknown, tasks of interest. With a meta-trained inductive bias,\ntraining of a machine learning model can be potentially carried out with\nreduced training data and/or time complexity. This paper provides a high-level\nintroduction to meta-learning with applications to communication systems."
+}

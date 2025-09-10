@@ -1,0 +1,7 @@
+{
+  "title": "Introducing Symmetries to Black Box Meta Reinforcement Learning",
+  "authors": "Louis Kirsch, Sebastian Flennerhag, Hado van Hasselt, Abram Friesen, Junhyuk Oh, Yutian Chen",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.10781v2",
+  "abstract": "Meta reinforcement learning (RL) attempts to discover new RL algorithms\nautomatically from environment interaction. In so-called black-box approaches,\nthe policy and the learning algorithm are jointly represented by a single\nneural network. These methods are very flexible, but they tend to underperform\nin terms of generalisation to new, unseen environments. In this paper, we\nexplore the role of symmetries in meta-generalisation. We show that a recent\nsuccessful meta RL approach that meta-learns an objective for\nbackpropagation-based learning exhibits certain symmetries (specifically the\nreuse of the learning rule, and invariance to input and output permutations)\nthat are not present in typical black-box meta RL systems. We hypothesise that\nthese symmetries can play an important role in meta-generalisation. Building\noff recent work in black-box supervised meta learning, we develop a black-box\nmeta RL system that exhibits these same symmetries. We show through careful\nexperimentation that incorporating these symmetries can lead to algorithms with\na greater ability to generalise to unseen action & observation spaces, tasks,\nand environments."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Constrained Meta Agnostic Reinforcement Learning",
+  "authors": "Karam Daaboul, Florian Kuhm, Tim Joseph, J. Marius Zoellner",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.14047v1",
+  "abstract": "Meta-Reinforcement Learning (Meta-RL) aims to acquire meta-knowledge for\nquick adaptation to diverse tasks. However, applying these policies in\nreal-world environments presents a significant challenge in balancing rapid\nadaptability with adherence to environmental constraints. Our novel approach,\nConstraint Model Agnostic Meta Learning (C-MAML), merges meta learning with\nconstrained optimization to address this challenge. C-MAML enables rapid and\nefficient task adaptation by incorporating task-specific constraints directly\ninto its meta-algorithm framework during the training phase. This fusion\nresults in safer initial parameters for learning new tasks. We demonstrate the\neffectiveness of C-MAML in simulated locomotion with wheeled robot tasks of\nvarying complexity, highlighting its practicality and robustness in dynamic\nenvironments."
+}

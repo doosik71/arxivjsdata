@@ -1,0 +1,7 @@
+{
+  "title": "Real-Time Object Tracking via Meta-Learning: Efficient Model Adaptation\n  and One-Shot Channel Pruning",
+  "authors": "Ilchae Jung, Kihyun You, Hyeonwoo Noh, Minsu Cho, Bohyung Han",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1911.11170v3",
+  "abstract": "We propose a novel meta-learning framework for real-time object tracking with\nefficient model adaptation and channel pruning. Given an object tracker, our\nframework learns to fine-tune its model parameters in only a few iterations of\ngradient-descent during tracking while pruning its network channels using the\ntarget ground-truth at the first frame. Such a learning problem is formulated\nas a meta-learning task, where a meta-tracker is trained by updating its\nmeta-parameters for initial weights, learning rates, and pruning masks through\ncarefully designed tracking simulations. The integrated meta-tracker greatly\nimproves tracking performance by accelerating the convergence of online\nlearning and reducing the cost of feature computation. Experimental evaluation\non the standard datasets demonstrates its outstanding accuracy and speed\ncompared to the state-of-the-art methods."
+}

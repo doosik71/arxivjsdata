@@ -1,0 +1,7 @@
+{
+  "title": "Improving Context-Based Meta-Reinforcement Learning with Self-Supervised\n  Trajectory Contrastive Learning",
+  "authors": "Bernie Wang, Simon Xu, Kurt Keutzer, Yang Gao, Bichen Wu",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2103.06386v1",
+  "abstract": "Meta-reinforcement learning typically requires orders of magnitude more\nsamples than single task reinforcement learning methods. This is because\nmeta-training needs to deal with more diverse distributions and train extra\ncomponents such as context encoders. To address this, we propose a novel\nself-supervised learning task, which we named Trajectory Contrastive Learning\n(TCL), to improve meta-training. TCL adopts contrastive learning and trains a\ncontext encoder to predict whether two transition windows are sampled from the\nsame trajectory. TCL leverages the natural hierarchical structure of\ncontext-based meta-RL and makes minimal assumptions, allowing it to be\ngenerally applicable to context-based meta-RL algorithms. It accelerates the\ntraining of context encoders and improves meta-training overall. Experiments\nshow that TCL performs better or comparably than a strong meta-RL baseline in\nmost of the environments on both meta-RL MuJoCo (5 of 6) and Meta-World\nbenchmarks (44 out of 50)."
+}

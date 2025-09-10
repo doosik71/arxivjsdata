@@ -1,0 +1,7 @@
+{
+  "title": "Meta-Learning Neural Mechanisms rather than Bayesian Priors",
+  "authors": "Michael Goodale, Salvador Mascarenhas, Yair Lakretz",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.16048v2",
+  "abstract": "Children acquire language despite being exposed to several orders of\nmagnitude less data than large language models require. Meta-learning has been\nproposed as a way to integrate human-like learning biases into neural-network\narchitectures, combining both the structured generalizations of symbolic models\nwith the scalability of neural-network models. But what does meta-learning\nexactly imbue the model with? We investigate the meta-learning of formal\nlanguages and find that, contrary to previous claims, meta-trained models are\nnot learning simplicity-based priors when meta-trained on datasets organised\naround simplicity. Rather, we find evidence that meta-training imprints neural\nmechanisms (such as counters) into the model, which function like cognitive\nprimitives for the network on downstream tasks. Most surprisingly, we find that\nmeta-training on a single formal language can provide as much improvement to a\nmodel as meta-training on 5000 different formal languages, provided that the\nformal language incentivizes the learning of useful neural mechanisms. Taken\ntogether, our findings provide practical implications for efficient\nmeta-learning paradigms and new theoretical insights into linking symbolic\ntheories and neural mechanisms."
+}

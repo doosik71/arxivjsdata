@@ -1,0 +1,7 @@
+{
+  "title": "Bayesian Meta-Learning for the Few-Shot Setting via Deep Kernels",
+  "authors": "Massimiliano Patacchiola, Jack Turner, Elliot J. Crowley, Michael O'Boyle, Amos Storkey",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1910.05199v4",
+  "abstract": "Recently, different machine learning methods have been introduced to tackle\nthe challenging few-shot learning scenario that is, learning from a small\nlabeled dataset related to a specific task. Common approaches have taken the\nform of meta-learning: learning to learn on the new problem given the old.\nFollowing the recognition that meta-learning is implementing learning in a\nmulti-level model, we present a Bayesian treatment for the meta-learning inner\nloop through the use of deep kernels. As a result we can learn a kernel that\ntransfers to new tasks; we call this Deep Kernel Transfer (DKT). This approach\nhas many advantages: is straightforward to implement as a single optimizer,\nprovides uncertainty quantification, and does not require estimation of\ntask-specific parameters. We empirically demonstrate that DKT outperforms\nseveral state-of-the-art algorithms in few-shot classification, and is the\nstate of the art for cross-domain adaptation and regression. We conclude that\ncomplex meta-learning routines can be replaced by a simpler Bayesian model\nwithout loss of accuracy."
+}

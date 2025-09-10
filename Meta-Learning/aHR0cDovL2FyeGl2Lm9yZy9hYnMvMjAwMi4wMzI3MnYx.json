@@ -1,0 +1,7 @@
+{
+  "title": "Local Nonparametric Meta-Learning",
+  "authors": "Wonjoon Goo, Scott Niekum",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2002.03272v1",
+  "abstract": "A central goal of meta-learning is to find a learning rule that enables fast\nadaptation across a set of tasks, by learning the appropriate inductive bias\nfor that set. Most meta-learning algorithms try to find a \\textit{global}\nlearning rule that encodes this inductive bias. However, a global learning rule\nrepresented by a fixed-size representation is prone to meta-underfitting or\n-overfitting since the right representational power for a task set is difficult\nto choose a priori. Even when chosen correctly, we show that global, fixed-size\nrepresentations often fail when confronted with certain types of\nout-of-distribution tasks, even when the same inductive bias is appropriate. To\naddress these problems, we propose a novel nonparametric meta-learning\nalgorithm that utilizes a meta-trained local learning rule, building on recent\nideas in attention-based and functional gradient-based meta-learning. In\nseveral meta-regression problems, we show improved meta-generalization results\nusing our local, nonparametric approach and achieve state-of-the-art results in\nthe robotics benchmark, Omnipush."
+}

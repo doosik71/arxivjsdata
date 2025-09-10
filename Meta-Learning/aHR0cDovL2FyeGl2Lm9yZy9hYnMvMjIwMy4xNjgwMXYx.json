@@ -1,0 +1,7 @@
+{
+  "title": "Robust Meta-Reinforcement Learning with Curriculum-Based Task Sampling",
+  "authors": "Morio Matsumoto, Hiroya Matsuba, Toshihiro Kujirai",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2203.16801v1",
+  "abstract": "Meta-reinforcement learning (meta-RL) acquires meta-policies that show good\nperformance for tasks in a wide task distribution. However, conventional\nmeta-RL, which learns meta-policies by randomly sampling tasks, has been\nreported to show meta-overfitting for certain tasks, especially for easy tasks\nwhere an agent can easily get high scores. To reduce effects of the\nmeta-overfitting, we considered meta-RL with curriculum-based task sampling.\nOur method is Robust Meta Reinforcement Learning with Guided Task Sampling\n(RMRL-GTS), which is an effective method that restricts task sampling based on\nscores and epochs. We show that in order to achieve robust meta-RL, it is\nnecessary not only to intensively sample tasks with poor scores, but also to\nrestrict and expand the task regions of the tasks to be sampled."
+}

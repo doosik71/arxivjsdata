@@ -1,0 +1,7 @@
+{
+  "title": "Meta-Meta Classification for One-Shot Learning",
+  "authors": "Arkabandhu Chowdhury, Dipak Chaudhari, Swarat Chaudhuri, Chris Jermaine",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2004.08083v4",
+  "abstract": "We present a new approach, called meta-meta classification, to learning in\nsmall-data settings. In this approach, one uses a large set of learning\nproblems to design an ensemble of learners, where each learner has high bias\nand low variance and is skilled at solving a specific type of learning problem.\nThe meta-meta classifier learns how to examine a given learning problem and\ncombine the various learners to solve the problem. The meta-meta learning\napproach is especially suited to solving few-shot learning tasks, as it is\neasier to learn to classify a new learning problem with little data than it is\nto apply a learning algorithm to a small data set. We evaluate the approach on\na one-shot, one-class-versus-all classification task and show that it is able\nto outperform traditional meta-learning as well as ensembling approaches."
+}

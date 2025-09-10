@@ -1,0 +1,7 @@
+{
+  "title": "Video RWKV:Video Action Recognition Based RWKV",
+  "authors": "Zhuowen Yin, Chengru Li, Xingbo Dong",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.05636v1",
+  "abstract": "To address the challenges of high computational costs and long-distance\ndependencies in exist ing video understanding methods, such as CNNs and\nTransformers, this work introduces RWKV to the video domain in a novel way. We\npropose a LSTM CrossRWKV (LCR) framework, designed for spatiotemporal\nrepresentation learning to tackle the video understanding task. Specifically,\nthe proposed linear complexity LCR incorporates a novel Cross RWKV gate to\nfacilitate interaction be tween current frame edge information and past\nfeatures, enhancing the focus on the subject through edge features and globally\naggregating inter-frame features over time. LCR stores long-term mem ory for\nvideo processing through an enhanced LSTM recurrent execution mechanism. By\nleveraging the Cross RWKV gate and recurrent execution, LCR effectively\ncaptures both spatial and temporal features. Additionally, the edge information\nserves as a forgetting gate for LSTM, guiding long-term memory management.Tube\nmasking strategy reduces redundant information in food and reduces\noverfitting.These advantages enable LSTM CrossRWKV to set a new benchmark in\nvideo under standing, offering a scalable and efficient solution for\ncomprehensive video analysis. All code and models are publicly available."
+}

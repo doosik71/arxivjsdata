@@ -1,0 +1,7 @@
+{
+  "title": "Accelerating Gradient-based Meta Learner",
+  "authors": "Varad Pimpalkhute, Amey Pandit, Mayank Mishra, Rekha Singhal",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2110.14459v1",
+  "abstract": "Meta Learning has been in focus in recent years due to the meta-learner\nmodel's ability to adapt well and generalize to new tasks, thus, reducing both\nthe time and data requirements for learning. However, a major drawback of meta\nlearner is that, to reach to a state from where learning new tasks becomes\nfeasible with less data, it requires a large number of iterations and a lot of\ntime. We address this issue by proposing various acceleration techniques to\nspeed up meta learning algorithms such as MAML (Model Agnostic Meta Learning).\nWe present 3.73X acceleration on a well known RNN optimizer based meta learner\nproposed in literature [11]. We introduce a novel method of training tasks in\nclusters, which not only accelerates the meta learning process but also\nimproves model accuracy performance.\n  Keywords: Meta learning, RNN optimizer, AGI, Performance optimization"
+}

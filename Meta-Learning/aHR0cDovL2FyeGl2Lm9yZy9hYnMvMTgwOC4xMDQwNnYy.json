@@ -1,0 +1,7 @@
+{
+  "title": "Characterizing classification datasets: a study of meta-features for\n  meta-learning",
+  "authors": "Adriano Rivolli, Luís P. F. Garcia, Carlos Soares, Joaquin Vanschoren, André C. P. L. F. de Carvalho",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1808.10406v2",
+  "abstract": "Meta-learning is increasingly used to support the recommendation of machine\nlearning algorithms and their configurations. Such recommendations are made\nbased on meta-data, consisting of performance evaluations of algorithms on\nprior datasets, as well as characterizations of these datasets. These\ncharacterizations, also called meta-features, describe properties of the data\nwhich are predictive for the performance of machine learning algorithms trained\non them. Unfortunately, despite being used in a large number of studies,\nmeta-features are not uniformly described, organized and computed, making many\nempirical studies irreproducible and hard to compare. This paper aims to deal\nwith this by systematizing and standardizing data characterization measures for\nclassification datasets used in meta-learning. Moreover, it presents MFE, a new\ntool for extracting meta-features from datasets and identifying more subtle\nreproducibility issues in the literature, proposing guidelines for data\ncharacterization that strengthen reproducible empirical research in\nmeta-learning."
+}

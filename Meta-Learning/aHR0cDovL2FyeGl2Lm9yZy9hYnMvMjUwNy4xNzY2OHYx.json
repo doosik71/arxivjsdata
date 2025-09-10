@@ -1,0 +1,7 @@
+{
+  "title": "How Should We Meta-Learn Reinforcement Learning Algorithms?",
+  "authors": "Alexander David Goldie, Zilin Wang, Jakob Nicolaus Foerster, Shimon Whiteson",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2507.17668v1",
+  "abstract": "The process of meta-learning algorithms from data, instead of relying on\nmanual design, is growing in popularity as a paradigm for improving the\nperformance of machine learning systems. Meta-learning shows particular promise\nfor reinforcement learning (RL), where algorithms are often adapted from\nsupervised or unsupervised learning despite their suboptimality for RL.\nHowever, until now there has been a severe lack of comparison between different\nmeta-learning algorithms, such as using evolution to optimise over black-box\nfunctions or LLMs to propose code. In this paper, we carry out this empirical\ncomparison of the different approaches when applied to a range of meta-learned\nalgorithms which target different parts of the RL pipeline. In addition to\nmeta-train and meta-test performance, we also investigate factors including the\ninterpretability, sample cost and train time for each meta-learning algorithm.\nBased on these findings, we propose several guidelines for meta-learning new RL\nalgorithms which will help ensure that future learned algorithms are as\nperformant as possible."
+}

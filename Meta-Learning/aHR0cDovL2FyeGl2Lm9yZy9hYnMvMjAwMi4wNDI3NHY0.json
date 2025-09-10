@@ -1,0 +1,7 @@
+{
+  "title": "Meta-Learning across Meta-Tasks for Few-Shot Learning",
+  "authors": "Nanyi Fei, Zhiwu Lu, Yizhao Gao, Jia Tian, Tao Xiang, Ji-Rong Wen",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2002.04274v4",
+  "abstract": "Existing meta-learning based few-shot learning (FSL) methods typically adopt\nan episodic training strategy whereby each episode contains a meta-task. Across\nepisodes, these tasks are sampled randomly and their relationships are ignored.\nIn this paper, we argue that the inter-meta-task relationships should be\nexploited and those tasks are sampled strategically to assist in meta-learning.\nSpecifically, we consider the relationships defined over two types of meta-task\npairs and propose different strategies to exploit them. (1) Two meta-tasks with\ndisjoint sets of classes: this pair is interesting because it is reminiscent of\nthe relationship between the source seen classes and target unseen classes,\nfeatured with domain gap caused by class differences. A novel learning\nobjective termed meta-domain adaptation (MDA) is proposed to make the\nmeta-learned model more robust to the domain gap. (2) Two meta-tasks with\nidentical sets of classes: this pair is useful because it can be employed to\nlearn models that are robust against poorly sampled few-shots. To that end, a\nnovel meta-knowledge distillation (MKD) objective is formulated. There are some\nmistakes in the experiments. We thus choose to withdraw this paper."
+}

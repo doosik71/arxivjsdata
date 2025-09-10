@@ -1,0 +1,7 @@
+{
+  "title": "Online Structured Meta-learning",
+  "authors": "Huaxiu Yao, Yingbo Zhou, Mehrdad Mahdavi, Zhenhui Li, Richard Socher, Caiming Xiong",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2010.11545v1",
+  "abstract": "Learning quickly is of great importance for machine intelligence deployed in\nonline platforms. With the capability of transferring knowledge from learned\ntasks, meta-learning has shown its effectiveness in online scenarios by\ncontinuously updating the model with the learned prior. However, current online\nmeta-learning algorithms are limited to learn a globally-shared meta-learner,\nwhich may lead to sub-optimal results when the tasks contain heterogeneous\ninformation that are distinct by nature and difficult to share. We overcome\nthis limitation by proposing an online structured meta-learning (OSML)\nframework. Inspired by the knowledge organization of human and hierarchical\nfeature representation, OSML explicitly disentangles the meta-learner as a\nmeta-hierarchical graph with different knowledge blocks. When a new task is\nencountered, it constructs a meta-knowledge pathway by either utilizing the\nmost relevant knowledge blocks or exploring new blocks. Through the\nmeta-knowledge pathway, the model is able to quickly adapt to the new task. In\naddition, new knowledge is further incorporated into the selected blocks.\nExperiments on three datasets demonstrate the effectiveness and\ninterpretability of our proposed framework in the context of both homogeneous\nand heterogeneous tasks."
+}

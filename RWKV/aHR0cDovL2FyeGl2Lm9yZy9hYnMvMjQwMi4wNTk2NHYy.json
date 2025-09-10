@@ -1,0 +1,7 @@
+{
+  "title": "A Survey on Transformer Compression",
+  "authors": "Yehui Tang, Yunhe Wang, Jianyuan Guo, Zhijun Tu, Kai Han, Hailin Hu, Dacheng Tao",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.05964v2",
+  "abstract": "Transformer plays a vital role in the realms of natural language processing\n(NLP) and computer vision (CV), specially for constructing large language\nmodels (LLM) and large vision models (LVM). Model compression methods reduce\nthe memory and computational cost of Transformer, which is a necessary step to\nimplement large language/vision models on practical devices. Given the unique\narchitecture of Transformer, featuring alternative attention and feedforward\nneural network (FFN) modules, specific compression techniques are usually\nrequired. The efficiency of these compression methods is also paramount, as\nretraining large models on the entire training dataset is usually impractical.\nThis survey provides a comprehensive review of recent compression methods, with\na specific focus on their application to Transformer-based models. The\ncompression methods are primarily categorized into pruning, quantization,\nknowledge distillation, and efficient architecture design (Mamba, RetNet, RWKV,\netc.). In each category, we discuss compression methods for both language and\nvision tasks, highlighting common underlying principles. Finally, we delve into\nthe relation between various compression methods, and discuss further\ndirections in this domain."
+}

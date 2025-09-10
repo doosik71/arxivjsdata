@@ -1,0 +1,7 @@
+{
+  "title": "Learning Abstract Task Representations",
+  "authors": "Mikhail M. Meskhi, Adriano Rivolli, Rafael G. Mantovani, Ricardo Vilalta",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2101.07852v3",
+  "abstract": "A proper form of data characterization can guide the process of\nlearning-algorithm selection and model-performance estimation. The field of\nmeta-learning has provided a rich body of work describing effective forms of\ndata characterization using different families of meta-features (statistical,\nmodel-based, information-theoretic, topological, etc.). In this paper, we start\nwith the abundant set of existing meta-features and propose a method to induce\nnew abstract meta-features as latent variables in a deep neural network. We\ndiscuss the pitfalls of using traditional meta-features directly and argue for\nthe importance of learning high-level task properties. We demonstrate our\nmethodology using a deep neural network as a feature extractor. We demonstrate\nthat 1) induced meta-models mapping abstract meta-features to generalization\nperformance outperform other methods by ~18% on average, and 2) abstract\nmeta-features attain high feature-relevance scores."
+}

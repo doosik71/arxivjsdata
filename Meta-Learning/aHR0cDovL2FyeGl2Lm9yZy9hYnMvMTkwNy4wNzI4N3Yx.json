@@ -1,0 +1,7 @@
+{
+  "title": "Towards Understanding Generalization in Gradient-Based Meta-Learning",
+  "authors": "Simon Guiroy, Vikas Verma, Christopher Pal",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1907.07287v1",
+  "abstract": "In this work we study generalization of neural networks in gradient-based\nmeta-learning by analyzing various properties of the objective landscapes. We\nexperimentally demonstrate that as meta-training progresses, the meta-test\nsolutions, obtained after adapting the meta-train solution of the model, to new\ntasks via few steps of gradient-based fine-tuning, become flatter, lower in\nloss, and further away from the meta-train solution. We also show that those\nmeta-test solutions become flatter even as generalization starts to degrade,\nthus providing an experimental evidence against the correlation between\ngeneralization and flat minima in the paradigm of gradient-based meta-leaning.\nFurthermore, we provide empirical evidence that generalization to new tasks is\ncorrelated with the coherence between their adaptation trajectories in\nparameter space, measured by the average cosine similarity between\ntask-specific trajectory directions, starting from a same meta-train solution.\nWe also show that coherence of meta-test gradients, measured by the average\ninner product between the task-specific gradient vectors evaluated at\nmeta-train solution, is also correlated with generalization. Based on these\nobservations, we propose a novel regularizer for MAML and provide experimental\nevidence for its effectiveness."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Few-Shot Learning of Compact Models via Task-Specific Meta Distillation",
+  "authors": "Yong Wu, Shekhor Chanda, Mehrdad Hosseinzadeh, Zhi Liu, Yang Wang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2210.09922v1",
+  "abstract": "We consider a new problem of few-shot learning of compact models.\nMeta-learning is a popular approach for few-shot learning. Previous work in\nmeta-learning typically assumes that the model architecture during\nmeta-training is the same as the model architecture used for final deployment.\nIn this paper, we challenge this basic assumption. For final deployment, we\noften need the model to be small. But small models usually do not have enough\ncapacity to effectively adapt to new tasks. In the mean time, we often have\naccess to the large dataset and extensive computing power during meta-training\nsince meta-training is typically performed on a server. In this paper, we\npropose task-specific meta distillation that simultaneously learns two models\nin meta-learning: a large teacher model and a small student model. These two\nmodels are jointly learned during meta-training. Given a new task during\nmeta-testing, the teacher model is first adapted to this task, then the adapted\nteacher model is used to guide the adaptation of the student model. The adapted\nstudent model is used for final deployment. We demonstrate the effectiveness of\nour approach in few-shot image classification using model-agnostic\nmeta-learning (MAML). Our proposed method outperforms other alternatives on\nseveral benchmark datasets."
+}

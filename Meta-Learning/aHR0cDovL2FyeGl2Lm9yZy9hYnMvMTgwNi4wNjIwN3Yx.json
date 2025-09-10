@@ -1,0 +1,7 @@
+{
+  "title": "Meta-learning: searching in the model space",
+  "authors": "Włodzisław Duch, Karol Grudzińsk",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1806.06207v1",
+  "abstract": "There is no free lunch, no single learning algorithm that will outperform\nother algorithms on all data. In practice different approaches are tried and\nthe best algorithm selected. An alternative solution is to build new algorithms\non demand by creating a framework that accommodates many algorithms. The best\ncombination of parameters and procedures is searched here in the space of all\npossible models belonging to the framework of Similarity-Based Methods (SBMs).\nSuch meta-learning approach gives a chance to find the best method in all\ncases. Issues related to the meta-learning and first tests of this approach are\npresented."
+}

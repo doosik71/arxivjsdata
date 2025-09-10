@@ -1,0 +1,7 @@
+{
+  "title": "Meta-Learning Siamese Network for Few-Shot Text Classification",
+  "authors": "Chengcheng Han, Yuhe Wang, Yingnan Fu, Xiang Li, Minghui Qiu, Ming Gao, Aoying Zhou",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.03507v2",
+  "abstract": "Few-shot learning has been used to tackle the problem of label scarcity in\ntext classification, of which meta-learning based methods have shown to be\neffective, such as the prototypical networks (PROTO). Despite the success of\nPROTO, there still exist three main problems: (1) ignore the randomness of the\nsampled support sets when computing prototype vectors; (2) disregard the\nimportance of labeled samples; (3) construct meta-tasks in a purely random\nmanner. In this paper, we propose a Meta-Learning Siamese Network, namely,\nMeta-SN, to address these issues. Specifically, instead of computing prototype\nvectors from the sampled support sets, Meta-SN utilizes external knowledge\n(e.g. class names and descriptive texts) for class labels, which is encoded as\nthe low-dimensional embeddings of prototype vectors. In addition, Meta-SN\npresents a novel sampling strategy for constructing meta-tasks, which gives\nhigher sampling probabilities to hard-to-classify samples. Extensive\nexperiments are conducted on six benchmark datasets to show the clear\nsuperiority of Meta-SN over other state-of-the-art models. For reproducibility,\nall the datasets and codes are provided at https://github.com/hccngu/Meta-SN."
+}
