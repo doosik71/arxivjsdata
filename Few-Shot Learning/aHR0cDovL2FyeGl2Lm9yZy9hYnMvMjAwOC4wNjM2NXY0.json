@@ -1,0 +1,7 @@
+{
+  "title": "An Overview of Deep Learning Architectures in Few-Shot Learning Domain",
+  "authors": "Shruti Jadon, Aryan Jadon",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.06365v4",
+  "abstract": "Since 2012, Deep learning has revolutionized Artificial Intelligence and has\nachieved state-of-the-art outcomes in different domains, ranging from Image\nClassification to Speech Generation. Though it has many potentials, our current\narchitectures come with the pre-requisite of large amounts of data. Few-Shot\nLearning (also known as one-shot learning) is a sub-field of machine learning\nthat aims to create such models that can learn the desired objective with less\ndata, similar to how humans learn. In this paper, we have reviewed some of the\nwell-known deep learning-based approaches towards few-shot learning. We have\ndiscussed the recent achievements, challenges, and possibilities of improvement\nof few-shot learning based deep learning architectures. Our aim for this paper\nis threefold: (i) Give a brief introduction to deep learning architectures for\nfew-shot learning with pointers to core references. (ii) Indicate how deep\nlearning has been applied to the low-data regime, from data preparation to\nmodel training. and, (iii) Provide a starting point for people interested in\nexperimenting and perhaps contributing to the field of few-shot learning by\npointing out some useful resources and open-source code. Our code is available\nat Github: https://github.com/shruti-jadon/Hands-on-One-Shot-Learning."
+}

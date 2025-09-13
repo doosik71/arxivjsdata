@@ -1,0 +1,7 @@
+{
+  "title": "Concept Learners for Few-Shot Learning",
+  "authors": "Kaidi Cao, Maria Brbic, Jure Leskovec",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.07375v3",
+  "abstract": "Developing algorithms that are able to generalize to a novel task given only\na few labeled examples represents a fundamental challenge in closing the gap\nbetween machine- and human-level performance. The core of human cognition lies\nin the structured, reusable concepts that help us to rapidly adapt to new tasks\nand provide reasoning behind our decisions. However, existing meta-learning\nmethods learn complex representations across prior labeled tasks without\nimposing any structure on the learned representations. Here we propose COMET, a\nmeta-learning method that improves generalization ability by learning to learn\nalong human-interpretable concept dimensions. Instead of learning a joint\nunstructured metric space, COMET learns mappings of high-level concepts into\nsemi-structured metric spaces, and effectively combines the outputs of\nindependent concept learners. We evaluate our model on few-shot tasks from\ndiverse domains, including fine-grained image classification, document\ncategorization and cell type annotation on a novel dataset from a biological\ndomain developed in our work. COMET significantly outperforms strong\nmeta-learning baselines, achieving 6-15% relative improvement on the most\nchallenging 1-shot learning tasks, while unlike existing methods providing\ninterpretations behind the model's predictions."
+}

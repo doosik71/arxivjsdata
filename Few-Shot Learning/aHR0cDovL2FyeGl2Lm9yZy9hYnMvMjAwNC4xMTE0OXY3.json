@@ -1,7 +1,7 @@
 {
-  "url": "http://arxiv.org/abs/2004.11149v7",
   "title": "A Comprehensive Overview and Survey of Recent Advances in Meta-Learning",
   "authors": "Huimin Peng",
   "year": 2020,
+  "url": "http://arxiv.org/abs/2004.11149v7",
   "abstract": "This article reviews meta-learning also known as learning-to-learn which\nseeks rapid and accurate model adaptation to unseen tasks with applications in\nhighly automated AI, few-shot learning, natural language processing and\nrobotics. Unlike deep learning, meta-learning can be applied to few-shot\nhigh-dimensional datasets and considers further improving model generalization\nto unseen tasks. Deep learning is focused upon in-sample prediction and\nmeta-learning concerns model adaptation for out-of-sample prediction.\nMeta-learning can continually perform self-improvement to achieve highly\nautonomous AI. Meta-learning may serve as an additional generalization block\ncomplementary for original deep learning model. Meta-learning seeks adaptation\nof machine learning models to unseen tasks which are vastly different from\ntrained tasks. Meta-learning with coevolution between agent and environment\nprovides solutions for complex tasks unsolvable by training from scratch.\nMeta-learning methodology covers a wide range of great minds and thoughts. We\nbriefly introduce meta-learning methodologies in the following categories:\nblack-box meta-learning, metric-based meta-learning, layered meta-learning and\nBayesian meta-learning framework. Recent applications concentrate upon the\nintegration of meta-learning with other machine learning framework to provide\nfeasible integrated problem solutions. We briefly present recent meta-learning\nadvances and discuss potential future research directions."
 }
