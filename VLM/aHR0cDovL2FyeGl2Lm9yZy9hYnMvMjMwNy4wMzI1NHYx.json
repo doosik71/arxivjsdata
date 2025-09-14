@@ -1,0 +1,7 @@
+{
+  "title": "Vision Language Transformers: A Survey",
+  "authors": "Clayton Fields, Casey Kennington",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2307.03254v1",
+  "abstract": "Vision language tasks, such as answering questions about or generating\ncaptions that describe an image, are difficult tasks for computers to perform.\nA relatively recent body of research has adapted the pretrained transformer\narchitecture introduced in \\citet{vaswani2017attention} to vision language\nmodeling. Transformer models have greatly improved performance and versatility\nover previous vision language models. They do so by pretraining models on a\nlarge generic datasets and transferring their learning to new tasks with minor\nchanges in architecture and parameter values. This type of transfer learning\nhas become the standard modeling practice in both natural language processing\nand computer vision. Vision language transformers offer the promise of\nproducing similar advancements in tasks which require both vision and language.\nIn this paper, we provide a broad synthesis of the currently available research\non vision language transformer models and offer some analysis of their\nstrengths, limitations and some open questions that remain."
+}

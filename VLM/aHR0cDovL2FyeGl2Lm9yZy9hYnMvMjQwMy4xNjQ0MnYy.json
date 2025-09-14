@@ -1,0 +1,7 @@
+{
+  "title": "If CLIP Could Talk: Understanding Vision-Language Model Representations\n  Through Their Preferred Concept Descriptions",
+  "authors": "Reza Esfandiarpoor, Cristina Menghini, Stephen H. Bach",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.16442v2",
+  "abstract": "Recent works often assume that Vision-Language Model (VLM) representations\nare based on visual attributes like shape. However, it is unclear to what\nextent VLMs prioritize this information to represent concepts. We propose\nExtract and Explore (EX2), a novel approach to characterize textual features\nthat are important for VLMs. EX2 uses reinforcement learning to align a large\nlanguage model with VLM preferences and generates descriptions that incorporate\nfeatures that are important for the VLM. Then, we inspect the descriptions to\nidentify features that contribute to VLM representations. Using EX2, we find\nthat spurious descriptions have a major role in VLM representations despite\nproviding no helpful information, e.g., Click to enlarge photo of CONCEPT. More\nimportantly, among informative descriptions, VLMs rely significantly on\nnon-visual attributes like habitat (e.g., North America) to represent visual\nconcepts. Also, our analysis reveals that different VLMs prioritize different\nattributes in their representations. Overall, we show that VLMs do not simply\nmatch images to scene descriptions and that non-visual or even spurious\ndescriptions significantly influence their representations."
+}

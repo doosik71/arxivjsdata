@@ -1,0 +1,7 @@
+{
+  "title": "VIBE: Can a VLM Read the Room?",
+  "authors": "Tania Chakraborty, Eylon Caplan, Dan Goldwasser",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.11162v1",
+  "abstract": "Understanding human social behavior such as recognizing emotions and the\nsocial dynamics causing them is an important and challenging problem. While\nLLMs have made remarkable advances, they are limited to the textual domain and\ncannot account for the major role that non-verbal cues play in understanding\nsocial situations. Vision Language Models (VLMs) can potentially account for\nthis gap, however their ability to make correct inferences over such social\ncues has received little attention. In this paper, we explore the capabilities\nof VLMs at social reasoning. We identify a previously overlooked limitation in\nVLMs: the Visual Social-Pragmatic Inference gap. To target this gap, we propose\na new task for VLMs: Visual Social-Pragmatic Inference. We construct a high\nquality dataset to test the abilities of a VLM for this task and benchmark the\nperformance of several VLMs on it."
+}

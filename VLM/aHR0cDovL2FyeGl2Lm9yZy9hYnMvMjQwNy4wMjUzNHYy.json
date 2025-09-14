@@ -1,0 +1,7 @@
+{
+  "title": "Image-to-Text Logic Jailbreak: Your Imagination can Help You Do Anything",
+  "authors": "Xiaotian Zou, Ke Li, Yongkang Chen",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2407.02534v2",
+  "abstract": "Large Visual Language Model\\textbfs (VLMs) such as GPT-4V have achieved\nremarkable success in generating comprehensive and nuanced responses.\nResearchers have proposed various benchmarks for evaluating the capabilities of\nVLMs. With the integration of visual and text inputs in VLMs, new security\nissues emerge, as malicious attackers can exploit multiple modalities to\nachieve their objectives. This has led to increasing attention on the\nvulnerabilities of VLMs to jailbreak. Most existing research focuses on\ngenerating adversarial images or nonsensical image to jailbreak these models.\nHowever, no researchers evaluate whether logic understanding capabilities of\nVLMs in flowchart can influence jailbreak. Therefore, to fill this gap, this\npaper first introduces a novel dataset Flow-JD specifically designed to\nevaluate the logic-based flowchart jailbreak capabilities of VLMs. We conduct\nan extensive evaluation on GPT-4o, GPT-4V, other 5 SOTA open source VLMs and\nthe jailbreak rate is up to 92.8%. Our research reveals significant\nvulnerabilities in current VLMs concerning image-to-text jailbreak and these\nfindings underscore the the urgency for the development of robust and effective\nfuture defenses."
+}

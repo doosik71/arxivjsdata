@@ -1,0 +1,7 @@
+{
+  "title": "Hidden in plain sight: VLMs overlook their visual representations",
+  "authors": "Stephanie Fu, Tyler Bonnen, Devin Guillory, Trevor Darrell",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.08008v1",
+  "abstract": "Language provides a natural interface to specify and evaluate performance on\nvisual tasks. To realize this possibility, vision language models (VLMs) must\nsuccessfully integrate visual and linguistic information. Our work compares\nVLMs to a direct readout of their visual encoders to understand their ability\nto integrate across these modalities. Across a series of vision-centric\nbenchmarks (e.g., depth estimation, correspondence), we find that VLMs perform\nsubstantially worse than their visual encoders, dropping to near-chance\nperformance. We investigate these results through a series of analyses across\nthe entire VLM: namely 1) the degradation of vision representations, 2)\nbrittleness to task prompt, and 3) the language model's role in solving the\ntask. We find that the bottleneck in performing these vision-centric tasks lies\nin this third category; VLMs are not effectively using visual information\neasily accessible throughout the entire model, and they inherit the language\npriors present in the LLM. Our work helps diagnose the failure modes of\nopen-source VLMs, and presents a series of evaluations useful for future\ninvestigations into visual understanding within VLMs."
+}

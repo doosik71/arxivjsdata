@@ -1,0 +1,7 @@
+{
+  "title": "Evaluating Vision-Language Models for Emotion Recognition",
+  "authors": "Sree Bhattacharyya, James Z. Wang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.05660v1",
+  "abstract": "Large Vision-Language Models (VLMs) have achieved unprecedented success in\nseveral objective multimodal reasoning tasks. However, to further enhance their\ncapabilities of empathetic and effective communication with humans, improving\nhow VLMs process and understand emotions is crucial. Despite significant\nresearch attention on improving affective understanding, there is a lack of\ndetailed evaluations of VLMs for emotion-related tasks, which can potentially\nhelp inform downstream fine-tuning efforts. In this work, we present the first\ncomprehensive evaluation of VLMs for recognizing evoked emotions from images.\nWe create a benchmark for the task of evoked emotion recognition and study the\nperformance of VLMs for this task, from perspectives of correctness and\nrobustness. Through several experiments, we demonstrate important factors that\nemotion recognition performance depends on, and also characterize the various\nerrors made by VLMs in the process. Finally, we pinpoint potential causes for\nerrors through a human evaluation study. We use our experimental results to\ninform recommendations for the future of emotion research in the context of\nVLMs."
+}

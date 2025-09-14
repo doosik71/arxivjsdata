@@ -1,0 +1,7 @@
+{
+  "title": "Code as Reward: Empowering Reinforcement Learning with VLMs",
+  "authors": "David Venuto, Sami Nur Islam, Martin Klissarov, Doina Precup, Sherry Yang, Ankit Anand",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.04764v1",
+  "abstract": "Pre-trained Vision-Language Models (VLMs) are able to understand visual\nconcepts, describe and decompose complex tasks into sub-tasks, and provide\nfeedback on task completion. In this paper, we aim to leverage these\ncapabilities to support the training of reinforcement learning (RL) agents. In\nprinciple, VLMs are well suited for this purpose, as they can naturally analyze\nimage-based observations and provide feedback (reward) on learning progress.\nHowever, inference in VLMs is computationally expensive, so querying them\nfrequently to compute rewards would significantly slowdown the training of an\nRL agent. To address this challenge, we propose a framework named Code as\nReward (VLM-CaR). VLM-CaR produces dense reward functions from VLMs through\ncode generation, thereby significantly reducing the computational burden of\nquerying the VLM directly. We show that the dense rewards generated through our\napproach are very accurate across a diverse set of discrete and continuous\nenvironments, and can be more effective in training RL policies than the\noriginal sparse environment rewards."
+}

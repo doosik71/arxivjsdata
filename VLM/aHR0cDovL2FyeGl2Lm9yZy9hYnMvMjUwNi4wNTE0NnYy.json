@@ -1,0 +1,7 @@
+{
+  "title": "CIVET: Systematic Evaluation of Understanding in VLMs",
+  "authors": "Massimo Rizzoli, Simone Alghisi, Olha Khomyn, Gabriel Roccabruna, Seyed Mahed Mousavi, Giuseppe Riccardi",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.05146v2",
+  "abstract": "While Vision-Language Models (VLMs) have achieved competitive performance in\nvarious tasks, their comprehension of the underlying structure and semantics of\na scene remains understudied. To investigate the understanding of VLMs, we\nstudy their capability regarding object properties and relations in a\ncontrolled and interpretable manner. To this scope, we introduce CIVET, a novel\nand extensible framework for systematiC evaluatIon Via controllEd sTimuli.\nCIVET addresses the lack of standardized systematic evaluation for assessing\nVLMs' understanding, enabling researchers to test hypotheses with statistical\nrigor. With CIVET, we evaluate five state-of-the-art VLMs on exhaustive sets of\nstimuli, free from annotation noise, dataset-specific biases, and uncontrolled\nscene complexity. Our findings reveal that 1) current VLMs can accurately\nrecognize only a limited set of basic object properties; 2) their performance\nheavily depends on the position of the object in the scene; 3) they struggle to\nunderstand basic relations among objects. Furthermore, a comparative evaluation\nwith human annotators reveals that VLMs still fall short of achieving\nhuman-level accuracy."
+}

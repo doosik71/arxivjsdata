@@ -1,0 +1,7 @@
+{
+  "title": "Tarsier2: Advancing Large Vision-Language Models from Detailed Video\n  Description to Comprehensive Video Understanding",
+  "authors": "Liping Yuan, Jiawei Wang, Haomiao Sun, Yuchen Zhang, Yuan Lin",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2501.07888v3",
+  "abstract": "We introduce Tarsier2, a state-of-the-art large vision-language model (LVLM)\ndesigned for generating detailed and accurate video descriptions, while also\nexhibiting superior general video understanding capabilities. Tarsier2 achieves\nsignificant advancements through three key upgrades: (1) Scaling pre-training\ndata from 11M to 40M video-text pairs, enriching both volume and diversity; (2)\nPerforming fine-grained temporal alignment during supervised fine-tuning; (3)\nUsing model-based sampling to automatically construct preference data and\napplying DPO training for optimization. Extensive experiments show that\nTarsier2-7B consistently outperforms leading proprietary models, including\nGPT-4o and Gemini 1.5 Pro, in detailed video description tasks. On the DREAM-1K\nbenchmark, Tarsier2-7B improves F1 by 2.8% over GPT-4o and 5.8% over\nGemini-1.5-Pro. In human side-by-side evaluations, Tarsier2-7B shows a +8.6%\nperformance advantage over GPT-4o and +24.9% over Gemini-1.5-Pro. Tarsier2-7B\nalso sets new state-of-the-art results across 15 public benchmarks, spanning\ntasks such as video question-answering, video grounding, hallucination test,\nand embodied question-answering, demonstrating its versatility as a robust\ngeneralist vision-language model."
+}

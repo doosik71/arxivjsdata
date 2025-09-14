@@ -1,0 +1,7 @@
+{
+  "title": "BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image\n  Encoders and Large Language Models",
+  "authors": "Junnan Li, Dongxu Li, Silvio Savarese, Steven Hoi",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2301.12597v3",
+  "abstract": "The cost of vision-and-language pre-training has become increasingly\nprohibitive due to end-to-end training of large-scale models. This paper\nproposes BLIP-2, a generic and efficient pre-training strategy that bootstraps\nvision-language pre-training from off-the-shelf frozen pre-trained image\nencoders and frozen large language models. BLIP-2 bridges the modality gap with\na lightweight Querying Transformer, which is pre-trained in two stages. The\nfirst stage bootstraps vision-language representation learning from a frozen\nimage encoder. The second stage bootstraps vision-to-language generative\nlearning from a frozen language model. BLIP-2 achieves state-of-the-art\nperformance on various vision-language tasks, despite having significantly\nfewer trainable parameters than existing methods. For example, our model\noutperforms Flamingo80B by 8.7% on zero-shot VQAv2 with 54x fewer trainable\nparameters. We also demonstrate the model's emerging capabilities of zero-shot\nimage-to-text generation that can follow natural language instructions."
+}

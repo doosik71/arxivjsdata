@@ -1,0 +1,7 @@
+{
+  "title": "VLM-Guard: Safeguarding Vision-Language Models via Fulfilling Safety\n  Alignment Gap",
+  "authors": "Qin Liu, Fei Wang, Chaowei Xiao, Muhao Chen",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.10486v1",
+  "abstract": "The emergence of vision language models (VLMs) comes with increased safety\nconcerns, as the incorporation of multiple modalities heightens vulnerability\nto attacks. Although VLMs can be built upon LLMs that have textual safety\nalignment, it is easily undermined when the vision modality is integrated. We\nattribute this safety challenge to the modality gap, a separation of image and\ntext in the shared representation space, which blurs the distinction between\nharmful and harmless queries that is evident in LLMs but weakened in VLMs. To\navoid safety decay and fulfill the safety alignment gap, we propose VLM-Guard,\nan inference-time intervention strategy that leverages the LLM component of a\nVLM as supervision for the safety alignment of the VLM. VLM-Guard projects the\nrepresentations of VLM into the subspace that is orthogonal to the safety\nsteering direction that is extracted from the safety-aligned LLM. Experimental\nresults on three malicious instruction settings show the effectiveness of\nVLM-Guard in safeguarding VLM and fulfilling the safety alignment gap between\nVLM and its LLM component."
+}

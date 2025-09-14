@@ -1,0 +1,7 @@
+{
+  "title": "Maya: An Instruction Finetuned Multilingual Multimodal Model",
+  "authors": "Nahid Alam, Karthik Reddy Kanjula, Surya Guthikonda, Timothy Chung, Bala Krishna S Vegesna, Abhipsha Das, Anthony Susevski, Ryan Sze-Yin Chan, S M Iftekhar Uddin, Shayekh Bin Islam, Roshan Santhosh, Snegha A, Drishti Sharma, Chen Liu, Isha Chaturvedi, Genta Indra Winata, Ashvanth. S, Snehanshu Mukherjee, Alham Fikri Aji",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.07112v1",
+  "abstract": "The rapid development of large Vision-Language Models (VLMs) has led to\nimpressive results on academic benchmarks, primarily in widely spoken\nlanguages. However, significant gaps remain in the ability of current VLMs to\nhandle low-resource languages and varied cultural contexts, largely due to a\nlack of high-quality, diverse, and safety-vetted data. Consequently, these\nmodels often struggle to understand low-resource languages and cultural nuances\nin a manner free from toxicity. To address these limitations, we introduce\nMaya, an open-source Multimodal Multilingual model. Our contributions are\nthreefold: 1) a multilingual image-text pretraining dataset in eight languages,\nbased on the LLaVA pretraining dataset; 2) a thorough analysis of toxicity\nwithin the LLaVA dataset, followed by the creation of a novel toxicity-free\nversion across eight languages; and 3) a multilingual image-text model\nsupporting these languages, enhancing cultural and linguistic comprehension in\nvision-language tasks. Code available at https://github.com/nahidalam/maya."
+}

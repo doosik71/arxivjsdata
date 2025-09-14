@@ -1,0 +1,7 @@
+{
+  "title": "LLaVA-Plus: Learning to Use Tools for Creating Multimodal Agents",
+  "authors": "Shilong Liu, Hao Cheng, Haotian Liu, Hao Zhang, Feng Li, Tianhe Ren, Xueyan Zou, Jianwei Yang, Hang Su, Jun Zhu, Lei Zhang, Jianfeng Gao, Chunyuan Li",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.05437v1",
+  "abstract": "LLaVA-Plus is a general-purpose multimodal assistant that expands the\ncapabilities of large multimodal models. It maintains a skill repository of\npre-trained vision and vision-language models and can activate relevant tools\nbased on users' inputs to fulfill real-world tasks. LLaVA-Plus is trained on\nmultimodal instruction-following data to acquire the ability to use tools,\ncovering visual understanding, generation, external knowledge retrieval, and\ncompositions. Empirical results show that LLaVA-Plus outperforms LLaVA in\nexisting capabilities and exhibits new ones. It is distinct in that the image\nquery is directly grounded and actively engaged throughout the entire human-AI\ninteraction sessions, significantly improving tool use performance and enabling\nnew scenarios."
+}

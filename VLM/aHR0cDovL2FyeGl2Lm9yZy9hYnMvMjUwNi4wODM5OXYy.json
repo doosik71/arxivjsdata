@@ -1,0 +1,7 @@
+{
+  "title": "SafeCoT: Improving VLM Safety with Minimal Reasoning",
+  "authors": "Jiachen Ma, Zhanhui Zhou, Chao Yang, Chaochao Lu",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.08399v2",
+  "abstract": "Ensuring safe and appropriate responses from vision-language models (VLMs)\nremains a critical challenge, particularly in high-risk or ambiguous scenarios.\nWe introduce SafeCoT, a lightweight, interpretable framework that leverages\nrule-based chain-of-thought (CoT) supervision to improve refusal behavior in\nVLMs. Unlike prior methods that rely on large-scale safety annotations or\ncomplex modeling, SafeCoT uses minimal supervision to help models reason about\nsafety risks and make context-aware refusals. Experiments across multiple\nbenchmarks show that SafeCoT significantly reduces overrefusal and enhances\ngeneralization, even with limited training data. Our approach offers a scalable\nsolution for aligning VLMs with safety-critical objectives."
+}

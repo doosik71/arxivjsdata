@@ -1,0 +1,7 @@
+{
+  "title": "Self-Supervised Visual Preference Alignment",
+  "authors": "Ke Zhu, Zheng Ge, Liang Zhao, Xiangyu Zhang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.10501v2",
+  "abstract": "This paper makes the first attempt towards unsupervised preference alignment\nin Vision-Language Models (VLMs). We generate chosen and rejected responses\nwith regard to the original and augmented image pairs, and conduct preference\nalignment with direct preference optimization. It is based on a core idea:\nproperly designed augmentation to the image input will induce VLM to generate\nfalse but hard negative responses, which helps the model to learn from and\nproduce more robust and powerful answers. The whole pipeline no longer hinges\non supervision from GPT-4 or human involvement during alignment, and is highly\nefficient with few lines of code. With only 8k randomly sampled unsupervised\ndata, it achieves 90\\% relative score to GPT-4 on complex reasoning in\nLLaVA-Bench, and improves LLaVA-7B/13B by 6.7\\%/5.6\\% score on complex\nmulti-modal benchmark MM-Vet. Visualizations shows its improved ability to\nalign with user-intentions. A series of ablations are firmly conducted to\nreveal the latent mechanism of the approach, which also indicates its potential\ntowards further scaling. Code are available in\nhttps://github.com/Kevinz-code/SeVa."
+}

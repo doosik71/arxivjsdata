@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2201.12086v2",
+  "title": "BLIP: Bootstrapping Language-Image Pre-training for Unified\n  Vision-Language Understanding and Generation",
+  "authors": "Junnan Li, Dongxu Li, Caiming Xiong, Steven Hoi",
+  "year": 2022,
+  "abstract": "Vision-Language Pre-training (VLP) has advanced the performance for many\nvision-language tasks. However, most existing pre-trained models only excel in\neither understanding-based tasks or generation-based tasks. Furthermore,\nperformance improvement has been largely achieved by scaling up the dataset\nwith noisy image-text pairs collected from the web, which is a suboptimal\nsource of supervision. In this paper, we propose BLIP, a new VLP framework\nwhich transfers flexibly to both vision-language understanding and generation\ntasks. BLIP effectively utilizes the noisy web data by bootstrapping the\ncaptions, where a captioner generates synthetic captions and a filter removes\nthe noisy ones. We achieve state-of-the-art results on a wide range of\nvision-language tasks, such as image-text retrieval (+2.7% in average\nrecall@1), image captioning (+2.8% in CIDEr), and VQA (+1.6% in VQA score).\nBLIP also demonstrates strong generalization ability when directly transferred\nto video-language tasks in a zero-shot manner. Code, models, and datasets are\nreleased at https://github.com/salesforce/BLIP."
+}

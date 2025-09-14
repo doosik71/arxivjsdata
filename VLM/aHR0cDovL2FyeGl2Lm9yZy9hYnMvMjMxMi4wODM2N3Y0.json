@@ -1,0 +1,7 @@
+{
+  "title": "ViLA: Efficient Video-Language Alignment for Video Question Answering",
+  "authors": "Xijun Wang, Junbang Liang, Chun-Kai Wang, Kenan Deng, Yu Lou, Ming Lin, Shan Yang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.08367v4",
+  "abstract": "In this work, we propose an efficient Video-Language Alignment (ViLA)\nnetwork. Our ViLA model addresses both efficient frame sampling and effective\ncross-modal alignment in a unified way. In our ViLA network, we design a new\nlearnable text-guided Frame-Prompter together with a new cross-modal\ndistillation (QFormer-Distiller) module. Pre-trained large image-language\nmodels have shown promising results on problems such as visual question\nanswering (VQA). However, how to efficiently and effectively sample video\nframes when adapting pre-trained large image-language model to video-language\nalignment is still the major challenge. Compared with prior work, our ViLA\nmodel demonstrates the capability of selecting key frames with critical\ncontents, thus improving the video-language alignment accuracy while reducing\nthe inference latency +3.3% on NExT-QA Temporal with 3.0X speed up). Overall,\nour ViLA network outperforms the state-of-the-art methods on the video\nquestion-answering benchmarks: +4.6% on STAR Interaction, +2.2% on STAR average\nwith 3.0X speed up, ours 2-frames out-perform SeViLA 4-frames on the VLEP\ndataset with 4.2X speed-up. The code will be available at\nhttps://github.com/xijun-cs/ViLA."
+}

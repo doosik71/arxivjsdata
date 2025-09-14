@@ -1,0 +1,7 @@
+{
+  "title": "Enhance Image-to-Image Generation with LLaVA-generated Prompts",
+  "authors": "Zhicheng Ding, Panfeng Li, Qikai Yang, Siyang Li",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.01956v3",
+  "abstract": "This paper presents a novel approach to enhance image-to-image generation by\nleveraging the multimodal capabilities of the Large Language and Vision\nAssistant (LLaVA). We propose a framework where LLaVA analyzes input images and\ngenerates textual descriptions, hereinafter LLaVA-generated prompts. These\nprompts, along with the original image, are fed into the image-to-image\ngeneration pipeline. This enriched representation guides the generation process\ntowards outputs that exhibit a stronger resemblance to the input image.\nExtensive experiments demonstrate the effectiveness of LLaVA-generated prompts\nin promoting image similarity. We observe a significant improvement in the\nvisual coherence between the generated and input images compared to traditional\nmethods. Future work will explore fine-tuning LLaVA prompts for increased\ncontrol over the creative process. By providing more specific details within\nthe prompts, we aim to achieve a delicate balance between faithfulness to the\noriginal image and artistic expression in the generated outputs."
+}

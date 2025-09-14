@@ -1,0 +1,7 @@
+{
+  "title": "Pushing the Limits of Vision-Language Models in Remote Sensing without\n  Human Annotations",
+  "authors": "Keumgang Cha, Donggeun Yu, Junghoon Seo",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.07048v1",
+  "abstract": "The prominence of generalized foundation models in vision-language\nintegration has witnessed a surge, given their multifarious applications.\nWithin the natural domain, the procurement of vision-language datasets to\nconstruct these foundation models is facilitated by their abundant availability\nand the ease of web crawling. Conversely, in the remote sensing domain,\nalthough vision-language datasets exist, their volume is suboptimal for\nconstructing robust foundation models. This study introduces an approach to\ncurate vision-language datasets by employing an image decoding machine learning\nmodel, negating the need for human-annotated labels. Utilizing this\nmethodology, we amassed approximately 9.6 million vision-language paired\ndatasets in VHR imagery. The resultant model outperformed counterparts that did\nnot leverage publicly available vision-language datasets, particularly in\ndownstream tasks such as zero-shot classification, semantic localization, and\nimage-text retrieval. Moreover, in tasks exclusively employing vision encoders,\nsuch as linear probing and k-NN classification, our model demonstrated superior\nefficacy compared to those relying on domain-specific vision-language datasets."
+}

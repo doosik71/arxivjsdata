@@ -1,0 +1,7 @@
+{
+  "title": "Generative Visual Instruction Tuning",
+  "authors": "Jefferson Hernandez, Ruben Villegas, Vicente Ordonez",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.11262v2",
+  "abstract": "We propose to use automatically generated instruction-following data to\nimprove the zero-shot capabilities of a large multimodal model with additional\nsupport for generative and image editing tasks. We achieve this by curating a\nnew multimodal instruction-following set using GPT-4V and existing datasets for\nimage generation and editing. Using this instruction set and the existing\nLLaVA-Finetune instruction set for visual understanding tasks, we produce\nGenLLaVA, a Generative Large Language and Visual Assistant. GenLLaVA is built\nthrough a strategy that combines three types of large pretrained models through\ninstruction finetuning: Mistral for language modeling, SigLIP for image-text\nmatching, and StableDiffusion for text-to-image generation. Our model\ndemonstrates visual understanding capabilities superior to LLaVA and\nadditionally demonstrates competitive results with native multimodal models\nsuch as Unified-IO 2, paving the way for building advanced general-purpose\nvisual assistants by effectively re-using existing multimodal models. We\nopen-source our dataset, codebase, and model checkpoints to foster further\nresearch and application in this domain."
+}

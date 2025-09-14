@@ -1,0 +1,7 @@
+{
+  "title": "Vision-Language Model Selection and Reuse for Downstream Adaptation",
+  "authors": "Hao-Zhe Tan, Zhi Zhou, Yu-Feng Li, Lan-Zhe Guo",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2501.18271v2",
+  "abstract": "Pre-trained Vision-Language Models (VLMs) are becoming increasingly popular\nacross various visual tasks, and several open-sourced VLM variants have been\nreleased. However, selecting the best-performing pre-trained VLM for a specific\ndownstream task is challenging since no single VLM can achieve promising\nperformance on all downstream tasks, and evaluating all available VLMs is\nimpossible due to time and data limitations. To address this problem, this\npaper proposes a novel paradigm to select and reuse VLM for downstream tasks,\ncalled Model Label Learning (MLL). The proposal contains three key modules:\n\\emph{model labeling}, which assigns labels to each VLM to describe their\nspecialty and utility; \\emph{model selection}, which matches the requirements\nof the target task with model labels; and \\emph{model reuse}, which applies\nselected VLMs to the target task in an ensemble manner. The proposal is highly\ncomputationally efficient and growable since the model labeling process is\ncompleted target task independent and the ability could grow with the number of\ncandidate VLMs. We also introduce a new benchmark for evaluating VLM selection\nmethods, including 49 VLMs and 17 target task datasets. Experimental results\nclearly demonstrate the effectiveness of the proposed method for selecting and\nreusing VLMs."
+}

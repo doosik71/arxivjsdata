@@ -1,0 +1,7 @@
+{
+  "title": "EVLM: Self-Reflective Multimodal Reasoning for Cross-Dimensional Visual\n  Editing",
+  "authors": "Umar Khalid, Hasan Iqbal, Azib Farooq, Nazanin Rahnavard, Jing Hua, Chen Chen",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.10566v1",
+  "abstract": "Editing complex visual content based on ambiguous instructions remains a\nchallenging problem in vision-language modeling. While existing models can\ncontextualize content, they often struggle to grasp the underlying intent\nwithin a reference image or scene, leading to misaligned edits. We introduce\nthe Editing Vision-Language Model (EVLM), a system designed to interpret such\ninstructions in conjunction with reference visuals, producing precise and\ncontext-aware editing prompts. Leveraging Chain-of-Thought (CoT) reasoning and\nKL-Divergence Target Optimization (KTO) alignment technique, EVLM captures\nsubjective editing preferences without requiring binary labels. Fine-tuned on a\ndataset of 30,000 CoT examples, with rationale paths rated by human evaluators,\nEVLM demonstrates substantial improvements in alignment with human intentions.\nExperiments across image, video, 3D, and 4D editing tasks show that EVLM\ngenerates coherent, high-quality instructions, supporting a scalable framework\nfor complex vision-language applications."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "PARC: A Quantitative Framework Uncovering the Symmetries within Vision\n  Language Models",
+  "authors": "Jenny Schmalfuss, Nadine Chang, Vibashan VS, Maying Shen, Andres Bruhn, Jose M. Alvarez",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.14808v1",
+  "abstract": "Vision language models (VLMs) respond to user-crafted text prompts and visual\ninputs, and are applied to numerous real-world problems. VLMs integrate visual\nmodalities with large language models (LLMs), which are well known to be\nprompt-sensitive. Hence, it is crucial to determine whether VLMs inherit this\ninstability to varying prompts. We therefore investigate which prompt\nvariations VLMs are most sensitive to and which VLMs are most agnostic to\nprompt variations. To this end, we introduce PARC (Prompt Analysis via\nReliability and Calibration), a VLM prompt sensitivity analysis framework built\non three pillars: (1) plausible prompt variations in both the language and\nvision domain, (2) a novel model reliability score with built-in guarantees,\nand (3) a calibration step that enables dataset- and prompt-spanning prompt\nvariation analysis. Regarding prompt variations, PARC's evaluation shows that\nVLMs mirror LLM language prompt sensitivity in the vision domain, and most\ndestructive variations change the expected answer. Regarding models,\noutstandingly robust VLMs among 22 evaluated models come from the InternVL2\nfamily. We further find indications that prompt sensitivity is linked to\ntraining data. The code will be at https://github.com/NVlabs/PARC."
+}

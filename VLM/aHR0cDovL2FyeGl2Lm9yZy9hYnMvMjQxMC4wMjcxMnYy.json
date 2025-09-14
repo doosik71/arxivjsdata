@@ -1,0 +1,7 @@
+{
+  "title": "LLaVA-Critic: Learning to Evaluate Multimodal Models",
+  "authors": "Tianyi Xiong, Xiyao Wang, Dong Guo, Qinghao Ye, Haoqi Fan, Quanquan Gu, Heng Huang, Chunyuan Li",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.02712v2",
+  "abstract": "We introduce LLaVA-Critic, the first open-source large multimodal model (LMM)\ndesigned as a generalist evaluator to assess performance across a wide range of\nmultimodal tasks. LLaVA-Critic is trained using a high-quality critic\ninstruction-following dataset that incorporates diverse evaluation criteria and\nscenarios. Our experiments demonstrate the model's effectiveness in two key\nareas: (1) LMM-as-a-Judge, where LLaVA-Critic provides reliable evaluation\nscores, performing on par with or surpassing GPT models on multiple evaluation\nbenchmarks; and (2) Preference Learning, where it generates reward signals for\npreference learning, enhancing model alignment capabilities. This work\nunderscores the potential of open-source LMMs in self-critique and evaluation,\nsetting the stage for future research into scalable, superhuman alignment\nfeedback mechanisms for LMMs."
+}
