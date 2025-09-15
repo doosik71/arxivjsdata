@@ -1,0 +1,7 @@
+{
+  "title": "A Survey of Vision-Language Pre-training from the Lens of Multimodal\n  Machine Translation",
+  "authors": "Jeremy Gwinnup, Kevin Duh",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.07198v1",
+  "abstract": "Large language models such as BERT and the GPT series started a paradigm\nshift that calls for building general-purpose models via pre-training on large\ndatasets, followed by fine-tuning on task-specific datasets. There is now a\nplethora of large pre-trained models for Natural Language Processing and\nComputer Vision. Recently, we have seen rapid developments in the joint\nVision-Language space as well, where pre-trained models such as CLIP (Radford\net al., 2021) have demonstrated improvements in downstream tasks like image\ncaptioning and visual question answering. However, surprisingly there is\ncomparatively little work on exploring these models for the task of multimodal\nmachine translation, where the goal is to leverage image/video modality in\ntext-to-text translation. To fill this gap, this paper surveys the landscape of\nlanguage-and-vision pre-training from the lens of multimodal machine\ntranslation. We summarize the common architectures, pre-training objectives,\nand datasets from literature and conjecture what further is needed to make\nprogress on multimodal machine translation."
+}

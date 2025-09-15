@@ -1,7 +1,7 @@
 {
+  "url": "http://arxiv.org/abs/1908.06327v1",
   "title": "Language Features Matter: Effective Language Representations for\n  Vision-Language Tasks",
   "authors": "Andrea Burns, Reuben Tan, Kate Saenko, Stan Sclaroff, Bryan A. Plummer",
   "year": 2019,
-  "url": "http://arxiv.org/abs/1908.06327v1",
   "abstract": "Shouldn't language and vision features be treated equally in vision-language\n(VL) tasks? Many VL approaches treat the language component as an afterthought,\nusing simple language models that are either built upon fixed word embeddings\ntrained on text-only data or are learned from scratch. We believe that language\nfeatures deserve more attention, and conduct experiments which compare\ndifferent word embeddings, language models, and embedding augmentation steps on\nfive common VL tasks: image-sentence retrieval, image captioning, visual\nquestion answering, phrase grounding, and text-to-clip retrieval. Our\nexperiments provide some striking results; an average embedding language model\noutperforms an LSTM on retrieval-style tasks; state-of-the-art representations\nsuch as BERT perform relatively poorly on vision-language tasks. From this\ncomprehensive set of experiments we propose a set of best practices for\nincorporating the language component of VL tasks. To further elevate language\nfeatures, we also show that knowledge in vision-language problems can be\ntransferred across tasks to gain performance with multi-task training. This\nmulti-task training is applied to a new Graph Oriented Vision-Language\nEmbedding (GrOVLE), which we adapt from Word2Vec using WordNet and an original\nvisual-language graph built from Visual Genome, providing a ready-to-use\nvision-language embedding: http://ai.bu.edu/grovle."
 }

@@ -1,0 +1,7 @@
+{
+  "title": "Multimodal Foundation Models: From Specialists to General-Purpose\n  Assistants",
+  "authors": "Chunyuan Li, Zhe Gan, Zhengyuan Yang, Jianwei Yang, Linjie Li, Lijuan Wang, Jianfeng Gao",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.10020v1",
+  "abstract": "This paper presents a comprehensive survey of the taxonomy and evolution of\nmultimodal foundation models that demonstrate vision and vision-language\ncapabilities, focusing on the transition from specialist models to\ngeneral-purpose assistants. The research landscape encompasses five core\ntopics, categorized into two classes. (i) We start with a survey of\nwell-established research areas: multimodal foundation models pre-trained for\nspecific purposes, including two topics -- methods of learning vision backbones\nfor visual understanding and text-to-image generation. (ii) Then, we present\nrecent advances in exploratory, open research areas: multimodal foundation\nmodels that aim to play the role of general-purpose assistants, including three\ntopics -- unified vision models inspired by large language models (LLMs),\nend-to-end training of multimodal LLMs, and chaining multimodal tools with\nLLMs. The target audiences of the paper are researchers, graduate students, and\nprofessionals in computer vision and vision-language multimodal communities who\nare eager to learn the basics and recent advances in multimodal foundation\nmodels."
+}

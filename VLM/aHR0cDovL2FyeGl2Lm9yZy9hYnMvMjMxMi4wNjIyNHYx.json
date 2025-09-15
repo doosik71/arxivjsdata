@@ -1,0 +1,7 @@
+{
+  "title": "Medical Vision Language Pretraining: A survey",
+  "authors": "Prashant Shrestha, Sanskar Amgain, Bidur Khanal, Cristian A. Linte, Binod Bhattarai",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.06224v1",
+  "abstract": "Medical Vision Language Pretraining (VLP) has recently emerged as a promising\nsolution to the scarcity of labeled data in the medical domain. By leveraging\npaired/unpaired vision and text datasets through self-supervised learning,\nmodels can be trained to acquire vast knowledge and learn robust feature\nrepresentations. Such pretrained models have the potential to enhance multiple\ndownstream medical tasks simultaneously, reducing the dependency on labeled\ndata. However, despite recent progress and its potential, there is no such\ncomprehensive survey paper that has explored the various aspects and\nadvancements in medical VLP. In this paper, we specifically review existing\nworks through the lens of different pretraining objectives, architectures,\ndownstream evaluation tasks, and datasets utilized for pretraining and\ndownstream tasks. Subsequently, we delve into current challenges in medical\nVLP, discussing existing and potential solutions, and conclude by highlighting\nfuture directions. To the best of our knowledge, this is the first survey\nfocused on medical VLP."
+}

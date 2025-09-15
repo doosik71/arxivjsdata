@@ -1,0 +1,7 @@
+{
+  "title": "VLP: A Survey on Vision-Language Pre-training",
+  "authors": "Feilong Chen, Duzhen Zhang, Minglun Han, Xiuyi Chen, Jing Shi, Shuang Xu, Bo Xu",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.09061v4",
+  "abstract": "In the past few years, the emergence of pre-training models has brought\nuni-modal fields such as computer vision (CV) and natural language processing\n(NLP) to a new era. Substantial works have shown they are beneficial for\ndownstream uni-modal tasks and avoid training a new model from scratch. So can\nsuch pre-trained models be applied to multi-modal tasks? Researchers have\nexplored this problem and made significant progress. This paper surveys recent\nadvances and new frontiers in vision-language pre-training (VLP), including\nimage-text and video-text pre-training. To give readers a better overall grasp\nof VLP, we first review its recent advances from five aspects: feature\nextraction, model architecture, pre-training objectives, pre-training datasets,\nand downstream tasks. Then, we summarize the specific VLP models in detail.\nFinally, we discuss the new frontiers in VLP. To the best of our knowledge,\nthis is the first survey focused on VLP. We hope that this survey can shed\nlight on future research in the VLP field."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Whisper-Flamingo: Integrating Visual Features into Whisper for\n  Audio-Visual Speech Recognition and Translation",
+  "authors": "Andrew Rouditchenko, Yuan Gong, Samuel Thomas, Leonid Karlinsky, Hilde Kuehne, Rogerio Feris, James Glass",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.10082v3",
+  "abstract": "Audio-Visual Speech Recognition (AVSR) uses lip-based video to improve\nperformance in noise. Since videos are harder to obtain than audio, the video\ntraining data of AVSR models is usually limited to a few thousand hours. In\ncontrast, speech models such as Whisper are trained with hundreds of thousands\nof hours of data, and thus learn a better speech-to-text decoder. The huge\ntraining data difference motivates us to adapt Whisper to handle video inputs.\nInspired by Flamingo which injects visual features into language models, we\npropose Whisper-Flamingo which integrates visual features into the Whisper\nspeech recognition and translation model with gated cross attention. Our models\nachieve state-of-the-art ASR WER (0.68%) and AVSR WER (0.76%) on LRS3, and\nstate-of-the-art ASR WER (1.3%) and AVSR WER (1.4%) on LRS2. Audio-visual\nWhisper-Flamingo outperforms audio-only Whisper on English speech recognition\nand En-X translation for 6 languages in noisy conditions. Moreover,\nWhisper-Flamingo is versatile and conducts all of these tasks using one set of\nparameters, while prior methods are trained separately on each language."
+}

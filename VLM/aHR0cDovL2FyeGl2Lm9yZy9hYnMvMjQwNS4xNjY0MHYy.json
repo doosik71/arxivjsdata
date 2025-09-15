@@ -1,0 +1,7 @@
+{
+  "title": "A Survey of Multimodal Large Language Model from A Data-centric\n  Perspective",
+  "authors": "Tianyi Bai, Hao Liang, Binwang Wan, Yanran Xu, Xi Li, Shiyu Li, Ling Yang, Bozhou Li, Yifan Wang, Bin Cui, Ping Huang, Jiulong Shan, Conghui He, Binhang Yuan, Wentao Zhang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.16640v2",
+  "abstract": "Multimodal large language models (MLLMs) enhance the capabilities of standard\nlarge language models by integrating and processing data from multiple\nmodalities, including text, vision, audio, video, and 3D environments. Data\nplays a pivotal role in the development and refinement of these models. In this\nsurvey, we comprehensively review the literature on MLLMs from a data-centric\nperspective. Specifically, we explore methods for preparing multimodal data\nduring the pretraining and adaptation phases of MLLMs. Additionally, we analyze\nthe evaluation methods for the datasets and review the benchmarks for\nevaluating MLLMs. Our survey also outlines potential future research\ndirections. This work aims to provide researchers with a detailed understanding\nof the data-driven aspects of MLLMs, fostering further exploration and\ninnovation in this field."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Multimodal Large Language Models: A Survey",
+  "authors": "Jiayang Wu, Wensheng Gan, Zefeng Chen, Shicheng Wan, Philip S. Yu",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.13165v1",
+  "abstract": "The exploration of multimodal language models integrates multiple data types,\nsuch as images, text, language, audio, and other heterogeneity. While the\nlatest large language models excel in text-based tasks, they often struggle to\nunderstand and process other data types. Multimodal models address this\nlimitation by combining various modalities, enabling a more comprehensive\nunderstanding of diverse data. This paper begins by defining the concept of\nmultimodal and examining the historical development of multimodal algorithms.\nFurthermore, we introduce a range of multimodal products, focusing on the\nefforts of major technology companies. A practical guide is provided, offering\ninsights into the technical aspects of multimodal models. Moreover, we present\na compilation of the latest algorithms and commonly used datasets, providing\nresearchers with valuable resources for experimentation and evaluation. Lastly,\nwe explore the applications of multimodal models and discuss the challenges\nassociated with their development. By addressing these aspects, this paper aims\nto facilitate a deeper understanding of multimodal models and their potential\nin various domains."
+}

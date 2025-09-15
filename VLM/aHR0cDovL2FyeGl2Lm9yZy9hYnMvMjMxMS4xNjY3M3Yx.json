@@ -1,0 +1,7 @@
+{
+  "title": "Large Language Models Meet Computer Vision: A Brief Survey",
+  "authors": "Raby Hamadi",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.16673v1",
+  "abstract": "Recently, the intersection of Large Language Models (LLMs) and Computer\nVision (CV) has emerged as a pivotal area of research, driving significant\nadvancements in the field of Artificial Intelligence (AI). As transformers have\nbecome the backbone of many state-of-the-art models in both Natural Language\nProcessing (NLP) and CV, understanding their evolution and potential\nenhancements is crucial. This survey paper delves into the latest progressions\nin the domain of transformers and their subsequent successors, emphasizing\ntheir potential to revolutionize Vision Transformers (ViTs) and LLMs. This\nsurvey also presents a comparative analysis, juxtaposing the performance\nmetrics of several leading paid and open-source LLMs, shedding light on their\nstrengths and areas of improvement as well as a literature review on how LLMs\nare being used to tackle vision related tasks. Furthermore, the survey presents\na comprehensive collection of datasets employed to train LLMs, offering\ninsights into the diverse data available to achieve high performance in various\npre-training and downstream tasks of LLMs. The survey is concluded by\nhighlighting open directions in the field, suggesting potential venues for\nfuture research and development. This survey aims to underscores the profound\nintersection of LLMs on CV, leading to a new era of integrated and advanced AI\nmodels."
+}

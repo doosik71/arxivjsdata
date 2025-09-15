@@ -1,0 +1,7 @@
+{
+  "title": "Cycle Consistency as Reward: Learning Image-Text Alignment without Human\n  Preferences",
+  "authors": "Hyojin Bahng, Caroline Chan, Fredo Durand, Phillip Isola",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.02095v1",
+  "abstract": "Learning alignment between language and vision is a fundamental challenge,\nespecially as multimodal data becomes increasingly detailed and complex.\nExisting methods often rely on collecting human or AI preferences, which can be\ncostly and time-intensive. We propose an alternative approach that leverages\ncycle consistency as a supervisory signal. Given an image and generated text,\nwe map the text back to image space using a text-to-image model and compute the\nsimilarity between the original image and its reconstruction. Analogously, for\ntext-to-image generation, we measure the textual similarity between an input\ncaption and its reconstruction through the cycle. We use the cycle consistency\nscore to rank candidates and construct a preference dataset of 866K comparison\npairs. The reward model trained on our dataset outperforms state-of-the-art\nalignment metrics on detailed captioning, with superior inference-time\nscalability when used as a verifier for Best-of-N sampling. Furthermore,\nperforming DPO and Diffusion DPO using our dataset enhances performance across\na wide range of vision-language tasks and text-to-image generation. Our\ndataset, model, and code are at https://cyclereward.github.io"
+}
