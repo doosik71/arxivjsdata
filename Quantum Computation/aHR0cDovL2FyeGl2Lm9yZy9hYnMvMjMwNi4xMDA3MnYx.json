@@ -1,0 +1,7 @@
+{
+  "title": "Shor's Algorithm Does Not Factor Large Integers in the Presence of Noise",
+  "authors": "Jin-Yi Cai",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.10072v1",
+  "abstract": "We consider Shor's quantum factoring algorithm in the setting of noisy\nquantum gates. Under a generic model of random noise for (controlled) rotation\ngates, we prove that the algorithm does not factor integers of the form $pq$\nwhen the noise exceeds a vanishingly small level in terms of $n$ -- the number\nof bits of the integer to be factored, where $p$ and $q$ are from a\nwell-defined set of primes of positive density. We further prove that with\nprobability $1 - o(1)$ over random prime pairs $(p,q)$, Shor's factoring\nalgorithm does not factor numbers of the form $pq$, with the same level of\nrandom noise present."
+}

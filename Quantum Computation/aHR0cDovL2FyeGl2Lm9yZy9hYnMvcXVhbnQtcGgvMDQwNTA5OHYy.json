@@ -1,0 +1,7 @@
+{
+  "title": "Adiabatic Quantum Computation is Equivalent to Standard Quantum\n  Computation",
+  "authors": "Dorit Aharonov, Wim van Dam, Julia Kempe, Zeph Landau, Seth Lloyd, Oded Regev",
+  "year": 2004,
+  "url": "http://arxiv.org/abs/quant-ph/0405098v2",
+  "abstract": "Adiabatic quantum computation has recently attracted attention in the physics\nand computer science communities, but its computational power was unknown. We\ndescribe an efficient adiabatic simulation of any given quantum algorithm,\nwhich implies that the adiabatic computation model and the conventional quantum\ncomputation model are polynomially equivalent. Our result can be extended to\nthe physically realistic setting of particles arranged on a two-dimensional\ngrid with nearest neighbor interactions. The equivalence between the models\nprovides a new vantage point from which to tackle the central issues in quantum\ncomputation, namely designing new quantum algorithms and constructing fault\ntolerant quantum computers. In particular, by translating the main open\nquestions in the area of quantum algorithms to the language of spectral gaps of\nsparse matrices, the result makes these questions accessible to a wider\nscientific audience, acquainted with mathematical physics, expander theory and\nrapidly mixing Markov chains."
+}

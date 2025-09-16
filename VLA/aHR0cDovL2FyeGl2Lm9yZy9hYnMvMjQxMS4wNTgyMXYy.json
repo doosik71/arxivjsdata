@@ -1,0 +1,7 @@
+{
+  "title": "Benchmarking Vision, Language, & Action Models on Robotic Learning Tasks",
+  "authors": "Pranav Guruprasad, Harshvardhan Sikka, Jaewoo Song, Yangyue Wang, Paul Pu Liang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.05821v2",
+  "abstract": "Vision-language-action (VLA) models represent a promising direction for\ndeveloping general-purpose robotic systems, demonstrating the ability to\ncombine visual understanding, language comprehension, and action generation.\nHowever, systematic evaluation of these models across diverse robotic tasks\nremains limited. In this work, we present a comprehensive evaluation framework\nand benchmark suite for assessing VLA models. We profile three state-of-the-art\nVLM and VLAs - GPT-4o, OpenVLA, and JAT - across 20 diverse datasets from the\nOpen-X-Embodiment collection, evaluating their performance on various\nmanipulation tasks. Our analysis reveals several key insights: 1. current VLA\nmodels show significant variation in performance across different tasks and\nrobot platforms, with GPT-4o demonstrating the most consistent performance\nthrough sophisticated prompt engineering, 2. all models struggle with complex\nmanipulation tasks requiring multi-step planning, and 3. model performance is\nnotably sensitive to action space characteristics and environmental factors. We\nrelease our evaluation framework and findings to facilitate systematic\nassessment of future VLA models and identify critical areas for improvement in\nthe development of general purpose robotic systems."
+}

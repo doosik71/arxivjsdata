@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/quant-ph/9508027v2",
+  "title": "Polynomial-Time Algorithms for Prime Factorization and Discrete\n  Logarithms on a Quantum Computer",
+  "authors": "Peter W. Shor",
+  "year": 1995,
+  "abstract": "A digital computer is generally believed to be an efficient universal\ncomputing device; that is, it is believed able to simulate any physical\ncomputing device with an increase in computation time of at most a polynomial\nfactor. This may not be true when quantum mechanics is taken into\nconsideration. This paper considers factoring integers and finding discrete\nlogarithms, two problems which are generally thought to be hard on a classical\ncomputer and have been used as the basis of several proposed cryptosystems.\nEfficient randomized algorithms are given for these two problems on a\nhypothetical quantum computer. These algorithms take a number of steps\npolynomial in the input size, e.g., the number of digits of the integer to be\nfactored."
+}

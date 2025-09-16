@@ -1,0 +1,7 @@
+{
+  "title": "Interactive Post-Training for Vision-Language-Action Models",
+  "authors": "Shuhan Tan, Kairan Dou, Yue Zhao, Philipp Krähenbühl",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.17016v1",
+  "abstract": "We introduce RIPT-VLA, a simple and scalable reinforcement-learning-based\ninteractive post-training paradigm that fine-tunes pretrained\nVision-Language-Action (VLA) models using only sparse binary success rewards.\nExisting VLA training pipelines rely heavily on offline expert demonstration\ndata and supervised imitation, limiting their ability to adapt to new tasks and\nenvironments under low-data regimes. RIPT-VLA addresses this by enabling\ninteractive post-training with a stable policy optimization algorithm based on\ndynamic rollout sampling and leave-one-out advantage estimation.\n  RIPT-VLA has the following characteristics. First, it applies to various VLA\nmodels, resulting in an improvement on the lightweight QueST model by 21.2%,\nand the 7B OpenVLA-OFT model to an unprecedented 97.5% success rate. Second, it\nis computationally efficient and data-efficient: with only one demonstration,\nRIPT-VLA enables an unworkable SFT model (4%) to succeed with a 97% success\nrate within 15 iterations. Furthermore, we demonstrate that the policy learned\nby RIPT-VLA generalizes across different tasks and scenarios and is robust to\nthe initial state context. These results highlight RIPT-VLA as a practical and\neffective paradigm for post-training VLA models through minimal supervision."
+}

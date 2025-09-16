@@ -1,0 +1,7 @@
+{
+  "title": "Fundamentals In Quantum Algorithms: A Tutorial Series Using Qiskit\n  Continued",
+  "authors": "Daniel Koch, Saahil Patel, Laura Wessing, Paul M. Alsing",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.10647v1",
+  "abstract": "With the increasing rise of publicly available high level quantum computing\nlanguages, the field of Quantum Computing has reached an important milestone of\nseparation of software from hardware. Consequently, the study of Quantum\nAlgorithms is beginning to emerge as university courses and disciplines around\nthe world, spanning physics, math, and computer science departments alike. As a\ncontinuation to its predecessor: \"Introduction to Coding Quantum Algorithms: A\nTutorial Series Using Qiskit\", this tutorial series aims to help understand\nseveral of the most promising quantum algorithms to date, including Phase\nEstimation, Shor's, QAOA, VQE, and several others. Accompanying each\nalgorithm's theoretical foundations are coding examples utilizing IBM's Qiskit,\ndemonstrating the strengths and challenges of implementing each algorithm in\ngate-based quantum computing."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "VLASCD: A Visual Language Action Model for Simultaneous Chatting and\n  Decision Making",
+  "authors": "Zuojin Tang, Bin Hu, Chenyang Zhao, De Ma, Gang Pan, Bin Liu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.15885v3",
+  "abstract": "Recent large pretrained models such as LLMs (e.g., GPT series) and VLAs\n(e.g., OpenVLA) have achieved notable progress on multimodal tasks, yet they\nare built upon a multi-input single-output (MISO) paradigm. We show that this\nparadigm fundamentally limits performance in multi-input multi-output (MIMO)\nscenarios, where parallel task execution is required. In MISO architectures,\ntasks compete for a shared output channel, creating mutual exclusion effects\nthat cause unbalanced optimization and degraded performance. To address this\ngap, we introduce MIMO-VLA (VLASCD), a unified training framework that enables\nconcurrent multi-task outputs, exemplified by simultaneous dialogue generation\nand decision-making. Inspired by human cognition, MIMO-VLA eliminates\ninterference between tasks and supports efficient parallel processing.\nExperiments on the CARLA autonomous driving platform demonstrate that MIMO-VLA\nsubstantially outperforms state-of-the-art MISO-based LLMs, reinforcement\nlearning models, and VLAs in MIMO settings, establishing a new direction for\nmultimodal and multitask learning."
+}

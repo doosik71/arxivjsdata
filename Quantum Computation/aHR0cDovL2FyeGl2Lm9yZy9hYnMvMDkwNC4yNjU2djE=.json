@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/0904.2656v1",
+  "title": "Diagrams of States in Quantum Information: an Illustrative Tutorial",
+  "authors": "Sara Felloni, Alberto Leporati, Giuliano Strini",
+  "year": 2009,
+  "abstract": "We present \"Diagrams of States\", a way to graphically represent and analyze\nhow quantum information is elaborated during the execution of quantum circuits.\nThis introductory tutorial illustrates the basics, providing useful examples of\nquantum computations: elementary operations in single-qubit, two-qubit and\nthree-qubit systems, immersions of gates on higher dimensional spaces,\ngeneration of single and multi-qubit states, procedures to synthesize unitary,\ncontrolled and diagonal matrices. To perform the analysis of quantum processes,\nwe directly derive diagrams of states from physical implementations of quantum\ncircuits associated to the processes. Complete diagrams are then rearranged\ninto simplified diagrams, to visualize the overall effects of computations.\nConversely, diagrams of states help to conceive new quantum algorithms, by\nschematically describing desired manipulations of quantum information with\nintuitive diagrams and then by guessing the equivalent complete diagrams, from\nwhich the corresponding quantum circuit is obtained effortlessly. Related\nexamples and analysis of complex algorithms will be provided in future works,\nfor whose comprehension this first tutorial offers the necessary introduction."
+}

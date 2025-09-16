@@ -1,0 +1,7 @@
+{
+  "title": "A Short Introduction to Topological Quantum Computation",
+  "authors": "Ville Lahtinen, Jiannis K. Pachos",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1705.04103v4",
+  "abstract": "This review presents an entry-level introduction to topological quantum\ncomputation -- quantum computing with anyons. We introduce anyons at the\nsystem-independent level of anyon models and discuss the key concepts of\nprotected fusion spaces and statistical quantum evolutions for encoding and\nprocessing quantum information. Both the encoding and the processing are\ninherently resilient against errors due to their topological nature, thus\npromising to overcome one of the main obstacles for the realisation of quantum\ncomputers. We outline the general steps of topological quantum computation, as\nwell as discuss various challenges faced by it. We also review the literature\non condensed matter systems where anyons can emerge. Finally, the appearance of\nanyons and employing them for quantum computation is demonstrated in the\ncontext of a simple microscopic model -- the topological superconducting\nnanowire -- that describes the low-energy physics of several experimentally\nrelevant settings. This model supports localised Majorana zero modes that are\nthe simplest and the experimentally most tractable types of anyons that are\nneeded to perform topological quantum computation."
+}

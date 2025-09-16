@@ -1,0 +1,7 @@
+{
+  "title": "Quantum measurements and the Abelian Stabilizer Problem",
+  "authors": "A. Yu. Kitaev",
+  "year": 1995,
+  "url": "http://arxiv.org/abs/quant-ph/9511026v1",
+  "abstract": "We present a polynomial quantum algorithm for the Abelian stabilizer problem\nwhich includes both factoring and the discrete logarithm. Thus we extend famous\nShor's results. Our method is based on a procedure for measuring an eigenvalue\nof a unitary operator. Another application of this procedure is a polynomial\nquantum Fourier transform algorithm for an arbitrary finite Abelian group. The\npaper also contains a rather detailed introduction to the theory of quantum\ncomputation."
+}

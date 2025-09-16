@@ -1,0 +1,7 @@
+{
+  "title": "An Introduction to Quantum Programming in Quipper",
+  "authors": "Alexander S. Green, Peter LeFanu Lumsdaine, Neil J. Ross, Peter Selinger, Benoît Valiron",
+  "year": 2013,
+  "url": "http://arxiv.org/abs/1304.5485v1",
+  "abstract": "Quipper is a recently developed programming language for expressing quantum\ncomputations. This paper gives a brief tutorial introduction to the language,\nthrough a demonstration of how to make use of some of its key features. We\nillustrate many of Quipper's language features by developing a few well known\nexamples of Quantum computation, including quantum teleportation, the quantum\nFourier transform, and a quantum circuit for addition."
+}

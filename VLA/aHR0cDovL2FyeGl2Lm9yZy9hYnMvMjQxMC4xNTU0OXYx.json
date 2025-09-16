@@ -1,0 +1,7 @@
+{
+  "title": "A Dual Process VLA: Efficient Robotic Manipulation Leveraging VLM",
+  "authors": "ByungOk Han, Jaehong Kim, Jinhyeok Jang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.15549v1",
+  "abstract": "Vision-Language-Action (VLA) models are receiving increasing attention for\ntheir ability to enable robots to perform complex tasks by integrating visual\ncontext with linguistic commands. However, achieving efficient real-time\nperformance remains challenging due to the high computational demands of\nexisting models. To overcome this, we propose Dual Process VLA (DP-VLA), a\nhierarchical framework inspired by dual-process theory. DP-VLA utilizes a Large\nSystem 2 Model (L-Sys2) for complex reasoning and decision-making, while a\nSmall System 1 Model (S-Sys1) handles real-time motor control and sensory\nprocessing. By leveraging Vision-Language Models (VLMs), the L-Sys2 operates at\nlow frequencies, reducing computational overhead, while the S-Sys1 ensures fast\nand accurate task execution. Experimental results on the RoboCasa dataset\ndemonstrate that DP-VLA achieves faster inference and higher task success\nrates, providing a scalable solution for advanced robotic applications."
+}
