@@ -1,7 +1,7 @@
 {
+  "url": "http://arxiv.org/abs/2304.00685v2",
   "title": "Vision-Language Models for Vision Tasks: A Survey",
   "authors": "Jingyi Zhang, Jiaxing Huang, Sheng Jin, Shijian Lu",
   "year": 2023,
-  "url": "http://arxiv.org/abs/2304.00685v2",
   "abstract": "Most visual recognition studies rely heavily on crowd-labelled data in deep\nneural networks (DNNs) training, and they usually train a DNN for each single\nvisual recognition task, leading to a laborious and time-consuming visual\nrecognition paradigm. To address the two challenges, Vision-Language Models\n(VLMs) have been intensively investigated recently, which learns rich\nvision-language correlation from web-scale image-text pairs that are almost\ninfinitely available on the Internet and enables zero-shot predictions on\nvarious visual recognition tasks with a single VLM. This paper provides a\nsystematic review of visual language models for various visual recognition\ntasks, including: (1) the background that introduces the development of visual\nrecognition paradigms; (2) the foundations of VLM that summarize the\nwidely-adopted network architectures, pre-training objectives, and downstream\ntasks; (3) the widely-adopted datasets in VLM pre-training and evaluations; (4)\nthe review and categorization of existing VLM pre-training methods, VLM\ntransfer learning methods, and VLM knowledge distillation methods; (5) the\nbenchmarking, analysis and discussion of the reviewed methods; (6) several\nresearch challenges and potential research directions that could be pursued in\nthe future VLM studies for visual recognition. A project associated with this\nsurvey has been created at https://github.com/jingyi0000/VLM_survey."
 }

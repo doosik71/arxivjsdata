@@ -1,10 +1,13 @@
 # Diffusion Models in Vision: A Survey
+
 Florinel-Alin Croitoru, Vlad Hondru, Radu Tudor Ionescu, Mubarak Shah
 
 ## 🧩 Problem to Solve
+
 확산 모델(Diffusion Models)이 컴퓨터 비전 분야에서 인상적인 생성 능력을 보이며 빠르게 부상하고 있지만, 이 모델들에 대한 포괄적이고 시의적절한 이론 및 실용적 관점의 조망이 부족합니다. 다양한 응용 분야와 기본 프레임워크를 체계적으로 분류하고, 현재의 한계를 분석하며, 향후 연구 방향을 제시하는 것이 이 논문의 목표입니다.
 
 ## ✨ Key Contributions
+
 - 컴퓨터 비전 분야에서 노이즈 제거 확산 모델(Denoising Diffusion Models)에 대한 시의적절하고 포괄적인 문헌을 검토하여 확산 모델링 프레임워크에 대한 빠른 이해를 돕습니다.
 - 확산 모델의 세 가지 주요 프레임워크(DDPMs, NCSNs, SDEs)를 정의하고 제시합니다.
 - VAEs, GANs, EBMs, Autoregressive Models, Normalizing Flows 등 다른 딥 생성 모델과의 관계를 분석합니다.
@@ -12,7 +15,9 @@ Florinel-Alin Croitoru, Vlad Hondru, Radu Tudor Ionescu, Mubarak Shah
 - 확산 모델의 현재 한계점(예: 샘플링 시 낮은 속도)을 제시하고, 이를 극복할 수 있는 흥미로운 미래 연구 방향을 제시합니다.
 
 ## 📎 Related Works
+
 이 논문은 확산 모델 분야의 포괄적인 개요를 제공하며, 다음을 포함한 다양한 선행 연구를 참조합니다.
+
 - **주요 확산 모델:**
   - Denoising Diffusion Probabilistic Models (DDPMs) [1, 2]
   - Noise Conditioned Score Networks (NCSNs) [3]
@@ -28,7 +33,9 @@ Florinel-Alin Croitoru, Vlad Hondru, Radu Tudor Ionescu, Mubarak Shah
   - Latent Diffusion Models (LDMs) [10] (Stable Diffusion [10] 포함)
 
 ## 🛠️ Methodology
+
 확산 모델은 데이터에 점진적으로 노이즈를 추가하여 순수한 가우시안 노이즈로 변환하는 **순방향 확산(Forward Diffusion)** 단계와, 이 노이즈를 점진적으로 제거하여 원본 데이터를 복원하는 **역방향 확산(Reverse Diffusion)** 단계를 기반으로 합니다.
+
 - **Denoising Diffusion Probabilistic Models (DDPMs) [1, 2]:**
   - 비평형 열역학에서 영감을 받아 가우시안 노이즈를 점진적으로 추가하여 데이터를 손상시킵니다.
   - 순방향 프로세스는 마르코프 체인(Markovian process)으로 정의되며, 특정 시간 $t$에서의 노이즈가 추가된 이미지 $x_t$는 원본 이미지 $x_0$와 관계식: $p(x_t|x_0) = \mathcal{N}(x_t; \sqrt{\hat{\beta}_t} \cdot x_0, (1 - \hat{\beta}_t) \cdot I)$ 로 직접 샘플링될 수 있습니다. 여기서 $\hat{\beta}_t = \prod_{i=1}^t \alpha_i$ 이고 $\alpha_t = 1 - \beta_t$ 입니다.
@@ -45,12 +52,14 @@ Florinel-Alin Croitoru, Vlad Hondru, Radu Tudor Ionescu, Mubarak Shah
   - 샘플링은 Euler-Maruyama [4] 또는 Predictor-Corrector [4]와 같은 수치 SDE 솔버를 통해 수행됩니다.
 
 ## 📊 Results
+
 - 확산 모델은 이미지 생성에서 GAN(Generative Adversarial Networks)을 능가하는 샘플 품질과 다양성을 보여주며(예: Imagen, Stable Diffusion), 매우 인상적인 결과를 달성했습니다.
 - 훈련 시 보지 못했던 비현실적인 시나리오를 생성하는 등 높은 일반화 능력을 입증했습니다. (논문 Figure 2 참조)
 - 이미지 생성(비조건부/조건부), 초해상도, 인페인팅, 이미지 편집, 이미지 간 변환, 분할, 의료 영상, 이상 탐지, 비디오 생성 등 광범위한 컴퓨터 비전 작업에 성공적으로 적용되었습니다. (논문 Table 1은 적용된 작업과 데이터셋에 대한 포괄적인 목록을 제공합니다.)
 - 학습된 잠재 표현을 활용하여 이미지 분할, 분류, 이상 탐지 등 판별 작업에서도 유망한 결과를 보입니다.
 
 ## 🧠 Insights & Discussion
+
 - **한계:**
   - **계산 부담:** 가장 큰 단점은 샘플당 수천 단계의 계산이 필요하여 추론 시간이 매우 길다는 점입니다. 이는 GANs에 비해 여전히 비효율적입니다.
   - **텍스트-이미지 생성의 한계:** CLIP 임베딩을 사용하는 텍스트-이미지 생성 모델은 CLIP 임베딩이 철자 정보를 포함하지 않아 이미지 내에서 읽을 수 있는 텍스트를 생성하는 데 어려움을 겪을 수 있습니다(예: Imagen).
@@ -63,6 +72,7 @@ Florinel-Alin Croitoru, Vlad Hondru, Radu Tudor Ionescu, Mubarak Shah
   - **다목적 모델 개발:** 텍스트, 클래스 레이블, 이미지 등 다양한 유형의 데이터를 조건으로 여러 유형의 출력을 생성하는 다목적 모델을 개발하여 AGI(인공 일반 지능)에 더 가까이 다가가는 것.
 
 ## 📌 TL;DR
+
 - **문제:** 컴퓨터 비전 분야에서 빠르게 발전하는 확산 모델에 대한 포괄적인 조사를 제공합니다.
 - **방법:** DDPM, NCSN, SDE 세 가지 핵심 확산 모델링 프레임워크를 소개하고, 다른 생성 모델과의 관계를 분석하며, 확산 모델의 다양한 응용 분야를 분류합니다.
 - **주요 발견:** 확산 모델이 인상적인 생성 품질과 다양성, 광범위한 적용 가능성을 보여주지만, 샘플링 시 높은 계산 비용이라는 한계를 가지고 있음을 지적합니다. 이 한계를 극복하고 새로운 응용 분야를 탐색하기 위한 미래 연구 방향을 제시합니다.
