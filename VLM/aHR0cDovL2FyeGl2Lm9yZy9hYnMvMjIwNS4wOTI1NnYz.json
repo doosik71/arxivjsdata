@@ -1,0 +1,7 @@
+{
+  "title": "Training Vision-Language Transformers from Captions",
+  "authors": "Liangke Gui, Yingshan Chang, Qiuyuan Huang, Subhojit Som, Alex Hauptmann, Jianfeng Gao, Yonatan Bisk",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2205.09256v3",
+  "abstract": "Vision-Language Transformers can be learned without low-level human labels\n(e.g. class labels, bounding boxes, etc). Existing work, whether explicitly\nutilizing bounding boxes or patches, assumes that the visual backbone must\nfirst be trained on ImageNet class prediction before being integrated into a\nmultimodal linguistic pipeline. We show that this is not necessary and\nintroduce a new model Vision-Language from Captions (VLC) built on top of\nMasked Auto-Encoders that does not require this supervision. In fact, in a\nhead-to-head comparison between ViLT, the current state-of-the-art patch-based\nvision-language transformer which is pretrained with supervised object\nclassification, and our model, VLC, we find that our approach 1. outperforms\nViLT on standard benchmarks, 2. provides more interpretable and intuitive patch\nvisualizations, and 3. is competitive with many larger models that utilize ROIs\ntrained on annotated bounding-boxes."
+}
