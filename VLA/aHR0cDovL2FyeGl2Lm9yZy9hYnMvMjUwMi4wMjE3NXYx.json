@@ -1,7 +1,7 @@
 {
+  "url": "http://arxiv.org/abs/2502.02175v1",
   "title": "VLA-Cache: Towards Efficient Vision-Language-Action Model via Adaptive\n  Token Caching in Robotic Manipulation",
   "authors": "Siyu Xu, Yunke Wang, Chenghao Xia, Dihao Zhu, Tao Huang, Chang Xu",
   "year": 2025,
-  "url": "http://arxiv.org/abs/2502.02175v1",
   "abstract": "Vision-Language-Action (VLA) model can process instructions and visual\nperception to directly generate actions as output in an end-to-end fashion due\nto its strong multi-modal reasoning capabilities. While the performance of VLA\nmodels is promising, their computational cost can be substantial. This raises\nchallenge for applying them on robotics tasks, which requires real-time\ndecision-making to respond quickly to environmental changes. Since robotic\ncontrol involves sequential decision-making, the visual input often exhibits\nminimal variation between successive steps. A natural idea is to reuse the\ncomputational results of unchanged visual tokens from the last step. Motivated\nby this idea, we propose VLA-Cache, an efficient vision-language-action model.\nVLA-Cache incorporates a token-selection mechanism that compares the visual\ninput at each step with the input from the previous step, adaptively\nidentifying visual tokens with minimal changes. The computational results for\nthese unchanged tokens are then reused in subsequent steps via KV-cache,\nthereby significantly improving the efficiency of the VLA-Cache model.\nExperimental results on both simulation (e.g., LIBERO benchmark and SIMPLER)\nand real-world robot valid VLA-Cache can achieve practical acceleration with\nminimal sacrifice in success rate."
 }

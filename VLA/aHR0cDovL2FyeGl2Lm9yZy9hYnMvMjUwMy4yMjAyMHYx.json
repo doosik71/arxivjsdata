@@ -1,7 +1,7 @@
 {
+  "url": "http://arxiv.org/abs/2503.22020v1",
   "title": "CoT-VLA: Visual Chain-of-Thought Reasoning for Vision-Language-Action\n  Models",
   "authors": "Qingqing Zhao, Yao Lu, Moo Jin Kim, Zipeng Fu, Zhuoyang Zhang, Yecheng Wu, Zhaoshuo Li, Qianli Ma, Song Han, Chelsea Finn, Ankur Handa, Ming-Yu Liu, Donglai Xiang, Gordon Wetzstein, Tsung-Yi Lin",
   "year": 2025,
-  "url": "http://arxiv.org/abs/2503.22020v1",
   "abstract": "Vision-language-action models (VLAs) have shown potential in leveraging\npretrained vision-language models and diverse robot demonstrations for learning\ngeneralizable sensorimotor control. While this paradigm effectively utilizes\nlarge-scale data from both robotic and non-robotic sources, current VLAs\nprimarily focus on direct input--output mappings, lacking the intermediate\nreasoning steps crucial for complex manipulation tasks. As a result, existing\nVLAs lack temporal planning or reasoning capabilities. In this paper, we\nintroduce a method that incorporates explicit visual chain-of-thought (CoT)\nreasoning into vision-language-action models (VLAs) by predicting future image\nframes autoregressively as visual goals before generating a short action\nsequence to achieve these goals. We introduce CoT-VLA, a state-of-the-art 7B\nVLA that can understand and generate visual and action tokens. Our experimental\nresults demonstrate that CoT-VLA achieves strong performance, outperforming the\nstate-of-the-art VLA model by 17% in real-world manipulation tasks and 6% in\nsimulation benchmarks. Project website: https://cot-vla.github.io/"
 }

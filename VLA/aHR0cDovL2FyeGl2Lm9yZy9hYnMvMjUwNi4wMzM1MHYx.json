@@ -1,7 +1,7 @@
 {
+  "url": "http://arxiv.org/abs/2506.03350v1",
   "title": "Adversarial Attacks on Robotic Vision Language Action Models",
   "authors": "Eliot Krzysztof Jones, Alexander Robey, Andy Zou, Zachary Ravichandran, George J. Pappas, Hamed Hassani, Matt Fredrikson, J. Zico Kolter",
   "year": 2025,
-  "url": "http://arxiv.org/abs/2506.03350v1",
   "abstract": "The emergence of vision-language-action models (VLAs) for end-to-end control\nis reshaping the field of robotics by enabling the fusion of multimodal sensory\ninputs at the billion-parameter scale. The capabilities of VLAs stem primarily\nfrom their architectures, which are often based on frontier large language\nmodels (LLMs). However, LLMs are known to be susceptible to adversarial misuse,\nand given the significant physical risks inherent to robotics, questions remain\nregarding the extent to which VLAs inherit these vulnerabilities. Motivated by\nthese concerns, in this work we initiate the study of adversarial attacks on\nVLA-controlled robots. Our main algorithmic contribution is the adaptation and\napplication of LLM jailbreaking attacks to obtain complete control authority\nover VLAs. We find that textual attacks, which are applied once at the\nbeginning of a rollout, facilitate full reachability of the action space of\ncommonly used VLAs and often persist over longer horizons. This differs\nsignificantly from LLM jailbreaking literature, as attacks in the real world do\nnot have to be semantically linked to notions of harm. We make all code\navailable at https://github.com/eliotjones1/robogcg ."
 }

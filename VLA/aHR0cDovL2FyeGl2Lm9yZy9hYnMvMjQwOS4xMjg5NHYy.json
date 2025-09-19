@@ -1,7 +1,7 @@
 {
+  "url": "http://arxiv.org/abs/2409.12894v2",
   "title": "VLATest: Testing and Evaluating Vision-Language-Action Models for\n  Robotic Manipulation",
   "authors": "Zhijie Wang, Zhehua Zhou, Jiayang Song, Yuheng Huang, Zhan Shu, Lei Ma",
   "year": 2024,
-  "url": "http://arxiv.org/abs/2409.12894v2",
   "abstract": "The rapid advancement of generative AI and multi-modal foundation models has\nshown significant potential in advancing robotic manipulation.\nVision-language-action (VLA) models, in particular, have emerged as a promising\napproach for visuomotor control by leveraging large-scale vision-language data\nand robot demonstrations. However, current VLA models are typically evaluated\nusing a limited set of hand-crafted scenes, leaving their general performance\nand robustness in diverse scenarios largely unexplored. To address this gap, we\npresent VLATest, a fuzzing framework designed to generate robotic manipulation\nscenes for testing VLA models. Based on VLATest, we conducted an empirical\nstudy to assess the performance of seven representative VLA models. Our study\nresults revealed that current VLA models lack the robustness necessary for\npractical deployment. Additionally, we investigated the impact of various\nfactors, including the number of confounding objects, lighting conditions,\ncamera poses, unseen objects, and task instruction mutations, on the VLA\nmodel's performance. Our findings highlight the limitations of existing VLA\nmodels, emphasizing the need for further research to develop reliable and\ntrustworthy VLA applications."
 }
