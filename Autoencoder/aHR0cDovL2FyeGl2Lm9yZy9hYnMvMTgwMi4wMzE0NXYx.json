@@ -1,0 +1,7 @@
+{
+  "title": "Relational Autoencoder for Feature Extraction",
+  "authors": "Qinxue Meng, Daniel Catchpoole, David Skillicorn, Paul J. Kennedy",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1802.03145v1",
+  "abstract": "Feature extraction becomes increasingly important as data grows high\ndimensional. Autoencoder as a neural network based feature extraction method\nachieves great success in generating abstract features of high dimensional\ndata. However, it fails to consider the relationships of data samples which may\naffect experimental results of using original and new features. In this paper,\nwe propose a Relation Autoencoder model considering both data features and\ntheir relationships. We also extend it to work with other major autoencoder\nmodels including Sparse Autoencoder, Denoising Autoencoder and Variational\nAutoencoder. The proposed relational autoencoder models are evaluated on a set\nof benchmark datasets and the experimental results show that considering data\nrelationships can generate more robust features which achieve lower\nconstruction loss and then lower error rate in further classification compared\nto the other variants of autoencoders."
+}

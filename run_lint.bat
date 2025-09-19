@@ -1,0 +1,1 @@
+markdownlint "**/*.md" 2>&1 | more

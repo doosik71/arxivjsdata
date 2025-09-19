@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2201.03898v1",
+  "title": "An Introduction to Autoencoders",
+  "authors": "Umberto Michelucci",
+  "year": 2022,
+  "abstract": "In this article, we will look at autoencoders. This article covers the\nmathematics and the fundamental concepts of autoencoders. We will discuss what\nthey are, what the limitations are, the typical use cases, and we will look at\nsome examples. We will start with a general introduction to autoencoders, and\nwe will discuss the role of the activation function in the output layer and the\nloss function. We will then discuss what the reconstruction error is. Finally,\nwe will look at typical applications as dimensionality reduction,\nclassification, denoising, and anomaly detection. This paper contains the notes\nof a PhD-level lecture on autoencoders given in 2021."
+}

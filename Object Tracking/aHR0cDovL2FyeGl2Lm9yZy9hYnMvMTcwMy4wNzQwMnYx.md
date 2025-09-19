@@ -1,10 +1,13 @@
 # SIMPLE ONLINE AND REALTIME TRACKING WITH A DEEP ASSOCIATION METRIC
+
 Nicolai Wojke, Alex Bewley, Dietrich Paulus
 
 ## 🧩 Problem to Solve
+
 기존 SORT(Simple Online and Realtime Tracking)는 간단하고 효율적이지만, 주로 바운딩 박스 중첩률(IoU) 기반의 연결 방식을 사용하여 긴 시간의 폐색(occlusion) 상황에서 객체 ID 전환(identity switches)이 빈번하게 발생한다는 한계가 있습니다. 특히 추정 불확실성이 높은 경우 연결 정확도가 떨어져 추적 성능이 저하됩니다.
 
 ## ✨ Key Contributions
+
 - 폐색 상황에서 객체 ID 유지를 개선하기 위해 SORT에 **깊이 학습 기반의 외형(appearance) 정보**를 통합했습니다.
 - 오프라인에서 대규모 보행자 재식별(person re-identification) 데이터셋으로 학습된 **깊은 연결 척도(deep association metric)**를 도입하여, 온라인 추적 시 외형 공간에서의 최근접 이웃(nearest neighbor) 쿼리를 통해 측정값-트랙 연결을 수행합니다.
 - 움직임 정보(마할라노비스 거리)와 외형 정보(코사인 거리)를 결합한 새로운 연결 비용 함수를 제안하고, **매칭 캐스케이드(matching cascade)** 방식을 도입하여 더 자주 보이는 객체에 우선순위를 부여함으로써 추적 안정성을 높였습니다.
@@ -12,12 +15,14 @@ Nicolai Wojke, Alex Bewley, Dietrich Paulus
 - 제안하는 모델의 코드와 사전 학습된 CNN 모델을 공개하여 연구 및 실제 응용 개발을 용이하게 했습니다.
 
 ## 📎 Related Works
+
 - **추적-by-검출(Tracking-by-detection) 패러다임:** 객체 검출의 발전으로 컴퓨터 비전 분야의 주류가 되었습니다.
   - **전역 최적화 방식:** 플로우 네트워크(flow network) [1, 2, 3] 및 확률적 그래픽 모델(probabilistic graphical models) [4, 5, 6, 7]은 전체 비디오를 배치(batch) 처리하여 온라인 시나리오에 부적합합니다.
   - **전통적인 온라인 방식:** MHT(Multiple Hypothesis Tracking) [8] 및 JPDAF(Joint Probabilistic Data Association Filter) [9]는 프레임별 데이터 연결을 수행하지만 계산 및 구현 복잡도가 높습니다.
 - **기존 SORT (Simple Online and Realtime Tracking)** [12]: 이미지 공간에서 칼만 필터링과 헝가리안 메소드를 사용하여 프레임별 데이터 연결을 수행하는 간단한 프레임워크입니다. 높은 프레임률에서 좋은 성능을 보이지만, ID 전환이 상대적으로 많다는 한계가 있습니다.
 
 ## 🛠️ Methodology
+
 본 논문은 재귀적인 칼만 필터링과 프레임별 데이터 연결을 사용하는 단일 가설 추적 방법론을 채택하며, 기존 SORT 프레임워크를 확장합니다.
 
 - **트랙 관리 및 상태 추정 (Track Handling and State Estimation):**
@@ -44,6 +49,7 @@ Nicolai Wojke, Alex Bewley, Dietrich Paulus
   - 최종 128차원 특징 맵은 배치 정규화(batch normalization) 및 $L_2$ 정규화를 통해 단위 초구(unit hypersphere)에 투영되어 코사인 외형 척도와 호환됩니다.
 
 ## 📊 Results
+
 - **데이터셋:** MOT16 벤치마크의 7개 테스트 시퀀스에서 평가되었습니다.
 - **검출기:** Yu et al. [16]이 제공한 Faster R-CNN 검출기를 사용하였으며, 공정한 비교를 위해 SORT도 동일한 검출기로 재실행되었습니다.
 - **주요 성능 지표 (MOTA, MOTP, MT, ML, ID, FM):**
@@ -54,6 +60,7 @@ Nicolai Wojke, Alex Bewley, Dietrich Paulus
   - **실시간 성능:** 약 20 Hz의 프레임률로 동작하며, 이 중 절반 정도의 시간이 특징 생성에 소요됩니다. 최신 GPU 환경에서 실시간 추적에 적합합니다.
 
 ## 🧠 Insights & Discussion
+
 - **ID 유지 개선:** 외형 정보 통합을 통해 특히 긴 폐색 기간 동안 객체 ID를 성공적으로 유지하는 데 큰 효과를 보였습니다. 이는 정량적 지표(ID 감소, MT 증가)뿐만 아니라 질적 분석에서도 확인되었습니다.
 - **경쟁력:** 제안된 방법은 다른 온라인 추적 방법들과 비교했을 때, 가장 적은 수의 ID 전환을 달성하면서도 전반적인 MOTA 점수와 다른 지표들에서 경쟁력을 유지합니다.
 - **한계 및 향후 개선점:**
@@ -62,4 +69,5 @@ Nicolai Wojke, Alex Bewley, Dietrich Paulus
   - 검출 신뢰도 임계값을 높이면 FP를 줄여 MOTA 성능을 크게 향상시킬 잠재력이 있습니다.
 
 ## 📌 TL;DR
+
 Deep SORT는 기존 SORT의 높은 ID 전환 문제를 해결하기 위해 **깊은 학습 기반의 외형 정보**를 통합한 실시간 온라인 다중 객체 추적 알고리즘입니다. **칼만 필터의 움직임 예측**과 **사전 학습된 CNN 기반 외형 기술자의 코사인 거리**를 결합한 새로운 연결 척도를 사용하고, **매칭 캐스케이드**를 통해 트랙의 나이에 따라 연결 우선순위를 부여합니다. 이를 통해 MOT16 벤치마크에서 **ID 전환율을 45% 감소**시키는 동시에 높은 추적 정확도와 실시간 성능을 달성하여, 긴 폐색 상황에서도 객체 ID를 효과적으로 유지할 수 있음을 입증했습니다.

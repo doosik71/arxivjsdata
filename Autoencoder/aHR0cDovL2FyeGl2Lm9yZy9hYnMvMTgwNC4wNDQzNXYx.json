@@ -1,0 +1,7 @@
+{
+  "title": "Variational Composite Autoencoders",
+  "authors": "Jiangchao Yao, Ivor Tsang, Ya Zhang",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1804.04435v1",
+  "abstract": "Learning in the latent variable model is challenging in the presence of the\ncomplex data structure or the intractable latent variable. Previous variational\nautoencoders can be low effective due to the straightforward encoder-decoder\nstructure. In this paper, we propose a variational composite autoencoder to\nsidestep this issue by amortizing on top of the hierarchical latent variable\nmodel. The experimental results confirm the advantages of our model."
+}
