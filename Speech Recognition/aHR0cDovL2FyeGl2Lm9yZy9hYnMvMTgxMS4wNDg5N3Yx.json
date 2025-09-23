@@ -1,0 +1,8 @@
+{
+  "title": "Multi-encoder multi-resolution framework for end-to-end speech\n  recognition",
+  "authors": "Ruizhi Li, Xiaofei Wang, Sri Harish Mallidi, Takaaki Hori, Shinji Watanabe, Hynek Hermansky",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1811.04897v1",
+  "abstract": "Attention-based methods and Connectionist Temporal Classification (CTC)\nnetwork have been promising research directions for end-to-end Automatic Speech\nRecognition (ASR). The joint CTC/Attention model has achieved great success by\nutilizing both architectures during multi-task training and joint decoding. In\nthis work, we present a novel Multi-Encoder Multi-Resolution (MEMR) framework\nbased on the joint CTC/Attention model. Two heterogeneous encoders with\ndifferent architectures, temporal resolutions and separate CTC networks work in\nparallel to extract complimentary acoustic information. A hierarchical\nattention mechanism is then used to combine the encoder-level information. To\ndemonstrate the effectiveness of the proposed model, experiments are conducted\non Wall Street Journal (WSJ) and CHiME-4, resulting in relative Word Error Rate\n(WER) reduction of 18.0-32.1%. Moreover, the proposed MEMR model achieves 3.6%\nWER in the WSJ eval92 test set, which is the best WER reported for an\nend-to-end system on this benchmark.",
+  "citation": 13
+}

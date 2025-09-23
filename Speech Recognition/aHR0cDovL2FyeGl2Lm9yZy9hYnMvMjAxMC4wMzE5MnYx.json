@@ -1,0 +1,8 @@
+{
+  "title": "Transformer Transducer: One Model Unifying Streaming and Non-streaming\n  Speech Recognition",
+  "authors": "Anshuman Tripathi, Jaeyoung Kim, Qian Zhang, Han Lu, Hasim Sak",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2010.03192v1",
+  "abstract": "In this paper we present a Transformer-Transducer model architecture and a\ntraining technique to unify streaming and non-streaming speech recognition\nmodels into one model. The model is composed of a stack of transformer layers\nfor audio encoding with no lookahead or right context and an additional stack\nof transformer layers on top trained with variable right context. In inference\ntime, the context length for the variable context layers can be changed to\ntrade off the latency and the accuracy of the model. We also show that we can\nrun this model in a Y-model architecture with the top layers running in\nparallel in low latency and high latency modes. This allows us to have\nstreaming speech recognition results with limited latency and delayed speech\nrecognition results with large improvements in accuracy (20% relative\nimprovement for voice-search task). We show that with limited right context\n(1-2 seconds of audio) and small additional latency (50-100 milliseconds) at\nthe end of decoding, we can achieve similar accuracy with models using\nunlimited audio right context. We also present optimizations for audio and\nlabel encoders to speed up the inference in streaming and non-streaming speech\ndecoding.",
+  "citation": 52
+}

@@ -1,0 +1,7 @@
+{
+  "title": "A Comparison of Hybrid and End-to-End Models for Syllable Recognition",
+  "authors": "Sebastian P. Bayerl, Korbinian Riedhammer",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1909.12232v1",
+  "abstract": "This paper presents a comparison of a traditional hybrid speech recognition\nsystem (kaldi using WFST and TDNN with lattice-free MMI) and a lexicon-free\nend-to-end (TensorFlow implementation of multi-layer LSTM with CTC training)\nmodels for German syllable recognition on the Verbmobil corpus. The results\nshow that explicitly modeling prior knowledge is still valuable in building\nrecognition systems. With a strong language model (LM) based on syllables, the\nstructured approach significantly outperforms the end-to-end model. The best\nword error rate (WER) regarding syllables was achieved using kaldi with a\n4-gram LM, modeling all syllables observed in the training set. It achieved\n10.0% WER w.r.t. the syllables, compared to the end-to-end approach where the\nbest WER was 27.53%. The work presented here has implications for building\nfuture recognition systems that operate independent of a large vocabulary, as\ntypically used in a tasks such as recognition of syllabic or agglutinative\nlanguages, out-of-vocabulary techniques, keyword search indexing and medical\nspeech processing."
+}

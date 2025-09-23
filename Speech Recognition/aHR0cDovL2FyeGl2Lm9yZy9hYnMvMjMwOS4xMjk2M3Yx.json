@@ -1,0 +1,8 @@
+{
+  "title": "Massive End-to-end Models for Short Search Queries",
+  "authors": "Weiran Wang, Rohit Prabhavalkar, Dongseong Hwang, Qiujia Li, Khe Chai Sim, Bo Li, James Qin, Xingyu Cai, Adam Stooke, Zhong Meng, CJ Zheng, Yanzhang He, Tara Sainath, Pedro Moreno Mengibar",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.12963v1",
+  "abstract": "In this work, we investigate two popular end-to-end automatic speech\nrecognition (ASR) models, namely Connectionist Temporal Classification (CTC)\nand RNN-Transducer (RNN-T), for offline recognition of voice search queries,\nwith up to 2B model parameters. The encoders of our models use the neural\narchitecture of Google's universal speech model (USM), with additional funnel\npooling layers to significantly reduce the frame rate and speed up training and\ninference. We perform extensive studies on vocabulary size, time reduction\nstrategy, and its generalization performance on long-form test sets. Despite\nthe speculation that, as the model size increases, CTC can be as good as RNN-T\nwhich builds label dependency into the prediction, we observe that a 900M RNN-T\nclearly outperforms a 1.8B CTC and is more tolerant to severe time reduction,\nalthough the WER gap can be largely removed by LM shallow fusion.",
+  "citation": 2
+}

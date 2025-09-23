@@ -1,0 +1,8 @@
+{
+  "title": "Multi-Channel Transformer Transducer for Speech Recognition",
+  "authors": "Feng-Ju Chang, Martin Radfar, Athanasios Mouchtaris, Maurizio Omologo",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2108.12953v1",
+  "abstract": "Multi-channel inputs offer several advantages over single-channel, to improve\nthe robustness of on-device speech recognition systems. Recent work on\nmulti-channel transformer, has proposed a way to incorporate such inputs into\nend-to-end ASR for improved accuracy. However, this approach is characterized\nby a high computational complexity, which prevents it from being deployed in\non-device systems. In this paper, we present a novel speech recognition model,\nMulti-Channel Transformer Transducer (MCTT), which features end-to-end\nmulti-channel training, low computation cost, and low latency so that it is\nsuitable for streaming decoding in on-device speech recognition. In a far-field\nin-house dataset, our MCTT outperforms stagewise multi-channel models with\ntransformer-transducer up to 6.01% relative WER improvement (WERR). In\naddition, MCTT outperforms the multi-channel transformer up to 11.62% WERR, and\nis 15.8 times faster in terms of inference speed. We further show that we can\nimprove the computational cost of MCTT by constraining the future and previous\ncontext in attention computations.",
+  "citation": 28
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Transformer-Transducer: End-to-End Speech Recognition with\n  Self-Attention",
+  "authors": "Ching-Feng Yeh, Jay Mahadeokar, Kaustubh Kalgaonkar, Yongqiang Wang, Duc Le, Mahaveer Jain, Kjell Schubert, Christian Fuegen, Michael L. Seltzer",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1910.12977v1",
+  "abstract": "We explore options to use Transformer networks in neural transducer for\nend-to-end speech recognition. Transformer networks use self-attention for\nsequence modeling and comes with advantages in parallel computation and\ncapturing contexts. We propose 1) using VGGNet with causal convolution to\nincorporate positional information and reduce frame rate for efficient\ninference 2) using truncated self-attention to enable streaming for Transformer\nand reduce computational complexity. All experiments are conducted on the\npublic LibriSpeech corpus. The proposed Transformer-Transducer outperforms\nneural transducer with LSTM/BLSTM networks and achieved word error rates of\n6.37 % on the test-clean set and 15.30 % on the test-other set, while remaining\nstreamable, compact with 45.7M parameters for the entire system, and\ncomputationally efficient with complexity of O(T), where T is input sequence\nlength."
+}

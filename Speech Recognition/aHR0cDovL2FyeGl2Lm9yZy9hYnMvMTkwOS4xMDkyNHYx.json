@@ -1,0 +1,7 @@
+{
+  "title": "Understanding Semantics from Speech Through Pre-training",
+  "authors": "Pengwei Wang, Liangchen Wei, Yong Cao, Jinghui Xie, Yuji Cao, Zaiqing Nie",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1909.10924v1",
+  "abstract": "End-to-end Spoken Language Understanding (SLU) is proposed to infer the\nsemantic meaning directly from audio features without intermediate text\nrepresentation. Although the acoustic model component of an end-to-end SLU\nsystem can be pre-trained with Automatic Speech Recognition (ASR) targets, the\nSLU component can only learn semantic features from limited task-specific\ntraining data. In this paper, for the first time we propose to do large-scale\nunsupervised pre-training for the SLU component of an end-to-end SLU system, so\nthat the SLU component may preserve semantic features from massive unlabeled\naudio data. As the output of the acoustic model component, i.e. phoneme\nposterior sequences, has much different characteristic from text sequences, we\npropose a novel pre-training model called BERT-PLM, which stands for\nBidirectional Encoder Representations from Transformers through Permutation\nLanguage Modeling. BERT-PLM trains the SLU component on unlabeled data through\na regression objective equivalent to the partial permutation language modeling\nobjective, while leverages full bi-directional context information with BERT\nnetworks. The experiment results show that our approach out-perform the\nstate-of-the-art end-to-end systems with over 12.5% error reduction."
+}

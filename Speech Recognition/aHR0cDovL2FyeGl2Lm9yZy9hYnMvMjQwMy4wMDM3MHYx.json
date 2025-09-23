@@ -1,0 +1,8 @@
+{
+  "title": "Post-decoder Biasing for End-to-End Speech Recognition of Multi-turn\n  Medical Interview",
+  "authors": "Heyang Liu, Yu Wang, Yanfeng Wang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.00370v1",
+  "abstract": "End-to-end (E2E) approach is gradually replacing hybrid models for automatic\nspeech recognition (ASR) tasks. However, the optimization of E2E models lacks\nan intuitive method for handling decoding shifts, especially in scenarios with\na large number of domain-specific rare words that hold specific important\nmeanings. Furthermore, the absence of knowledge-intensive speech datasets in\nacademia has been a significant limiting factor, and the commonly used speech\ncorpora exhibit significant disparities with realistic conversation. To address\nthese challenges, we present Medical Interview (MED-IT), a multi-turn\nconsultation speech dataset that contains a substantial number of\nknowledge-intensive named entities. We also explore methods to enhance the\nrecognition performance of rare words for E2E models. We propose a novel\napproach, post-decoder biasing, which constructs a transform probability matrix\nbased on the distribution of training transcriptions. This guides the model to\nprioritize recognizing words in the biasing list. In our experiments, for\nsubsets of rare words appearing in the training speech between 10 and 20 times,\nand between 1 and 5 times, the proposed method achieves a relative improvement\nof 9.3% and 5.1%, respectively.",
+  "citation": 0
+}

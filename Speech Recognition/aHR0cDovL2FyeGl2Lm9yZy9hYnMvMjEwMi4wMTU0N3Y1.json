@@ -1,0 +1,8 @@
+{
+  "title": "WeNet: Production oriented Streaming and Non-streaming End-to-End Speech\n  Recognition Toolkit",
+  "authors": "Zhuoyuan Yao, Di Wu, Xiong Wang, Binbin Zhang, Fan Yu, Chao Yang, Zhendong Peng, Xiaoyu Chen, Lei Xie, Xin Lei",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2102.01547v5",
+  "abstract": "In this paper, we propose an open source, production first, and production\nready speech recognition toolkit called WeNet in which a new two-pass approach\nis implemented to unify streaming and non-streaming end-to-end (E2E) speech\nrecognition in a single model. The main motivation of WeNet is to close the gap\nbetween the research and the production of E2E speechrecognition models. WeNet\nprovides an efficient way to ship ASR applications in several real-world\nscenarios, which is the main difference and advantage to other open source E2E\nspeech recognition toolkits. In our toolkit, a new two-pass method is\nimplemented. Our method propose a dynamic chunk-based attention strategy of the\nthe transformer layers to allow arbitrary right context length modifies in\nhybrid CTC/attention architecture. The inference latency could be easily\ncontrolled by only changing the chunk size. The CTC hypotheses are then\nrescored by the attention decoder to get the final result. Our experiments on\nthe AISHELL-1 dataset using WeNet show that, our model achieves 5.03\\% relative\ncharacter error rate (CER) reduction in non-streaming ASR compared to a\nstandard non-streaming transformer. After model quantification, our model\nperform reasonable RTF and latency.",
+  "citation": 330
+}

@@ -1,0 +1,7 @@
+{
+  "title": "End-to-end Speech Recognition with Word-based RNN Language Models",
+  "authors": "Takaaki Hori, Jaejin Cho, Shinji Watanabe",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1808.02608v1",
+  "abstract": "This paper investigates the impact of word-based RNN language models\n(RNN-LMs) on the performance of end-to-end automatic speech recognition (ASR).\nIn our prior work, we have proposed a multi-level LM, in which character-based\nand word-based RNN-LMs are combined in hybrid CTC/attention-based ASR. Although\nthis multi-level approach achieves significant error reduction in the Wall\nStreet Journal (WSJ) task, two different LMs need to be trained and used for\ndecoding, which increase the computational cost and memory usage. In this\npaper, we further propose a novel word-based RNN-LM, which allows us to decode\nwith only the word-based LM, where it provides look-ahead word probabilities to\npredict next characters instead of the character-based LM, leading competitive\naccuracy with less computation compared to the multi-level LM. We demonstrate\nthe efficacy of the word-based RNN-LMs using a larger corpus, LibriSpeech, in\naddition to WSJ we used in the prior work. Furthermore, we show that the\nproposed model achieves 5.1 %WER for WSJ Eval'92 test set when the vocabulary\nsize is increased, which is the best WER reported for end-to-end ASR systems on\nthis benchmark."
+}

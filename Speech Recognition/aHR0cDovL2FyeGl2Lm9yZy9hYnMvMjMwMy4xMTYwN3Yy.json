@@ -1,0 +1,8 @@
+{
+  "title": "Transformers in Speech Processing: A Survey",
+  "authors": "Siddique Latif, Aun Zaidi, Heriberto Cuayahuitl, Fahad Shamshad, Moazzam Shoukat, Muhammad Usama, Junaid Qadir",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2303.11607v2",
+  "abstract": "The remarkable success of transformers in the field of natural language\nprocessing has sparked the interest of the speech-processing community, leading\nto an exploration of their potential for modeling long-range dependencies\nwithin speech sequences. Recently, transformers have gained prominence across\nvarious speech-related domains, including automatic speech recognition, speech\nsynthesis, speech translation, speech para-linguistics, speech enhancement,\nspoken dialogue systems, and numerous multimodal applications. In this paper,\nwe present a comprehensive survey that aims to bridge research studies from\ndiverse subfields within speech technology. By consolidating findings from\nacross the speech technology landscape, we provide a valuable resource for\nresearchers interested in harnessing the power of transformers to advance the\nfield. We identify the challenges encountered by transformers in speech\nprocessing while also offering insights into potential solutions to address\nthese issues.",
+  "citation": 93
+}

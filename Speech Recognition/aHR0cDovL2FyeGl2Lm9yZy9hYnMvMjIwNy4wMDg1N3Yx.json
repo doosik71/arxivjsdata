@@ -1,0 +1,8 @@
+{
+  "title": "Tree-constrained Pointer Generator with Graph Neural Network Encodings\n  for Contextual Speech Recognition",
+  "authors": "Guangzhi Sun, Chao Zhang, Philip C. Woodland",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2207.00857v1",
+  "abstract": "Incorporating biasing words obtained as contextual knowledge is critical for\nmany automatic speech recognition (ASR) applications. This paper proposes the\nuse of graph neural network (GNN) encodings in a tree-constrained pointer\ngenerator (TCPGen) component for end-to-end contextual ASR. By encoding the\nbiasing words in the prefix-tree with a tree-based GNN, lookahead for future\nwordpieces in end-to-end ASR decoding is achieved at each tree node by\nincorporating information about all wordpieces on the tree branches rooted from\nit, which allows a more accurate prediction of the generation probability of\nthe biasing words. Systems were evaluated on the Librispeech corpus using\nsimulated biasing tasks, and on the AMI corpus by proposing a novel\nvisual-grounded contextual ASR pipeline that extracts biasing words from slides\nalongside each meeting. Results showed that TCPGen with GNN encodings achieved\nabout a further 15% relative WER reduction on the biasing words compared to the\noriginal TCPGen, with a negligible increase in the computation cost for\ndecoding.",
+  "citation": 16
+}

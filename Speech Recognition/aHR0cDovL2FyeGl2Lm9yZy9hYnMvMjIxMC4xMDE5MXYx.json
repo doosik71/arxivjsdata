@@ -1,0 +1,8 @@
+{
+  "title": "Simple and Effective Unsupervised Speech Translation",
+  "authors": "Changhan Wang, Hirofumi Inaguma, Peng-Jen Chen, Ilia Kulikov, Yun Tang, Wei-Ning Hsu, Michael Auli, Juan Pino",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2210.10191v1",
+  "abstract": "The amount of labeled data to train models for speech tasks is limited for\nmost languages, however, the data scarcity is exacerbated for speech\ntranslation which requires labeled data covering two different languages. To\naddress this issue, we study a simple and effective approach to build speech\ntranslation systems without labeled data by leveraging recent advances in\nunsupervised speech recognition, machine translation and speech synthesis,\neither in a pipeline approach, or to generate pseudo-labels for training\nend-to-end speech translation models. Furthermore, we present an unsupervised\ndomain adaptation technique for pre-trained speech models which improves the\nperformance of downstream unsupervised speech recognition, especially for\nlow-resource settings. Experiments show that unsupervised speech-to-text\ntranslation outperforms the previous unsupervised state of the art by 3.2 BLEU\non the Libri-Trans benchmark, on CoVoST 2, our best systems outperform the best\nsupervised end-to-end models (without pre-training) from only two years ago by\nan average of 5.0 BLEU over five X-En directions. We also report competitive\nresults on MuST-C and CVSS benchmarks.",
+  "citation": 18
+}

@@ -3,5 +3,6 @@
   "title": "Modified Mel Filter Bank to Compute MFCC of Subsampled Speech",
   "authors": "Kiran Kumar Bhuvanagiri, Sunil Kumar Kopparapu",
   "year": 2014,
-  "abstract": "Mel Frequency Cepstral Coefficients (MFCCs) are the most popularly used\nspeech features in most speech and speaker recognition applications. In this\nwork, we propose a modified Mel filter bank to extract MFCCs from subsampled\nspeech. We also propose a stronger metric which effectively captures the\ncorrelation between MFCCs of original speech and MFCC of resampled speech. It\nis found that the proposed method of filter bank construction performs\ndistinguishably well and gives recognition performance on resampled speech\nclose to recognition accuracies on original speech."
+  "abstract": "Mel Frequency Cepstral Coefficients (MFCCs) are the most popularly used\nspeech features in most speech and speaker recognition applications. In this\nwork, we propose a modified Mel filter bank to extract MFCCs from subsampled\nspeech. We also propose a stronger metric which effectively captures the\ncorrelation between MFCCs of original speech and MFCC of resampled speech. It\nis found that the proposed method of filter bank construction performs\ndistinguishably well and gives recognition performance on resampled speech\nclose to recognition accuracies on original speech.",
+  "citation": 6
 }

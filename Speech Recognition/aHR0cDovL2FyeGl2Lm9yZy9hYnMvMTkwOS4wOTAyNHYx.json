@@ -1,0 +1,7 @@
+{
+  "title": "WEnets: A Convolutional Framework for Evaluating Audio Waveforms",
+  "authors": "Andrew A. Catellier, Stephen D. Voran",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1909.09024v1",
+  "abstract": "We describe a new convolutional framework for waveform evaluation, WEnets,\nand build a Narrowband Audio Waveform Evaluation Network, or NAWEnet, using\nthis framework. NAWEnet is single-ended (or no-reference) and was trained three\nseparate times in order to emulate PESQ, POLQA, or STOI with testing\ncorrelations 0.95, 0.92, and 0.95, respectively when training on only 50% of\navailable data and testing on 40%. Stacks of 1-D convolutional layers and\nnon-linear downsampling learn which features are important for quality or\nintelligibility estimation. This straightforward architecture simplifies the\ninterpretation of its inner workings and paves the way for future\ninvestigations into higher sample rates and accurate no-reference subjective\nspeech quality predictions."
+}

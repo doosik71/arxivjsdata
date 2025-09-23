@@ -1,0 +1,8 @@
+{
+  "title": "Toward Cross-Domain Speech Recognition with End-to-End Models",
+  "authors": "Thai-Son Nguyen, Sebastian Stüker, Alex Waibel",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2003.04194v1",
+  "abstract": "In the area of multi-domain speech recognition, research in the past focused\non hybrid acoustic models to build cross-domain and domain-invariant speech\nrecognition systems. In this paper, we empirically examine the difference in\nbehavior between hybrid acoustic models and neural end-to-end systems when\nmixing acoustic training data from several domains. For these experiments we\ncomposed a multi-domain dataset from public sources, with the different domains\nin the corpus covering a wide variety of topics and acoustic conditions such as\ntelephone conversations, lectures, read speech and broadcast news. We show that\nfor the hybrid models, supplying additional training data from other domains\nwith mismatched acoustic conditions does not increase the performance on\nspecific domains. However, our end-to-end models optimized with sequence-based\ncriterion generalize better than the hybrid models on diverse domains. In term\nof word-error-rate performance, our experimental acoustic-to-word and\nattention-based models trained on multi-domain dataset reach the performance of\ndomain-specific long short-term memory (LSTM) hybrid models, thus resulting in\nmulti-domain speech recognition systems that do not suffer in performance over\ndomain specific ones. Moreover, the use of neural end-to-end models eliminates\nthe need of domain-adapted language models during recognition, which is a great\nadvantage when the input domain is unknown.",
+  "citation": 10
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Continuous Modeling of the Denoising Process for Speech Enhancement\n  Based on Deep Learning",
+  "authors": "Zilu Guo, Jun Du, CHin-Hui Lee",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.09270v2",
+  "abstract": "In this paper, we explore a continuous modeling approach for\ndeep-learning-based speech enhancement, focusing on the denoising process. We\nuse a state variable to indicate the denoising process. The starting state is\nnoisy speech and the ending state is clean speech. The noise component in the\nstate variable decreases with the change of the state index until the noise\ncomponent is 0. During training, a UNet-like neural network learns to estimate\nevery state variable sampled from the continuous denoising process. In testing,\nwe introduce a controlling factor as an embedding, ranging from zero to one, to\nthe neural network, allowing us to control the level of noise reduction. This\napproach enables controllable speech enhancement and is adaptable to various\napplication scenarios. Experimental results indicate that preserving a small\namount of noise in the clean target benefits speech enhancement, as evidenced\nby improvements in both objective speech measures and automatic speech\nrecognition performance.",
+  "citation": 0
+}

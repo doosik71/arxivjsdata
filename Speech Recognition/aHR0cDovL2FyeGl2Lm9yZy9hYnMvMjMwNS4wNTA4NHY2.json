@@ -1,0 +1,8 @@
+{
+  "title": "Fast Conformer with Linearly Scalable Attention for Efficient Speech\n  Recognition",
+  "authors": "Dima Rekesh, Nithin Rao Koluguri, Samuel Kriman, Somshubra Majumdar, Vahid Noroozi, He Huang, Oleksii Hrinchuk, Krishna Puvvada, Ankur Kumar, Jagadeesh Balam, Boris Ginsburg",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.05084v6",
+  "abstract": "Conformer-based models have become the dominant end-to-end architecture for\nspeech processing tasks. With the objective of enhancing the conformer\narchitecture for efficient training and inference, we carefully redesigned\nConformer with a novel downsampling schema. The proposed model, named Fast\nConformer(FC), is 2.8x faster than the original Conformer, supports scaling to\nBillion parameters without any changes to the core architecture and also\nachieves state-of-the-art accuracy on Automatic Speech Recognition benchmarks.\nTo enable transcription of long-form speech up to 11 hours, we replaced global\nattention with limited context attention post-training, while also improving\naccuracy through fine-tuning with the addition of a global token. Fast\nConformer, when combined with a Transformer decoder also outperforms the\noriginal Conformer in accuracy and in speed for Speech Translation and Spoken\nLanguage Understanding.",
+  "citation": 139
+}

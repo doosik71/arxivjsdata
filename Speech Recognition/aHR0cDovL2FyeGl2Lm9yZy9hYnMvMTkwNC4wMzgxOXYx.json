@@ -1,0 +1,7 @@
+{
+  "title": "WeNet: Weighted Networks for Recurrent Network Architecture Search",
+  "authors": "Zhiheng Huang, Bing Xiang",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1904.03819v1",
+  "abstract": "In recent years, there has been increasing demand for automatic architecture\nsearch in deep learning. Numerous approaches have been proposed and led to\nstate-of-the-art results in various applications, including image\nclassification and language modeling. In this paper, we propose a novel way of\narchitecture search by means of weighted networks (WeNet), which consist of a\nnumber of networks, with each assigned a weight. These weights are updated with\nback-propagation to reflect the importance of different networks. Such weighted\nnetworks bear similarity to mixture of experts. We conduct experiments on Penn\nTreebank and WikiText-2. We show that the proposed WeNet can find recurrent\narchitectures which result in state-of-the-art performance."
+}

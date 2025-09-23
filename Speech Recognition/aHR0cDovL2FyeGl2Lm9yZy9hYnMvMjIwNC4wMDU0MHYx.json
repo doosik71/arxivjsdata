@@ -1,0 +1,8 @@
+{
+  "title": "End-to-End Integration of Speech Recognition, Speech Enhancement, and\n  Self-Supervised Learning Representation",
+  "authors": "Xuankai Chang, Takashi Maekaku, Yuya Fujita, Shinji Watanabe",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2204.00540v1",
+  "abstract": "This work presents our end-to-end (E2E) automatic speech recognition (ASR)\nmodel targetting at robust speech recognition, called Integraded speech\nRecognition with enhanced speech Input for Self-supervised learning\nrepresentation (IRIS). Compared with conventional E2E ASR models, the proposed\nE2E model integrates two important modules including a speech enhancement (SE)\nmodule and a self-supervised learning representation (SSLR) module. The SE\nmodule enhances the noisy speech. Then the SSLR module extracts features from\nenhanced speech to be used for speech recognition (ASR). To train the proposed\nmodel, we establish an efficient learning scheme. Evaluation results on the\nmonaural CHiME-4 task show that the IRIS model achieves the best performance\nreported in the literature for the single-channel CHiME-4 benchmark (2.0% for\nthe real development and 3.9% for the real test) thanks to the powerful\npre-trained SSLR module and the fine-tuned SE module.",
+  "citation": 69
+}

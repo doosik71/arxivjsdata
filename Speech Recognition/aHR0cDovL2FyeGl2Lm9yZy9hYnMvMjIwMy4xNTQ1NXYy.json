@@ -1,0 +1,8 @@
+{
+  "title": "WeNet 2.0: More Productive End-to-End Speech Recognition Toolkit",
+  "authors": "Binbin Zhang, Di Wu, Zhendong Peng, Xingchen Song, Zhuoyuan Yao, Hang Lv, Lei Xie, Chao Yang, Fuping Pan, Jianwei Niu",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2203.15455v2",
+  "abstract": "Recently, we made available WeNet, a production-oriented end-to-end speech\nrecognition toolkit, which introduces a unified two-pass (U2) framework and a\nbuilt-in runtime to address the streaming and non-streaming decoding modes in a\nsingle model. To further improve ASR performance and facilitate various\nproduction requirements, in this paper, we present WeNet 2.0 with four\nimportant updates. (1) We propose U2++, a unified two-pass framework with\nbidirectional attention decoders, which includes the future contextual\ninformation by a right-to-left attention decoder to improve the representative\nability of the shared encoder and the performance during the rescoring stage.\n(2) We introduce an n-gram based language model and a WFST-based decoder into\nWeNet 2.0, promoting the use of rich text data in production scenarios. (3) We\ndesign a unified contextual biasing framework, which leverages user-specific\ncontext (e.g., contact lists) to provide rapid adaptation ability for\nproduction and improves ASR accuracy in both with-LM and without-LM scenarios.\n(4) We design a unified IO to support large-scale data for effective model\ntraining. In summary, the brand-new WeNet 2.0 achieves up to 10\\% relative\nrecognition performance improvement over the original WeNet on various corpora\nand makes available several important production-oriented features.",
+  "citation": 137
+}

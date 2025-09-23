@@ -1,0 +1,7 @@
+{
+  "title": "Pushing the Limits of Semi-Supervised Learning for Automatic Speech\n  Recognition",
+  "authors": "Yu Zhang, James Qin, Daniel S. Park, Wei Han, Chung-Cheng Chiu, Ruoming Pang, Quoc V. Le, Yonghui Wu",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2010.10504v2",
+  "abstract": "We employ a combination of recent developments in semi-supervised learning\nfor automatic speech recognition to obtain state-of-the-art results on\nLibriSpeech utilizing the unlabeled audio of the Libri-Light dataset. More\nprecisely, we carry out noisy student training with SpecAugment using giant\nConformer models pre-trained using wav2vec 2.0 pre-training. By doing so, we\nare able to achieve word-error-rates (WERs) 1.4%/2.6% on the LibriSpeech\ntest/test-other sets against the current state-of-the-art WERs 1.7%/3.3%."
+}

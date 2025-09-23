@@ -1,0 +1,8 @@
+{
+  "title": "Continual Test-time Adaptation for End-to-end Speech Recognition on\n  Noisy Speech",
+  "authors": "Guan-Ting Lin, Wei-Ping Huang, Hung-yi Lee",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.11064v2",
+  "abstract": "Deep Learning-based end-to-end Automatic Speech Recognition (ASR) has made\nsignificant strides but still struggles with performance on out-of-domain\nsamples due to domain shifts in real-world scenarios. Test-Time Adaptation\n(TTA) methods address this issue by adapting models using test samples at\ninference time. However, current ASR TTA methods have largely focused on\nnon-continual TTA, which limits cross-sample knowledge learning compared to\ncontinual TTA. In this work, we first propose a Fast-slow TTA framework for ASR\nthat leverages the advantage of continual and non-continual TTA. Following this\nframework, we introduce Dynamic SUTA (DSUTA), an entropy-minimization-based\ncontinual TTA method for ASR. To enhance DSUTA robustness for time-varying\ndata, we design a dynamic reset strategy to automatically detect domain shifts\nand reset the model, making it more effective at handling multi-domain data.\nOur method demonstrates superior performance on various noisy ASR datasets,\noutperforming both non-continual and continual TTA baselines while maintaining\nrobustness to domain changes without requiring domain boundary information.",
+  "citation": 6
+}

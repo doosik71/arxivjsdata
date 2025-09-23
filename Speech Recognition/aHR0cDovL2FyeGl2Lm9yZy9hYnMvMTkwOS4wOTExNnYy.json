@@ -1,0 +1,7 @@
+{
+  "title": "Self-Training for End-to-End Speech Recognition",
+  "authors": "Jacob Kahn, Ann Lee, Awni Hannun",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1909.09116v2",
+  "abstract": "We revisit self-training in the context of end-to-end speech recognition. We\ndemonstrate that training with pseudo-labels can substantially improve the\naccuracy of a baseline model. Key to our approach are a strong baseline\nacoustic and language model used to generate the pseudo-labels, filtering\nmechanisms tailored to common errors from sequence-to-sequence models, and a\nnovel ensemble approach to increase pseudo-label diversity. Experiments on the\nLibriSpeech corpus show that with an ensemble of four models and label\nfiltering, self-training yields a 33.9% relative improvement in WER compared\nwith a baseline trained on 100 hours of labelled data in the noisy speech\nsetting. In the clean speech setting, self-training recovers 59.3% of the gap\nbetween the baseline and an oracle model, which is at least 93.8% relatively\nhigher than what previous approaches can achieve."
+}

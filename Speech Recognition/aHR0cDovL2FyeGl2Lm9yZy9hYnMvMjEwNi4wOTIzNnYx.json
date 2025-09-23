@@ -1,0 +1,8 @@
+{
+  "title": "Efficient Conformer with Prob-Sparse Attention Mechanism for\n  End-to-EndSpeech Recognition",
+  "authors": "Xiong Wang, Sining Sun, Lei Xie, Long Ma",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2106.09236v1",
+  "abstract": "End-to-end models are favored in automatic speech recognition (ASR) because\nof their simplified system structure and superior performance. Among these\nmodels, Transformer and Conformer have achieved state-of-the-art recognition\naccuracy in which self-attention plays a vital role in capturing important\nglobal information. However, the time and memory complexity of self-attention\nincreases squarely with the length of the sentence. In this paper, a\nprob-sparse self-attention mechanism is introduced into Conformer to sparse the\ncomputing process of self-attention in order to accelerate inference speed and\nreduce space consumption. Specifically, we adopt a Kullback-Leibler divergence\nbased sparsity measurement for each query to decide whether we compute the\nattention function on this query. By using the prob-sparse attention mechanism,\nwe achieve impressively 8% to 45% inference speed-up and 15% to 45% memory\nusage reduction of the self-attention module of Conformer Transducer while\nmaintaining the same level of error rate.",
+  "citation": 30
+}

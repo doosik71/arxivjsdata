@@ -1,0 +1,7 @@
+{
+  "title": "Self-Attention Networks for Connectionist Temporal Classification in\n  Speech Recognition",
+  "authors": "Julian Salazar, Katrin Kirchhoff, Zhiheng Huang",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1901.10055v2",
+  "abstract": "The success of self-attention in NLP has led to recent applications in\nend-to-end encoder-decoder architectures for speech recognition. Separately,\nconnectionist temporal classification (CTC) has matured as an alignment-free,\nnon-autoregressive approach to sequence transduction, either by itself or in\nvarious multitask and decoding frameworks. We propose SAN-CTC, a deep, fully\nself-attentional network for CTC, and show it is tractable and competitive for\nend-to-end speech recognition. SAN-CTC trains quickly and outperforms existing\nCTC models and most encoder-decoder models, with character error rates (CERs)\nof 4.7% in 1 day on WSJ eval92 and 2.8% in 1 week on LibriSpeech test-clean,\nwith a fixed architecture and one GPU. Similar improvements hold for WERs after\nLM decoding. We motivate the architecture for speech, evaluate position and\ndownsampling approaches, and explore how label alphabets (character, phoneme,\nsubword) affect attention heads and performance."
+}

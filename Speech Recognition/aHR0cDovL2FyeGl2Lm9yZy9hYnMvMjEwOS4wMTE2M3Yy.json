@@ -1,0 +1,8 @@
+{
+  "title": "Efficient conformer: Progressive downsampling and grouped attention for\n  automatic speech recognition",
+  "authors": "Maxime Burchi, Valentin Vielzeuf",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.01163v2",
+  "abstract": "The recently proposed Conformer architecture has shown state-of-the-art\nperformances in Automatic Speech Recognition by combining convolution with\nattention to model both local and global dependencies. In this paper, we study\nhow to reduce the Conformer architecture complexity with a limited computing\nbudget, leading to a more efficient architecture design that we call Efficient\nConformer. We introduce progressive downsampling to the Conformer encoder and\npropose a novel attention mechanism named grouped attention, allowing us to\nreduce attention complexity from $O(n^{2}d)$ to $O(n^{2}d / g)$ for sequence\nlength $n$, hidden dimension $d$ and group size parameter $g$. We also\nexperiment the use of strided multi-head self-attention as a global\ndownsampling operation. Our experiments are performed on the LibriSpeech\ndataset with CTC and RNN-Transducer losses. We show that within the same\ncomputing budget, the proposed architecture achieves better performances with\nfaster training and decoding compared to the Conformer. Our 13M parameters CTC\nmodel achieves competitive WERs of 3.6%/9.0% without using a language model and\n2.7%/6.7% with an external n-gram language model on the test-clean/test-other\nsets while being 29% faster than our CTC Conformer baseline at inference and\n36% faster to train.",
+  "citation": 123
+}

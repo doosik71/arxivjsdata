@@ -1,0 +1,7 @@
+{
+  "title": "kNN-CTC: Enhancing ASR via Retrieval of CTC Pseudo Labels",
+  "authors": "Jiaming Zhou, Shiwan Zhao, Yaqi Liu, Wenjia Zeng, Yong Chen, Yong Qin",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.13560v2",
+  "abstract": "The success of retrieval-augmented language models in various natural\nlanguage processing (NLP) tasks has been constrained in automatic speech\nrecognition (ASR) applications due to challenges in constructing fine-grained\naudio-text datastores. This paper presents kNN-CTC, a novel approach that\novercomes these challenges by leveraging Connectionist Temporal Classification\n(CTC) pseudo labels to establish frame-level audio-text key-value pairs,\ncircumventing the need for precise ground truth alignments. We further\nintroduce a skip-blank strategy, which strategically ignores CTC blank frames,\nto reduce datastore size. kNN-CTC incorporates a k-nearest neighbors retrieval\nmechanism into pre-trained CTC ASR systems, achieving significant improvements\nin performance. By incorporating a k-nearest neighbors retrieval mechanism into\npre-trained CTC ASR systems and leveraging a fine-grained, pruned datastore,\nkNN-CTC consistently achieves substantial improvements in performance under\nvarious experimental settings. Our code is available at\nhttps://github.com/NKU-HLT/KNN-CTC."
+}

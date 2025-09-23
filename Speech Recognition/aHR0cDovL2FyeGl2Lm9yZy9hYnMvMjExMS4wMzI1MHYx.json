@@ -1,0 +1,8 @@
+{
+  "title": "Context-Aware Transformer Transducer for Speech Recognition",
+  "authors": "Feng-Ju Chang, Jing Liu, Martin Radfar, Athanasios Mouchtaris, Maurizio Omologo, Ariya Rastrow, Siegfried Kunzmann",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2111.03250v1",
+  "abstract": "End-to-end (E2E) automatic speech recognition (ASR) systems often have\ndifficulty recognizing uncommon words, that appear infrequently in the training\ndata. One promising method, to improve the recognition accuracy on such rare\nwords, is to latch onto personalized/contextual information at inference. In\nthis work, we present a novel context-aware transformer transducer (CATT)\nnetwork that improves the state-of-the-art transformer-based ASR system by\ntaking advantage of such contextual signals. Specifically, we propose a\nmulti-head attention-based context-biasing network, which is jointly trained\nwith the rest of the ASR sub-networks. We explore different techniques to\nencode contextual data and to create the final attention context vectors. We\nalso leverage both BLSTM and pretrained BERT based models to encode contextual\ndata and guide the network training. Using an in-house far-field dataset, we\nshow that CATT, using a BERT based context encoder, improves the word error\nrate of the baseline transformer transducer and outperforms an existing deep\ncontextual model by 24.2% and 19.4% respectively.",
+  "citation": 107
+}

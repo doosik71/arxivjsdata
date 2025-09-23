@@ -1,0 +1,8 @@
+{
+  "title": "Disentangled-Transformer: An Explainable End-to-End Automatic Speech\n  Recognition Model with Speech Content-Context Separation",
+  "authors": "Pu Wang, Hugo Van hamme",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.17846v1",
+  "abstract": "End-to-end transformer-based automatic speech recognition (ASR) systems often\ncapture multiple speech traits in their learned representations that are highly\nentangled, leading to a lack of interpretability. In this study, we propose the\nexplainable Disentangled-Transformer, which disentangles the internal\nrepresentations into sub-embeddings with explicit content and speaker traits\nbased on varying temporal resolutions. Experimental results show that the\nproposed Disentangled-Transformer produces a clear speaker identity, separated\nfrom the speech content, for speaker diarization while improving ASR\nperformance.",
+  "citation": 1
+}

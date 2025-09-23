@@ -1,0 +1,8 @@
+{
+  "title": "Deep Neural Networks for Automatic Speech Processing: A Survey from\n  Large Corpora to Limited Data",
+  "authors": "Vincent Roger, Jérôme Farinas, Julien Pinquier",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2003.04241v1",
+  "abstract": "Most state-of-the-art speech systems are using Deep Neural Networks (DNNs).\nThose systems require a large amount of data to be learned. Hence, learning\nstate-of-the-art frameworks on under-resourced speech languages/problems is a\ndifficult task. Problems could be the limited amount of data for impaired\nspeech. Furthermore, acquiring more data and/or expertise is time-consuming and\nexpensive. In this paper we position ourselves for the following speech\nprocessing tasks: Automatic Speech Recognition, speaker identification and\nemotion recognition. To assess the problem of limited data, we firstly\ninvestigate state-of-the-art Automatic Speech Recognition systems as it\nrepresents the hardest tasks (due to the large variability in each language).\nNext, we provide an overview of techniques and tasks requiring fewer data. In\nthe last section we investigate few-shot techniques as we interpret\nunder-resourced speech as a few-shot problem. In that sense we propose an\noverview of few-shot techniques and perspectives of using such techniques for\nthe focused speech problems in this survey. It occurs that the reviewed\ntechniques are not well adapted for large datasets. Nevertheless, some\npromising results from the literature encourage the usage of such techniques\nfor speech processing.",
+  "citation": 45
+}
