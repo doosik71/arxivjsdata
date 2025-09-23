@@ -1,0 +1,8 @@
+{
+  "title": "PPG2ABP: Translating Photoplethysmogram (PPG) Signals to Arterial Blood\n  Pressure (ABP) Waveforms using Fully Convolutional Neural Networks",
+  "authors": "Nabil Ibtehaz, Sakib Mahmud, Muhammad E. H. Chowdhury, Amith Khandakar, Mohamed Arselene Ayari, Anas Tahir, M. Sohel Rahman",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2005.01669v2",
+  "abstract": "Cardiovascular diseases are one of the most severe causes of mortality,\ntaking a heavy toll of lives annually throughout the world. The continuous\nmonitoring of blood pressure seems to be the most viable option, but this\ndemands an invasive process, bringing about several layers of complexities.\nThis motivates us to develop a method to predict the continuous arterial blood\npressure (ABP) waveform through a non-invasive approach using\nphotoplethysmogram (PPG) signals. In addition we explore the advantage of deep\nlearning as it would free us from sticking to ideally shaped PPG signals only,\nby making handcrafted feature computation irrelevant, which is a shortcoming of\nthe existing approaches. Thus, we present, PPG2ABP, a deep learning based\nmethod, that manages to predict the continuous ABP waveform from the input PPG\nsignal, with a mean absolute error of 4.604 mmHg, preserving the shape,\nmagnitude and phase in unison. However, the more astounding success of PPG2ABP\nturns out to be that the computed values of DBP, MAP and SBP from the predicted\nABP waveform outperforms the existing works under several metrics, despite that\nPPG2ABP is not explicitly trained to do so.",
+  "citation": 155
+}

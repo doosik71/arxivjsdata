@@ -1,0 +1,8 @@
+{
+  "title": "Robust Anomaly Detection in Images using Adversarial Autoencoders",
+  "authors": "Laura Beggel, Michael Pfeiffer, Bernd Bischl",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1901.06355v1",
+  "abstract": "Reliably detecting anomalies in a given set of images is a task of high\npractical relevance for visual quality inspection, surveillance, or medical\nimage analysis. Autoencoder neural networks learn to reconstruct normal images,\nand hence can classify those images as anomalies, where the reconstruction\nerror exceeds some threshold. Here we analyze a fundamental problem of this\napproach when the training set is contaminated with a small fraction of\noutliers. We find that continued training of autoencoders inevitably reduces\nthe reconstruction error of outliers, and hence degrades the anomaly detection\nperformance. In order to counteract this effect, an adversarial autoencoder\narchitecture is adapted, which imposes a prior distribution on the latent\nrepresentation, typically placing anomalies into low likelihood-regions.\nUtilizing the likelihood model, potential anomalies can be identified and\nrejected already during training, which results in an anomaly detector that is\nsignificantly more robust to the presence of outliers during training.",
+  "citation": 193
+}

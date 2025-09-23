@@ -1,0 +1,8 @@
+{
+  "title": "Anomaly Detection with SDAE",
+  "authors": "Benjamin Smith, Kevin Cant, Gloria Wang",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2004.04391v1",
+  "abstract": "Anomaly detection is a prominent data preprocessing step in learning\napplications for correction and/or removal of faulty data. Automating this data\ntype with the use of autoencoders could increase the quality of the dataset by\nisolating anomalies that were missed through manual or basic statistical\nanalysis. A Simple, Deep, and Supervised Deep Autoencoder were trained and\ncompared for anomaly detection over the ASHRAE building energy dataset. Given\nthe restricted parameters under which the models were trained, the Deep\nAutoencoder perfoms the best, however, the Supervised Deep Autoencoder\noutperforms the other models in total anomalies detected when considerations\nfor the test datasets are given.",
+  "citation": 1
+}

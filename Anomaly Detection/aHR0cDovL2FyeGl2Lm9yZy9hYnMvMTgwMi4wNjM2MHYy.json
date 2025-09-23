@@ -1,0 +1,8 @@
+{
+  "url": "http://arxiv.org/abs/1802.06360v2",
+  "title": "Anomaly Detection using One-Class Neural Networks",
+  "authors": "Raghavendra Chalapathy, Aditya Krishna Menon, Sanjay Chawla",
+  "year": 2018,
+  "abstract": "We propose a one-class neural network (OC-NN) model to detect anomalies in\ncomplex data sets. OC-NN combines the ability of deep networks to extract a\nprogressively rich representation of data with the one-class objective of\ncreating a tight envelope around normal data. The OC-NN approach breaks new\nground for the following crucial reason: data representation in the hidden\nlayer is driven by the OC-NN objective and is thus customized for anomaly\ndetection. This is a departure from other approaches which use a hybrid\napproach of learning deep features using an autoencoder and then feeding the\nfeatures into a separate anomaly detection method like one-class SVM (OC-SVM).\nThe hybrid OC-SVM approach is sub-optimal because it is unable to influence\nrepresentational learning in the hidden layers. A comprehensive set of\nexperiments demonstrate that on complex data sets (like CIFAR and GTSRB), OC-NN\nperforms on par with state-of-the-art methods and outperformed conventional\nshallow methods in some scenarios.",
+  "citation": 648
+}

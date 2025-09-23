@@ -3,5 +3,6 @@
   "authors": "Jian Zhu, Xin Zou, Yu Cui, Zhangmin Huang, Chenshu Hu, Bo Lyu",
   "year": 2024,
   "url": "http://arxiv.org/abs/2406.18007v1",
-  "abstract": "Inspired by the excellent performance of Mamba networks, we propose a novel\nDeep Mamba Multi-modal Learning (DMML). It can be used to achieve the fusion of\nmulti-modal features. We apply DMML to the field of multimedia retrieval and\npropose an innovative Deep Mamba Multi-modal Hashing (DMMH) method. It combines\nthe advantages of algorithm accuracy and inference speed. We validated the\neffectiveness of DMMH on three public datasets and achieved state-of-the-art\nresults."
+  "abstract": "Inspired by the excellent performance of Mamba networks, we propose a novel\nDeep Mamba Multi-modal Learning (DMML). It can be used to achieve the fusion of\nmulti-modal features. We apply DMML to the field of multimedia retrieval and\npropose an innovative Deep Mamba Multi-modal Hashing (DMMH) method. It combines\nthe advantages of algorithm accuracy and inference speed. We validated the\neffectiveness of DMMH on three public datasets and achieved state-of-the-art\nresults.",
+  "citation": 0
 }

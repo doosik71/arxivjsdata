@@ -1,0 +1,8 @@
+{
+  "title": "Continuous Monitoring of Blood Pressure with Evidential Regression",
+  "authors": "Hyeongju Kim, Woo Hyun Kang, Hyeonseung Lee, Nam Soo Kim",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2102.03542v2",
+  "abstract": "Photoplethysmogram (PPG) signal-based blood pressure (BP) estimation is a\npromising candidate for modern BP measurements, as PPG signals can be easily\nobtained from wearable devices in a non-invasive manner, allowing quick BP\nmeasurement. However, the performance of existing machine learning-based BP\nmeasuring methods still fall behind some BP measurement guidelines and most of\nthem provide only point estimates of systolic blood pressure (SBP) and\ndiastolic blood pressure (DBP). In this paper, we present a cutting-edge method\nwhich is capable of continuously monitoring BP from the PPG signal and\nsatisfies healthcare criteria such as the Association for the Advancement of\nMedical Instrumentation (AAMI) and the British Hypertension Society (BHS)\nstandards. Furthermore, the proposed method provides the reliability of the\npredicted BP by estimating its uncertainty to help diagnose medical condition\nbased on the model prediction. Experiments on the MIMIC II database verify the\nstate-of-the-art performance of the proposed method under several metrics and\nits ability to accurately represent uncertainty in prediction.",
+  "citation": 2
+}

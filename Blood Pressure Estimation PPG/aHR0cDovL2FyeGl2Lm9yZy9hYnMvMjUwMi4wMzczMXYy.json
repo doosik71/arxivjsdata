@@ -1,0 +1,8 @@
+{
+  "title": "A Physiological-Model-Based Neural Network Framework for Blood Pressure\n  Estimation from Photoplethysmography Signals",
+  "authors": "Yaowen Zhang, Libera Fresiello, Peter H. Veltink, Dirk W. Donker, Ying Wang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.03731v2",
+  "abstract": "Continuous blood pressure (BP) estimation via photoplethysmography (PPG)\nremains a significant challenge, particularly in providing comprehensive\ncardiovascular insights for hypertensive complications. This study presents a\nnovel physiological model-based neural network (PMB-NN) framework for BP\nestimation from PPG signals, incorporating the identification of total\nperipheral resistance (TPR) and arterial compliance (AC) to enhance\nphysiological interpretability. Preliminary experimental results, obtained from\na single healthy participant under varying activity intensities, demonstrated\npromising accuracy, with a median standard deviation of 6.88 mmHg for systolic\nBP and 3.72 mmHg for diastolic BP. The median error for TPR and AC was 0.048\nmmHg*s/ml and -0.521 ml/mmHg, respectively. Consistent with expectations, both\nestimated TPR and AC exhibited a reduction as activity intensity increased.",
+  "citation": 0
+}

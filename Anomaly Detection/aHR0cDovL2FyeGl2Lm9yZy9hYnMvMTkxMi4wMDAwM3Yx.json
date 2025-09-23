@@ -1,0 +1,8 @@
+{
+  "title": "A Case for the Score: Identifying Image Anomalies using Variational\n  Autoencoder Gradients",
+  "authors": "David Zimmerer, Jens Petersen, Simon A. A. Kohl, Klaus H. Maier-Hein",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1912.00003v1",
+  "abstract": "Through training on unlabeled data, anomaly detection has the potential to\nimpact computer-aided diagnosis by outlining suspicious regions. Previous work\non deep-learning-based anomaly detection has primarily focused on the\nreconstruction error. We argue instead, that pixel-wise anomaly ratings derived\nfrom a Variational Autoencoder based score approximation yield a theoretically\nbetter grounded and more faithful estimate. In our experiments, Variational\nAutoencoder gradient-based rating outperforms other approaches on unsupervised\npixel-wise tumor detection on the BraTS-2017 dataset with a ROC-AUC of 0.94.",
+  "citation": 25
+}

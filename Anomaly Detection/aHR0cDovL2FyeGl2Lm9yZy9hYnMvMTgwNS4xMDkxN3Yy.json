@@ -1,0 +1,8 @@
+{
+  "title": "Deep Anomaly Detection Using Geometric Transformations",
+  "authors": "Izhak Golan, Ran El-Yaniv",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1805.10917v2",
+  "abstract": "We consider the problem of anomaly detection in images, and present a new\ndetection technique. Given a sample of images, all known to belong to a\n\"normal\" class (e.g., dogs), we show how to train a deep neural model that can\ndetect out-of-distribution images (i.e., non-dog objects). The main idea behind\nour scheme is to train a multi-class model to discriminate between dozens of\ngeometric transformations applied on all the given images. The auxiliary\nexpertise learned by the model generates feature detectors that effectively\nidentify, at test time, anomalous images based on the softmax activation\nstatistics of the model when applied on transformed images. We present\nextensive experiments using the proposed detector, which indicate that our\nalgorithm improves state-of-the-art methods by a wide margin.",
+  "citation": 880
+}

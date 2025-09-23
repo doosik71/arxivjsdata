@@ -1,0 +1,8 @@
+{
+  "title": "Generative Modeling with Diffusion",
+  "authors": "Justin Le",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.10948v2",
+  "abstract": "We provide an overview of the diffusion model as a method to generate new\nsamples. Generative models have been recently adopted for tasks such as art\ngeneration (Stable Diffusion, Dall-E) and text generation (ChatGPT). Diffusion\nmodels in particular apply noise to sample data and then \"reverse\" this noising\nprocess to generate new samples. We will formally define these noising and\ndenoising processes, then present algorithms to train and generate with a\ndiffusion model. Afterward, we will explore a potential application of\ndiffusion models in improving classifier performance on imbalanced data.",
+  "citation": 2
+}

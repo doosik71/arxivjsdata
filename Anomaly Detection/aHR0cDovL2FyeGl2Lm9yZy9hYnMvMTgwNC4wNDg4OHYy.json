@@ -1,0 +1,8 @@
+{
+  "title": "Scalable and Interpretable One-class SVMs with Deep Learning and Random\n  Fourier features",
+  "authors": "Minh-Nghia Nguyen, Ngo Anh Vien",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1804.04888v2",
+  "abstract": "One-class support vector machine (OC-SVM) for a long time has been one of the\nmost effective anomaly detection methods and extensively adopted in both\nresearch as well as industrial applications. The biggest issue for OC-SVM is\nyet the capability to operate with large and high-dimensional datasets due to\noptimization complexity. Those problems might be mitigated via dimensionality\nreduction techniques such as manifold learning or autoencoder. However,\nprevious work often treats representation learning and anomaly prediction\nseparately. In this paper, we propose autoencoder based one-class support\nvector machine (AE-1SVM) that brings OC-SVM, with the aid of random Fourier\nfeatures to approximate the radial basis kernel, into deep learning context by\ncombining it with a representation learning architecture and jointly exploit\nstochastic gradient descent to obtain end-to-end training. Interestingly, this\nalso opens up the possible use of gradient-based attribution methods to explain\nthe decision making for anomaly detection, which has ever been challenging as a\nresult of the implicit mappings between the input space and the kernel space.\nTo the best of our knowledge, this is the first work to study the\ninterpretability of deep learning in anomaly detection. We evaluate our method\non a wide range of unsupervised anomaly detection tasks in which our end-to-end\ntraining architecture achieves a performance significantly better than the\nprevious work using separate training.",
+  "citation": 52
+}

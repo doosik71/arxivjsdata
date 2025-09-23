@@ -1,0 +1,8 @@
+{
+  "title": "Rethinking the Chain-of-Thought: The Roles of In-Context Learning and\n  Pre-trained Priors",
+  "authors": "Hao Yang, Zhiyu Yang, Yunjie Zhang, Shanyi Zhu, Lin Yang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.01236v1",
+  "abstract": "Chain-of-Thought reasoning has emerged as a pivotal methodology for enhancing\nmodel inference capabilities. Despite growing interest in Chain-of-Thought\nreasoning, its underlying mechanisms remain unclear. This paper explores the\nworking mechanisms of Chain-of-Thought reasoning from the perspective of the\ndual relationship between in-context learning and pretrained priors. We first\nconduct a fine-grained lexical-level analysis of rationales to examine the\nmodel's reasoning behavior. Then, by incrementally introducing noisy exemplars,\nwe examine how the model balances pretrained priors against erroneous\nin-context information. Finally, we investigate whether prompt engineering can\ninduce slow thinking in large language models. Our extensive experiments reveal\nthree key findings: (1) The model not only quickly learns the reasoning\nstructure at the lexical level but also grasps deeper logical reasoning\npatterns, yet it heavily relies on pretrained priors. (2) Providing sufficient\nexemplars shifts the model's decision-making from pretrained priors to\nin-context signals, while misleading prompts introduce instability. (3) Long\nChain-of-Thought prompting can induce the model to generate longer reasoning\nchains, thereby improving its performance on downstream tasks.",
+  "citation": 0
+}

@@ -1,0 +1,8 @@
+{
+  "url": "http://arxiv.org/abs/2011.02231v2",
+  "title": "Continuous PPG-Based Blood Pressure Monitoring Using Multi-Linear\n  Regression",
+  "authors": "Serj Haddad, Assim Boukhayma, Antonino Caizzone",
+  "year": 2020,
+  "abstract": "In this work, we present the Senbiosys blood pressure monitoring algorithm\n(SB-BPM) that solely requires a photoplethysmography (PPG) signal. The\ntechnology is based on pulse wave analysis (PWA) of PPG signals retrieved from\ndifferent body locations to continuously estimate the systolic blood pressure\n(SBP) and the diastolic blood pressure (DBP).",
+  "citation": 105
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Arbitrary Discrete Sequence Anomaly Detection with Zero Boundary LSTM",
+  "authors": "Chase Roberts, Manish Nair",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1803.02395v1",
+  "abstract": "We propose a simple mathematical definition and new neural architecture for\nfinding anomalies within discrete sequence datasets. Our model comprises of a\nmodified LSTM autoencoder and an array of One-Class SVMs. The LSTM takes in\nelements from a sequence and creates context vectors that are used to predict\nthe probability distribution of the following element. These context vectors\nare then used to train an array of One-Class SVMs. These SVMs are used to\ndetermine an outlier boundary in context space.We show that our method is\nconsistently more stable and also outperforms standard LSTM and sliding window\nanomaly detection systems on two generated datasets.",
+  "citation": 6
+}

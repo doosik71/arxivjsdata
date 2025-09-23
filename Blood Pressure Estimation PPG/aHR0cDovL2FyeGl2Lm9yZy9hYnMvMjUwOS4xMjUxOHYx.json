@@ -1,0 +1,8 @@
+{
+  "title": "Generalizable Blood Pressure Estimation from Multi-Wavelength PPG Using\n  Curriculum-Adversarial Learning",
+  "authors": "Zequan Liang, Ruoyu Zhang, Wei Shao, Mahdi Pirayesh Shirazi Nejad, Ehsan Kourkchi, Setareh Rafatirad, Houman Homayoun",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.12518v1",
+  "abstract": "Accurate and generalizable blood pressure (BP) estimation is vital for the\nearly detection and management of cardiovascular diseases. In this study, we\nenforce subject-level data splitting on a public multi-wavelength\nphotoplethysmography (PPG) dataset and propose a generalizable BP estimation\nframework based on curriculum-adversarial learning. Our approach combines\ncurriculum learning, which transitions from hypertension classification to BP\nregression, with domain-adversarial training that confuses subject identity to\nencourage the learning of subject-invariant features. Experiments show that\nmulti-channel fusion consistently outperforms single-channel models. On the\nfour-wavelength PPG dataset, our method achieves strong performance under\nstrict subject-level splitting, with mean absolute errors (MAE) of 14.2mmHg for\nsystolic blood pressure (SBP) and 6.4mmHg for diastolic blood pressure (DBP).\nAdditionally, ablation studies validate the effectiveness of both the\ncurriculum and adversarial components. These results highlight the potential of\nleveraging complementary information in multi-wavelength PPG and\ncurriculum-adversarial strategies for accurate and robust BP estimation.",
+  "citation": 0
+}

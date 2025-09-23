@@ -1,0 +1,7 @@
+{
+  "title": "Novelty Detection in MultiClass Scenarios with Incomplete Set of Class\n  Labels",
+  "authors": "Nomi Vinokurov, Daphna Weinshall",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1604.06242v2",
+  "abstract": "We address the problem of novelty detection in multiclass scenarios where\nsome class labels are missing from the training set. Our method is based on the\ninitial assignment of confidence values, which measure the affinity between a\nnew test point and each known class. We first compare the values of the two top\nelements in this vector of confidence values. In the heart of our method lies\nthe training of an ensemble of classifiers, each trained to discriminate known\nfrom novel classes based on some partition of the training data into\npresumed-known and presumednovel classes. Our final novelty score is derived\nfrom the output of this ensemble of classifiers. We evaluated our method on two\ndatasets of images containing a relatively large number of classes - the\nCaltech-256 and Cifar-100 datasets. We compared our method to 3 alternative\nmethods which represent commonly used approaches, including the one-class SVM,\nnovelty based on k-NN, novelty based on maximal confidence, and the recent\nKNFST method. The results show a very clear and marked advantage for our method\nover all alternative methods, in an experimental setup where class labels are\nmissing during training."
+}

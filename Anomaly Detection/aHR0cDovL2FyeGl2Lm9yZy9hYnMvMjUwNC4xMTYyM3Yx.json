@@ -1,0 +1,8 @@
+{
+  "url": "http://arxiv.org/abs/2504.11623v1",
+  "title": "Possibility for Proactive Anomaly Detection",
+  "authors": "Jinsung Jeon, Jaehyeon Park, Sewon Park, Jeongwhan Choi, Minjung Kim, Noseong Park",
+  "year": 2025,
+  "abstract": "Time-series anomaly detection, which detects errors and failures in a\nworkflow, is one of the most important topics in real-world applications. The\npurpose of time-series anomaly detection is to reduce potential damages or\nlosses. However, existing anomaly detection models detect anomalies through the\nerror between the model output and the ground truth (observed) value, which\nmakes them impractical. In this work, we present a \\textit{proactive} approach\nfor time-series anomaly detection based on a time-series forecasting model\nspecialized for anomaly detection and a data-driven anomaly detection model.\nOur proactive approach establishes an anomaly threshold from training data with\na data-driven anomaly detection model, and anomalies are subsequently detected\nby identifying predicted values that exceed the anomaly threshold. In addition,\nwe extensively evaluated the model using four anomaly detection benchmarks and\nanalyzed both predictable and unpredictable anomalies. We attached the source\ncode as supplementary material.",
+  "citation": 0
+}

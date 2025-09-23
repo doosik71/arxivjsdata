@@ -1,0 +1,8 @@
+{
+  "title": "Deep Active Learning for Anomaly Detection",
+  "authors": "Tiago Pimentel, Marianne Monteiro, Adriano Veloso, Nivio Ziviani",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1805.09411v2",
+  "abstract": "Anomalies are intuitively easy for human experts to understand, but they are\nhard to define mathematically. Therefore, in order to have performance\nguarantees in unsupervised anomaly detection, priors need to be assumed on what\nthe anomalies are. By contrast, active learning provides the necessary priors\nthrough appropriate expert feedback. Thus, in this work we present an active\nlearning method that can be built upon existing deep learning solutions for\nunsupervised anomaly detection, so that outliers can be separated from normal\ndata effectively. We introduce a new layer that can be easily attached to any\ndeep learning model designed for unsupervised anomaly detection to transform it\ninto an active method. We report results on both synthetic and real anomaly\ndetection datasets, using multi-layer perceptrons and autoencoder architectures\nempowered with the proposed active layer, and we discuss their performance on\nfinding clustered and low density anomalies.",
+  "citation": 69
+}

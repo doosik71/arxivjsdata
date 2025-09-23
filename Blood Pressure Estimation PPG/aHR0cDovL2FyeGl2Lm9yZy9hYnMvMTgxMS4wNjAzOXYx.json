@@ -1,0 +1,8 @@
+{
+  "title": "Arterial Blood Pressure Feature Estimation Using Photoplethysmography",
+  "authors": "Armin Soltan Zadi, Raichel Alex, Rong Zhang, Donald E. Watenpaugh, Khosrow Behbehani",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1811.06039v1",
+  "abstract": "Continuous and noninvasive monitoring of blood pressure has numerous clinical\nand fitness applications. Current methods of continuous measurement of blood\npressure are either invasive and/or require expensive equipment. Therefore, we\ninvestigated a new method for the continuous estimation of two main features of\nblood pressure waveform: systolic and diastolic pressures. The estimates were\nobtained from a photoplethysmography signal as input to the fifth order\nautoregressive moving average models. The performance of the method was\nevaluated using beat-to-beat full-wave blood pressure measurements from 15\nyoung subjects, with no known cardiovascular disorder, in supine position as\nthey breathed normally and also while they performed a breath-hold maneuver.\nThe level of error in the estimates, as measured by the root mean square of the\nmodel residuals, was less than 5 mmHg during normal breathing and less than 8\nmmHg during the breath-hold maneuver. The mean of model residuals both during\nnormal breathing and breath-hold maneuvers was considered to be less than 3.2\nmmHg. The dependency of the accuracy of the estimates on the subject data was\nassessed by comparing the modeling errors for the 15 subjects. Less than 1% of\nthe models showed significant differences (p < 0.05) from the other models,\nwhich indicates a high level of consistency among the models.",
+  "citation": 51
+}

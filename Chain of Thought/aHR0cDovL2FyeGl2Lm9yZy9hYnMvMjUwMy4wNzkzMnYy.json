@@ -1,0 +1,8 @@
+{
+  "title": "A Theory of Learning with Autoregressive Chain of Thought",
+  "authors": "Nirmit Joshi, Gal Vardi, Adam Block, Surbhi Goel, Zhiyuan Li, Theodor Misiakiewicz, Nathan Srebro",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.07932v2",
+  "abstract": "For a given base class of sequence-to-next-token generators, we consider\nlearning prompt-to-answer mappings obtained by iterating a fixed,\ntime-invariant generator for multiple steps, thus generating a\nchain-of-thought, and then taking the final token as the answer. We formalize\nthe learning problems both when the chain-of-thought is observed and when\ntraining only on prompt-answer pairs, with the chain-of-thought latent. We\nanalyze the sample and computational complexity both in terms of general\nproperties of the base class (e.g. its VC dimension) and for specific base\nclasses such as linear thresholds. We present a simple base class that allows\nfor universal representability and computationally tractable chain-of-thought\nlearning. Central to our development is that time invariance allows for sample\ncomplexity that is independent of the length of the chain-of-thought. Attention\narises naturally in our construction.",
+  "citation": 6
+}

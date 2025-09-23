@@ -1,0 +1,8 @@
+{
+  "title": "Thinking Machines: A Survey of LLM based Reasoning Strategies",
+  "authors": "Dibyanayan Bandyopadhyay, Soham Bhattacharjee, Asif Ekbal",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.10814v1",
+  "abstract": "Large Language Models (LLMs) are highly proficient in language-based tasks.\nTheir language capabilities have positioned them at the forefront of the future\nAGI (Artificial General Intelligence) race. However, on closer inspection,\nValmeekam et al. (2024); Zecevic et al. (2023); Wu et al. (2024) highlight a\nsignificant gap between their language proficiency and reasoning abilities.\nReasoning in LLMs and Vision Language Models (VLMs) aims to bridge this gap by\nenabling these models to think and re-evaluate their actions and responses.\nReasoning is an essential capability for complex problem-solving and a\nnecessary step toward establishing trust in Artificial Intelligence (AI). This\nwill make AI suitable for deployment in sensitive domains, such as healthcare,\nbanking, law, defense, security etc. In recent times, with the advent of\npowerful reasoning models like OpenAI O1 and DeepSeek R1, reasoning endowment\nhas become a critical research topic in LLMs. In this paper, we provide a\ndetailed overview and comparison of existing reasoning techniques and present a\nsystematic survey of reasoning-imbued language models. We also study current\nchallenges and present our findings.",
+  "citation": 15
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1711.00614v1",
+  "title": "A Multimodal Anomaly Detector for Robot-Assisted Feeding Using an\n  LSTM-based Variational Autoencoder",
+  "authors": "Daehyung Park, Yuuna Hoshi, Charles C. Kemp",
+  "year": 2017,
+  "abstract": "The detection of anomalous executions is valuable for reducing potential\nhazards in assistive manipulation. Multimodal sensory signals can be helpful\nfor detecting a wide range of anomalies. However, the fusion of\nhigh-dimensional and heterogeneous modalities is a challenging problem. We\nintroduce a long short-term memory based variational autoencoder (LSTM-VAE)\nthat fuses signals and reconstructs their expected distribution. We also\nintroduce an LSTM-VAE-based detector using a reconstruction-based anomaly score\nand a state-based threshold. For evaluations with 1,555 robot-assisted feeding\nexecutions including 12 representative types of anomalies, our detector had a\nhigher area under the receiver operating characteristic curve (AUC) of 0.8710\nthan 5 other baseline detectors from the literature. We also show the\nmultimodal fusion through the LSTM-VAE is effective by comparing our detector\nwith 17 raw sensory signals versus 4 hand-engineered features."
+}

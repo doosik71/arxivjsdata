@@ -1,0 +1,7 @@
+{
+  "title": "A Deep Learning Anomaly Detection Method in Textual Data",
+  "authors": "Amir Jafari",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.13900v1",
+  "abstract": "In this article, we propose using deep learning and transformer architectures\ncombined with classical machine learning algorithms to detect and identify text\nanomalies in texts. Deep learning model provides a very crucial context\ninformation about the textual data which all textual context are converted to a\nnumerical representation. We used multiple machine learning methods such as\nSentence Transformers, Auto Encoders, Logistic Regression and Distance\ncalculation methods to predict anomalies. The method are tested on the texts\ndata and we used syntactic data from different source injected into the\noriginal text as anomalies or use them as target. Different methods and\nalgorithm are explained in the field of outlier detection and the results of\nthe best technique is presented. These results suggest that our algorithm could\npotentially reduce false positive rates compared with other anomaly detection\nmethods that we are testing."
+}

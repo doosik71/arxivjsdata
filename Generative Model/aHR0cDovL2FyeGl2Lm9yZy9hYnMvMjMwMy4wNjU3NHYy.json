@@ -1,0 +1,8 @@
+{
+  "title": "Diffusion Models for Non-autoregressive Text Generation: A Survey",
+  "authors": "Yifan Li, Kun Zhou, Wayne Xin Zhao, Ji-Rong Wen",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2303.06574v2",
+  "abstract": "Non-autoregressive (NAR) text generation has attracted much attention in the\nfield of natural language processing, which greatly reduces the inference\nlatency but has to sacrifice the generation accuracy. Recently, diffusion\nmodels, a class of latent variable generative models, have been introduced into\nNAR text generation, showing an improved text generation quality. In this\nsurvey, we review the recent progress in diffusion models for NAR text\ngeneration. As the background, we first present the general definition of\ndiffusion models and the text diffusion models, and then discuss their merits\nfor NAR generation. As the core content, we further introduce two mainstream\ndiffusion models in existing work of text diffusion, and review the key designs\nof the diffusion process. Moreover, we discuss the utilization of pre-trained\nlanguage models (PLMs) for text diffusion models and introduce optimization\ntechniques for text data. Finally, we discuss several promising directions and\nconclude this paper. Our survey aims to provide researchers with a systematic\nreference of related research on text diffusion models for NAR generation. We\npresent our collection of text diffusion models at\nhttps://github.com/RUCAIBox/Awesome-Text-Diffusion-Models.",
+  "citation": 54
+}

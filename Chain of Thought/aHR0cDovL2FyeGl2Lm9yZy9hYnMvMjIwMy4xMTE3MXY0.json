@@ -1,0 +1,8 @@
+{
+  "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+  "authors": "Xuezhi Wang, Jason Wei, Dale Schuurmans, Quoc Le, Ed Chi, Sharan Narang, Aakanksha Chowdhery, Denny Zhou",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2203.11171v4",
+  "abstract": "Chain-of-thought prompting combined with pre-trained large language models\nhas achieved encouraging results on complex reasoning tasks. In this paper, we\npropose a new decoding strategy, self-consistency, to replace the naive greedy\ndecoding used in chain-of-thought prompting. It first samples a diverse set of\nreasoning paths instead of only taking the greedy one, and then selects the\nmost consistent answer by marginalizing out the sampled reasoning paths.\nSelf-consistency leverages the intuition that a complex reasoning problem\ntypically admits multiple different ways of thinking leading to its unique\ncorrect answer. Our extensive empirical evaluation shows that self-consistency\nboosts the performance of chain-of-thought prompting with a striking margin on\na range of popular arithmetic and commonsense reasoning benchmarks, including\nGSM8K (+17.9%), SVAMP (+11.0%), AQuA (+12.2%), StrategyQA (+6.4%) and\nARC-challenge (+3.9%).",
+  "citation": 2787
+}

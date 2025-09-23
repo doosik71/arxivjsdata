@@ -1,0 +1,7 @@
+{
+  "title": "Denoising Architecture for Unsupervised Anomaly Detection in Time-Series",
+  "authors": "Wadie Skaf, Tomáš Horváth",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2208.14337v1",
+  "abstract": "Anomalies in time-series provide insights of critical scenarios across a\nrange of industries, from banking and aerospace to information technology,\nsecurity, and medicine. However, identifying anomalies in time-series data is\nparticularly challenging due to the imprecise definition of anomalies, the\nfrequent absence of labels, and the enormously complex temporal correlations\npresent in such data. The LSTM Autoencoder is an Encoder-Decoder scheme for\nAnomaly Detection based on Long Short Term Memory Networks that learns to\nreconstruct time-series behavior and then uses reconstruction error to identify\nabnormalities. We introduce the Denoising Architecture as a complement to this\nLSTM Encoder-Decoder model and investigate its effect on real-world as well as\nartificially generated datasets. We demonstrate that the proposed architecture\nincreases both the accuracy and the training speed, thereby, making the LSTM\nAutoencoder more efficient for unsupervised anomaly detection tasks."
+}

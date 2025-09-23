@@ -1,0 +1,8 @@
+{
+  "title": "A One-Class Support Vector Machine Calibration Method for Time Series\n  Change Point Detection",
+  "authors": "Baihong Jin, Yuxin Chen, Dan Li, Kameshwar Poolla, Alberto Sangiovanni-Vincentelli",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1902.06361v1",
+  "abstract": "It is important to identify the change point of a system's health status,\nwhich usually signifies an incipient fault under development. The One-Class\nSupport Vector Machine (OC-SVM) is a popular machine learning model for anomaly\ndetection and hence could be used for identifying change points; however, it is\nsometimes difficult to obtain a good OC-SVM model that can be used on sensor\nmeasurement time series to identify the change points in system health status.\nIn this paper, we propose a novel approach for calibrating OC-SVM models. The\napproach uses a heuristic search method to find a good set of input data and\nhyperparameters that yield a well-performing model. Our results on the C-MAPSS\ndataset demonstrate that OC-SVM can also achieve satisfactory accuracy in\ndetecting change point in time series with fewer training data, compared to\nstate-of-the-art deep learning approaches. In our case study, the OC-SVM\ncalibrated by the proposed model is shown to be useful especially in scenarios\nwith limited amount of training data.",
+  "citation": 44
+}

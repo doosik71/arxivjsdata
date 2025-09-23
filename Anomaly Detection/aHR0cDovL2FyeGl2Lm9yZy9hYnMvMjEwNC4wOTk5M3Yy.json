@@ -1,0 +1,7 @@
+{
+  "title": "Fine-grained Anomaly Detection via Multi-task Self-Supervision",
+  "authors": "Loic Jezequel, Ngoc-Son Vu, Jean Beaudet, Aymeric Histace",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2104.09993v2",
+  "abstract": "Detecting anomalies using deep learning has become a major challenge over the\nlast years, and is becoming increasingly promising in several fields. The\nintroduction of self-supervised learning has greatly helped many methods\nincluding anomaly detection where simple geometric transformation recognition\ntasks are used. However these methods do not perform well on fine-grained\nproblems since they lack finer features. By combining in a multi-task framework\nhigh-scale shape features oriented task with low-scale fine features oriented\ntask, our method greatly improves fine-grained anomaly detection. It\noutperforms state-of-the-art with up to 31% relative error reduction measured\nwith AUROC on various anomaly detection problems."
+}

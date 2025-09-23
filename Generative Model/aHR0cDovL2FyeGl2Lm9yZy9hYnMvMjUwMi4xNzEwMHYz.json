@@ -1,0 +1,8 @@
+{
+  "title": "Generative Models in Decision Making: A Survey",
+  "authors": "Yinchuan Li, Xinyu Shao, Jianping Zhang, Haozhi Wang, Leo Maxime Brunswic, Kaiwen Zhou, Jiqian Dong, Kaiyang Guo, Xiu Li, Zhitang Chen, Jun Wang, Jianye Hao",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.17100v3",
+  "abstract": "In recent years, the exceptional performance of generative models in\ngenerative tasks has sparked significant interest in their integration into\ndecision-making processes. Due to their ability to handle complex data\ndistributions and their strong model capacity, generative models can be\neffectively incorporated into decision-making systems by generating\ntrajectories that guide agents toward high-reward state-action regions or\nintermediate sub-goals. This paper presents a comprehensive review of the\napplication of generative models in decision-making tasks. We classify seven\nfundamental types of generative models: energy-based models, generative\nadversarial networks, variational autoencoders, normalizing flows, diffusion\nmodels, generative flow networks, and autoregressive models. Regarding their\napplications, we categorize their functions into three main roles: controllers,\nmodelers and optimizers, and discuss how each role contributes to\ndecision-making. Furthermore, we examine the deployment of these models across\nfive critical real-world decision-making scenarios. Finally, we summarize the\nstrengths and limitations of current approaches and propose three key\ndirections for advancing next-generation generative directive models:\nhigh-performance algorithms, large-scale generalized decision-making models,\nand self-evolving and adaptive models.",
+  "citation": 4
+}

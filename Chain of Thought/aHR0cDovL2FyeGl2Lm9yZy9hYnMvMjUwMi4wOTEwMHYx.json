@@ -1,0 +1,8 @@
+{
+  "title": "Logical Reasoning in Large Language Models: A Survey",
+  "authors": "Hanmeng Liu, Zhizhang Fu, Mengru Ding, Ruoxi Ning, Chaoli Zhang, Xiaozhang Liu, Yue Zhang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.09100v1",
+  "abstract": "With the emergence of advanced reasoning models like OpenAI o3 and\nDeepSeek-R1, large language models (LLMs) have demonstrated remarkable\nreasoning capabilities. However, their ability to perform rigorous logical\nreasoning remains an open question. This survey synthesizes recent advancements\nin logical reasoning within LLMs, a critical area of AI research. It outlines\nthe scope of logical reasoning in LLMs, its theoretical foundations, and the\nbenchmarks used to evaluate reasoning proficiency. We analyze existing\ncapabilities across different reasoning paradigms - deductive, inductive,\nabductive, and analogical - and assess strategies to enhance reasoning\nperformance, including data-centric tuning, reinforcement learning, decoding\nstrategies, and neuro-symbolic approaches. The review concludes with future\ndirections, emphasizing the need for further exploration to strengthen logical\nreasoning in AI systems.",
+  "citation": 20
+}

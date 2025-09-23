@@ -1,0 +1,8 @@
+{
+  "url": "http://arxiv.org/abs/2102.12245v1",
+  "title": "Estimation of Continuous Blood Pressure from PPG via a Federated\n  Learning Approach",
+  "authors": "Eoin Brophy, Maarten De Vos, Geraldine Boylan, Tomas Ward",
+  "year": 2021,
+  "abstract": "Ischemic heart disease is the highest cause of mortality globally each year.\nThis not only puts a massive strain on the lives of those affected but also on\nthe public healthcare systems. To understand the dynamics of the healthy and\nunhealthy heart doctors commonly use electrocardiogram (ECG) and blood pressure\n(BP) readings. These methods are often quite invasive, in particular when\ncontinuous arterial blood pressure (ABP) readings are taken and not to mention\nvery costly. Using machine learning methods we seek to develop a framework that\nis capable of inferring ABP from a single optical photoplethysmogram (PPG)\nsensor alone. We train our framework across distributed models and data sources\nto mimic a large-scale distributed collaborative learning experiment that could\nbe implemented across low-cost wearables. Our time series-to-time series\ngenerative adversarial network (T2TGAN) is capable of high-quality continuous\nABP generation from a PPG signal with a mean error of 2.54 mmHg and a standard\ndeviation of 23.7 mmHg when estimating mean arterial pressure on a previously\nunseen, noisy, independent dataset. To our knowledge, this framework is the\nfirst example of a GAN capable of continuous ABP generation from an input PPG\nsignal that also uses a federated learning methodology.",
+  "citation": 66
+}

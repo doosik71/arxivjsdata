@@ -1,0 +1,7 @@
+{
+  "title": "Unsupervised Event Outlier Detection in Continuous Time",
+  "authors": "Somjit Nath, Yik Chau Lui, Siqi Liu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.16427v1",
+  "abstract": "Event sequence data record the occurrences of events in continuous time.\nEvent sequence forecasting based on temporal point processes (TPPs) has been\nextensively studied, but outlier or anomaly detection, especially without any\nsupervision from humans, is still underexplored. In this work, we develop, to\nthe best our knowledge, the first unsupervised outlier detection approach to\ndetecting abnormal events. Our novel unsupervised outlier detection framework\nis based on ideas from generative adversarial networks (GANs) and reinforcement\nlearning (RL). We train a 'generator' that corrects outliers in the data with a\n'discriminator' that learns to discriminate the corrected data from the real\ndata, which may contain outliers. A key insight is that if the generator made a\nmistake in the correction, it would generate anomalies that are different from\nthe anomalies in the real data, so it serves as data augmentation for the\ndiscriminator learning. Different from typical GAN-based outlier detection\napproaches, our method employs the generator to detect outliers in an online\nmanner. The experimental results show that our method can detect event outliers\nmore accurately than the state-of-the-art approaches."
+}

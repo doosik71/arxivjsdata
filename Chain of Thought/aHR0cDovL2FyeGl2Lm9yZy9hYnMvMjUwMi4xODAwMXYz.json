@@ -1,0 +1,8 @@
+{
+  "title": "Unveiling the Key Factors for Distilling Chain-of-Thought Reasoning",
+  "authors": "Xinghao Chen, Zhijing Sun, Wenjin Guo, Miaoran Zhang, Yanjun Chen, Yirong Sun, Hui Su, Yijie Pan, Dietrich Klakow, Wenjie Li, Xiaoyu Shen",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.18001v3",
+  "abstract": "Large Language Models (LLMs) excel in reasoning tasks through\nChain-of-Thought (CoT) prompting. However, CoT prompting greatly increases\ncomputational demands, which has prompted growing interest in distilling CoT\ncapabilities into Small Language Models (SLMs). This study systematically\nexamines the factors influencing CoT distillation, including the choice of\ngranularity, format and teacher model. Through experiments involving four\nteacher models and seven student models across seven mathematical and\ncommonsense reasoning datasets, we uncover three key findings: (1) Unlike LLMs,\nSLMs exhibit a non-monotonic relationship with granularity, with stronger\nmodels benefiting from finer-grained reasoning and weaker models performing\nbetter with simpler CoT supervision; (2) CoT format significantly impacts LLMs\nbut has minimal effect on SLMs, likely due to their reliance on supervised\nfine-tuning rather than pretraining preferences; (3) Stronger teacher models do\nNOT always produce better student models, as diversity and complexity in CoT\nsupervision can outweigh accuracy alone. These findings emphasize the need to\ntailor CoT strategies to specific student model, offering actionable insights\nfor optimizing CoT distillation in SLMs. The code and datasets are available at\nhttps://github.com/EIT-NLP/Distilling-CoT-Reasoning.",
+  "citation": 13
+}

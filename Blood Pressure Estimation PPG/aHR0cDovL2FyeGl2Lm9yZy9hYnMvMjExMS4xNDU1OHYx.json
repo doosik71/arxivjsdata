@@ -1,0 +1,8 @@
+{
+  "title": "BP-Net: Efficient Deep Learning for Continuous Arterial Blood Pressure\n  Estimation using Photoplethysmogram",
+  "authors": "Rishi Vardhan K, Vedanth S, Poojah G, Abhishek K, Nitish Kumar M, Vineeth Vijayaraghavan",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2111.14558v1",
+  "abstract": "Blood pressure (BP) is one of the most influential bio-markers for\ncardiovascular diseases and stroke; therefore, it needs to be regularly\nmonitored to diagnose and prevent any advent of medical complications. Current\ncuffless approaches to continuous BP monitoring, though non-invasive and\nunobtrusive, involve explicit feature engineering surrounding fingertip\nPhotoplethysmogram (PPG) signals. To circumvent this, we present an end-to-end\ndeep learning solution, BP-Net, that uses PPG waveform to estimate Systolic BP\n(SBP), Mean Average Pressure (MAP), and Diastolic BP (DBP) through intermediate\ncontinuous Arterial BP (ABP) waveform. Under the terms of the British\nHypertension Society (BHS) standard, BP-Net achieves Grade A for DBP and MAP\nestimation and Grade B for SBP estimation. BP-Net also satisfies Advancement of\nMedical Instrumentation (AAMI) criteria for DBP and MAP estimation and achieves\nMean Absolute Error (MAE) of 5.16 mmHg and 2.89 mmHg for SBP and DBP,\nrespectively. Further, we establish the ubiquitous potential of our approach by\ndeploying BP-Net on a Raspberry Pi 4 device and achieve 4.25 ms inference time\nfor our model to translate the PPG waveform to ABP waveform.",
+  "citation": 34
+}

@@ -1,0 +1,8 @@
+{
+  "title": "GenAI for Simulation Model in Model-Based Systems Engineering",
+  "authors": "Lin Zhang, Yuteng Zhang, Dusit Niyato, Lei Ren, Pengfei Gu, Zhen Chen, Yuanjun Laili, Wentong Cai, Agostino Bruzzone",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.06422v1",
+  "abstract": "Generative AI (GenAI) has demonstrated remarkable capabilities in code\ngeneration, and its integration into complex product modeling and simulation\ncode generation can significantly enhance the efficiency of the system design\nphase in Model-Based Systems Engineering (MBSE). In this study, we introduce a\ngenerative system design methodology framework for MBSE, offering a practical\napproach for the intelligent generation of simulation models for system\nphysical properties. First, we employ inference techniques, generative models,\nand integrated modeling and simulation languages to construct simulation models\nfor system physical properties based on product design documents. Subsequently,\nwe fine-tune the language model used for simulation model generation on an\nexisting library of simulation models and additional datasets generated through\ngenerative modeling. Finally, we introduce evaluation metrics for the generated\nsimulation models for system physical properties. Our proposed approach to\nsimulation model generation presents the innovative concept of scalable\ntemplates for simulation models. Using these templates, GenAI generates\nsimulation models for system physical properties through code completion. The\nexperimental results demonstrate that, for mainstream open-source\nTransformer-based models, the quality of the simulation model is significantly\nimproved using the simulation model generation method proposed in this paper.",
+  "citation": 2
+}

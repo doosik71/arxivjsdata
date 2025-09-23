@@ -3,5 +3,6 @@
   "title": "Autoencoders",
   "authors": "Dor Bank, Noam Koenigstein, Raja Giryes",
   "year": 2020,
-  "abstract": "An autoencoder is a specific type of a neural network, which is mainly\ndesigned to encode the input into a compressed and meaningful representation,\nand then decode it back such that the reconstructed input is similar as\npossible to the original one. This chapter surveys the different types of\nautoencoders that are mainly used today. It also describes various applications\nand use-cases of autoencoders."
+  "abstract": "An autoencoder is a specific type of a neural network, which is mainly\ndesigned to encode the input into a compressed and meaningful representation,\nand then decode it back such that the reconstructed input is similar as\npossible to the original one. This chapter surveys the different types of\nautoencoders that are mainly used today. It also describes various applications\nand use-cases of autoencoders.",
+  "citation": 1614
 }

@@ -1,0 +1,7 @@
+{
+  "title": "ASC-Net : Adversarial-based Selective Network for Unsupervised Anomaly\n  Segmentation",
+  "authors": "Raunak Dey, Yi Hong",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2103.03664v2",
+  "abstract": "We introduce a neural network framework, utilizing adversarial learning to\npartition an image into two cuts, with one cut falling into a reference\ndistribution provided by the user. This concept tackles the task of\nunsupervised anomaly segmentation, which has attracted increasing attention in\nrecent years due to their broad applications in tasks with unlabelled data.\nThis Adversarial-based Selective Cutting network (ASC-Net) bridges the two\ndomains of cluster-based deep learning methods and adversarial-based\nanomaly/novelty detection algorithms. We evaluate this unsupervised learning\nmodel on BraTS brain tumor segmentation, LiTS liver lesion segmentation, and\nMS-SEG2015 segmentation tasks. Compared to existing methods like the AnoGAN\nfamily, our model demonstrates tremendous performance gains in unsupervised\nanomaly segmentation tasks. Although there is still room to further improve\nperformance compared to supervised learning algorithms, the promising\nexperimental results shed light on building an unsupervised learning algorithm\nusing user-defined knowledge."
+}

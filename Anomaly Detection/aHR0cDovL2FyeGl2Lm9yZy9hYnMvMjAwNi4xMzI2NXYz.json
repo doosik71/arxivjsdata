@@ -1,0 +1,7 @@
+{
+  "title": "Anomaly Detection in Medical Imaging with Deep Perceptual Autoencoders",
+  "authors": "Nina Shvetsova, Bart Bakker, Irina Fedulova, Heinrich Schulz, Dmitry V. Dylov",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.13265v3",
+  "abstract": "Anomaly detection is the problem of recognizing abnormal inputs based on the\nseen examples of normal data. Despite recent advances of deep learning in\nrecognizing image anomalies, these methods still prove incapable of handling\ncomplex medical images, such as barely visible abnormalities in chest X-rays\nand metastases in lymph nodes. To address this problem, we introduce a new\npowerful method of image anomaly detection. It relies on the classical\nautoencoder approach with a re-designed training pipeline to handle\nhigh-resolution, complex images and a robust way of computing an image\nabnormality score. We revisit the very problem statement of fully unsupervised\nanomaly detection, where no abnormal examples at all are provided during the\nmodel setup. We propose to relax this unrealistic assumption by using a very\nsmall number of anomalies of confined variability merely to initiate the search\nof hyperparameters of the model. We evaluate our solution on natural image\ndatasets with a known benchmark, as well as on two medical datasets containing\nradiology and digital pathology images. The proposed approach suggests a new\nstrong baseline for image anomaly detection and outperforms state-of-the-art\napproaches in complex medical image analysis tasks."
+}

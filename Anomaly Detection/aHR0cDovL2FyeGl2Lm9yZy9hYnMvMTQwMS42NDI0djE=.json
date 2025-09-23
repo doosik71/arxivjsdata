@@ -1,0 +1,8 @@
+{
+  "url": "http://arxiv.org/abs/1401.6424v1",
+  "title": "Toward Supervised Anomaly Detection",
+  "authors": "Nico Goernitz, Marius Micha Kloft, Konrad Rieck, Ulf Brefeld",
+  "year": 2014,
+  "abstract": "Anomaly detection is being regarded as an unsupervised learning task as\nanomalies stem from adversarial or unlikely events with unknown distributions.\nHowever, the predictive performance of purely unsupervised anomaly detection\noften fails to match the required detection rates in many tasks and there\nexists a need for labeled data to guide the model generation. Our first\ncontribution shows that classical semi-supervised approaches, originating from\na supervised classifier, are inappropriate and hardly detect new and unknown\nanomalies. We argue that semi-supervised anomaly detection needs to ground on\nthe unsupervised learning paradigm and devise a novel algorithm that meets this\nrequirement. Although being intrinsically non-convex, we further show that the\noptimization problem has a convex equivalent under relatively mild assumptions.\nAdditionally, we propose an active learning strategy to automatically filter\ncandidates for labeling. In an empirical study on network intrusion detection\ndata, we observe that the proposed learning methodology requires much less\nlabeled data than the state-of-the-art, while achieving higher detection\naccuracies.",
+  "citation": 592
+}

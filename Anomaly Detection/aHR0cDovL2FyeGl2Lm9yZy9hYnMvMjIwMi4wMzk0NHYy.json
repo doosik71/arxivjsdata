@@ -1,0 +1,7 @@
+{
+  "title": "Detecting Anomalies within Time Series using Local Neural\n  Transformations",
+  "authors": "Tim Schneider, Chen Qiu, Marius Kloft, Decky Aspandi Latif, Steffen Staab, Stephan Mandt, Maja Rudolph",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.03944v2",
+  "abstract": "We develop a new method to detect anomalies within time series, which is\nessential in many application domains, reaching from self-driving cars,\nfinance, and marketing to medical diagnosis and epidemiology. The method is\nbased on self-supervised deep learning that has played a key role in\nfacilitating deep anomaly detection on images, where powerful image\ntransformations are available. However, such transformations are widely\nunavailable for time series. Addressing this, we develop Local Neural\nTransformations(LNT), a method learning local transformations of time series\nfrom data. The method produces an anomaly score for each time step and thus can\nbe used to detect anomalies within time series. We prove in a theoretical\nanalysis that our novel training objective is more suitable for transformation\nlearning than previous deep Anomaly detection(AD) methods. Our experiments\ndemonstrate that LNT can find anomalies in speech segments from the LibriSpeech\ndata set and better detect interruptions to cyber-physical systems than\nprevious work. Visualization of the learned transformations gives insight into\nthe type of transformations that LNT learns."
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Chain-of-Thought Reasoning is a Policy Improvement Operator",
+  "authors": "Hugh Zhang, David C. Parkes",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.08589v2",
+  "abstract": "Large language models have astounded the world with fascinating new\ncapabilities. However, they currently lack the ability to teach themselves new\nskills, relying instead on large amounts of human-generated training data. We\nintroduce SECToR (Self-Education via Chain-of-Thought Reasoning), a\nproof-of-concept demonstration that language models can teach themselves new\nskills using chain-of-thought reasoning. During the self-learning loop, SECToR\nasks models to solve addition problems using chain-of-thought reasoning before\ntraining the next version of the model to solve those same problems directly\nwithout using such reasoning. This process often results in an improved model\nwhich can, when again augmented with chain-of-thought reasoning, solve even\nharder problems than the original model, allowing the self-learning loop to\ncontinue. Language models trained via SECToR autonomously learn to add up to\nthe longest-length-digit numbers without access to any ground truth examples\nbeyond an initial supervised fine-tuning phase consisting only of numbers with\n6 or fewer digits. Our central hypothesis is that chain-of-thought reasoning\ncan act as a policy improvement operator, similarly to how Monte-Carlo Tree\nSearch is used in AlphaZero (Silver et al., 2017). We hope that this research\ncan lead to new directions in which language models can learn to teach\nthemselves without the need for human demonstrations.",
+  "citation": 9
+}

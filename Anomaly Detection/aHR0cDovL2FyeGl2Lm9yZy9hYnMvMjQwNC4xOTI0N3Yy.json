@@ -1,0 +1,8 @@
+{
+  "url": "http://arxiv.org/abs/2404.19247v2",
+  "title": "Improved AutoEncoder with LSTM module and KL divergence",
+  "authors": "Wei Huang, Bingyang Zhang, Kaituo Zhang, Hua Gao, Rongchun Wan",
+  "year": 2024,
+  "abstract": "The task of anomaly detection is to separate anomalous data from normal data\nin the dataset. Models such as deep convolutional autoencoder (CAE) network and\ndeep supporting vector data description (SVDD) model have been universally\nemployed and have demonstrated significant success in detecting anomalies.\nHowever, the over-reconstruction ability of CAE network for anomalous data can\neasily lead to high false negative rate in detecting anomalous data. On the\nother hand, the deep SVDD model has the drawback of feature collapse, which\nleads to a decrease of detection accuracy for anomalies. To address these\nproblems, we propose the Improved AutoEncoder with LSTM module and\nKullback-Leibler divergence (IAE-LSTM-KL) model in this paper. An LSTM network\nis added after the encoder to memorize feature representations of normal data.\nIn the meanwhile, the phenomenon of feature collapse can also be mitigated by\npenalizing the featured input to SVDD module via KL divergence. The efficacy of\nthe IAE-LSTM-KL model is validated through experiments on both synthetic and\nreal-world datasets. Experimental results show that IAE-LSTM-KL model yields\nhigher detection accuracy for anomalies. In addition, it is also found that the\nIAE-LSTM-KL model demonstrates enhanced robustness to contaminated outliers in\nthe dataset. All code may be found at\nhttps://github.com/crazyn2/IAE-LSTM-KL_codes",
+  "citation": 2
+}

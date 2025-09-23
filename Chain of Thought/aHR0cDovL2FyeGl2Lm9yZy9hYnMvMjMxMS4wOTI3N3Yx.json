@@ -1,0 +1,8 @@
+{
+  "title": "Contrastive Chain-of-Thought Prompting",
+  "authors": "Yew Ken Chia, Guizhen Chen, Luu Anh Tuan, Soujanya Poria, Lidong Bing",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.09277v1",
+  "abstract": "Despite the success of chain of thought in enhancing language model\nreasoning, the underlying process remains less well understood. Although\nlogically sound reasoning appears inherently crucial for chain of thought,\nprior studies surprisingly reveal minimal impact when using invalid\ndemonstrations instead. Furthermore, the conventional chain of thought does not\ninform language models on what mistakes to avoid, which potentially leads to\nmore errors. Hence, inspired by how humans can learn from both positive and\nnegative examples, we propose contrastive chain of thought to enhance language\nmodel reasoning. Compared to the conventional chain of thought, our approach\nprovides both valid and invalid reasoning demonstrations, to guide the model to\nreason step-by-step while reducing reasoning mistakes. To improve\ngeneralization, we introduce an automatic method to construct contrastive\ndemonstrations. Our experiments on reasoning benchmarks demonstrate that\ncontrastive chain of thought can serve as a general enhancement of\nchain-of-thought prompting.",
+  "citation": 79
+}

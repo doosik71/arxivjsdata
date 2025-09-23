@@ -1,0 +1,8 @@
+{
+  "title": "Why Can Large Language Models Generate Correct Chain-of-Thoughts?",
+  "authors": "Rasul Tutunov, Antoine Grosnit, Juliusz Ziomek, Jun Wang, Haitham Bou-Ammar",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2310.13571v4",
+  "abstract": "This paper delves into the capabilities of large language models (LLMs),\nspecifically focusing on advancing the theoretical comprehension of\nchain-of-thought prompting. We investigate how LLMs can be effectively induced\nto generate a coherent chain of thoughts. To achieve this, we introduce a\ntwo-level hierarchical graphical model tailored for natural language\ngeneration. Within this framework, we establish a compelling geometrical\nconvergence rate that gauges the likelihood of an LLM-generated chain of\nthoughts compared to those originating from the true language. Our findings\nprovide a theoretical justification for the ability of LLMs to produce the\ncorrect sequence of thoughts (potentially) explaining performance gains in\ntasks demanding reasoning skills.",
+  "citation": 23
+}

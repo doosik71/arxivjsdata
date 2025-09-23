@@ -1,0 +1,8 @@
+{
+  "title": "Group Anomaly Detection using Deep Generative Models",
+  "authors": "Raghavendra Chalapathy, Edward Toth, Sanjay Chawla",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1804.04876v1",
+  "abstract": "Unlike conventional anomaly detection research that focuses on point\nanomalies, our goal is to detect anomalous collections of individual data\npoints. In particular, we perform group anomaly detection (GAD) with an\nemphasis on irregular group distributions (e.g. irregular mixtures of image\npixels). GAD is an important task in detecting unusual and anomalous phenomena\nin real-world applications such as high energy particle physics, social media,\nand medical imaging. In this paper, we take a generative approach by proposing\ndeep generative models: Adversarial autoencoder (AAE) and variational\nautoencoder (VAE) for group anomaly detection. Both AAE and VAE detect group\nanomalies using point-wise input data where group memberships are known a\npriori. We conduct extensive experiments to evaluate our models on real-world\ndatasets. The empirical results demonstrate that our approach is effective and\nrobust in detecting group anomalies.",
+  "citation": 78
+}

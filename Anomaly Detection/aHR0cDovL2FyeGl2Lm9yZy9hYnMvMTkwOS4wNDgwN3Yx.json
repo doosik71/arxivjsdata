@@ -1,0 +1,8 @@
+{
+  "title": "Anomaly Detection with Inexact Labels",
+  "authors": "Tomoharu Iwata, Machiko Toyoda, Shotaro Tora, Naonori Ueda",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1909.04807v1",
+  "abstract": "We propose a supervised anomaly detection method for data with inexact\nanomaly labels, where each label, which is assigned to a set of instances,\nindicates that at least one instance in the set is anomalous. Although many\nanomaly detection methods have been proposed, they cannot handle inexact\nanomaly labels. To measure the performance with inexact anomaly labels, we\ndefine the inexact AUC, which is our extension of the area under the ROC curve\n(AUC) for inexact labels. The proposed method trains an anomaly score function\nso that the smooth approximation of the inexact AUC increases while anomaly\nscores for non-anomalous instances become low. We model the anomaly score\nfunction by a neural network-based unsupervised anomaly detection method, e.g.,\nautoencoders. The proposed method performs well even when only a small number\nof inexact labels are available by incorporating an unsupervised anomaly\ndetection mechanism with inexact AUC maximization. Using various datasets, we\nexperimentally demonstrate that our proposed method improves the anomaly\ndetection performance with inexact anomaly labels, and outperforms existing\nunsupervised and supervised anomaly detection and multiple instance learning\nmethods.",
+  "citation": 18
+}

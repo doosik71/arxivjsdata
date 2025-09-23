@@ -1,0 +1,7 @@
+{
+  "title": "Symbolic Chain-of-Thought Distillation: Small Models Can Also \"Think\"\n  Step-by-Step",
+  "authors": "Liunian Harold Li, Jack Hessel, Youngjae Yu, Xiang Ren, Kai-Wei Chang, Yejin Choi",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.14050v2",
+  "abstract": "Chain-of-thought prompting (e.g., \"Let's think step-by-step\") primes large\nlanguage models to verbalize rationalization for their predictions. While\nchain-of-thought can lead to dramatic performance gains, benefits appear to\nemerge only for sufficiently large models (beyond 50B parameters). We show that\norders-of-magnitude smaller models (125M -- 1.3B parameters) can still benefit\nfrom chain-of-thought prompting. To achieve this, we introduce Symbolic\nChain-of-Thought Distillation (SCoTD), a method to train a smaller student\nmodel on rationalizations sampled from a significantly larger teacher model.\nExperiments across several commonsense benchmarks show that: 1) SCoTD enhances\nthe performance of the student model in both supervised and few-shot settings,\nand especially for challenge sets; 2) sampling many reasoning chains per\ninstance from the teacher is paramount; and 3) after distillation, student\nchain-of-thoughts are judged by humans as comparable to the teacher, despite\norders of magnitude fewer parameters. We test several hypotheses regarding what\nproperties of chain-of-thought samples are important, e.g., diversity vs.\nteacher likelihood vs. open-endedness. We release our corpus of\nchain-of-thought samples and code."
+}

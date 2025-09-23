@@ -1,0 +1,8 @@
+{
+  "title": "Deep Anomaly Detection with Deviation Networks",
+  "authors": "Guansong Pang, Chunhua Shen, Anton van den Hengel",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1911.08623v1",
+  "abstract": "Although deep learning has been applied to successfully address many data\nmining problems, relatively limited work has been done on deep learning for\nanomaly detection. Existing deep anomaly detection methods, which focus on\nlearning new feature representations to enable downstream anomaly detection\nmethods, perform indirect optimization of anomaly scores, leading to\ndata-inefficient learning and suboptimal anomaly scoring. Also, they are\ntypically designed as unsupervised learning due to the lack of large-scale\nlabeled anomaly data. As a result, they are difficult to leverage prior\nknowledge (e.g., a few labeled anomalies) when such information is available as\nin many real-world anomaly detection applications.\n  This paper introduces a novel anomaly detection framework and its\ninstantiation to address these problems. Instead of representation learning,\nour method fulfills an end-to-end learning of anomaly scores by a neural\ndeviation learning, in which we leverage a few (e.g., multiple to dozens)\nlabeled anomalies and a prior probability to enforce statistically significant\ndeviations of the anomaly scores of anomalies from that of normal data objects\nin the upper tail. Extensive results show that our method can be trained\nsubstantially more data-efficiently and achieves significantly better anomaly\nscoring than state-of-the-art competing methods.",
+  "citation": 531
+}
