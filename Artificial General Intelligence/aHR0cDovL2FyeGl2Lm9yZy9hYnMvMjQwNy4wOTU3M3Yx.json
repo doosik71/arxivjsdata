@@ -1,0 +1,8 @@
+{
+  "title": "Have We Reached AGI? Comparing ChatGPT, Claude, and Gemini to Human\n  Literacy and Education Benchmarks",
+  "authors": "Mfon Akpan",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2407.09573v1",
+  "abstract": "Recent advancements in AI, particularly in large language models (LLMs) like\nChatGPT, Claude, and Gemini, have prompted questions about their proximity to\nArtificial General Intelligence (AGI). This study compares LLM performance on\neducational benchmarks with Americans' average educational attainment and\nliteracy levels, using data from the U.S. Census Bureau and technical reports.\nResults show that LLMs significantly outperform human benchmarks in tasks such\nas undergraduate knowledge and advanced reading comprehension, indicating\nsubstantial progress toward AGI. However, true AGI requires broader cognitive\nassessments. The study highlights the implications for AI development,\neducation, and societal impact, emphasizing the need for ongoing research and\nethical considerations.",
+  "citation": 2
+}

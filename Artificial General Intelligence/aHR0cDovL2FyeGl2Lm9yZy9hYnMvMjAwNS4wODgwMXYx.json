@@ -1,0 +1,8 @@
+{
+  "title": "AGI and the Knight-Darwin Law: why idealized AGI reproduction requires\n  collaboration",
+  "authors": "Samuel Allen Alexander",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2005.08801v1",
+  "abstract": "Can an AGI create a more intelligent AGI? Under idealized assumptions, for a\ncertain theoretical type of intelligence, our answer is: \"Not without outside\nhelp\". This is a paper on the mathematical structure of AGI populations when\nparent AGIs create child AGIs. We argue that such populations satisfy a certain\nbiological law. Motivated by observations of sexual reproduction in\nseemingly-asexual species, the Knight-Darwin Law states that it is impossible\nfor one organism to asexually produce another, which asexually produces\nanother, and so on forever: that any sequence of organisms (each one a child of\nthe previous) must contain occasional multi-parent organisms, or must\nterminate. By proving that a certain measure (arguably an intelligence measure)\ndecreases when an idealized parent AGI single-handedly creates a child AGI, we\nargue that a similar Law holds for AGIs.",
+  "citation": 8
+}

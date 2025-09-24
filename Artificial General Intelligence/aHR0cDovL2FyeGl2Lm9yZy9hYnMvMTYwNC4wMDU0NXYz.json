@@ -1,0 +1,8 @@
+{
+  "title": "The AGI Containment Problem",
+  "authors": "James Babcock, Janos Kramar, Roman Yampolskiy",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1604.00545v3",
+  "abstract": "There is considerable uncertainty about what properties, capabilities and\nmotivations future AGIs will have. In some plausible scenarios, AGIs may pose\nsecurity risks arising from accidents and defects. In order to mitigate these\nrisks, prudent early AGI research teams will perform significant testing on\ntheir creations before use. Unfortunately, if an AGI has human-level or greater\nintelligence, testing itself may not be safe; some natural AGI goal systems\ncreate emergent incentives for AGIs to tamper with their test environments,\nmake copies of themselves on the internet, or convince developers and operators\nto do dangerous things. In this paper, we survey the AGI containment problem -\nthe question of how to build a container in which tests can be conducted safely\nand reliably, even on AGIs with unknown motivations and capabilities that could\nbe dangerous. We identify requirements for AGI containers, available\nmechanisms, and weaknesses that need to be addressed.",
+  "citation": 71
+}

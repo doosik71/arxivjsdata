@@ -1,0 +1,8 @@
+{
+  "title": "Approaches to Artificial General Intelligence: An Analysis",
+  "authors": "Soumil Rathi",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.03153v1",
+  "abstract": "This paper is an analysis of the different methods proposed to achieve AGI,\nincluding Human Brain Emulation, AIXI and Integrated Cognitive Architecture.\nFirst, the definition of AGI as used in this paper has been defined, and its\nrequirements have been stated. For each proposed method mentioned, the method\nin question was summarized and its key processes were detailed, showcasing how\nit functioned. Then, each method listed was analyzed, taking various factors\ninto consideration, such as technological requirements, computational ability,\nand adequacy to the requirements. It was concluded that while there are various\nmethods to achieve AGI that could work, such as Human Brain Emulation and\nIntegrated Cognitive Architectures, the most promising method to achieve AGI is\nIntegrated Cognitive Architectures. This is because Human Brain Emulation was\nfound to require scanning technologies that will most likely not be available\nuntil the 2030s, making it unlikely to be created before then. Moreover,\nIntegrated Cognitive Architectures has reduced computational requirements and a\nsuitable functionality for General Intelligence, making it the most likely way\nto achieve AGI.",
+  "citation": 10
+}

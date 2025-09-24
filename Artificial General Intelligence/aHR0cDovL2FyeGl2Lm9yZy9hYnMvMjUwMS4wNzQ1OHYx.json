@@ -1,0 +1,8 @@
+{
+  "title": "Understanding and Benchmarking Artificial Intelligence: OpenAI's o3 Is\n  Not AGI",
+  "authors": "Rolf Pfister, Hansueli Jud",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2501.07458v1",
+  "abstract": "OpenAI's o3 achieves a high score of 87.5 % on ARC-AGI, a benchmark proposed\nto measure intelligence. This raises the question whether systems based on\nLarge Language Models (LLMs), particularly o3, demonstrate intelligence and\nprogress towards artificial general intelligence (AGI). Building on the\ndistinction between skills and intelligence made by Fran\\c{c}ois Chollet, the\ncreator of ARC-AGI, a new understanding of intelligence is introduced: an agent\nis the more intelligent, the more efficiently it can achieve the more diverse\ngoals in the more diverse worlds with the less knowledge. An analysis of the\nARC-AGI benchmark shows that its tasks represent a very specific type of\nproblem that can be solved by massive trialling of combinations of predefined\noperations. This method is also applied by o3, achieving its high score through\nthe extensive use of computing power. However, for most problems in the\nphysical world and in the human domain, solutions cannot be tested in advance\nand predefined operations are not available. Consequently, massive trialling of\npredefined operations, as o3 does, cannot be a basis for AGI - instead, new\napproaches are required that can reliably solve a wide variety of problems\nwithout existing skills. To support this development, a new benchmark for\nintelligence is outlined that covers a much higher diversity of unknown tasks\nto be solved, thus enabling a comprehensive assessment of intelligence and of\nprogress towards AGI.",
+  "citation": 15
+}

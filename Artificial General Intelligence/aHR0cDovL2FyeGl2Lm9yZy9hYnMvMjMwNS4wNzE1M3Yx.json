@@ -1,0 +1,8 @@
+{
+  "title": "Towards best practices in AGI safety and governance: A survey of expert\n  opinion",
+  "authors": "Jonas Schuett, Noemi Dreksler, Markus Anderljung, David McCaffary, Lennart Heim, Emma Bluemke, Ben Garfinkel",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.07153v1",
+  "abstract": "A number of leading AI companies, including OpenAI, Google DeepMind, and\nAnthropic, have the stated goal of building artificial general intelligence\n(AGI) - AI systems that achieve or exceed human performance across a wide range\nof cognitive tasks. In pursuing this goal, they may develop and deploy AI\nsystems that pose particularly significant risks. While they have already taken\nsome measures to mitigate these risks, best practices have not yet emerged. To\nsupport the identification of best practices, we sent a survey to 92 leading\nexperts from AGI labs, academia, and civil society and received 51 responses.\nParticipants were asked how much they agreed with 50 statements about what AGI\nlabs should do. Our main finding is that participants, on average, agreed with\nall of them. Many statements received extremely high levels of agreement. For\nexample, 98% of respondents somewhat or strongly agreed that AGI labs should\nconduct pre-deployment risk assessments, dangerous capabilities evaluations,\nthird-party model audits, safety restrictions on model usage, and red teaming.\nUltimately, our list of statements may serve as a helpful foundation for\nefforts to develop best practices, standards, and regulations for AGI labs.",
+  "citation": 60
+}

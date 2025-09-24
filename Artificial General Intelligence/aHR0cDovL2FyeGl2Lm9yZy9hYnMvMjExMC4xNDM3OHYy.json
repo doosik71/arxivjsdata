@@ -1,0 +1,8 @@
+{
+  "title": "Towards artificial general intelligence via a multimodal foundation\n  model",
+  "authors": "Nanyi Fei, Zhiwu Lu, Yizhao Gao, Guoxing Yang, Yuqi Huo, Jingyuan Wen, Haoyu Lu, Ruihua Song, Xin Gao, Tao Xiang, Hao Sun, Ji-Rong Wen",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2110.14378v2",
+  "abstract": "The fundamental goal of artificial intelligence (AI) is to mimic the core\ncognitive activities of human. Despite tremendous success in the AI research,\nmost of existing methods have only single-cognitive ability. To overcome this\nlimitation and take a solid step towards artificial general intelligence (AGI),\nwe develop a foundation model pre-trained with huge multimodal data, which can\nbe quickly adapted for various downstream cognitive tasks. To achieve this\ngoal, we propose to pre-train our foundation model by self-supervised learning\nwith weak semantic correlation data crawled from the Internet and show that\npromising results can be obtained on a wide range of downstream tasks.\nParticularly, with the developed model-interpretability tools, we demonstrate\nthat strong imagination ability is now possessed by our foundation model. We\nbelieve that our work makes a transformative stride towards AGI, from our\ncommon practice of \"weak or narrow AI\" to that of \"strong or generalized AI\".",
+  "citation": 343
+}

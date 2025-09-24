@@ -1,0 +1,8 @@
+{
+  "title": "Sparks of Artificial General Intelligence(AGI) in Semiconductor Material\n  Science: Early Explorations into the Next Frontier of Generative AI-Assisted\n  Electron Micrograph Analysis",
+  "authors": "Sakhinana Sagar Srinivas, Geethan Sannidhi, Sreeja Gangasani, Chidaksh Ravuru, Venkataramana Runkana",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.12244v1",
+  "abstract": "Characterizing materials with electron micrographs poses significant\nchallenges for automated labeling due to the complex nature of nanomaterial\nstructures. To address this, we introduce a fully automated, end-to-end\npipeline that leverages recent advances in Generative AI. It is designed for\nanalyzing and understanding the microstructures of semiconductor materials with\neffectiveness comparable to that of human experts, contributing to the pursuit\nof Artificial General Intelligence (AGI) in nanomaterial identification. Our\napproach utilizes Large MultiModal Models (LMMs) such as GPT-4V, alongside\ntext-to-image models like DALLE-3. We integrate a GPT-4 guided Visual Question\nAnswering (VQA) method to analyze nanomaterial images, generate synthetic\nnanomaterial images via DALLE-3, and employ in-context learning with few-shot\nprompting in GPT-4V for accurate nanomaterial identification. Our method\nsurpasses traditional techniques by enhancing the precision of nanomaterial\nidentification and optimizing the process for high-throughput screening.",
+  "citation": 0
+}

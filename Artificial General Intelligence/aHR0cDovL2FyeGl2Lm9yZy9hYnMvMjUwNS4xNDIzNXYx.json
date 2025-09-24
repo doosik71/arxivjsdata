@@ -1,0 +1,8 @@
+{
+  "title": "Toward Embodied AGI: A Review of Embodied AI and the Road Ahead",
+  "authors": "Yequan Wang, Aixin Sun",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.14235v1",
+  "abstract": "Artificial General Intelligence (AGI) is often envisioned as inherently\nembodied. With recent advances in robotics and foundational AI models, we stand\nat the threshold of a new era-one marked by increasingly generalized embodied\nAI systems. This paper contributes to the discourse by introducing a systematic\ntaxonomy of Embodied AGI spanning five levels (L1-L5). We review existing\nresearch and challenges at the foundational stages (L1-L2) and outline the key\ncomponents required to achieve higher-level capabilities (L3-L5). Building on\nthese insights and existing technologies, we propose a conceptual framework for\nan L3+ robotic brain, offering both a technical outlook and a foundation for\nfuture exploration.",
+  "citation": 4
+}

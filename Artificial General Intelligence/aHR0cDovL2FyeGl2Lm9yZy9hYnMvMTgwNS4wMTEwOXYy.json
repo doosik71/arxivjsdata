@@ -1,0 +1,8 @@
+{
+  "title": "AGI Safety Literature Review",
+  "authors": "Tom Everitt, Gary Lea, Marcus Hutter",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1805.01109v2",
+  "abstract": "The development of Artificial General Intelligence (AGI) promises to be a\nmajor event. Along with its many potential benefits, it also raises serious\nsafety concerns (Bostrom, 2014). The intention of this paper is to provide an\neasily accessible and up-to-date collection of references for the emerging\nfield of AGI safety. A significant number of safety problems for AGI have been\nidentified. We list these, and survey recent research on solving them. We also\ncover works on how best to think of AGI from the limited knowledge we have\ntoday, predictions for when AGI will first be created, and what will happen\nafter its creation. Finally, we review the current public policy on AGI.",
+  "citation": 179
+}

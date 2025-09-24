@@ -1,0 +1,8 @@
+{
+  "title": "A Survey of Theory of Mind in Large Language Models: Evaluations,\n  Representations, and Safety Risks",
+  "authors": "Hieu Minh \"Jord\" Nguyen",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.06470v1",
+  "abstract": "Theory of Mind (ToM), the ability to attribute mental states to others and\npredict their behaviour, is fundamental to social intelligence. In this paper,\nwe survey studies evaluating behavioural and representational ToM in Large\nLanguage Models (LLMs), identify important safety risks from advanced LLM ToM\ncapabilities, and suggest several research directions for effective evaluation\nand mitigation of these risks.",
+  "citation": 3
+}

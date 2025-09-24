@@ -1,0 +1,8 @@
+{
+  "title": "An AGI Modifying Its Utility Function in Violation of the Orthogonality\n  Thesis",
+  "authors": "James D. Miller, Roman Yampolskiy, Olle Häggström",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2003.00812v1",
+  "abstract": "An artificial general intelligence (AGI) might have an instrumental drive to\nmodify its utility function to improve its ability to cooperate, bargain,\npromise, threaten, and resist and engage in blackmail. Such an AGI would\nnecessarily have a utility function that was at least partially observable and\nthat was influenced by how other agents chose to interact with it. This\ninstrumental drive would conflict with the orthogonality thesis since the\nmodifications would be influenced by the AGI's intelligence. AGIs in highly\ncompetitive environments might converge to having nearly the same utility\nfunction, one optimized to favorably influencing other agents through game\ntheory.",
+  "citation": 24
+}

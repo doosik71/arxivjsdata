@@ -34,39 +34,39 @@ M.A.Anusuya, S.K.Katti
 
 이 논문은 ASR 시스템을 구축하는 데 사용되는 다양한 접근 방식과 기술을 검토합니다.
 
-1.  **ASR의 기본 모델**:
+1. **ASR의 기본 모델**:
 
-    - **확률적 모델**을 기반으로 음향 관측 시퀀스 $A$로부터 가장 가능성 있는 단어 시퀀스 $W$를 디코딩하는 것을 목표로 합니다:
-      $$\hat{W} = \arg \max_{W} P(A|W)P(W)$$
-      여기서 $P(A|W)$는 **음향 모델(Acoustic Model)**, $P(W)$는 **언어 모델(Language Model)**입니다.
-    - ASR 시스템은 일반적으로 프론트엔드(음향 분석), 모델 유닛, 언어 모델 유닛, 검색 유닛으로 구성됩니다.
+   - **확률적 모델**을 기반으로 음향 관측 시퀀스 $A$로부터 가장 가능성 있는 단어 시퀀스 $W$를 디코딩하는 것을 목표로 합니다:
+     $$\hat{W} = \arg \max_{W} P(A|W)P(W)$$
+     여기서 $P(A|W)$는 **음향 모델(Acoustic Model)**, $P(W)$는 **언어 모델(Language Model)**입니다.
+   - ASR 시스템은 일반적으로 프론트엔드(음향 분석), 모델 유닛, 언어 모델 유닛, 검색 유닛으로 구성됩니다.
 
-2.  **음성 인식 유형**:
+2. **음성 인식 유형**:
 
-    - **단어 분리(Isolated Words)**: 각 발화 사이에 일시 정지가 필요한 단일 단어 또는 구 인식.
-    - **연결 단어(Connected Words)**: 최소한의 일시 정지를 허용하며 여러 단어를 연결하여 인식.
-    - **연속 음성(Continuous Speech)**: 자연스럽게 말하는 문장을 인식 (컴퓨터 받아쓰기).
-    - **자발적 음성(Spontaneous Speech)**: "음", "아" 같은 비유창성(disfluency)이나 발화 간의 경계 모호성을 처리.
+   - **단어 분리(Isolated Words)**: 각 발화 사이에 일시 정지가 필요한 단일 단어 또는 구 인식.
+   - **연결 단어(Connected Words)**: 최소한의 일시 정지를 허용하며 여러 단어를 연결하여 인식.
+   - **연속 음성(Continuous Speech)**: 자연스럽게 말하는 문장을 인식 (컴퓨터 받아쓰기).
+   - **자발적 음성(Spontaneous Speech)**: "음", "아" 같은 비유창성(disfluency)이나 발화 간의 경계 모호성을 처리.
 
-3.  **주요 접근 방식**:
+3. **주요 접근 방식**:
 
-    - **음향-음성학적 접근(Acoustic-Phonetic Approach)**: 음성 신호를 음소(phonemes) 단위로 분할하고 음향적 특성을 기반으로 라벨링한 후, 언어적 제약을 사용하여 단어 시퀀스를 결정.
-    - **패턴 인식 접근(Pattern Recognition Approach)**:
-      - **템플릿 기반(Template Based)**: 미리 저장된 참조 패턴(템플릿)과 들어온 음성 패턴을 직접 비교. 시간적 변동성을 보정하기 위해 **Dynamic Time Warping (DTW)** 사용.
-      - **확률적(Stochastic)**: 음성 신호의 불확실성을 확률 모델로 다룸. **Hidden Markov Model (HMM)**이 가장 널리 사용되며, 은닉 상태의 시계열적 변화와 관측 값의 스펙트럼 변화를 모델링.
-      - **Vector Quantization (VQ)**: 데이터 축소 기법으로, 음성 특징 벡터를 코드북의 대표 벡터로 양자화하여 효율적인 모델 표현 및 비교를 가능하게 함.
-    - **인공 지능 접근(Artificial Intelligence Approach)**: 음향-음성학적 및 패턴 인식 아이디어를 결합. 언어학적, 음성학적, 스펙트로그램 정보와 전문가 규칙을 활용.
-      - **연결주의 접근(Connectionist Approaches / ANN)**: 인공 신경망을 사용하여 음성 패턴 간의 복잡한 비선형 관계를 학습. 병렬 분산 처리와 대규모 학습 데이터를 통해 분류기 성능을 최적화.
-      - **Support Vector Machine (SVM)**: 고정 길이 데이터 벡터에 대한 판별 학습 분류기로, 선형 및 비선형 분리 초평면을 사용하여 최대 마진을 찾음으로써 분류 성능을 향상.
+   - **음향-음성학적 접근(Acoustic-Phonetic Approach)**: 음성 신호를 음소(phonemes) 단위로 분할하고 음향적 특성을 기반으로 라벨링한 후, 언어적 제약을 사용하여 단어 시퀀스를 결정.
+   - **패턴 인식 접근(Pattern Recognition Approach)**:
+     - **템플릿 기반(Template Based)**: 미리 저장된 참조 패턴(템플릿)과 들어온 음성 패턴을 직접 비교. 시간적 변동성을 보정하기 위해 **Dynamic Time Warping (DTW)** 사용.
+     - **확률적(Stochastic)**: 음성 신호의 불확실성을 확률 모델로 다룸. **Hidden Markov Model (HMM)**이 가장 널리 사용되며, 은닉 상태의 시계열적 변화와 관측 값의 스펙트럼 변화를 모델링.
+     - **Vector Quantization (VQ)**: 데이터 축소 기법으로, 음성 특징 벡터를 코드북의 대표 벡터로 양자화하여 효율적인 모델 표현 및 비교를 가능하게 함.
+   - **인공 지능 접근(Artificial Intelligence Approach)**: 음향-음성학적 및 패턴 인식 아이디어를 결합. 언어학적, 음성학적, 스펙트로그램 정보와 전문가 규칙을 활용.
+     - **연결주의 접근(Connectionist Approaches / ANN)**: 인공 신경망을 사용하여 음성 패턴 간의 복잡한 비선형 관계를 학습. 병렬 분산 처리와 대규모 학습 데이터를 통해 분류기 성능을 최적화.
+     - **Support Vector Machine (SVM)**: 고정 길이 데이터 벡터에 대한 판별 학습 분류기로, 선형 및 비선형 분리 초평면을 사용하여 최대 마진을 찾음으로써 분류 성능을 향상.
 
-4.  **특징 추출(Feature Extraction)**:
+4. **특징 추출(Feature Extraction)**:
 
-    - 음성 신호의 컴팩트한 표현을 위해 수행되며, 일반적으로 세 단계를 거침: 음성 분석 (스펙트럼 포락선 특징), 정적 및 동적 특징으로 확장, 더 견고한 벡터로 변환.
-    - 주요 방법: Principal Component Analysis (PCA), Linear Discriminant Analysis (LDA), Independent Component Analysis (ICA), Linear Predictive Coding (LPC), Cepstral Analysis, Mel-frequency Cepstral Coefficients (MFCCs), Wavelet 변환, 스펙트럼 차감법(Spectral Subtraction), 켑스트럼 평균 차감법(Cepstral Mean Subtraction).
+   - 음성 신호의 컴팩트한 표현을 위해 수행되며, 일반적으로 세 단계를 거침: 음성 분석 (스펙트럼 포락선 특징), 정적 및 동적 특징으로 확장, 더 견고한 벡터로 변환.
+   - 주요 방법: Principal Component Analysis (PCA), Linear Discriminant Analysis (LDA), Independent Component Analysis (ICA), Linear Predictive Coding (LPC), Cepstral Analysis, Mel-frequency Cepstral Coefficients (MFCCs), Wavelet 변환, 스펙트럼 차감법(Spectral Subtraction), 켑스트럼 평균 차감법(Cepstral Mean Subtraction).
 
-5.  **분류기(Classifiers)**:
-    - **유사성 기반**: 템플릿 매칭, 최소 거리 분류기, 최근접 평균 분류기, VQ, 학습 벡터 양자화 (LVQ), 1-NN (1-Nearest Neighbor).
-    - **확률 기반**: 베이즈 의사결정 규칙, 최대 사후 확률 (MAP), 최대 우도(Maximum Likelihood).
+5. **분류기(Classifiers)**:
+   - **유사성 기반**: 템플릿 매칭, 최소 거리 분류기, 최근접 평균 분류기, VQ, 학습 벡터 양자화 (LVQ), 1-NN (1-Nearest Neighbor).
+   - **확률 기반**: 베이즈 의사결정 규칙, 최대 사후 확률 (MAP), 최대 우도(Maximum Likelihood).
 
 ## 📊 Results
 

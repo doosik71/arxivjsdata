@@ -1,0 +1,8 @@
+{
+  "title": "Stone Needle: A General Multimodal Large-scale Model Framework towards\n  Healthcare",
+  "authors": "Weihua Liu, Yong Zuo",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.16034v1",
+  "abstract": "In healthcare, multimodal data is prevalent and requires to be\ncomprehensively analyzed before diagnostic decisions, including medical images,\nclinical reports, etc. However, current large-scale artificial intelligence\nmodels predominantly focus on single-modal cognitive abilities and neglect the\nintegration of multiple modalities. Therefore, we propose Stone Needle, a\ngeneral multimodal large-scale model framework tailored explicitly for\nhealthcare applications. Stone Needle serves as a comprehensive medical\nmultimodal model foundation, integrating various modalities such as text,\nimages, videos, and audio to surpass the limitations of single-modal systems.\nThrough the framework components of intent analysis, medical foundation models,\nprompt manager, and medical language module, our architecture can perform\nmulti-modal interaction in multiple rounds of dialogue. Our method is a general\nmultimodal large-scale model framework, integrating diverse modalities and\nallowing us to tailor for specific tasks. The experimental results demonstrate\nthe superior performance of our method compared to single-modal systems. The\nfusion of different modalities and the ability to process complex medical\ninformation in Stone Needle benefits accurate diagnosis, treatment\nrecommendations, and patient care.",
+  "citation": 7
+}

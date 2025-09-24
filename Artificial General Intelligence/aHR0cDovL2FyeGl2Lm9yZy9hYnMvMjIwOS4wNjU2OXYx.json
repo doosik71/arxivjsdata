@@ -1,0 +1,8 @@
+{
+  "title": "The Embeddings World and Artificial General Intelligence",
+  "authors": "Mostafa Haghir Chehreghani",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2209.06569v1",
+  "abstract": "From early days, a key and controversial question inside the artificial\nintelligence community was whether Artificial General Intelligence (AGI) is\nachievable. AGI is the ability of machines and computer programs to achieve\nhuman-level intelligence and do all tasks that a human being can. While there\nexist a number of systems in the literature claiming they realize AGI, several\nother researchers argue that it is impossible to achieve it. In this paper, we\ntake a different view to the problem. First, we discuss that in order to\nrealize AGI, along with building intelligent machines and programs, an\nintelligent world should also be constructed which is on the one hand, an\naccurate approximation of our world and on the other hand, a significant part\nof reasoning of intelligent machines is already embedded in this world. Then we\ndiscuss that AGI is not a product or algorithm, rather it is a continuous\nprocess which will become more and more mature over time (like human\ncivilization and wisdom). Then, we argue that pre-trained embeddings play a key\nrole in building this intelligent world and as a result, realizing AGI. We\ndiscuss how pre-trained embeddings facilitate achieving several characteristics\nof human-level intelligence, such as embodiment, common sense knowledge,\nunconscious knowledge and continuality of learning, by machines.",
+  "citation": 4
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Artificial Intelligence Approaches",
+  "authors": "Yingjie Hu, Wenwen Li, Dawn Wright, Orhun Aydin, Daniel Wilson, Omar Maher, Mansour Raad",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1908.10345v1",
+  "abstract": "Artificial Intelligence (AI) has received tremendous attention from academia,\nindustry, and the general public in recent years. The integration of geography\nand AI, or GeoAI, provides novel approaches for addressing a variety of\nproblems in the natural environment and our human society. This entry briefly\nreviews the recent development of AI with a focus on machine learning and deep\nlearning approaches. We discuss the integration of AI with geography and\nparticularly geographic information science, and present a number of GeoAI\napplications and possible future directions.",
+  "citation": 55
+}

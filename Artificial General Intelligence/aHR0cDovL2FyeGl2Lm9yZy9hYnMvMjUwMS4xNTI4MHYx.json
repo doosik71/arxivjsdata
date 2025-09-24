@@ -1,0 +1,8 @@
+{
+  "title": "Who's Driving? Game Theoretic Path Risk of AGI Development",
+  "authors": "Robin Young",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2501.15280v1",
+  "abstract": "Who controls the development of Artificial General Intelligence (AGI) might\nmatter less than how we handle the fight for control itself. We formalize this\n\"steering wheel problem\" as humanity's greatest near-term existential risk may\nstem not from misaligned AGI, but from the dynamics of competing to develop it.\nJust as a car crash can occur from passengers fighting over the wheel before\nreaching any destination, catastrophic outcomes could arise from development\ncompetition long before AGI exists. While technical alignment research focuses\non ensuring safe arrival, we show how coordination failures during development\ncould drive us off the cliff first.\n  We present a game theoretic framework modeling AGI development dynamics and\nprove conditions for sustainable cooperative equilibria. Drawing from nuclear\ncontrol while accounting for AGI's unique characteristics, we propose concrete\nmechanisms including pre-registration, shared technical infrastructure, and\nautomated deterrence to stabilize cooperation. Our key insight is that AGI\ncreates network effects in safety: shared investments become more valuable as\nparticipation grows, enabling mechanism designs where cooperation dominates\ndefection. This work bridges formal methodology and policy frameworks,\nproviding foundations for practical governance of AGI competition risks.",
+  "citation": 0
+}

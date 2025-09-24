@@ -1,0 +1,8 @@
+{
+  "title": "Vision System for AGI: Problems and Directions",
+  "authors": "Alexey Potapov, Sergey Rodionov, Maxim Peterson, Oleg Shcherbakov, Innokentii Zhdanov, Nikolai Skorobogatko",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1807.03887v1",
+  "abstract": "What frameworks and architectures are necessary to create a vision system for\nAGI? In this paper, we propose a formal model that states the task of\nperception within AGI. We show the role of discriminative and generative models\nin achieving efficient and general solution of this task, thus specifying the\ntask in more detail. We discuss some existing generative and discriminative\nmodels and demonstrate their insufficiency for our purposes. Finally, we\ndiscuss some architectural dilemmas and open questions.",
+  "citation": 3
+}

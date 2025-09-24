@@ -1,0 +1,8 @@
+{
+  "title": "The Alignment Problem from a Deep Learning Perspective",
+  "authors": "Richard Ngo, Lawrence Chan, Sören Mindermann",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2209.00626v8",
+  "abstract": "In coming years or decades, artificial general intelligence (AGI) may surpass\nhuman capabilities across many critical domains. We argue that, without\nsubstantial effort to prevent it, AGIs could learn to pursue goals that are in\nconflict (i.e. misaligned) with human interests. If trained like today's most\ncapable models, AGIs could learn to act deceptively to receive higher reward,\nlearn misaligned internally-represented goals which generalize beyond their\nfine-tuning distributions, and pursue those goals using power-seeking\nstrategies. We review emerging evidence for these properties. In this revised\npaper, we include more direct empirical evidence published as of early 2025.\nAGIs with these properties would be difficult to align and may appear aligned\neven when they are not. Finally, we briefly outline how the deployment of\nmisaligned AGIs might irreversibly undermine human control over the world, and\nwe review research directions aimed at preventing this outcome.",
+  "citation": 282
+}

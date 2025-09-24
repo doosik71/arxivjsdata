@@ -1,0 +1,8 @@
+{
+  "title": "Generative AI vs. AGI: The Cognitive Strengths and Weaknesses of Modern\n  LLMs",
+  "authors": "Ben Goertzel",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.10371v1",
+  "abstract": "A moderately detailed consideration of interactive LLMs as cognitive systems\nis given, focusing on LLMs circa mid-2023 such as ChatGPT, GPT-4, Bard, Llama,\netc.. Cognitive strengths of these systems are reviewed, and then careful\nattention is paid to the substantial differences between the sort of cognitive\nsystem these LLMs are, and the sort of cognitive systems human beings are. It\nis found that many of the practical weaknesses of these AI systems can be tied\nspecifically to lacks in the basic cognitive architectures according to which\nthese systems are built. It is argued that incremental improvement of such LLMs\nis not a viable approach to working toward human-level AGI, in practical terms\ngiven realizable amounts of compute resources. This does not imply there is\nnothing to learn about human-level AGI from studying and experimenting with\nLLMs, nor that LLMs cannot form significant parts of human-level AGI\narchitectures that also incorporate other ideas. Social and ethical matters\nregarding LLMs are very briefly touched from this perspective, which implies\nthat while care should be taken regarding misinformation and other issues, and\neconomic upheavals will need their own social remedies based on their\nunpredictable course as with any powerfully impactful technology, overall the\nsort of policy needed as regards modern LLMs is quite different than would be\nthe case if a more credible approximation to human-level AGI were at hand.",
+  "citation": 38
+}

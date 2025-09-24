@@ -1,0 +1,8 @@
+{
+  "title": "Towards Safer Generative Language Models: A Survey on Safety Risks,\n  Evaluations, and Improvements",
+  "authors": "Jiawen Deng, Jiale Cheng, Hao Sun, Zhexin Zhang, Minlie Huang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.09270v3",
+  "abstract": "As generative large model capabilities advance, safety concerns become more\npronounced in their outputs. To ensure the sustainable growth of the AI\necosystem, it's imperative to undertake a holistic evaluation and refinement of\nassociated safety risks. This survey presents a framework for safety research\npertaining to large models, delineating the landscape of safety risks as well\nas safety evaluation and improvement methods. We begin by introducing safety\nissues of wide concern, then delve into safety evaluation methods for large\nmodels, encompassing preference-based testing, adversarial attack approaches,\nissues detection, and other advanced evaluation methods. Additionally, we\nexplore the strategies for enhancing large model safety from training to\ndeployment, highlighting cutting-edge safety approaches for each stage in\nbuilding large models. Finally, we discuss the core challenges in advancing\ntowards more responsible AI, including the interpretability of safety\nmechanisms, ongoing safety issues, and robustness against malicious attacks.\nThrough this survey, we aim to provide clear technical guidance for safety\nresearchers and encourage further study on the safety of large models.",
+  "citation": 13
+}

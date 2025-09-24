@@ -1,0 +1,8 @@
+{
+  "title": "Turing Test 2.0: The General Intelligence Threshold",
+  "authors": "Georgios Mappouras",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.19550v4",
+  "abstract": "With the rise of artificial intelligence (A.I.) and large language models\nlike ChatGPT, a new race for achieving artificial general intelligence (A.G.I)\nhas started. While many speculate how and when A.I. will achieve A.G.I., there\nis no clear agreement on how A.G.I. can be detected in A.I. models, even when\npopular tools like the Turing test (and its modern variations) are used to\nmeasure their intelligence. In this work, we discuss why traditional methods\nlike the Turing test do not suffice for measuring or detecting A.G.I. and\nprovide a new, practical method that can be used to decide if a system\n(computer or any other) has reached or surpassed A.G.I. To achieve this, we\nmake two new contributions. First, we present a clear definition for general\nintelligence (G.I.) and set a G.I. Threshold (G.I.T.) that can be used to\ndistinguish between systems that achieve A.G.I. and systems that do not.\nSecond, we present a new framework on how to construct tests that can detect if\na system has achieved G.I. in a simple, comprehensive, and clear-cut fail/pass\nway. We call this novel framework the Turing test 2.0. We then demonstrate\nreal-life examples of applying tests that follow our Turing test 2.0 framework\non modern A.I. models.",
+  "citation": 1
+}

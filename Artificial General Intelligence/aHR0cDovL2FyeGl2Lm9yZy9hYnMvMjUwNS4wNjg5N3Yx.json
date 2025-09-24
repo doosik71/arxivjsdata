@@ -1,0 +1,8 @@
+{
+  "title": "Embodied Intelligence: The Key to Unblocking Generalized Artificial\n  Intelligence",
+  "authors": "Jinhao Jiang, Changlin Chen, Shile Feng, Wanru Geng, Zesheng Zhou, Ni Wang, Shuai Li, Feng-Qi Cui, Erbao Dong",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.06897v1",
+  "abstract": "The ultimate goal of artificial intelligence (AI) is to achieve Artificial\nGeneral Intelligence (AGI). Embodied Artificial Intelligence (EAI), which\ninvolves intelligent systems with physical presence and real-time interaction\nwith the environment, has emerged as a key research direction in pursuit of\nAGI. While advancements in deep learning, reinforcement learning, large-scale\nlanguage models, and multimodal technologies have significantly contributed to\nthe progress of EAI, most existing reviews focus on specific technologies or\napplications. A systematic overview, particularly one that explores the direct\nconnection between EAI and AGI, remains scarce. This paper examines EAI as a\nfoundational approach to AGI, systematically analyzing its four core modules:\nperception, intelligent decision-making, action, and feedback. We provide a\ndetailed discussion of how each module contributes to the six core principles\nof AGI. Additionally, we discuss future trends, challenges, and research\ndirections in EAI, emphasizing its potential as a cornerstone for AGI\ndevelopment. Our findings suggest that EAI's integration of dynamic learning\nand real-world interaction is essential for bridging the gap between narrow AI\nand AGI.",
+  "citation": 2
+}

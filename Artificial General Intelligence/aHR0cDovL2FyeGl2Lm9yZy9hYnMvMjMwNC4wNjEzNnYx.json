@@ -1,0 +1,8 @@
+{
+  "title": "AGI for Agriculture",
+  "authors": "Guoyu Lu, Sheng Li, Gengchen Mai, Jin Sun, Dajiang Zhu, Lilong Chai, Haijian Sun, Xianqiao Wang, Haixing Dai, Ninghao Liu, Rui Xu, Daniel Petti, Changying Li, Tianming Liu, Changying Li",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.06136v1",
+  "abstract": "Artificial General Intelligence (AGI) is poised to revolutionize a variety of\nsectors, including healthcare, finance, transportation, and education. Within\nhealthcare, AGI is being utilized to analyze clinical medical notes, recognize\npatterns in patient data, and aid in patient management. Agriculture is another\ncritical sector that impacts the lives of individuals worldwide. It serves as a\nfoundation for providing food, fiber, and fuel, yet faces several challenges,\nsuch as climate change, soil degradation, water scarcity, and food security.\nAGI has the potential to tackle these issues by enhancing crop yields, reducing\nwaste, and promoting sustainable farming practices. It can also help farmers\nmake informed decisions by leveraging real-time data, leading to more efficient\nand effective farm management. This paper delves into the potential future\napplications of AGI in agriculture, such as agriculture image processing,\nnatural language processing (NLP), robotics, knowledge graphs, and\ninfrastructure, and their impact on precision livestock and precision crops. By\nleveraging the power of AGI, these emerging technologies can provide farmers\nwith actionable insights, allowing for optimized decision-making and increased\nproductivity. The transformative potential of AGI in agriculture is vast, and\nthis paper aims to highlight its potential to revolutionize the industry.",
+  "citation": 46
+}

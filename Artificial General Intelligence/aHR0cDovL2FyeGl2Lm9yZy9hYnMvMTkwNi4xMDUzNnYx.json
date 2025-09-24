@@ -1,0 +1,8 @@
+{
+  "title": "An AGI with Time-Inconsistent Preferences",
+  "authors": "James D. Miller, Roman Yampolskiy",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1906.10536v1",
+  "abstract": "This paper reveals a trap for artificial general intelligence (AGI) theorists\nwho use economists' standard method of discounting. This trap is implicitly and\nfalsely assuming that a rational AGI would have time-consistent preferences. An\nagent with time-inconsistent preferences knows that its future self will\ndisagree with its current self concerning intertemporal decision making. Such\nan agent cannot automatically trust its future self to carry out plans that its\ncurrent self considers optimal.",
+  "citation": 6
+}

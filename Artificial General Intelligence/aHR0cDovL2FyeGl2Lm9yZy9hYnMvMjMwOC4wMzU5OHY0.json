@@ -1,0 +1,8 @@
+{
+  "title": "Why We Don't Have AGI Yet",
+  "authors": "Peter Voss, Mladjan Jovanovic",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2308.03598v4",
+  "abstract": "The original vision of AI was re-articulated in 2002 via the term 'Artificial\nGeneral Intelligence' or AGI. This vision is to build 'Thinking Machines' -\ncomputer systems that can learn, reason, and solve problems similar to the way\nhumans do. This is in stark contrast to the 'Narrow AI' approach practiced by\nalmost everyone in the field over the many decades. While several large-scale\nefforts have nominally been working on AGI (most notably DeepMind), the field\nof pure focused AGI development has not been well funded or promoted. This is\nsurprising given the fantastic value that true AGI can bestow on humanity. In\naddition to the dearth of effort in this field, there are also several\ntheoretical and methodical missteps that are hampering progress. We highlight\nwhy purely statistical approaches are unlikely to lead to AGI, and identify\nseveral crucial cognitive abilities required to achieve human-like adaptability\nand autonomous learning. We conclude with a survey of socio-technical factors\nthat have undoubtedly slowed progress towards AGI.",
+  "citation": 6
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Concepts is All You Need: A More Direct Path to AGI",
+  "authors": "Peter Voss, Mladjan Jovanovic",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.01622v1",
+  "abstract": "Little demonstrable progress has been made toward AGI (Artificial General\nIntelligence) since the term was coined some 20 years ago. In spite of the\nfantastic breakthroughs in Statistical AI such as AlphaZero, ChatGPT, and\nStable Diffusion none of these projects have, or claim to have, a clear path to\nAGI. In order to expedite the development of AGI it is crucial to understand\nand identify the core requirements of human-like intelligence as it pertains to\nAGI. From that one can distill which particular development steps are necessary\nto achieve AGI, and which are a distraction. Such analysis highlights the need\nfor a Cognitive AI approach rather than the currently favored statistical and\ngenerative efforts. More specifically it identifies the central role of\nconcepts in human-like cognition. Here we outline an architecture and\ndevelopment plan, together with some preliminary results, that offers a much\nmore direct path to full Human-Level AI (HLAI)/ AGI.",
+  "citation": 3
+}

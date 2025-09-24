@@ -1,0 +1,8 @@
+{
+  "title": "Counterfactual Planning in AGI Systems",
+  "authors": "Koen Holtman",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2102.00834v1",
+  "abstract": "We present counterfactual planning as a design approach for creating a range\nof safety mechanisms that can be applied in hypothetical future AI systems\nwhich have Artificial General Intelligence.\n  The key step in counterfactual planning is to use an AGI machine learning\nsystem to construct a counterfactual world model, designed to be different from\nthe real world the system is in. A counterfactual planning agent determines the\naction that best maximizes expected utility in this counterfactual planning\nworld, and then performs the same action in the real world.\n  We use counterfactual planning to construct an AGI agent emergency stop\nbutton, and a safety interlock that will automatically stop the agent before it\nundergoes an intelligence explosion. We also construct an agent with an input\nterminal that can be used by humans to iteratively improve the agent's reward\nfunction, where the incentive for the agent to manipulate this improvement\nprocess is suppressed. As an example of counterfactual planning in a non-agent\nAGI system, we construct a counterfactual oracle.\n  As a design approach, counterfactual planning is built around the use of a\ngraphical notation for defining mathematical counterfactuals. This two-diagram\nnotation also provides a compact and readable language for reasoning about the\ncomplex types of self-referencing and indirect representation which are\ntypically present inside machine learning agents.",
+  "citation": 2
+}

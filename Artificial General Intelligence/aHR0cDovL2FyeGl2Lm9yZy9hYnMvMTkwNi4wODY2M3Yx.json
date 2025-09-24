@@ -1,0 +1,8 @@
+{
+  "title": "Modeling AGI Safety Frameworks with Causal Influence Diagrams",
+  "authors": "Tom Everitt, Ramana Kumar, Victoria Krakovna, Shane Legg",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1906.08663v1",
+  "abstract": "Proposals for safe AGI systems are typically made at the level of frameworks,\nspecifying how the components of the proposed system should be trained and\ninteract with each other. In this paper, we model and compare the most\npromising AGI safety frameworks using causal influence diagrams. The diagrams\nshow the optimization objective and causal assumptions of the framework. The\nunified representation permits easy comparison of frameworks and their\nassumptions. We hope that the diagrams will serve as an accessible and visual\nintroduction to the main AGI safety frameworks.",
+  "citation": 29
+}

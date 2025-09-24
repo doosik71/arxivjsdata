@@ -1,0 +1,8 @@
+{
+  "title": "An Early Investigation into the Utility of Multimodal Large Language\n  Models in Medical Imaging",
+  "authors": "Sulaiman Khan, Md. Rafiul Biswas, Alina Murad, Hazrat Ali, Zubair Shah",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.00667v1",
+  "abstract": "Recent developments in multimodal large language models (MLLMs) have spurred\nsignificant interest in their potential applications across various medical\nimaging domains. On the one hand, there is a temptation to use these generative\nmodels to synthesize realistic-looking medical image data, while on the other\nhand, the ability to identify synthetic image data in a pool of data is also\nsignificantly important. In this study, we explore the potential of the Gemini\n(\\textit{gemini-1.0-pro-vision-latest}) and GPT-4V (gpt-4-vision-preview)\nmodels for medical image analysis using two modalities of medical image data.\nUtilizing synthetic and real imaging data, both Gemini AI and GPT-4V are first\nused to classify real versus synthetic images, followed by an interpretation\nand analysis of the input images. Experimental results demonstrate that both\nGemini and GPT-4 could perform some interpretation of the input images. In this\nspecific experiment, Gemini was able to perform slightly better than the GPT-4V\non the classification task. In contrast, responses associated with GPT-4V were\nmostly generic in nature. Our early investigation presented in this work\nprovides insights into the potential of MLLMs to assist with the classification\nand interpretation of retinal fundoscopy and lung X-ray images. We also\nidentify key limitations associated with the early investigation study on MLLMs\nfor specialized tasks in medical image analysis.",
+  "citation": 8
+}

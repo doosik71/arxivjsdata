@@ -1,0 +1,8 @@
+{
+  "title": "Levels of AGI for Operationalizing Progress on the Path to AGI",
+  "authors": "Meredith Ringel Morris, Jascha Sohl-dickstein, Noah Fiedel, Tris Warkentin, Allan Dafoe, Aleksandra Faust, Clement Farabet, Shane Legg",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.02462v4",
+  "abstract": "We propose a framework for classifying the capabilities and behavior of\nArtificial General Intelligence (AGI) models and their precursors. This\nframework introduces levels of AGI performance, generality, and autonomy,\nproviding a common language to compare models, assess risks, and measure\nprogress along the path to AGI. To develop our framework, we analyze existing\ndefinitions of AGI, and distill six principles that a useful ontology for AGI\nshould satisfy. With these principles in mind, we propose \"Levels of AGI\" based\non depth (performance) and breadth (generality) of capabilities, and reflect on\nhow current systems fit into this ontology. We discuss the challenging\nrequirements for future benchmarks that quantify the behavior and capabilities\nof AGI models against these levels. Finally, we discuss how these levels of AGI\ninteract with deployment considerations such as autonomy and risk, and\nemphasize the importance of carefully selecting Human-AI Interaction paradigms\nfor responsible and safe deployment of highly capable AI systems.",
+  "citation": 207
+}

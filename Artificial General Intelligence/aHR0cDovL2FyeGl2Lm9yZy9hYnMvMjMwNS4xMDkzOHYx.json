@@ -1,0 +1,8 @@
+{
+  "title": "A method for the ethical analysis of brain-inspired AI",
+  "authors": "Michele Farisco, Gianluca Baldassarre, Emilio Cartoni, Antonia Leach, Mihai A. Petrovici, Achim Rosemann, Arleen Salles, Bernd Stahl, Sacha J. van Albada",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.10938v1",
+  "abstract": "Despite its successes, to date Artificial Intelligence (AI) is still\ncharacterized by a number of shortcomings with regards to different application\ndomains and goals. These limitations are arguably both conceptual (e.g.,\nrelated to underlying theoretical models, such as symbolic vs. connectionist),\nand operational (e.g., related to robustness and ability to generalize).\nBiologically inspired AI, and more specifically brain-inspired AI, promises to\nprovide further biological aspects beyond those that are already traditionally\nincluded in AI, making it possible to assess and possibly overcome some of its\npresent shortcomings. This article examines some conceptual, technical, and\nethical issues raised by the development and use of brain-inspired AI. Against\nthis background, the paper asks whether there is anything ethically unique\nabout brain-inspired AI. The aim of the paper is to introduce a method that has\na heuristic nature and that can be applied to identify and address the ethical\nissues arising from brain-inspired AI. The conclusion resulting from the\napplication of this method is that, compared to traditional AI, brain-inspired\nAI raises new foundational ethical issues and some new practical ethical\nissues, and exacerbates some of the issues raised by traditional AI.",
+  "citation": 15
+}

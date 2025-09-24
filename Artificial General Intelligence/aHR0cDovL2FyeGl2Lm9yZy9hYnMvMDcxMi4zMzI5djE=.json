@@ -1,0 +1,8 @@
+{
+  "title": "Universal Intelligence: A Definition of Machine Intelligence",
+  "authors": "Shane Legg, Marcus Hutter",
+  "year": 2007,
+  "url": "http://arxiv.org/abs/0712.3329v1",
+  "abstract": "A fundamental problem in artificial intelligence is that nobody really knows\nwhat intelligence is. The problem is especially acute when we need to consider\nartificial systems which are significantly different to humans. In this paper\nwe approach this problem in the following way: We take a number of well known\ninformal definitions of human intelligence that have been given by experts, and\nextract their essential features. These are then mathematically formalised to\nproduce a general measure of intelligence for arbitrary machines. We believe\nthat this equation formally captures the concept of machine intelligence in the\nbroadest reasonable sense. We then show how this formal definition is related\nto the theory of universal optimal learning agents. Finally, we survey the many\nother tests and definitions of intelligence that have been proposed for\nmachines.",
+  "citation": 1183
+}

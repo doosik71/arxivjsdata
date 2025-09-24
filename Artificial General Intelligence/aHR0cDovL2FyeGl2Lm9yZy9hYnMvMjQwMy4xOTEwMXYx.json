@@ -1,0 +1,8 @@
+{
+  "title": "AAPMT: AGI Assessment Through Prompt and Metric Transformer",
+  "authors": "Benhao Huang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.19101v1",
+  "abstract": "The emergence of text-to-image models marks a significant milestone in the\nevolution of AI-generated images (AGIs), expanding their use in diverse domains\nlike design, entertainment, and more. Despite these breakthroughs, the quality\nof AGIs often remains suboptimal, highlighting the need for effective\nevaluation methods. These methods are crucial for assessing the quality of\nimages relative to their textual descriptions, and they must accurately mirror\nhuman perception. Substantial progress has been achieved in this domain, with\ninnovative techniques such as BLIP and DBCNN contributing significantly.\nHowever, recent studies, including AGIQA-3K, reveal a notable discrepancy\nbetween current methods and state-of-the-art (SOTA) standards. This gap\nemphasizes the necessity for a more sophisticated and precise evaluation\nmetric. In response, our objective is to develop a model that could give\nratings for metrics, which focuses on parameters like perceptual quality,\nauthenticity, and the correspondence between text and image, that more closely\naligns with human perception. In our paper, we introduce a range of effective\nmethods, including prompt designs and the Metric Transformer. The Metric\nTransformer is a novel structure inspired by the complex interrelationships\namong various AGI quality metrics. The code is available at\nhttps://github.com/huskydoge/CS3324-Digital-Image-Processing/tree/main/Assignment1",
+  "citation": 0
+}

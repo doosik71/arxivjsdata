@@ -1,0 +1,8 @@
+{
+  "title": "Brain-inspired AI Agent: The Way Towards AGI",
+  "authors": "Bo Yu, Jiangning Wei, Minzhen Hu, Zejie Han, Tianjian Zou, Ye He, Jun Liu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.08875v1",
+  "abstract": "Artificial General Intelligence (AGI), widely regarded as the fundamental\ngoal of artificial intelligence, represents the realization of cognitive\ncapabilities that enable the handling of general tasks with human-like\nproficiency. Researchers in brain-inspired AI seek inspiration from the\noperational mechanisms of the human brain, aiming to replicate its functional\nrules in intelligent models. Moreover, with the rapid development of\nlarge-scale models in recent years, the concept of agents has garnered\nincreasing attention, with researchers widely recognizing it as a necessary\npathway toward achieving AGI. In this article, we propose the concept of a\nbrain-inspired AI agent and analyze how to extract relatively feasible and\nagent-compatible cortical region functionalities and their associated\nfunctional connectivity networks from the complex mechanisms of the human\nbrain. Implementing these structures within an agent enables it to achieve\nbasic cognitive intelligence akin to human capabilities. Finally, we explore\nthe limitations and challenges for realizing brain-inspired agents and discuss\ntheir future development.",
+  "citation": 3
+}

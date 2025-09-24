@@ -1,0 +1,8 @@
+{
+  "title": "Misalignment or misuse? The AGI alignment tradeoff",
+  "authors": "Max Hellrigel-Holderbaum, Leonard Dung",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.03755v1",
+  "abstract": "Creating systems that are aligned with our goals is seen as a leading\napproach to create safe and beneficial AI in both leading AI companies and the\nacademic field of AI safety. We defend the view that misaligned AGI - future,\ngenerally intelligent (robotic) AI agents - poses catastrophic risks. At the\nsame time, we support the view that aligned AGI creates a substantial risk of\ncatastrophic misuse by humans. While both risks are severe and stand in tension\nwith one another, we show that - in principle - there is room for alignment\napproaches which do not increase misuse risk. We then investigate how the\ntradeoff between misalignment and misuse looks empirically for different\ntechnical approaches to AI alignment. Here, we argue that many current\nalignment techniques and foreseeable improvements thereof plausibly increase\nrisks of catastrophic misuse. Since the impacts of AI depend on the social\ncontext, we close by discussing important social factors and suggest that to\nreduce the risk of a misuse catastrophe due to aligned AGI, techniques such as\nrobustness, AI control methods and especially good governance seem essential.",
+  "citation": 1
+}

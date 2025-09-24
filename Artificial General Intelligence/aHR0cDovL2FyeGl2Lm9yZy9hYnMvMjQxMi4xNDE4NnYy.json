@@ -1,0 +1,8 @@
+{
+  "title": "Towards AI-$45^{\\circ}$ Law: A Roadmap to Trustworthy AGI",
+  "authors": "Chao Yang, Chaochao Lu, Yingchun Wang, Bowen Zhou",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.14186v2",
+  "abstract": "Ensuring Artificial General Intelligence (AGI) reliably avoids harmful\nbehaviors is a critical challenge, especially for systems with high autonomy or\nin safety-critical domains. Despite various safety assurance proposals and\nextreme risk warnings, comprehensive guidelines balancing AI safety and\ncapability remain lacking. In this position paper, we propose the\n\\textit{AI-\\textbf{$45^{\\circ}$} Law} as a guiding principle for a balanced\nroadmap toward trustworthy AGI, and introduce the \\textit{Causal Ladder of\nTrustworthy AGI} as a practical framework. This framework provides a systematic\ntaxonomy and hierarchical structure for current AI capability and safety\nresearch, inspired by Judea Pearl's ``Ladder of Causation''. The Causal Ladder\ncomprises three core layers: the Approximate Alignment Layer, the Intervenable\nLayer, and the Reflectable Layer. These layers address the key challenges of\nsafety and trustworthiness in AGI and contemporary AI systems. Building upon\nthis framework, we define five levels of trustworthy AGI: perception,\nreasoning, decision-making, autonomy, and collaboration trustworthiness. These\nlevels represent distinct yet progressive aspects of trustworthy AGI. Finally,\nwe present a series of potential governance measures to support the development\nof trustworthy AGI.",
+  "citation": 0
+}

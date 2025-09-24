@@ -1,0 +1,8 @@
+{
+  "title": "Asymptotically Unambitious Artificial General Intelligence",
+  "authors": "Michael K Cohen, Badri Vellambi, Marcus Hutter",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1905.12186v4",
+  "abstract": "General intelligence, the ability to solve arbitrary solvable problems, is\nsupposed by many to be artificially constructible. Narrow intelligence, the\nability to solve a given particularly difficult problem, has seen impressive\nrecent development. Notable examples include self-driving cars, Go engines,\nimage classifiers, and translators. Artificial General Intelligence (AGI)\npresents dangers that narrow intelligence does not: if something smarter than\nus across every domain were indifferent to our concerns, it would be an\nexistential threat to humanity, just as we threaten many species despite no ill\nwill. Even the theory of how to maintain the alignment of an AGI's goals with\nour own has proven highly elusive. We present the first algorithm we are aware\nof for asymptotically unambitious AGI, where \"unambitiousness\" includes not\nseeking arbitrary power. Thus, we identify an exception to the Instrumental\nConvergence Thesis, which is roughly that by default, an AGI would seek power,\nincluding over us.",
+  "citation": 31
+}

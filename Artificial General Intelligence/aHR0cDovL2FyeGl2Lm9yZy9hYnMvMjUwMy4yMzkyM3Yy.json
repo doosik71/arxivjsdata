@@ -1,0 +1,8 @@
+{
+  "title": "What the F*ck Is Artificial General Intelligence?",
+  "authors": "Michael Timothy Bennett",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.23923v2",
+  "abstract": "Artificial general intelligence (AGI) is an established field of research.\nYet some have questioned if the term still has meaning. AGI has been subject to\nso much hype and speculation it has become something of a Rorschach test.\nMelanie Mitchell argues the debate will only be settled through long term,\nscientific investigation. To that end here is a short, accessible and\nprovocative overview of AGI. I compare definitions of intelligence, settling on\nintelligence in terms of adaptation and AGI as an artificial scientist. Taking\nmy cue from Sutton's Bitter Lesson I describe two foundational tools used to\nbuild adaptive systems: search and approximation. I compare pros, cons, hybrids\nand architectures like o3, AlphaGo, AERA, NARS and Hyperon. I then discuss\noverall meta-approaches to making systems behave more intelligently. I divide\nthem into scale-maxing, simp-maxing, w-maxing based on the Bitter Lesson,\nOckham's and Bennett's Razors. These maximise resources, simplicity of form,\nand the weakness of constraints on functionality. I discuss examples including\nAIXI, the free energy principle and The Embiggening of language models. I\nconclude that though scale-maxed approximation dominates, AGI will be a fusion\nof tools and meta-approaches. The Embiggening was enabled by improvements in\nhardware. Now the bottlenecks are sample and energy efficiency.",
+  "citation": 3
+}

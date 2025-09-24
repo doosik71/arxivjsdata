@@ -1,0 +1,8 @@
+{
+  "title": "Transformative AGI by 2043 is <1% likely",
+  "authors": "Ari Allyn-Feuer, Ted Sanders",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.02519v1",
+  "abstract": "This paper is a submission to the Open Philanthropy AI Worldviews Contest. In\nit, we estimate the likelihood of transformative artificial general\nintelligence (AGI) by 2043 and find it to be <1%.\n  Specifically, we argue:\n  The bar is high: AGI as defined by the contest - something like AI that can\nperform nearly all valuable tasks at human cost or less - which we will call\ntransformative AGI is a much higher bar than merely massive progress in AI, or\neven the unambiguous attainment of expensive superhuman AGI or cheap but uneven\nAGI.\n  Many steps are needed: The probability of transformative AGI by 2043 can be\ndecomposed as the joint probability of a number of necessary steps, which we\ngroup into categories of software, hardware, and sociopolitical factors.\n  No step is guaranteed: For each step, we estimate a probability of success by\n2043, conditional on prior steps being achieved. Many steps are quite\nconstrained by the short timeline, and our estimates range from 16% to 95%.\n  Therefore, the odds are low: Multiplying the cascading conditional\nprobabilities together, we estimate that transformative AGI by 2043 is 0.4%\nlikely. Reaching >10% seems to require probabilities that feel unreasonably\nhigh, and even 3% seems unlikely.\n  Thoughtfully applying the cascading conditional probability approach to this\nquestion yields lower probability values than is often supposed. This framework\nhelps enumerate the many future scenarios where humanity makes partial but\nincomplete progress toward transformative AGI.",
+  "citation": 4
+}

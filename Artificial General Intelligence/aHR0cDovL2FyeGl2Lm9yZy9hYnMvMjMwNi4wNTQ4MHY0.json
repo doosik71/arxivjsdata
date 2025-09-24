@@ -1,0 +1,8 @@
+{
+  "title": "Artificial General Intelligence for Medical Imaging Analysis",
+  "authors": "Xiang Li, Lin Zhao, Lu Zhang, Zihao Wu, Zhengliang Liu, Hanqi Jiang, Chao Cao, Shaochen Xu, Yiwei Li, Haixing Dai, Yixuan Yuan, Jun Liu, Gang Li, Dajiang Zhu, Pingkun Yan, Quanzheng Li, Wei Liu, Tianming Liu, Dinggang Shen",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.05480v4",
+  "abstract": "Large-scale Artificial General Intelligence (AGI) models, including Large\nLanguage Models (LLMs) such as ChatGPT/GPT-4, have achieved unprecedented\nsuccess in a variety of general domain tasks. Yet, when applied directly to\nspecialized domains like medical imaging, which require in-depth expertise,\nthese models face notable challenges arising from the medical field's inherent\ncomplexities and unique characteristics. In this review, we delve into the\npotential applications of AGI models in medical imaging and healthcare, with a\nprimary focus on LLMs, Large Vision Models, and Large Multimodal Models. We\nprovide a thorough overview of the key features and enabling techniques of LLMs\nand AGI, and further examine the roadmaps guiding the evolution and\nimplementation of AGI models in the medical sector, summarizing their present\napplications, potentialities, and associated challenges. In addition, we\nhighlight potential future research directions, offering a holistic view on\nupcoming ventures. This comprehensive review aims to offer insights into the\nfuture implications of AGI in medical imaging, healthcare, and beyond.",
+  "citation": 79
+}

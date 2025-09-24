@@ -1,0 +1,8 @@
+{
+  "title": "LightHouse: A Survey of AGI Hallucination",
+  "authors": "Feng Wang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2401.06792v2",
+  "abstract": "With the development of artificial intelligence, large-scale models have\nbecome increasingly intelligent. However, numerous studies indicate that\nhallucinations within these large models are a bottleneck hindering the\ndevelopment of AI research. In the pursuit of achieving strong artificial\nintelligence, a significant volume of research effort is being invested in the\nAGI (Artificial General Intelligence) hallucination research. Previous\nexplorations have been conducted in researching hallucinations within LLMs\n(Large Language Models). As for multimodal AGI, research on hallucinations is\nstill in an early stage. To further the progress of research in the domain of\nhallucinatory phenomena, we present a bird's eye view of hallucinations in AGI,\nsummarizing the current work on AGI hallucinations and proposing some\ndirections for future research.",
+  "citation": 7
+}
