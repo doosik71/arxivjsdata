@@ -28,7 +28,7 @@ SA-T (Self-Attention Transducer)는 RNN-T의 핵심 구성 요소인 RNN을 자�
   - **자기-어텐션 블록:** 일반적으로 멀티-헤드 자기-어텐션(Multi-head Self-Attention, MHA) 레이어, 포지션-와이즈 피드 포워드 네트워크(Position-wise Feed Forward Network, FFN), 잔차 연결(residual connections), 그리고 레이어 정규화(layer normalization)로 구성됩니다.
     - **멀티-헤드 어텐션 (MHA):** 모델이 여러 위치의 정보에 동시에 집중할 수 있도록 합니다. 각 헤드 $h_i$는 독립적인 자기-어텐션 컴포넌트로 정의됩니다:
       $$ \text{SelfAttn}(Q,K,V) = \text{softmax}(\frac{QK^T}{\sqrt{d*k}})V $$
-            $$ \text{MultiHead}(Q,K,V) = \text{Concat}(h_1, h_2, ..., h*{n*h})W_O $$
+      $$ \text{MultiHead}(Q,K,V) = \text{Concat}(h_1, h_2, ..., h*{n*h})W_O $$
       여기서 $h_i = \text{SelfAttn}(QW*{Q*i},KW*{K*i},V W*{V_i})$ 입니다.
     - **포지션-와이즈 피드 포워드 네트워크 (FFN):** 두 개의 선형 변환과 ReLU 활성화 함수로 구성됩니다:
       $$ \text{FFN}(x) = \text{max}(0,xW_1+b_1)W_2+b_2 $$
@@ -37,15 +37,15 @@ SA-T (Self-Attention Transducer)는 RNN-T의 핵심 구성 요소인 RNN을 자�
 - **경로 인식 정규화 (Path-Aware Regularization, PAR):**
   - **목적:** SA-T 훈련을 안정화하고 정렬 학습을 돕기 위해 CTC-CE 훈련 [18, 19]에서 영감을 받았습니다.
   - **손실 함수:** 전체 손실 $L_{\text{joint}}(x)$는 트랜스듀서 손실 $L_{\text{transducer}}(x)$와 경로 인식 정규화 손실 $L_{\text{par}}(x)$의 가중합으로 정의됩니다.
-    $$ L*{\text{joint}}(x) = L*{\text{transducer}}(x) + \beta \cdot L*{\text{par}}(x) $$
-    여기서 $L*{\text{par}}(x) = - \sum*{t=0}^{T-1} \sum*{u=0}^{U-1} \sum*{k=0}^{K-1} w*{t,u} c*{t,u,k} \text{log}p(k|t,u)$ 이고, $w*{t,u} = 1-p(\phi|t,u)$ ($p(\phi|t,u)$는 'blank' 레이블의 확률)입니다.
+    $$ L_{\text{joint}}(x) = L_{\text{transducer}}(x) + \beta \cdot L_{\text{par}}(x) $$
+    여기서 $L_{\text{par}}(x) = - \sum_{t=0}^{T-1} \sum_{u=0}^{U-1} \sum_{k=0}^{K-1} w_{t,u} c_{t,u,k} \text{log}p(k|t,u)$ 이고, $w_{t,u} = 1-p(\phi|t,u)$ (여기에서 $p(\phi|t,u)$는 'blank' 레이블의 확률)입니다.
   - **프레임 레벨 대상 레이블($c_{t,u,k}$) 생성:** Kaldi Toolkit [22]을 사용하여 각 발화에 대한 문자 레벨 정렬 시퀀스를 생성한 후, 이를 기반으로 프레임 레벨 대상 레이블을 얻습니다. 훈련 중에는 Figure 1(c)의 녹색 원으로 표시된 정렬 위치에 대해서만 교차 엔트로피 손실을 계산하여, 모델이 특정 정렬 경로 최적화에 집중하도록 유도합니다.
 - **청크-플로우 메커니즘 (Chunk-Flow Mechanism):**
   - **목적:** 자기-어텐션 메커니즘의 특성상 전체 시퀀스를 입력으로 받아야 하므로 스트리밍(온라인) 음성 인식에 직접 적용하기 어려운 문제를 해결합니다.
   - **동작 방식:** 자기-어텐션 블록의 처리 범위를 고정 길이 청크로 제한합니다. 이 청크는 특징 시퀀스의 시간 축을 따라 슬라이딩하며, 여러 자기-어텐션 블록을 쌓아 더 넓은 시간적 컨텍스트를 모델링합니다.
   - **수식:** 각 시간 $t$에서의 $i$번째 헤드 출력 $h_{i,t}$는 다음과 같이 정의됩니다:
     $$ h*{i,t} = \sum*{\tau=t-N*l}^{t+N_r} \alpha*{i,\tau} s\_{\tau} $$
-        여기서 $N_l$과 $N_r$은 현재 시간 $t$의 왼쪽과 오른쪽 프레임 수를 나타내며, 각 블록 내 청크의 길이는 $N_l + N_r + 1$입니다.
+    여기서 $N_l$과 $N_r$은 현재 시간 $t$의 왼쪽과 오른쪽 프레임 수를 나타내며, 각 블록 내 청크의 길이는 $N_l + N_r + 1$입니다.
 
 ## 📊 Results
 
