@@ -1,0 +1,8 @@
+{
+  "title": "TDT-KWS: Fast And Accurate Keyword Spotting Using Token-and-duration\n  Transducer",
+  "authors": "Yu Xi, Hao Li, Baochen Yang, Haoyu Li, Hainan Xu, Kai Yu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.13332v1",
+  "abstract": "Designing an efficient keyword spotting (KWS) system that delivers\nexceptional performance on resource-constrained edge devices has long been a\nsubject of significant attention. Existing KWS search algorithms typically\nfollow a frame-synchronous approach, where search decisions are made repeatedly\nat each frame despite the fact that most frames are keyword-irrelevant. In this\npaper, we propose TDT-KWS, which leverages token-and-duration Transducers (TDT)\nfor KWS tasks. We also propose a novel KWS task-specific decoding algorithm for\nTransducer-based models, which supports highly effective frame-asynchronous\nkeyword search in streaming speech scenarios. With evaluations conducted on\nboth the public Hey Snips and self-constructed LibriKWS-20 datasets, our\nproposed KWS-decoding algorithm produces more accurate results than\nconventional ASR decoding algorithms. Additionally, TDT-KWS achieves on-par or\nbetter wake word detection performance than both RNN-T and traditional TDT-ASR\nsystems while achieving significant inference speed-up. Furthermore,\nexperiments show that TDT-KWS is more robust to noisy environments compared to\nRNN-T KWS.",
+  "citation": 6
+}

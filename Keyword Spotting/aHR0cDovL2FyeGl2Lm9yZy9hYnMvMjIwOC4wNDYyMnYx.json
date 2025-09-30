@@ -1,0 +1,8 @@
+{
+  "title": "An Anchor-Free Detector for Continuous Speech Keyword Spotting",
+  "authors": "Zhiyuan Zhao, Chuanxin Tang, Chengdong Yao, Chong Luo",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2208.04622v1",
+  "abstract": "Continuous Speech Keyword Spotting (CSKWS) is a task to detect predefined\nkeywords in a continuous speech. In this paper, we regard CSKWS as a\none-dimensional object detection task and propose a novel anchor-free detector,\nnamed AF-KWS, to solve the problem. AF-KWS directly regresses the center\nlocations and lengths of the keywords through a single-stage deep neural\nnetwork. In particular, AF-KWS is tailored for this speech task as we introduce\nan auxiliary unknown class to exclude other words from non-speech or silent\nbackground. We have built two benchmark datasets named LibriTop-20 and\ncontinuous meeting analysis keywords (CMAK) dataset for CSKWS. Evaluations on\nthese two datasets show that our proposed AF-KWS outperforms reference schemes\nby a large margin, and therefore provides a decent baseline for future\nresearch.",
+  "citation": 3
+}

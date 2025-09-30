@@ -1,0 +1,8 @@
+{
+  "title": "Predicting detection filters for small footprint open-vocabulary keyword\n  spotting",
+  "authors": "Theodore Bluche, Thibault Gisselbrecht",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1912.07575v2",
+  "abstract": "In this paper, we propose a fully-neural approach to open-vocabulary keyword\nspotting, that allows the users to include a customizable voice interface to\ntheir device and that does not require task-specific data. We present a keyword\ndetection neural network weighing less than 250KB, in which the topmost layer\nperforming keyword detection is predicted by an auxiliary network, that may be\nrun offline to generate a detector for any keyword. We show that the proposed\nmodel outperforms acoustic keyword spotting baselines by a large margin on two\ntasks of detecting keywords in utterances and three tasks of detecting isolated\nspeech commands. We also propose a method to fine-tune the model when specific\ntraining data is available for some keywords, which yields a performance\nsimilar to a standard speech command neural network while keeping the ability\nof the model to be applied to new keywords.",
+  "citation": 26
+}

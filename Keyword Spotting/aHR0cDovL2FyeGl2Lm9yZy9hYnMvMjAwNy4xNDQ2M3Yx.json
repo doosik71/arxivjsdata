@@ -1,0 +1,8 @@
+{
+  "title": "Few-Shot Keyword Spotting With Prototypical Networks",
+  "authors": "Archit Parnami, Minwoo Lee",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.14463v1",
+  "abstract": "Recognizing a particular command or a keyword, keyword spotting has been\nwidely used in many voice interfaces such as Amazon's Alexa and Google Home. In\norder to recognize a set of keywords, most of the recent deep learning based\napproaches use a neural network trained with a large number of samples to\nidentify certain pre-defined keywords. This restricts the system from\nrecognizing new, user-defined keywords. Therefore, we first formulate this\nproblem as a few-shot keyword spotting and approach it using metric learning.\nTo enable this research, we also synthesize and publish a Few-shot Google\nSpeech Commands dataset. We then propose a solution to the few-shot keyword\nspotting problem using temporal and dilated convolutions on prototypical\nnetworks. Our comparative experimental results demonstrate keyword spotting of\nnew keywords using just a small number of samples.",
+  "citation": 46
+}

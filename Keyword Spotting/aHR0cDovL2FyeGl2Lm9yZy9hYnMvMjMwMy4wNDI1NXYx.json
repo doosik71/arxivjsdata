@@ -1,0 +1,8 @@
+{
+  "title": "Self-supervised speech representation learning for keyword-spotting with\n  light-weight transformers",
+  "authors": "Chenyang Gao, Yue Gu, Francesco Caliva, Yuzong Liu",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2303.04255v1",
+  "abstract": "Self-supervised speech representation learning (S3RL) is revolutionizing the\nway we leverage the ever-growing availability of data. While S3RL related\nstudies typically use large models, we employ light-weight networks to comply\nwith tight memory of compute-constrained devices. We demonstrate the\neffectiveness of S3RL on a keyword-spotting (KS) problem by using transformers\nwith 330k parameters and propose a mechanism to enhance utterance-wise\ndistinction, which proves crucial for improving performance on classification\ntasks. On the Google speech commands v2 dataset, the proposed method applied to\nthe Auto-Regressive Predictive Coding S3RL led to a 1.2% accuracy improvement\ncompared to training from scratch. On an in-house KS dataset with four\ndifferent keywords, it provided 6% to 23.7% relative false accept improvement\nat fixed false reject rate. We argue this demonstrates the applicability of\nS3RL approaches to light-weight models for KS and confirms S3RL is a powerful\nalternative to traditional supervised learning for resource-constrained\napplications.",
+  "citation": 7
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Text-Aware Adapter for Few-Shot Keyword Spotting",
+  "authors": "Youngmoon Jung, Jinyoung Lee, Seungjin Lee, Myunghun Jung, Yong-Hyeok Lee, Hoon-Young Cho",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.18142v1",
+  "abstract": "Recent advances in flexible keyword spotting (KWS) with text enrollment allow\nusers to personalize keywords without uttering them during enrollment. However,\nthere is still room for improvement in target keyword performance. In this\nwork, we propose a novel few-shot transfer learning method, called text-aware\nadapter (TA-adapter), designed to enhance a pre-trained flexible KWS model for\nspecific keywords with limited speech samples. To adapt the acoustic encoder,\nwe leverage a jointly pre-trained text encoder to generate a text embedding\nthat acts as a representative vector for the keyword. By fine-tuning only a\nsmall portion of the network while keeping the core components' weights intact,\nthe TA-adapter proves highly efficient for few-shot KWS, enabling a seamless\nreturn to the original pre-trained model. In our experiments, the TA-adapter\ndemonstrated significant performance improvements across 35 distinct keywords\nfrom the Google Speech Commands V2 dataset, with only a 0.14% increase in the\ntotal number of parameters.",
+  "citation": 1
+}

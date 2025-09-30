@@ -1,0 +1,8 @@
+{
+  "title": "Efficient keyword spotting using dilated convolutions and gating",
+  "authors": "Alice Coucke, Mohammed Chlieh, Thibault Gisselbrecht, David Leroy, Mathieu Poumeyrol, Thibaut Lavril",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1811.07684v2",
+  "abstract": "We explore the application of end-to-end stateless temporal modeling to\nsmall-footprint keyword spotting as opposed to recurrent networks that model\nlong-term temporal dependencies using internal states. We propose a model\ninspired by the recent success of dilated convolutions in sequence modeling\napplications, allowing to train deeper architectures in resource-constrained\nconfigurations. Gated activations and residual connections are also added,\nfollowing a similar configuration to WaveNet. In addition, we apply a custom\ntarget labeling that back-propagates loss from specific frames of interest,\ntherefore yielding higher accuracy and only requiring to detect the end of the\nkeyword. Our experimental results show that our model outperforms a max-pooling\nloss trained recurrent neural network using LSTM cells, with a significant\ndecrease in false rejection rate. The underlying dataset - \"Hey Snips\"\nutterances recorded by over 2.2K different speakers - has been made publicly\navailable to establish an open reference for wake-word detection.",
+  "citation": 131
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Keyword spotting -- Detecting commands in speech using deep learning",
+  "authors": "Sumedha Rai, Tong Li, Bella Lyu",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.05640v1",
+  "abstract": "Speech recognition has become an important task in the development of machine\nlearning and artificial intelligence. In this study, we explore the important\ntask of keyword spotting using speech recognition machine learning and deep\nlearning techniques. We implement feature engineering by converting raw\nwaveforms to Mel Frequency Cepstral Coefficients (MFCCs), which we use as\ninputs to our models. We experiment with several different algorithms such as\nHidden Markov Model with Gaussian Mixture, Convolutional Neural Networks and\nvariants of Recurrent Neural Networks including Long Short-Term Memory and the\nAttention mechanism. In our experiments, RNN with BiLSTM and Attention achieves\nthe best performance with an accuracy of 93.9 %",
+  "citation": 2
+}

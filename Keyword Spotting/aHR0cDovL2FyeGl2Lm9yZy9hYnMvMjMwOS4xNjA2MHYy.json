@@ -1,0 +1,8 @@
+{
+  "title": "Does Single-channel Speech Enhancement Improve Keyword Spotting\n  Accuracy? A Case Study",
+  "authors": "Avamarie Brueggeman, Takuya Higuchi, Masood Delfarah, Stephen Shum, Vineet Garg",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.16060v2",
+  "abstract": "Noise robustness is a key aspect of successful speech applications. Speech\nenhancement (SE) has been investigated to improve automatic speech recognition\naccuracy; however, its effectiveness for keyword spotting (KWS) is still\nunder-investigated. In this paper, we conduct a comprehensive study on\nsingle-channel speech enhancement for keyword spotting on the Google Speech\nCommand (GSC) dataset. To investigate robustness to noise, the GSC dataset is\naugmented with noise signals from the WSJ0 Hipster Ambient Mixtures (WHAM!)\nnoise dataset. Our investigation includes not only applying SE before KWS but\nalso performing joint training of the SE frontend and KWS backend models.\nMoreover, we explore audio injection, a common approach to reduce distortions\nby using a weighted average of the enhanced and original signals. Audio\ninjection is then further optimized by using another model that predicts the\nweight for each utterance. Our investigation reveals that SE can improve KWS\naccuracy on noisy speech when the backend model is trained on clean speech;\nhowever, despite our extensive exploration, it is difficult to improve the KWS\naccuracy with SE when the backend is trained on noisy speech.",
+  "citation": 1
+}

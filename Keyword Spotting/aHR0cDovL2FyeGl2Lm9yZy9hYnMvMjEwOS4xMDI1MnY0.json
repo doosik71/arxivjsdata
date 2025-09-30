@@ -1,0 +1,8 @@
+{
+  "title": "Audiomer: A Convolutional Transformer For Keyword Spotting",
+  "authors": "Surya Kant Sahu, Sai Mitheran, Juhi Kamdar, Meet Gandhi",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.10252v4",
+  "abstract": "Transformers have seen an unprecedented rise in Natural Language Processing\nand Computer Vision tasks. However, in audio tasks, they are either infeasible\nto train due to extremely large sequence length of audio waveforms or incur a\nperformance penalty when trained on Fourier-based features. In this work, we\nintroduce an architecture, Audiomer, where we combine 1D Residual Networks with\nPerformer Attention to achieve state-of-the-art performance in keyword spotting\nwith raw audio waveforms, outperforming all previous methods while being\ncomputationally cheaper and parameter-efficient. Additionally, our model has\npractical advantages for speech processing, such as inference on arbitrarily\nlong audio clips owing to the absence of positional encoding. The code is\navailable at https://github.com/The-Learning-Machines/Audiomer-PyTorch.",
+  "citation": 10
+}

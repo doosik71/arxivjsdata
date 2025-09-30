@@ -1,0 +1,8 @@
+{
+  "title": "SeqSleepNet: End-to-End Hierarchical Recurrent Neural Network for\n  Sequence-to-Sequence Automatic Sleep Staging",
+  "authors": "Huy Phan, Fernando Andreotti, Navin Cooray, Oliver Y. Chén, Maarten De Vos",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1809.10932v3",
+  "abstract": "Automatic sleep staging has been often treated as a simple classification\nproblem that aims at determining the label of individual target polysomnography\n(PSG) epochs one at a time. In this work, we tackle the task as a\nsequence-to-sequence classification problem that receives a sequence of\nmultiple epochs as input and classifies all of their labels at once. For this\npurpose, we propose a hierarchical recurrent neural network named SeqSleepNet.\nAt the epoch processing level, the network consists of a filterbank layer\ntailored to learn frequency-domain filters for preprocessing and an\nattention-based recurrent layer designed for short-term sequential modelling.\nAt the sequence processing level, a recurrent layer placed on top of the\nlearned epoch-wise features for long-term modelling of sequential epochs. The\nclassification is then carried out on the output vectors at every time step of\nthe top recurrent layer to produce the sequence of output labels. Despite being\nhierarchical, we present a strategy to train the network in an end-to-end\nfashion. We show that the proposed network outperforms state-of-the-art\napproaches, achieving an overall accuracy, macro F1-score, and Cohen's kappa of\n87.1%, 83.3%, and 0.815 on a publicly available dataset with 200 subjects.",
+  "citation": 596
+}

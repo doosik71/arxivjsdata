@@ -1,0 +1,8 @@
+{
+  "title": "Efficient Keyword Spotting by capturing long-range interactions with\n  Temporal Lambda Networks",
+  "authors": "Biel Tura, Santiago Escuder, Ferran Diego, Carlos Segura, Jordi Luque",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2104.08086v2",
+  "abstract": "Models based on attention mechanisms have shown unprecedented speech\nrecognition performance. However, they are computationally expensive and\nunnecessarily complex for keyword spotting, a task targeted to small-footprint\ndevices. This work explores the application of Lambda networks, an alternative\nframework for capturing long-range interactions without attention, for the\nkeyword spotting task. We propose a novel \\textit{ResNet}-based model by\nswapping the residual blocks by temporal Lambda layers. Furthermore, the\nproposed architecture is built upon uni-dimensional temporal convolutions that\nfurther reduce its complexity. The presented model does not only reach\nstate-of-the-art accuracies on the Google Speech Commands dataset, but it is\n85% and 65% lighter than its Transformer-based (KWT) and convolutional (Res15)\ncounterparts while being up to 100 times faster. To the best of our knowledge,\nthis is the first attempt to explore the Lambda framework within the speech\ndomain and therefore, we unravel further research of new interfaces based on\nthis architecture.",
+  "citation": 4
+}

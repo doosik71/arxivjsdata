@@ -1,0 +1,8 @@
+{
+  "title": "Deep Spoken Keyword Spotting: An Overview",
+  "authors": "Iván López-Espejo, Zheng-Hua Tan, John Hansen, Jesper Jensen",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2111.10592v1",
+  "abstract": "Spoken keyword spotting (KWS) deals with the identification of keywords in\naudio streams and has become a fast-growing technology thanks to the paradigm\nshift introduced by deep learning a few years ago. This has allowed the rapid\nembedding of deep KWS in a myriad of small electronic devices with different\npurposes like the activation of voice assistants. Prospects suggest a sustained\ngrowth in terms of social use of this technology. Thus, it is not surprising\nthat deep KWS has become a hot research topic among speech scientists, who\nconstantly look for KWS performance improvement and computational complexity\nreduction. This context motivates this paper, in which we conduct a literature\nreview into deep spoken KWS to assist practitioners and researchers who are\ninterested in this technology. Specifically, this overview has a comprehensive\nnature by covering a thorough analysis of deep KWS systems (which includes\nspeech features, acoustic modeling and posterior handling), robustness methods,\napplications, datasets, evaluation metrics, performance of deep KWS systems and\naudio-visual KWS. The analysis performed in this paper allows us to identify a\nnumber of directions for future research, including directions adopted from\nautomatic speech recognition research and directions that are unique to the\nproblem of spoken KWS.",
+  "citation": 175
+}

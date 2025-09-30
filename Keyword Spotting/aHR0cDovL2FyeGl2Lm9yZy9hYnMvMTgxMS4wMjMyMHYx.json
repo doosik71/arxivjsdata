@@ -1,0 +1,8 @@
+{
+  "title": "Hierarchical Neural Network Architecture In Keyword Spotting",
+  "authors": "Yixiao Qu, Sihao Xue, Zhenyi Ying, Hang Zhou, Jue Sun",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1811.02320v1",
+  "abstract": "Keyword Spotting (KWS) provides the start signal of ASR problem, and thus it\nis essential to ensure a high recall rate. However, its real-time property\nrequires low computation complexity. This contradiction inspires people to find\na suitable model which is small enough to perform well in multi environments.\nTo deal with this contradiction, we implement the Hierarchical Neural\nNetwork(HNN), which is proved to be effective in many speech recognition\nproblems. HNN outperforms traditional DNN and CNN even though its model size\nand computation complexity are slightly less. Also, its simple topology\nstructure makes easy to deploy on any device.",
+  "citation": 0
+}

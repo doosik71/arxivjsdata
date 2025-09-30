@@ -1,0 +1,8 @@
+{
+  "title": "CTC-aligned Audio-Text Embedding for Streaming Open-vocabulary Keyword\n  Spotting",
+  "authors": "Sichen Jin, Youngmoon Jung, Seungjin Lee, Jaeyoung Roh, Changwoo Han, Hoonyoung Cho",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.07923v1",
+  "abstract": "This paper introduces a novel approach for streaming openvocabulary keyword\nspotting (KWS) with text-based keyword enrollment. For every input frame, the\nproposed method finds the optimal alignment ending at the frame using\nconnectionist temporal classification (CTC) and aggregates the frame-level\nacoustic embedding (AE) to obtain higher-level (i.e., character, word, or\nphrase) AE that aligns with the text embedding (TE) of the target keyword text.\nAfter that, we calculate the similarity of the aggregated AE and the TE. To the\nbest of our knowledge, this is the first attempt to dynamically align the audio\nand the keyword text on-the-fly to attain the joint audio-text embedding for\nKWS. Despite operating in a streaming fashion, our approach achieves\ncompetitive performance on the LibriPhrase dataset compared to the\nnon-streaming methods with a mere 155K model parameters and a decoding\nalgorithm with time complexity O(U), where U is the length of the target\nkeyword at inference time.",
+  "citation": 4
+}

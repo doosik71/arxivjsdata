@@ -1,0 +1,8 @@
+{
+  "title": "Rainbow Keywords: Efficient Incremental Learning for Online Spoken\n  Keyword Spotting",
+  "authors": "Yang Xiao, Nana Hou, Eng Siong Chng",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2203.16361v2",
+  "abstract": "Catastrophic forgetting is a thorny challenge when updating keyword spotting\n(KWS) models after deployment. This problem will be more challenging if KWS\nmodels are further required for edge devices due to their limited memory. To\nalleviate such an issue, we propose a novel diversity-aware incremental\nlearning method named Rainbow Keywords (RK). Specifically, the proposed RK\napproach introduces a diversity-aware sampler to select a diverse set from\nhistorical and incoming keywords by calculating classification uncertainty. As\na result, the RK approach can incrementally learn new tasks without forgetting\nprior knowledge. Besides, the RK approach also proposes data augmentation and\nknowledge distillation loss function for efficient memory management on the\nedge device. Experimental results show that the proposed RK approach achieves\n4.2% absolute improvement in terms of average accuracy over the best baseline\non Google Speech Command dataset with less required memory. The scripts are\navailable on GitHub.",
+  "citation": 19
+}

@@ -1,0 +1,8 @@
+{
+  "title": "QbyE-MLPMixer: Query-by-Example Open-Vocabulary Keyword Spotting using\n  MLPMixer",
+  "authors": "Jinmiao Huang, Waseem Gharbieh, Qianhui Wan, Han Suk Shim, Chul Lee",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2206.13231v1",
+  "abstract": "Current keyword spotting systems are typically trained with a large amount of\npre-defined keywords. Recognizing keywords in an open-vocabulary setting is\nessential for personalizing smart device interaction. Towards this goal, we\npropose a pure MLP-based neural network that is based on MLPMixer - an MLP\nmodel architecture that effectively replaces the attention mechanism in Vision\nTransformers. We investigate different ways of adapting the MLPMixer\narchitecture to the QbyE open-vocabulary keyword spotting task. Comparisons\nwith the state-of-the-art RNN and CNN models show that our method achieves\nbetter performance in challenging situations (10dB and 6dB environments) on\nboth the publicly available Hey-Snips dataset and a larger scale internal\ndataset with 400 speakers. Our proposed model also has a smaller number of\nparameters and MACs compared to the baseline models.",
+  "citation": 11
+}

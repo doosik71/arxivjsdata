@@ -1,0 +1,8 @@
+{
+  "title": "Dynamic curriculum learning via data parameters for noise robust keyword\n  spotting",
+  "authors": "Takuya Higuchi, Shreyas Saxena, Mehrez Souden, Tien Dung Tran, Masood Delfarah, Chandra Dhir",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2102.09666v1",
+  "abstract": "We propose dynamic curriculum learning via data parameters for noise robust\nkeyword spotting. Data parameter learning has recently been introduced for\nimage processing, where weight parameters, so-called data parameters, for\ntarget classes and instances are introduced and optimized along with model\nparameters. The data parameters scale logits and control importance over\nclasses and instances during training, which enables automatic curriculum\nlearning without additional annotations for training data. Similarly, in this\npaper, we propose using this curriculum learning approach for acoustic\nmodeling, and train an acoustic model on clean and noisy utterances with the\ndata parameters. The proposed approach automatically learns the difficulty of\nthe classes and instances, e.g. due to low speech to noise ratio (SNR), in the\ngradient descent optimization and performs curriculum learning. This curriculum\nlearning leads to overall improvement of the accuracy of the acoustic model. We\nevaluate the effectiveness of the proposed approach on a keyword spotting task.\nExperimental results show 7.7% relative reduction in false reject ratio with\nthe data parameters compared to a baseline model which is simply trained on the\nmulticonditioned dataset.",
+  "citation": 11
+}

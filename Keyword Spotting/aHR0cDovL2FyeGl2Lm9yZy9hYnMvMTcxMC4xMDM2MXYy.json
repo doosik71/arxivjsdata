@@ -1,0 +1,8 @@
+{
+  "title": "Deep Residual Learning for Small-Footprint Keyword Spotting",
+  "authors": "Raphael Tang, Jimmy Lin",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1710.10361v2",
+  "abstract": "We explore the application of deep residual learning and dilated convolutions\nto the keyword spotting task, using the recently-released Google Speech\nCommands Dataset as our benchmark. Our best residual network (ResNet)\nimplementation significantly outperforms Google's previous convolutional neural\nnetworks in terms of accuracy. By varying model depth and width, we can achieve\ncompact models that also outperform previous small-footprint variants. To our\nknowledge, we are the first to examine these approaches for keyword spotting,\nand our results establish an open-source state-of-the-art reference to support\nthe development of future speech-based interfaces.",
+  "citation": 310
+}

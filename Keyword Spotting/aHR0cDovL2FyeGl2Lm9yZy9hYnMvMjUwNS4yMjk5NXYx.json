@@ -1,0 +1,8 @@
+{
+  "title": "LLM-Synth4KWS: Scalable Automatic Generation and Synthesis of Confusable\n  Data for Custom Keyword Spotting",
+  "authors": "Pai Zhu, Quan Wang, Dhruuv Agarwal, Kurt Partridge",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.22995v1",
+  "abstract": "Custom keyword spotting (KWS) allows detecting user-defined spoken keywords\nfrom streaming audio. This is achieved by comparing the embeddings from voice\nenrollments and input audio. State-of-the-art custom KWS models are typically\ntrained contrastively using utterances whose keywords are randomly sampled from\ntraining dataset. These KWS models often struggle with confusing keywords, such\nas \"blue\" versus \"glue\". This paper introduces an effective way to augment the\ntraining with confusable utterances where keywords are generated and grouped\nfrom large language models (LLMs), and speech signals are synthesized with\ndiverse speaking styles from text-to-speech (TTS) engines. To better measure\nuser experience on confusable KWS, we define a new northstar metric using the\naverage area under DET curve from confusable groups (c-AUC). Featuring high\nscalability and zero labor cost, the proposed method improves AUC by 3.7% and\nc-AUC by 11.3% on the Speech Commands testing set.",
+  "citation": 1
+}

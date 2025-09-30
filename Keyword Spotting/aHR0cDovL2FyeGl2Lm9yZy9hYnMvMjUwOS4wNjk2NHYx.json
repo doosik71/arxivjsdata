@@ -1,0 +1,8 @@
+{
+  "title": "Prototype: A Keyword Spotting-Based Intelligent Audio SoC for IoT",
+  "authors": "Huihong Liang, Dongxuan Jia, Youquan Wang, Longtao Huang, Shida Zhong, Luping Xiang, Lei Huang, Tao Yuan",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.06964v1",
+  "abstract": "In this demo, we present a compact intelligent audio system-on-chip (SoC)\nintegrated with a keyword spotting accelerator, enabling ultra-low latency,\nlow-power, and low-cost voice interaction in Internet of Things (IoT) devices.\nThrough algorithm-hardware co-design, the system's energy efficiency is\nmaximized. We demonstrate the system's capabilities through a live FPGA-based\nprototype, showcasing stable performance and real-time voice interaction for\nedge intelligence applications.",
+  "citation": 0
+}

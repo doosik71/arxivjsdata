@@ -1,0 +1,8 @@
+{
+  "title": "Dummy Prototypical Networks for Few-Shot Open-Set Keyword Spotting",
+  "authors": "Byeonggeun Kim, Seunghan Yang, Inseop Chung, Simyung Chang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2206.13691v1",
+  "abstract": "Keyword spotting is the task of detecting a keyword in streaming audio.\nConventional keyword spotting targets predefined keywords classification, but\nthere is growing attention in few-shot (query-by-example) keyword spotting,\ne.g., N-way classification given M-shot support samples. Moreover, in\nreal-world scenarios, there can be utterances from unexpected categories\n(open-set) which need to be rejected rather than classified as one of the N\nclasses. Combining the two needs, we tackle few-shot open-set keyword spotting\nwith a new benchmark setting, named splitGSC. We propose episode-known dummy\nprototypes based on metric learning to detect an open-set better and introduce\na simple and powerful approach, Dummy Prototypical Networks (D-ProtoNets). Our\nD-ProtoNets shows clear margins compared to recent few-shot open-set\nrecognition (FSOSR) approaches in the suggested splitGSC. We also verify our\nmethod on a standard benchmark, miniImageNet, and D-ProtoNets shows the\nstate-of-the-art open-set detection rate in FSOSR.",
+  "citation": 20
+}

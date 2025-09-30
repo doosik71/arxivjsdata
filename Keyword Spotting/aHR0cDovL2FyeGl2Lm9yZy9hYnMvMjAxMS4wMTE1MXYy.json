@@ -1,0 +1,8 @@
+{
+  "title": "Optimize what matters: Training DNN-HMM Keyword Spotting Model Using End\n  Metric",
+  "authors": "Ashish Shrivastava, Arnav Kundu, Chandra Dhir, Devang Naik, Oncel Tuzel",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2011.01151v2",
+  "abstract": "Deep Neural Network--Hidden Markov Model (DNN-HMM) based methods have been\nsuccessfully used for many always-on keyword spotting algorithms that detect a\nwake word to trigger a device. The DNN predicts the state probabilities of a\ngiven speech frame, while HMM decoder combines the DNN predictions of multiple\nspeech frames to compute the keyword detection score. The DNN, in prior\nmethods, is trained independent of the HMM parameters to minimize the\ncross-entropy loss between the predicted and the ground-truth state\nprobabilities. The mis-match between the DNN training loss (cross-entropy) and\nthe end metric (detection score) is the main source of sub-optimal performance\nfor the keyword spotting task. We address this loss-metric mismatch with a\nnovel end-to-end training strategy that learns the DNN parameters by optimizing\nfor the detection score. To this end, we make the HMM decoder (dynamic\nprogramming) differentiable and back-propagate through it to maximize the score\nfor the keyword and minimize the scores for non-keyword speech segments. Our\nmethod does not require any change in the model architecture or the inference\nframework; therefore, there is no overhead in run-time memory or compute\nrequirements. Moreover, we show significant reduction in false rejection rate\n(FRR) at the same false trigger experience (> 70% over independent DNN\ntraining).",
+  "citation": 20
+}

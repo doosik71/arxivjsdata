@@ -1,0 +1,8 @@
+{
+  "title": "Meta-AF Echo Cancellation for Improved Keyword Spotting",
+  "authors": "Jonah Casebeer, Junkai Wu, Paris Smaragdis",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.10605v1",
+  "abstract": "Adaptive filters (AFs) are vital for enhancing the performance of downstream\ntasks, such as speech recognition, sound event detection, and keyword spotting.\nHowever, traditional AF design prioritizes isolated signal-level objectives,\noften overlooking downstream task performance. This can lead to suboptimal\nperformance. Recent research has leveraged meta-learning to automatically learn\nAF update rules from data, alleviating the need for manual tuning when using\nsimple signal-level objectives. This paper improves the Meta-AF framework by\nexpanding it to support end-to-end training for arbitrary downstream tasks. We\nfocus on classification tasks, where we introduce a novel training methodology\nthat harnesses self-supervision and classifier feedback. We evaluate our\napproach on the combined task of acoustic echo cancellation and keyword\nspotting. Our findings demonstrate consistent performance improvements with\nboth pre-trained and joint-trained keyword spotting models across synthetic and\nreal playback. Notably, these improvements come without requiring additional\ntuning, increased inference-time complexity, or reliance on oracle signal-level\ntraining data.",
+  "citation": 3
+}

@@ -1,0 +1,8 @@
+{
+  "title": "CaTT-KWS: A Multi-stage Customized Keyword Spotting Framework based on\n  Cascaded Transducer-Transformer",
+  "authors": "Zhanheng Yang, Sining Sun, Jin Li, Xiaoming Zhang, Xiong Wang, Long Ma, Lei Xie",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2207.01267v1",
+  "abstract": "Customized keyword spotting (KWS) has great potential to be deployed on edge\ndevices to achieve hands-free user experience. However, in real applications,\nfalse alarm (FA) would be a serious problem for spotting dozens or even\nhundreds of keywords, which drastically affects user experience. To solve this\nproblem, in this paper, we leverage the recent advances in transducer and\ntransformer based acoustic models and propose a new multi-stage customized KWS\nframework named Cascaded Transducer-Transformer KWS (CaTT-KWS), which includes\na transducer based keyword detector, a frame-level phone predictor based force\nalignment module and a transformer based decoder. Specifically, the streaming\ntransducer module is used to spot keyword candidates in audio stream. Then\nforce alignment is implemented using the phone posteriors predicted by the\nphone predictor to finish the first stage keyword verification and refine the\ntime boundaries of keyword. Finally, the transformer decoder further verifies\nthe triggered keyword. Our proposed CaTT-KWS framework reduces FA rate\neffectively without obviously hurting keyword recognition accuracy.\nSpecifically, we can get impressively 0.13 FA per hour on a challenging\ndataset, with over 90% relative reduction on FA comparing to the transducer\nbased detection model, while keyword recognition accuracy only drops less than\n2%.",
+  "citation": 12
+}

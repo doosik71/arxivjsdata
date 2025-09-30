@@ -1,0 +1,8 @@
+{
+  "title": "End-to-End Multi-Look Keyword Spotting",
+  "authors": "Meng Yu, Xuan Ji, Bo Wu, Dan Su, Dong Yu",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2005.10386v1",
+  "abstract": "The performance of keyword spotting (KWS), measured in false alarms and false\nrejects, degrades significantly under the far field and noisy conditions. In\nthis paper, we propose a multi-look neural network modeling for speech\nenhancement which simultaneously steers to listen to multiple sampled look\ndirections. The multi-look enhancement is then jointly trained with KWS to form\nan end-to-end KWS model which integrates the enhanced signals from multiple\nlook directions and leverages an attention mechanism to dynamically tune the\nmodel's attention to the reliable sources. We demonstrate, on our large noisy\nand far-field evaluation sets, that the proposed approach significantly\nimproves the KWS performance against the baseline KWS system and a recent\nbeamformer based multi-beam KWS system.",
+  "citation": 28
+}

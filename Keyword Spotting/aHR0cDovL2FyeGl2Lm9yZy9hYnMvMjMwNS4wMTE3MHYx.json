@@ -1,0 +1,8 @@
+{
+  "title": "Contrastive Speech Mixup for Low-resource Keyword Spotting",
+  "authors": "Dianwen Ng, Ruixi Zhang, Jia Qi Yip, Chong Zhang, Yukun Ma, Trung Hieu Nguyen, Chongjia Ni, Eng Siong Chng, Bin Ma",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.01170v1",
+  "abstract": "Most of the existing neural-based models for keyword spotting (KWS) in smart\ndevices require thousands of training samples to learn a decent audio\nrepresentation. However, with the rising demand for smart devices to become\nmore personalized, KWS models need to adapt quickly to smaller user samples. To\ntackle this challenge, we propose a contrastive speech mixup (CosMix) learning\nalgorithm for low-resource KWS. CosMix introduces an auxiliary contrastive loss\nto the existing mixup augmentation technique to maximize the relative\nsimilarity between the original pre-mixed samples and the augmented samples.\nThe goal is to inject enhancing constraints to guide the model towards simpler\nbut richer content-based speech representations from two augmented views (i.e.\nnoisy mixed and clean pre-mixed utterances). We conduct our experiments on the\nGoogle Speech Command dataset, where we trim the size of the training set to as\nsmall as 2.5 mins per keyword to simulate a low-resource condition. Our\nexperimental results show a consistent improvement in the performance of\nmultiple models, which exhibits the effectiveness of our method.",
+  "citation": 19
+}

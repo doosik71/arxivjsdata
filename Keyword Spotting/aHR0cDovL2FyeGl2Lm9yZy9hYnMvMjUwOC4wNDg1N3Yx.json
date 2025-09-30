@@ -1,0 +1,8 @@
+{
+  "title": "Keyword Spotting with Hyper-Matched Filters for Small Footprint Devices",
+  "authors": "Yael Segal-Feldman, Ann R. Bradlow, Matthew Goldrick, Joseph Keshet",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2508.04857v1",
+  "abstract": "Open-vocabulary keyword spotting (KWS) refers to the task of detecting words\nor terms within speech recordings, regardless of whether they were included in\nthe training data. This paper introduces an open-vocabulary keyword spotting\nmodel with state-of-the-art detection accuracy for small-footprint devices. The\nmodel is composed of a speech encoder, a target keyword encoder, and a\ndetection network. The speech encoder is either a tiny Whisper or a tiny\nConformer. The target keyword encoder is implemented as a hyper-network that\ntakes the desired keyword as a character string and generates a unique set of\nweights for a convolutional layer, which can be considered as a\nkeyword-specific matched filter. The detection network uses the matched-filter\nweights to perform a keyword-specific convolution, which guides the\ncross-attention mechanism of a Perceiver module in determining whether the\ntarget term appears in the recording. The results indicate that our system\nachieves state-of-the-art detection performance and generalizes effectively to\nout-of-domain conditions, including second-language (L2) speech. Notably, our\nsmallest model, with just 4.2 million parameters, matches or outperforms models\nthat are several times larger, demonstrating both efficiency and robustness.",
+  "citation": 0
+}

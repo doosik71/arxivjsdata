@@ -1,0 +1,8 @@
+{
+  "title": "TACos: Learning Temporally Structured Embeddings for Few-Shot Keyword\n  Spotting with Dynamic Time Warping",
+  "authors": "Kevin Wilkinghoff, Alessia Cornaggia-Urrigshardt",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.10816v3",
+  "abstract": "To segment a signal into blocks to be analyzed, few-shot keyword spotting\n(KWS) systems often utilize a sliding window of fixed size. Because of the\nvarying lengths of different keywords or their spoken instances, choosing the\nright window size is a problem: A window should be long enough to contain all\nnecessary information needed to recognize a keyword but a longer window may\ncontain irrelevant information such as multiple words or noise and thus makes\nit difficult to reliably detect on- and offsets of keywords. We propose TACos,\na novel angular margin loss for deriving two-dimensional embeddings that retain\ntemporal properties of the underlying speech signal. In experiments conducted\non KWS-DailyTalk, a few-shot KWS dataset presented in this work, using these\nembeddings as templates for dynamic time warping is shown to outperform using\nother representations or a sliding window and that using time-reversed segments\nof the keywords during training improves the performance.",
+  "citation": 4
+}

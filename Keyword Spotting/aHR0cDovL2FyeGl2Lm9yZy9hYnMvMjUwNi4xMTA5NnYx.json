@@ -1,0 +1,8 @@
+{
+  "title": "Assessing the Impact of Anisotropy in Neural Representations of Speech:\n  A Case Study on Keyword Spotting",
+  "authors": "Guillaume Wisniewski, Séverine Guillaume, Clara Rosina Fernández",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.11096v1",
+  "abstract": "Pretrained speech representations like wav2vec2 and HuBERT exhibit strong\nanisotropy, leading to high similarity between random embeddings. While widely\nobserved, the impact of this property on downstream tasks remains unclear. This\nwork evaluates anisotropy in keyword spotting for computational documentary\nlinguistics. Using Dynamic Time Warping, we show that despite anisotropy,\nwav2vec2 similarity measures effectively identify words without transcription.\nOur results highlight the robustness of these representations, which capture\nphonetic structures and generalize across speakers. Our results underscore the\nimportance of pretraining in learning rich and invariant speech\nrepresentations.",
+  "citation": 0
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Sequence-to-sequence Models for Small-Footprint Keyword Spotting",
+  "authors": "Haitong Zhang, Junbo Zhang, Yujun Wang",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1811.00348v1",
+  "abstract": "In this paper, we propose a sequence-to-sequence model for keyword spotting\n(KWS). Compared with other end-to-end architectures for KWS, our model\nsimplifies the pipelines of production-quality KWS system and satisfies the\nrequirement of high accuracy, low-latency, and small-footprint. We also\nevaluate the performances of different encoder architectures, which include\nLSTM and GRU. Experiments on the real-world wake-up data show that our approach\noutperforms the recently proposed attention-based end-to-end model.\nSpecifically speaking, with 73K parameters, our sequence-to-sequence model\nachieves $\\sim$3.05\\% false rejection rate (FRR) at 0.1 false alarm (FA) per\nhour.",
+  "citation": 11
+}

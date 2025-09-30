@@ -1,0 +1,8 @@
+{
+  "title": "Behavior of Keyword Spotting Networks Under Noisy Conditions",
+  "authors": "Anwesh Mohanty, Adrian Frischknecht, Christoph Gerum, Oliver Bringmann",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.07930v1",
+  "abstract": "Keyword spotting (KWS) is becoming a ubiquitous need with the advancement in\nartificial intelligence and smart devices. Recent work in this field have\nfocused on several different architectures to achieve good results on datasets\nwith low to moderate noise. However, the performance of these models\ndeteriorates under high noise conditions as shown by our experiments. In our\npaper, we present an extensive comparison between state-of-the-art KWS networks\nunder various noisy conditions. We also suggest adaptive batch normalization as\na technique to improve the performance of the networks when the noise files are\nunknown during the training phase. The results of such high noise\ncharacterization enable future work in developing models that perform better in\nthe aforementioned conditions.",
+  "citation": 5
+}

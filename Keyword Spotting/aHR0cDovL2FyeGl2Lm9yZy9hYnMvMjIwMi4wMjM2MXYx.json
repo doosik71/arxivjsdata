@@ -1,0 +1,8 @@
+{
+  "title": "A Fast Network Exploration Strategy to Profile Low Energy Consumption\n  for Keyword Spotting",
+  "authors": "Arnab Neelim Mazumder, Tinoosh Mohsenin",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.02361v1",
+  "abstract": "Keyword Spotting nowadays is an integral part of speech-oriented user\ninteraction targeted for smart devices. To this extent, neural networks are\nextensively used for their flexibility and high accuracy. However, coming up\nwith a suitable configuration for both accuracy requirements and hardware\ndeployment is a challenge. We propose a regression-based network exploration\ntechnique that considers the scaling of the network filters ($s$) and\nquantization ($q$) of the network layers, leading to a friendly and\nenergy-efficient configuration for FPGA hardware implementation. We experiment\nwith different combinations of $\\mathcal{NN}\\scriptstyle\\langle q,\\,s\\rangle\n\\displaystyle$ on the FPGA to profile the energy consumption of the deployed\nnetwork so that the user can choose the most energy-efficient network\nconfiguration promptly. Our accelerator design is deployed on the Xilinx AC 701\nplatform and has at least 2.1$\\times$ and 4$\\times$ improvements on energy and\nenergy efficiency results, respectively, compared to recent hardware\nimplementations for keyword spotting.",
+  "citation": 9
+}

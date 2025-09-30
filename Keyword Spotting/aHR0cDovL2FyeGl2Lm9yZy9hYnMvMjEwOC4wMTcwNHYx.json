@@ -1,0 +1,8 @@
+{
+  "title": "Bifocal Neural ASR: Exploiting Keyword Spotting for Inference\n  Optimization",
+  "authors": "Jonathan Macoskey, Grant P. Strimel, Ariya Rastrow",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2108.01704v1",
+  "abstract": "We present Bifocal RNN-T, a new variant of the Recurrent Neural Network\nTransducer (RNN-T) architecture designed for improved inference time latency on\nspeech recognition tasks. The architecture enables a dynamic pivot for its\nruntime compute pathway, namely taking advantage of keyword spotting to select\nwhich component of the network to execute for a given audio frame. To\naccomplish this, we leverage a recurrent cell we call the Bifocal LSTM\n(BFLSTM), which we detail in the paper. The architecture is compatible with\nother optimization strategies such as quantization, sparsification, and\napplying time-reduction layers, making it especially applicable for deployed,\nreal-time speech recognition settings. We present the architecture and report\ncomparative experimental results on voice-assistant speech recognition tasks.\nSpecifically, we show our proposed Bifocal RNN-T can improve inference cost by\n29.1% with matching word error rates and only a minor increase in memory size.",
+  "citation": 20
+}

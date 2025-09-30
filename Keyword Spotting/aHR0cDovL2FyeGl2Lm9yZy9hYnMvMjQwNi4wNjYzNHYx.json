@@ -1,0 +1,8 @@
+{
+  "title": "Sparse Binarization for Fast Keyword Spotting",
+  "authors": "Jonathan Svirsky, Uri Shaham, Ofir Lindenbaum",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.06634v1",
+  "abstract": "With the increasing prevalence of voice-activated devices and applications,\nkeyword spotting (KWS) models enable users to interact with technology\nhands-free, enhancing convenience and accessibility in various contexts.\nDeploying KWS models on edge devices, such as smartphones and embedded systems,\noffers significant benefits for real-time applications, privacy, and bandwidth\nefficiency. However, these devices often possess limited computational power\nand memory. This necessitates optimizing neural network models for efficiency\nwithout significantly compromising their accuracy. To address these challenges,\nwe propose a novel keyword-spotting model based on sparse input representation\nfollowed by a linear classifier. The model is four times faster than the\nprevious state-of-the-art edge device-compatible model with better accuracy. We\nshow that our method is also more robust in noisy environments while being\nfast. Our code is available at: https://github.com/jsvir/sparknet.",
+  "citation": 0
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Fast ASR-free and almost zero-resource keyword spotting using DTW and\n  CNNs for humanitarian monitoring",
+  "authors": "Raghav Menon, Herman Kamper, John Quinn, Thomas Niesler",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1806.09374v1",
+  "abstract": "We use dynamic time warping (DTW) as supervision for training a convolutional\nneural network (CNN) based keyword spotting system using a small set of spoken\nisolated keywords. The aim is to allow rapid deployment of a keyword spotting\nsystem in a new language to support urgent United Nations (UN) relief\nprogrammes in parts of Africa where languages are extremely under-resourced and\nthe development of annotated speech resources is infeasible. First, we use 1920\nrecorded keywords (40 keyword types, 34 minutes of speech) as exemplars in a\nDTW-based template matching system and apply it to untranscribed broadcast\nspeech. Then, we use the resulting DTW scores as targets to train a CNN on the\nsame unlabelled speech. In this way we use just 34 minutes of labelled speech,\nbut leverage a large amount of unlabelled data for training. While the\nresulting CNN keyword spotter cannot match the performance of the DTW-based\nsystem, it substantially outperforms a CNN classifier trained only on the\nkeywords, improving the area under the ROC curve from 0.54 to 0.64. Because our\nCNN system is several orders of magnitude faster at runtime than the DTW\nsystem, it represents the most viable keyword spotter on this extremely limited\ndataset.",
+  "citation": 32
+}

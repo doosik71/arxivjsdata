@@ -1,0 +1,8 @@
+{
+  "title": "Training Keyword Spotters with Limited and Synthesized Speech Data",
+  "authors": "James Lin, Kevin Kilgour, Dominik Roblek, Matthew Sharifi",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2002.01322v1",
+  "abstract": "With the rise of low power speech-enabled devices, there is a growing demand\nto quickly produce models for recognizing arbitrary sets of keywords. As with\nmany machine learning tasks, one of the most challenging parts in the model\ncreation process is obtaining a sufficient amount of training data. In this\npaper, we explore the effectiveness of synthesized speech data in training\nsmall, spoken term detection models of around 400k parameters. Instead of\ntraining such models directly on the audio or low level features such as MFCCs,\nwe use a pre-trained speech embedding model trained to extract useful features\nfor keyword spotting models. Using this speech embedding, we show that a model\nwhich detects 10 keywords when trained on only synthetic speech is equivalent\nto a model trained on over 500 real examples. We also show that a model without\nour speech embeddings would need to be trained on over 4000 real examples to\nreach the same accuracy.",
+  "citation": 65
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Query-by-example on-device keyword spotting",
+  "authors": "Byeonggeun Kim, Mingu Lee, Jinkyu Lee, Yeonseok Kim, Kyuwoong Hwang",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1910.05171v3",
+  "abstract": "A keyword spotting (KWS) system determines the existence of, usually\npredefined, keyword in a continuous speech stream. This paper presents a\nquery-by-example on-device KWS system which is user-specific. The proposed\nsystem consists of two main steps: query enrollment and testing. In query\nenrollment step, phonetic posteriors are output by a small-footprint automatic\nspeech recognition model based on connectionist temporal classification. Using\nthe phonetic-level posteriorgram, hypothesis graph of finite-state transducer\n(FST) is built, thus can enroll any keywords thus avoiding an out-of-vocabulary\nproblem. In testing, a log-likelihood is scored for input audio using the FST.\nWe propose a threshold prediction method while using the user-specific keyword\nhypothesis only. The system generates query-specific negatives by rearranging\neach query utterance in waveform. The threshold is decided based on the\nenrollment queries and generated negatives. We tested two keywords in English,\nand the proposed work shows promising performance while preserving simplicity.",
+  "citation": 58
+}

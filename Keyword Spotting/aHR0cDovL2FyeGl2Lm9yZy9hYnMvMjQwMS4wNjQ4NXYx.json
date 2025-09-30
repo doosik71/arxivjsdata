@@ -1,0 +1,8 @@
+{
+  "title": "Contrastive Learning With Audio Discrimination For Customizable Keyword\n  Spotting In Continuous Speech",
+  "authors": "Yu Xi, Baochen Yang, Hao Li, Jiaqi Guo, Kai Yu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2401.06485v1",
+  "abstract": "Customizable keyword spotting (KWS) in continuous speech has attracted\nincreasing attention due to its real-world application potential. While\ncontrastive learning (CL) has been widely used to extract keyword\nrepresentations, previous CL approaches all operate on pre-segmented isolated\nwords and employ only audio-text representations matching strategy. However,\nfor KWS in continuous speech, co-articulation and streaming word segmentation\ncan easily yield similar audio patterns for different texts, which may\nconsequently trigger false alarms. To address this issue, we propose a novel CL\nwith Audio Discrimination (CLAD) approach to learning keyword representation\nwith both audio-text matching and audio-audio discrimination ability. Here, an\nInfoNCE loss considering both audio-audio and audio-text CL data pairs is\nemployed for each sliding window during training. Evaluations on the\nopen-source LibriPhrase dataset show that the use of sliding-window level\nInfoNCE loss yields comparable performance compared to previous CL approaches.\nFurthermore, experiments on the continuous speech dataset LibriSpeech\ndemonstrate that, by incorporating audio discrimination, CLAD achieves\nsignificant performance gain over CL without audio discrimination. Meanwhile,\ncompared to two-stage KWS approaches, the end-to-end KWS with CLAD achieves not\nonly better performance, but also significant speed-up.",
+  "citation": 12
+}

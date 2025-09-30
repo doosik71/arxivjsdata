@@ -1,0 +1,8 @@
+{
+  "title": "DCCRN-KWS: an audio bias based model for noise robust small-footprint\n  keyword spotting",
+  "authors": "Shubo Lv, Xiong Wang, Sining Sun, Long Ma, Lei Xie",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.12331v3",
+  "abstract": "Real-world complex acoustic environments especially the ones with a low\nsignal-to-noise ratio (SNR) will bring tremendous challenges to a keyword\nspotting (KWS) system. Inspired by the recent advances of neural speech\nenhancement and context bias in speech recognition, we propose a robust audio\ncontext bias based DCCRN-KWS model to address this challenge. We form the whole\narchitecture as a multi-task learning framework for both denosing and keyword\nspotting, where the DCCRN encoder is connected with the KWS model. Helped with\nthe denoising task, we further introduce an audio context bias module to\nleverage the real keyword samples and bias the network to better iscriminate\nkeywords in noisy conditions. Feature merge and complex context linear modules\nare also introduced to strength such discrimination and to effectively leverage\ncontextual information respectively. Experiments on the internal challenging\ndataset and the HIMIYA public dataset show that our DCCRN-KWS system is\nsuperior in performance, while ablation study demonstrates the good design of\nthe whole model.",
+  "citation": 6
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Personalizing Keyword Spotting with Speaker Information",
+  "authors": "Beltrán Labrador, Pai Zhu, Guanlong Zhao, Angelo Scorza Scarpati, Quan Wang, Alicia Lozano-Diez, Alex Park, Ignacio López Moreno",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.03419v1",
+  "abstract": "Keyword spotting systems often struggle to generalize to a diverse population\nwith various accents and age groups. To address this challenge, we propose a\nnovel approach that integrates speaker information into keyword spotting using\nFeature-wise Linear Modulation (FiLM), a recent method for learning from\nmultiple sources of information. We explore both Text-Dependent and\nText-Independent speaker recognition systems to extract speaker information,\nand we experiment on extracting this information from both the input audio and\npre-enrolled user audio. We evaluate our systems on a diverse dataset and\nachieve a substantial improvement in keyword detection accuracy, particularly\namong underrepresented speaker groups. Moreover, our proposed approach only\nrequires a small 1% increase in the number of parameters, with a minimum impact\non latency and computational cost, which makes it a practical solution for\nreal-world applications.",
+  "citation": 3
+}

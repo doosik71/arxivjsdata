@@ -1,0 +1,8 @@
+{
+  "title": "Auto-KWS 2021 Challenge: Task, Datasets, and Baselines",
+  "authors": "Jingsong Wang, Yuxuan He, Chunyu Zhao, Qijie Shao, Wei-Wei Tu, Tom Ko, Hung-yi Lee, Lei Xie",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2104.00513v1",
+  "abstract": "Auto-KWS 2021 challenge calls for automated machine learning (AutoML)\nsolutions to automate the process of applying machine learning to a customized\nkeyword spotting task. Compared with other keyword spotting tasks, Auto-KWS\nchallenge has the following three characteristics: 1) The challenge focuses on\nthe problem of customized keyword spotting, where the target device can only be\nawakened by an enrolled speaker with his specified keyword. The speaker can use\nany language and accent to define his keyword. 2) All dataset of the challenge\nis recorded in realistic environment. It is to simulate different user\nscenarios. 3) Auto-KWS is a \"code competition\", where participants need to\nsubmit AutoML solutions, then the platform automatically runs the enrollment\nand prediction steps with the submitted code.This challenge aims at promoting\nthe development of a more personalized and flexible keyword spotting system.\nTwo baseline systems are provided to all participants as references.",
+  "citation": 8
+}

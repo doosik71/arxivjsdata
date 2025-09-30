@@ -1,0 +1,8 @@
+{
+  "title": "Multi-Sample Dynamic Time Warping for Few-Shot Keyword Spotting",
+  "authors": "Kevin Wilkinghoff, Alessia Cornaggia-Urrigshardt",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.14903v2",
+  "abstract": "In multi-sample keyword spotting, each keyword class is represented by\nmultiple spoken instances, called samples. A na\\\"ive approach to detect\nkeywords in a target sequence consists of querying all samples of all classes\nusing sub-sequence dynamic time warping. However, the resulting processing time\nincreases linearly with respect to the number of samples belonging to each\nclass. Alternatively, only a single Fr\\'echet mean can be queried for each\nclass, resulting in reduced processing time but usually also in worse detection\nperformance as the variability of the query samples is not captured\nsufficiently well. In this work, multi-sample dynamic time warping is proposed\nto compute class-specific cost-tensors that include the variability of all\nquery samples. To significantly reduce the computational complexity during\ninference, these cost tensors are converted to cost matrices before applying\ndynamic time warping. In experimental evaluations for few-shot keyword\nspotting, it is shown that this method yields a very similar performance as\nusing all individual query samples as templates while having a runtime that is\nonly slightly slower than when using Fr\\'echet means.",
+  "citation": 0
+}

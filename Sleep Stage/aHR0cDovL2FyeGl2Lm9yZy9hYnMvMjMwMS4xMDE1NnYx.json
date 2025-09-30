@@ -1,0 +1,8 @@
+{
+  "title": "Sleep Activity Recognition and Characterization from Multi-Source\n  Passively Sensed Data",
+  "authors": "María Martínez-García, Fernando Moreno-Pino, Pablo M. Olmos, Antonio Artés-Rodríguez",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2301.10156v1",
+  "abstract": "Sleep constitutes a key indicator of human health, performance, and quality\nof life. Sleep deprivation has long been related to the onset, development, and\nworsening of several mental and metabolic disorders, constituting an essential\nmarker for preventing, evaluating, and treating different health conditions.\nSleep Activity Recognition methods can provide indicators to assess, monitor,\nand characterize subjects' sleep-wake cycles and detect behavioral changes. In\nthis work, we propose a general method that continuously operates on passively\nsensed data from smartphones to characterize sleep and identify significant\nsleep episodes. Thanks to their ubiquity, these devices constitute an excellent\nalternative data source to profile subjects' biorhythms in a continuous,\nobjective, and non-invasive manner, in contrast to traditional sleep assessment\nmethods that usually rely on intrusive and subjective procedures. A\nHeterogeneous Hidden Markov Model is used to model a discrete latent variable\nprocess associated with the Sleep Activity Recognition task in a\nself-supervised way. We validate our results against sleep metrics reported by\ntested wearables, proving the effectiveness of the proposed approach and\nadvocating its use to assess sleep without more reliable sources.",
+  "citation": 4
+}

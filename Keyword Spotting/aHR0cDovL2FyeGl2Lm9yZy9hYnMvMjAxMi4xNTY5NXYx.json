@@ -1,0 +1,8 @@
+{
+  "title": "EfficientNet-Absolute Zero for Continuous Speech Keyword Spotting",
+  "authors": "Amir Mohammad Rostami, Ali Karimi, Mohammad Ali Akhaee",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2012.15695v1",
+  "abstract": "Keyword spotting is a process of finding some specific words or phrases in\nrecorded speeches by computers. Deep neural network algorithms, as a powerful\nengine, can handle this problem if they are trained over an appropriate\ndataset. To this end, the football keyword dataset (FKD), as a new keyword\nspotting dataset in Persian, is collected with crowdsourcing. This dataset\ncontains nearly 31000 samples in 18 classes. The continuous speech synthesis\nmethod proposed to made FKD usable in the practical application which works\nwith continuous speeches. Besides, we proposed a lightweight architecture\ncalled EfficientNet-A0 (absolute zero) by applying the compound scaling method\non EfficientNet-B0 for keyword spotting task. Finally, the proposed\narchitecture is evaluated with various models. It is realized that\nEfficientNet-A0 and Resnet models outperform other models on this dataset.",
+  "citation": 3
+}

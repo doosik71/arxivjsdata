@@ -1,0 +1,8 @@
+{
+  "title": "Honk: A PyTorch Reimplementation of Convolutional Neural Networks for\n  Keyword Spotting",
+  "authors": "Raphael Tang, Jimmy Lin",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1710.06554v2",
+  "abstract": "We describe Honk, an open-source PyTorch reimplementation of convolutional\nneural networks for keyword spotting that are included as examples in\nTensorFlow. These models are useful for recognizing \"command triggers\" in\nspeech-based interfaces (e.g., \"Hey Siri\"), which serve as explicit cues for\naudio recordings of utterances that are sent to the cloud for full speech\nrecognition. Evaluation on Google's recently released Speech Commands Dataset\nshows that our reimplementation is comparable in accuracy and provides a\nstarting point for future work on the keyword spotting task.",
+  "citation": 47
+}

@@ -1,0 +1,8 @@
+{
+  "title": "UniKW-AT: Unified Keyword Spotting and Audio Tagging",
+  "authors": "Heinrich Dinkel, Yongqing Wang, Zhiyong Yan, Junbo Zhang, Yujun Wang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2209.11377v1",
+  "abstract": "Within the audio research community and the industry, keyword spotting (KWS)\nand audio tagging (AT) are seen as two distinct tasks and research fields.\nHowever, from a technical point of view, both of these tasks are identical:\nthey predict a label (keyword in KWS, sound event in AT) for some fixed-sized\ninput audio segment. This work proposes UniKW-AT: An initial approach for\njointly training both KWS and AT. UniKW-AT enhances the noise-robustness for\nKWS, while also being able to predict specific sound events and enabling\nconditional wake-ups on sound events. Our approach extends the AT pipeline with\nadditional labels describing the presence of a keyword. Experiments are\nconducted on the Google Speech Commands V1 (GSCV1) and the balanced Audioset\n(AS) datasets. The proposed MobileNetV2 model achieves an accuracy of 97.53% on\nthe GSCV1 dataset and an mAP of 33.4 on the AS evaluation set. Further, we show\nthat significant noise-robustness gains can be observed on a real-world KWS\ndataset, greatly outperforming standard KWS approaches. Our study shows that\nKWS and AT can be merged into a single framework without significant\nperformance degradation.",
+  "citation": 3
+}

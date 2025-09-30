@@ -1,0 +1,8 @@
+{
+  "title": "Small-footprint Keyword Spotting with Graph Convolutional Network",
+  "authors": "Xi Chen, Shouyi Yin, Dandan Song, Peng Ouyang, Leibo Liu, Shaojun Wei",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1912.05124v1",
+  "abstract": "Despite the recent successes of deep neural networks, it remains challenging\nto achieve high precision keyword spotting task (KWS) on resource-constrained\ndevices. In this study, we propose a novel context-aware and compact\narchitecture for keyword spotting task. Based on residual connection and\nbottleneck structure, we design a compact and efficient network for KWS task.\nTo leverage the long range dependencies and global context of the convolutional\nfeature maps, the graph convolutional network is introduced to encode the\nnon-local relations. By evaluated on the Google Speech Command Dataset, the\nproposed method achieves state-of-the-art performance and outperforms the prior\nworks by a large margin with lower computational cost.",
+  "citation": 42
+}

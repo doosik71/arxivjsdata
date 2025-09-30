@@ -1,0 +1,8 @@
+{
+  "title": "End-to-End Automatic Sleep Stage Classification Using Spectral-Temporal\n  Sleep Features",
+  "authors": "Hyeong-Jin Kim, Minji Lee, Seong-Whan Lee",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2005.05437v1",
+  "abstract": "Sleep disorder is one of many neurological diseases that can affect greatly\nthe quality of daily life. It is very burdensome to manually classify the sleep\nstages to detect sleep disorders. Therefore, the automatic sleep stage\nclassification techniques are needed. However, the previous automatic sleep\nscoring methods using raw signals are still low classification performance. In\nthis study, we proposed an end-to-end automatic sleep staging framework based\non optimal spectral-temporal sleep features using a sleep-edf dataset. The\ninput data were modified using a bandpass filter and then applied to a\nconvolutional neural network model. For five sleep stage classification, the\nclassification performance 85.6% and 91.1% using the raw input data and the\nproposed input, respectively. This result also shows the highest performance\ncompared to conventional studies using the same dataset. The proposed framework\nhas shown high performance by using optimal features associated with each sleep\nstage, which may help to find new features in the automatic sleep stage method.",
+  "citation": 13
+}

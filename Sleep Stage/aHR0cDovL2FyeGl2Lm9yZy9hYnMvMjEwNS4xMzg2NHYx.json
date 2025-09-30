@@ -1,0 +1,8 @@
+{
+  "title": "SalientSleepNet: Multimodal Salient Wave Detection Network for Sleep\n  Staging",
+  "authors": "Ziyu Jia, Youfang Lin, Jing Wang, Xuehui Wang, Peiyi Xie, Yingbin Zhang",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2105.13864v1",
+  "abstract": "Sleep staging is fundamental for sleep assessment and disease diagnosis.\nAlthough previous attempts to classify sleep stages have achieved high\nclassification performance, several challenges remain open: 1) How to\neffectively extract salient waves in multimodal sleep data; 2) How to capture\nthe multi-scale transition rules among sleep stages; 3) How to adaptively seize\nthe key role of specific modality for sleep staging. To address these\nchallenges, we propose SalientSleepNet, a multimodal salient wave detection\nnetwork for sleep staging. Specifically, SalientSleepNet is a temporal fully\nconvolutional network based on the $\\rm U^2$-Net architecture that is\noriginally proposed for salient object detection in computer vision. It is\nmainly composed of two independent $\\rm U^2$-like streams to extract the\nsalient features from multimodal data, respectively. Meanwhile, the multi-scale\nextraction module is designed to capture multi-scale transition rules among\nsleep stages. Besides, the multimodal attention module is proposed to\nadaptively capture valuable information from multimodal data for the specific\nsleep stage. Experiments on the two datasets demonstrate that SalientSleepNet\noutperforms the state-of-the-art baselines. It is worth noting that this model\nhas the least amount of parameters compared with the existing deep neural\nnetwork models.",
+  "citation": 124
+}

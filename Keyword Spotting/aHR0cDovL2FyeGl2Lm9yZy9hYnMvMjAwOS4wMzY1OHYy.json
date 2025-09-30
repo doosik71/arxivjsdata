@@ -1,0 +1,8 @@
+{
+  "title": "AutoKWS: Keyword Spotting with Differentiable Architecture Search",
+  "authors": "Bo Zhang, Wenfeng Li, Qingyuan Li, Weiji Zhuang, Xiangxiang Chu, Yujun Wang",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2009.03658v2",
+  "abstract": "Smart audio devices are gated by an always-on lightweight keyword spotting\nprogram to reduce power consumption. It is however challenging to design models\nthat have both high accuracy and low latency for accurate and fast\nresponsiveness. Many efforts have been made to develop end-to-end neural\nnetworks, in which depthwise separable convolutions, temporal convolutions, and\nLSTMs are adopted as building units. Nonetheless, these networks designed with\nhuman expertise may not achieve an optimal trade-off in an expansive search\nspace. In this paper, we propose to leverage recent advances in differentiable\nneural architecture search to discover more efficient networks. Our searched\nmodel attains 97.2% top-1 accuracy on Google Speech Command Dataset v1 with\nonly nearly 100K parameters.",
+  "citation": 29
+}

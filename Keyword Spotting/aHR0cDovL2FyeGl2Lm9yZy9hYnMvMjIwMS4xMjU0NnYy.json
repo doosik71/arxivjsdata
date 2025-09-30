@@ -1,0 +1,8 @@
+{
+  "title": "Progressive Continual Learning for Spoken Keyword Spotting",
+  "authors": "Yizheng Huang, Nana Hou, Nancy F. Chen",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2201.12546v2",
+  "abstract": "Catastrophic forgetting is a thorny challenge when updating keyword spotting\n(KWS) models after deployment. To tackle such challenges, we propose a\nprogressive continual learning strategy for small-footprint spoken keyword\nspotting (PCL-KWS). Specifically, the proposed PCL-KWS framework introduces a\nnetwork instantiator to generate the task-specific sub-networks for remembering\npreviously learned keywords. As a result, the PCL-KWS approach incrementally\nlearns new keywords without forgetting prior knowledge. Besides, the\nkeyword-aware network scaling mechanism of PCL-KWS constrains the growth of\nmodel parameters while achieving high performance. Experimental results show\nthat after learning five new tasks sequentially, our proposed PCL-KWS approach\narchives the new state-of-the-art performance of 92.8% average accuracy for all\nthe tasks on Google Speech Command dataset compared with other baselines.",
+  "citation": 18
+}

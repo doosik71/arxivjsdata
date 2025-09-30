@@ -1,0 +1,8 @@
+{
+  "title": "Maximum-Entropy Adversarial Audio Augmentation for Keyword Spotting",
+  "authors": "Zuzhao Ye, Gregory Ciccarelli, Brian Kulis",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2401.06897v1",
+  "abstract": "Data augmentation is a key tool for improving the performance of deep\nnetworks, particularly when there is limited labeled data. In some fields, such\nas computer vision, augmentation methods have been extensively studied;\nhowever, for speech and audio data, there are relatively fewer methods\ndeveloped. Using adversarial learning as a starting point, we develop a simple\nand effective augmentation strategy based on taking the gradient of the entropy\nof the outputs with respect to the inputs and then creating new data points by\nmoving in the direction of the gradient to maximize the entropy. We validate\nits efficacy on several keyword spotting tasks as well as standard audio\nbenchmarks. Our method is straightforward to implement, offering greater\ncomputational efficiency than more complex adversarial schemes like GANs.\nDespite its simplicity, it proves robust and effective, especially when\ncombined with the established SpecAugment technique, leading to enhanced\nperformance.",
+  "citation": 4
+}

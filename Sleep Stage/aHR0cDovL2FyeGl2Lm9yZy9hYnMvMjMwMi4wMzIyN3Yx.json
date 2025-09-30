@@ -1,0 +1,8 @@
+{
+  "title": "Automatic Sleep Stage Classification with Cross-modal Self-supervised\n  Features from Deep Brain Signals",
+  "authors": "Chen Gong, Yue Chen, Yanan Sui, Luming Li",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.03227v1",
+  "abstract": "The detection of human sleep stages is widely used in the diagnosis and\nintervention of neurological and psychiatric diseases. Some patients with deep\nbrain stimulator implanted could have their neural activities recorded from the\ndeep brain. Sleep stage classification based on deep brain recording has great\npotential to provide more precise treatment for patients. The accuracy and\ngeneralizability of existing sleep stage classifiers based on local field\npotentials are still limited. We proposed an applicable cross-modal transfer\nlearning method for sleep stage classification with implanted devices. This\nend-to-end deep learning model contained cross-modal self-supervised feature\nrepresentation, self-attention, and classification framework. We tested the\nmodel with deep brain recording data from 12 patients with Parkinson's disease.\nThe best total accuracy reached 83.2% for sleep stage classification. Results\nshowed speech self-supervised features catch the conversion pattern of sleep\nstages effectively. We provide a new method on transfer learning from acoustic\nsignals to local field potentials. This method supports an effective solution\nfor the insufficient scale of clinical data. This sleep stage classification\nmodel could be adapted to chronic and continuous monitor sleep for Parkinson's\npatients in daily life, and potentially utilized for more precise treatment in\ndeep brain-machine interfaces, such as closed-loop deep brain stimulation.",
+  "citation": 1
+}

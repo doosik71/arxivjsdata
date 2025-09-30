@@ -1,0 +1,8 @@
+{
+  "title": "Metric Learning for User-defined Keyword Spotting",
+  "authors": "Jaemin Jung, Youkyum Kim, Jihwan Park, Youshin Lim, Byeong-Yeol Kim, Youngjoon Jang, Joon Son Chung",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.00439v1",
+  "abstract": "The goal of this work is to detect new spoken terms defined by users. While\nmost previous works address Keyword Spotting (KWS) as a closed-set\nclassification problem, this limits their transferability to unseen terms. The\nability to define custom keywords has advantages in terms of user experience.\n  In this paper, we propose a metric learning-based training strategy for\nuser-defined keyword spotting. In particular, we make the following\ncontributions: (1) we construct a large-scale keyword dataset with an existing\nspeech corpus and propose a filtering method to remove data that degrade model\ntraining; (2) we propose a metric learning-based two-stage training strategy,\nand demonstrate that the proposed method improves the performance on the\nuser-defined keyword spotting task by enriching their representations; (3) to\nfacilitate the fair comparison in the user-defined KWS field, we propose\nunified evaluation protocol and metrics.\n  Our proposed system does not require an incremental training on the\nuser-defined keywords, and outperforms previous works by a significant margin\non the Google Speech Commands dataset using the proposed as well as the\nexisting metrics.",
+  "citation": 22
+}

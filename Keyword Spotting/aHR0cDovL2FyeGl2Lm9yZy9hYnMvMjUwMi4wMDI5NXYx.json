@@ -1,0 +1,8 @@
+{
+  "title": "Toward noise-robust whisper keyword spotting on headphones with\n  in-earcup microphone and curriculum learning",
+  "authors": "Qiaoyu Yang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.00295v1",
+  "abstract": "The expanding feature set of modern headphones puts a challenge on the design\nof their control interface. Users may want to separately control each feature\nor quickly switch between modes that activate different features. Traditional\napproach of physical buttons may no longer be feasible when the feature set is\nlarge. Keyword spotting with voice commands is a promising solution to the\nissue. Most existing methods of keyword spotting only support commands spoken\nin a regular voice. However, regular voice may not be desirable in quiet places\nor public settings. In this paper, we investigate the problem of on-device\nkeyword spotting in whisper voice and explore approaches to improve noise\nrobustness. We leverage the inner microphone on noise-cancellation headphones\nas an additional source of voice input. We also design a curriculum learning\nstrategy that gradually increases the proportion of whisper keywords during\ntraining. We demonstrate through experiments that the combination of\nmulti-microphone processing and curriculum learning could improve F1 score of\nwhisper keyword spotting by up to 15% in noisy conditions.",
+  "citation": 0
+}

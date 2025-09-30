@@ -1,0 +1,8 @@
+{
+  "title": "Exploring Sequence-to-Sequence Transformer-Transducer Models for Keyword\n  Spotting",
+  "authors": "Beltrán Labrador, Guanlong Zhao, Ignacio López Moreno, Angelo Scorza Scarpati, Liam Fowl, Quan Wang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.06478v1",
+  "abstract": "In this paper, we present a novel approach to adapt a sequence-to-sequence\nTransformer-Transducer ASR system to the keyword spotting (KWS) task. We\nachieve this by replacing the keyword in the text transcription with a special\ntoken <kw> and training the system to detect the <kw> token in an audio stream.\nAt inference time, we create a decision function inspired by conventional KWS\napproaches, to make our approach more suitable for the KWS task. Furthermore,\nwe introduce a specific keyword spotting loss by adapting the\nsequence-discriminative Minimum Bayes-Risk training technique. We find that our\napproach significantly outperforms ASR based KWS systems. When compared with a\nconventional keyword spotting system, our proposal has similar performance\nwhile bringing the advantages and flexibility of sequence-to-sequence training.\nAdditionally, when combined with the conventional KWS system, our approach can\nimprove the performance at any operation point.",
+  "citation": 4
+}

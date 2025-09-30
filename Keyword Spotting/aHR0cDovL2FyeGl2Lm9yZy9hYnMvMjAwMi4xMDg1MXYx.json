@@ -1,0 +1,8 @@
+{
+  "title": "Small-Footprint Open-Vocabulary Keyword Spotting with Quantized LSTM\n  Networks",
+  "authors": "Théodore Bluche, Maël Primet, Thibault Gisselbrecht",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2002.10851v1",
+  "abstract": "We explore a keyword-based spoken language understanding system, in which the\nintent of the user can directly be derived from the detection of a sequence of\nkeywords in the query. In this paper, we focus on an open-vocabulary keyword\nspotting method, allowing the user to define their own keywords without having\nto retrain the whole model. We describe the different design choices leading to\na fast and small-footprint system, able to run on tiny devices, for any\narbitrary set of user-defined keywords, without training data specific to those\nkeywords. The model, based on a quantized long short-term memory (LSTM) neural\nnetwork, trained with connectionist temporal classification (CTC), weighs less\nthan 500KB. Our approach takes advantage of some properties of the predictions\nof CTC-trained networks to calibrate the confidence scores and implement a fast\ndetection algorithm. The proposed system outperforms a standard keyword-filler\nmodel approach.",
+  "citation": 34
+}

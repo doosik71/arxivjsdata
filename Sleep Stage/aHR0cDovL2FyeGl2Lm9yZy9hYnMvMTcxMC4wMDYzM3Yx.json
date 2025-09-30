@@ -1,0 +1,8 @@
+{
+  "title": "Deep Convolutional Neural Networks for Interpretable Analysis of EEG\n  Sleep Stage Scoring",
+  "authors": "Albert Vilamala, Kristoffer H. Madsen, Lars K. Hansen",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1710.00633v1",
+  "abstract": "Sleep studies are important for diagnosing sleep disorders such as insomnia,\nnarcolepsy or sleep apnea. They rely on manual scoring of sleep stages from raw\npolisomnography signals, which is a tedious visual task requiring the workload\nof highly trained professionals. Consequently, research efforts to purse for an\nautomatic stage scoring based on machine learning techniques have been carried\nout over the last years. In this work, we resort to multitaper spectral\nanalysis to create visually interpretable images of sleep patterns from EEG\nsignals as inputs to a deep convolutional network trained to solve visual\nrecognition tasks. As a working example of transfer learning, a system able to\naccurately classify sleep stages in new unseen patients is presented.\nEvaluations in a widely-used publicly available dataset favourably compare to\nstate-of-the-art results, while providing a framework for visual interpretation\nof outcomes.",
+  "citation": 200
+}

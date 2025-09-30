@@ -1,0 +1,8 @@
+{
+  "title": "An Experimental Analysis of the Power Consumption of Convolutional\n  Neural Networks for Keyword Spotting",
+  "authors": "Raphael Tang, Weijie Wang, Zhucheng Tu, Jimmy Lin",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1711.00333v2",
+  "abstract": "Nearly all previous work on small-footprint keyword spotting with neural\nnetworks quantify model footprint in terms of the number of parameters and\nmultiply operations for a feedforward inference pass. These values are,\nhowever, proxy measures since empirical performance in actual deployments is\ndetermined by many factors. In this paper, we study the power consumption of a\nfamily of convolutional neural networks for keyword spotting on a Raspberry Pi.\nWe find that both proxies are good predictors of energy usage, although the\nnumber of multiplies is more predictive than the number of model parameters. We\nalso confirm that models with the highest accuracies are, unsurprisingly, the\nmost power hungry.",
+  "citation": 59
+}

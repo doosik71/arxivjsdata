@@ -1,0 +1,8 @@
+{
+  "title": "Query-by-Example Keyword Spotting Using Spectral-Temporal Graph\n  Attentive Pooling and Multi-Task Learning",
+  "authors": "Zhenyu Wang, Shuyu Kong, Li Wan, Biqiao Zhang, Yiteng Huang, Mumin Jin, Ming Sun, Xin Lei, Zhaojun Yang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.00099v2",
+  "abstract": "Existing keyword spotting (KWS) systems primarily rely on predefined keyword\nphrases. However, the ability to recognize customized keywords is crucial for\ntailoring interactions with intelligent devices. In this paper, we present a\nnovel Query-by-Example (QbyE) KWS system that employs spectral-temporal graph\nattentive pooling and multi-task learning. This framework aims to effectively\nlearn speaker-invariant and linguistic-informative embeddings for QbyE KWS\ntasks. Within this framework, we investigate three distinct network\narchitectures for encoder modeling: LiCoNet, Conformer and ECAPA_TDNN. The\nexperimental results on a substantial internal dataset of $629$ speakers have\ndemonstrated the effectiveness of the proposed QbyE framework in maximizing the\npotential of simpler models such as LiCoNet. Particularly, LiCoNet, which is\n13x more efficient, achieves comparable performance to the computationally\nintensive Conformer model (1.98% vs. 1.63\\% FRR at 0.3 FAs/Hr).",
+  "citation": 0
+}

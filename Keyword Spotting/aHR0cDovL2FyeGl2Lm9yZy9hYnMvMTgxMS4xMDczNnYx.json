@@ -1,0 +1,8 @@
+{
+  "title": "DONUT: CTC-based Query-by-Example Keyword Spotting",
+  "authors": "Loren Lugosch, Samuel Myer, Vikrant Singh Tomar",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1811.10736v1",
+  "abstract": "Keyword spotting--or wakeword detection--is an essential feature for\nhands-free operation of modern voice-controlled devices. With such devices\nbecoming ubiquitous, users might want to choose a personalized custom wakeword.\nIn this work, we present DONUT, a CTC-based algorithm for online\nquery-by-example keyword spotting that enables custom wakeword detection. The\nalgorithm works by recording a small number of training examples from the user,\ngenerating a set of label sequence hypotheses from these training examples, and\ndetecting the wakeword by aggregating the scores of all the hypotheses given a\nnew audio recording. Our method combines the generalization and\ninterpretability of CTC-based keyword spotting with the user-adaptation and\nconvenience of a conventional query-by-example system. DONUT has low\ncomputational requirements and is well-suited for both learning and inference\non embedded systems without requiring private user data to be uploaded to the\ncloud.",
+  "citation": 39
+}

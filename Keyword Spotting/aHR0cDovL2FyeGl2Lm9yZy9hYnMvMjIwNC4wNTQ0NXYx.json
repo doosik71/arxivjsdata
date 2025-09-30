@@ -1,0 +1,8 @@
+{
+  "title": "Small Footprint Multi-channel ConvMixer for Keyword Spotting with\n  Centroid Based Awareness",
+  "authors": "Dianwen Ng, Jin Hui Pang, Yang Xiao, Biao Tian, Qiang Fu, Eng Siong Chng",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2204.05445v1",
+  "abstract": "It is critical for a keyword spotting model to have a small footprint as it\ntypically runs on-device with low computational resources. However, maintaining\nthe previous SOTA performance with reduced model size is challenging. In\naddition, a far-field and noisy environment with multiple signals interference\naggravates the problem causing the accuracy to degrade significantly. In this\npaper, we present a multi-channel ConvMixer for speech command recognitions.\nThe novel architecture introduces an additional audio channel mixing for\nchannel audio interaction in a multi-channel audio setting to achieve better\nnoise-robust features with more efficient computation. Besides, we proposed a\ncentroid based awareness component to enhance the system by equipping it with\nadditional spatial geometry information in the latent feature projection space.\nWe evaluate our model using the new MISP challenge 2021 dataset. Our model\nachieves significant improvement against the official baseline with a 55% gain\nin the competition score (0.152) on raw microphone array input and a 63%\n(0.126) boost upon front-end speech enhancement.",
+  "citation": 3
+}

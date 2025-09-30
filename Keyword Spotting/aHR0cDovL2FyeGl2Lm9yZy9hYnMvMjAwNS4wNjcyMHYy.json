@@ -1,0 +1,8 @@
+{
+  "title": "Streaming keyword spotting on mobile devices",
+  "authors": "Oleg Rybakov, Natasha Kononenko, Niranjan Subrahmanya, Mirko Visontai, Stella Laurenzo",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2005.06720v2",
+  "abstract": "In this work we explore the latency and accuracy of keyword spotting (KWS)\nmodels in streaming and non-streaming modes on mobile phones. NN model\nconversion from non-streaming mode (model receives the whole input sequence and\nthen returns the classification result) to streaming mode (model receives\nportion of the input sequence and classifies it incrementally) may require\nmanual model rewriting. We address this by designing a Tensorflow/Keras based\nlibrary which allows automatic conversion of non-streaming models to streaming\nones with minimum effort. With this library we benchmark multiple KWS models in\nboth streaming and non-streaming modes on mobile phones and demonstrate\ndifferent tradeoffs between latency and accuracy. We also explore novel KWS\nmodels with multi-head attention which reduce the classification error over the\nstate-of-art by 10% on Google speech commands data sets V2. The streaming\nlibrary with all experiments is open-sourced.",
+  "citation": 165
+}

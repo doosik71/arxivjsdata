@@ -1,0 +1,8 @@
+{
+  "title": "End-to-end Keyword Spotting using Xception-1d",
+  "authors": "Iván Vallés-Pérez, Juan Gómez-Sanchis, Marcelino Martínez-Sober, Joan Vila-Francés, Antonio J. Serrano-López, Emilio Soria-Olivas",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2110.07498v1",
+  "abstract": "The field of conversational agents is growing fast and there is an increasing\nneed for algorithms that enhance natural interaction. In this work we show how\nwe achieved state of the art results in the Keyword Spotting field by adapting\nand tweaking the Xception algorithm, which achieved outstanding results in\nseveral computer vision tasks. We obtained about 96\\% accuracy when classifying\naudio clips belonging to 35 different categories, beating human annotation at\nthe most complex tasks proposed.",
+  "citation": 1
+}

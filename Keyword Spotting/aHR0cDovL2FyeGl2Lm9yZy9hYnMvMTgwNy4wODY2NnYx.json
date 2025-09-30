@@ -1,0 +1,8 @@
+{
+  "title": "ASR-free CNN-DTW keyword spotting using multilingual bottleneck features\n  for almost zero-resource languages",
+  "authors": "Raghav Menon, Herman Kamper, Emre Yilmaz, John Quinn, Thomas Niesler",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1807.08666v1",
+  "abstract": "We consider multilingual bottleneck features (BNFs) for nearly zero-resource\nkeyword spotting. This forms part of a United Nations effort using keyword\nspotting to support humanitarian relief programmes in parts of Africa where\nlanguages are severely under-resourced. We use 1920 isolated keywords (40\ntypes, 34 minutes) as exemplars for dynamic time warping (DTW) template\nmatching, which is performed on a much larger body of untranscribed speech.\nThese DTW costs are used as targets for a convolutional neural network (CNN)\nkeyword spotter, giving a much faster system than direct DTW. Here we consider\nhow available data from well-resourced languages can improve this CNN-DTW\napproach. We show that multilingual BNFs trained on ten languages improve the\narea under the ROC curve of a CNN-DTW system by 10.9% absolute relative to the\nMFCC baseline. By combining low-resource DTW-based supervision with information\nfrom well-resourced languages, CNN-DTW is a competitive option for low-resource\nkeyword spotting.",
+  "citation": 12
+}

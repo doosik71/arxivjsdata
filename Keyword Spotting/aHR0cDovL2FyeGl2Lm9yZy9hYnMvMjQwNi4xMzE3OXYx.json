@@ -1,0 +1,8 @@
+{
+  "title": "Global-Local Convolution with Spiking Neural Networks for\n  Energy-efficient Keyword Spotting",
+  "authors": "Shuai Wang, Dehao Zhang, Kexin Shi, Yuchen Wang, Wenjie Wei, Jibin Wu, Malu Zhang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.13179v1",
+  "abstract": "Thanks to Deep Neural Networks (DNNs), the accuracy of Keyword Spotting (KWS)\nhas made substantial progress. However, as KWS systems are usually implemented\non edge devices, energy efficiency becomes a critical requirement besides\nperformance. Here, we take advantage of spiking neural networks' energy\nefficiency and propose an end-to-end lightweight KWS model. The model consists\nof two innovative modules: 1) Global-Local Spiking Convolution (GLSC) module\nand 2) Bottleneck-PLIF module. Compared to the hand-crafted feature extraction\nmethods, the GLSC module achieves speech feature extraction that is sparser,\nmore energy-efficient, and yields better performance. The Bottleneck-PLIF\nmodule further processes the signals from GLSC with the aim to achieve higher\naccuracy with fewer parameters. Extensive experiments are conducted on the\nGoogle Speech Commands Dataset (V1 and V2). The results show our method\nachieves competitive performance among SNN-based KWS models with fewer\nparameters.",
+  "citation": 8
+}

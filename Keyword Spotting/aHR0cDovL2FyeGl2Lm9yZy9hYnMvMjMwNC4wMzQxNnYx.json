@@ -1,0 +1,8 @@
+{
+  "title": "To Wake-up or Not to Wake-up: Reducing Keyword False Alarm by Successive\n  Refinement",
+  "authors": "Yashas Malur Saidutta, Rakshith Sharma Srinivasa, Ching-Hua Lee, Chouchang Yang, Yilin Shen, Hongxia Jin",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.03416v1",
+  "abstract": "Keyword spotting systems continuously process audio streams to detect\nkeywords. One of the most challenging tasks in designing such systems is to\nreduce False Alarm (FA) which happens when the system falsely registers a\nkeyword despite the keyword not being uttered. In this paper, we propose a\nsimple yet elegant solution to this problem that follows from the law of total\nprobability. We show that existing deep keyword spotting mechanisms can be\nimproved by Successive Refinement, where the system first classifies whether\nthe input audio is speech or not, followed by whether the input is keyword-like\nor not, and finally classifies which keyword was uttered. We show across\nmultiple models with size ranging from 13K parameters to 2.41M parameters, the\nsuccessive refinement technique reduces FA by up to a factor of 8 on in-domain\nheld-out FA data, and up to a factor of 7 on out-of-domain (OOD) FA data.\nFurther, our proposed approach is \"plug-and-play\" and can be applied to any\ndeep keyword spotting model.",
+  "citation": 3
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Keyword-Guided Adaptation of Automatic Speech Recognition",
+  "authors": "Aviv Shamsian, Aviv Navon, Neta Glazer, Gill Hetz, Joseph Keshet",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.02649v1",
+  "abstract": "Automatic Speech Recognition (ASR) technology has made significant progress\nin recent years, providing accurate transcription across various domains.\nHowever, some challenges remain, especially in noisy environments and\nspecialized jargon. In this paper, we propose a novel approach for improved\njargon word recognition by contextual biasing Whisper-based models. We employ a\nkeyword spotting model that leverages the Whisper encoder representation to\ndynamically generate prompts for guiding the decoder during the transcription\nprocess. We introduce two approaches to effectively steer the decoder towards\nthese prompts: KG-Whisper, which is aimed at fine-tuning the Whisper decoder,\nand KG-Whisper-PT, which learns a prompt prefix. Our results show a significant\nimprovement in the recognition accuracy of specified keywords and in reducing\nthe overall word error rates. Specifically, in unseen language generalization,\nwe demonstrate an average WER improvement of 5.1% over Whisper.",
+  "citation": 5
+}

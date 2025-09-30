@@ -1,0 +1,8 @@
+{
+  "title": "Multiple-Instance, Cascaded Classification for Keyword Spotting in\n  Narrow-Band Audio",
+  "authors": "Ahmad AbdulKader, Kareem Nassar, Mohamed El-Geish, Daniel Galvez, Chetan Patil",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1711.08058v2",
+  "abstract": "We propose using cascaded classifiers for a keyword spotting (KWS) task on\nnarrow-band (NB), 8kHz audio acquired in non-IID environments -- a more\nchallenging task than most state-of-the-art KWS systems face. We present a\nmodel that incorporates Deep Neural Networks (DNNs), cascading,\nmultiple-feature representations, and multiple-instance learning. The cascaded\nclassifiers handle the task's class imbalance and reduce power consumption on\ncomputationally-constrained devices via early termination. The KWS system\nachieves a false negative rate of 6% at an hourly false positive rate of 0.75",
+  "citation": 3
+}

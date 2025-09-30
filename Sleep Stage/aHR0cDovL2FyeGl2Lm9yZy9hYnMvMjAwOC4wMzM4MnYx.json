@@ -1,0 +1,8 @@
+{
+  "title": "Classifying sleep-wake stages through recurrent neural networks using\n  pulse oximetry signals",
+  "authors": "Ramiro Casal, Leandro E. Di Persia, Gastón Schlotthauer",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.03382v1",
+  "abstract": "The regulation of the autonomic nervous system changes with the sleep stages\ncausing variations in the physiological variables. We exploit these changes\nwith the aim of classifying the sleep stages in awake or asleep using pulse\noximeter signals. We applied a recurrent neural network to heart rate and\nperipheral oxygen saturation signals to classify the sleep stage every 30\nseconds. The network architecture consists of two stacked layers of\nbidirectional gated recurrent units (GRUs) and a softmax layer to classify the\noutput. In this paper, we used 5000 patients from the Sleep Heart Health Study\ndataset. 2500 patients were used to train the network, and two subsets of 1250\nwere used to validate and test the trained models. In the test stage, the best\nresult obtained was 90.13% accuracy, 94.13% sensitivity, 80.26% specificity,\n92.05% precision, and 84.68% negative predictive value. Further, the Cohen's\nKappa coefficient was 0.74 and the average absolute error percentage to the\nactual sleep time was 8.9%. The performance of the proposed network is\ncomparable with the state-of-the-art algorithms when they use much more\ninformative signals (except those with EEG).",
+  "citation": 31
+}

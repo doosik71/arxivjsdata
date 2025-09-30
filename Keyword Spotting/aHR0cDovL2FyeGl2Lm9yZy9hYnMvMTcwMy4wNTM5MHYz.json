@@ -1,0 +1,8 @@
+{
+  "title": "Convolutional Recurrent Neural Networks for Small-Footprint Keyword\n  Spotting",
+  "authors": "Sercan O. Arik, Markus Kliegl, Rewon Child, Joel Hestness, Andrew Gibiansky, Chris Fougner, Ryan Prenger, Adam Coates",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1703.05390v3",
+  "abstract": "Keyword spotting (KWS) constitutes a major component of human-technology\ninterfaces. Maximizing the detection accuracy at a low false alarm (FA) rate,\nwhile minimizing the footprint size, latency and complexity are the goals for\nKWS. Towards achieving them, we study Convolutional Recurrent Neural Networks\n(CRNNs). Inspired by large-scale state-of-the-art speech recognition systems,\nwe combine the strengths of convolutional layers and recurrent layers to\nexploit local structure and long-range context. We analyze the effect of\narchitecture parameters, and propose training strategies to improve\nperformance. With only ~230k parameters, our CRNN model yields acceptably low\nlatency, and achieves 97.71% accuracy at 0.5 FA/hour for 5 dB signal-to-noise\nratio.",
+  "citation": 773
+}

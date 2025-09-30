@@ -1,0 +1,8 @@
+{
+  "title": "A Comparison of Temporal Encoders for Neuromorphic Keyword Spotting with\n  Few Neurons",
+  "authors": "Mattias Nilsson, Ton Juny Pina, Lyes Khacef, Foteini Liwicki, Elisabetta Chicca, Fredrik Sandin",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2301.09962v1",
+  "abstract": "With the expansion of AI-powered virtual assistants, there is a need for\nlow-power keyword spotting systems providing a \"wake-up\" mechanism for\nsubsequent computationally expensive speech recognition. One promising approach\nis the use of neuromorphic sensors and spiking neural networks (SNNs)\nimplemented in neuromorphic processors for sparse event-driven sensing.\nHowever, this requires resource-efficient SNN mechanisms for temporal encoding,\nwhich need to consider that these systems process information in a streaming\nmanner, with physical time being an intrinsic property of their operation. In\nthis work, two candidate neurocomputational elements for temporal encoding and\nfeature extraction in SNNs described in recent literature - the spiking\ntime-difference encoder (TDE) and disynaptic excitatory-inhibitory (E-I)\nelements - are comparatively investigated in a keyword-spotting task on\nformants computed from spoken digits in the TIDIGITS dataset. While both\nencoders improve performance over direct classification of the formant features\nin the training data, enabling a complete binary classification with a logistic\nregression model, they show no clear improvements on the test set.\nResource-efficient keyword spotting applications may benefit from the use of\nthese encoders, but further work on methods for learning the time constants and\nweights is required to investigate their full potential.",
+  "citation": 5
+}

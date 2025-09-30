@@ -1,0 +1,8 @@
+{
+  "title": "Speech Augmentation Based Unsupervised Learning for Keyword Spotting",
+  "authors": "Jian Luo, Jianzong Wang, Ning Cheng, Haobin Tang, Jing Xiao",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2205.14329v1",
+  "abstract": "In this paper, we investigated a speech augmentation based unsupervised\nlearning approach for keyword spotting (KWS) task. KWS is a useful speech\napplication, yet also heavily depends on the labeled data. We designed a\nCNN-Attention architecture to conduct the KWS task. CNN layers focus on the\nlocal acoustic features, and attention layers model the long-time dependency.\nTo improve the robustness of KWS model, we also proposed an unsupervised\nlearning method. The unsupervised loss is based on the similarity between the\noriginal and augmented speech features, as well as the audio reconstructing\ninformation. Two speech augmentation methods are explored in the unsupervised\nlearning: speed and intensity. The experiments on Google Speech Commands V2\nDataset demonstrated that our CNN-Attention model has competitive results.\nMoreover, the augmentation based unsupervised learning could further improve\nthe classification accuracy of KWS task. In our experiments, with augmentation\nbased unsupervised learning, our KWS model achieves better performance than\nother unsupervised methods, such as CPC, APC, and MPC.",
+  "citation": 3
+}

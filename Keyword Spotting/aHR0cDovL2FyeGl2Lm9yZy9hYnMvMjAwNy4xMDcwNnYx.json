@@ -1,0 +1,8 @@
+{
+  "title": "Very Fast Keyword Spotting System with Real Time Factor below 0.01",
+  "authors": "Jan Nouza, Petr Cerva, Jindrich Zdansky",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.10706v1",
+  "abstract": "In the paper we present an architecture of a keyword spotting (KWS) system\nthat is based on modern neural networks, yields good performance on various\ntypes of speech data and can run very fast. We focus mainly on the last aspect\nand propose optimizations for all the steps required in a KWS design: signal\nprocessing and likelihood computation, Viterbi decoding, spot candidate\ndetection and confidence calculation. We present time and memory efficient\nmodelling by bidirectional feedforward sequential memory networks (an\nalternative to recurrent nets) either by standard triphones or so called\nquasi-monophones, and an entirely forward decoding of speech frames (with\nminimal need for look back). Several variants of the proposed scheme are\nevaluated on 3 large Czech datasets (broadcast, internet and telephone, 17\nhours in total) and their performance is compared by Detection Error Tradeoff\n(DET) diagrams and real-time (RT) factors. We demonstrate that the complete\nsystem can run in a single pass with a RT factor close to 0.001 if all\noptimizations (including a GPU for likelihood computation) are applied.",
+  "citation": 1
+}

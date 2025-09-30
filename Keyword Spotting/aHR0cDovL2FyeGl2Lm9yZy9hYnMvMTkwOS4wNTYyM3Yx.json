@@ -1,0 +1,8 @@
+{
+  "title": "A Channel-Pruned and Weight-Binarized Convolutional Neural Network for\n  Keyword Spotting",
+  "authors": "Jiancheng Lyu, Spencer Sheen",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1909.05623v1",
+  "abstract": "We study channel number reduction in combination with weight binarization\n(1-bit weight precision) to trim a convolutional neural network for a keyword\nspotting (classification) task. We adopt a group-wise splitting method based on\nthe group Lasso penalty to achieve over 50% channel sparsity while maintaining\nthe network performance within 0.25% accuracy loss. We show an effective\nthree-stage procedure to balance accuracy and sparsity in network training.",
+  "citation": 6
+}

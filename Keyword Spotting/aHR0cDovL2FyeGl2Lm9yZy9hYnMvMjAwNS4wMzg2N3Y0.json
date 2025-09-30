@@ -1,0 +1,8 @@
+{
+  "title": "Multi-Task Network for Noise-Robust Keyword Spotting and Speaker\n  Verification using CTC-based Soft VAD and Global Query Attention",
+  "authors": "Myunghun Jung, Youngmoon Jung, Jahyun Goo, Hoirin Kim",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2005.03867v4",
+  "abstract": "Keyword spotting (KWS) and speaker verification (SV) have been studied\nindependently although it is known that acoustic and speaker domains are\ncomplementary. In this paper, we propose a multi-task network that performs KWS\nand SV simultaneously to fully utilize the interrelated domain information. The\nmulti-task network tightly combines sub-networks aiming at performance\nimprovement in challenging conditions such as noisy environments,\nopen-vocabulary KWS, and short-duration SV, by introducing novel techniques of\nconnectionist temporal classification (CTC)-based soft voice activity detection\n(VAD) and global query attention. Frame-level acoustic and speaker information\nis integrated with phonetically originated weights so that forms a word-level\nglobal representation. Then it is used for the aggregation of feature vectors\nto generate discriminative embeddings. Our proposed approach shows 4.06% and\n26.71% relative improvements in equal error rate (EER) compared to the\nbaselines for both tasks. We also present a visualization example and results\nof ablation experiments.",
+  "citation": 24
+}

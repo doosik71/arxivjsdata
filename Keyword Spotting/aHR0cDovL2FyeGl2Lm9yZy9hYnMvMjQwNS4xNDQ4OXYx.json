@@ -1,0 +1,8 @@
+{
+  "title": "End-to-End User-Defined Keyword Spotting using Shifted Delta\n  Coefficients",
+  "authors": "Kesavaraj V, Anuprabha M, Anil Kumar Vuppala",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.14489v1",
+  "abstract": "Identifying user-defined keywords is crucial for personalizing interactions\nwith smart devices. Previous approaches of user-defined keyword spotting\n(UDKWS) have relied on short-term spectral features such as mel frequency\ncepstral coefficients (MFCC) to detect the spoken keyword. However, these\nfeatures may face challenges in accurately identifying closely related\npronunciation of audio-text pairs, due to their limited capability in capturing\nthe temporal dynamics of the speech signal. To address this challenge, we\npropose to use shifted delta coefficients (SDC) which help in capturing\npronunciation variability (transition between connecting phonemes) by\nincorporating long-term temporal information. The performance of the SDC\nfeature is compared with various baseline features across four different\ndatasets using a cross-attention based end-to-end system. Additionally, various\nconfigurations of SDC are explored to find the suitable temporal context for\nthe UDKWS task. The experimental results reveal that the SDC feature\noutperforms the MFCC baseline feature, exhibiting an improvement of 8.32% in\narea under the curve (AUC) and 8.69% in terms of equal error rate (EER) on the\nchallenging Libriphrase-hard dataset. Moreover, the proposed approach\ndemonstrated superior performance when compared to state-of-the-art UDKWS\ntechniques.",
+  "citation": 1
+}

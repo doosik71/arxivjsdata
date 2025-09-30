@@ -1,0 +1,8 @@
+{
+  "title": "U2-KWS: Unified Two-pass Open-vocabulary Keyword Spotting with Keyword\n  Bias",
+  "authors": "Ao Zhang, Pan Zhou, Kaixun Huang, Yong Zou, Ming Liu, Lei Xie",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.09760v1",
+  "abstract": "Open-vocabulary keyword spotting (KWS), which allows users to customize\nkeywords, has attracted increasingly more interest. However, existing methods\nbased on acoustic models and post-processing train the acoustic model with ASR\ntraining criteria to model all phonemes, making the acoustic model\nunder-optimized for the KWS task. To solve this problem, we propose a novel\nunified two-pass open-vocabulary KWS (U2-KWS) framework inspired by the\ntwo-pass ASR model U2. Specifically, we employ the CTC branch as the first\nstage model to detect potential keyword candidates and the decoder branch as\nthe second stage model to validate candidates. In order to enhance any\ncustomized keywords, we redesign the U2 training procedure for U2-KWS and add\nkeyword information by audio and text cross-attention into both branches. We\nperform experiments on our internal dataset and Aishell-1. The results show\nthat U2-KWS can achieve a significant relative wake-up rate improvement of 41%\ncompared to the traditional customized KWS systems when the false alarm rate is\nfixed to 0.5 times per hour.",
+  "citation": 6
+}

@@ -1,0 +1,8 @@
+{
+  "title": "I2CR: Improving Noise Robustness on Keyword Spotting Using Inter-Intra\n  Contrastive Regularization",
+  "authors": "Dianwen Ng, Jia Qi Yip, Tanmay Surana, Zhao Yang, Chong Zhang, Yukun Ma, Chongjia Ni, Eng Siong Chng, Bin Ma",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2209.06360v1",
+  "abstract": "Noise robustness in keyword spotting remains a challenge as many models fail\nto overcome the heavy influence of noises, causing the deterioration of the\nquality of feature embeddings. We proposed a contrastive regularization method\ncalled Inter-Intra Contrastive Regularization (I2CR) to improve the feature\nrepresentations by guiding the model to learn the fundamental speech\ninformation specific to the cluster. This involves maximizing the similarity\nacross Intra and Inter samples of the same class. As a result, it pulls the\ninstances closer to more generalized representations that form more prominent\nclusters and reduces the adverse impact of noises. We show that our method\nprovides consistent improvements in accuracy over different backbone model\narchitectures under different noise environments. We also demonstrate that our\nproposed framework has improved the accuracy of unseen out-of-domain noises and\nunseen variant noise SNRs. This indicates the significance of our work with the\noverall refinement in noise robustness.",
+  "citation": 10
+}

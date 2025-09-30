@@ -1,0 +1,8 @@
+{
+  "title": "Exploring Representation Learning for Small-Footprint Keyword Spotting",
+  "authors": "Fan Cui, Liyong Guo, Quandong Wang, Peng Gao, Yujun Wang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2303.10912v1",
+  "abstract": "In this paper, we investigate representation learning for low-resource\nkeyword spotting (KWS). The main challenges of KWS are limited labeled data and\nlimited available device resources. To address those challenges, we explore\nrepresentation learning for KWS by self-supervised contrastive learning and\nself-training with pretrained model. First, local-global contrastive siamese\nnetworks (LGCSiam) are designed to learn similar utterance-level\nrepresentations for similar audio samplers by proposed local-global contrastive\nloss without requiring ground-truth. Second, a self-supervised pretrained\nWav2Vec 2.0 model is applied as a constraint module (WVC) to force the KWS\nmodel to learn frame-level acoustic representations. By the LGCSiam and WVC\nmodules, the proposed small-footprint KWS model can be pretrained with\nunlabeled data. Experiments on speech commands dataset show that the\nself-training WVC module and the self-supervised LGCSiam module significantly\nimprove accuracy, especially in the case of training on a small labeled\ndataset.",
+  "citation": 2
+}

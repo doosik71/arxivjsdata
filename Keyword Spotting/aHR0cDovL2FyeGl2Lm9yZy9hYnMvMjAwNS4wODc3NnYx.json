@@ -1,0 +1,8 @@
+{
+  "title": "Metric Learning for Keyword Spotting",
+  "authors": "Jaesung Huh, Minjae Lee, Heesoo Heo, Seongkyu Mun, Joon Son Chung",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2005.08776v1",
+  "abstract": "The goal of this work is to train effective representations for keyword\nspotting via metric learning. Most existing works address keyword spotting as a\nclosed-set classification problem, where both target and non-target keywords\nare predefined. Therefore, prevailing classifier-based keyword spotting systems\nperform poorly on non-target sounds which are unseen during the training stage,\ncausing high false alarm rates in real-world scenarios. In reality, keyword\nspotting is a detection problem where predefined target keywords are detected\nfrom a variety of unknown sounds. This shares many similarities to metric\nlearning problems in that the unseen and unknown non-target sounds must be\nclearly differentiated from the target keywords. However, a key difference is\nthat the target keywords are known and predefined. To this end, we propose a\nnew method based on metric learning that maximises the distance between target\nand non-target keywords, but also learns per-class weights for target keywords\n\\`a la classification objectives. Experiments on the Google Speech Commands\ndataset show that our method significantly reduces false alarms to unseen\nnon-target keywords, while maintaining the overall classification accuracy.",
+  "citation": 27
+}

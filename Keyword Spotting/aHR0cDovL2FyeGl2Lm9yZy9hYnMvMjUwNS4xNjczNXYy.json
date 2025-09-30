@@ -1,0 +1,8 @@
+{
+  "title": "Adversarial Deep Metric Learning for Cross-Modal Audio-Text Alignment in\n  Open-Vocabulary Keyword Spotting",
+  "authors": "Youngmoon Jung, Yong-Hyeok Lee, Myunghun Jung, Jaeyoung Roh, Chang Woo Han, Hoon-Young Cho",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.16735v2",
+  "abstract": "For text enrollment-based open-vocabulary keyword spotting (KWS), acoustic\nand text embeddings are typically compared at either the phoneme or utterance\nlevel. To facilitate this, we optimize acoustic and text encoders using deep\nmetric learning (DML), enabling direct comparison of multi-modal embeddings in\na shared embedding space. However, the inherent heterogeneity between audio and\ntext modalities presents a significant challenge. To address this, we propose\nModality Adversarial Learning (MAL), which reduces the domain gap in\nheterogeneous modality representations. Specifically, we train a modality\nclassifier adversarially to encourage both encoders to generate\nmodality-invariant embeddings. Additionally, we apply DML to achieve\nphoneme-level alignment between audio and text, and conduct extensive\ncomparisons across various DML objectives. Experiments on the Wall Street\nJournal (WSJ) and LibriPhrase datasets demonstrate the effectiveness of the\nproposed approach.",
+  "citation": 0
+}

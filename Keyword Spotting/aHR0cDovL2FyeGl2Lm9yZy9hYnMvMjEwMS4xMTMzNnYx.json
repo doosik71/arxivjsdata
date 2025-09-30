@@ -1,0 +1,8 @@
+{
+  "title": "Low-Power Audio Keyword Spotting using Tsetlin Machines",
+  "authors": "Jie Lei, Tousif Rahman, Rishad Shafik, Adrian Wheeldon, Alex Yakovlev, Ole-Christoffer Granmo, Fahim Kawsar, Akhil Mathur",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2101.11336v1",
+  "abstract": "The emergence of Artificial Intelligence (AI) driven Keyword Spotting (KWS)\ntechnologies has revolutionized human to machine interaction. Yet, the\nchallenge of end-to-end energy efficiency, memory footprint and system\ncomplexity of current Neural Network (NN) powered AI-KWS pipelines has remained\never present. This paper evaluates KWS utilizing a learning automata powered\nmachine learning algorithm called the Tsetlin Machine (TM). Through significant\nreduction in parameter requirements and choosing logic over arithmetic based\nprocessing, the TM offers new opportunities for low-power KWS while maintaining\nhigh learning efficacy. In this paper we explore a TM based keyword spotting\n(KWS) pipeline to demonstrate low complexity with faster rate of convergence\ncompared to NNs. Further, we investigate the scalability with increasing\nkeywords and explore the potential for enabling low-power on-chip KWS.",
+  "citation": 52
+}

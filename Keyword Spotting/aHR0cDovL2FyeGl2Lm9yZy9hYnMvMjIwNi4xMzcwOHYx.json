@@ -1,0 +1,8 @@
+{
+  "title": "Personalized Keyword Spotting through Multi-task Learning",
+  "authors": "Seunghan Yang, Byeonggeun Kim, Inseop Chung, Simyung Chang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2206.13708v1",
+  "abstract": "Keyword spotting (KWS) plays an essential role in enabling speech-based user\ninteraction on smart devices, and conventional KWS (C-KWS) approaches have\nconcentrated on detecting user-agnostic pre-defined keywords. However, in\npractice, most user interactions come from target users enrolled in the device\nwhich motivates to construct personalized keyword spotting. We design two\npersonalized KWS tasks; (1) Target user Biased KWS (TB-KWS) and (2) Target user\nOnly KWS (TO-KWS). To solve the tasks, we propose personalized keyword spotting\nthrough multi-task learning (PK-MTL) that consists of multi-task learning and\ntask-adaptation. First, we introduce applying multi-task learning on keyword\nspotting and speaker verification to leverage user information to the keyword\nspotting system. Next, we design task-specific scoring functions to adapt to\nthe personalized KWS tasks thoroughly. We evaluate our framework on\nconventional and personalized scenarios, and the results show that PK-MTL can\ndramatically reduce the false alarm rate, especially in various practical\nscenarios.",
+  "citation": 16
+}

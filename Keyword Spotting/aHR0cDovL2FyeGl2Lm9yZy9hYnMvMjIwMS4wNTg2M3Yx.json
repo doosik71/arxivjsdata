@@ -1,0 +1,8 @@
+{
+  "title": "ConvMixer: Feature Interactive Convolution with Curriculum Learning for\n  Small Footprint and Noisy Far-field Keyword Spotting",
+  "authors": "Dianwen Ng, Yunqi Chen, Biao Tian, Qiang Fu, Eng Siong Chng",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2201.05863v1",
+  "abstract": "Building efficient architecture in neural speech processing is paramount to\nsuccess in keyword spotting deployment. However, it is very challenging for\nlightweight models to achieve noise robustness with concise neural operations.\nIn a real-world application, the user environment is typically noisy and may\nalso contain reverberations. We proposed a novel feature interactive\nconvolutional model with merely 100K parameters to tackle this under the noisy\nfar-field condition. The interactive unit is proposed in place of the attention\nmodule that promotes the flow of information with more efficient computations.\nMoreover, curriculum-based multi-condition training is adopted to attain better\nnoise robustness. Our model achieves 98.2% top-1 accuracy on Google Speech\nCommand V2-12 and is competitive against large transformer models under the\ndesigned noise condition.",
+  "citation": 74
+}

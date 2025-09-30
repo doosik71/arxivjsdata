@@ -1,0 +1,8 @@
+{
+  "title": "Adaptive Noise Resilient Keyword Spotting Using One-Shot Learning",
+  "authors": "Luciano Sebastian Martinez-Rau, Quynh Nguyen Phuong Vu, Yuxuan Zhang, Bengt Oelmann, Sebastian Bader",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.09304v2",
+  "abstract": "Keyword spotting (KWS) is a key component of smart devices, enabling\nefficient and intuitive audio interaction. However, standard KWS systems\ndeployed on embedded devices often suffer performance degradation under\nreal-world operating conditions. Resilient KWS systems address this issue by\nenabling dynamic adaptation, with applications such as adding or replacing\nkeywords, adjusting to specific users, and improving noise robustness. However,\ndeploying resilient, standalone KWS systems with low latency on\nresource-constrained devices remains challenging due to limited memory and\ncomputational resources. This study proposes a low computational approach for\ncontinuous noise adaptation of pretrained neural networks used for KWS\nclassification, requiring only 1-shot learning and one epoch. The proposed\nmethod was assessed using two pretrained models and three real-world noise\nsources at signal-to-noise ratios (SNRs) ranging from 24 to -3 dB. The adapted\nmodels consistently outperformed the pretrained models across all scenarios,\nespecially at SNR $\\leq$ 18 dB, achieving accuracy improvements of 4.9% to\n46.0%. These results highlight the efficacy of the proposed methodology while\nbeing lightweight enough for deployment on resource-constrained devices.",
+  "citation": 0
+}

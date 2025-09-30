@@ -1,0 +1,8 @@
+{
+  "title": "Multi-task Voice Activated Framework using Self-supervised Learning",
+  "authors": "Shehzeen Hussain, Van Nguyen, Shuhua Zhang, Erik Visser",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2110.01077v3",
+  "abstract": "Self-supervised learning methods such as wav2vec 2.0 have shown promising\nresults in learning speech representations from unlabelled and untranscribed\nspeech data that are useful for speech recognition. Since these representations\nare learned without any task-specific supervision, they can also be useful for\nother voice-activated tasks like speaker verification, keyword spotting,\nemotion classification etc. In our work, we propose a general purpose framework\nfor adapting a pre-trained wav2vec 2.0 model for different voice-activated\ntasks. We develop downstream network architectures that operate on the\ncontextualized speech representations of wav2vec 2.0 to adapt the\nrepresentations for solving a given task. Finally, we extend our framework to\nperform multi-task learning by jointly optimizing the network parameters on\nmultiple voice activated tasks using a shared transformer backbone. Both of our\nsingle and multi-task frameworks achieve state-of-the-art results in speaker\nverification and keyword spotting benchmarks. Our best performing models\nachieve 1.98% and 3.15% EER on VoxCeleb1 test set when trained on VoxCeleb2 and\nVoxCeleb1 respectively, and 98.23% accuracy on Google Speech Commands v1.0\nkeyword spotting dataset.",
+  "citation": 19
+}

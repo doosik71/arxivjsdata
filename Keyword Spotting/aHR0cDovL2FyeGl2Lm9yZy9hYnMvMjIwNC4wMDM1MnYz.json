@@ -1,0 +1,8 @@
+{
+  "title": "On the Efficiency of Integrating Self-supervised Learning and\n  Meta-learning for User-defined Few-shot Keyword Spotting",
+  "authors": "Wei-Tsung Kao, Yuan-Kuei Wu, Chia-Ping Chen, Zhi-Sheng Chen, Yu-Pao Tsai, Hung-Yi Lee",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2204.00352v3",
+  "abstract": "User-defined keyword spotting is a task to detect new spoken terms defined by\nusers. This can be viewed as a few-shot learning problem since it is\nunreasonable for users to define their desired keywords by providing many\nexamples. To solve this problem, previous works try to incorporate\nself-supervised learning models or apply meta-learning algorithms. But it is\nunclear whether self-supervised learning and meta-learning are complementary\nand which combination of the two types of approaches is most effective for\nfew-shot keyword discovery. In this work, we systematically study these\nquestions by utilizing various self-supervised learning models and combining\nthem with a wide variety of meta-learning algorithms. Our result shows that\nHuBERT combined with Matching network achieves the best result and is robust to\nthe changes of few-shot examples.",
+  "citation": 11
+}

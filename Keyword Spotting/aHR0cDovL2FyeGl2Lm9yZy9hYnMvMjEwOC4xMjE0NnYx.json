@@ -1,0 +1,8 @@
+{
+  "title": "Separable Temporal Convolution plus Temporally Pooled Attention for\n  Lightweight High-performance Keyword Spotting",
+  "authors": "Shenghua Hu, Jing Wang, Yujun Wang, Wenjing Yang",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2108.12146v1",
+  "abstract": "Keyword spotting (KWS) on mobile devices generally requires a small memory\nfootprint. However, most current models still maintain a large number of\nparameters in order to ensure good performance. In this paper, we propose a\ntemporally pooled attention module which can capture global features better\nthan the AveragePool. Besides, we design a separable temporal convolution\nnetwork which leverages depthwise separable and temporal convolution to reduce\nthe number of parameter and calculations. Finally, taking advantage of\nseparable temporal convolution and temporally pooled attention, a efficient\nneural network (ST-AttNet) is designed for KWS system. We evaluate the models\non the publicly available Google speech commands data sets V1. The number of\nparameters of proposed model (48K) is 1/6 of state-of-the-art TC-ResNet14-1.5\nmodel (305K). The proposed model achieves a 96.6% accuracy, which is comparable\nto the TC-ResNet14-1.5 model (96.6%).",
+  "citation": 1
+}

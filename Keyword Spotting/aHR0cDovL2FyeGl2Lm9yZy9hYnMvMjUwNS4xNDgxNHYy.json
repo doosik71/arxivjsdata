@@ -1,0 +1,8 @@
+{
+  "title": "GraphemeAug: A Systematic Approach to Synthesized Hard Negative Keyword\n  Spotting Examples",
+  "authors": "Harry Zhang, Kurt Partridge, Pai Zhu, Neng Chen, Hyun Jin Park, Dhruuv Agarwal, Quan Wang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.14814v2",
+  "abstract": "Spoken Keyword Spotting (KWS) is the task of distinguishing between the\npresence and absence of a keyword in audio. The accuracy of a KWS model hinges\non its ability to correctly classify examples close to the keyword and\nnon-keyword boundary. These boundary examples are often scarce in training\ndata, limiting model performance. In this paper, we propose a method to\nsystematically generate adversarial examples close to the decision boundary by\nmaking insertion/deletion/substitution edits on the keyword's graphemes. We\nevaluate this technique on held-out data for a popular keyword and show that\nthe technique improves AUC on a dataset of synthetic hard negatives by 61%\nwhile maintaining quality on positives and ambient negative audio data.",
+  "citation": 1
+}

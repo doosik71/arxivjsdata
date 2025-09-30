@@ -1,0 +1,8 @@
+{
+  "title": "Query-by-Example Keyword Spotting system using Multi-head Attention and\n  Softtriple Loss",
+  "authors": "Jinmiao Huang, Waseem Gharbieh, Han Suk Shim, Eugene Kim",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2102.07061v2",
+  "abstract": "This paper proposes a neural network architecture for tackling the\nquery-by-example user-defined keyword spotting task. A multi-head attention\nmodule is added on top of a multi-layered GRU for effective feature extraction,\nand a normalized multi-head attention module is proposed for feature\naggregation. We also adopt the softtriple loss - a combination of triplet loss\nand softmax loss - and showcase its effectiveness. We demonstrate the\nperformance of our model on internal datasets with different languages and the\npublic Hey-Snips dataset. We compare the performance of our model to a baseline\nsystem and conduct an ablation study to show the benefit of each component in\nour architecture. The proposed work shows solid performance while preserving\nsimplicity.",
+  "citation": 53
+}

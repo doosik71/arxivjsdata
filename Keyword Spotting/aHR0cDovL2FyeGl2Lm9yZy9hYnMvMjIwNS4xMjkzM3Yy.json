@@ -1,0 +1,8 @@
+{
+  "title": "Boosting Tail Neural Network for Realtime Custom Keyword Spotting",
+  "authors": "Sihao Xue, Qianyao Shen, Guoqing Li",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2205.12933v2",
+  "abstract": "In this paper, we propose a Boosting Tail Neural Network (BTNN) for improving\nthe performance of Realtime Custom Keyword Spotting (RCKS) that is still an\nindustrial challenge for demanding powerful classification ability with limited\ncomputation resources. Inspired by Brain Science that a brain is only partly\nactivated for a nerve simulation and numerous machine learning algorithms are\ndeveloped to use a batch of weak classifiers to resolve arduous problems, which\nare often proved to be effective. We show that this method is helpful to the\nRCKS problem. The proposed approach achieve better performances in terms of\nwakeup rate and false alarm.\n  In our experiments compared with those traditional algorithms that use only\none strong classifier, it gets 18\\% relative improvement. We also point out\nthat this approach may be promising in future ASR exploration.",
+  "citation": 0
+}

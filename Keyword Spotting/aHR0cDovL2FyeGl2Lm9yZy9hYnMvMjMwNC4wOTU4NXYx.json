@@ -1,0 +1,8 @@
+{
+  "title": "Multilingual Query-by-Example Keyword Spotting with Metric Learning and\n  Phoneme-to-Embedding Mapping",
+  "authors": "Paul M. Reuter, Christian Rollwage, Bernd T. Meyer",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.09585v1",
+  "abstract": "In this paper, we propose a multilingual query-by-example keyword spotting\n(KWS) system based on a residual neural network. The model is trained as a\nclassifier on a multilingual keyword dataset extracted from Common Voice\nsentences and fine-tuned using circle loss. We demonstrate the generalization\nability of the model to new languages and report a mean reduction in EER of\n59.2 % for previously seen and 47.9 % for unseen languages compared to a\ncompetitive baseline. We show that the word embeddings learned by the KWS model\ncan be accurately predicted from the phoneme sequences using a simple LSTM\nmodel. Our system achieves a promising accuracy for streaming keyword spotting\nand keyword search on Common Voice audio using just 5 examples per keyword.\nExperiments on the Hey-Snips dataset show a good performance with a false\nnegative rate of 5.4 % at only 0.1 false alarms per hour.",
+  "citation": 13
+}

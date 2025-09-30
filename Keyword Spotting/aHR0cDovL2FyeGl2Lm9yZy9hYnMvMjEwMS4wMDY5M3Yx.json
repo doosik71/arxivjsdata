@@ -1,0 +1,8 @@
+{
+  "title": "Neural Networks for Keyword Spotting on IoT Devices",
+  "authors": "Rakesh Dhakshinamurthy",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2101.00693v1",
+  "abstract": "We explore Neural Networks (NNs) for keyword spotting (KWS) on IoT devices\nlike smart speakers and wearables. Since we target to execute our NN on a\nconstrained memory and computation footprint, we propose a CNN design that. (i)\nuses a limited number of multiplies. (ii) uses a limited number of model\nparameters.",
+  "citation": 1
+}

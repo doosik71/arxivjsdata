@@ -1,0 +1,8 @@
+{
+  "title": "A Separable Temporal Convolution Neural Network with Attention for\n  Small-Footprint Keyword Spotting",
+  "authors": "Shenghua Hu, Jing Wang, Yujun Wang, Lidong Yang, Wenjing Yang",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.00260v1",
+  "abstract": "Keyword spotting (KWS) on mobile devices generally requires a small memory\nfootprint. However, most current models still maintain a large number of\nparameters in order to ensure good performance. To solve this problem, this\npaper proposes a separable temporal convolution neural network with attention,\nit has a small number of parameters. Through the time convolution combined with\nattention mechanism, a small number of parameters model (32.2K) is implemented\nwhile maintaining high performance. The proposed model achieves 95.7% accuracy\non the Google Speech Commands dataset, which is close to the performance of\nRes15(239K), the state-of-the-art model in KWS at present.",
+  "citation": 2
+}

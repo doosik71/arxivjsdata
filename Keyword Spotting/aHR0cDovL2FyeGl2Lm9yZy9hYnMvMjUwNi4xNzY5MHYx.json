@@ -1,0 +1,8 @@
+{
+  "title": "Low-resource keyword spotting using contrastively trained transformer\n  acoustic word embeddings",
+  "authors": "Julian Herreilers, Christiaan Jacobs, Thomas Niesler",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.17690v1",
+  "abstract": "We introduce a new approach, the ContrastiveTransformer, that produces\nacoustic word embeddings (AWEs) for the purpose of very low-resource keyword\nspotting. The ContrastiveTransformer, an encoder-only model, directly optimises\nthe embedding space using normalised temperature-scaled cross entropy (NT-Xent)\nloss. We use this model to perform keyword spotting for radio broadcasts in\nLuganda and Bambara, the latter a severely under-resourced language. We compare\nour model to various existing AWE approaches, including those constructed from\nlarge pre-trained self-supervised models, a recurrent encoder which previously\nused the NT-Xent loss, and a DTW baseline. We demonstrate that the proposed\ncontrastive transformer approach offers performance improvements over all\nconsidered existing approaches to very low-resource keyword spotting in both\nlanguages.",
+  "citation": 0
+}

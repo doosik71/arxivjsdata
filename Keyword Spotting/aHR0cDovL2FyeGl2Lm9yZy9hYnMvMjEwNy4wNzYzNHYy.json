@@ -1,0 +1,8 @@
+{
+  "title": "Multi-task Learning with Cross Attention for Keyword Spotting",
+  "authors": "Takuya Higuchi, Anmol Gupta, Chandra Dhir",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2107.07634v2",
+  "abstract": "Keyword spotting (KWS) is an important technique for speech applications,\nwhich enables users to activate devices by speaking a keyword phrase. Although\na phoneme classifier can be used for KWS, exploiting a large amount of\ntranscribed data for automatic speech recognition (ASR), there is a mismatch\nbetween the training criterion (phoneme recognition) and the target task (KWS).\nRecently, multi-task learning has been applied to KWS to exploit both ASR and\nKWS training data. In this approach, an output of an acoustic model is split\ninto two branches for the two tasks, one for phoneme transcription trained with\nthe ASR data and one for keyword classification trained with the KWS data. In\nthis paper, we introduce a cross attention decoder in the multi-task learning\nframework. Unlike the conventional multi-task learning approach with the simple\nsplit of the output layer, the cross attention decoder summarizes information\nfrom a phonetic encoder by performing cross attention between the encoder\noutputs and a trainable query sequence to predict a confidence score for the\nKWS task. Experimental results on KWS tasks show that the proposed approach\nachieves a 12% relative reduction in the false reject ratios compared to the\nconventional multi-task learning with split branches and a bi-directional long\nshort-team memory decoder.",
+  "citation": 10
+}

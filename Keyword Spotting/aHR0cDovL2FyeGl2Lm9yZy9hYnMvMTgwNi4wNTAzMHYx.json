@@ -1,0 +1,8 @@
+{
+  "title": "Visually grounded cross-lingual keyword spotting in speech",
+  "authors": "Herman Kamper, Michael Roth",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1806.05030v1",
+  "abstract": "Recent work considered how images paired with speech can be used as\nsupervision for building speech systems when transcriptions are not available.\nWe ask whether visual grounding can be used for cross-lingual keyword spotting:\ngiven a text keyword in one language, the task is to retrieve spoken utterances\ncontaining that keyword in another language. This could enable searching\nthrough speech in a low-resource language using text queries in a high-resource\nlanguage. As a proof-of-concept, we use English speech with German queries: we\nuse a German visual tagger to add keyword labels to each training image, and\nthen train a neural network to map English speech to German keywords. Without\nseeing parallel speech-transcriptions or translations, the model achieves a\nprecision at ten of 58%. We show that most erroneous retrievals contain\nequivalent or semantically relevant keywords; excluding these would improve\nP@10 to 91%.",
+  "citation": 35
+}

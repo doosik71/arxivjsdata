@@ -1,0 +1,7 @@
+{
+  "title": "Longformer: The Long-Document Transformer",
+  "authors": "Iz Beltagy, Matthew E. Peters, Arman Cohan",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2004.05150v2",
+  "abstract": "Transformer-based models are unable to process long sequences due to their\nself-attention operation, which scales quadratically with the sequence length.\nTo address this limitation, we introduce the Longformer with an attention\nmechanism that scales linearly with sequence length, making it easy to process\ndocuments of thousands of tokens or longer. Longformer's attention mechanism is\na drop-in replacement for the standard self-attention and combines a local\nwindowed attention with a task motivated global attention. Following prior work\non long-sequence transformers, we evaluate Longformer on character-level\nlanguage modeling and achieve state-of-the-art results on text8 and enwik8. In\ncontrast to most prior work, we also pretrain Longformer and finetune it on a\nvariety of downstream tasks. Our pretrained Longformer consistently outperforms\nRoBERTa on long document tasks and sets new state-of-the-art results on WikiHop\nand TriviaQA. We finally introduce the Longformer-Encoder-Decoder (LED), a\nLongformer variant for supporting long document generative sequence-to-sequence\ntasks, and demonstrate its effectiveness on the arXiv summarization dataset."
+}

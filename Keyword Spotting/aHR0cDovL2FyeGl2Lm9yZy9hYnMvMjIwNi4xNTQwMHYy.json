@@ -1,0 +1,8 @@
+{
+  "title": "Learning Audio-Text Agreement for Open-vocabulary Keyword Spotting",
+  "authors": "Hyeon-Kyeong Shin, Hyewon Han, Doyeon Kim, Soo-Whan Chung, Hong-Goo Kang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2206.15400v2",
+  "abstract": "In this paper, we propose a novel end-to-end user-defined keyword spotting\nmethod that utilizes linguistically corresponding patterns between speech and\ntext sequences. Unlike previous approaches requiring speech keyword enrollment,\nour method compares input queries with an enrolled text keyword sequence. To\nplace the audio and text representations within a common latent space, we adopt\nan attention-based cross-modal matching approach that is trained in an\nend-to-end manner with monotonic matching loss and keyword classification loss.\nWe also utilize a de-noising loss for the acoustic embedding network to improve\nrobustness in noisy environments. Additionally, we introduce the LibriPhrase\ndataset, a new short-phrase dataset based on LibriSpeech for efficiently\ntraining keyword spotting models. Our proposed method achieves competitive\nresults on various evaluation sets compared to other single-modal and\ncross-modal baselines.",
+  "citation": 49
+}

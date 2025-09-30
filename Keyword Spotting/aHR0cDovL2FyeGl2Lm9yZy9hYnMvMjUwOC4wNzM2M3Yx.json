@@ -1,0 +1,8 @@
+{
+  "title": "Keyword Mamba: Spoken Keyword Spotting with State Space Models",
+  "authors": "Hanyu Ding, Wenlong Dong, Qirong Mao",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2508.07363v1",
+  "abstract": "Keyword spotting (KWS) is an essential task in speech processing. It is\nwidely used in voice assistants and smart devices. Deep learning models like\nCNNs, RNNs, and Transformers have performed well in KWS. However, they often\nstruggle to handle long-term patterns and stay efficient at the same time. In\nthis work, we present Keyword Mamba, a new architecture for KWS. It uses a\nneural state space model (SSM) called Mamba. We apply Mamba along the time axis\nand also explore how it can replace the self-attention part in Transformer\nmodels. We test our model on the Google Speech Commands datasets. The results\nshow that Keyword Mamba reaches strong accuracy with fewer parameters and lower\ncomputational cost. To our knowledge, this is the first time a state space\nmodel has been used for KWS. These results suggest that Mamba has strong\npotential in speech-related tasks.",
+  "citation": 0
+}

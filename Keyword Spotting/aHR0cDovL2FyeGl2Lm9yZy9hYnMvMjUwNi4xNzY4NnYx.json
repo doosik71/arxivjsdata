@@ -1,0 +1,8 @@
+{
+  "title": "Enhancing Few-shot Keyword Spotting Performance through Pre-Trained\n  Self-supervised Speech Models",
+  "authors": "Alican Gok, Oguzhan Buyuksolak, Osman Erman Okman, Murat Saraclar",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.17686v1",
+  "abstract": "Keyword Spotting plays a critical role in enabling hands-free interaction for\nbattery-powered edge devices. Few-Shot Keyword Spotting (FS-KWS) addresses the\nscalability and adaptability challenges of traditional systems by enabling\nrecognition of custom keywords with only a few examples. However, existing\nFS-KWS systems achieve subpar accuracy at desirable false acceptance rates,\nparticularly in resource-constrained edge environments. To address these\nissues, we propose a training scheme that leverages self-supervised learning\nmodels for robust feature extraction, dimensionality reduction, and knowledge\ndistillation. The teacher model, based on Wav2Vec 2.0 is trained using\nSub-center ArcFace loss, which enhances inter-class separability and\nintra-class compactness. To enable efficient deployment on edge devices, we\nintroduce attention-based dimensionality reduction and train a standard\nlightweight ResNet15 student model. We evaluate the proposed approach on the\nEnglish portion of the Multilingual Spoken Words Corpus (MSWC) and the Google\nSpeech Commands (GSC) datasets. Notably, the proposed training method improves\nthe 10-shot classification accuracy from 33.4% to 74.1% on 11 classes at 1%\nfalse alarm accuracy on the GSC dataset, thus making it significantly\nbetter-suited for a real use case scenario.",
+  "citation": 0
+}

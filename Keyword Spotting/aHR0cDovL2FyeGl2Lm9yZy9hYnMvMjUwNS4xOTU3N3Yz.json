@@ -1,0 +1,8 @@
+{
+  "title": "MFA-KWS: Effective Keyword Spotting with Multi-head Frame-asynchronous\n  Decoding",
+  "authors": "Yu Xi, Haoyu Li, Xiaoyu Gu, Yidi Jiang, Kai Yu",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.19577v3",
+  "abstract": "Keyword spotting (KWS) is essential for voice-driven applications, demanding\nboth accuracy and efficiency. Traditional ASR-based KWS methods, such as greedy\nand beam search, explore the entire search space without explicitly\nprioritizing keyword detection, often leading to suboptimal performance. In\nthis paper, we propose an effective keyword-specific KWS framework by\nintroducing a streaming-oriented CTC-Transducer-combined frame-asynchronous\nsystem with multi-head frame-asynchronous decoding (MFA-KWS). Specifically,\nMFA-KWS employs keyword-specific phone-synchronous decoding for CTC and\nreplaces conventional RNN-T with Token-and-Duration Transducer to enhance both\nperformance and efficiency. Furthermore, we explore various score fusion\nstrategies, including single-frame-based and consistency-based methods.\nExtensive experiments demonstrate the superior performance of MFA-KWS, which\nachieves state-of-the-art results on both fixed keyword and arbitrary keywords\ndatasets, such as Snips, MobvoiHotwords, and LibriKWS-20, while exhibiting\nstrong robustness in noisy environments. Among fusion strategies, the\nconsistency-based CDC-Last method delivers the best performance. Additionally,\nMFA-KWS achieves a 47% to 63% speed-up over the frame-synchronous baselines\nacross various datasets. Extensive experimental results confirm that MFA-KWS is\nan effective and efficient KWS framework, making it well-suited for on-device\ndeployment.",
+  "citation": 1
+}

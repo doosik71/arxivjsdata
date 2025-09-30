@@ -1,0 +1,8 @@
+{
+  "title": "Understanding temporally weakly supervised training: A case study for\n  keyword spotting",
+  "authors": "Heinrich Dinkel, Weiji Zhuang, Zhiyong Yan, Yongqing Wang, Junbo Zhang, Yujun Wang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.18794v1",
+  "abstract": "The currently most prominent algorithm to train keyword spotting (KWS) models\nwith deep neural networks (DNNs) requires strong supervision i.e., precise\nknowledge of the spoken keyword location in time. Thus, most KWS approaches\ntreat the presence of redundant data, such as noise, within their training set\nas an obstacle. A common training paradigm to deal with data redundancies is to\nuse temporally weakly supervised learning, which only requires providing labels\non a coarse scale. This study explores the limits of DNN training using\ntemporally weak labeling with applications in KWS. We train a simple end-to-end\nclassifier on the common Google Speech Commands dataset with increased\ndifficulty by randomly appending and adding noise to the training dataset. Our\nresults indicate that temporally weak labeling can achieve comparable results\nto strongly supervised baselines while having a less stringent labeling\nrequirement. In the presence of noise, weakly supervised models are capable to\nlocalize and extract target keywords without explicit supervision, leading to a\nperformance increase compared to strongly supervised approaches.",
+  "citation": 0
+}

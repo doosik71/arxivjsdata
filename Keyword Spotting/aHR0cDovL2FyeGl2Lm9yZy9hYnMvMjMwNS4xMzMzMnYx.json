@@ -1,0 +1,8 @@
+{
+  "title": "Conditional Online Learning for Keyword Spotting",
+  "authors": "Michel Meneses, Bruno Iwami",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.13332v1",
+  "abstract": "Modern approaches for keyword spotting rely on training deep neural networks\non large static datasets with i.i.d. distributions. However, the resulting\nmodels tend to underperform when presented with changing data regimes in\nreal-life applications. This work investigates a simple but effective online\ncontinual learning method that updates a keyword spotter on-device via SGD as\nnew data becomes available. Contrary to previous research, this work focuses on\nlearning the same KWS task, which covers most commercial applications. During\nexperiments with dynamic audio streams in different scenarios, that method\nimproves the performance of a pre-trained small-footprint model by 34%.\nMoreover, experiments demonstrate that, compared to a naive online learning\nimplementation, conditional model updates based on its performance in a small\nhold-out set drawn from the training distribution mitigate catastrophic\nforgetting.",
+  "citation": 0
+}

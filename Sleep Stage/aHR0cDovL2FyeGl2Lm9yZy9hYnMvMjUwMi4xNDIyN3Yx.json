@@ -1,0 +1,8 @@
+{
+  "title": "SleepGMUformer: A gated multimodal temporal neural network for sleep\n  staging",
+  "authors": "Chenjun Zhao, Xuesen Niu, Xinglin Yu, Long Chen, Na Lv, Huiyu Zhou, Aite Zhao",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.14227v1",
+  "abstract": "Sleep staging is a key method for assessing sleep quality and diagnosing\nsleep disorders. However, current deep learning methods face challenges: 1)\npostfusion techniques ignore the varying contributions of different modalities;\n2) unprocessed sleep data can interfere with frequency-domain information. To\ntackle these issues, this paper proposes a gated multimodal temporal neural\nnetwork for multidomain sleep data, including heart rate, motion, steps, EEG\n(Fpz-Cz, Pz-Oz), and EOG from WristHR-Motion-Sleep and SleepEDF-78. The model\nintegrates: 1) a pre-processing module for feature alignment, missing value\nhandling, and EEG de-trending; 2) a feature extraction module for complex sleep\nfeatures in the time dimension; and 3) a dynamic fusion module for real-time\nmodality weighting.Experiments show classification accuracies of 85.03% on\nSleepEDF-78 and 94.54% on WristHR-Motion-Sleep datasets. The model handles\nheterogeneous datasets and outperforms state-of-the-art models by 1.00%-4.00%.",
+  "citation": 0
+}

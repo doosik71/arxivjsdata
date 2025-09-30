@@ -1,0 +1,8 @@
+{
+  "title": "Unified Keyword Spotting and Audio Tagging on Mobile Devices with\n  Transformers",
+  "authors": "Heinrich Dinkel, Yongqing Wang, Zhiyong Yan, Junbo Zhang, Yujun Wang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2303.01812v1",
+  "abstract": "Keyword spotting (KWS) is a core human-machine-interaction front-end task for\nmost modern intelligent assistants. Recently, a unified (UniKW-AT) framework\nhas been proposed that adds additional capabilities in the form of audio\ntagging (AT) to a KWS model. However, previous work did not consider the\nreal-world deployment of a UniKW-AT model, where factors such as model size and\ninference speed are more important than performance alone. This work introduces\nthree mobile-device deployable models named Unified Transformers (UiT). Our\nbest model achieves an mAP of 34.09 on Audioset, and an accuracy of 97.76 on\nthe public Google Speech Commands V1 dataset. Further, we benchmark our\nproposed approaches on four mobile platforms, revealing that the proposed UiT\nmodels can achieve a speedup of 2 - 6 times against a competitive MobileNetV2.",
+  "citation": 4
+}

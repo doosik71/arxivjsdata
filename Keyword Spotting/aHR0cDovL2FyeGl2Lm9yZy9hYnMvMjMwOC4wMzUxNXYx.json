@@ -1,0 +1,8 @@
+{
+  "title": "Keyword Spotting Simplified: A Segmentation-Free Approach using\n  Character Counting and CTC re-scoring",
+  "authors": "George Retsinas, Giorgos Sfikas, Christophoros Nikou",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2308.03515v1",
+  "abstract": "Recent advances in segmentation-free keyword spotting treat this problem\nw.r.t. an object detection paradigm and borrow from state-of-the-art detection\nsystems to simultaneously propose a word bounding box proposal mechanism and\ncompute a corresponding representation. Contrary to the norm of such methods\nthat rely on complex and large DNN models, we propose a novel segmentation-free\nsystem that efficiently scans a document image to find rectangular areas that\ninclude the query information. The underlying model is simple and compact,\npredicting character occurrences over rectangular areas through an implicitly\nlearned scale map, trained on word-level annotated images. The proposed\ndocument scanning is then performed using this character counting in a\ncost-effective manner via integral images and binary search. Finally, the\nretrieval similarity by character counting is refined by a pyramidal\nrepresentation and a CTC-based re-scoring algorithm, fully utilizing the\ntrained CNN model. Experimental validation on two widely-used datasets shows\nthat our method achieves state-of-the-art results outperforming the more\ncomplex alternatives, despite the simplicity of the underlying model.",
+  "citation": 4
+}

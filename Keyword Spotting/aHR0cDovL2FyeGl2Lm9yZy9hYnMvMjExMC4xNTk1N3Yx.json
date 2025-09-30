@@ -1,0 +1,8 @@
+{
+  "title": "Visual Keyword Spotting with Attention",
+  "authors": "K R Prajwal, Liliane Momeni, Triantafyllos Afouras, Andrew Zisserman",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2110.15957v1",
+  "abstract": "In this paper, we consider the task of spotting spoken keywords in silent\nvideo sequences -- also known as visual keyword spotting. To this end, we\ninvestigate Transformer-based models that ingest two streams, a visual encoding\nof the video and a phonetic encoding of the keyword, and output the temporal\nlocation of the keyword if present. Our contributions are as follows: (1) We\npropose a novel architecture, the Transpotter, that uses full cross-modal\nattention between the visual and phonetic streams; (2) We show through\nextensive evaluations that our model outperforms the prior state-of-the-art\nvisual keyword spotting and lip reading methods on the challenging LRW, LRS2,\nLRS3 datasets by a large margin; (3) We demonstrate the ability of our model to\nspot words under the extreme conditions of isolated mouthings in sign language\nvideos.",
+  "citation": 23
+}

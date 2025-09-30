@@ -1,0 +1,8 @@
+{
+  "title": "Improving Small Footprint Few-shot Keyword Spotting with Supervision on\n  Auxiliary Data",
+  "authors": "Seunghan Yang, Byeonggeun Kim, Kyuhong Shim, Simyung Chang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.00647v1",
+  "abstract": "Few-shot keyword spotting (FS-KWS) models usually require large-scale\nannotated datasets to generalize to unseen target keywords. However, existing\nKWS datasets are limited in scale and gathering keyword-like labeled data is\ncostly undertaking. To mitigate this issue, we propose a framework that uses\neasily collectible, unlabeled reading speech data as an auxiliary source.\nSelf-supervised learning has been widely adopted for learning representations\nfrom unlabeled data; however, it is known to be suitable for large models with\nenough capacity and is not practical for training a small footprint FS-KWS\nmodel. Instead, we automatically annotate and filter the data to construct a\nkeyword-like dataset, LibriWord, enabling supervision on auxiliary data. We\nthen adopt multi-task learning that helps the model to enhance the\nrepresentation power from out-of-domain auxiliary data. Our method notably\nimproves the performance over competitive methods in the FS-KWS benchmark.",
+  "citation": 3
+}

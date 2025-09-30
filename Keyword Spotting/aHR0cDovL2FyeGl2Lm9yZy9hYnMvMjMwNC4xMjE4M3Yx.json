@@ -1,0 +1,8 @@
+{
+  "title": "Small-footprint slimmable networks for keyword spotting",
+  "authors": "Zuhaib Akhtar, Mohammad Omar Khursheed, Dongsu Du, Yuzong Liu",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.12183v1",
+  "abstract": "In this work, we present Slimmable Neural Networks applied to the problem of\nsmall-footprint keyword spotting. We show that slimmable neural networks allow\nus to create super-nets from Convolutioanl Neural Networks and Transformers,\nfrom which sub-networks of different sizes can be extracted. We demonstrate the\nusefulness of these models on in-house Alexa data and Google Speech Commands,\nand focus our efforts on models for the on-device use case, limiting ourselves\nto less than 250k parameters. We show that slimmable models can match (and in\nsome cases, outperform) models trained from scratch. Slimmable neural networks\nare therefore a class of models particularly useful when the same functionality\nis to be replicated at different memory and compute budgets, with different\naccuracy requirements.",
+  "citation": 8
+}

@@ -1,0 +1,8 @@
+{
+  "title": "GE2E-KWS: Generalized End-to-End Training and Evaluation for Zero-shot\n  Keyword Spotting",
+  "authors": "Pai Zhu, Jacob W. Bartel, Dhruuv Agarwal, Kurt Partridge, Hyun Jin Park, Quan Wang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.16647v1",
+  "abstract": "We propose GE2E-KWS -- a generalized end-to-end training and evaluation\nframework for customized keyword spotting. Specifically, enrollment utterances\nare separated and grouped by keywords from the training batch and their\nembedding centroids are compared to all other test utterance embeddings to\ncompute the loss. This simulates runtime enrollment and verification stages,\nand improves convergence stability and training speed by optimizing matrix\noperations compared to SOTA triplet loss approaches. To benchmark different\nmodels reliably, we propose an evaluation process that mimics the production\nenvironment and compute metrics that directly measure keyword matching\naccuracy. Trained with GE2E loss, our 419KB quantized conformer model beats a\n7.5GB ASR encoder by 23.6% relative AUC, and beats a same size triplet loss\nmodel by 60.7% AUC. Our KWS models are natively streamable with low memory\nfootprints, and designed to continuously run on-device with no retraining\nneeded for new keywords (zero-shot).",
+  "citation": 3
+}

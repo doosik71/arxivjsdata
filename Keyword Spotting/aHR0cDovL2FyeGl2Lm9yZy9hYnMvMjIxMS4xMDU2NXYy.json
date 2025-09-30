@@ -1,0 +1,8 @@
+{
+  "title": "Filterbank Learning for Noise-Robust Small-Footprint Keyword Spotting",
+  "authors": "Iván López-Espejo, Ram C. M. C. Shekar, Zheng-Hua Tan, Jesper Jensen, John H. L. Hansen",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.10565v2",
+  "abstract": "In the context of keyword spotting (KWS), the replacement of handcrafted\nspeech features by learnable features has not yielded superior KWS performance.\nIn this study, we demonstrate that filterbank learning outperforms handcrafted\nspeech features for KWS whenever the number of filterbank channels is severely\ndecreased. Reducing the number of channels might yield certain KWS performance\ndrop, but also a substantial energy consumption reduction, which is key when\ndeploying common always-on KWS on low-resource devices. Experimental results on\na noisy version of the Google Speech Commands Dataset show that filterbank\nlearning adapts to noise characteristics to provide a higher degree of\nrobustness to noise, especially when dropout is integrated. Thus, switching\nfrom typically used 40-channel log-Mel features to 8-channel learned features\nleads to a relative KWS accuracy loss of only 3.5% while simultaneously\nachieving a 6.3x energy consumption reduction.",
+  "citation": 6
+}

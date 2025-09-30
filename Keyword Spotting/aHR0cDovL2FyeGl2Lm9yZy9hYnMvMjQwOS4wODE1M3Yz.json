@@ -1,0 +1,8 @@
+{
+  "title": "Dark Experience for Incremental Keyword Spotting",
+  "authors": "Tianyi Peng, Yang Xiao",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.08153v3",
+  "abstract": "Spoken keyword spotting (KWS) is crucial for identifying keywords within\naudio inputs and is widely used in applications like Apple Siri and Google\nHome, particularly on edge devices. Current deep learning-based KWS systems,\nwhich are typically trained on a limited set of keywords, can suffer from\nperformance degradation when encountering new domains, a challenge often\naddressed through few-shot fine-tuning. However, this adaptation frequently\nleads to catastrophic forgetting, where the model's performance on original\ndata deteriorates. Progressive continual learning (CL) strategies have been\nproposed to overcome this, but they face limitations such as the need for\ntask-ID information and increased storage, making them less practical for\nlightweight devices. To address these challenges, we introduce Dark Experience\nfor Keyword Spotting (DE-KWS), a novel CL approach that leverages dark\nknowledge to distill past experiences throughout the training process. DE-KWS\ncombines rehearsal and distillation, using both ground truth labels and logits\nstored in a memory buffer to maintain model performance across tasks.\nEvaluations on the Google Speech Command dataset show that DE-KWS outperforms\nexisting CL baselines in average accuracy without increasing model size,\noffering an effective solution for resource-constrained edge devices. The\nscripts are available on GitHub for the future research.",
+  "citation": 7
+}

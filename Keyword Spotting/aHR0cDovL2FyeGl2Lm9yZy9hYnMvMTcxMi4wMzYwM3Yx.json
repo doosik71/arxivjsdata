@@ -1,0 +1,8 @@
+{
+  "title": "A Cascade Architecture for Keyword Spotting on Mobile Devices",
+  "authors": "Alexander Gruenstein, Raziel Alvarez, Chris Thornton, Mohammadali Ghodrat",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1712.03603v1",
+  "abstract": "We present a cascade architecture for keyword spotting with speaker\nverification on mobile devices. By pairing a small computational footprint with\nspecialized digital signal processing (DSP) chips, we are able to achieve low\npower consumption while continuously listening for a keyword.",
+  "citation": 42
+}

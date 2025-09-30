@@ -1,0 +1,8 @@
+{
+  "title": "Robust Dual-Modal Speech Keyword Spotting for XR Headsets",
+  "authors": "Zhuojiang Cai, Yuhan Ma, Feng Lu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2401.14978v1",
+  "abstract": "While speech interaction finds widespread utility within the Extended Reality\n(XR) domain, conventional vocal speech keyword spotting systems continue to\ngrapple with formidable challenges, including suboptimal performance in noisy\nenvironments, impracticality in situations requiring silence, and\nsusceptibility to inadvertent activations when others speak nearby. These\nchallenges, however, can potentially be surmounted through the cost-effective\nfusion of voice and lip movement information. Consequently, we propose a novel\nvocal-echoic dual-modal keyword spotting system designed for XR headsets. We\ndevise two different modal fusion approches and conduct experiments to test the\nsystem's performance across diverse scenarios. The results show that our\ndual-modal system not only consistently outperforms its single-modal\ncounterparts, demonstrating higher precision in both typical and noisy\nenvironments, but also excels in accurately identifying silent utterances.\nFurthermore, we have successfully applied the system in real-time\ndemonstrations, achieving promising results. The code is available at\nhttps://github.com/caizhuojiang/VE-KWS.",
+  "citation": 6
+}

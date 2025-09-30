@@ -1,0 +1,8 @@
+{
+  "title": "End-to-end Models with auditory attention in Multi-channel Keyword\n  Spotting",
+  "authors": "Haitong Zhang, Junbo Zhang, Yujun Wang",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1811.00350v2",
+  "abstract": "In this paper, we propose an attention-based end-to-end model for\nmulti-channel keyword spotting (KWS), which is trained to optimize the KWS\nresult directly. As a result, our model outperforms the baseline model with\nsignal pre-processing techniques in both the clean and noisy testing data. We\nalso found that multi-task learning results in a better performance when the\ntraining and testing data are similar. Transfer learning and multi-target\nspectral mapping can dramatically enhance the robustness to the noisy\nenvironment. At 0.1 false alarm (FA) per hour, the model with transfer learning\nand multi-target mapping gain an absolute 30% improvement in the wake-up rate\nin the noisy data with SNR about -20.",
+  "citation": 4
+}

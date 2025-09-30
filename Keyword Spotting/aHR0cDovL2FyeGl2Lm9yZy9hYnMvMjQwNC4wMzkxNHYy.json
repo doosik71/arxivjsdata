@@ -1,0 +1,8 @@
+{
+  "title": "Open vocabulary keyword spotting through transfer learning from speech\n  synthesis",
+  "authors": "Kesavaraj V, Anil Kumar Vuppala",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.03914v2",
+  "abstract": "Identifying keywords in an open-vocabulary context is crucial for\npersonalizing interactions with smart devices. Previous approaches to open\nvocabulary keyword spotting dependon a shared embedding space created by audio\nand text encoders. However, these approaches suffer from heterogeneous modality\nrepresentations (i.e., audio-text mismatch). To address this issue, our\nproposed framework leverages knowledge acquired from a pre-trained\ntext-to-speech (TTS) system. This knowledge transfer allows for the\nincorporation of awareness of audio projections into the text representations\nderived from the text encoder. The performance of the proposed approach is\ncompared with various baseline methods across four different datasets. The\nrobustness of our proposed model is evaluated by assessing its performance\nacross different word lengths and in an Out-of-Vocabulary (OOV) scenario.\nAdditionally, the effectiveness of transfer learning from the TTS system is\ninvestigated by analyzing its different intermediate representations. The\nexperimental results indicate that, in the challenging LibriPhrase Hard\ndataset, the proposed approach outperformed the cross-modality correspondence\ndetector (CMCD) method by a significant improvement of 8.22% in area under the\ncurve (AUC) and 12.56% in equal error rate (EER).",
+  "citation": 4
+}

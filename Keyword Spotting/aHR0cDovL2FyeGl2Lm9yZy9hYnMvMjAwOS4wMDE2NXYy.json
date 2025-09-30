@@ -1,0 +1,8 @@
+{
+  "title": "Neural Architecture Search For Keyword Spotting",
+  "authors": "Tong Mo, Yakun Yu, Mohammad Salameh, Di Niu, Shangling Jui",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2009.00165v2",
+  "abstract": "Deep neural networks have recently become a popular solution to keyword\nspotting systems, which enable the control of smart devices via voice. In this\npaper, we apply neural architecture search to search for convolutional neural\nnetwork models that can help boost the performance of keyword spotting based on\nfeatures extracted from acoustic signals while maintaining an acceptable memory\nfootprint. Specifically, we use differentiable architecture search techniques\nto search for operators and their connections in a predefined cell search\nspace. The found cells are then scaled up in both depth and width to achieve\ncompetitive performance. We evaluated the proposed method on Google's Speech\nCommands Dataset and achieved a state-of-the-art accuracy of over 97% on the\nsetting of 12-class utterance classification commonly reported in the\nliterature.",
+  "citation": 42
+}

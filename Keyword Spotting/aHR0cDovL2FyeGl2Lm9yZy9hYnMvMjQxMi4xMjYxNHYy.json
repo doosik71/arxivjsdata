@@ -1,0 +1,8 @@
+{
+  "title": "NTC-KWS: Noise-aware CTC for Robust Keyword Spotting",
+  "authors": "Yu Xi, Haoyu Li, Hao Li, Jiaqi Guo, Xu Li, Wen Ding, Kai Yu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.12614v2",
+  "abstract": "In recent years, there has been a growing interest in designing\nsmall-footprint yet effective Connectionist Temporal Classification based\nkeyword spotting (CTC-KWS) systems. They are typically deployed on low-resource\ncomputing platforms, where limitations on model size and computational capacity\ncreate bottlenecks under complicated acoustic scenarios. Such constraints often\nresult in overfitting and confusion between keywords and background noise,\nleading to high false alarms. To address these issues, we propose a noise-aware\nCTC-based KWS (NTC-KWS) framework designed to enhance model robustness in noisy\nenvironments, particularly under extremely low signal-to-noise ratios. Our\napproach introduces two additional noise-modeling wildcard arcs into the\ntraining and decoding processes based on weighted finite state transducer\n(WFST) graphs: self-loop arcs to address noise insertion errors and bypass arcs\nto handle masking and interference caused by excessive noise. Experiments on\nclean and noisy Hey Snips show that NTC-KWS outperforms state-of-the-art (SOTA)\nend-to-end systems and CTC-KWS baselines across various acoustic conditions,\nwith particularly strong performance in low SNR scenarios.",
+  "citation": 3
+}

@@ -1,0 +1,8 @@
+{
+  "title": "End-to-end Keyword Spotting using Neural Architecture Search and\n  Quantization",
+  "authors": "David Peter, Wolfgang Roth, Franz Pernkopf",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2104.06666v1",
+  "abstract": "This paper introduces neural architecture search (NAS) for the automatic\ndiscovery of end-to-end keyword spotting (KWS) models in limited resource\nenvironments. We employ a differentiable NAS approach to optimize the structure\nof convolutional neural networks (CNNs) operating on raw audio waveforms. After\na suitable KWS model is found with NAS, we conduct quantization of weights and\nactivations to reduce the memory footprint. We conduct extensive experiments on\nthe Google speech commands dataset. In particular, we compare our end-to-end\napproach to mel-frequency cepstral coefficient (MFCC) based systems. For\nquantization, we compare fixed bit-width quantization and trained bit-width\nquantization. Using NAS only, we were able to obtain a highly efficient model\nwith an accuracy of 95.55% using 75.7k parameters and 13.6M operations. Using\ntrained bit-width quantization, the same model achieves a test accuracy of\n93.76% while using on average only 2.91 bits per activation and 2.51 bits per\nweight.",
+  "citation": 24
+}

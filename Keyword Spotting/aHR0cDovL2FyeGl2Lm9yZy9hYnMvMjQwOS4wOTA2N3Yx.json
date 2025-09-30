@@ -1,0 +1,8 @@
+{
+  "title": "SLiCK: Exploiting Subsequences for Length-Constrained Keyword Spotting",
+  "authors": "Kumari Nishu, Minsik Cho, Devang Naik",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.09067v1",
+  "abstract": "User-defined keyword spotting on a resource-constrained edge device is\nchallenging. However, keywords are often bounded by a maximum keyword length,\nwhich has been largely under-leveraged in prior works. Our analysis of\nkeyword-length distribution shows that user-defined keyword spotting can be\ntreated as a length-constrained problem, eliminating the need for aggregation\nover variable text length. This leads to our proposed method for efficient\nkeyword spotting, SLiCK (exploiting Subsequences for Length-Constrained Keyword\nspotting). We further introduce a subsequence-level matching scheme to learn\naudio-text relations at a finer granularity, thus distinguishing\nsimilar-sounding keywords more effectively through enhanced context. In SLiCK,\nthe model is trained with a multi-task learning approach using two modules:\nMatcher (utterance-level matching task, novel subsequence-level matching task)\nand Encoder (phoneme recognition task). The proposed method improves the\nbaseline results on Libriphrase hard dataset, increasing AUC from $88.52$ to\n$94.9$ and reducing EER from $18.82$ to $11.1$.",
+  "citation": 0
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Open-vocabulary Keyword-spotting with Adaptive Instance Normalization",
+  "authors": "Aviv Navon, Aviv Shamsian, Neta Glazer, Gill Hetz, Joseph Keshet",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.08561v1",
+  "abstract": "Open vocabulary keyword spotting is a crucial and challenging task in\nautomatic speech recognition (ASR) that focuses on detecting user-defined\nkeywords within a spoken utterance. Keyword spotting methods commonly map the\naudio utterance and keyword into a joint embedding space to obtain some\naffinity score. In this work, we propose AdaKWS, a novel method for keyword\nspotting in which a text encoder is trained to output keyword-conditioned\nnormalization parameters. These parameters are used to process the auditory\ninput. We provide an extensive evaluation using challenging and diverse\nmulti-lingual benchmarks and show significant improvements over recent keyword\nspotting and ASR baselines. Furthermore, we study the effectiveness of our\napproach on low-resource languages that were unseen during the training. The\nresults demonstrate a substantial performance improvement compared to baseline\nmethods.",
+  "citation": 18
+}

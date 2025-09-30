@@ -1,0 +1,8 @@
+{
+  "title": "Fully Unsupervised Training of Few-shot Keyword Spotting",
+  "authors": "Dongjune Lee, Minchan Kim, Sung Hwan Mun, Min Hyun Han, Nam Soo Kim",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2210.02732v2",
+  "abstract": "For training a few-shot keyword spotting (FS-KWS) model, a large labeled\ndataset containing massive target keywords has known to be essential to\ngeneralize to arbitrary target keywords with only a few enrollment samples. To\nalleviate the expensive data collection with labeling, in this paper, we\npropose a novel FS-KWS system trained only on synthetic data. The proposed\nsystem is based on metric learning enabling target keywords to be detected\nusing distance metrics. Exploiting the speech synthesis model that generates\nspeech with pseudo phonemes instead of texts, we easily obtain a large\ncollection of multi-view samples with the same semantics. These samples are\nsufficient for training, considering metric learning does not intrinsically\nnecessitate labeled data. All of the components in our framework do not require\nany supervision, making our method unsupervised. Experimental results on real\ndatasets show our proposed method is competitive even without any labeled and\nreal datasets.",
+  "citation": 9
+}

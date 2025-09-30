@@ -1,0 +1,8 @@
+{
+  "title": "Resource-efficient DNNs for Keyword Spotting using Neural Architecture\n  Search and Quantization",
+  "authors": "David Peter, Wolfgang Roth, Franz Pernkopf",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2012.10138v1",
+  "abstract": "This paper introduces neural architecture search (NAS) for the automatic\ndiscovery of small models for keyword spotting (KWS) in limited resource\nenvironments. We employ a differentiable NAS approach to optimize the structure\nof convolutional neural networks (CNNs) to maximize the classification accuracy\nwhile minimizing the number of operations per inference. Using NAS only, we\nwere able to obtain a highly efficient model with 95.4% accuracy on the Google\nspeech commands dataset with 494.8 kB of memory usage and 19.6 million\noperations. Additionally, weight quantization is used to reduce the memory\nconsumption even further. We show that weight quantization to low bit-widths\n(e.g. 1 bit) can be used without substantial loss in accuracy. By increasing\nthe number of input features from 10 MFCC to 20 MFCC we were able to increase\nthe accuracy to 96.3% at 340.1 kB of memory usage and 27.1 million operations.",
+  "citation": 7
+}

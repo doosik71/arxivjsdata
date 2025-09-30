@@ -1,0 +1,8 @@
+{
+  "title": "On-Device Constrained Self-Supervised Speech Representation Learning for\n  Keyword Spotting via Knowledge Distillation",
+  "authors": "Gene-Ping Yang, Yue Gu, Qingming Tang, Dongsu Du, Yuzong Liu",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2307.02720v1",
+  "abstract": "Large self-supervised models are effective feature extractors, but their\napplication is challenging under on-device budget constraints and biased\ndataset collection, especially in keyword spotting. To address this, we\nproposed a knowledge distillation-based self-supervised speech representation\nlearning (S3RL) architecture for on-device keyword spotting. Our approach used\na teacher-student framework to transfer knowledge from a larger, more complex\nmodel to a smaller, light-weight model using dual-view cross-correlation\ndistillation and the teacher's codebook as learning objectives. We evaluated\nour model's performance on an Alexa keyword spotting detection task using a\n16.6k-hour in-house dataset. Our technique showed exceptional performance in\nnormal and noisy conditions, demonstrating the efficacy of knowledge\ndistillation methods in constructing self-supervised models for keyword\nspotting tasks while working within on-device resource constraints.",
+  "citation": 10
+}

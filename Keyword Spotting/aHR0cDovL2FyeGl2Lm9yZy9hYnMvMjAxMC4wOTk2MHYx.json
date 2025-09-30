@@ -1,0 +1,8 @@
+{
+  "title": "Small-Footprint Keyword Spotting with Multi-Scale Temporal Convolution",
+  "authors": "Ximin Li, Xiaodong Wei, Xiaowei Qin",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2010.09960v1",
+  "abstract": "Keyword Spotting (KWS) plays a vital role in human-computer interaction for\nsmart on-device terminals and service robots. It remains challenging to achieve\nthe trade-off between small footprint and high accuracy for KWS task. In this\npaper, we explore the application of multi-scale temporal modeling to the\nsmall-footprint keyword spotting task. We propose a multi-branch temporal\nconvolution module (MTConv), a CNN block consisting of multiple temporal\nconvolution filters with different kernel sizes, which enriches temporal\nfeature space. Besides, taking advantage of temporal and depthwise convolution,\na temporal efficient neural network (TENet) is designed for KWS system. Based\non the purposed model, we replace standard temporal convolution layers with\nMTConvs that can be trained for better performance. While at the inference\nstage, the MTConv can be equivalently converted to the base convolution\narchitecture, so that no extra parameters and computational costs are added\ncompared to the base model. The results on Google Speech Command Dataset show\nthat one of our models trained with MTConv performs the accuracy of 96.8% with\nonly 100K parameters.",
+  "citation": 51
+}

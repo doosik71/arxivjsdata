@@ -1,0 +1,8 @@
+{
+  "title": "Spot keywords from very noisy and mixed speech",
+  "authors": "Ying Shi, Dong Wang, Lantian Li, Jiqing Han, Shi Yin",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.17706v1",
+  "abstract": "Most existing keyword spotting research focuses on conditions with slight or\nmoderate noise. In this paper, we try to tackle a more challenging task:\ndetecting keywords buried under strong interfering speech (10 times higher than\nthe keyword in amplitude), and even worse, mixed with other keywords. We\npropose a novel Mix Training (MT) strategy that encourages the model to\ndiscover low-energy keywords from noisy and mixed speech. Experiments were\nconducted with a vanilla CNN and two EfficientNet (B0/B2) architectures. The\nresults evaluated with the Google Speech Command dataset demonstrated that the\nproposed mix training approach is highly effective and outperforms standard\ndata augmentation and mixup training.",
+  "citation": 6
+}

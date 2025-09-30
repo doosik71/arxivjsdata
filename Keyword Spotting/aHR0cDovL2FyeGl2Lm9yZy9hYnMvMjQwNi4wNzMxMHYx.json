@@ -1,0 +1,8 @@
+{
+  "title": "MM-KWS: Multi-modal Prompts for Multilingual User-defined Keyword\n  Spotting",
+  "authors": "Zhiqi Ai, Zhiyong Chen, Shugong Xu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.07310v1",
+  "abstract": "In this paper, we propose MM-KWS, a novel approach to user-defined keyword\nspotting leveraging multi-modal enrollments of text and speech templates.\nUnlike previous methods that focus solely on either text or speech features,\nMM-KWS extracts phoneme, text, and speech embeddings from both modalities.\nThese embeddings are then compared with the query speech embedding to detect\nthe target keywords. To ensure the applicability of MM-KWS across diverse\nlanguages, we utilize a feature extractor incorporating several multilingual\npre-trained models. Subsequently, we validate its effectiveness on Mandarin and\nEnglish tasks. In addition, we have integrated advanced data augmentation tools\nfor hard case mining to enhance MM-KWS in distinguishing confusable words.\nExperimental results on the LibriPhrase and WenetPhrase datasets demonstrate\nthat MM-KWS outperforms prior methods significantly.",
+  "citation": 5
+}

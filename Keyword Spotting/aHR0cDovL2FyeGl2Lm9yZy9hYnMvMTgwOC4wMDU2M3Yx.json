@@ -1,0 +1,8 @@
+{
+  "title": "Data Augmentation for Robust Keyword Spotting under Playback\n  Interference",
+  "authors": "Anirudh Raju, Sankaran Panchapagesan, Xing Liu, Arindam Mandal, Nikko Strom",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1808.00563v1",
+  "abstract": "Accurate on-device keyword spotting (KWS) with low false accept and false\nreject rate is crucial to customer experience for far-field voice control of\nconversational agents. It is particularly challenging to maintain low false\nreject rate in real world conditions where there is (a) ambient noise from\nexternal sources such as TV, household appliances, or other speech that is not\ndirected at the device (b) imperfect cancellation of the audio playback from\nthe device, resulting in residual echo, after being processed by the Acoustic\nEcho Cancellation (AEC) system. In this paper, we propose a data augmentation\nstrategy to improve keyword spotting performance under these challenging\nconditions. The training set audio is artificially corrupted by mixing in music\nand TV/movie audio, at different signal to interference ratios. Our results\nshow that we get around 30-45% relative reduction in false reject rates, at a\nrange of false alarm rates, under audio playback from such devices.",
+  "citation": 41
+}

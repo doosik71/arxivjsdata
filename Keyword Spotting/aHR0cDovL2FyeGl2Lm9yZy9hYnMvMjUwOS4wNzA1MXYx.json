@@ -1,0 +1,8 @@
+{
+  "title": "End-to-End Efficiency in Keyword Spotting: A System-Level Approach for\n  Embedded Microcontrollers",
+  "authors": "Pietro Bartoli, Tommaso Bondini, Christian Veronesi, Andrea Giudici, Niccolò Antonello, Franco Zappa",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.07051v1",
+  "abstract": "Keyword spotting (KWS) is a key enabling technology for hands-free\ninteraction in embedded and IoT devices, where stringent memory and energy\nconstraints challenge the deployment of AI-enabeld devices. In this work, we\nsystematically evaluate and compare several state-of-the-art lightweight neural\nnetwork architectures, including DS-CNN, LiCoNet, and TENet, alongside our\nproposed Typman-KWS (TKWS) architecture built upon MobileNet, specifically\ndesigned for efficient KWS on microcontroller units (MCUs). Unlike prior\nstudies focused solely on model inference, our analysis encompasses the entire\nprocessing pipeline, from Mel-Frequency Cepstral Coefficient (MFCC) feature\nextraction to neural inference, and is benchmarked across three STM32 platforms\n(N6, H7, and U5). Our results show that TKWS with three residual blocks\nachieves up to 92.4% F1-score with only 14.4k parameters, reducing memory\nfootprint without compromising the accuracy. Moreover, the N6 MCU with\nintegrated neural acceleration achieves the best energy-delay product (EDP),\nenabling efficient, low-latency operation even with high-resolution features.\nOur findings highlight the model accuracy alone does not determine real-world\neffectiveness; rather, optimal keyword spotting deployments require careful\nconsideration of feature extraction parameters and hardware-specific\noptimization.",
+  "citation": 0
+}

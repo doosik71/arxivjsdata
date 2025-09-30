@@ -1,0 +1,8 @@
+{
+  "title": "SLEEPNET: Automated Sleep Staging System via Deep Learning",
+  "authors": "Siddharth Biswal, Joshua Kulas, Haoqi Sun, Balaji Goparaju, M Brandon Westover, Matt T Bianchi, Jimeng Sun",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1707.08262v1",
+  "abstract": "Sleep disorders, such as sleep apnea, parasomnias, and hypersomnia, affect\n50-70 million adults in the United States (Hillman et al., 2006). Overnight\npolysomnography (PSG), including brain monitoring using electroencephalography\n(EEG), is a central component of the diagnostic evaluation for sleep disorders.\nWhile PSG is conventionally performed by trained technologists, the recent rise\nof powerful neural network learning algorithms combined with large\nphysiological datasets offers the possibility of automation, potentially making\nexpert-level sleep analysis more widely available. We propose SLEEPNET (Sleep\nEEG neural network), a deployed annotation tool for sleep staging. SLEEPNET\nuses a deep recurrent neural network trained on the largest sleep physiology\ndatabase assembled to date, consisting of PSGs from over 10,000 patients from\nthe Massachusetts General Hospital (MGH) Sleep Laboratory. SLEEPNET achieves\nhuman-level annotation performance on an independent test set of 1,000 EEGs,\nwith an average accuracy of 85.76% and algorithm-expert inter-rater agreement\n(IRA) of kappa = 79.46%, comparable to expert-expert IRA.",
+  "citation": 190
+}

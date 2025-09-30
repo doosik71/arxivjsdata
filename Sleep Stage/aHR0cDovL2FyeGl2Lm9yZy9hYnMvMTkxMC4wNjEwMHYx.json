@@ -1,0 +1,8 @@
+{
+  "title": "SLEEPER: interpretable Sleep staging via Prototypes from Expert Rules",
+  "authors": "Irfan Al-Hussaini, Cao Xiao, M. Brandon Westover, Jimeng Sun",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1910.06100v1",
+  "abstract": "Sleep staging is a crucial task for diagnosing sleep disorders. It is tedious\nand complex as it can take a trained expert several hours to annotate just one\npatient's polysomnogram (PSG) from a single night. Although deep learning\nmodels have demonstrated state-of-the-art performance in automating sleep\nstaging, interpretability which defines other desiderata, has largely remained\nunexplored. In this study, we propose Sleep staging via Prototypes from Expert\nRules (SLEEPER), which combines deep learning models with expert defined rules\nusing a prototype learning framework to generate simple interpretable models.\nIn particular, SLEEPER utilizes sleep scoring rules and expert defined features\nto derive prototypes which are embeddings of PSG data fragments via\nconvolutional neural networks. The final models are simple interpretable models\nlike a shallow decision tree defined over those phenotypes. We evaluated\nSLEEPER using two PSG datasets collected from sleep studies and demonstrated\nthat SLEEPER could provide accurate sleep stage classification comparable to\nhuman experts and deep neural networks with about 85% ROC-AUC and .7 kappa.",
+  "citation": 25
+}

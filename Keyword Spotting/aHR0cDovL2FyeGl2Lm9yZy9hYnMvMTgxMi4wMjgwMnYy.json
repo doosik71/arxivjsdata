@@ -1,0 +1,8 @@
+{
+  "title": "End-to-End Streaming Keyword Spotting",
+  "authors": "Alvarez Raziel, Park Hyun-Jin",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1812.02802v2",
+  "abstract": "We present a system for keyword spotting that, except for a frontend\ncomponent for feature generation, it is entirely contained in a deep neural\nnetwork (DNN) model trained \"end-to-end\" to predict the presence of the keyword\nin a stream of audio. The main contributions of this work are, first, an\nefficient memoized neural network topology that aims at making better use of\nthe parameters and associated computations in the DNN by holding a memory of\nprevious activations distributed over the depth of the DNN. The second\ncontribution is a method to train the DNN, end-to-end, to produce the keyword\nspotting score. This system significantly outperforms previous approaches both\nin terms of quality of detection as well as size and computation.",
+  "citation": 85
+}

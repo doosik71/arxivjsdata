@@ -1,0 +1,8 @@
+{
+  "title": "Self-Learning for Personalized Keyword Spotting on Ultra-Low-Power Audio\n  Sensors",
+  "authors": "Manuele Rusci, Francesco Paci, Marco Fariselli, Eric Flamand, Tinne Tuytelaars",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2408.12481v2",
+  "abstract": "This paper proposes a self-learning method to incrementally train (fine-tune)\na personalized Keyword Spotting (KWS) model after the deployment on ultra-low\npower smart audio sensors. We address the fundamental problem of the absence of\nlabeled training data by assigning pseudo-labels to the new recorded audio\nframes based on a similarity score with respect to few user recordings. By\nexperimenting with multiple KWS models with a number of parameters up to 0.5M\non two public datasets, we show an accuracy improvement of up to +19.2% and\n+16.0% vs. the initial models pretrained on a large set of generic keywords.\nThe labeling task is demonstrated on a sensor system composed of a low-power\nmicrophone and an energy-efficient Microcontroller (MCU). By efficiently\nexploiting the heterogeneous processing engines of the MCU, the always-on\nlabeling task runs in real-time with an average power cost of up to 8.2 mW. On\nthe same platform, we estimate an energy cost for on-device training 10x lower\nthan the labeling energy if sampling a new utterance every 6.1 s or 18.8 s with\na DS-CNN-S or a DS-CNN-M model. Our empirical result paves the way to\nself-adaptive personalized KWS sensors at the extreme edge.",
+  "citation": 3
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Neural ODE with Temporal Convolution and Time Delay Neural Networks for\n  Small-Footprint Keyword Spotting",
+  "authors": "Hiroshi Fuketa, Yukinori Morita",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.00209v2",
+  "abstract": "In this paper, we propose neural network models based on the neural ordinary\ndifferential equation (NODE) for small-footprint keyword spotting (KWS). We\npresent techniques to apply NODE to KWS that make it possible to adopt Batch\nNormalization to NODE-based network and to reduce the number of computations\nduring inference. Finally, we show that the number of model parameters of the\nproposed model is smaller by 68% than that of the conventional KWS model.",
+  "citation": 5
+}

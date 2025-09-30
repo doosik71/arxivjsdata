@@ -1,0 +1,8 @@
+{
+  "title": "Matching Latent Encoding for Audio-Text based Keyword Spotting",
+  "authors": "Kumari Nishu, Minsik Cho, Devang Naik",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.05245v1",
+  "abstract": "Using audio and text embeddings jointly for Keyword Spotting (KWS) has shown\nhigh-quality results, but the key challenge of how to semantically align two\nembeddings for multi-word keywords of different sequence lengths remains\nlargely unsolved. In this paper, we propose an audio-text-based end-to-end\nmodel architecture for flexible keyword spotting (KWS), which builds upon\nlearned audio and text embeddings. Our architecture uses a novel dynamic\nprogramming-based algorithm, Dynamic Sequence Partitioning (DSP), to optimally\npartition the audio sequence into the same length as the word-based text\nsequence using the monotonic alignment of spoken content. Our proposed model\nconsists of an encoder block to get audio and text embeddings, a projector\nblock to project individual embeddings to a common latent space, and an\naudio-text aligner containing a novel DSP algorithm, which aligns the audio and\ntext embeddings to determine if the spoken content is the same as the text.\nExperimental results show that our DSP is more effective than other\npartitioning schemes, and the proposed architecture outperformed the\nstate-of-the-art results on the public dataset in terms of Area Under the ROC\nCurve (AUC) and Equal-Error-Rate (EER) by 14.4 % and 28.9%, respectively.",
+  "citation": 29
+}
