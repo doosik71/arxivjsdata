@@ -1,0 +1,8 @@
+{
+  "title": "EZSR: Event-based Zero-Shot Recognition",
+  "authors": "Yan Yang, Liyuan Pan, Dongxu Li, Liu Liu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2407.21616v2",
+  "abstract": "This paper studies zero-shot object recognition using event camera data.\nGuided by CLIP, which is pre-trained on RGB images, existing approaches achieve\nzero-shot object recognition by optimizing embedding similarities between event\ndata and RGB images respectively encoded by an event encoder and the CLIP image\nencoder. Alternatively, several methods learn RGB frame reconstructions from\nevent data for the CLIP image encoder. However, they often result in suboptimal\nzero-shot performance.\n  This study develops an event encoder without relying on additional\nreconstruction networks. We theoretically analyze the performance bottlenecks\nof previous approaches: the embedding optimization objectives are prone to\nsuffer from the spatial sparsity of event data, causing semantic misalignments\nbetween the learned event embedding space and the CLIP text embedding space. To\nmitigate the issue, we explore a scalar-wise modulation strategy. Furthermore,\nto scale up the number of events and RGB data pairs for training, we also study\na pipeline for synthesizing event data from static RGB images in mass.\n  Experimentally, we demonstrate an attractive scaling property in the number\nof parameters and synthesized data. We achieve superior zero-shot object\nrecognition performance on extensive standard benchmark datasets, even compared\nwith past supervised learning approaches. For example, our model with a\nViT/B-16 backbone achieves 47.84% zero-shot accuracy on the N-ImageNet dataset.",
+  "citation": 1
+}

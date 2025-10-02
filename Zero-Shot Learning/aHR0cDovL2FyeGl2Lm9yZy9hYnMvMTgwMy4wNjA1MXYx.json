@@ -1,0 +1,8 @@
+{
+  "title": "Deep Multiple Instance Learning for Zero-shot Image Tagging",
+  "authors": "Shafin Rahman, Salman Khan",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1803.06051v1",
+  "abstract": "In-line with the success of deep learning on traditional recognition problem,\nseveral end-to-end deep models for zero-shot recognition have been proposed in\nthe literature. These models are successful to predict a single unseen label\ngiven an input image, but does not scale to cases where multiple unseen objects\nare present. In this paper, we model this problem within the framework of\nMultiple Instance Learning (MIL). To the best of our knowledge, we propose the\nfirst end-to-end trainable deep MIL framework for the multi-label zero-shot\ntagging problem. Due to its novel design, the proposed framework has several\ninteresting features: (1) Unlike previous deep MIL models, it does not use any\noff-line procedure (e.g., Selective Search or EdgeBoxes) for bag generation.\n(2) During test time, it can process any number of unseen labels given their\nsemantic embedding vectors. (3) Using only seen labels per image as weak\nannotation, it can produce a bounding box for each predicted labels. We\nexperiment with the NUS-WIDE dataset and achieve superior performance across\nconventional, zero-shot and generalized zero-shot tagging tasks.",
+  "citation": 20
+}

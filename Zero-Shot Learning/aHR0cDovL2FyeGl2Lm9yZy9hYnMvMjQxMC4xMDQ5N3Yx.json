@@ -1,0 +1,8 @@
+{
+  "title": "Continual Learning Improves Zero-Shot Action Recognition",
+  "authors": "Shreyank N Gowda, Davide Moltisanti, Laura Sevilla-Lara",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.10497v1",
+  "abstract": "Zero-shot action recognition requires a strong ability to generalize from\npre-training and seen classes to novel unseen classes. Similarly, continual\nlearning aims to develop models that can generalize effectively and learn new\ntasks without forgetting the ones previously learned. The generalization goals\nof zero-shot and continual learning are closely aligned, however techniques\nfrom continual learning have not been applied to zero-shot action recognition.\nIn this paper, we propose a novel method based on continual learning to address\nzero-shot action recognition. This model, which we call {\\em Generative\nIterative Learning} (GIL) uses a memory of synthesized features of past\nclasses, and combines these synthetic features with real ones from novel\nclasses. The memory is used to train a classification model, ensuring a\nbalanced exposure to both old and new classes. Experiments demonstrate that\n{\\em GIL} improves generalization in unseen classes, achieving a new\nstate-of-the-art in zero-shot recognition across multiple benchmarks.\nImportantly, {\\em GIL} also boosts performance in the more challenging\ngeneralized zero-shot setting, where models need to retain knowledge about\nclasses seen before fine-tuning.",
+  "citation": 3
+}

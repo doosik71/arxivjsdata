@@ -1,0 +1,8 @@
+{
+  "title": "ELECTRA is a Zero-Shot Learner, Too",
+  "authors": "Shiwen Ni, Hung-Yu Kao",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2207.08141v2",
+  "abstract": "Recently, for few-shot or even zero-shot learning, the new paradigm\n\"pre-train, prompt, and predict\" has achieved remarkable achievements compared\nwith the \"pre-train, fine-tune\" paradigm. After the success of prompt-based\nGPT-3, a series of masked language model (MLM)-based (e.g., BERT, RoBERTa)\nprompt learning methods became popular and widely used. However, another\nefficient pre-trained discriminative model, ELECTRA, has probably been\nneglected. In this paper, we attempt to accomplish several NLP tasks in the\nzero-shot scenario using a novel our proposed replaced token detection\n(RTD)-based prompt learning method. Experimental results show that ELECTRA\nmodel based on RTD-prompt learning achieves surprisingly state-of-the-art\nzero-shot performance. Numerically, compared to MLM-RoBERTa-large and\nMLM-BERT-large, our RTD-ELECTRA-large has an average of about 8.4% and 13.7%\nimprovement on all 15 tasks. Especially on the SST-2 task, our\nRTD-ELECTRA-large achieves an astonishing 90.1% accuracy without any training\ndata. Overall, compared to the pre-trained masked language models, the\npre-trained replaced token detection model performs better in zero-shot\nlearning. The source code is available at:\nhttps://github.com/nishiwen1214/RTD-ELECTRA.",
+  "citation": 9
+}

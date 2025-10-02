@@ -1,0 +1,8 @@
+{
+  "title": "Towards Visual Explainable Active Learning for Zero-Shot Classification",
+  "authors": "Shichao Jia, Zeyu Li, Nuo Chen, Jiawan Zhang",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2108.06730v1",
+  "abstract": "Zero-shot classification is a promising paradigm to solve an applicable\nproblem when the training classes and test classes are disjoint. Achieving this\nusually needs experts to externalize their domain knowledge by manually\nspecifying a class-attribute matrix to define which classes have which\nattributes. Designing a suitable class-attribute matrix is the key to the\nsubsequent procedure, but this design process is tedious and trial-and-error\nwith no guidance. This paper proposes a visual explainable active learning\napproach with its design and implementation called semantic navigator to solve\nthe above problems. This approach promotes human-AI teaming with four actions\n(ask, explain, recommend, respond) in each interaction loop. The machine asks\ncontrastive questions to guide humans in the thinking process of attributes. A\nnovel visualization called semantic map explains the current status of the\nmachine. Therefore analysts can better understand why the machine misclassifies\nobjects. Moreover, the machine recommends the labels of classes for each\nattribute to ease the labeling burden. Finally, humans can steer the model by\nmodifying the labels interactively, and the machine adjusts its\nrecommendations. The visual explainable active learning approach improves\nhumans' efficiency of building zero-shot classification models interactively,\ncompared with the method without guidance. We justify our results with user\nstudies using the standard benchmarks for zero-shot classification.",
+  "citation": 40
+}

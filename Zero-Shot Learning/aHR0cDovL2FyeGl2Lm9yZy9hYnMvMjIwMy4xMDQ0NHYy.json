@@ -1,0 +1,8 @@
+{
+  "title": "VGSE: Visually-Grounded Semantic Embeddings for Zero-Shot Learning",
+  "authors": "Wenjia Xu, Yongqin Xian, Jiuniu Wang, Bernt Schiele, Zeynep Akata",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2203.10444v2",
+  "abstract": "Human-annotated attributes serve as powerful semantic embeddings in zero-shot\nlearning. However, their annotation process is labor-intensive and needs expert\nsupervision. Current unsupervised semantic embeddings, i.e., word embeddings,\nenable knowledge transfer between classes. However, word embeddings do not\nalways reflect visual similarities and result in inferior zero-shot\nperformance. We propose to discover semantic embeddings containing\ndiscriminative visual properties for zero-shot learning, without requiring any\nhuman annotation. Our model visually divides a set of images from seen classes\ninto clusters of local image regions according to their visual similarity, and\nfurther imposes their class discrimination and semantic relatedness. To\nassociate these clusters with previously unseen classes, we use external\nknowledge, e.g., word embeddings and propose a novel class relation discovery\nmodule. Through quantitative and qualitative evaluation, we demonstrate that\nour model discovers semantic embeddings that model the visual properties of\nboth seen and unseen classes. Furthermore, we demonstrate on three benchmarks\nthat our visually-grounded semantic embeddings further improve performance over\nword embeddings across various ZSL models by a large margin.",
+  "citation": 89
+}

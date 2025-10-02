@@ -1,0 +1,8 @@
+{
+  "title": "Feature Generating Networks for Zero-Shot Learning",
+  "authors": "Yongqin Xian, Tobias Lorenz, Bernt Schiele, Zeynep Akata",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1712.00981v2",
+  "abstract": "Suffering from the extreme training data imbalance between seen and unseen\nclasses, most of existing state-of-the-art approaches fail to achieve\nsatisfactory results for the challenging generalized zero-shot learning task.\nTo circumvent the need for labeled examples of unseen classes, we propose a\nnovel generative adversarial network (GAN) that synthesizes CNN features\nconditioned on class-level semantic information, offering a shortcut directly\nfrom a semantic descriptor of a class to a class-conditional feature\ndistribution. Our proposed approach, pairing a Wasserstein GAN with a\nclassification loss, is able to generate sufficiently discriminative CNN\nfeatures to train softmax classifiers or any multimodal embedding method. Our\nexperimental results demonstrate a significant boost in accuracy over the state\nof the art on five challenging datasets -- CUB, FLO, SUN, AWA and ImageNet --\nin both the zero-shot learning and generalized zero-shot learning settings.",
+  "citation": 1300
+}

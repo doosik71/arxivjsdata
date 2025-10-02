@@ -1,0 +1,8 @@
+{
+  "title": "Label-Embedding for Image Classification",
+  "authors": "Zeynep Akata, Florent Perronnin, Zaid Harchaoui, Cordelia Schmid",
+  "year": 2015,
+  "url": "http://arxiv.org/abs/1503.08677v2",
+  "abstract": "Attributes act as intermediate representations that enable parameter sharing\nbetween classes, a must when training data is scarce. We propose to view\nattribute-based image classification as a label-embedding problem: each class\nis embedded in the space of attribute vectors. We introduce a function that\nmeasures the compatibility between an image and a label embedding. The\nparameters of this function are learned on a training set of labeled samples to\nensure that, given an image, the correct classes rank higher than the incorrect\nones. Results on the Animals With Attributes and Caltech-UCSD-Birds datasets\nshow that the proposed framework outperforms the standard Direct Attribute\nPrediction baseline in a zero-shot learning scenario. Label embedding enjoys a\nbuilt-in ability to leverage alternative sources of information instead of or\nin addition to attributes, such as e.g. class hierarchies or textual\ndescriptions. Moreover, label embedding encompasses the whole range of learning\nsettings from zero-shot learning to regular learning with a large number of\nlabeled examples.",
+  "citation": 1044
+}

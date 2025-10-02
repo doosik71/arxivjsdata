@@ -1,0 +1,8 @@
+{
+  "title": "Zero-Shot Learning by Convex Combination of Semantic Embeddings",
+  "authors": "Mohammad Norouzi, Tomas Mikolov, Samy Bengio, Yoram Singer, Jonathon Shlens, Andrea Frome, Greg S. Corrado, Jeffrey Dean",
+  "year": 2013,
+  "url": "http://arxiv.org/abs/1312.5650v3",
+  "abstract": "Several recent publications have proposed methods for mapping images into\ncontinuous semantic embedding spaces. In some cases the embedding space is\ntrained jointly with the image transformation. In other cases the semantic\nembedding space is established by an independent natural language processing\ntask, and then the image transformation into that space is learned in a second\nstage. Proponents of these image embedding systems have stressed their\nadvantages over the traditional \\nway{} classification framing of image\nunderstanding, particularly in terms of the promise for zero-shot learning --\nthe ability to correctly annotate images of previously unseen object\ncategories. In this paper, we propose a simple method for constructing an image\nembedding system from any existing \\nway{} image classifier and a semantic word\nembedding model, which contains the $\\n$ class labels in its vocabulary. Our\nmethod maps images into the semantic embedding space via convex combination of\nthe class label embedding vectors, and requires no additional training. We show\nthat this simple and direct method confers many of the advantages associated\nwith more complex image embedding schemes, and indeed outperforms state of the\nart methods on the ImageNet zero-shot learning task.",
+  "citation": 1159
+}

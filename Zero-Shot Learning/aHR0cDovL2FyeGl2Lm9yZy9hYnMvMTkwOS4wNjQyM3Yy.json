@@ -1,0 +1,8 @@
+{
+  "title": "Zero-Shot Action Recognition in Videos: A Survey",
+  "authors": "Valter Estevam, Helio Pedrini, David Menotti",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1909.06423v2",
+  "abstract": "Zero-Shot Action Recognition has attracted attention in the last years and\nmany approaches have been proposed for recognition of objects, events and\nactions in images and videos. There is a demand for methods that can classify\ninstances from classes that are not present in the training of models,\nespecially in the complex problem of automatic video understanding, since\ncollecting, annotating and labeling videos are difficult and laborious tasks.\nWe have identified that there are many methods available in the literature,\nhowever, it is difficult to categorize which techniques can be considered state\nof the art. Despite the existence of some surveys about zero-shot action\nrecognition in still images and experimental protocol, there is no work focused\non videos. Therefore, we present a survey of the methods that comprise\ntechniques to perform visual feature extraction and semantic feature extraction\nas well to learn the mapping between these features considering specifically\nzero-shot action recognition in videos. We also provide a complete description\nof datasets, experiments and protocols, presenting open issues and directions\nfor future work, essential for the development of the computer vision research\nfield.",
+  "citation": 51
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Zero-Shot Text Classification with Self-Training",
+  "authors": "Ariel Gera, Alon Halfon, Eyal Shnarch, Yotam Perlitz, Liat Ein-Dor, Noam Slonim",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2210.17541v1",
+  "abstract": "Recent advances in large pretrained language models have increased attention\nto zero-shot text classification. In particular, models finetuned on natural\nlanguage inference datasets have been widely adopted as zero-shot classifiers\ndue to their promising results and off-the-shelf availability. However, the\nfact that such models are unfamiliar with the target task can lead to\ninstability and performance issues. We propose a plug-and-play method to bridge\nthis gap using a simple self-training approach, requiring only the class names\nalong with an unlabeled dataset, and without the need for domain expertise or\ntrial and error. We show that fine-tuning the zero-shot classifier on its most\nconfident predictions leads to significant performance gains across a wide\nrange of text classification tasks, presumably since self-training adapts the\nzero-shot model to the task at hand.",
+  "citation": 83
+}

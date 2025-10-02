@@ -1,0 +1,8 @@
+{
+  "title": "Progressive Ensemble Networks for Zero-Shot Recognition",
+  "authors": "Meng Ye, Yuhong Guo",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1805.07473v2",
+  "abstract": "Despite the advancement of supervised image recognition algorithms, their\ndependence on the availability of labeled data and the rapid expansion of image\ncategories raise the significant challenge of zero-shot learning. Zero-shot\nlearning (ZSL) aims to transfer knowledge from labeled classes into unlabeled\nclasses to reduce human labeling effort. In this paper, we propose a novel\nprogressive ensemble network model with multiple projected label embeddings to\naddress zero-shot image recognition. The ensemble network is built by learning\nmultiple image classification functions with a shared feature extraction\nnetwork but different label embedding representations, which enhance the\ndiversity of the classifiers and facilitate information transfer to unlabeled\nclasses. A progressive training framework is then deployed to gradually label\nthe most confident images in each unlabeled class with predicted pseudo-labels\nand update the ensemble network with the training data augmented by the\npseudo-labels. The proposed model performs training on both labeled and\nunlabeled data. It can naturally bridge the domain shift problem in visual\nappearances and be extended to the generalized zero-shot learning scenario. We\nconduct experiments on multiple ZSL datasets and the empirical results\ndemonstrate the efficacy of the proposed model.",
+  "citation": 87
+}

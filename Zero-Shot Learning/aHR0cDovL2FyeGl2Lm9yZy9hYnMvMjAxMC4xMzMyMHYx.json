@@ -1,0 +1,8 @@
+{
+  "title": "Zero-Shot Learning from scratch (ZFS): leveraging local compositional\n  representations",
+  "authors": "Tristan Sylvain, Linda Petrini, R Devon Hjelm",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2010.13320v1",
+  "abstract": "Zero-shot classification is a generalization task where no instance from the\ntarget classes is seen during training. To allow for test-time transfer, each\nclass is annotated with semantic information, commonly in the form of\nattributes or text descriptions. While classical zero-shot learning does not\nexplicitly forbid using information from other datasets, the approaches that\nachieve the best absolute performance on image benchmarks rely on features\nextracted from encoders pretrained on Imagenet. This approach relies on\nhyper-optimized Imagenet-relevant parameters from the supervised classification\nsetting, entangling important questions about the suitability of those\nparameters and how they were learned with more fundamental questions about\nrepresentation learning and generalization. To remove these distractors, we\npropose a more challenging setting: Zero-Shot Learning from scratch (ZFS),\nwhich explicitly forbids the use of encoders fine-tuned on other datasets. Our\nanalysis on this setting highlights the importance of local information, and\ncompositional representations.",
+  "citation": 10
+}

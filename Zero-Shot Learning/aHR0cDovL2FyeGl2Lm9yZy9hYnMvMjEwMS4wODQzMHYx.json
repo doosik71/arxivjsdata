@@ -1,0 +1,8 @@
+{
+  "title": "Generative Zero-shot Network Quantization",
+  "authors": "Xiangyu He, Qinghao Hu, Peisong Wang, Jian Cheng",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2101.08430v1",
+  "abstract": "Convolutional neural networks are able to learn realistic image priors from\nnumerous training samples in low-level image generation and restoration. We\nshow that, for high-level image recognition tasks, we can further reconstruct\n\"realistic\" images of each category by leveraging intrinsic Batch Normalization\n(BN) statistics without any training data. Inspired by the popular VAE/GAN\nmethods, we regard the zero-shot optimization process of synthetic images as\ngenerative modeling to match the distribution of BN statistics. The generated\nimages serve as a calibration set for the following zero-shot network\nquantizations. Our method meets the needs for quantizing models based on\nsensitive information, \\textit{e.g.,} due to privacy concerns, no data is\navailable. Extensive experiments on benchmark datasets show that, with the help\nof generated data, our approach consistently outperforms existing data-free\nquantization methods.",
+  "citation": 29
+}
