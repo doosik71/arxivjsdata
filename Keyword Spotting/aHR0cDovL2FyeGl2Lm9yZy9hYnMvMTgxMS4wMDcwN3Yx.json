@@ -1,0 +1,8 @@
+{
+  "title": "Training Neural Speech Recognition Systems with Synthetic Speech\n  Augmentation",
+  "authors": "Jason Li, Ravi Gadde, Boris Ginsburg, Vitaly Lavrukhin",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1811.00707v1",
+  "abstract": "Building an accurate automatic speech recognition (ASR) system requires a\nlarge dataset that contains many hours of labeled speech samples produced by a\ndiverse set of speakers. The lack of such open free datasets is one of the main\nissues preventing advancements in ASR research. To address this problem, we\npropose to augment a natural speech dataset with synthetic speech. We train\nvery large end-to-end neural speech recognition models using the LibriSpeech\ndataset augmented with synthetic speech. These new models achieve state of the\nart Word Error Rate (WER) for character-level based models without an external\nlanguage model.",
+  "citation": 82
+}

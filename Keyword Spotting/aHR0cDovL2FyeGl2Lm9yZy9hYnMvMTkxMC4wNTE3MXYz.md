@@ -48,7 +48,7 @@ Byeonggeun Kim, Mingu Lee, Jinkyu Lee, Yeonseok Kim, and Kyuwoong Hwang
      - 상태 전이 확률 $a_{ij}(t)$는 가설을 따르도록 정의됩니다.
      - 로그 가능도 점수는 다음 근사식을 따릅니다:
        $$ \log p(X'|Y') \propto \max*{q, t_0} \left[ \log\left\{\pi \prod*{t=t*0+1}^T a*{q*{t-1}q_t} \prod*{t=t_0}^T p(q_t|x'\_t)\right\} \right] $$
-            여기서 $\pi$는 초기 상태 확률이고 $p(q_t|x'_t)$는 AM의 후방확률에 비례합니다.
+       여기서 $\pi$는 초기 상태 확률이고 $p(q_t|x'_t)$는 AM의 후방확률에 비례합니다.
      - 빔 서치(beam search)를 통해 $q$와 $t_0$를 최적화하여 점수를 최대화합니다.
      - 점수는 비-빈 상태(non-blank state)의 수로 정규화됩니다.
 
