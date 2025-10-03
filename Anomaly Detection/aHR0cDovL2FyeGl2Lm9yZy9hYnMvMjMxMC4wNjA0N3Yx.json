@@ -3,5 +3,6 @@
   "title": "Knowledge Distillation for Anomaly Detection",
   "authors": "Adrian Alan Pol, Ekaterina Govorkova, Sonja Gronroos, Nadezda Chernyavskaya, Philip Harris, Maurizio Pierini, Isobel Ojalvo, Peter Elmer",
   "year": 2023,
-  "abstract": "Unsupervised deep learning techniques are widely used to identify anomalous\nbehaviour. The performance of such methods is a product of the amount of\ntraining data and the model size. However, the size is often a limiting factor\nfor the deployment on resource-constrained devices. We present a novel\nprocedure based on knowledge distillation for compressing an unsupervised\nanomaly detection model into a supervised deployable one and we suggest a set\nof techniques to improve the detection sensitivity. Compressed models perform\ncomparably to their larger counterparts while significantly reducing the size\nand memory footprint."
+  "abstract": "Unsupervised deep learning techniques are widely used to identify anomalous\nbehaviour. The performance of such methods is a product of the amount of\ntraining data and the model size. However, the size is often a limiting factor\nfor the deployment on resource-constrained devices. We present a novel\nprocedure based on knowledge distillation for compressing an unsupervised\nanomaly detection model into a supervised deployable one and we suggest a set\nof techniques to improve the detection sensitivity. Compressed models perform\ncomparably to their larger counterparts while significantly reducing the size\nand memory footprint.",
+  "citation": 2
 }

@@ -3,5 +3,6 @@
   "authors": "Irene Y. Chen, Shalmali Joshi, Marzyeh Ghassemi, Rajesh Ranganath",
   "year": 2020,
   "url": "http://arxiv.org/abs/2009.11087v1",
-  "abstract": "Machine learning can be used to make sense of healthcare data. Probabilistic\nmachine learning models help provide a complete picture of observed data in\nhealthcare. In this review, we examine how probabilistic machine learning can\nadvance healthcare. We consider challenges in the predictive model building\npipeline where probabilistic models can be beneficial including calibration and\nmissing data. Beyond predictive models, we also investigate the utility of\nprobabilistic machine learning models in phenotyping, in generative models for\nclinical use cases, and in reinforcement learning."
+  "abstract": "Machine learning can be used to make sense of healthcare data. Probabilistic\nmachine learning models help provide a complete picture of observed data in\nhealthcare. In this review, we examine how probabilistic machine learning can\nadvance healthcare. We consider challenges in the predictive model building\npipeline where probabilistic models can be beneficial including calibration and\nmissing data. Beyond predictive models, we also investigate the utility of\nprobabilistic machine learning models in phenotyping, in generative models for\nclinical use cases, and in reinforcement learning.",
+  "citation": 99
 }
