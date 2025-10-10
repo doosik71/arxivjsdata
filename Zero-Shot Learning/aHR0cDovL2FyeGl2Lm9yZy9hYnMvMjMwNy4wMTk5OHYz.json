@@ -1,0 +1,8 @@
+{
+  "title": "Zero-Shot Neural Architecture Search: Challenges, Solutions, and\n  Opportunities",
+  "authors": "Guihong Li, Duc Hoang, Kartikeya Bhardwaj, Ming Lin, Zhangyang Wang, Radu Marculescu",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2307.01998v3",
+  "abstract": "Recently, zero-shot (or training-free) Neural Architecture Search (NAS)\napproaches have been proposed to liberate NAS from the expensive training\nprocess. The key idea behind zero-shot NAS approaches is to design proxies that\ncan predict the accuracy of some given networks without training the network\nparameters. The proxies proposed so far are usually inspired by recent progress\nin theoretical understanding of deep learning and have shown great potential on\nseveral datasets and NAS benchmarks. This paper aims to comprehensively review\nand compare the state-of-the-art (SOTA) zero-shot NAS approaches, with an\nemphasis on their hardware awareness. To this end, we first review the\nmainstream zero-shot proxies and discuss their theoretical underpinnings. We\nthen compare these zero-shot proxies through large-scale experiments and\ndemonstrate their effectiveness in both hardware-aware and hardware-oblivious\nNAS scenarios. Finally, we point out several promising ideas to design better\nproxies. Our source code and the list of related papers are available on\nhttps://github.com/SLDGroup/survey-zero-shot-nas.",
+  "citation": 48
+}

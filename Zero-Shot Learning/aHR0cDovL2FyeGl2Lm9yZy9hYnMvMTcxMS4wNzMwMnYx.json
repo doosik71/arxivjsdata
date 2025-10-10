@@ -1,0 +1,8 @@
+{
+  "title": "Zero-shot Learning via Shared-Reconstruction-Graph Pursuit",
+  "authors": "Bo Zhao, Xinwei Sun, Yuan Yao, Yizhou Wang",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1711.07302v1",
+  "abstract": "Zero-shot learning (ZSL) aims to recognize objects from novel unseen classes\nwithout any training data. Recently, structure-transfer based methods are\nproposed to implement ZSL by transferring structural knowledge from the\nsemantic embedding space to image feature space to classify testing images.\nHowever, we observe that such a knowledge transfer framework may suffer from\nthe problem of the geometric inconsistency between the data in the training and\ntesting spaces. We call this problem as the space shift problem. In this paper,\nwe propose a novel graph based method to alleviate this space shift problem.\nSpecifically, a Shared Reconstruction Graph (SRG) is pursued to capture the\ncommon structure of data in the two spaces. With the learned SRG, each unseen\nclass prototype (cluster center) in the image feature space can be synthesized\nby the linear combination of other class prototypes, so that testing instances\ncan be classified based on the distance to these synthesized prototypes. The\nSRG bridges the image feature space and semantic embedding space. By applying\nspectral clustering on the learned SRG, many meaningful clusters can be\ndiscovered, which interprets ZSL performance on the datasets. Our method can be\neasily extended to the generalized zero-shot learning setting. Experiments on\nthree popular datasets show that our method outperforms other methods on all\ndatasets. Even with a small number of training samples, our method can achieve\nthe state-of-the-art performance.",
+  "citation": 15
+}

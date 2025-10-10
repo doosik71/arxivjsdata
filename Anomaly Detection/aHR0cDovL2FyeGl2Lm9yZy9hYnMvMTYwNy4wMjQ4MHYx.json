@@ -3,5 +3,6 @@
   "authors": "Subutai Ahmad, Scott Purdy",
   "year": 2016,
   "url": "http://arxiv.org/abs/1607.02480v1",
-  "abstract": "Much of the worlds data is streaming, time-series data, where anomalies give\nsignificant information in critical situations. Yet detecting anomalies in\nstreaming data is a difficult task, requiring detectors to process data in\nreal-time, and learn while simultaneously making predictions. We present a\nnovel anomaly detection technique based on an on-line sequence memory algorithm\ncalled Hierarchical Temporal Memory (HTM). We show results from a live\napplication that detects anomalies in financial metrics in real-time. We also\ntest the algorithm on NAB, a published benchmark for real-time anomaly\ndetection, where our algorithm achieves best-in-class results."
+  "abstract": "Much of the worlds data is streaming, time-series data, where anomalies give\nsignificant information in critical situations. Yet detecting anomalies in\nstreaming data is a difficult task, requiring detectors to process data in\nreal-time, and learn while simultaneously making predictions. We present a\nnovel anomaly detection technique based on an on-line sequence memory algorithm\ncalled Hierarchical Temporal Memory (HTM). We show results from a live\napplication that detects anomalies in financial metrics in real-time. We also\ntest the algorithm on NAB, a published benchmark for real-time anomaly\ndetection, where our algorithm achieves best-in-class results.",
+  "citation": 177
 }

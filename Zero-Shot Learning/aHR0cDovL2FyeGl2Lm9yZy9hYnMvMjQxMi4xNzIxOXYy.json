@@ -1,0 +1,8 @@
+{
+  "title": "Discriminative Image Generation with Diffusion Models for Zero-Shot\n  Learning",
+  "authors": "Dingjie Fu, Wenjin Hou, Shiming Chen, Shuhuang Chen, Xinge You, Salman Khan, Fahad Shahbaz Khan",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.17219v2",
+  "abstract": "Generative Zero-Shot Learning (ZSL) methods synthesize class-related features\nbased on predefined class semantic prototypes, showcasing superior performance.\nHowever, this feature generation paradigm falls short of providing\ninterpretable insights. In addition, existing approaches rely on semantic\nprototypes annotated by human experts, which exhibit a significant limitation\nin their scalability to generalized scenes. To overcome these deficiencies, a\nnatural solution is to generate images for unseen classes using text prompts.\nTo this end, We present DIG-ZSL, a novel Discriminative Image Generation\nframework for Zero-Shot Learning. Specifically, to ensure the generation of\ndiscriminative images for training an effective ZSL classifier, we learn a\ndiscriminative class token (DCT) for each unseen class under the guidance of a\npre-trained category discrimination model (CDM). Harnessing DCTs, we can\ngenerate diverse and high-quality images, which serve as informative unseen\nsamples for ZSL tasks. In this paper, the extensive experiments and\nvisualizations on four datasets show that our DIG-ZSL: (1) generates diverse\nand high-quality images, (2) outperforms previous state-of-the-art\nnonhuman-annotated semantic prototype-based methods by a large margin, and (3)\nachieves comparable or better performance than baselines that leverage\nhuman-annotated semantic prototypes. The codes will be made available upon\nacceptance of the paper.",
+  "citation": 0
+}

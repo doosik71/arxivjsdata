@@ -1,0 +1,8 @@
+{
+  "title": "Alternative Semantic Representations for Zero-Shot Human Action\n  Recognition",
+  "authors": "Qian Wang, Ke Chen",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1706.09317v1",
+  "abstract": "A proper semantic representation for encoding side information is key to the\nsuccess of zero-shot learning. In this paper, we explore two alternative\nsemantic representations especially for zero-shot human action recognition:\ntextual descriptions of human actions and deep features extracted from still\nimages relevant to human actions. Such side information are accessible on Web\nwith little cost, which paves a new way in gaining side information for\nlarge-scale zero-shot human action recognition. We investigate different\nencoding methods to generate semantic representations for human actions from\nsuch side information. Based on our zero-shot visual recognition method, we\nconducted experiments on UCF101 and HMDB51 to evaluate two proposed semantic\nrepresentations . The results suggest that our proposed text- and image-based\nsemantic representations outperform traditional attributes and word vectors\nconsiderably for zero-shot human action recognition. In particular, the\nimage-based semantic representations yield the favourable performance even\nthough the representation is extracted from a small number of images per class.",
+  "citation": 92
+}

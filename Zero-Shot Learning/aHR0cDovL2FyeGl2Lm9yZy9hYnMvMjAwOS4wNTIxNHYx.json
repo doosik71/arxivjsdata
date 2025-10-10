@@ -1,0 +1,8 @@
+{
+  "title": "Adversarial Learning for Zero-shot Domain Adaptation",
+  "authors": "Jinghua Wang, Jianmin Jiang",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2009.05214v1",
+  "abstract": "Zero-shot domain adaptation (ZSDA) is a category of domain adaptation\nproblems where neither data sample nor label is available for parameter\nlearning in the target domain. With the hypothesis that the shift between a\ngiven pair of domains is shared across tasks, we propose a new method for ZSDA\nby transferring domain shift from an irrelevant task (IrT) to the task of\ninterest (ToI). Specifically, we first identify an IrT, where dual-domain\nsamples are available, and capture the domain shift with a coupled generative\nadversarial networks (CoGAN) in this task. Then, we train a CoGAN for the ToI\nand restrict it to carry the same domain shift as the CoGAN for IrT does. In\naddition, we introduce a pair of co-training classifiers to regularize the\ntraining procedure of CoGAN in the ToI. The proposed method not only derives\nmachine learning models for the non-available target-domain data, but also\nsynthesizes the data themselves. We evaluate the proposed method on benchmark\ndatasets and achieve the state-of-the-art performances.",
+  "citation": 26
+}

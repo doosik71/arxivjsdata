@@ -1,0 +1,8 @@
+{
+  "title": "From Pixel to Patch: Synthesize Context-aware Features for Zero-shot\n  Semantic Segmentation",
+  "authors": "Zhangxuan Gu, Siyuan Zhou, Li Niu, Zihan Zhao, Liqing Zhang",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2009.12232v4",
+  "abstract": "Zero-shot learning has been actively studied for image classification task to\nrelieve the burden of annotating image labels. Interestingly, semantic\nsegmentation task requires more labor-intensive pixel-wise annotation, but\nzero-shot semantic segmentation has only attracted limited research interest.\nThus, we focus on zero-shot semantic segmentation, which aims to segment unseen\nobjects with only category-level semantic representations provided for unseen\ncategories. In this paper, we propose a novel Context-aware feature Generation\nNetwork (CaGNet), which can synthesize context-aware pixel-wise visual features\nfor unseen categories based on category-level semantic representations and\npixel-wise contextual information. The synthesized features are used to\nfinetune the classifier to enable segmenting unseen objects. Furthermore, we\nextend pixel-wise feature generation and finetuning to patch-wise feature\ngeneration and finetuning, which additionally considers inter-pixel\nrelationship. Experimental results on Pascal-VOC, Pascal-Context, and\nCOCO-stuff show that our method significantly outperforms the existing\nzero-shot semantic segmentation methods. Code is available at\nhttps://github.com/bcmi/CaGNetv2-Zero-Shot-Semantic-Segmentation.",
+  "citation": 23
+}

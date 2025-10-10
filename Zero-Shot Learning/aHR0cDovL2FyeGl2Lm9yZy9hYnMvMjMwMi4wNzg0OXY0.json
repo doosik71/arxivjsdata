@@ -1,0 +1,8 @@
+{
+  "title": "Zero-Shot Anomaly Detection via Batch Normalization",
+  "authors": "Aodong Li, Chen Qiu, Marius Kloft, Padhraic Smyth, Maja Rudolph, Stephan Mandt",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.07849v4",
+  "abstract": "Anomaly detection (AD) plays a crucial role in many safety-critical\napplication domains. The challenge of adapting an anomaly detector to drift in\nthe normal data distribution, especially when no training data is available for\nthe \"new normal,\" has led to the development of zero-shot AD techniques. In\nthis paper, we propose a simple yet effective method called Adaptive Centered\nRepresentations (ACR) for zero-shot batch-level AD. Our approach trains\noff-the-shelf deep anomaly detectors (such as deep SVDD) to adapt to a set of\ninter-related training data distributions in combination with batch\nnormalization, enabling automatic zero-shot generalization for unseen AD tasks.\nThis simple recipe, batch normalization plus meta-training, is a highly\neffective and versatile tool. Our theoretical results guarantee the zero-shot\ngeneralization for unseen AD tasks; our empirical results demonstrate the first\nzero-shot AD results for tabular data and outperform existing methods in\nzero-shot anomaly detection and segmentation on image data from specialized\ndomains. Code is at https://github.com/aodongli/zero-shot-ad-via-batch-norm",
+  "citation": 47
+}

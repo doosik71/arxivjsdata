@@ -1,0 +1,8 @@
+{
+  "title": "Few-Shot Inspired Generative Zero-Shot Learning",
+  "authors": "Md Shakil Ahamed Shohag, Q. M. Jonathan Wu, Farhad Pourpanah",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2507.01026v1",
+  "abstract": "Generative zero-shot learning (ZSL) methods typically synthesize visual\nfeatures for unseen classes using predefined semantic attributes, followed by\ntraining a fully supervised classification model. While effective, these\nmethods require substantial computational resources and extensive synthetic\ndata, thereby relaxing the original ZSL assumptions. In this paper, we propose\nFSIGenZ, a few-shot-inspired generative ZSL framework that reduces reliance on\nlarge-scale feature synthesis. Our key insight is that class-level attributes\nexhibit instance-level variability, i.e., some attributes may be absent or\npartially visible, yet conventional ZSL methods treat them as uniformly\npresent. To address this, we introduce Model-Specific Attribute Scoring (MSAS),\nwhich dynamically re-scores class attributes based on model-specific\noptimization to approximate instance-level variability without access to unseen\ndata. We further estimate group-level prototypes as clusters of instances based\non MSAS-adjusted attribute scores, which serve as representative synthetic\nfeatures for each unseen class. To mitigate the resulting data imbalance, we\nintroduce a Dual-Purpose Semantic Regularization (DPSR) strategy while training\na semantic-aware contrastive classifier (SCC) using these prototypes.\nExperiments on SUN, AwA2, and CUB benchmarks demonstrate that FSIGenZ achieves\ncompetitive performance using far fewer synthetic features.",
+  "citation": 0
+}

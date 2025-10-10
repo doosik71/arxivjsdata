@@ -1,0 +1,8 @@
+{
+  "title": "Semantically Consistent Regularization for Zero-Shot Recognition",
+  "authors": "Pedro Morgado, Nuno Vasconcelos",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1704.03039v1",
+  "abstract": "The role of semantics in zero-shot learning is considered. The effectiveness\nof previous approaches is analyzed according to the form of supervision\nprovided. While some learn semantics independently, others only supervise the\nsemantic subspace explained by training classes. Thus, the former is able to\nconstrain the whole space but lacks the ability to model semantic correlations.\nThe latter addresses this issue but leaves part of the semantic space\nunsupervised. This complementarity is exploited in a new convolutional neural\nnetwork (CNN) framework, which proposes the use of semantics as constraints for\nrecognition.Although a CNN trained for classification has no transfer ability,\nthis can be encouraged by learning an hidden semantic layer together with a\nsemantic code for classification. Two forms of semantic constraints are then\nintroduced. The first is a loss-based regularizer that introduces a\ngeneralization constraint on each semantic predictor. The second is a codeword\nregularizer that favors semantic-to-class mappings consistent with prior\nsemantic knowledge while allowing these to be learned from data. Significant\nimprovements over the state-of-the-art are achieved on several datasets.",
+  "citation": 169
+}

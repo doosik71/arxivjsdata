@@ -1,0 +1,8 @@
+{
+  "title": "Unsupervised Anomaly Detection and Localization with Generative\n  Adversarial Networks",
+  "authors": "Khouloud Abdelli, Matteo Lonardi, Jurgen Gripp, Samuel Olsson, Fabien Boitier, Patricia Layec",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.03657v1",
+  "abstract": "We propose a novel unsupervised anomaly detection approach using generative\nadversarial networks and SOP-derived spectrograms. Demonstrating remarkable\nefficacy, our method achieves over 97% accuracy on SOP datasets from both\nsubmarine and terrestrial fiber links, all achieved without the need for\nlabelled data.",
+  "citation": 5
+}

@@ -1,0 +1,8 @@
+{
+  "title": "CLIP model is an Efficient Continual Learner",
+  "authors": "Vishal Thengane, Salman Khan, Munawar Hayat, Fahad Khan",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2210.03114v1",
+  "abstract": "The continual learning setting aims to learn new tasks over time without\nforgetting the previous ones. The literature reports several significant\nefforts to tackle this problem with limited or no access to previous task data.\nAmong such efforts, typical solutions offer sophisticated techniques involving\nmemory replay, knowledge distillation, model regularization, and dynamic\nnetwork expansion. The resulting methods have a retraining cost at each\nlearning task, dedicated memory requirements, and setting-specific design\nchoices. In this work, we show that a frozen CLIP (Contrastive Language-Image\nPretraining) model offers astounding continual learning performance without any\nfine-tuning (zero-shot evaluation). We evaluate CLIP under a variety of\nsettings including class-incremental, domain-incremental and task-agnostic\nincremental learning on five popular benchmarks (ImageNet-100 & 1K, CORe50,\nCIFAR-100, and TinyImageNet). Without any bells and whistles, the CLIP model\noutperforms the state-of-the-art continual learning approaches in the majority\nof the settings. We show the effect on the CLIP model's performance by varying\ntext inputs with simple prompt templates. To the best of our knowledge, this is\nthe first work to report the CLIP zero-shot performance in a continual setting.\nWe advocate the use of this strong yet embarrassingly simple baseline for\nfuture comparisons in the continual learning tasks.",
+  "citation": 75
+}

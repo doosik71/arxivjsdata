@@ -1,0 +1,8 @@
+{
+  "title": "Unified Generator-Classifier for Efficient Zero-Shot Learning",
+  "authors": "Ayyappa Kumar Pambala, Titir Dutta, Soma Biswas",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1905.04511v1",
+  "abstract": "Generative models have achieved state-of-the-art performance for the\nzero-shot learning problem, but they require re-training the classifier every\ntime a new object category is encountered. The traditional semantic embedding\napproaches, though very elegant, usually do not perform at par with their\ngenerative counterparts. In this work, we propose an unified framework termed\nGenClass, which integrates the generator with the classifier for efficient\nzero-shot learning, thus combining the representative power of the generative\napproaches and the elegance of the embedding approaches. End-to-end training of\nthe unified framework not only eliminates the requirement of additional\nclassifier for new object categories as in the generative approaches, but also\nfacilitates the generation of more discriminative and useful features.\nExtensive evaluation on three standard zero-shot object classification\ndatasets, namely AWA, CUB and SUN shows the effectiveness of the proposed\napproach. The approach without any modification, also gives state-of-the-art\nperformance for zero-shot action classification, thus showing its\ngeneralizability to other domains.",
+  "citation": 1
+}

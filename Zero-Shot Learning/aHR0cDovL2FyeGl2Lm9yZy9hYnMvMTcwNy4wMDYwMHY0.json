@@ -1,0 +1,8 @@
+{
+  "title": "Zero-Shot Learning -- A Comprehensive Evaluation of the Good, the Bad\n  and the Ugly",
+  "authors": "Yongqin Xian, Christoph H. Lampert, Bernt Schiele, Zeynep Akata",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1707.00600v4",
+  "abstract": "Due to the importance of zero-shot learning, i.e. classifying images where\nthere is a lack of labeled training data, the number of proposed approaches has\nrecently increased steadily. We argue that it is time to take a step back and\nto analyze the status quo of the area. The purpose of this paper is three-fold.\nFirst, given the fact that there is no agreed upon zero-shot learning\nbenchmark, we first define a new benchmark by unifying both the evaluation\nprotocols and data splits of publicly available datasets used for this task.\nThis is an important contribution as published results are often not comparable\nand sometimes even flawed due to, e.g. pre-training on zero-shot test classes.\nMoreover, we propose a new zero-shot learning dataset, the Animals with\nAttributes 2 (AWA2) dataset which we make publicly available both in terms of\nimage features and the images themselves. Second, we compare and analyze a\nsignificant number of the state-of-the-art methods in depth, both in the\nclassic zero-shot setting but also in the more realistic generalized zero-shot\nsetting. Finally, we discuss in detail the limitations of the current status of\nthe area which can be taken as a basis for advancing it.",
+  "citation": 2
+}

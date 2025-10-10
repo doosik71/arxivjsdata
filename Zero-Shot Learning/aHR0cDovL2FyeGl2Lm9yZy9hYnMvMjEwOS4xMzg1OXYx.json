@@ -1,0 +1,8 @@
+{
+  "title": "NudgeSeg: Zero-Shot Object Segmentation by Repeated Physical Interaction",
+  "authors": "Chahat Deep Singh, Nitin J. Sanket, Chethan M. Parameshwara, Cornelia Fermüller, Yiannis Aloimonos",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.13859v1",
+  "abstract": "Recent advances in object segmentation have demonstrated that deep neural\nnetworks excel at object segmentation for specific classes in color and depth\nimages. However, their performance is dictated by the number of classes and\nobjects used for training, thereby hindering generalization to never seen\nobjects or zero-shot samples. To exacerbate the problem further, object\nsegmentation using image frames rely on recognition and pattern matching cues.\nInstead, we utilize the 'active' nature of a robot and their ability to\n'interact' with the environment to induce additional geometric constraints for\nsegmenting zero-shot samples.\n  In this paper, we present the first framework to segment unknown objects in a\ncluttered scene by repeatedly 'nudging' at the objects and moving them to\nobtain additional motion cues at every step using only a monochrome monocular\ncamera. We call our framework NudgeSeg. These motion cues are used to refine\nthe segmentation masks. We successfully test our approach to segment novel\nobjects in various cluttered scenes and provide an extensive study with image\nand motion segmentation methods. We show an impressive average detection rate\nof over 86% on zero-shot objects.",
+  "citation": 6
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Frustratingly Simple but Effective Zero-shot Detection and Segmentation:\n  Analysis and a Strong Baseline",
+  "authors": "Siddhesh Khandelwal, Anirudth Nambirajan, Behjat Siddiquie, Jayan Eledath, Leonid Sigal",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.07319v1",
+  "abstract": "Methods for object detection and segmentation often require abundant\ninstance-level annotations for training, which are time-consuming and expensive\nto collect. To address this, the task of zero-shot object detection (or\nsegmentation) aims at learning effective methods for identifying and localizing\nobject instances for the categories that have no supervision available.\nConstructing architectures for these tasks requires choosing from a myriad of\ndesign options, ranging from the form of the class encoding used to transfer\ninformation from seen to unseen categories, to the nature of the function being\noptimized for learning. In this work, we extensively study these design\nchoices, and carefully construct a simple yet extremely effective zero-shot\nrecognition method. Through extensive experiments on the MSCOCO dataset on\nobject detection and segmentation, we highlight that our proposed method\noutperforms existing, considerably more complex, architectures. Our findings\nand method, which we propose as a competitive future baseline, point towards\nthe need to revisit some of the recent design trends in zero-shot detection /\nsegmentation.",
+  "citation": 6
+}

@@ -1,0 +1,8 @@
+{
+  "title": "AnoGAN for Tabular Data: A Novel Approach to Anomaly Detection",
+  "authors": "Aditya Singh, Pavan Reddy",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.03075v1",
+  "abstract": "Anomaly detection, a critical facet in data analysis, involves identifying\npatterns that deviate from expected behavior. This research addresses the\ncomplexities inherent in anomaly detection, exploring challenges and adapting\nto sophisticated malicious activities. With applications spanning\ncybersecurity, healthcare, finance, and surveillance, anomalies often signify\ncritical information or potential threats. Inspired by the success of Anomaly\nGenerative Adversarial Network (AnoGAN) in image domains, our research extends\nits principles to tabular data. Our contributions include adapting AnoGAN's\nprinciples to a new domain and promising advancements in detecting previously\nundetectable anomalies. This paper delves into the multifaceted nature of\nanomaly detection, considering the dynamic evolution of normal behavior,\ncontext-dependent anomaly definitions, and data-related challenges like noise\nand imbalances.",
+  "citation": 3
+}

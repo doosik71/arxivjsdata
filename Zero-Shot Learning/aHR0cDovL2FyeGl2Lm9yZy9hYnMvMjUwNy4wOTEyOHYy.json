@@ -1,0 +1,8 @@
+{
+  "title": "A Generalization Theory for Zero-Shot Prediction",
+  "authors": "Ronak Mehta, Zaid Harchaoui",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2507.09128v2",
+  "abstract": "A modern paradigm for generalization in machine learning and AI consists of\npre-training a task-agnostic foundation model, generally obtained using\nself-supervised and multimodal contrastive learning. The resulting\nrepresentations can be used for prediction on a downstream task for which no\nlabeled data is available. We present a theoretical framework to better\nunderstand this approach, called zero-shot prediction. We identify the target\nquantities that zero-shot prediction aims to learn, or learns in passing, and\nthe key conditional independence relationships that enable its generalization\nability.",
+  "citation": 1
+}
