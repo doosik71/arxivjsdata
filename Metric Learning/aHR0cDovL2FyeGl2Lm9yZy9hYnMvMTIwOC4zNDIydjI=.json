@@ -1,0 +1,8 @@
+{
+  "title": "Distance Metric Learning for Kernel Machines",
+  "authors": "Zhixiang Xu, Kilian Q. Weinberger, Olivier Chapelle",
+  "year": 2012,
+  "url": "http://arxiv.org/abs/1208.3422v2",
+  "abstract": "Recent work in metric learning has significantly improved the\nstate-of-the-art in k-nearest neighbor classification. Support vector machines\n(SVM), particularly with RBF kernels, are amongst the most popular\nclassification algorithms that uses distance metrics to compare examples. This\npaper provides an empirical analysis of the efficacy of three of the most\npopular Mahalanobis metric learning algorithms as pre-processing for SVM\ntraining. We show that none of these algorithms generate metrics that lead to\nparticularly satisfying improvements for SVM-RBF classification. As a remedy we\nintroduce support vector metric learning (SVML), a novel algorithm that\nseamlessly combines the learning of a Mahalanobis metric with the training of\nthe RBF-SVM parameters. We demonstrate the capabilities of SVML on nine\nbenchmark data sets of varying sizes and difficulties. In our study, SVML\noutperforms all alternative state-of-the-art metric learning algorithms in\nterms of accuracy and establishes itself as a serious alternative to the\nstandard Euclidean metric with model selection by cross validation.",
+  "citation": 63
+}

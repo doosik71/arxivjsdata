@@ -1,0 +1,8 @@
+{
+  "title": "Triplet-Center Loss for Multi-View 3D Object Retrieval",
+  "authors": "Xinwei He, Yang Zhou, Zhichao Zhou, Song Bai, Xiang Bai",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1803.06189v1",
+  "abstract": "Most existing 3D object recognition algorithms focus on leveraging the strong\ndiscriminative power of deep learning models with softmax loss for the\nclassification of 3D data, while learning discriminative features with deep\nmetric learning for 3D object retrieval is more or less neglected. In the\npaper, we study variants of deep metric learning losses for 3D object\nretrieval, which did not receive enough attention from this area. First , two\nkinds of representative losses, triplet loss and center loss, are introduced\nwhich could learn more discriminative features than traditional classification\nloss. Then, we propose a novel loss named triplet-center loss, which can\nfurther enhance the discriminative power of the features. The proposed\ntriplet-center loss learns a center for each class and requires that the\ndistances between samples and centers from the same class are closer than those\nfrom different classes. Extensive experimental results on two popular 3D object\nretrieval benchmarks and two widely-adopted sketch-based 3D shape retrieval\nbenchmarks consistently demonstrate the effectiveness of our proposed loss, and\nsignificant improvements have been achieved compared with the\nstate-of-the-arts.",
+  "citation": 480
+}

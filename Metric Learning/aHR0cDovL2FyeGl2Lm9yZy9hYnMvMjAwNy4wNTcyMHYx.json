@@ -1,0 +1,8 @@
+{
+  "title": "ECML: An Ensemble Cascade Metric Learning Mechanism towards Face\n  Verification",
+  "authors": "Fu Xiong, Yang Xiao, Zhiguo Cao, Yancheng Wang, Joey Tianyi Zhou, Jianxi Wu",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.05720v1",
+  "abstract": "Face verification can be regarded as a 2-class fine-grained visual\nrecognition problem. Enhancing the feature's discriminative power is one of the\nkey problems to improve its performance. Metric learning technology is often\napplied to address this need, while achieving a good tradeoff between\nunderfitting and overfitting plays the vital role in metric learning. Hence, we\npropose a novel ensemble cascade metric learning (ECML) mechanism. In\nparticular, hierarchical metric learning is executed in the cascade way to\nalleviate underfitting. Meanwhile, at each learning level, the features are\nsplit into non-overlapping groups. Then, metric learning is executed among the\nfeature groups in the ensemble manner to resist overfitting. Considering the\nfeature distribution characteristics of faces, a robust Mahalanobis metric\nlearning method (RMML) with closed-form solution is additionally proposed. It\ncan avoid the computation failure issue on inverse matrix faced by some\nwell-known metric learning approaches (e.g., KISSME). Embedding RMML into the\nproposed ECML mechanism, our metric learning paradigm (EC-RMML) can run in the\none-pass learning manner. Experimental results demonstrate that EC-RMML is\nsuperior to state-of-the-art metric learning methods for face verification.\nAnd, the proposed ensemble cascade metric learning mechanism is also applicable\nto other metric learning approaches.",
+  "citation": 20
+}

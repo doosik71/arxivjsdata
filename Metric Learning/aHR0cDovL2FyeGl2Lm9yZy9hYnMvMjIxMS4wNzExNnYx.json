@@ -1,0 +1,8 @@
+{
+  "title": "Few-shot Metric Learning: Online Adaptation of Embedding for Retrieval",
+  "authors": "Deunsol Jung, Dahyun Kang, Suha Kwak, Minsu Cho",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.07116v1",
+  "abstract": "Metric learning aims to build a distance metric typically by learning an\neffective embedding function that maps similar objects into nearby points in\nits embedding space. Despite recent advances in deep metric learning, it\nremains challenging for the learned metric to generalize to unseen classes with\na substantial domain gap. To tackle the issue, we explore a new problem of\nfew-shot metric learning that aims to adapt the embedding function to the\ntarget domain with only a few annotated data. We introduce three few-shot\nmetric learning baselines and propose the Channel-Rectifier Meta-Learning\n(CRML), which effectively adapts the metric space online by adjusting channels\nof intermediate layers. Experimental analyses on miniImageNet, CUB-200-2011,\nMPII, as well as a new dataset, miniDeepFashion, demonstrate that our method\nconsistently improves the learned metric by adapting it to target classes and\nachieves a greater gain in image retrieval when the domain gap from the source\nclasses is larger.",
+  "citation": 12
+}

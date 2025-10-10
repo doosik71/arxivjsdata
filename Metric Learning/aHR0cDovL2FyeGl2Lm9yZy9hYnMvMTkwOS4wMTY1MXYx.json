@@ -1,0 +1,8 @@
+{
+  "title": "Metric Learning from Imbalanced Data",
+  "authors": "Léo Gautheron, Emilie Morvant, Amaury Habrard, Marc Sebban",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1909.01651v1",
+  "abstract": "A key element of any machine learning algorithm is the use of a function that\nmeasures the dis/similarity between data points. Given a task, such a function\ncan be optimized with a metric learning algorithm. Although this research field\nhas received a lot of attention during the past decade, very few approaches\nhave focused on learning a metric in an imbalanced scenario where the number of\npositive examples is much smaller than the negatives. Here, we address this\nchallenging task by designing a new Mahalanobis metric learning algorithm (IML)\nwhich deals with class imbalance. The empirical study performed shows the\nefficiency of IML.",
+  "citation": 32
+}

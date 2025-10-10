@@ -1,0 +1,8 @@
+{
+  "title": "Provably Robust Metric Learning",
+  "authors": "Lu Wang, Xuanqing Liu, Jinfeng Yi, Yuan Jiang, Cho-Jui Hsieh",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.07024v2",
+  "abstract": "Metric learning is an important family of algorithms for classification and\nsimilarity search, but the robustness of learned metrics against small\nadversarial perturbations is less studied. In this paper, we show that existing\nmetric learning algorithms, which focus on boosting the clean accuracy, can\nresult in metrics that are less robust than the Euclidean distance. To overcome\nthis problem, we propose a novel metric learning algorithm to find a\nMahalanobis distance that is robust against adversarial perturbations, and the\nrobustness of the resulting model is certifiable. Experimental results show\nthat the proposed metric learning algorithm improves both certified robust\nerrors and empirical robust errors (errors under adversarial attacks).\nFurthermore, unlike neural network defenses which usually encounter a trade-off\nbetween clean and robust errors, our method does not sacrifice clean errors\ncompared with previous metric learning methods. Our code is available at\nhttps://github.com/wangwllu/provably_robust_metric_learning.",
+  "citation": 7
+}

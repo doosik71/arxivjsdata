@@ -1,0 +1,8 @@
+{
+  "title": "Applying SoftTriple Loss for Supervised Language Model Fine Tuning",
+  "authors": "Witold Sosnowski, Anna Wroblewska, Piotr Gawrysiak",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2112.08462v1",
+  "abstract": "We introduce a new loss function TripleEntropy, to improve classification\nperformance for fine-tuning general knowledge pre-trained language models based\non cross-entropy and SoftTriple loss. This loss function can improve the robust\nRoBERTa baseline model fine-tuned with cross-entropy loss by about (0.02% -\n2.29%). Thorough tests on popular datasets indicate a steady gain. The fewer\nsamples in the training dataset, the higher gain -- thus, for small-sized\ndataset it is 0.78%, for medium-sized -- 0.86% for large -- 0.20% and for\nextra-large 0.04%.",
+  "citation": 3
+}

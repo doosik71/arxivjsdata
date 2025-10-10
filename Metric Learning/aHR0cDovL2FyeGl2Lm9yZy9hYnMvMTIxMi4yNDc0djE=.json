@@ -1,0 +1,8 @@
+{
+  "title": "Learning Riemannian Metrics",
+  "authors": "Guy Lebanon",
+  "year": 2012,
+  "url": "http://arxiv.org/abs/1212.2474v1",
+  "abstract": "We propose a solution to the problem of estimating a Riemannian metric\nassociated with a given differentiable manifold. The metric learning problem is\nbased on minimizing the relative volume of a given set of points. We derive the\ndetails for a family of metrics on the multinomial simplex. The resulting\nmetric has applications in text classification and bears some similarity to\nTFIDF representation of text documents.",
+  "citation": 60
+}

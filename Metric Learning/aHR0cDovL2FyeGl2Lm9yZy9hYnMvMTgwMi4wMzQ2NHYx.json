@@ -1,0 +1,8 @@
+{
+  "title": "Metric Learning via Maximizing the Lipschitz Margin Ratio",
+  "authors": "Mingzhi Dong, Xiaochen Yang, Yang Wu, Jing-Hao Xue",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1802.03464v1",
+  "abstract": "In this paper, we propose the Lipschitz margin ratio and a new metric\nlearning framework for classification through maximizing the ratio. This\nframework enables the integration of both the inter-class margin and the\nintra-class dispersion, as well as the enhancement of the generalization\nability of a classifier. To introduce the Lipschitz margin ratio and its\nassociated learning bound, we elaborate the relationship between metric\nlearning and Lipschitz functions, as well as the representability and\nlearnability of the Lipschitz functions. After proposing the new metric\nlearning framework based on the introduced Lipschitz margin ratio, we also\nprove that some well known metric learning algorithms can be shown as special\ncases of the proposed framework. In addition, we illustrate the framework by\nimplementing it for learning the squared Mahalanobis metric, and by\ndemonstrating its encouraging results on eight popular datasets of machine\nlearning.",
+  "citation": 6
+}

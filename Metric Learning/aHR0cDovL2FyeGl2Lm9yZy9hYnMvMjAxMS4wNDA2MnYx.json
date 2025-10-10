@@ -1,0 +1,8 @@
+{
+  "title": "MLAS: Metric Learning on Attributed Sequences",
+  "authors": "Zhongfang Zhuang, Xiangnan Kong, Elke Rundensteiner, Jihane Zouaoui, Aditya Arora",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2011.04062v1",
+  "abstract": "Distance metric learning has attracted much attention in recent years, where\nthe goal is to learn a distance metric based on user feedback. Conventional\napproaches to metric learning mainly focus on learning the Mahalanobis distance\nmetric on data attributes. Recent research on metric learning has been extended\nto sequential data, where we only have structural information in the sequences,\nbut no attribute is available. However, real-world applications often involve\nattributed sequence data (e.g., clickstreams), where each instance consists of\nnot only a set of attributes (e.g., user session context) but also a sequence\nof categorical items (e.g., user actions). In this paper, we study the problem\nof metric learning on attributed sequences. Unlike previous work on metric\nlearning, we now need to go beyond the Mahalanobis distance metric in the\nattribute feature space while also incorporating the structural information in\nsequences. We propose a deep learning framework, called MLAS (Metric Learning\non Attributed Sequences), to learn a distance metric that effectively measures\ndissimilarities between attributed sequences. Empirical results on real-world\ndatasets demonstrate that the proposed MLAS framework significantly improves\nthe performance of metric learning compared to state-of-the-art methods on\nattributed sequences.",
+  "citation": 2
+}

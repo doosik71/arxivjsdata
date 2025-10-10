@@ -1,0 +1,8 @@
+{
+  "title": "Deep Metric Learning-Based Semi-Supervised Regression With Alternate\n  Learning",
+  "authors": "Adina Zell, Gencer Sumbul, Begüm Demir",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.11388v2",
+  "abstract": "This paper introduces a novel deep metric learning-based semi-supervised\nregression (DML-S2R) method for parameter estimation problems. The proposed\nDML-S2R method aims to mitigate the problems of insufficient amount of labeled\nsamples without collecting any additional sample with a target value. To this\nend, it is made up of two main steps: i) pairwise similarity modeling with\nscarce labeled data; and ii) triplet-based metric learning with abundant\nunlabeled data. The first step aims to model pairwise sample similarities by\nusing a small number of labeled samples. This is achieved by estimating the\ntarget value differences of labeled samples with a Siamese neural network\n(SNN). The second step aims to learn a triplet-based metric space (in which\nsimilar samples are close to each other and dissimilar samples are far apart\nfrom each other) when the number of labeled samples is insufficient. This is\nachieved by employing the SNN of the first step for triplet-based deep metric\nlearning that exploits not only labeled samples but also unlabeled samples. For\nthe end-to-end training of DML-S2R, we investigate an alternate learning\nstrategy for the two steps. Due to this strategy, the encoded information in\neach step becomes a guidance for learning phase of the other step. The\nexperimental results confirm the success of DML-S2R compared to the\nstate-of-the-art semi-supervised regression methods. The code of the proposed\nmethod is publicly available at https://git.tu-berlin.de/rsim/DML-S2R.",
+  "citation": 6
+}

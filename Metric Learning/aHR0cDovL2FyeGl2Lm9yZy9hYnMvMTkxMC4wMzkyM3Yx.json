@@ -1,0 +1,7 @@
+{
+  "title": "Multiple Kernel Fisher Discriminant Metric Learning for Person\n  Re-identification",
+  "authors": "T M Feroz Ali, Kalpesh K Patel, Rajbabu Velmurugan, Subhasis Chaudhuri",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1910.03923v1",
+  "abstract": "Person re-identification addresses the problem of matching pedestrian images\nacross disjoint camera views. Design of feature descriptor and distance metric\nlearning are the two fundamental tasks in person re-identification. In this\npaper, we propose a metric learning framework for person re-identification,\nwhere the discriminative metric space is learned using Kernel Fisher\nDiscriminant Analysis (KFDA), to simultaneously maximize the inter-class\nvariance as well as minimize the intra-class variance. We derive a Mahalanobis\nmetric induced by KFDA and argue that KFDA is efficient to be applied for\nmetric learning in person re-identification. We also show how the efficiency of\nKFDA in metric learning can be further enhanced for person re-identification by\nusing two simple yet efficient multiple kernel learning methods. We conduct\nextensive experiments on three benchmark datasets for person re-identification\nand demonstrate that the proposed approaches have competitive performance with\nstate-of-the-art methods."
+}

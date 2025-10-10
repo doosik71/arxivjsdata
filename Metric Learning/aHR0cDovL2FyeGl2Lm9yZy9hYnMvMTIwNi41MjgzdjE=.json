@@ -1,0 +1,8 @@
+{
+  "title": "Bayesian Active Distance Metric Learning",
+  "authors": "Liu Yang, Rong Jin, Rahul Sukthankar",
+  "year": 2012,
+  "url": "http://arxiv.org/abs/1206.5283v1",
+  "abstract": "Distance metric learning is an important component for many tasks, such as\nstatistical classification and content-based image retrieval. Existing\napproaches for learning distance metrics from pairwise constraints typically\nsuffer from two major problems. First, most algorithms only offer point\nestimation of the distance metric and can therefore be unreliable when the\nnumber of training examples is small. Second, since these algorithms generally\nselect their training examples at random, they can be inefficient if labeling\neffort is limited. This paper presents a Bayesian framework for distance metric\nlearning that estimates a posterior distribution for the distance metric from\nlabeled pairwise constraints. We describe an efficient algorithm based on the\nvariational method for the proposed Bayesian approach. Furthermore, we apply\nthe proposed Bayesian framework to active distance metric learning by selecting\nthose unlabeled example pairs with the greatest uncertainty in relative\ndistance. Experiments in classification demonstrate that the proposed framework\nachieves higher classification accuracy and identifies more informative\ntraining examples than the non-Bayesian approach and state-of-the-art distance\nmetric learning algorithms.",
+  "citation": 90
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Ground Metric Learning",
+  "authors": "Marco Cuturi, David Avis",
+  "year": 2011,
+  "url": "http://arxiv.org/abs/1110.2306v1",
+  "abstract": "Transportation distances have been used for more than a decade now in machine\nlearning to compare histograms of features. They have one parameter: the ground\nmetric, which can be any metric between the features themselves. As is the case\nfor all parameterized distances, transportation distances can only prove useful\nin practice when this parameter is carefully chosen. To date, the only option\navailable to practitioners to set the ground metric parameter was to rely on a\npriori knowledge of the features, which limited considerably the scope of\napplication of transportation distances. We propose to lift this limitation and\nconsider instead algorithms that can learn the ground metric using only a\ntraining set of labeled histograms. We call this approach ground metric\nlearning. We formulate the problem of learning the ground metric as the\nminimization of the difference of two polyhedral convex functions over a convex\nset of distance matrices. We follow the presentation of our algorithms with\npromising experimental results on binary classification tasks using GIST\ndescriptors of images taken in the Caltech-256 set.",
+  "citation": 131
+}

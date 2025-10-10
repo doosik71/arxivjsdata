@@ -1,0 +1,8 @@
+{
+  "title": "Query-augmented Active Metric Learning",
+  "authors": "Yujia Deng, Yubai Yuan, Haoda Fu, Annie Qu",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2111.04871v1",
+  "abstract": "In this paper we propose an active metric learning method for clustering with\npairwise constraints. The proposed method actively queries the label of\ninformative instance pairs, while estimating underlying metrics by\nincorporating unlabeled instance pairs, which leads to a more accurate and\nefficient clustering process. In particular, we augment the queried constraints\nby generating more pairwise labels to provide additional information in\nlearning a metric to enhance clustering performance. Furthermore, we increase\nthe robustness of metric learning by updating the learned metric sequentially\nand penalizing the irrelevant features adaptively. In addition, we propose a\nnovel active query strategy that evaluates the information gain of instance\npairs more accurately by incorporating the neighborhood structure, which\nimproves clustering efficiency without extra labeling cost. In theory, we\nprovide a tighter error bound of the proposed metric learning method utilizing\naugmented queries compared with methods using existing constraints only.\nFurthermore, we also investigate the improvement using the active query\nstrategy instead of random selection. Numerical studies on simulation settings\nand real datasets indicate that the proposed method is especially advantageous\nwhen the signal-to-noise ratio between significant features and irrelevant\nfeatures is low.",
+  "citation": 12
+}

@@ -1,0 +1,8 @@
+{
+  "title": "A Survey on Metric Learning for Feature Vectors and Structured Data",
+  "authors": "Aurélien Bellet, Amaury Habrard, Marc Sebban",
+  "year": 2013,
+  "url": "http://arxiv.org/abs/1306.6709v4",
+  "abstract": "The need for appropriate ways to measure the distance or similarity between\ndata is ubiquitous in machine learning, pattern recognition and data mining,\nbut handcrafting such good metrics for specific problems is generally\ndifficult. This has led to the emergence of metric learning, which aims at\nautomatically learning a metric from data and has attracted a lot of interest\nin machine learning and related fields for the past ten years. This survey\npaper proposes a systematic review of the metric learning literature,\nhighlighting the pros and cons of each approach. We pay particular attention to\nMahalanobis distance metric learning, a well-studied and successful framework,\nbut additionally present a wide range of methods that have recently emerged as\npowerful alternatives, including nonlinear metric learning, similarity learning\nand local metric learning. Recent trends and extensions, such as\nsemi-supervised metric learning, metric learning for histogram data and the\nderivation of generalization guarantees, are also covered. Finally, this survey\naddresses metric learning for structured data, in particular edit distance\nlearning, and attempts to give an overview of the remaining challenges in\nmetric learning for the years to come.",
+  "citation": 869
+}
