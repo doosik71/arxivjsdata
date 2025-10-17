@@ -1,0 +1,8 @@
+{
+  "title": "A provably stable neural network Turing Machine",
+  "authors": "John Stogin, Ankur Mali, C Lee Giles",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.03651v4",
+  "abstract": "We introduce a neural stack architecture, including a differentiable\nparametrized stack operator that approximates stack push and pop operations for\nsuitable choices of parameters that explicitly represents a stack. We prove the\nstability of this stack architecture: after arbitrarily many stack operations,\nthe state of the neural stack still closely resembles the state of the discrete\nstack. Using the neural stack with a recurrent neural network, we introduce a\nneural network Pushdown Automaton (nnPDA) and prove that nnPDA with\nfinite/bounded neurons and time can simulate any PDA. Furthermore, we extend\nour construction and propose new architecture neural state Turing Machine\n(nnTM). We prove that differentiable nnTM with bounded neurons can simulate\nTuring Machine (TM) in real-time. Just like the neural stack, these\narchitectures are also stable. Finally, we extend our construction to show that\ndifferentiable nnTM is equivalent to Universal Turing Machine (UTM) and can\nsimulate any TM with only \\textbf{seven finite/bounded precision} neurons. This\nwork provides a new theoretical bound for the computational capability of\nbounded precision RNNs augmented with memory.",
+  "citation": 6
+}

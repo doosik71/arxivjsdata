@@ -1,0 +1,8 @@
+{
+  "title": "A short note on the decision tree based neural turing machine",
+  "authors": "Yingshi Chen",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2010.14753v1",
+  "abstract": "Turing machine and decision tree have developed independently for a long\ntime. With the recent development of differentiable models, there is an\nintersection between them. Neural turing machine(NTM) opens door for the memory\nnetwork. It use differentiable attention mechanism to read/write external\nmemory bank. Differentiable forest brings differentiable properties to\nclassical decision tree. In this short note, we show the deep connection\nbetween these two models. That is: differentiable forest is a special case of\nNTM. Differentiable forest is actually decision tree based neural turing\nmachine. Based on this deep connection, we propose a response augmented\ndifferential forest (RaDF). The controller of RaDF is differentiable forest,\nthe external memory of RaDF are response vectors which would be read/write by\nleaf nodes.",
+  "citation": 2
+}

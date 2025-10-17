@@ -1,0 +1,8 @@
+{
+  "title": "Reservoir memory machines",
+  "authors": "Benjamin Paassen, Alexander Schulz",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2003.04793v1",
+  "abstract": "In recent years, Neural Turing Machines have gathered attention by joining\nthe flexibility of neural networks with the computational capabilities of\nTuring machines. However, Neural Turing Machines are notoriously hard to train,\nwhich limits their applicability. We propose reservoir memory machines, which\nare still able to solve some of the benchmark tests for Neural Turing Machines,\nbut are much faster to train, requiring only an alignment algorithm and linear\nregression. Our model can also be seen as an extension of echo state networks\nwith an external memory, enabling arbitrarily long storage without\ninterference.",
+  "citation": 8
+}

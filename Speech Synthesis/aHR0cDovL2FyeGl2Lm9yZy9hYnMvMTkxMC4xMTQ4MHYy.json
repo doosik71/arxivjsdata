@@ -1,0 +1,8 @@
+{
+  "title": "Parallel WaveGAN: A fast waveform generation model based on generative\n  adversarial networks with multi-resolution spectrogram",
+  "authors": "Ryuichi Yamamoto, Eunwoo Song, Jae-Min Kim",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1910.11480v2",
+  "abstract": "We propose Parallel WaveGAN, a distillation-free, fast, and small-footprint\nwaveform generation method using a generative adversarial network. In the\nproposed method, a non-autoregressive WaveNet is trained by jointly optimizing\nmulti-resolution spectrogram and adversarial loss functions, which can\neffectively capture the time-frequency distribution of the realistic speech\nwaveform. As our method does not require density distillation used in the\nconventional teacher-student framework, the entire model can be easily trained.\nFurthermore, our model is able to generate high-fidelity speech even with its\ncompact architecture. In particular, the proposed Parallel WaveGAN has only\n1.44 M parameters and can generate 24 kHz speech waveform 28.68 times faster\nthan real-time on a single GPU environment. Perceptual listening test results\nverify that our proposed method achieves 4.16 mean opinion score within a\nTransformer-based text-to-speech framework, which is comparative to the best\ndistillation-based Parallel WaveNet system.",
+  "citation": 1170
+}

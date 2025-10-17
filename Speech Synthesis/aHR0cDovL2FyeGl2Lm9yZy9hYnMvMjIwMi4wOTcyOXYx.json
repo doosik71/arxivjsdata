@@ -1,0 +1,8 @@
+{
+  "title": "It's Raw! Audio Generation with State-Space Models",
+  "authors": "Karan Goel, Albert Gu, Chris Donahue, Christopher Ré",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.09729v1",
+  "abstract": "Developing architectures suitable for modeling raw audio is a challenging\nproblem due to the high sampling rates of audio waveforms. Standard sequence\nmodeling approaches like RNNs and CNNs have previously been tailored to fit the\ndemands of audio, but the resultant architectures make undesirable\ncomputational tradeoffs and struggle to model waveforms effectively. We propose\nSaShiMi, a new multi-scale architecture for waveform modeling built around the\nrecently introduced S4 model for long sequence modeling. We identify that S4\ncan be unstable during autoregressive generation, and provide a simple\nimprovement to its parameterization by drawing connections to Hurwitz matrices.\nSaShiMi yields state-of-the-art performance for unconditional waveform\ngeneration in the autoregressive setting. Additionally, SaShiMi improves\nnon-autoregressive generation performance when used as the backbone\narchitecture for a diffusion model. Compared to prior architectures in the\nautoregressive generation setting, SaShiMi generates piano and speech waveforms\nwhich humans find more musical and coherent respectively, e.g. 2x better mean\nopinion scores than WaveNet on an unconditional speech generation task. On a\nmusic generation task, SaShiMi outperforms WaveNet on density estimation and\nspeed at both training and inference even when using 3x fewer parameters. Code\ncan be found at https://github.com/HazyResearch/state-spaces and samples at\nhttps://hazyresearch.stanford.edu/sashimi-examples.",
+  "citation": 299
+}

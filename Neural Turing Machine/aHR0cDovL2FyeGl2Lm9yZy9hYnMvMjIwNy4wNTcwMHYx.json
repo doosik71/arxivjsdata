@@ -1,0 +1,8 @@
+{
+  "title": "Turing Machines cannot simulate the human mind",
+  "authors": "Abhinav Muraleedharan",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2207.05700v1",
+  "abstract": "Can a Turing Machine simulate the human mind? If the Church-Turing thesis is\nassumed to be true, then a Turing Machine should be able to simulate the human\nmind. In this paper, I challenge that assumption by providing strong\nmathematical arguments against the Church-Turing thesis. First, I show that\nthere are decision problems that are computable for humans, but uncomputable\nfor Turing Machines. Next, using a thought experiment I show that a humanoid\nrobot equipped with a Turing Machine as the control unit cannot perform all\nhumanly doable physical tasks. Finally, I show that a quantum mechanical\ncomputing device involving sequential quantum wave function collapse can\ncompute sequences that are uncomputable for Turing Machines. These results\ninvalidate the Church-Turing thesis and lead to the conclusion that the human\nmind cannot be simulated by a Turing Machine. Connecting these results, I argue\nthat quantum effects in the human brain are fundamental to the computing\nabilities of the human mind.",
+  "citation": 3
+}

@@ -1,0 +1,8 @@
+{
+  "title": "WaveNets: Wavelet Channel Attention Networks",
+  "authors": "Hadi Salman, Caleb Parks, Shi Yin Hong, Justin Zhan",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.02695v2",
+  "abstract": "Channel Attention reigns supreme as an effective technique in the field of\ncomputer vision. However, the proposed channel attention by SENet suffers from\ninformation loss in feature learning caused by the use of Global Average\nPooling (GAP) to represent channels as scalars. Thus, designing effective\nchannel attention mechanisms requires finding a solution to enhance features\npreservation in modeling channel inter-dependencies. In this work, we utilize\nWavelet transform compression as a solution to the channel representation\nproblem. We first test wavelet transform as an Auto-Encoder model equipped with\nconventional channel attention module. Next, we test wavelet transform as a\nstandalone channel compression method. We prove that global average pooling is\nequivalent to the recursive approximate Haar wavelet transform. With this\nproof, we generalize channel attention using Wavelet compression and name it\nWaveNet. Implementation of our method can be embedded within existing channel\nattention methods with a couple of lines of code. We test our proposed method\nusing ImageNet dataset for image classification task. Our method outperforms\nthe baseline SENet, and achieves the state-of-the-art results. Our code\nimplementation is publicly available at https://github.com/hady1011/WaveNet-C.",
+  "citation": 4
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Large-Scale Visual Speech Recognition",
+  "authors": "Brendan Shillingford, Yannis Assael, Matthew W. Hoffman, Thomas Paine, Cían Hughes, Utsav Prabhu, Hank Liao, Hasim Sak, Kanishka Rao, Lorrayne Bennett, Marie Mulville, Ben Coppin, Ben Laurie, Andrew Senior, Nando de Freitas",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1807.05162v3",
+  "abstract": "This work presents a scalable solution to open-vocabulary visual speech\nrecognition. To achieve this, we constructed the largest existing visual speech\nrecognition dataset, consisting of pairs of text and video clips of faces\nspeaking (3,886 hours of video). In tandem, we designed and trained an\nintegrated lipreading system, consisting of a video processing pipeline that\nmaps raw video to stable videos of lips and sequences of phonemes, a scalable\ndeep neural network that maps the lip videos to sequences of phoneme\ndistributions, and a production-level speech decoder that outputs sequences of\nwords. The proposed system achieves a word error rate (WER) of 40.9% as\nmeasured on a held-out set. In comparison, professional lipreaders achieve\neither 86.4% or 92.9% WER on the same dataset when having access to additional\ntypes of contextual information. Our approach significantly improves on other\nlipreading approaches, including variants of LipNet and of Watch, Attend, and\nSpell (WAS), which are only capable of 89.8% and 76.8% WER respectively.",
+  "citation": 235
+}

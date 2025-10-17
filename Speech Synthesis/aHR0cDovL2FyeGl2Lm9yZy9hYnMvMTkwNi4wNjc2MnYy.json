@@ -1,0 +1,8 @@
+{
+  "title": "Parametric Resynthesis with neural vocoders",
+  "authors": "Soumi Maiti, Michael I Mandel",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1906.06762v2",
+  "abstract": "Noise suppression systems generally produce output speech with compromised\nquality. We propose to utilize the high quality speech generation capability of\nneural vocoders for noise suppression. We use a neural network to predict clean\nmel-spectrogram features from noisy speech and then compare two neural\nvocoders, WaveNet and WaveGlow, for synthesizing clean speech from the\npredicted mel spectrogram. Both WaveNet and WaveGlow achieve better subjective\nand objective quality scores than the source separation model Chimera++.\nFurther, WaveNet and WaveGlow also achieve significantly better subjective\nquality ratings than the oracle Wiener mask. Moreover, we observe that between\nWaveNet and WaveGlow, WaveNet achieves the best subjective quality scores,\nalthough at the cost of much slower waveform generation.",
+  "citation": 29
+}
