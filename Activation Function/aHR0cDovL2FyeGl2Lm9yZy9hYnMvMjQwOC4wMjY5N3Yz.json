@@ -1,0 +1,8 @@
+{
+  "title": "Why Rectified Power Unit Networks Fail and How to Improve It: An\n  Effective Theory Perspective",
+  "authors": "Taeyoung Kim, Myungjoo Kang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2408.02697v3",
+  "abstract": "The Rectified Power Unit (RePU) activation functions, unlike the Rectified\nLinear Unit (ReLU), have the advantage of being a differentiable function when\nconstructing neural networks. However, it can be experimentally observed when\ndeep layers are stacked, neural networks constructed with RePU encounter\ncritical issues. These issues include the values exploding or vanishing and\nfailure of training. And these happen regardless of the hyperparameter\ninitialization. From the perspective of effective theory, we aim to identify\nthe causes of this phenomenon and propose a new activation function that\nretains the advantages of RePU while overcoming its drawbacks.",
+  "citation": 0
+}

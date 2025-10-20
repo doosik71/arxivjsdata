@@ -1,0 +1,8 @@
+{
+  "title": "Activation Ensembles for Deep Neural Networks",
+  "authors": "Mark Harmon, Diego Klabjan",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1702.07790v1",
+  "abstract": "Many activation functions have been proposed in the past, but selecting an\nadequate one requires trial and error. We propose a new methodology of\ndesigning activation functions within a neural network at each layer. We call\nthis technique an \"activation ensemble\" because it allows the use of multiple\nactivation functions at each layer. This is done by introducing additional\nvariables, $\\alpha$, at each activation layer of a network to allow for\nmultiple activation functions to be active at each neuron. By design,\nactivations with larger $\\alpha$ values at a neuron is equivalent to having the\nlargest magnitude. Hence, those higher magnitude activations are \"chosen\" by\nthe network. We implement the activation ensembles on a variety of datasets\nusing an array of Feed Forward and Convolutional Neural Networks. By using the\nactivation ensemble, we achieve superior results compared to traditional\ntechniques. In addition, because of the flexibility of this methodology, we\nmore deeply explore activation functions and the features that they capture.",
+  "citation": 56
+}

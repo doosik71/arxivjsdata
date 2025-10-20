@@ -1,0 +1,8 @@
+{
+  "title": "Learning specialized activation functions with the Piecewise Linear Unit",
+  "authors": "Yucong Zhou, Zezhou Zhu, Zhao Zhong",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2104.03693v1",
+  "abstract": "The choice of activation functions is crucial for modern deep neural\nnetworks. Popular hand-designed activation functions like Rectified Linear\nUnit(ReLU) and its variants show promising performance in various tasks and\nmodels. Swish, the automatically discovered activation function, has been\nproposed and outperforms ReLU on many challenging datasets. However, it has two\nmain drawbacks. First, the tree-based search space is highly discrete and\nrestricted, which is difficult for searching. Second, the sample-based\nsearching method is inefficient, making it infeasible to find specialized\nactivation functions for each dataset or neural architecture. To tackle these\ndrawbacks, we propose a new activation function called Piecewise Linear\nUnit(PWLU), which incorporates a carefully designed formulation and learning\nmethod. It can learn specialized activation functions and achieves SOTA\nperformance on large-scale datasets like ImageNet and COCO. For example, on\nImageNet classification dataset, PWLU improves 0.9%/0.53%/1.0%/1.7%/1.0% top-1\naccuracy over Swish for\nResNet-18/ResNet-50/MobileNet-V2/MobileNet-V3/EfficientNet-B0. PWLU is also\neasy to implement and efficient at inference, which can be widely applied in\nreal-world applications.",
+  "citation": 28
+}

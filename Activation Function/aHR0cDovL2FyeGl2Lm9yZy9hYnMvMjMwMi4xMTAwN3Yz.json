@@ -1,0 +1,8 @@
+{
+  "title": "Unification of popular artificial neural network activation functions",
+  "authors": "Mohammad Mostafanejad",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.11007v3",
+  "abstract": "We present a unified representation of the most popular neural network\nactivation functions. Adopting Mittag-Leffler functions of fractional calculus,\nwe propose a flexible and compact functional form that is able to interpolate\nbetween various activation functions and mitigate common problems in training\nneural networks such as vanishing and exploding gradients. The presented gated\nrepresentation extends the scope of fixed-shape activation functions to their\nadaptive counterparts whose shape can be learnt from the training data. The\nderivatives of the proposed functional form can also be expressed in terms of\nMittag-Leffler functions making it a suitable candidate for gradient-based\nbackpropagation algorithms. By training multiple neural networks of different\ncomplexities on various datasets with different sizes, we demonstrate that\nadopting a unified gated representation of activation functions offers a\npromising and affordable alternative to individual built-in implementations of\nactivation functions in conventional machine learning frameworks.",
+  "citation": 0
+}

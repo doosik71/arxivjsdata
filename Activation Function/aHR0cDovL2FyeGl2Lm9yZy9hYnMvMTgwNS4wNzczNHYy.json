@@ -1,0 +1,8 @@
+{
+  "title": "Analysis of Multilayer Perceptron with Rectifier Linear Unit Activation\n  Function",
+  "authors": "Meirambek Mukhametkhan, Olga Krestinskaya, Alex Pappachen James",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1805.07734v2",
+  "abstract": "The implementation of analog neural network and online analog learning\ncircuits based on memristive crossbar has been intensively explored in recent\nyears. The implementation of various activation functions is important,\nespecially for deep leaning neural networks. There are several implementations\nof sigmoid and tangent activation function, while the implementation of the\nneural networks with linear activation functions is an open problem. Therefore,\nthis paper introduces a multilayer perceptron design with linear activation\nfunction. The temperature and noise analysis was performed. The perceptron\nshowed a good performance and strong durability to temperature changes.",
+  "citation": 0
+}

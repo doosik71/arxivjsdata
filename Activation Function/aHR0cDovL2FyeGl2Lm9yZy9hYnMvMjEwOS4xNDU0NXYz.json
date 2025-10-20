@@ -1,0 +1,8 @@
+{
+  "title": "Activation Functions in Deep Learning: A Comprehensive Survey and\n  Benchmark",
+  "authors": "Shiv Ram Dubey, Satish Kumar Singh, Bidyut Baran Chaudhuri",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.14545v3",
+  "abstract": "Neural networks have shown tremendous growth in recent years to solve\nnumerous problems. Various types of neural networks have been introduced to\ndeal with different types of problems. However, the main goal of any neural\nnetwork is to transform the non-linearly separable input data into more\nlinearly separable abstract features using a hierarchy of layers. These layers\nare combinations of linear and nonlinear functions. The most popular and common\nnon-linearity layers are activation functions (AFs), such as Logistic Sigmoid,\nTanh, ReLU, ELU, Swish and Mish. In this paper, a comprehensive overview and\nsurvey is presented for AFs in neural networks for deep learning. Different\nclasses of AFs such as Logistic Sigmoid and Tanh based, ReLU based, ELU based,\nand Learning based are covered. Several characteristics of AFs such as output\nrange, monotonicity, and smoothness are also pointed out. A performance\ncomparison is also performed among 18 state-of-the-art AFs with different\nnetworks on different types of data. The insights of AFs are presented to\nbenefit the researchers for doing further research and practitioners to select\namong different choices. The code used for experimental comparison is released\nat: \\url{https://github.com/shivram1987/ActivationFunctions}.",
+  "citation": 1386
+}

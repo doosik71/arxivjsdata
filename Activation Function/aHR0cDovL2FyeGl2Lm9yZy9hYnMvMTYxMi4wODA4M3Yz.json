@@ -1,0 +1,8 @@
+{
+  "title": "Language Modeling with Gated Convolutional Networks",
+  "authors": "Yann N. Dauphin, Angela Fan, Michael Auli, David Grangier",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1612.08083v3",
+  "abstract": "The pre-dominant approach to language modeling to date is based on recurrent\nneural networks. Their success on this task is often linked to their ability to\ncapture unbounded context. In this paper we develop a finite context approach\nthrough stacked convolutions, which can be more efficient since they allow\nparallelization over sequential tokens. We propose a novel simplified gating\nmechanism that outperforms Oord et al (2016) and investigate the impact of key\narchitectural decisions. The proposed approach achieves state-of-the-art on the\nWikiText-103 benchmark, even though it features long-term dependencies, as well\nas competitive results on the Google Billion Words benchmark. Our model reduces\nthe latency to score a sentence by an order of magnitude compared to a\nrecurrent baseline. To our knowledge, this is the first time a non-recurrent\napproach is competitive with strong recurrent models on these large scale\nlanguage tasks.",
+  "citation": 3492
+}

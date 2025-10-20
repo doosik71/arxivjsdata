@@ -1,0 +1,8 @@
+{
+  "title": "A Significantly Better Class of Activation Functions Than ReLU Like\n  Activation Functions",
+  "authors": "Mathew Mithra Noel, Yug Oswal",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.04459v1",
+  "abstract": "This paper introduces a significantly better class of activation functions\nthan the almost universally used ReLU like and Sigmoidal class of activation\nfunctions. Two new activation functions referred to as the Cone and\nParabolic-Cone that differ drastically from popular activation functions and\nsignificantly outperform these on the CIFAR-10 and Imagenette benchmmarks are\nproposed. The cone activation functions are positive only on a finite interval\nand are strictly negative except at the end-points of the interval, where they\nbecome zero. Thus the set of inputs that produce a positive output for a neuron\nwith cone activation functions is a hyperstrip and not a half-space as is the\nusual case. Since a hyper strip is the region between two parallel\nhyper-planes, it allows neurons to more finely divide the input feature space\ninto positive and negative classes than with infinitely wide half-spaces. In\nparticular the XOR function can be learn by a single neuron with cone-like\nactivation functions. Both the cone and parabolic-cone activation functions are\nshown to achieve higher accuracies with significantly fewer neurons on\nbenchmarks. The results presented in this paper indicate that many nonlinear\nreal-world datasets may be separated with fewer hyperstrips than half-spaces.\nThe Cone and Parabolic-Cone activation functions have larger derivatives than\nReLU and are shown to significantly speedup training.",
+  "citation": 6
+}

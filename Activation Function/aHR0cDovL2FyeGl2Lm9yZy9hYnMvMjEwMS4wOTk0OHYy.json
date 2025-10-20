@@ -1,0 +1,8 @@
+{
+  "title": "Parametric Rectified Power Sigmoid Units: Learning Nonlinear Neural\n  Transfer Analytical Forms",
+  "authors": "Abdourrahmane Mahamane Atto, Sylvie Galichet, Dominique Pastor, Nicolas Méger",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2101.09948v2",
+  "abstract": "The paper proposes representation functionals in a dual paradigm where\nlearning jointly concerns both linear convolutional weights and parametric\nforms of nonlinear activation functions. The nonlinear forms proposed for\nperforming the functional representation are associated with a new class of\nparametric neural transfer functions called rectified power sigmoid units. This\nclass is constructed to integrate both advantages of sigmoid and rectified\nlinear unit functions, in addition with rejecting the drawbacks of these\nfunctions. Moreover, the analytic form of this new neural class involves scale,\nshift and shape parameters so as to obtain a wide range of activation shapes,\nincluding the standard rectified linear unit as a limit case. Parameters of\nthis neural transfer class are considered as learnable for the sake of\ndiscovering the complex shapes that can contribute in solving machine learning\nissues. Performance achieved by the joint learning of convolutional and\nrectified power sigmoid learnable parameters are shown outstanding in both\nshallow and deep learning frameworks. This class opens new prospects with\nrespect to machine learning in the sense that learnable parameters are not only\nattached to linear transformations, but also to suitable nonlinear operators.",
+  "citation": 2
+}

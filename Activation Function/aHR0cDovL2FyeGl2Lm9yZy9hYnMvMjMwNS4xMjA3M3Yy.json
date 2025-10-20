@@ -1,0 +1,8 @@
+{
+  "title": "GELU Activation Function in Deep Learning: A Comprehensive Mathematical\n  Analysis and Performance",
+  "authors": "Minhyeok Lee",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.12073v2",
+  "abstract": "Selecting the most suitable activation function is a critical factor in the\neffectiveness of deep learning models, as it influences their learning\ncapacity, stability, and computational efficiency. In recent years, the\nGaussian Error Linear Unit (GELU) activation function has emerged as a dominant\nmethod, surpassing traditional functions such as the Rectified Linear Unit\n(ReLU) in various applications. This study presents a rigorous mathematical\ninvestigation of the GELU activation function, exploring its differentiability,\nboundedness, stationarity, and smoothness properties in detail. Additionally,\nwe conduct an extensive experimental comparison of the GELU function against a\nbroad range of alternative activation functions, utilizing a residual\nconvolutional network trained on the CIFAR-10, CIFAR-100, and STL-10 datasets\nas the empirical testbed. Our results demonstrate the superior performance of\nGELU compared to other activation functions, establishing its suitability for a\nwide range of deep learning applications. This comprehensive study contributes\nto a more profound understanding of the underlying mathematical properties of\nGELU and provides valuable insights for practitioners aiming to select\nactivation functions that optimally align with their specific objectives and\nconstraints in deep learning.",
+  "citation": 70
+}

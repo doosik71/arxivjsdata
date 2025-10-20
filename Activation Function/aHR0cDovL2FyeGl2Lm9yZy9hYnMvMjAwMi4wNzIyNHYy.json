@@ -1,0 +1,8 @@
+{
+  "title": "Evolutionary Optimization of Deep Learning Activation Functions",
+  "authors": "Garrett Bingham, William Macke, Risto Miikkulainen",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2002.07224v2",
+  "abstract": "The choice of activation function can have a large effect on the performance\nof a neural network. While there have been some attempts to hand-engineer novel\nactivation functions, the Rectified Linear Unit (ReLU) remains the most\ncommonly-used in practice. This paper shows that evolutionary algorithms can\ndiscover novel activation functions that outperform ReLU. A tree-based search\nspace of candidate activation functions is defined and explored with mutation,\ncrossover, and exhaustive search. Experiments on training wide residual\nnetworks on the CIFAR-10 and CIFAR-100 image datasets show that this approach\nis effective. Replacing ReLU with evolved activation functions results in\nstatistically significant increases in network accuracy. Optimal performance is\nachieved when evolution is allowed to customize activation functions to a\nparticular task; however, these novel activation functions are shown to\ngeneralize, achieving high performance across tasks. Evolutionary optimization\nof activation functions is therefore a promising new dimension of metalearning\nin neural networks.",
+  "citation": 78
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Continuously Differentiable Exponential Linear Units",
+  "authors": "Jonathan T. Barron",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1704.07483v1",
+  "abstract": "Exponential Linear Units (ELUs) are a useful rectifier for constructing deep\nlearning architectures, as they may speed up and otherwise improve learning by\nvirtue of not have vanishing gradients and by having mean activations near\nzero. However, the ELU activation as parametrized in [1] is not continuously\ndifferentiable with respect to its input when the shape parameter alpha is not\nequal to 1. We present an alternative parametrization which is C1 continuous\nfor all values of alpha, making the rectifier easier to reason about and making\nalpha easier to tune. This alternative parametrization has several other useful\nproperties that the original parametrization of ELU does not: 1) its derivative\nwith respect to x is bounded, 2) it contains both the linear transfer function\nand ReLU as special cases, and 3) it is scale-similar with respect to alpha.",
+  "citation": 180
+}

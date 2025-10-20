@@ -1,0 +1,8 @@
+{
+  "title": "On Polynomial Approximation of Activation Function",
+  "authors": "John Chiang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.00004v1",
+  "abstract": "In this work, we propose an interesting method that aims to approximate an\nactivation function over some domain by polynomials of the presupposing low\ndegree. The main idea behind this method can be seen as an extension of the\nordinary least square method and includes the gradient of activation function\ninto the cost function to minimize.",
+  "citation": 6
+}

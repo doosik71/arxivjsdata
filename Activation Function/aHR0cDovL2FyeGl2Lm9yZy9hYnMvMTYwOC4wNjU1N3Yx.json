@@ -1,0 +1,8 @@
+{
+  "title": "Neural Networks with Smooth Adaptive Activation Functions for Regression",
+  "authors": "Le Hou, Dimitris Samaras, Tahsin M. Kurc, Yi Gao, Joel H. Saltz",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1608.06557v1",
+  "abstract": "In Neural Networks (NN), Adaptive Activation Functions (AAF) have parameters\nthat control the shapes of activation functions. These parameters are trained\nalong with other parameters in the NN. AAFs have improved performance of Neural\nNetworks (NN) in multiple classification tasks. In this paper, we propose and\napply AAFs on feedforward NNs for regression tasks. We argue that applying AAFs\nin the regression (second-to-last) layer of a NN can significantly decrease the\nbias of the regression NN. However, using existing AAFs may lead to\noverfitting. To address this problem, we propose a Smooth Adaptive Activation\nFunction (SAAF) with piecewise polynomial form which can approximate any\ncontinuous function to arbitrary degree of error. NNs with SAAFs can avoid\noverfitting by simply regularizing the parameters. In particular, an NN with\nSAAFs is Lipschitz continuous given a bounded magnitude of the NN parameters.\nWe prove an upper-bound for model complexity in terms of fat-shattering\ndimension for any Lipschitz continuous regression model. Thus, regularizing the\nparameters in NNs with SAAFs avoids overfitting. We empirically evaluated NNs\nwith SAAFs and achieved state-of-the-art results on multiple regression\ndatasets.",
+  "citation": 24
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Feedback-Gated Rectified Linear Units",
+  "authors": "Marco Kemmerling",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2301.02610v1",
+  "abstract": "Feedback connections play a prominent role in the human brain but have not\nreceived much attention in artificial neural network research. Here, a\nbiologically inspired feedback mechanism which gates rectified linear units is\nproposed. On the MNIST dataset, autoencoders with feedback show faster\nconvergence, better performance, and more robustness to noise compared to their\ncounterparts without feedback. Some benefits, although less pronounced and less\nconsistent, can be observed when networks with feedback are applied on the\nCIFAR-10 dataset.",
+  "citation": 0
+}

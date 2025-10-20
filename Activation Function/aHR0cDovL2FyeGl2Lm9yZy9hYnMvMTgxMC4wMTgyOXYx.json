@@ -1,0 +1,8 @@
+{
+  "title": "Weighted Sigmoid Gate Unit for an Activation Function of Deep Neural\n  Network",
+  "authors": "Masayuki Tanaka",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1810.01829v1",
+  "abstract": "An activation function has crucial role in a deep neural network.\n  A simple rectified linear unit (ReLU) are widely used for the activation\nfunction.\n  In this paper, a weighted sigmoid gate unit (WiG) is proposed as the\nactivation function.\n  The proposed WiG consists of a multiplication of inputs and the weighted\nsigmoid gate.\n  It is shown that the WiG includes the ReLU and same activation functions as a\nspecial case.\n  Many activation functions have been proposed to overcome the performance of\nthe ReLU.\n  In the literature, the performance is mainly evaluated with an object\nrecognition task.\n  The proposed WiG is evaluated with the object recognition task and the image\nrestoration task.\n  Then, the expeirmental comparisons demonstrate the proposed WiG overcomes the\nexisting activation functions including the ReLU.",
+  "citation": 78
+}

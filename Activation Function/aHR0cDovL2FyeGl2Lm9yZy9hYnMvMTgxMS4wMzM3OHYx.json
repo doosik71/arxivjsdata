@@ -1,0 +1,8 @@
+{
+  "title": "Activation Functions: Comparison of trends in Practice and Research for\n  Deep Learning",
+  "authors": "Chigozie Nwankpa, Winifred Ijomah, Anthony Gachagan, Stephen Marshall",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1811.03378v1",
+  "abstract": "Deep neural networks have been successfully used in diverse emerging domains\nto solve real world complex problems with may more deep learning(DL)\narchitectures, being developed to date. To achieve these state-of-the-art\nperformances, the DL architectures use activation functions (AFs), to perform\ndiverse computations between the hidden layers and the output layers of any\ngiven DL architecture. This paper presents a survey on the existing AFs used in\ndeep learning applications and highlights the recent trends in the use of the\nactivation functions for deep learning applications. The novelty of this paper\nis that it compiles majority of the AFs used in DL and outlines the current\ntrends in the applications and usage of these functions in practical deep\nlearning deployments against the state-of-the-art research results. This\ncompilation will aid in making effective decisions in the choice of the most\nsuitable and appropriate activation function for any given application, ready\nfor deployment. This paper is timely because most research papers on AF\nhighlights similar works and results while this paper will be the first, to\ncompile the trends in AF applications in practice against the research results\nfrom literature, found in deep learning research to date.",
+  "citation": 2712
+}

@@ -1,0 +1,8 @@
+{
+  "title": "ReCA: A Parametric ReLU Composite Activation Function",
+  "authors": "John Chidiac, Danielle Azar",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2504.08994v2",
+  "abstract": "Activation functions have been shown to affect the performance of deep neural\nnetworks significantly. While the Rectified Linear Unit (ReLU) remains the\ndominant choice in practice, the optimal activation function for deep neural\nnetworks remains an open research question. In this paper, we propose a novel\nparametric activation function, ReCA, based on ReLU, which has been shown to\noutperform all baselines on state-of-the-art datasets using different complex\nneural network architectures.",
+  "citation": 1
+}

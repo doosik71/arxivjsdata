@@ -1,0 +1,8 @@
+{
+  "title": "Three Decades of Activations: A Comprehensive Survey of 400 Activation\n  Functions for Neural Networks",
+  "authors": "Vladimír Kunc, Jiří Kléma",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.09092v1",
+  "abstract": "Neural networks have proven to be a highly effective tool for solving complex\nproblems in many areas of life. Recently, their importance and practical\nusability have further been reinforced with the advent of deep learning. One of\nthe important conditions for the success of neural networks is the choice of an\nappropriate activation function introducing non-linearity into the model. Many\ntypes of these functions have been proposed in the literature in the past, but\nthere is no single comprehensive source containing their exhaustive overview.\nThe absence of this overview, even in our experience, leads to redundancy and\nthe unintentional rediscovery of already existing activation functions. To\nbridge this gap, our paper presents an extensive survey involving 400\nactivation functions, which is several times larger in scale than previous\nsurveys. Our comprehensive compilation also references these surveys; however,\nits main goal is to provide the most comprehensive overview and systematization\nof previously published activation functions with links to their original\nsources. The secondary aim is to update the current understanding of this\nfamily of functions.",
+  "citation": 61
+}

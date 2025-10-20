@@ -1,0 +1,8 @@
+{
+  "title": "Parametric Exponential Linear Unit for Deep Convolutional Neural\n  Networks",
+  "authors": "Ludovic Trottier, Philippe Giguère, Brahim Chaib-draa",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1605.09332v4",
+  "abstract": "Object recognition is an important task for improving the ability of visual\nsystems to perform complex scene understanding. Recently, the Exponential\nLinear Unit (ELU) has been proposed as a key component for managing bias shift\nin Convolutional Neural Networks (CNNs), but defines a parameter that must be\nset by hand. In this paper, we propose learning a parameterization of ELU in\norder to learn the proper activation shape at each layer in the CNNs. Our\nresults on the MNIST, CIFAR-10/100 and ImageNet datasets using the NiN,\nOverfeat, All-CNN and ResNet networks indicate that our proposed Parametric ELU\n(PELU) has better performances than the non-parametric ELU. We have observed as\nmuch as a 7.28% relative error improvement on ImageNet with the NiN network,\nwith only 0.0003% parameter increase. Our visual examination of the non-linear\nbehaviors adopted by Vgg using PELU shows that the network took advantage of\nthe added flexibility by learning different activations at different layers.",
+  "citation": 306
+}

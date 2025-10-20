@@ -1,0 +1,8 @@
+{
+  "title": "ReLU Deep Neural Networks from the Hierarchical Basis Perspective",
+  "authors": "Juncai He, Lin Li, Jinchao Xu",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2105.04156v2",
+  "abstract": "We study ReLU deep neural networks (DNNs) by investigating their connections\nwith the hierarchical basis method in finite element methods. First, we show\nthat the approximation schemes of ReLU DNNs for $x^2$ and $xy$ are composition\nversions of the hierarchical basis approximation for these two functions. Based\non this fact, we obtain a geometric interpretation and systematic proof for the\napproximation result of ReLU DNNs for polynomials, which plays an important\nrole in a series of recent exponential approximation results of ReLU DNNs.\nThrough our investigation of connections between ReLU DNNs and the hierarchical\nbasis approximation for $x^2$ and $xy$, we show that ReLU DNNs with this\nspecial structure can be applied only to approximate quadratic functions.\nFurthermore, we obtain a concise representation to explicitly reproduce any\nlinear finite element function on a two-dimensional uniform mesh by using ReLU\nDNNs with only two hidden layers.",
+  "citation": 41
+}

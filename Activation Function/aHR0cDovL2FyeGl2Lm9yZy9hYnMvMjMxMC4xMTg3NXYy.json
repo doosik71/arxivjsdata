@@ -1,0 +1,8 @@
+{
+  "title": "Fractional Concepts in Neural Networks: Enhancing Activation Functions",
+  "authors": "Zahra Alijani, Vojtech Molek",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2310.11875v2",
+  "abstract": "Designing effective neural networks requires tuning architectural elements.\nThis study integrates fractional calculus into neural networks by introducing\nfractional order derivatives (FDO) as tunable parameters in activation\nfunctions, allowing diverse activation functions by adjusting the FDO. We\nevaluate these fractional activation functions on various datasets and network\narchitectures, comparing their performance with traditional and new activation\nfunctions. Our experiments assess their impact on accuracy, time complexity,\ncomputational overhead, and memory usage. Results suggest fractional activation\nfunctions, particularly fractional Sigmoid, offer benefits in some scenarios.\nChallenges related to consistency and efficiency remain. Practical implications\nand limitations are discussed.",
+  "citation": 4
+}

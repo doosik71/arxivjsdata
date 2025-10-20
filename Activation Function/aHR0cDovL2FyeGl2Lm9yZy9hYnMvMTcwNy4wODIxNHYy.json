@@ -1,0 +1,8 @@
+{
+  "title": "Dual Rectified Linear Units (DReLUs): A Replacement for Tanh Activation\n  Functions in Quasi-Recurrent Neural Networks",
+  "authors": "Fréderic Godin, Jonas Degrave, Joni Dambre, Wesley De Neve",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1707.08214v2",
+  "abstract": "In this paper, we introduce a novel type of Rectified Linear Unit (ReLU),\ncalled a Dual Rectified Linear Unit (DReLU). A DReLU, which comes with an\nunbounded positive and negative image, can be used as a drop-in replacement for\na tanh activation function in the recurrent step of Quasi-Recurrent Neural\nNetworks (QRNNs) (Bradbury et al. (2017)). Similar to ReLUs, DReLUs are less\nprone to the vanishing gradient problem, they are noise robust, and they induce\nsparse activations.\n  We independently reproduce the QRNN experiments of Bradbury et al. (2017) and\ncompare our DReLU-based QRNNs with the original tanh-based QRNNs and Long\nShort-Term Memory networks (LSTMs) on sentiment classification and word-level\nlanguage modeling. Additionally, we evaluate on character-level language\nmodeling, showing that we are able to stack up to eight QRNN layers with\nDReLUs, thus making it possible to improve the current state-of-the-art in\ncharacter-level language modeling over shallow architectures based on LSTMs.",
+  "citation": 70
+}

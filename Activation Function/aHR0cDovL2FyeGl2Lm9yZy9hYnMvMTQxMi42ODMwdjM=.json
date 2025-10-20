@@ -1,0 +1,8 @@
+{
+  "title": "Learning Activation Functions to Improve Deep Neural Networks",
+  "authors": "Forest Agostinelli, Matthew Hoffman, Peter Sadowski, Pierre Baldi",
+  "year": 2014,
+  "url": "http://arxiv.org/abs/1412.6830v3",
+  "abstract": "Artificial neural networks typically have a fixed, non-linear activation\nfunction at each neuron. We have designed a novel form of piecewise linear\nactivation function that is learned independently for each neuron using\ngradient descent. With this adaptive activation function, we are able to\nimprove upon deep neural network architectures composed of static rectified\nlinear units, achieving state-of-the-art performance on CIFAR-10 (7.51%),\nCIFAR-100 (30.83%), and a benchmark from high-energy physics involving Higgs\nboson decay modes.",
+  "citation": 777
+}

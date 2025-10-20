@@ -1,0 +1,8 @@
+{
+  "title": "Expressiveness of Rectifier Networks",
+  "authors": "Xingyuan Pan, Vivek Srikumar",
+  "year": 2015,
+  "url": "http://arxiv.org/abs/1511.05678v3",
+  "abstract": "Rectified Linear Units (ReLUs) have been shown to ameliorate the vanishing\ngradient problem, allow for efficient backpropagation, and empirically promote\nsparsity in the learned parameters. They have led to state-of-the-art results\nin a variety of applications. However, unlike threshold and sigmoid networks,\nReLU networks are less explored from the perspective of their expressiveness.\nThis paper studies the expressiveness of ReLU networks. We characterize the\ndecision boundary of two-layer ReLU networks by constructing functionally\nequivalent threshold networks. We show that while the decision boundary of a\ntwo-layer ReLU network can be captured by a threshold network, the latter may\nrequire an exponentially larger number of hidden units. We also formulate\nsufficient conditions for a corresponding logarithmic reduction in the number\nof hidden units to represent a sign network as a ReLU network. Finally, we\nexperimentally compare threshold networks and their much smaller ReLU\ncounterparts with respect to their ability to learn from synthetically\ngenerated data.",
+  "citation": 75
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Activation Adaptation in Neural Networks",
+  "authors": "Farnoush Farhadi, Vahid Partovi Nia, Andrea Lodi",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1901.09849v2",
+  "abstract": "Many neural network architectures rely on the choice of the activation\nfunction for each hidden layer. Given the activation function, the neural\nnetwork is trained over the bias and the weight parameters. The bias catches\nthe center of the activation, and the weights capture the scale. Here we\npropose to train the network over a shape parameter as well. This view allows\neach neuron to tune its own activation function and adapt the neuron curvature\ntowards a better prediction. This modification only adds one further equation\nto the back-propagation for each neuron. Re-formalizing activation functions as\nCDF generalizes the class of activation function extensively. We aimed at\ngeneralizing an extensive class of activation functions to study: i) skewness\nand ii) smoothness of activation functions. Here we introduce adaptive Gumbel\nactivation function as a bridge between Gumbel and sigmoid. A similar approach\nis used to invent a smooth version of ReLU. Our comparison with common\nactivation functions suggests different data representation especially in early\nneural network layers. This adaptation also provides prediction improvement.",
+  "citation": 18
+}

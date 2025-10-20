@@ -1,0 +1,8 @@
+{
+  "title": "Piecewise Linear Units Improve Deep Neural Networks",
+  "authors": "Jordan Inturrisi, Sui Yang Khoo, Abbas Kouzani, Riccardo Pagliarella",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2108.00700v3",
+  "abstract": "The activation function is at the heart of a deep neural networks\nnonlinearity; the choice of the function has great impact on the success of\ntraining. Currently, many practitioners prefer the Rectified Linear Unit (ReLU)\ndue to its simplicity and reliability, despite its few drawbacks. While most\nprevious functions proposed to supplant ReLU have been hand-designed, recent\nwork on learning the function during training has shown promising results. In\nthis paper we propose an adaptive piecewise linear activation function, the\nPiecewise Linear Unit (PiLU), which can be learned independently for each\ndimension of the neural network. We demonstrate how PiLU is a generalised\nrectifier unit and note its similarities with the Adaptive Piecewise Linear\nUnits, namely adaptive and piecewise linear. Across a distribution of 30\nexperiments, we show that for the same model architecture, hyperparameters, and\npre-processing, PiLU significantly outperforms ReLU: reducing classification\nerror by 18.53% on CIFAR-10 and 13.13% on CIFAR-100, for a minor increase in\nthe number of neurons. Further work should be dedicated to exploring\ngeneralised piecewise linear units, as well as verifying these results across\nother challenging domains and larger problems.",
+  "citation": 7
+}

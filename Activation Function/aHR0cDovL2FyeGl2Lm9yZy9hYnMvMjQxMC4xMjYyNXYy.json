@@ -1,0 +1,8 @@
+{
+  "title": "Activation functions enabling the addition of neurons and layers without\n  altering outcomes",
+  "authors": "Sergio López-Ureña",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.12625v2",
+  "abstract": "In this work, we propose activation functions for neuronal networks that are\nrefinable and sum the identity. This new class of activation functions allows\nthe insertion of new layers between existing ones and/or the increase of\nneurons in a layer, both without altering the network outputs.\n  Our approach is grounded in subdivision theory. The proposed activation\nfunctions are constructed from basic limit functions of convergent subdivision\nschemes. As a showcase of our results, we introduce a family of spline\nactivation functions and provide comprehensive details for their practical\nimplementation.",
+  "citation": 0
+}

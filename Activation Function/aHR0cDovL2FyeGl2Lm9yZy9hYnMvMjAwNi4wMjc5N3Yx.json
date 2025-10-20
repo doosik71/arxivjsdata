@@ -1,0 +1,8 @@
+{
+  "title": "Overcoming Overfitting and Large Weight Update Problem in Linear\n  Rectifiers: Thresholded Exponential Rectified Linear Units",
+  "authors": "Vijay Pandey",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.02797v1",
+  "abstract": "In past few years, linear rectified unit activation functions have shown its\nsignificance in the neural networks, surpassing the performance of sigmoid\nactivations. RELU (Nair & Hinton, 2010), ELU (Clevert et al., 2015), PRELU (He\net al., 2015), LRELU (Maas et al., 2013), SRELU (Jin et al., 2016),\nThresholdedRELU, all these linear rectified activation functions have its own\nsignificance over others in some aspect. Most of the time these activation\nfunctions suffer from bias shift problem due to non-zero output mean, and high\nweight update problem in deep complex networks due to unit gradient, which\nresults in slower training, and high variance in model prediction respectively.\nIn this paper, we propose, \"Thresholded exponential rectified linear unit\"\n(TERELU) activation function that works better in alleviating in overfitting:\nlarge weight update problem. Along with alleviating overfitting problem, this\nmethod also gives good amount of non-linearity as compared to other linear\nrectifiers. We will show better performance on the various datasets using\nneural networks, considering TERELU activation method compared to other\nactivations.",
+  "citation": 3
+}

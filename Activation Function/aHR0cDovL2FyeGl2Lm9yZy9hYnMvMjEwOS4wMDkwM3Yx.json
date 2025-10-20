@@ -1,0 +1,8 @@
+{
+  "title": "Effect of the output activation function on the probabilities and errors\n  in medical image segmentation",
+  "authors": "Lars Nieradzik, Gerik Scheuermann, Dorothee Saur, Christina Gillmann",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.00903v1",
+  "abstract": "The sigmoid activation is the standard output activation function in binary\nclassification and segmentation with neural networks. Still, there exist a\nvariety of other potential output activation functions, which may lead to\nimproved results in medical image segmentation. In this work, we consider how\nthe asymptotic behavior of different output activation and loss functions\naffects the prediction probabilities and the corresponding segmentation errors.\nFor cross entropy, we show that a faster rate of change of the activation\nfunction correlates with better predictions, while a slower rate of change can\nimprove the calibration of probabilities. For dice loss, we found that the\narctangent activation function is superior to the sigmoid function.\nFurthermore, we provide a test space for arbitrary output activation functions\nin the area of medical image segmentation. We tested seven activation functions\nin combination with three loss functions on four different medical image\nsegmentation tasks to provide a classification of which function is best suited\nin this application scenario.",
+  "citation": 16
+}

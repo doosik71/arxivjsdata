@@ -1,0 +1,8 @@
+{
+  "title": "Empirical Evaluation of Rectified Activations in Convolutional Network",
+  "authors": "Bing Xu, Naiyan Wang, Tianqi Chen, Mu Li",
+  "year": 2015,
+  "url": "http://arxiv.org/abs/1505.00853v2",
+  "abstract": "In this paper we investigate the performance of different types of rectified\nactivation functions in convolutional neural network: standard rectified linear\nunit (ReLU), leaky rectified linear unit (Leaky ReLU), parametric rectified\nlinear unit (PReLU) and a new randomized leaky rectified linear units (RReLU).\nWe evaluate these activation function on standard image classification task.\nOur experiments suggest that incorporating a non-zero slope for negative part\nin rectified activation units could consistently improve the results. Thus our\nfindings are negative on the common belief that sparsity is the key of good\nperformance in ReLU. Moreover, on small scale dataset, using deterministic\nnegative slope or learning it are both prone to overfitting. They are not as\neffective as using their randomized counterpart. By using RReLU, we achieved\n75.68\\% accuracy on CIFAR-100 test set without multiple test or ensemble.",
+  "citation": 4692
+}

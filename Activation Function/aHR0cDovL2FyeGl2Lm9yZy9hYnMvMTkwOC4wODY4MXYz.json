@@ -1,0 +1,8 @@
+{
+  "title": "Mish: A Self Regularized Non-Monotonic Activation Function",
+  "authors": "Diganta Misra",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1908.08681v3",
+  "abstract": "We propose $\\textit{Mish}$, a novel self-regularized non-monotonic activation\nfunction which can be mathematically defined as: $f(x)=x\\tanh(softplus(x))$. As\nactivation functions play a crucial role in the performance and training\ndynamics in neural networks, we validated experimentally on several well-known\nbenchmarks against the best combinations of architectures and activation\nfunctions. We also observe that data augmentation techniques have a favorable\neffect on benchmarks like ImageNet-1k and MS-COCO across multiple\narchitectures. For example, Mish outperformed Leaky ReLU on YOLOv4 with a\nCSP-DarkNet-53 backbone on average precision ($AP_{50}^{val}$) by 2.1$\\%$ in\nMS-COCO object detection and ReLU on ResNet-50 on ImageNet-1k in Top-1 accuracy\nby $\\approx$1$\\%$ while keeping all other network parameters and\nhyperparameters constant. Furthermore, we explore the mathematical formulation\nof Mish in relation with the Swish family of functions and propose an intuitive\nunderstanding on how the first derivative behavior may be acting as a\nregularizer helping the optimization of deep neural networks. Code is publicly\navailable at https://github.com/digantamisra98/Mish.",
+  "citation": 2468
+}

@@ -1,0 +1,8 @@
+{
+  "title": "STL: A Signed and Truncated Logarithm Activation Function for Neural\n  Networks",
+  "authors": "Yuanhao Gong",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2307.16389v1",
+  "abstract": "Activation functions play an essential role in neural networks. They provide\nthe non-linearity for the networks. Therefore, their properties are important\nfor neural networks' accuracy and running performance. In this paper, we\npresent a novel signed and truncated logarithm function as activation function.\nThe proposed activation function has significantly better mathematical\nproperties, such as being odd function, monotone, differentiable, having\nunbounded value range, and a continuous nonzero gradient. These properties make\nit an excellent choice as an activation function. We compare it with other\nwell-known activation functions in several well-known neural networks. The\nresults confirm that it is the state-of-the-art. The suggested activation\nfunction can be applied in a large range of neural networks where activation\nfunctions are necessary.",
+  "citation": 4
+}

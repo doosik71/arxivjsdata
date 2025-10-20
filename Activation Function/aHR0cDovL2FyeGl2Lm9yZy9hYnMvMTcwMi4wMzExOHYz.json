@@ -1,0 +1,8 @@
+{
+  "title": "Sigmoid-Weighted Linear Units for Neural Network Function Approximation\n  in Reinforcement Learning",
+  "authors": "Stefan Elfwing, Eiji Uchibe, Kenji Doya",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1702.03118v3",
+  "abstract": "In recent years, neural networks have enjoyed a renaissance as function\napproximators in reinforcement learning. Two decades after Tesauro's TD-Gammon\nachieved near top-level human performance in backgammon, the deep reinforcement\nlearning algorithm DQN achieved human-level performance in many Atari 2600\ngames. The purpose of this study is twofold. First, we propose two activation\nfunctions for neural network function approximation in reinforcement learning:\nthe sigmoid-weighted linear unit (SiLU) and its derivative function (dSiLU).\nThe activation of the SiLU is computed by the sigmoid function multiplied by\nits input. Second, we suggest that the more traditional approach of using\non-policy learning with eligibility traces, instead of experience replay, and\nsoftmax action selection with simple annealing can be competitive with DQN,\nwithout the need for a separate target network. We validate our proposed\napproach by, first, achieving new state-of-the-art results in both stochastic\nSZ-Tetris and Tetris with a small 10$\\times$10 board, using TD($\\lambda$)\nlearning and shallow dSiLU network agents, and, then, by outperforming DQN in\nthe Atari 2600 domain by using a deep Sarsa($\\lambda$) agent with SiLU and\ndSiLU hidden units.",
+  "citation": 2516
+}

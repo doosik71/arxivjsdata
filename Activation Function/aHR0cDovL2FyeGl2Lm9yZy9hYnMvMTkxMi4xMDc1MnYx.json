@@ -1,0 +1,8 @@
+{
+  "title": "Learn-able parameter guided Activation Functions",
+  "authors": "S. Balaji, T. Kavya, Natasha Sebastian",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1912.10752v1",
+  "abstract": "In this paper, we explore the concept of adding learn-able slope and mean\nshift parameters to an activation function to improve the total response\nregion. The characteristics of an activation function depend highly on the\nvalue of parameters. Making the parameters learn-able, makes the activation\nfunction more dynamic and capable to adapt as per the requirements of its\nneighboring layers. The introduced slope parameter is independent of other\nparameters in the activation function. The concept was applied to ReLU to\ndevelop Dual Line and DualParametric ReLU activation function. Evaluation on\nMNIST and CIFAR10 show that the proposed activation function Dual Line achieves\ntop-5 position for mean accuracy among 43 activation functions tested with\nLENET4, LENET5, and WideResNet architectures. This is the first time more than\n40 activation functions were analyzed on MNIST andCIFAR10 dataset at the same\ntime. The study on the distribution of positive slope parameter beta indicates\nthat the activation function adapts as per the requirements of the neighboring\nlayers. The study shows that model performance increases with the proposed\nactivation functions",
+  "citation": 6
+}

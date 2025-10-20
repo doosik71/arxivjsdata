@@ -1,0 +1,8 @@
+{
+  "title": "Trainable Activation Function in Image Classification",
+  "authors": "Zhaohe Liao",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2004.13271v2",
+  "abstract": "In the current research of neural networks, the activation function is\nmanually specified by human and not able to change themselves during training.\nThis paper focus on how to make the activation function trainable for deep\nneural networks. We use series and linear combination of different activation\nfunctions make activation functions continuously variable. Also, we test the\nperformance of CNNs with Fourier series simulated activation(Fourier-CNN) and\nCNNs with linear combined activation function (LC-CNN) on Cifar-10 dataset. The\nresult shows our trainable activation function reveals better performance than\nthe most used ReLU activation function. Finally, we improves the performance of\nFourier-CNN with Autoencoder, and test the performance of PSO algorithm in\noptimizing the parameters of networks",
+  "citation": 8
+}

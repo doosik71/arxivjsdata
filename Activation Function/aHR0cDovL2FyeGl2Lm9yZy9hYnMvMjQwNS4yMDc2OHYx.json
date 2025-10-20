@@ -1,0 +1,8 @@
+{
+  "title": "Expanded Gating Ranges Improve Activation Functions",
+  "authors": "Allen Hao Huang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.20768v1",
+  "abstract": "Activation functions are core components of all deep learning architectures.\nCurrently, the most popular activation functions are smooth ReLU variants like\nGELU and SiLU. These are self-gated activation functions where the range of the\ngating function is between zero and one. In this paper, we explore the\nviability of using arctan as a gating mechanism. A self-gated activation\nfunction that uses arctan as its gating function has a monotonically increasing\nfirst derivative. To make this activation function competitive, it is necessary\nto introduce a trainable parameter for every MLP block to expand the range of\nthe gating function beyond zero and one. We find that this technique also\nimproves existing self-gated activation functions. We conduct an empirical\nevaluation of Expanded ArcTan Linear Unit (xATLU), Expanded GELU (xGELU), and\nExpanded SiLU (xSiLU) and show that they outperform existing activation\nfunctions within a transformer architecture. Additionally, expanded gating\nranges show promising results in improving first-order Gated Linear Units\n(GLU).",
+  "citation": 2
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Biologically Inspired Oscillating Activation Functions Can Bridge the\n  Performance Gap between Biological and Artificial Neurons",
+  "authors": "Matthew Mithra Noel, Shubham Bharadwaj, Venkataraman Muthiah-Nakarajan, Praneet Dutta, Geraldine Bessie Amali",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2111.04020v4",
+  "abstract": "The recent discovery of special human neocortical pyramidal neurons that can\nindividually learn the XOR function highlights the significant performance gap\nbetween biological and artificial neurons. The output of these pyramidal\nneurons first increases to a maximum with input and then decreases. Artificial\nneurons with similar characteristics can be designed with oscillating\nactivation functions. Oscillating activation functions have multiple zeros\nallowing single neurons to have multiple hyper-planes in their decision\nboundary. This enables even single neurons to learn the XOR function. This\npaper proposes four new oscillating activation functions inspired by human\npyramidal neurons that can also individually learn the XOR function.\nOscillating activation functions are non-saturating for all inputs unlike\npopular activation functions, leading to improved gradient flow and faster\nconvergence. Using oscillating activation functions instead of popular\nmonotonic or non-monotonic single-zero activation functions enables neural\nnetworks to train faster and solve classification problems with fewer layers.\nAn extensive comparison of 23 activation functions on CIFAR 10, CIFAR 100, and\nImagentte benchmarks is presented and the oscillating activation functions\nproposed in this paper are shown to outperform all known popular activation\nfunctions.",
+  "citation": 32
+}

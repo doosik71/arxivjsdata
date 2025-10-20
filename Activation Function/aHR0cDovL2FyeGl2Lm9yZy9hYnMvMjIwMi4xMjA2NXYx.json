@@ -1,0 +1,8 @@
+{
+  "title": "Activation Functions: Dive into an optimal activation function",
+  "authors": "Vipul Bansal",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.12065v1",
+  "abstract": "Activation functions have come up as one of the essential components of\nneural networks. The choice of adequate activation function can impact the\naccuracy of these methods. In this study, we experiment for finding an optimal\nactivation function by defining it as a weighted sum of existing activation\nfunctions and then further optimizing these weights while training the network.\nThe study uses three activation functions, ReLU, tanh, and sin, over three\npopular image datasets, MNIST, FashionMNIST, and KMNIST. We observe that the\nReLU activation function can easily overlook other activation functions. Also,\nwe see that initial layers prefer to have ReLU or LeakyReLU type of activation\nfunctions, but deeper layers tend to prefer more convergent activation\nfunctions.",
+  "citation": 2
+}

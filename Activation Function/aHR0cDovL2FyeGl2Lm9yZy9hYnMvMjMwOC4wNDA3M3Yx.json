@@ -1,0 +1,8 @@
+{
+  "title": "Learning Specialized Activation Functions for Physics-informed Neural\n  Networks",
+  "authors": "Honghui Wang, Lu Lu, Shiji Song, Gao Huang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2308.04073v1",
+  "abstract": "Physics-informed neural networks (PINNs) are known to suffer from\noptimization difficulty. In this work, we reveal the connection between the\noptimization difficulty of PINNs and activation functions. Specifically, we\nshow that PINNs exhibit high sensitivity to activation functions when solving\nPDEs with distinct properties. Existing works usually choose activation\nfunctions by inefficient trial-and-error. To avoid the inefficient manual\nselection and to alleviate the optimization difficulty of PINNs, we introduce\nadaptive activation functions to search for the optimal function when solving\ndifferent problems. We compare different adaptive activation functions and\ndiscuss their limitations in the context of PINNs. Furthermore, we propose to\ntailor the idea of learning combinations of candidate activation functions to\nthe PINNs optimization, which has a higher requirement for the smoothness and\ndiversity on learned functions. This is achieved by removing activation\nfunctions which cannot provide higher-order derivatives from the candidate set\nand incorporating elementary functions with different properties according to\nour prior knowledge about the PDE at hand. We further enhance the search space\nwith adaptive slopes. The proposed adaptive activation function can be used to\nsolve different PDE systems in an interpretable way. Its effectiveness is\ndemonstrated on a series of benchmarks. Code is available at\nhttps://github.com/LeapLabTHU/AdaAFforPINNs.",
+  "citation": 40
+}

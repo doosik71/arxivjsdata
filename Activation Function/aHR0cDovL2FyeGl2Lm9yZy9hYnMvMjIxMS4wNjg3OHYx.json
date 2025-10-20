@@ -1,0 +1,8 @@
+{
+  "title": "Evaluating CNN with Oscillatory Activation Function",
+  "authors": "Jeevanshi Sharma",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.06878v1",
+  "abstract": "The reason behind CNNs capability to learn high-dimensional complex features\nfrom the images is the non-linearity introduced by the activation function.\nSeveral advanced activation functions have been discovered to improve the\ntraining process of neural networks, as choosing an activation function is a\ncrucial step in the modeling. Recent research has proposed using an oscillating\nactivation function to solve classification problems inspired by the human\nbrain cortex. This paper explores the performance of one of the CNN\narchitecture ALexNet on MNIST and CIFAR10 datasets using oscillatory activation\nfunction (GCU) and some other commonly used activation functions like ReLu,\nPReLu, and Mish.",
+  "citation": 4
+}

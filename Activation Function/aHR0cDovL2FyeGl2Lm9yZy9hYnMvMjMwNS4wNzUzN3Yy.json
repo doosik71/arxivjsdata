@@ -1,0 +1,8 @@
+{
+  "title": "Saturated Non-Monotonic Activation Functions",
+  "authors": "Junjia Chen, Zhibin Pan",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.07537v2",
+  "abstract": "Activation functions are essential to deep learning networks. Popular and\nversatile activation functions are mostly monotonic functions, some\nnon-monotonic activation functions are being explored and show promising\nperformance. But by introducing non-monotonicity, they also alter the positive\ninput, which is proved to be unnecessary by the success of ReLU and its\nvariants. In this paper, we double down on the non-monotonic activation\nfunctions' development and propose the Saturated Gaussian Error Linear Units by\ncombining the characteristics of ReLU and non-monotonic activation functions.\nWe present three new activation functions built with our proposed method:\nSGELU, SSiLU, and SMish, which are composed of the negative portion of GELU,\nSiLU, and Mish, respectively, and ReLU's positive portion. The results of image\nclassification experiments on CIFAR-100 indicate that our proposed activation\nfunctions are highly effective and outperform state-of-the-art baselines across\nmultiple deep learning architectures.",
+  "citation": 4
+}

@@ -1,0 +1,8 @@
+{
+  "title": "R3Net: Random Weights, Rectifier Linear Units and Robustness for\n  Artificial Neural Network",
+  "authors": "Arun Venkitaraman, Alireza M. Javid, Saikat Chatterjee",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1803.04186v1",
+  "abstract": "We consider a neural network architecture with randomized features, a\nsign-splitter, followed by rectified linear units (ReLU). We prove that our\narchitecture exhibits robustness to the input perturbation: the output feature\nof the neural network exhibits a Lipschitz continuity in terms of the input\nperturbation. We further show that the network output exhibits a discrimination\nability that inputs that are not arbitrarily close generate output vectors\nwhich maintain distance between each other obeying a certain lower bound. This\nensures that two different inputs remain discriminable while contracting the\ndistance in the output feature space.",
+  "citation": 2
+}

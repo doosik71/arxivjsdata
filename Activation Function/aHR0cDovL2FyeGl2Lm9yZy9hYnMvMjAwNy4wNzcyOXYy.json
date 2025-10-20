@@ -1,0 +1,8 @@
+{
+  "title": "Attention as Activation",
+  "authors": "Yimian Dai, Stefan Oehmcke, Fabian Gieseke, Yiquan Wu, Kobus Barnard",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.07729v2",
+  "abstract": "Activation functions and attention mechanisms are typically treated as having\ndifferent purposes and have evolved differently. However, both concepts can be\nformulated as a non-linear gating function. Inspired by their similarity, we\npropose a novel type of activation units called attentional activation (ATAC)\nunits as a unification of activation functions and attention mechanisms. In\nparticular, we propose a local channel attention module for the simultaneous\nnon-linear activation and element-wise feature refinement, which locally\naggregates point-wise cross-channel feature contexts. By replacing the\nwell-known rectified linear units by such ATAC units in convolutional networks,\nwe can construct fully attentional networks that perform significantly better\nwith a modest number of additional parameters. We conducted detailed ablation\nstudies on the ATAC units using several host networks with varying network\ndepths to empirically verify the effectiveness and efficiency of the units.\nFurthermore, we compared the performance of the ATAC units against existing\nactivation functions as well as other attention mechanisms on the CIFAR-10,\nCIFAR-100, and ImageNet datasets. Our experimental results show that networks\nconstructed with the proposed ATAC units generally yield performance gains over\ntheir competitors given a comparable number of parameters.",
+  "citation": 16
+}

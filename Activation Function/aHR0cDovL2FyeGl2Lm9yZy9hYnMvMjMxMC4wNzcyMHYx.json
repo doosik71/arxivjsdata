@@ -1,0 +1,8 @@
+{
+  "title": "Parametric Leaky Tanh: A New Hybrid Activation Function for Deep\n  Learning",
+  "authors": "Stamatis Mastromichalakis",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2310.07720v1",
+  "abstract": "Activation functions (AFs) are crucial components of deep neural networks\n(DNNs), having a significant impact on their performance. An activation\nfunction in a DNN is typically a smooth, nonlinear function that transforms an\ninput signal into an output signal for the subsequent layer. In this paper, we\npropose the Parametric Leaky Tanh (PLTanh), a novel hybrid activation function\ndesigned to combine the strengths of both the Tanh and Leaky ReLU (LReLU)\nactivation functions. PLTanh is differentiable at all points and addresses the\n'dying ReLU' problem by ensuring a non-zero gradient for negative inputs,\nconsistent with the behavior of LReLU. By integrating the unique advantages of\nthese two diverse activation functions, PLTanh facilitates the learning of more\nintricate nonlinear relationships within the network. This paper presents an\nempirical evaluation of PLTanh against established activation functions, namely\nReLU, LReLU, and ALReLU utilizing five diverse datasets.",
+  "citation": 6
+}

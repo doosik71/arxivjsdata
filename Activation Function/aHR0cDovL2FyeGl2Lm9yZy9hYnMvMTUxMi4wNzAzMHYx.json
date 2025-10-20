@@ -1,0 +1,8 @@
+{
+  "title": "Deep Learning with S-shaped Rectified Linear Activation Units",
+  "authors": "Xiaojie Jin, Chunyan Xu, Jiashi Feng, Yunchao Wei, Junjun Xiong, Shuicheng Yan",
+  "year": 2015,
+  "url": "http://arxiv.org/abs/1512.07030v1",
+  "abstract": "Rectified linear activation units are important components for\nstate-of-the-art deep convolutional networks. In this paper, we propose a novel\nS-shaped rectified linear activation unit (SReLU) to learn both convex and\nnon-convex functions, imitating the multiple function forms given by the two\nfundamental laws, namely the Webner-Fechner law and the Stevens law, in\npsychophysics and neural sciences. Specifically, SReLU consists of three\npiecewise linear functions, which are formulated by four learnable parameters.\nThe SReLU is learned jointly with the training of the whole deep network\nthrough back propagation. During the training phase, to initialize SReLU in\ndifferent layers, we propose a \"freezing\" method to degenerate SReLU into a\npredefined leaky rectified linear unit in the initial several training epochs\nand then adaptively learn the good initial values. SReLU can be universally\nused in the existing deep networks with negligible additional parameters and\ncomputation cost. Experiments with two popular CNN architectures, Network in\nNetwork and GoogLeNet on scale-various benchmarks including CIFAR10, CIFAR100,\nMNIST and ImageNet demonstrate that SReLU achieves remarkable improvement\ncompared to other activation functions.",
+  "citation": 298
+}

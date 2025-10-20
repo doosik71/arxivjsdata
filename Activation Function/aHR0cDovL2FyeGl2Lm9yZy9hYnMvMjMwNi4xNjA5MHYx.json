@@ -1,0 +1,8 @@
+{
+  "title": "Empirical Loss Landscape Analysis of Neural Network Activation Functions",
+  "authors": "Anna Sergeevna Bosman, Andries Engelbrecht, Marde Helbig",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.16090v1",
+  "abstract": "Activation functions play a significant role in neural network design by\nenabling non-linearity. The choice of activation function was previously shown\nto influence the properties of the resulting loss landscape. Understanding the\nrelationship between activation functions and loss landscape properties is\nimportant for neural architecture and training algorithm design. This study\nempirically investigates neural network loss landscapes associated with\nhyperbolic tangent, rectified linear unit, and exponential linear unit\nactivation functions. Rectified linear unit is shown to yield the most convex\nloss landscape, and exponential linear unit is shown to yield the least flat\nloss landscape, and to exhibit superior generalisation performance. The\npresence of wide and narrow valleys in the loss landscape is established for\nall activation functions, and the narrow valleys are shown to correlate with\nsaturated neurons and implicitly regularised network configurations.",
+  "citation": 7
+}

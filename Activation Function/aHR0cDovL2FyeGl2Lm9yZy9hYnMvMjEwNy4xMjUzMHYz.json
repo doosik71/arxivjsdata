@@ -1,0 +1,8 @@
+{
+  "title": "Convergence of Deep ReLU Networks",
+  "authors": "Yuesheng Xu, Haizhang Zhang",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2107.12530v3",
+  "abstract": "We explore convergence of deep neural networks with the popular ReLU\nactivation function, as the depth of the networks tends to infinity. To this\nend, we introduce the notion of activation domains and activation matrices of a\nReLU network. By replacing applications of the ReLU activation function by\nmultiplications with activation matrices on activation domains, we obtain an\nexplicit expression of the ReLU network. We then identify the convergence of\nthe ReLU networks as convergence of a class of infinite products of matrices.\nSufficient and necessary conditions for convergence of these infinite products\nof matrices are studied. As a result, we establish necessary conditions for\nReLU networks to converge that the sequence of weight matrices converges to the\nidentity matrix and the sequence of the bias vectors converges to zero as the\ndepth of ReLU networks increases to infinity. Moreover, we obtain sufficient\nconditions in terms of the weight matrices and bias vectors at hidden layers\nfor pointwise convergence of deep ReLU networks. These results provide\nmathematical insights to the design strategy of the well-known deep residual\nnetworks in image classification.",
+  "citation": 48
+}

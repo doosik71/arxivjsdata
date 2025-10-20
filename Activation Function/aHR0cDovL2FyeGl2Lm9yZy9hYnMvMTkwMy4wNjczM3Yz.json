@@ -1,0 +1,8 @@
+{
+  "title": "Dying ReLU and Initialization: Theory and Numerical Examples",
+  "authors": "Lu Lu, Yeonjong Shin, Yanhui Su, George Em Karniadakis",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1903.06733v3",
+  "abstract": "The dying ReLU refers to the problem when ReLU neurons become inactive and\nonly output 0 for any input. There are many empirical and heuristic\nexplanations of why ReLU neurons die. However, little is known about its\ntheoretical analysis. In this paper, we rigorously prove that a deep ReLU\nnetwork will eventually die in probability as the depth goes to infinite.\nSeveral methods have been proposed to alleviate the dying ReLU. Perhaps, one of\nthe simplest treatments is to modify the initialization procedure. One common\nway of initializing weights and biases uses symmetric probability\ndistributions, which suffers from the dying ReLU. We thus propose a new\ninitialization procedure, namely, a randomized asymmetric initialization. We\nprove that the new initialization can effectively prevent the dying ReLU. All\nparameters required for the new initialization are theoretically designed.\nNumerical examples are provided to demonstrate the effectiveness of the new\ninitialization procedure.",
+  "citation": 801
+}

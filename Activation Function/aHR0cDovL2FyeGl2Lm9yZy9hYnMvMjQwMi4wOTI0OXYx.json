@@ -1,0 +1,8 @@
+{
+  "title": "Exploring the Relationship: Transformative Adaptive Activation Functions\n  in Comparison to Other Activation Functions",
+  "authors": "Vladimír Kunc",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.09249v1",
+  "abstract": "Neural networks are the state-of-the-art approach for many tasks and the\nactivation function is one of the main building blocks that allow such\nperformance. Recently, a novel transformative adaptive activation function\n(TAAF) allowing for any vertical and horizontal translation and scaling was\nproposed. This work sets the TAAF into the context of other activation\nfunctions. It shows that the TAAFs generalize over 50 existing activation\nfunctions and utilize similar concepts as over 70 other activation functions,\nunderscoring the versatility of TAAFs. This comprehensive exploration positions\nTAAFs as a promising and adaptable addition to neural networks.",
+  "citation": 3
+}

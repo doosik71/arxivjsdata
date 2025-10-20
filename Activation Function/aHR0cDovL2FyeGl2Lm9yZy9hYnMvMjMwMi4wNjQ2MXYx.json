@@ -1,0 +1,8 @@
+{
+  "title": "A Study on ReLU and Softmax in Transformer",
+  "authors": "Kai Shen, Junliang Guo, Xu Tan, Siliang Tang, Rui Wang, Jiang Bian",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.06461v1",
+  "abstract": "The Transformer architecture consists of self-attention and feed-forward\nnetworks (FFNs) which can be viewed as key-value memories according to previous\nworks. However, FFN and traditional memory utilize different activation\nfunctions (i.e., ReLU and Softmax respectively), which makes them not\nequivalent. In this paper, we first rebuild the connections between FFN and\nkey-value memory by conducting extensive studies on ReLU and Softmax, and find\nthey are equivalent when adding an additional layer normalization module on\nSoftmax. In addition, ReLU outperforms Softmax on both FFN and key-value memory\nwhen the number of value slots is large. We analyze the reasons and then\nexplore this good property of ReLU on the self-attention network where the\noriginal Softmax activation performs poorly on long input sequences. We then\npropose a full ReLU architecture named ReLUFormer which performs better than\nthe baseline Transformer on long sequence tasks such as document translation.\nThis paper sheds light on the following points: 1) Softmax and ReLU use\ndifferent normalization methods over elements which lead to different variances\nof results, and ReLU is good at dealing with a large number of key-value slots;\n2) FFN and key-value memory are equivalent, and thus the Transformer can be\nviewed as a memory network where FFNs and self-attention networks are both\nkey-value memories.",
+  "citation": 85
+}

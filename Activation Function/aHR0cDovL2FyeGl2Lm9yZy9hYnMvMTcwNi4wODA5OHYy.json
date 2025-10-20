@@ -1,0 +1,8 @@
+{
+  "title": "FReLU: Flexible Rectified Linear Units for Improving Convolutional\n  Neural Networks",
+  "authors": "Suo Qiu, Xiangmin Xu, Bolun Cai",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1706.08098v2",
+  "abstract": "Rectified linear unit (ReLU) is a widely used activation function for deep\nconvolutional neural networks. However, because of the zero-hard rectification,\nReLU networks miss the benefits from negative values. In this paper, we propose\na novel activation function called \\emph{flexible rectified linear unit\n(FReLU)} to further explore the effects of negative values. By redesigning the\nrectified point of ReLU as a learnable parameter, FReLU expands the states of\nthe activation output. When the network is successfully trained, FReLU tends to\nconverge to a negative value, which improves the expressiveness and thus the\nperformance. Furthermore, FReLU is designed to be simple and effective without\nexponential functions to maintain low cost computation. For being able to\neasily used in various network architectures, FReLU does not rely on strict\nassumptions by self-adaption. We evaluate FReLU on three standard image\nclassification datasets, including CIFAR-10, CIFAR-100, and ImageNet.\nExperimental results show that the proposed method achieves fast convergence\nand higher performances on both plain and residual networks.",
+  "citation": 133
+}

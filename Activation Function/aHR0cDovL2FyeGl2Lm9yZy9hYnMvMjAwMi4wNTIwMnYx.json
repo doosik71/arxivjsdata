@@ -1,0 +1,8 @@
+{
+  "title": "GLU Variants Improve Transformer",
+  "authors": "Noam Shazeer",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2002.05202v1",
+  "abstract": "Gated Linear Units (arXiv:1612.08083) consist of the component-wise product\nof two linear projections, one of which is first passed through a sigmoid\nfunction. Variations on GLU are possible, using different nonlinear (or even\nlinear) functions in place of sigmoid. We test these variants in the\nfeed-forward sublayers of the Transformer (arXiv:1706.03762)\nsequence-to-sequence model, and find that some of them yield quality\nimprovements over the typically-used ReLU or GELU activations.",
+  "citation": 1385
+}

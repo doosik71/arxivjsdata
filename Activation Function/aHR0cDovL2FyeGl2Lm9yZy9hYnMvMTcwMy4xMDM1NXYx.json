@@ -1,0 +1,8 @@
+{
+  "title": "From Deep to Shallow: Transformations of Deep Rectifier Networks",
+  "authors": "Senjian An, Farid Boussaid, Mohammed Bennamoun, Jiankun Hu",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1703.10355v1",
+  "abstract": "In this paper, we introduce transformations of deep rectifier networks,\nenabling the conversion of deep rectifier networks into shallow rectifier\nnetworks. We subsequently prove that any rectifier net of any depth can be\nrepresented by a maximum of a number of functions that can be realized by a\nshallow network with a single hidden layer. The transformations of both deep\nrectifier nets and deep residual nets are conducted to demonstrate the\nadvantages of the residual nets over the conventional neural nets and the\nadvantages of the deep neural nets over the shallow neural nets. In summary,\nfor two rectifier nets with different depths but with same total number of\nhidden units, the corresponding single hidden layer representation of the\ndeeper net is much more complex than the corresponding single hidden\nrepresentation of the shallower net. Similarly, for a residual net and a\nconventional rectifier net with the same structure except for the skip\nconnections in the residual net, the corresponding single hidden layer\nrepresentation of the residual net is much more complex than the corresponding\nsingle hidden layer representation of the conventional net.",
+  "citation": 3
+}

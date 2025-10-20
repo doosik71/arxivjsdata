@@ -1,0 +1,8 @@
+{
+  "title": "Activation Functions in Artificial Neural Networks: A Systematic\n  Overview",
+  "authors": "Johannes Lederer",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2101.09957v1",
+  "abstract": "Activation functions shape the outputs of artificial neurons and, therefore,\nare integral parts of neural networks in general and deep learning in\nparticular. Some activation functions, such as logistic and relu, have been\nused for many decades. But with deep learning becoming a mainstream research\ntopic, new activation functions have mushroomed, leading to confusion in both\ntheory and practice. This paper provides an analytic yet up-to-date overview of\npopular activation functions and their properties, which makes it a timely\nresource for anyone who studies or applies neural networks.",
+  "citation": 169
+}

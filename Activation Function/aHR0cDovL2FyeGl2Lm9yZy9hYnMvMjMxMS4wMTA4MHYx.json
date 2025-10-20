@@ -1,0 +1,8 @@
+{
+  "title": "Optical ReLU-like Activation Function Based on a Semiconductor Laser\n  with Optical Injection",
+  "authors": "Guanting Liu, Yiwei Shen, Ruiqian Li, Jingyi Yu, Xuming He, Cheng Wang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.01080v1",
+  "abstract": "Artificial neural networks usually consist of successive linear\nmultiply-accumulate operations and nonlinear activation functions. However,\nmost optical neural networks only achieve the linear operation in the optical\ndomain, while the optical implementation of activation function remains\nchallenging. Here we present an optical ReLU-like activation function based on\na semiconductor laser subject to the optical injection in experiment. The\nReLU-like function is achieved in a broad regime above the Hopf bifurcation of\nthe injection-locking diagram. In particular, the slope of the activation\nfunction is reconfigurable by tuning the frequency difference between the\nmaster laser and the slave laser.",
+  "citation": 11
+}

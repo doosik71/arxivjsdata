@@ -1,0 +1,8 @@
+{
+  "title": "An ELU Network with Total Variation for Image Denoising",
+  "authors": "Tianyang Wang, Zhengrui Qin, Michelle Zhu",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1708.04317v1",
+  "abstract": "In this paper, we propose a novel convolutional neural network (CNN) for\nimage denoising, which uses exponential linear unit (ELU) as the activation\nfunction. We investigate the suitability by analyzing ELU's connection with\ntrainable nonlinear reaction diffusion model (TNRD) and residual denoising. On\nthe other hand, batch normalization (BN) is indispensable for residual\ndenoising and convergence purpose. However, direct stacking of BN and ELU\ndegrades the performance of CNN. To mitigate this issue, we design an\ninnovative combination of activation layer and normalization layer to exploit\nand leverage the ELU network, and discuss the corresponding rationale.\nMoreover, inspired by the fact that minimizing total variation (TV) can be\napplied to image denoising, we propose a TV regularized L2 loss to evaluate the\ntraining effect during the iterations. Finally, we conduct extensive\nexperiments, showing that our model outperforms some recent and popular\napproaches on Gaussian denoising with specific or randomized noise levels for\nboth gray and color images.",
+  "citation": 32
+}
