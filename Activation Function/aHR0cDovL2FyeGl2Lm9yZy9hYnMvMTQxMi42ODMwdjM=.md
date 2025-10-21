@@ -33,7 +33,10 @@ Forest Agostinelli, Matthew Hoffman, Peter Sadowski, Pierre Baldi
 
 1. **적응형 조각별 선형 (APL) 유닛 정의:**
    - APL 유닛 $i$의 활성화 함수 $h_i(x)$는 힌지(hinge) 형태의 함수들의 합으로 정의됩니다.
-     $$ h*i(x) = \max(0, x) + \sum*{s=1}^{S} a*{s}^{i} \max(0, -x + b*{s}^{i}) $$
+     $$
+     h_i(x) = \max(0, x) +
+     \sum_{s=1}^S a_i^s \max(0, -x + b_i^s)
+     $$
    - $S$는 힌지(piece)의 수를 결정하는 하이퍼파라미터입니다.
    - 변수 $a_{s}^{i}$는 선형 세그먼트의 기울기를 제어하고, $b_{s}^{i}$는 힌지의 위치를 결정합니다.
    - 이 파라미터들($a_{s}^{i}$, $b_{s}^{i}$)은 훈련 중 표준 그래디언트 하강을 사용하여 각 뉴런에 대해 독립적으로 학습됩니다.
