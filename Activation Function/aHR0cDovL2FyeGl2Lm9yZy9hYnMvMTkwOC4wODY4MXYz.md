@@ -42,15 +42,15 @@ Diganta Misra
    - **통계적 유의미성:** SqueezeNet을 사용하여 CIFAR-10에서 23회 반복 실행으로 Mish 및 기타 활성화 함수의 평균 정확도, 평균 손실, 정확도 표준 편차를 통계적으로 비교하여 Mish의 일관된 우월성을 입증합니다.
    - **CIFAR-10 다양한 아키텍처:** ResNet, WRN, DenseNet, MobileNet, EfficientNet 등 11가지 표준 신경망 아키텍처에 Mish, Swish, ReLU를 적용하여 이미지 분류 성능을 비교합니다.
    - **ImageNet-1k 분류:** DarkNet 프레임워크를 사용하여 ResNet-18/50, PeleeNet, CSP-ResNet-50, CSP-DarkNet-53, CSP-ResNext-50 등 대규모 모델에서 Mish, Leaky ReLU, Swish의 Top-1 및 Top-5 정확도를 비교합니다. CutMix, Mosaic, Label Smoothing 등 최신 데이터 증강 기법과의 결합 성능도 평가합니다.
-   - **MS-COCO 객체 탐지:** CSP-DarkNet-53 백본을 사용하는 객체 탐지 모델 및 YOLOv4 탐지기에 Mish를 적용하여 mAP@0.5, AP$_{50}$val 등 객체 탐지 성능을 ReLU 및 Leaky ReLU와 비교합니다. 다양한 데이터 증강 전략과 함께 Mish의 효과를 검증합니다.
+   - **MS-COCO 객체 탐지:** CSP-DarkNet-53 백본을 사용하는 객체 탐지 모델 및 YOLOv4 탐지기에 Mish를 적용하여 mAP\@0.5, AP$_{50}$val 등 객체 탐지 성능을 ReLU 및 Leaky ReLU와 비교합니다. 다양한 데이터 증강 전략과 함께 Mish의 효과를 검증합니다.
 5. **효율성 최적화:**
-   - Mish의 계산 오버헤드를 줄이기 위해 CUDA 기반으로 최적화된 `Mish-CUDA` 구현을 개발하고, FP16 및 FP32 데이터 타입에서 ReLU, SoftPlus, Mish, Mish-CUDA의 순방향(Forward) 및 역방향(Backward) 패스 실행 시간을 비교하여 효율성을 검증합니다.
+   - Mish의 계산 오버헤드를 줄이기 위해 CUDA 기반으로 최적화된 Mish-CUDA 구현을 개발하고, FP16 및 FP32 데이터 타입에서 ReLU, SoftPlus, Mish, Mish-CUDA의 순방향(Forward) 및 역방향(Backward) 패스 실행 시간을 비교하여 효율성을 검증합니다.
 
 ## 📊 Results
 
 - **CIFAR-10 성능:** SqueezeNet에서 Mish는 가장 높은 평균 정확도(87.48%)와 낮은 평균 손실을 기록했으며, 다양한 아키텍처(ResNet, WRN, DenseNet 등)에서 ReLU 및 Swish보다 1~3%의 일관된 성능 향상을 보였습니다.
 - **ImageNet-1k 성능:** ResNet-50에서 ReLU 대비 Top-1 정확도가 약 1% 향상되었으며, CSP-DarkNet-53 같은 대규모 모델에서 Leaky ReLU 대비 Top-1 정확도가 1% 이상 향상되었습니다. 특히 Swish가 특정 대규모 모델(CSP-ResNext-50)에서 성능이 크게 하락한 반면, Mish는 안정적으로 성능을 개선했습니다.
-- **MS-COCO 객체 탐지:** CSP-DarkNet-53 백본에서 ReLU를 Mish로 대체하는 것만으로 mAP@0.5가 0.4% 향상되었습니다. YOLOv4 탐지기에서는 Leaky ReLU 대비 AP$_{50}$val에서 0.9%에서 2.1%까지 일관된 성능 향상을 보이며, 최신 mAP@0.5(65.7%)를 실시간(65 FPS)으로 달성했습니다.
+- **MS-COCO 객체 탐지:** CSP-DarkNet-53 백본에서 ReLU를 Mish로 대체하는 것만으로 mAP\@0.5가 0.4% 향상되었습니다. YOLOv4 탐지기에서는 Leaky ReLU 대비 AP$_{50}$val에서 0.9%에서 2.1%까지 일관된 성능 향상을 보이며, 최신 mAP\@0.5(65.7%)를 실시간(65 FPS)으로 달성했습니다.
 - **안정성 및 강건성:**
   - MNIST 데이터셋에서 네트워크 깊이가 증가할 때 Mish는 Swish 및 ReLU보다 훨씬 높은 테스트 정확도를 유지하며 깊은 모델에서의 최적화 어려움에 강건함을 보였습니다.
   - 가우시안 노이즈가 있는 MNIST 입력에 대해 Mish는 ReLU 및 Swish보다 일관되게 낮은 테스트 손실을 보였습니다.
