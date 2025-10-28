@@ -1,0 +1,8 @@
+{
+  "title": "Temporal Convolution for Real-time Keyword Spotting on Mobile Devices",
+  "authors": "Seungwoo Choi, Seokjun Seo, Beomjun Shin, Hyeongmin Byun, Martin Kersner, Beomsu Kim, Dongyoung Kim, Sungjoo Ha",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1904.03814v2",
+  "abstract": "Keyword spotting (KWS) plays a critical role in enabling speech-based user\ninteractions on smart devices. Recent developments in the field of deep\nlearning have led to wide adoption of convolutional neural networks (CNNs) in\nKWS systems due to their exceptional accuracy and robustness. The main\nchallenge faced by KWS systems is the trade-off between high accuracy and low\nlatency. Unfortunately, there has been little quantitative analysis of the\nactual latency of KWS models on mobile devices. This is especially concerning\nsince conventional convolution-based KWS approaches are known to require a\nlarge number of operations to attain an adequate level of performance. In this\npaper, we propose a temporal convolution for real-time KWS on mobile devices.\nUnlike most of the 2D convolution-based KWS approaches that require a deep\narchitecture to fully capture both low- and high-frequency domains, we exploit\ntemporal convolutions with a compact ResNet architecture. In Google Speech\nCommand Dataset, we achieve more than \\textbf{385x} speedup on Google Pixel 1\nand surpass the accuracy compared to the state-of-the-art model. In addition,\nwe release the implementation of the proposed and the baseline models including\nan end-to-end pipeline for training models and evaluating them on mobile\ndevices.",
+  "citation": 224
+}

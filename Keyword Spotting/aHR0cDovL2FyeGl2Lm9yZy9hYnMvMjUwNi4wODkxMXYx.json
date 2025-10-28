@@ -1,0 +1,7 @@
+{
+  "title": "Implementing Keyword Spotting on the MCUX947 Microcontroller with\n  Integrated NPU",
+  "authors": "Petar Jakuš, Hrvoje Džapo",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.08911v1",
+  "abstract": "This paper presents a keyword spotting (KWS) system implemented on the NXP\nMCXN947 microcontroller with an integrated Neural Processing Unit (NPU),\nenabling real-time voice interaction on resource-constrained devices. The\nsystem combines MFCC feature extraction with a CNN classifier, optimized using\nQuantization Aware Training to reduce model size with minimal accuracy drop.\nExperimental results demonstrate a 59x speedup in inference time when\nleveraging the NPU compared to CPU-only execution, achieving 97.06% accuracy\nwith a model size of 30.58 KB, demonstrating the feasibility of efficient,\nlow-power voice interfaces on embedded platforms."
+}

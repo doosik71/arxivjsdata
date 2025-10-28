@@ -1,0 +1,7 @@
+{
+  "title": "Hardware Aware Training for Efficient Keyword Spotting on General\n  Purpose and Specialized Hardware",
+  "authors": "Peter Blouw, Gurshaant Malik, Benjamin Morcos, Aaron R. Voelker, Chris Eliasmith",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2009.04465v3",
+  "abstract": "Keyword spotting (KWS) provides a critical user interface for many mobile and\nedge applications, including phones, wearables, and cars. As KWS systems are\ntypically 'always on', maximizing both accuracy and power efficiency are\ncentral to their utility. In this work we use hardware aware training (HAT) to\nbuild new KWS neural networks based on the Legendre Memory Unit (LMU) that\nachieve state-of-the-art (SotA) accuracy and low parameter counts. This allows\nthe neural network to run efficiently on standard hardware (212$\\mu$W). We also\ncharacterize the power requirements of custom designed accelerator hardware\nthat achieves SotA power efficiency of 8.79$\\mu$W, beating general purpose low\npower hardware (a microcontroller) by 24x and special purpose ASICs by 16x."
+}

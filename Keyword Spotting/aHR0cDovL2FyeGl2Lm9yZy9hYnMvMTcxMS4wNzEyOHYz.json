@@ -1,0 +1,8 @@
+{
+  "title": "Hello Edge: Keyword Spotting on Microcontrollers",
+  "authors": "Yundong Zhang, Naveen Suda, Liangzhen Lai, Vikas Chandra",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1711.07128v3",
+  "abstract": "Keyword spotting (KWS) is a critical component for enabling speech based user\ninteractions on smart devices. It requires real-time response and high accuracy\nfor good user experience. Recently, neural networks have become an attractive\nchoice for KWS architecture because of their superior accuracy compared to\ntraditional speech processing algorithms. Due to its always-on nature, KWS\napplication has highly constrained power budget and typically runs on tiny\nmicrocontrollers with limited memory and compute capability. The design of\nneural network architecture for KWS must consider these constraints. In this\nwork, we perform neural network architecture evaluation and exploration for\nrunning KWS on resource-constrained microcontrollers. We train various neural\nnetwork architectures for keyword spotting published in literature to compare\ntheir accuracy and memory/compute requirements. We show that it is possible to\noptimize these neural network architectures to fit within the memory and\ncompute constraints of microcontrollers without sacrificing accuracy. We\nfurther explore the depthwise separable convolutional neural network (DS-CNN)\nand compare it against other neural network architectures. DS-CNN achieves an\naccuracy of 95.4%, which is ~10% higher than the DNN model with similar number\nof parameters.",
+  "citation": 630
+}
