@@ -1,0 +1,8 @@
+{
+  "title": "MatchboxNet: 1D Time-Channel Separable Convolutional Neural Network\n  Architecture for Speech Commands Recognition",
+  "authors": "Somshubra Majumdar, Boris Ginsburg",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2004.08531v2",
+  "abstract": "We present an MatchboxNet - an end-to-end neural network for speech command\nrecognition. MatchboxNet is a deep residual network composed from blocks of 1D\ntime-channel separable convolution, batch-normalization, ReLU and dropout\nlayers. MatchboxNet reaches state-of-the-art accuracy on the Google Speech\nCommands dataset while having significantly fewer parameters than similar\nmodels. The small footprint of MatchboxNet makes it an attractive candidate for\ndevices with limited computational resources. The model is highly scalable, so\nmodel accuracy can be improved with modest additional memory and compute.\nFinally, we show how intensive data augmentation using an auxiliary noise\ndataset improves robustness in the presence of background noise.",
+  "citation": 115
+}

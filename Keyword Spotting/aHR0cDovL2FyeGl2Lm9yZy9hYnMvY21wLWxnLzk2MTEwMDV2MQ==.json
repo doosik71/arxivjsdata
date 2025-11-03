@@ -1,0 +1,8 @@
+{
+  "title": "Integrating HMM-Based Speech Recognition With Direct Manipulation In A\n  Multimodal Korean Natural Language Interface",
+  "authors": "Geunbae Lee, Jong-Hyeok Lee, Sangeok Kim",
+  "year": 1996,
+  "url": "http://arxiv.org/abs/cmp-lg/9611005v1",
+  "abstract": "This paper presents a HMM-based speech recognition engine and its integration\ninto direct manipulation interfaces for Korean document editor. Speech\nrecognition can reduce typical tedious and repetitive actions which are\ninevitable in standard GUIs (graphic user interfaces). Our system consists of\ngeneral speech recognition engine called ABrain {Auditory Brain} and speech\ncommandable document editor called SHE {Simple Hearing Editor}. ABrain is a\nphoneme-based speech recognition engine which shows up to 97% of discrete\ncommand recognition rate. SHE is a EuroBridge widget-based document editor that\nsupports speech commands as well as direct manipulation interfaces.",
+  "citation": 0
+}

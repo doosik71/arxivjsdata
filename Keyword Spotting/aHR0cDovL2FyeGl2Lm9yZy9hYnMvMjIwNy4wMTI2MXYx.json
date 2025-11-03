@@ -1,0 +1,8 @@
+{
+  "title": "Minimizing Sequential Confusion Error in Speech Command Recognition",
+  "authors": "Zhanheng Yang, Hang Lv, Xiong Wang, Ao Zhang, Lei Xie",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2207.01261v1",
+  "abstract": "Speech command recognition (SCR) has been commonly used on resource\nconstrained devices to achieve hands-free user experience. However, in real\napplications, confusion among commands with similar pronunciations often\nhappens due to the limited capacity of small models deployed on edge devices,\nwhich drastically affects the user experience. In this paper, inspired by the\nadvances of discriminative training in speech recognition, we propose a novel\nminimize sequential confusion error (MSCE) training criterion particularly for\nSCR, aiming to alleviate the command confusion problem. Specifically, we aim to\nimprove the ability of discriminating the target command from other commands on\nthe basis of MCE discriminative criteria. We define the likelihood of different\ncommands through connectionist temporal classification (CTC). During training,\nwe propose several strategies to use prior knowledge creating a confusing\nsequence set for similar-sounding command instead of creating the whole\nnon-target command set, which can better save the training resources and\neffectively reduce command confusion errors. Specifically, we design and\ncompare three different strategies for confusing set construction. By using our\nproposed method, we can relatively reduce the False Reject Rate~(FRR) by 33.7%\nat 0.01 False Alarm Rate~(FAR) and confusion errors by 18.28% on our collected\nspeech command set.",
+  "citation": 1
+}

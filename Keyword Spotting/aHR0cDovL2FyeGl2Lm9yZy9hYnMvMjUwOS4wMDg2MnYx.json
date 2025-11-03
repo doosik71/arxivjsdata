@@ -1,0 +1,8 @@
+{
+  "title": "Speech Command Recognition Using LogNNet Reservoir Computing for\n  Embedded Systems",
+  "authors": "Yuriy Izotov, Andrei Velichko",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.00862v1",
+  "abstract": "This paper presents a low-resource speech-command recognizer combining\nenergy-based voice activity detection (VAD), an optimized Mel-Frequency\nCepstral Coefficients (MFCC) pipeline, and the LogNNet reservoir-computing\nclassifier. Using four commands from the Speech Commands da-taset downsampled\nto 8 kHz, we evaluate four MFCC aggregation schemes and find that adaptive\nbinning (64-dimensional feature vector) offers the best accuracy-to-compactness\ntrade-off. The LogNNet classifier with architecture 64:33:9:4 reaches 92.04%\naccuracy under speaker-independent evaluation, while requiring significantly\nfewer parameters than conventional deep learn-ing models. Hardware\nimplementation on Arduino Nano 33 IoT (ARM Cor-tex-M0+, 48 MHz, 32 KB RAM)\nvalidates the practical feasibility, achieving ~90% real-time recognition\naccuracy while consuming only 18 KB RAM (55% utilization). The complete\npipeline (VAD -> MFCC -> LogNNet) thus enables reliable on-device\nspeech-command recognition under strict memory and compute limits, making it\nsuitable for battery-powered IoT nodes, wire-less sensor networks, and\nhands-free control interfaces.",
+  "citation": 0
+}

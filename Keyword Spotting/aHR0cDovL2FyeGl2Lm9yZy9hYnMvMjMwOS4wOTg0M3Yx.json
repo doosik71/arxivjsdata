@@ -1,0 +1,8 @@
+{
+  "title": "Instruction-Following Speech Recognition",
+  "authors": "Cheng-I Jeff Lai, Zhiyun Lu, Liangliang Cao, Ruoming Pang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.09843v1",
+  "abstract": "Conventional end-to-end Automatic Speech Recognition (ASR) models primarily\nfocus on exact transcription tasks, lacking flexibility for nuanced user\ninteractions. With the advent of Large Language Models (LLMs) in speech\nprocessing, more organic, text-prompt-based interactions have become possible.\nHowever, the mechanisms behind these models' speech understanding and\n\"reasoning\" capabilities remain underexplored. To study this question from the\ndata perspective, we introduce instruction-following speech recognition,\ntraining a Listen-Attend-Spell model to understand and execute a diverse set of\nfree-form text instructions. This enables a multitude of speech recognition\ntasks -- ranging from transcript manipulation to summarization -- without\nrelying on predefined command sets. Remarkably, our model, trained from scratch\non Librispeech, interprets and executes simple instructions without requiring\nLLMs or pre-trained speech modules. It also offers selective transcription\noptions based on instructions like \"transcribe first half and then turn off\nlistening,\" providing an additional layer of privacy and safety compared to\nexisting LLMs. Our findings highlight the significant potential of\ninstruction-following training to advance speech foundation models.",
+  "citation": 6
+}

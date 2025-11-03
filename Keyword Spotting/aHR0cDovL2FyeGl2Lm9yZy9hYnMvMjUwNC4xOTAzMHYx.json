@@ -1,0 +1,8 @@
+{
+  "title": "Improving Pretrained YAMNet for Enhanced Speech Command Detection via\n  Transfer Learning",
+  "authors": "Sidahmed Lachenani, Hamza Kheddar, Mohamed Ouldzmirli",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2504.19030v1",
+  "abstract": "This work addresses the need for enhanced accuracy and efficiency in speech\ncommand recognition systems, a critical component for improving user\ninteraction in various smart applications. Leveraging the robust pretrained\nYAMNet model and transfer learning, this study develops a method that\nsignificantly improves speech command recognition. We adapt and train a YAMNet\ndeep learning model to effectively detect and interpret speech commands from\naudio signals. Using the extensively annotated Speech Commands dataset\n(speech_commands_v0.01), our approach demonstrates the practical application of\ntransfer learning to accurately recognize a predefined set of speech commands.\nThe dataset is meticulously augmented, and features are strategically extracted\nto boost model performance. As a result, the final model achieved a recognition\naccuracy of 95.28%, underscoring the impact of advanced machine learning\ntechniques on speech command recognition. This achievement marks substantial\nprogress in audio processing technologies and establishes a new benchmark for\nfuture research in the field.",
+  "citation": 3
+}

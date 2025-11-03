@@ -1,0 +1,8 @@
+{
+  "title": "Representation based meta-learning for few-shot spoken intent\n  recognition",
+  "authors": "Ashish Mittal, Samarth Bharadwaj, Shreya Khare, Saneem Chemmengath, Karthik Sankaranarayanan, Brian Kingsbury",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2106.15238v1",
+  "abstract": "Spoken intent detection has become a popular approach to interface with\nvarious smart devices with ease. However, such systems are limited to the\npreset list of intents-terms or commands, which restricts the quick\ncustomization of personal devices to new intents. This paper presents a\nfew-shot spoken intent classification approach with task-agnostic\nrepresentations via meta-learning paradigm. Specifically, we leverage the\npopular representation-based meta-learning learning to build a task-agnostic\nrepresentation of utterances, that then use a linear classifier for prediction.\nWe evaluate three such approaches on our novel experimental protocol developed\non two popular spoken intent classification datasets: Google Commands and the\nFluent Speech Commands dataset. For a 5-shot (1-shot) classification of novel\nclasses, the proposed framework provides an average classification accuracy of\n88.6% (76.3%) on the Google Commands dataset, and 78.5% (64.2%) on the Fluent\nSpeech Commands dataset. The performance is comparable to traditionally\nsupervised classification models with abundant training samples.",
+  "citation": 13
+}
