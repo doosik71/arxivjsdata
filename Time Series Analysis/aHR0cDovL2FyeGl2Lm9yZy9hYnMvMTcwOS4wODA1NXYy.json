@@ -1,0 +1,8 @@
+{
+  "title": "Feature-based time-series analysis",
+  "authors": "Ben D. Fulcher",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1709.08055v2",
+  "abstract": "This work presents an introduction to feature-based time-series analysis. The\ntime series as a data type is first described, along with an overview of the\ninterdisciplinary time-series analysis literature. I then summarize the range\nof feature-based representations for time series that have been developed to\naid interpretable insights into time-series structure. Particular emphasis is\ngiven to emerging research that facilitates wide comparison of feature-based\nrepresentations that allow us to understand the properties of a time-series\ndataset that make it suited to a particular feature-based representation or\nanalysis algorithm. The future of time-series analysis is likely to embrace\napproaches that exploit machine learning methods to partially automate human\nlearning to aid understanding of the complex dynamical patterns in the time\nseries we measure from the world.",
+  "citation": 220
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Respecting Time Series Properties Makes Deep Time Series Forecasting\n  Perfect",
+  "authors": "Li Shen, Yuning Wei, Yangzhu Wang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2207.10941v1",
+  "abstract": "How to handle time features shall be the core question of any time series\nforecasting model. Ironically, it is often ignored or misunderstood by\ndeep-learning based models, even those baselines which are state-of-the-art.\nThis behavior makes their inefficient, untenable and unstable. In this paper,\nwe rigorously analyze three prevalent but deficient/unfounded deep time series\nforecasting mechanisms or methods from the view of time series properties,\nincluding normalization methods, multivariate forecasting and input sequence\nlength. Corresponding corollaries and solutions are given on both empirical and\ntheoretical basis. We thereby propose a novel time series forecasting network,\ni.e. RTNet, on the basis of aforementioned analysis. It is general enough to be\ncombined with both supervised and self-supervised forecasting format. Thanks to\nthe core idea of respecting time series properties, no matter in which\nforecasting format, RTNet shows obviously superior forecasting performances\ncompared with dozens of other SOTA time series forecasting baselines in three\nreal-world benchmark datasets. By and large, it even occupies less time\ncomplexity and memory usage while acquiring better forecasting accuracy. The\nsource code is available at https://github.com/OrigamiSL/RTNet.",
+  "citation": 11
+}

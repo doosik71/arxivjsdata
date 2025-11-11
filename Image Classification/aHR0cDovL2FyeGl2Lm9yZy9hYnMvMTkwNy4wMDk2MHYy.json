@@ -1,0 +1,7 @@
+{
+  "title": "Going Deeper with Lean Point Networks",
+  "authors": "Eric-Tuan Le, Iasonas Kokkinos, Niloy J. Mitra",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1907.00960v2",
+  "abstract": "In this work we introduce Lean Point Networks (LPNs) to train deeper and more\naccurate point processing networks by relying on three novel point processing\nblocks that improve memory consumption, inference time, and accuracy: a\nconvolution-type block for point sets that blends neighborhood information in a\nmemory-efficient manner; a crosslink block that efficiently shares information\nacross low- and high-resolution processing branches; and a multiresolution\npoint cloud processing block for faster diffusion of information. By combining\nthese blocks, we design wider and deeper point-based architectures. We report\nsystematic accuracy and memory consumption improvements on multiple publicly\navailable segmentation tasks by using our generic modules as drop-in\nreplacements for the blocks of multiple architectures (PointNet++, DGCNN,\nSpiderNet, PointCNN)."
+}

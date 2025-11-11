@@ -1,0 +1,8 @@
+{
+  "title": "Impact of Deep Learning Libraries on Online Adaptive Lightweight Time\n  Series Anomaly Detection",
+  "authors": "Ming-Chang Lee, Jia-Chun Lin",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.00595v2",
+  "abstract": "Providing online adaptive lightweight time series anomaly detection without\nhuman intervention and domain knowledge is highly valuable. Several such\nanomaly detection approaches have been introduced in the past years, but all of\nthem were only implemented in one deep learning library. With the development\nof deep learning libraries, it is unclear how different deep learning libraries\nimpact these anomaly detection approaches since there is no such evaluation\navailable. Randomly choosing a deep learning library to implement an anomaly\ndetection approach might not be able to show the true performance of the\napproach. It might also mislead users in believing one approach is better than\nanother. Therefore, in this paper, we investigate the impact of deep learning\nlibraries on online adaptive lightweight time series anomaly detection by\nimplementing two state-of-the-art anomaly detection approaches in three\nwell-known deep learning libraries and evaluating how these two approaches are\nindividually affected by the three deep learning libraries. A series of\nexperiments based on four real-world open-source time series datasets were\nconducted. The results provide a good reference to select an appropriate deep\nlearning library for online adaptive lightweight anomaly detection.",
+  "citation": 5
+}

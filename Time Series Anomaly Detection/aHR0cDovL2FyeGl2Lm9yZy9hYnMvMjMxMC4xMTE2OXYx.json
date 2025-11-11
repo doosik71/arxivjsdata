@@ -1,0 +1,8 @@
+{
+  "title": "MST-GAT: A Multimodal Spatial-Temporal Graph Attention Network for Time\n  Series Anomaly Detection",
+  "authors": "Chaoyue Ding, Shiliang Sun, Jing Zhao",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2310.11169v1",
+  "abstract": "Multimodal time series (MTS) anomaly detection is crucial for maintaining the\nsafety and stability of working devices (e.g., water treatment system and\nspacecraft), whose data are characterized by multivariate time series with\ndiverse modalities. Although recent deep learning methods show great potential\nin anomaly detection, they do not explicitly capture spatial-temporal\nrelationships between univariate time series of different modalities, resulting\nin more false negatives and false positives. In this paper, we propose a\nmultimodal spatial-temporal graph attention network (MST-GAT) to tackle this\nproblem. MST-GAT first employs a multimodal graph attention network (M-GAT) and\na temporal convolution network to capture the spatial-temporal correlation in\nmultimodal time series. Specifically, M-GAT uses a multi-head attention module\nand two relational attention modules (i.e., intra- and inter-modal attention)\nto model modal correlations explicitly. Furthermore, MST-GAT optimizes the\nreconstruction and prediction modules simultaneously. Experimental results on\nfour multimodal benchmarks demonstrate that MST-GAT outperforms the\nstate-of-the-art baselines. Further analysis indicates that MST-GAT strengthens\nthe interpretability of detected anomalies by locating the most anomalous\nunivariate time series.",
+  "citation": 242
+}

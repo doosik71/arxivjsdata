@@ -1,0 +1,8 @@
+{
+  "title": "Challenges and perspectives in recurrence analyses of event time series",
+  "authors": "Norbert Marwan",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.08398v1",
+  "abstract": "The analysis of event time series is in general challenging. Most time series\nanalysis tools are limited for the analysis of this kind of data. Recurrence\nanalysis, a powerful concept from nonlinear time series analysis, provides\nseveral opportunities to work with event data and even for the most challenging\ntask of comparing event time series with continuous time series. Here, the\nbasic concept is introduced, the challenges are discussed, and the future\nperspectives are summarised.",
+  "citation": 11
+}

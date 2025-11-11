@@ -1,0 +1,8 @@
+{
+  "title": "CNTS: Cooperative Network for Time Series",
+  "authors": "Jinsheng Yang, Yuanhai Shao, ChunNa Li",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.09800v1",
+  "abstract": "The use of deep learning techniques in detecting anomalies in time series\ndata has been an active area of research with a long history of development and\na variety of approaches. In particular, reconstruction-based unsupervised\nanomaly detection methods have gained popularity due to their intuitive\nassumptions and low computational requirements. However, these methods are\noften susceptible to outliers and do not effectively model anomalies, leading\nto suboptimal results. This paper presents a novel approach for unsupervised\nanomaly detection, called the Cooperative Network Time Series (CNTS) approach.\nThe CNTS system consists of two components: a detector and a reconstructor. The\ndetector is responsible for directly detecting anomalies, while the\nreconstructor provides reconstruction information to the detector and updates\nits learning based on anomalous information received from the detector. The\ncentral aspect of CNTS is a multi-objective optimization problem, which is\nsolved through a cooperative solution strategy. Experiments on three real-world\ndatasets demonstrate the state-of-the-art performance of CNTS and confirm the\ncooperative effectiveness of the detector and reconstructor. The source code\nfor this study is publicly available on GitHub.",
+  "citation": 4
+}

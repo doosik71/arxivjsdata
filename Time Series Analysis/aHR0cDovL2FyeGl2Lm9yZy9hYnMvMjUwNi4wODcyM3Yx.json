@@ -1,0 +1,8 @@
+{
+  "title": "Wasserstein and Convex Gaussian Approximations for Non-stationary Time\n  Series of Diverging Dimensionality",
+  "authors": "Miaoshiqi Liu, Jun Yang, Zhou Zhou",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.08723v1",
+  "abstract": "In high-dimensional time series analysis, Gaussian approximation (GA) schemes\nunder various distance measures or on various collections of subsets of the\nEuclidean space play a fundamental role in a wide range of statistical\ninference problems. To date, most GA results for high-dimensional time series\nare established on hyper-rectangles and their equivalence. In this paper, by\nconsidering the 2-Wasserstein distance and the collection of all convex sets,\nwe establish a general GA theory for a broad class of high-dimensional\nnon-stationary (HDNS) time series, extending the scope of problems that can be\naddressed in HDNS time series analysis. For HDNS time series of sufficiently\nweak dependence and light tail, the GA rates established in this paper are\neither nearly optimal with respect to the dimensionality and time series\nlength, or they are nearly identical to the corresponding best-known GA rates\nestablished for independent data. A multiplier bootstrap procedure is utilized\nand theoretically justified to implement our GA theory. We demonstrate by two\npreviously undiscussed time series applications the use of the GA theory and\nthe bootstrap procedure as unified tools for a wide range of statistical\ninference problems in HDNS time series analysis.",
+  "citation": 1
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Towards a Rigorous Evaluation of Time-series Anomaly Detection",
+  "authors": "Siwon Kim, Kukjin Choi, Hyun-Soo Choi, Byunghan Lee, Sungroh Yoon",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.05257v2",
+  "abstract": "In recent years, proposed studies on time-series anomaly detection (TAD)\nreport high F1 scores on benchmark TAD datasets, giving the impression of clear\nimprovements in TAD. However, most studies apply a peculiar evaluation protocol\ncalled point adjustment (PA) before scoring. In this paper, we theoretically\nand experimentally reveal that the PA protocol has a great possibility of\noverestimating the detection performance; that is, even a random anomaly score\ncan easily turn into a state-of-the-art TAD method. Therefore, the comparison\nof TAD methods after applying the PA protocol can lead to misguided rankings.\nFurthermore, we question the potential of existing TAD methods by showing that\nan untrained model obtains comparable detection performance to the existing\nmethods even when PA is forbidden. Based on our findings, we propose a new\nbaseline and an evaluation protocol. We expect that our study will help a\nrigorous evaluation of TAD and lead to further improvement in future\nresearches.",
+  "citation": 261
+}

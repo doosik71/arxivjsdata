@@ -1,0 +1,8 @@
+{
+  "title": "Enhancing Network Anomaly Detection with Quantum GANs and Successive\n  Data Injection for Multivariate Time Series",
+  "authors": "Wajdi Hammami, Soumaya Cherkaoui, Shengrui Wang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.11631v1",
+  "abstract": "Quantum computing may offer new approaches for advancing machine learning,\nincluding in complex tasks such as anomaly detection in network traffic. In\nthis paper, we introduce a quantum generative adversarial network (QGAN)\narchitecture for multivariate time-series anomaly detection that leverages\nvariational quantum circuits (VQCs) in combination with a time-window shifting\ntechnique, data re-uploading, and successive data injection (SuDaI). The method\nencodes multivariate time series data as rotation angles. By integrating both\ndata re-uploading and SuDaI, the approach maps classical data into quantum\nstates efficiently, helping to address hardware limitations such as the\nrestricted number of available qubits. In addition, the approach employs an\nanomaly scoring technique that utilizes both the generator and the\ndiscriminator output to enhance the accuracy of anomaly detection. The QGAN was\ntrained using the parameter shift rule and benchmarked against a classical GAN.\nExperimental results indicate that the quantum model achieves a accuracy high\nalong with high recall and F1-scores in anomaly detection, and attains a lower\nMSE compared to the classical model. Notably, the QGAN accomplishes this\nperformance with only 80 parameters, demonstrating competitive results with a\ncompact architecture. Tests using a noisy simulator suggest that the approach\nremains effective under realistic noise-prone conditions.",
+  "citation": 2
+}

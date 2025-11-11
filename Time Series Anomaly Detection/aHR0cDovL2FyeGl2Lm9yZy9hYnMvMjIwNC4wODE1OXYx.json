@@ -1,0 +1,8 @@
+{
+  "title": "Multi-scale Anomaly Detection for Big Time Series of Industrial Sensors",
+  "authors": "Quan Ding, Shenghua Liu, Bin Zhou, Huawei Shen, Xueqi Cheng",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2204.08159v1",
+  "abstract": "Given a multivariate big time series, can we detect anomalies as soon as they\noccur? Many existing works detect anomalies by learning how much a time series\ndeviates away from what it should be in the reconstruction framework. However,\nmost models have to cut the big time series into small pieces empirically since\noptimization algorithms cannot afford such a long series. The question is\nraised: do such cuts pollute the inherent semantic segments, like incorrect\npunctuation in sentences? Therefore, we propose a reconstruction-based anomaly\ndetection method, MissGAN, iteratively learning to decode and encode naturally\nsmooth time series in coarse segments, and finding out a finer segment from\nlow-dimensional representations based on HMM. As a result, learning from\nmulti-scale segments, MissGAN can reconstruct a meaningful and robust time\nseries, with the help of adversarial regularization and extra conditional\nstates. MissGAN does not need labels or only needs labels of normal instances,\nmaking it widely applicable. Experiments on industrial datasets of real water\nnetwork sensors show our MissGAN outperforms the baselines with scalability.\nBesides, we use a case study on the CMU Motion dataset to demonstrate that our\nmodel can well distinguish unexpected gestures from a given conditional motion.",
+  "citation": 1
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Robust Audio Anomaly Detection",
+  "authors": "Wo Jae Lee, Karim Helwani, Arvindh Krishnaswamy, Srikanth Tenneti",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.01784v1",
+  "abstract": "We propose an outlier robust multivariate time series model which can be used\nfor detecting previously unseen anomalous sounds based on noisy training data.\nThe presented approach doesn't assume the presence of labeled anomalies in the\ntraining dataset and uses a novel deep neural network architecture to learn the\ntemporal dynamics of the multivariate time series at multiple resolutions while\nbeing robust to contaminations in the training dataset. The temporal dynamics\nare modeled using recurrent layers augmented with attention mechanism. These\nrecurrent layers are built on top of convolutional layers allowing the network\nto extract features at multiple resolutions. The output of the network is an\noutlier robust probability density function modeling the conditional\nprobability of future samples given the time series history. State-of-the-art\napproaches using other multiresolution architectures are contrasted with our\nproposed approach. We validate our solution using publicly available machine\nsound datasets. We demonstrate the effectiveness of our approach in anomaly\ndetection by comparing against several state-of-the-art models.",
+  "citation": 4
+}

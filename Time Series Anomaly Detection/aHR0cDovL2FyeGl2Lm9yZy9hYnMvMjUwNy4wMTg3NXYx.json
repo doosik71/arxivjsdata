@@ -1,0 +1,8 @@
+{
+  "title": "Towards Foundation Auto-Encoders for Time-Series Anomaly Detection",
+  "authors": "Gastón García González, Pedro Casas, Emilio Martínez, Alicia Fernández",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2507.01875v1",
+  "abstract": "We investigate a novel approach to time-series modeling, inspired by the\nsuccesses of large pretrained foundation models. We introduce FAE (Foundation\nAuto-Encoders), a foundation generative-AI model for anomaly detection in\ntime-series data, based on Variational Auto-Encoders (VAEs). By foundation, we\nmean a model pretrained on massive amounts of time-series data which can learn\ncomplex temporal patterns useful for accurate modeling, forecasting, and\ndetection of anomalies on previously unseen datasets. FAE leverages VAEs and\nDilated Convolutional Neural Networks (DCNNs) to build a generic model for\nunivariate time-series modeling, which could eventually perform properly in\nout-of-the-box, zero-shot anomaly detection applications. We introduce the main\nconcepts of FAE, and present preliminary results in different multi-dimensional\ntime-series datasets from various domains, including a real dataset from an\noperational mobile ISP, and the well known KDD 2021 Anomaly Detection dataset.",
+  "citation": 0
+}

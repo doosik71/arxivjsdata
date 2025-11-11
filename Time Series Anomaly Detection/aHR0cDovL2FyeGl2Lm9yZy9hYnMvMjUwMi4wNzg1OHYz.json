@@ -1,0 +1,8 @@
+{
+  "title": "Mamba Adaptive Anomaly Transformer with association discrepancy for time\n  series",
+  "authors": "Abdellah Zakaria Sellam, Ilyes Benaissa, Abdelmalik Taleb-Ahmed, Luigi Patrono, Cosimo Distante",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.07858v3",
+  "abstract": "Anomaly detection in time series is essential for industrial monitoring and\nenvironmental sensing, yet distinguishing anomalies from complex patterns\nremains challenging. Existing methods like the Anomaly Transformer and\nDCdetector have progressed, but they face limitations such as sensitivity to\nshort-term contexts and inefficiency in noisy, non-stationary environments.\n  To overcome these issues, we introduce MAAT, an improved architecture that\nenhances association discrepancy modeling and reconstruction quality. MAAT\nfeatures Sparse Attention, efficiently capturing long-range dependencies by\nfocusing on relevant time steps, thereby reducing computational redundancy.\nAdditionally, a Mamba-Selective State Space Model is incorporated into the\nreconstruction module, utilizing a skip connection and Gated Attention to\nimprove anomaly localization and detection performance.\n  Extensive experiments show that MAAT significantly outperforms previous\nmethods, achieving better anomaly distinguishability and generalization across\nvarious time series applications, setting a new standard for unsupervised time\nseries anomaly detection in real-world scenarios.",
+  "citation": 6
+}

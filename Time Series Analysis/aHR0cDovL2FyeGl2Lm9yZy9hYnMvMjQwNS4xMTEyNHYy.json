@@ -1,0 +1,8 @@
+{
+  "title": "AdaWaveNet: Adaptive Wavelet Network for Time Series Analysis",
+  "authors": "Han Yu, Peikun Guo, Akane Sano",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.11124v2",
+  "abstract": "Time series data analysis is a critical component in various domains such as\nfinance, healthcare, and meteorology. Despite the progress in deep learning for\ntime series analysis, there remains a challenge in addressing the\nnon-stationary nature of time series data. Traditional models, which are built\non the assumption of constant statistical properties over time, often struggle\nto capture the temporal dynamics in realistic time series, resulting in bias\nand error in time series analysis. This paper introduces the Adaptive Wavelet\nNetwork (AdaWaveNet), a novel approach that employs Adaptive Wavelet\nTransformation for multi-scale analysis of non-stationary time series data.\nAdaWaveNet designed a lifting scheme-based wavelet decomposition and\nconstruction mechanism for adaptive and learnable wavelet transforms, which\noffers enhanced flexibility and robustness in analysis. We conduct extensive\nexperiments on 10 datasets across 3 different tasks, including forecasting,\nimputation, and a newly established super-resolution task. The evaluations\ndemonstrate the effectiveness of AdaWaveNet over existing methods in all three\ntasks, which illustrates its potential in various real-world applications.",
+  "citation": 15
+}

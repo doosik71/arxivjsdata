@@ -1,0 +1,8 @@
+{
+  "title": "RobustTAD: Robust Time Series Anomaly Detection via Decomposition and\n  Convolutional Neural Networks",
+  "authors": "Jingkun Gao, Xiaomin Song, Qingsong Wen, Pichao Wang, Liang Sun, Huan Xu",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2002.09545v2",
+  "abstract": "The monitoring and management of numerous and diverse time series data at\nAlibaba Group calls for an effective and scalable time series anomaly detection\nservice. In this paper, we propose RobustTAD, a Robust Time series Anomaly\nDetection framework by integrating robust seasonal-trend decomposition and\nconvolutional neural network for time series data. The seasonal-trend\ndecomposition can effectively handle complicated patterns in time series, and\nmeanwhile significantly simplifies the architecture of the neural network,\nwhich is an encoder-decoder architecture with skip connections. This\narchitecture can effectively capture the multi-scale information from time\nseries, which is very useful in anomaly detection. Due to the limited labeled\ndata in time series anomaly detection, we systematically investigate data\naugmentation methods in both time and frequency domains. We also introduce\nlabel-based weight and value-based weight in the loss function by utilizing the\nunbalanced nature of the time series anomaly detection problem. Compared with\nthe widely used forecasting-based anomaly detection algorithms,\ndecomposition-based algorithms, traditional statistical algorithms, as well as\nrecent neural network based algorithms, RobustTAD performs significantly better\non public benchmark datasets. It is deployed as a public online service and\nwidely adopted in different business scenarios at Alibaba Group.",
+  "citation": 245
+}

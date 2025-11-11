@@ -1,0 +1,8 @@
+{
+  "title": "F-SE-LSTM: A Time Series Anomaly Detection Method with Frequency Domain\n  Information",
+  "authors": "Yi-Xiang Lu, Xiao-Bo Jin, Jian Chen, Dong-Jie Liu, Guang-Gang Geng",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.02474v1",
+  "abstract": "With the development of society, time series anomaly detection plays an\nimportant role in network and IoT services. However, most existing anomaly\ndetection methods directly analyze time series in the time domain and cannot\ndistinguish some relatively hidden anomaly sequences. We attempt to analyze the\nimpact of frequency on time series from a frequency domain perspective, thus\nproposing a new time series anomaly detection method called F-SE-LSTM. This\nmethod utilizes two sliding windows and fast Fourier transform (FFT) to\nconstruct a frequency matrix. Simultaneously, Squeeze-and-Excitation Networks\n(SENet) and Long Short-Term Memory (LSTM) are employed to extract\nfrequency-related features within and between periods. Through comparative\nexperiments on multiple datasets such as Yahoo Webscope S5 and Numenta Anomaly\nBenchmark, the results demonstrate that the frequency matrix constructed by\nF-SE-LSTM exhibits better discriminative ability than ordinary time domain and\nfrequency domain data. Furthermore, F-SE-LSTM outperforms existing\nstate-of-the-art deep learning anomaly detection methods in terms of anomaly\ndetection capability and execution efficiency.",
+  "citation": 8
+}

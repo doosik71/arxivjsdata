@@ -3,5 +3,6 @@
   "authors": "Bryan Lim, Stefan Zohren",
   "year": 2020,
   "url": "http://arxiv.org/abs/2004.13408v2",
-  "abstract": "Numerous deep learning architectures have been developed to accommodate the\ndiversity of time series datasets across different domains. In this article, we\nsurvey common encoder and decoder designs used in both one-step-ahead and\nmulti-horizon time series forecasting -- describing how temporal information is\nincorporated into predictions by each model. Next, we highlight recent\ndevelopments in hybrid deep learning models, which combine well-studied\nstatistical models with neural network components to improve pure methods in\neither category. Lastly, we outline some ways in which deep learning can also\nfacilitate decision support with time series data."
+  "abstract": "Numerous deep learning architectures have been developed to accommodate the\ndiversity of time series datasets across different domains. In this article, we\nsurvey common encoder and decoder designs used in both one-step-ahead and\nmulti-horizon time series forecasting -- describing how temporal information is\nincorporated into predictions by each model. Next, we highlight recent\ndevelopments in hybrid deep learning models, which combine well-studied\nstatistical models with neural network components to improve pure methods in\neither category. Lastly, we outline some ways in which deep learning can also\nfacilitate decision support with time series data.",
+  "citation": 2209
 }

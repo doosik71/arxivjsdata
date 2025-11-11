@@ -1,0 +1,8 @@
+{
+  "title": "Argos: Agentic Time-Series Anomaly Detection with Autonomous Rule\n  Generation via Large Language Models",
+  "authors": "Yile Gu, Yifan Xiong, Jonathan Mace, Yuting Jiang, Yigong Hu, Baris Kasikci, Peng Cheng",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2501.14170v1",
+  "abstract": "Observability in cloud infrastructure is critical for service providers,\ndriving the widespread adoption of anomaly detection systems for monitoring\nmetrics. However, existing systems often struggle to simultaneously achieve\nexplainability, reproducibility, and autonomy, which are three indispensable\nproperties for production use. We introduce Argos, an agentic system for\ndetecting time-series anomalies in cloud infrastructure by leveraging large\nlanguage models (LLMs). Argos proposes to use explainable and reproducible\nanomaly rules as intermediate representation and employs LLMs to autonomously\ngenerate such rules. The system will efficiently train error-free and\naccuracy-guaranteed anomaly rules through multiple collaborative agents and\ndeploy the trained rules for low-cost online anomaly detection. Through\nevaluation results, we demonstrate that Argos outperforms state-of-the-art\nmethods, increasing $F_1$ scores by up to $9.5\\%$ and $28.3\\%$ on public\nanomaly detection datasets and an internal dataset collected from Microsoft,\nrespectively.",
+  "citation": 8
+}

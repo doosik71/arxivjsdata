@@ -1,0 +1,8 @@
+{
+  "title": "GDformer: Going Beyond Subsequence Isolation for Multivariate Time\n  Series Anomaly Detection",
+  "authors": "Qingxiang Liu, Chenghao Liu, Sheng Sun, Di Yao, Yuxuan Liang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2501.18196v2",
+  "abstract": "Unsupervised anomaly detection of multivariate time series is a challenging\ntask, given the requirements of deriving a compact detection criterion without\naccessing the anomaly points. The existing methods are mainly based on\nreconstruction error or association divergence, which are both confined to\nisolated subsequences with limited horizons, hardly promising unified\nseries-level criterion. In this paper, we propose the Global\nDictionary-enhanced Transformer (GDformer) with a renovated dictionary-based\ncross attention mechanism to cultivate the global representations shared by all\nnormal points in the entire series. Accordingly, the cross-attention maps\nreflect the correlation weights between the point and global representations,\nwhich naturally leads to the representation-wise similarity-based detection\ncriterion. To foster more compact detection boundary, prototypes are introduced\nto capture the distribution of normal point-global correlation weights.\nGDformer consistently achieves state-of-the-art unsupervised anomaly detection\nperformance on five real-world benchmark datasets. Further experiments validate\nthe global dictionary has great transferability among various datasets. The\ncode is available at https://github.com/yuppielqx/GDformer.",
+  "citation": 4
+}

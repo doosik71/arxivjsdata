@@ -1,0 +1,8 @@
+{
+  "title": "Is it worth it? Comparing six deep and classical methods for\n  unsupervised anomaly detection in time series",
+  "authors": "Ferdinand Rewicki, Joachim Denzler, Julia Niebling",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2212.11080v3",
+  "abstract": "Detecting anomalies in time series data is important in a variety of fields,\nincluding system monitoring, healthcare, and cybersecurity. While the abundance\nof available methods makes it difficult to choose the most appropriate method\nfor a given application, each method has its strengths in detecting certain\ntypes of anomalies. In this study, we compare six unsupervised anomaly\ndetection methods of varying complexity to determine whether more complex\nmethods generally perform better and if certain methods are better suited to\ncertain types of anomalies. We evaluated the methods using the UCR anomaly\narchive, a recent benchmark dataset for anomaly detection. We analyzed the\nresults on a dataset and anomaly type level after adjusting the necessary\nhyperparameters for each method. Additionally, we assessed the ability of each\nmethod to incorporate prior knowledge about anomalies and examined the\ndifferences between point-wise and sequence-wise features. Our experiments show\nthat classical machine learning methods generally outperform deep learning\nmethods across a range of anomaly types.",
+  "citation": 67
+}

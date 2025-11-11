@@ -1,0 +1,8 @@
+{
+  "title": "Entropy Causal Graphs for Multivariate Time Series Anomaly Detection",
+  "authors": "Falih Gozi Febrinanto, Kristen Moore, Chandra Thapa, Mujie Liu, Vidya Saikrishna, Jiangang Ma, Feng Xia",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.09478v2",
+  "abstract": "Many multivariate time series anomaly detection frameworks have been proposed\nand widely applied. However, most of these frameworks do not consider intrinsic\nrelationships between variables in multivariate time series data, thus ignoring\nthe causal relationship among variables and degrading anomaly detection\nperformance. This work proposes a novel framework called CGAD, an entropy\nCausal Graph for multivariate time series Anomaly Detection. CGAD utilizes\ntransfer entropy to construct graph structures that unveil the underlying\ncausal relationships among time series data. Weighted graph convolutional\nnetworks combined with causal convolutions are employed to model both the\ncausal graph structures and the temporal patterns within multivariate time\nseries data. Furthermore, CGAD applies anomaly scoring, leveraging median\nabsolute deviation-based normalization to improve the robustness of the anomaly\nidentification process. Extensive experiments demonstrate that CGAD outperforms\nstate-of-the-art methods on real-world datasets with a 9% average improvement\nin terms of three different multivariate time series anomaly detection metrics.",
+  "citation": 13
+}

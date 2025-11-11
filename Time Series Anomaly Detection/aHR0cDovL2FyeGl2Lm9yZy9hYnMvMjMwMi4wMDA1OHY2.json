@@ -1,0 +1,8 @@
+{
+  "title": "Graph Anomaly Detection in Time Series: A Survey",
+  "authors": "Thi Kieu Khanh Ho, Ali Karami, Narges Armanfard",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.00058v6",
+  "abstract": "With the recent advances in technology, a wide range of systems continue to\ncollect a large amount of data over time and thus generate time series.\nTime-Series Anomaly Detection (TSAD) is an important task in various\ntime-series applications such as e-commerce, cybersecurity, vehicle\nmaintenance, and healthcare monitoring. However, this task is very challenging\nas it requires considering both the intra-variable dependency (relationships\nwithin a variable over time) and the inter-variable dependency (relationships\nbetween multiple variables) existing in time-series data. Recent graph-based\napproaches have made impressive progress in tackling the challenges of this\nfield. In this survey, we conduct a comprehensive and up-to-date review of TSAD\nusing graphs, referred to as G-TSAD. First, we explore the significant\npotential of graph representation for time-series data and and its\ncontributions to facilitating anomaly detection. Then, we review\nstate-of-the-art graph anomaly detection techniques, mostly leveraging deep\nlearning architectures, in the context of time series. For each method, we\ndiscuss its strengths, limitations, and the specific applications where it\nexcels. Finally, we address both the technical and application challenges\ncurrently facing the field, and suggest potential future directions for\nadvancing research and improving practical outcomes.",
+  "citation": 12
+}

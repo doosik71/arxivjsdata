@@ -1,0 +1,8 @@
+{
+  "title": "Deep Learning for Time Series Anomaly Detection: A Survey",
+  "authors": "Zahra Zamanzadeh Darban, Geoffrey I. Webb, Shirui Pan, Charu C. Aggarwal, Mahsa Salehi",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.05244v3",
+  "abstract": "Time series anomaly detection has applications in a wide range of research\nfields and applications, including manufacturing and healthcare. The presence\nof anomalies can indicate novel or unexpected events, such as production\nfaults, system defects, or heart fluttering, and is therefore of particular\ninterest. The large size and complex patterns of time series have led\nresearchers to develop specialised deep learning models for detecting anomalous\npatterns. This survey focuses on providing structured and comprehensive\nstate-of-the-art time series anomaly detection models through the use of deep\nlearning. It providing a taxonomy based on the factors that divide anomaly\ndetection models into different categories. Aside from describing the basic\nanomaly detection technique for each category, the advantages and limitations\nare also discussed. Furthermore, this study includes examples of deep anomaly\ndetection in time series across various application domains in recent years. It\nfinally summarises open issues in research and challenges faced while adopting\ndeep anomaly detection models.",
+  "citation": 428
+}

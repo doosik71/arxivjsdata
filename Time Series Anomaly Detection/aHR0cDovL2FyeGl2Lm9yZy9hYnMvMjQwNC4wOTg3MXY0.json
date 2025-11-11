@@ -1,0 +1,8 @@
+{
+  "title": "Explainable Online Unsupervised Anomaly Detection for Cyber-Physical\n  Systems via Causal Discovery from Time Series",
+  "authors": "Daniele Meli",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.09871v4",
+  "abstract": "Online unsupervised detection of anomalies is crucial to guarantee the\ncorrect operation of cyber-physical systems and the safety of humans\ninteracting with them. State-of-the-art approaches based on deep learning via\nneural networks achieve outstanding performance at anomaly recognition,\nevaluating the discrepancy between a normal model of the system (with no\nanomalies) and the real-time stream of sensor time series. However, large\ntraining data and time are typically required, and explainability is still a\nchallenge to identify the root of the anomaly and implement predictive\nmaintainance. In this paper, we use causal discovery to learn a normal causal\ngraph of the system, and we evaluate the persistency of causal links during\nreal-time acquisition of sensor data to promptly detect anomalies. On two\nbenchmark anomaly detection datasets, we show that our method has higher\ntraining efficiency, outperforms the accuracy of state-of-the-art neural\narchitectures and correctly identifies the sources of >10 different anomalies.\nThe code is at https://github.com/Isla-lab/causal_anomaly_detection.",
+  "citation": 4
+}

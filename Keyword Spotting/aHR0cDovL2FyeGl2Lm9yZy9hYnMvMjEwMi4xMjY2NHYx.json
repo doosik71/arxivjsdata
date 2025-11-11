@@ -1,0 +1,7 @@
+{
+  "title": "MixSpeech: Data Augmentation for Low-resource Automatic Speech\n  Recognition",
+  "authors": "Linghui Meng, Jin Xu, Xu Tan, Jindong Wang, Tao Qin, Bo Xu",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2102.12664v1",
+  "abstract": "In this paper, we propose MixSpeech, a simple yet effective data augmentation\nmethod based on mixup for automatic speech recognition (ASR). MixSpeech trains\nan ASR model by taking a weighted combination of two different speech features\n(e.g., mel-spectrograms or MFCC) as the input, and recognizing both text\nsequences, where the two recognition losses use the same combination weight. We\napply MixSpeech on two popular end-to-end speech recognition models including\nLAS (Listen, Attend and Spell) and Transformer, and conduct experiments on\nseveral low-resource datasets including TIMIT, WSJ, and HKUST. Experimental\nresults show that MixSpeech achieves better accuracy than the baseline models\nwithout data augmentation, and outperforms a strong data augmentation method\nSpecAugment on these recognition tasks. Specifically, MixSpeech outperforms\nSpecAugment with a relative PER improvement of 10.6$\\%$ on TIMIT dataset, and\nachieves a strong WER of 4.7$\\%$ on WSJ dataset."
+}

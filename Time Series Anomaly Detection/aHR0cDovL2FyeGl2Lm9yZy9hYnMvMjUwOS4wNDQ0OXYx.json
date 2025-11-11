@@ -1,0 +1,8 @@
+{
+  "title": "ChronoGraph: A Real-World Graph-Based Multivariate Time Series Dataset",
+  "authors": "Adrian Catalin Lutu, Ioana Pintilie, Elena Burceanu, Andrei Manolache",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.04449v1",
+  "abstract": "We present ChronoGraph, a graph-structured multivariate time series\nforecasting dataset built from real-world production microservices. Each node\nis a service that emits a multivariate stream of system-level performance\nmetrics, capturing CPU, memory, and network usage patterns, while directed\nedges encode dependencies between services. The primary task is forecasting\nfuture values of these signals at the service level. In addition, ChronoGraph\nprovides expert-annotated incident windows as anomaly labels, enabling\nevaluation of anomaly detection methods and assessment of forecast robustness\nduring operational disruptions. Compared to existing benchmarks from industrial\ncontrol systems or traffic and air-quality domains, ChronoGraph uniquely\ncombines (i) multivariate time series, (ii) an explicit, machine-readable\ndependency graph, and (iii) anomaly labels aligned with real incidents. We\nreport baseline results spanning forecasting models, pretrained time-series\nfoundation models, and standard anomaly detectors. ChronoGraph offers a\nrealistic benchmark for studying structure-aware forecasting and incident-aware\nevaluation in microservice systems.",
+  "citation": 0
+}

@@ -1,0 +1,7 @@
+{
+  "title": "SpecAugment on Large Scale Datasets",
+  "authors": "Daniel S. Park, Yu Zhang, Chung-Cheng Chiu, Youzheng Chen, Bo Li, William Chan, Quoc V. Le, Yonghui Wu",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1912.05533v1",
+  "abstract": "Recently, SpecAugment, an augmentation scheme for automatic speech\nrecognition that acts directly on the spectrogram of input utterances, has\nshown to be highly effective in enhancing the performance of end-to-end\nnetworks on public datasets. In this paper, we demonstrate its effectiveness on\ntasks with large scale datasets by investigating its application to the Google\nMultidomain Dataset (Narayanan et al., 2018). We achieve improvement across all\ntest domains by mixing raw training data augmented with SpecAugment and\nnoise-perturbed training data when training the acoustic model. We also\nintroduce a modification of SpecAugment that adapts the time mask size and/or\nmultiplicity depending on the length of the utterance, which can potentially\nbenefit large scale tasks. By using adaptive masking, we are able to further\nimprove the performance of the Listen, Attend and Spell model on LibriSpeech to\n2.2% WER on test-clean and 5.2% WER on test-other."
+}

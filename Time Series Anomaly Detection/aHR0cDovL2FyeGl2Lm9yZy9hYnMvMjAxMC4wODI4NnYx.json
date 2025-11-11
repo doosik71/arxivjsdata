@@ -1,0 +1,8 @@
+{
+  "title": "On the Usage of Generative Models for Network Anomaly Detection in\n  Multivariate Time-Series",
+  "authors": "Gastón García González, Pedro Casas, Alicia Fernández, Gabriel Gómez",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2010.08286v1",
+  "abstract": "Despite the many attempts and approaches for anomaly detection explored over\nthe years, the automatic detection of rare events in data communication\nnetworks remains a complex problem. In this paper we introduce Net-GAN, a novel\napproach to network anomaly detection in time-series, using recurrent neural\nnetworks (RNNs) and generative adversarial networks (GAN). Different from the\nstate of the art, which traditionally focuses on univariate measurements,\nNet-GAN detects anomalies in multivariate time-series, exploiting temporal\ndependencies through RNNs. Net-GAN discovers the underlying distribution of the\nbaseline, multivariate data, without making any assumptions on its nature,\noffering a powerful approach to detect anomalies in complex, difficult to model\nnetwork monitoring data. We further exploit the concepts behind generative\nmodels to conceive Net-VAE, a complementary approach to Net-GAN for network\nanomaly detection, based on variational auto-encoders (VAE). We evaluate\nNet-GAN and Net-VAE in different monitoring scenarios, including anomaly\ndetection in IoT sensor data, and intrusion detection in network measurements.\nGenerative models represent a promising approach for network anomaly detection,\nespecially when considering the complexity and ever-growing number of\ntime-series to monitor in operational networks.",
+  "citation": 37
+}

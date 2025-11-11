@@ -1,0 +1,8 @@
+{
+  "title": "Multi-scale streaming anomalies detection for time series",
+  "authors": "B Ravi Kiran",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1706.06910v1",
+  "abstract": "In the class of streaming anomaly detection algorithms for univariate time\nseries, the size of the sliding window over which various statistics are\ncalculated is an important parameter. To address the anomalous variation in the\nscale of the pseudo-periodicity of time series, we define a streaming\nmulti-scale anomaly score with a streaming PCA over a multi-scale lag-matrix.\nWe define three methods of aggregation of the multi-scale anomaly scores. We\nevaluate their performance on Yahoo! and Numenta dataset for unsupervised\nanomaly detection benchmark. To the best of authors' knowledge, this is the\nfirst time a multi-scale streaming anomaly detection has been proposed and\nsystematically studied.",
+  "citation": 0
+}

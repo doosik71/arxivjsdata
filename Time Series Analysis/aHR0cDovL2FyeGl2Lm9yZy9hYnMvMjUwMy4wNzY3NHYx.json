@@ -1,0 +1,8 @@
+{
+  "title": "TVNet: A Novel Time Series Analysis Method Based on Dynamic Convolution\n  and 3D-Variation",
+  "authors": "Chenghan Li, Mingchen Li, Ruisheng Diao",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.07674v1",
+  "abstract": "With the recent development and advancement of Transformer and MLP\narchitectures, significant strides have been made in time series analysis.\nConversely, the performance of Convolutional Neural Networks (CNNs) in time\nseries analysis has fallen short of expectations, diminishing their potential\nfor future applications. Our research aims to enhance the representational\ncapacity of Convolutional Neural Networks (CNNs) in time series analysis by\nintroducing novel perspectives and design innovations. To be specific, We\nintroduce a novel time series reshaping technique that considers the\ninter-patch, intra-patch, and cross-variable dimensions. Consequently, we\npropose TVNet, a dynamic convolutional network leveraging a 3D perspective to\nemploy time series analysis. TVNet retains the computational efficiency of CNNs\nand achieves state-of-the-art results in five key time series analysis tasks,\noffering a superior balance of efficiency and performance over the\nstate-of-the-art Transformer-based and MLP-based models. Additionally, our\nfindings suggest that TVNet exhibits enhanced transferability and robustness.\nTherefore, it provides a new perspective for applying CNN in advanced time\nseries analysis tasks.",
+  "citation": 6
+}

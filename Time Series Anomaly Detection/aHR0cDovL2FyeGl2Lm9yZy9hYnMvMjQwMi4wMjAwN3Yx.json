@@ -1,0 +1,8 @@
+{
+  "title": "Understanding Time Series Anomaly State Detection through One-Class\n  Classification",
+  "authors": "Hanxu Zhou, Yuan Zhang, Guangjie Leng, Ruofan Wang, Zhi-Qin John Xu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.02007v1",
+  "abstract": "For a long time, research on time series anomaly detection has mainly focused\non finding outliers within a given time series. Admittedly, this is consistent\nwith some practical problems, but in other practical application scenarios,\npeople are concerned about: assuming a standard time series is given, how to\njudge whether another test time series deviates from the standard time series,\nwhich is more similar to the problem discussed in one-class classification\n(OCC). Therefore, in this article, we try to re-understand and define the time\nseries anomaly detection problem through OCC, which we call 'time series\nanomaly state detection problem'. We first use stochastic processes and\nhypothesis testing to strictly define the 'time series anomaly state detection\nproblem', and its corresponding anomalies. Then, we use the time series\nclassification dataset to construct an artificial dataset corresponding to the\nproblem. We compile 38 anomaly detection algorithms and correct some of the\nalgorithms to adapt to handle this problem. Finally, through a large number of\nexperiments, we fairly compare the actual performance of various time series\nanomaly detection algorithms, providing insights and directions for future\nresearch by researchers.",
+  "citation": 1
+}

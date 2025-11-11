@@ -1,0 +1,8 @@
+{
+  "title": "VELC: A New Variational AutoEncoder Based Model for Time Series Anomaly\n  Detection",
+  "authors": "Chunkai Zhang, Shaocong Li, Hongye Zhang, Yingyang Chen",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1907.01702v2",
+  "abstract": "Anomaly detection is a classical but worthwhile problem, and many deep\nlearning-based anomaly detection algorithms have been proposed, which can\nusually achieve better detection results than traditional methods. In view of\nreconstruct ability of the model and the calculation of anomaly score, this\npaper proposes a time series anomaly detection method based on Variational\nAutoEncoder model(VAE) with re-Encoder and Latent Constraint network(VELC). In\norder to modify reconstruct ability of the model to prevent it from\nreconstructing abnormal samples well, we add a constraint network in the latent\nspace of the VAE to force it generate new latent variables that are similar\nwith that of training samples. To be able to calculate anomaly score in two\nfeature spaces, we train a re-encoder to transform the generated data to a new\nlatent space. For better handling the time series, we use the LSTM as the\nencoder and decoder part of the VAE framework. Experimental results of several\nbenchmarks show that our method outperforms state-of-the-art anomaly detection\nmethods.",
+  "citation": 59
+}

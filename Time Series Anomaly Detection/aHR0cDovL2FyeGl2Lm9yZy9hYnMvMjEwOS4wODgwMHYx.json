@@ -1,0 +1,8 @@
+{
+  "title": "A Robust and Efficient Multi-Scale Seasonal-Trend Decomposition",
+  "authors": "Linxiao Yang, Qingsong Wen, Bo Yang, Liang Sun",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.08800v1",
+  "abstract": "Many real-world time series exhibit multiple seasonality with different\nlengths. The removal of seasonal components is crucial in numerous applications\nof time series, including forecasting and anomaly detection. However, many\nseasonal-trend decomposition algorithms suffer from high computational cost and\nrequire a large amount of data when multiple seasonal components exist,\nespecially when the periodic length is long. In this paper, we propose a\ngeneral and efficient multi-scale seasonal-trend decomposition algorithm for\ntime series with multiple seasonality. We first down-sample the original time\nseries onto a lower resolution, and then convert it to a time series with\nsingle seasonality. Thus, existing seasonal-trend decomposition algorithms can\nbe applied directly to obtain the rough estimates of trend and the seasonal\ncomponent corresponding to the longer periodic length. By considering the\nrelationship between different resolutions, we formulate the recovery of\ndifferent components on the high resolution as an optimization problem, which\nis solved efficiently by our alternative direction multiplier method (ADMM)\nbased algorithm. Our experimental results demonstrate the accurate\ndecomposition results with significantly improved efficiency.",
+  "citation": 22
+}

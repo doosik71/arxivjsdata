@@ -1,0 +1,8 @@
+{
+  "title": "Expressing Multivariate Time Series as Graphs with Time Series Attention\n  Transformer",
+  "authors": "William T. Ng, K. Siu, Albert C. Cheung, Michael K. Ng",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2208.09300v1",
+  "abstract": "A reliable and efficient representation of multivariate time series is\ncrucial in various downstream machine learning tasks. In multivariate time\nseries forecasting, each variable depends on its historical values and there\nare inter-dependencies among variables as well. Models have to be designed to\ncapture both intra- and inter-relationships among the time series. To move\ntowards this goal, we propose the Time Series Attention Transformer (TSAT) for\nmultivariate time series representation learning. Using TSAT, we represent both\ntemporal information and inter-dependencies of multivariate time series in\nterms of edge-enhanced dynamic graphs. The intra-series correlations are\nrepresented by nodes in a dynamic graph; a self-attention mechanism is modified\nto capture the inter-series correlations by using the super-empirical mode\ndecomposition (SMD) module. We applied the embedded dynamic graphs to times\nseries forecasting problems, including two real-world datasets and two\nbenchmark datasets. Extensive experiments show that TSAT clearly outerperforms\nsix state-of-the-art baseline methods in various forecasting horizons. We\nfurther visualize the embedded dynamic graphs to illustrate the graph\nrepresentation power of TSAT. We share our code at\nhttps://github.com/RadiantResearch/TSAT.",
+  "citation": 14
+}

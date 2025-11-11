@@ -1,0 +1,8 @@
+{
+  "title": "EdgeConvFormer: Dynamic Graph CNN and Transformer based Anomaly\n  Detection in Multivariate Time Series",
+  "authors": "Jie Liu, Qilin Li, Senjian An, Bradley Ezard, Ling Li",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.01729v1",
+  "abstract": "Transformer-based models for anomaly detection in multivariate time series\ncan benefit from the self-attention mechanism due to its advantage in modeling\nlong-term dependencies. However, Transformer-based anomaly detection models\nhave problems such as a large amount of data being required for training,\nstandard positional encoding is not suitable for multivariate time series data,\nand the interdependence between time series is not considered. To address these\nlimitations, we propose a novel anomaly detection method, named EdgeConvFormer,\nwhich integrates Time2vec embedding, stacked dynamic graph CNN, and Transformer\nto extract global and local spatial-time information. This design of\nEdgeConvFormer empowers it with decomposition capacities for complex time\nseries, progressive spatiotemporal correlation discovery between time series,\nand representation aggregation of multi-scale features. Experiments demonstrate\nthat EdgeConvFormer can learn the spatial-temporal correlations from\nmultivariate time series data and achieve better anomaly detection performance\nthan the state-of-the-art approaches on many real-world datasets of different\nscales.",
+  "citation": 8
+}

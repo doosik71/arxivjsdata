@@ -1,0 +1,8 @@
+{
+  "title": "Time Series Anomaly Detection Using Convolutional Neural Networks and\n  Transfer Learning",
+  "authors": "Tailai Wen, Roy Keyes",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1905.13628v1",
+  "abstract": "Time series anomaly detection plays a critical role in automated monitoring\nsystems. Most previous deep learning efforts related to time series anomaly\ndetection were based on recurrent neural networks (RNN). In this paper, we\npropose a time series segmentation approach based on convolutional neural\nnetworks (CNN) for anomaly detection. Moreover, we propose a transfer learning\nframework that pretrains a model on a large-scale synthetic univariate time\nseries data set and then fine-tunes its weights on small-scale, univariate or\nmultivariate data sets with previously unseen classes of anomalies. For the\nmultivariate case, we introduce a novel network architecture. The approach was\ntested on multiple synthetic and real data sets successfully.",
+  "citation": 229
+}

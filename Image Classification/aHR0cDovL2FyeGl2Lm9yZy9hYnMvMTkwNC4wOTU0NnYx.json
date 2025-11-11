@@ -1,0 +1,7 @@
+{
+  "title": "DeepCaps: Going Deeper with Capsule Networks",
+  "authors": "Jathushan Rajasegaran, Vinoj Jayasundara, Sandaru Jayasekara, Hirunima Jayasekara, Suranga Seneviratne, Ranga Rodrigo",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1904.09546v1",
+  "abstract": "Capsule Network is a promising concept in deep learning, yet its true\npotential is not fully realized thus far, providing sub-par performance on\nseveral key benchmark datasets with complex data. Drawing intuition from the\nsuccess achieved by Convolutional Neural Networks (CNNs) by going deeper, we\nintroduce DeepCaps1, a deep capsule network architecture which uses a novel 3D\nconvolution based dynamic routing algorithm. With DeepCaps, we surpass the\nstate-of-the-art results in the capsule network domain on CIFAR10, SVHN and\nFashion MNIST, while achieving a 68% reduction in the number of parameters.\nFurther, we propose a class-independent decoder network, which strengthens the\nuse of reconstruction loss as a regularization term. This leads to an\ninteresting property of the decoder, which allows us to identify and control\nthe physical attributes of the images represented by the instantiation\nparameters."
+}

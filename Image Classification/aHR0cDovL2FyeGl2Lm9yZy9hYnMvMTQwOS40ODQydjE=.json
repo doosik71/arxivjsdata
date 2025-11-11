@@ -1,0 +1,7 @@
+{
+  "title": "Going Deeper with Convolutions",
+  "authors": "Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich",
+  "year": 2014,
+  "url": "http://arxiv.org/abs/1409.4842v1",
+  "abstract": "We propose a deep convolutional neural network architecture codenamed\n\"Inception\", which was responsible for setting the new state of the art for\nclassification and detection in the ImageNet Large-Scale Visual Recognition\nChallenge 2014 (ILSVRC 2014). The main hallmark of this architecture is the\nimproved utilization of the computing resources inside the network. This was\nachieved by a carefully crafted design that allows for increasing the depth and\nwidth of the network while keeping the computational budget constant. To\noptimize quality, the architectural decisions were based on the Hebbian\nprinciple and the intuition of multi-scale processing. One particular\nincarnation used in our submission for ILSVRC 2014 is called GoogLeNet, a 22\nlayers deep network, the quality of which is assessed in the context of\nclassification and detection."
+}

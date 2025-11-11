@@ -1,0 +1,8 @@
+{
+  "title": "MSTL: A Seasonal-Trend Decomposition Algorithm for Time Series with\n  Multiple Seasonal Patterns",
+  "authors": "Kasun Bandara, Rob J Hyndman, Christoph Bergmeir",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2107.13462v1",
+  "abstract": "The decomposition of time series into components is an important task that\nhelps to understand time series and can enable better forecasting. Nowadays,\nwith high sampling rates leading to high-frequency data (such as daily, hourly,\nor minutely data), many real-world datasets contain time series data that can\nexhibit multiple seasonal patterns. Although several methods have been proposed\nto decompose time series better under these circumstances, they are often\ncomputationally inefficient or inaccurate. In this study, we propose Multiple\nSeasonal-Trend decomposition using Loess (MSTL), an extension to the\ntraditional Seasonal-Trend decomposition using Loess (STL) procedure, allowing\nthe decomposition of time series with multiple seasonal patterns. In our\nevaluation on synthetic and a perturbed real-world time series dataset,\ncompared to other decomposition benchmarks, MSTL demonstrates competitive\nresults with lower computational cost. The implementation of MSTL is available\nin the R package forecast.",
+  "citation": 184
+}

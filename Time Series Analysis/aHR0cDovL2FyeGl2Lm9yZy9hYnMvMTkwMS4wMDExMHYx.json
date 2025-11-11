@@ -1,0 +1,8 @@
+{
+  "title": "Time series classification based on triadic time series motifs",
+  "authors": "Wen-Jie Xie, Rui-Qi Han, Wei-Xing Zhou",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1901.00110v1",
+  "abstract": "It is of great significance to identify the characteristics of time series to\nqualify their similarity. We define six types of triadic time-series motifs and\ninvestigate the motif occurrence profiles extracted from logistic map, chaotic\nlogistic map, chaotic Henon map, chaotic Ikeda map, hyperchaotic generalized\nHenon map and hyperchaotic folded-tower map. Based on the similarity of motif\nprofiles, we further propose to estimate the similarity coefficients between\ndifferent time series and classify these time series with high accuracy. We\nfurther apply the motif analysis method to the UCR Time Series Classification\nArchive and provide evidence of good classification ability for some data sets.\nOur analysis shows that the proposed triadic time series motif analysis\nperforms better than the classic dynamic time wrapping method in classifying\ntime series for certain data sets investigated in this work.",
+  "citation": 9
+}

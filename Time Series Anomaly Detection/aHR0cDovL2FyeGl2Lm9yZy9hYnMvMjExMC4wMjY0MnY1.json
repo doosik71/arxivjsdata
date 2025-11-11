@@ -1,0 +1,8 @@
+{
+  "title": "Anomaly Transformer: Time Series Anomaly Detection with Association\n  Discrepancy",
+  "authors": "Jiehui Xu, Haixu Wu, Jianmin Wang, Mingsheng Long",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2110.02642v5",
+  "abstract": "Unsupervised detection of anomaly points in time series is a challenging\nproblem, which requires the model to derive a distinguishable criterion.\nPrevious methods tackle the problem mainly through learning pointwise\nrepresentation or pairwise association, however, neither is sufficient to\nreason about the intricate dynamics. Recently, Transformers have shown great\npower in unified modeling of pointwise representation and pairwise association,\nand we find that the self-attention weight distribution of each time point can\nembody rich association with the whole series. Our key observation is that due\nto the rarity of anomalies, it is extremely difficult to build nontrivial\nassociations from abnormal points to the whole series, thereby, the anomalies'\nassociations shall mainly concentrate on their adjacent time points. This\nadjacent-concentration bias implies an association-based criterion inherently\ndistinguishable between normal and abnormal points, which we highlight through\nthe \\emph{Association Discrepancy}. Technically, we propose the \\emph{Anomaly\nTransformer} with a new \\emph{Anomaly-Attention} mechanism to compute the\nassociation discrepancy. A minimax strategy is devised to amplify the\nnormal-abnormal distinguishability of the association discrepancy. The Anomaly\nTransformer achieves state-of-the-art results on six unsupervised time series\nanomaly detection benchmarks of three applications: service monitoring, space &\nearth exploration, and water treatment.",
+  "citation": 1074
+}

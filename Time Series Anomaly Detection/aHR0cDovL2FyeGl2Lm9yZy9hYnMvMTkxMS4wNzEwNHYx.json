@@ -1,0 +1,8 @@
+{
+  "title": "RSM-GAN: A Convolutional Recurrent GAN for Anomaly Detection in\n  Contaminated Seasonal Multivariate Time Series",
+  "authors": "Farzaneh Khoshnevisan, Zhewen Fan",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1911.07104v1",
+  "abstract": "Robust anomaly detection is a requirement for monitoring complex modern\nsystems with applications such as cyber-security, fraud prevention, and\nmaintenance. These systems generate multiple correlated time series that are\nhighly seasonal and noisy. This paper presents a novel unsupervised deep\nlearning architecture for multivariate time series anomaly detection, called\nRobust Seasonal Multivariate Generative Adversarial Network (RSM-GAN). It\nextends recent advancements in GANs with adoption of convolutional-LSTM layers\nand an attention mechanism to produce state-of-the-art performance. We conduct\nextensive experiments to demonstrate the strength of our architecture in\nadjusting for complex seasonality patterns and handling severe levels of\ntraining data contamination. We also propose a novel anomaly score assignment\nand causal inference framework. We compare RSM-GAN with existing classical and\ndeep-learning based anomaly detection models, and the results show that our\narchitecture is associated with the lowest false positive rate and improves\nprecision by 30% and 16% in real-world and synthetic data, respectively.\nFurthermore, we report the superiority of RSM-GAN regarding accurate root cause\nidentification and NAB scores in all data settings.",
+  "citation": 12
+}

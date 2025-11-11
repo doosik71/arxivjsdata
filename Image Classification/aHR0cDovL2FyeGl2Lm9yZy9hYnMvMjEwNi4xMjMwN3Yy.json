@@ -1,0 +1,7 @@
+{
+  "title": "Should You Go Deeper? Optimizing Convolutional Neural Network\n  Architectures without Training by Receptive Field Analysis",
+  "authors": "Mats L. Richter, Julius Schöning, Anna Wiedenroth, Ulf Krumnack",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2106.12307v2",
+  "abstract": "When optimizing convolutional neural networks (CNN) for a specific\nimage-based task, specialists commonly overshoot the number of convolutional\nlayers in their designs. By implication, these CNNs are unnecessarily resource\nintensive to train and deploy, with diminishing beneficial effects on the\npredictive performance.\n  The features a convolutional layer can process are strictly limited by its\nreceptive field. By layer-wise analyzing the size of the receptive fields, we\ncan reliably predict sequences of layers that will not contribute qualitatively\nto the test accuracy in the given CNN architecture. Based on this analysis, we\npropose design strategies based on a so-called border layer. This layer allows\nto identify unproductive convolutional layers and hence to resolve these\ninefficiencies, optimize the explainability and the computational performance\nof CNNs. Since neither the strategies nor the analysis requires training of the\nactual model, these insights allow for a very efficient design process of CNN\narchitectures, which might be automated in the future."
+}

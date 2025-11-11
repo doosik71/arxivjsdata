@@ -1,0 +1,8 @@
+{
+  "title": "Cross-Modal Deep Metric Learning for Time Series Anomaly Detection",
+  "authors": "Wei Li, Zheze Yang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.12540v1",
+  "abstract": "To effectively address the issues of low sensitivity and high time\nconsumption in time series anomaly detection, we propose an anomaly detection\nmethod based on cross-modal deep metric learning. A cross-modal deep metric\nlearning feature clustering model is constructed, composed of an input layer, a\ntriplet selection layer, and a loss function computation layer. The squared\nEuclidean distances between cluster centers are calculated, and a stochastic\ngradient descent strategy is employed to optimize the model and classify\ndifferent time series features. The inner product of principal component\ndirection vectors is used as a metric for anomaly measurement. The von\nMises-Fisher (vMF) distribution is applied to describe the directional\ncharacteristics of time series data, and historical data is used to train and\nobtain evaluation parameters. By comparing the principal component direction\nvector of actual time series data with the threshold, anomaly detection is\nperformed. Experimental results demonstrate that the proposed method accurately\nclassifies time series data with different attributes, exhibits high\nsensitivity to anomalies, and achieves high detection accuracy, fast detection\nspeed, and strong robustness.",
+  "citation": 0
+}

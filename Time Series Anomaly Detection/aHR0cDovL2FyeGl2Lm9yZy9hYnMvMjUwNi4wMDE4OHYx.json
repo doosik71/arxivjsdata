@@ -1,0 +1,8 @@
+{
+  "title": "Cluster-Aware Causal Mixer for Online Anomaly Detection in Multivariate\n  Time Series",
+  "authors": "Md Mahmuddun Nabi Murad, Yasin Yilmaz",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.00188v1",
+  "abstract": "Early and accurate detection of anomalies in time series data is critical,\ngiven the significant risks associated with false or missed detections. While\nMLP-based mixer models have shown promise in time series analysis, they lack a\ncausality mechanism to preserve temporal dependencies inherent in the system.\nMoreover, real-world multivariate time series often contain numerous channels\nwith diverse inter-channel correlations. A single embedding mechanism for all\nchannels does not effectively capture these complex relationships. To address\nthese challenges, we propose a novel cluster-aware causal mixer to effectively\ndetect anomalies in multivariate time series. Our model groups channels into\nclusters based on their correlations, with each cluster processed through a\ndedicated embedding layer. In addition, we introduce a causal mixer in our\nmodel, which mixes the information while maintaining causality. Furthermore, we\npresent an anomaly detection framework that accumulates the anomaly evidence\nover time to prevent false positives due to nominal outliers. Our proposed\nmodel operates in an online fashion, making it suitable for real-time\ntime-series anomaly detection tasks. Experimental evaluations across six public\nbenchmark datasets demonstrate that our model consistently achieves superior F1\nscores.",
+  "citation": 0
+}

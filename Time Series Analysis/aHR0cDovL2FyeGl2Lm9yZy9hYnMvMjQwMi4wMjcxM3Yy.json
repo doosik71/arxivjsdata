@@ -1,0 +1,8 @@
+{
+  "title": "Position: What Can Large Language Models Tell Us about Time Series\n  Analysis",
+  "authors": "Ming Jin, Yifan Zhang, Wei Chen, Kexin Zhang, Yuxuan Liang, Bin Yang, Jindong Wang, Shirui Pan, Qingsong Wen",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.02713v2",
+  "abstract": "Time series analysis is essential for comprehending the complexities inherent\nin various realworld systems and applications. Although large language models\n(LLMs) have recently made significant strides, the development of artificial\ngeneral intelligence (AGI) equipped with time series analysis capabilities\nremains in its nascent phase. Most existing time series models heavily rely on\ndomain knowledge and extensive model tuning, predominantly focusing on\nprediction tasks. In this paper, we argue that current LLMs have the potential\nto revolutionize time series analysis, thereby promoting efficient\ndecision-making and advancing towards a more universal form of time series\nanalytical intelligence. Such advancement could unlock a wide range of\npossibilities, including time series modality switching and question answering.\nWe encourage researchers and practitioners to recognize the potential of LLMs\nin advancing time series analysis and emphasize the need for trust in these\nrelated efforts. Furthermore, we detail the seamless integration of time series\nanalysis with existing LLM technologies and outline promising avenues for\nfuture research.",
+  "citation": 94
+}

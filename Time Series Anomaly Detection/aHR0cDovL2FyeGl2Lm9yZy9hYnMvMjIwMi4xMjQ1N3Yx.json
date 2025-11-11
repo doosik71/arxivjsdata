@@ -1,0 +1,8 @@
+{
+  "title": "Stacked Residuals of Dynamic Layers for Time Series Anomaly Detection",
+  "authors": "L. Zancato, A. Achille, G. Paolini, A. Chiuso, S. Soatto",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.12457v1",
+  "abstract": "We present an end-to-end differentiable neural network architecture to\nperform anomaly detection in multivariate time series by incorporating a\nSequential Probability Ratio Test on the prediction residual. The architecture\nis a cascade of dynamical systems designed to separate linearly predictable\ncomponents of the signal such as trends and seasonality, from the non-linear\nones. The former are modeled by local Linear Dynamic Layers, and their residual\nis fed to a generic Temporal Convolutional Network that also aggregates global\nstatistics from different time series as context for the local predictions of\neach one. The last layer implements the anomaly detector, which exploits the\ntemporal structure of the prediction residuals to detect both isolated point\nanomalies and set-point changes. It is based on a novel application of the\nclassic CUMSUM algorithm, adapted through the use of a variational\napproximation of f-divergences. The model automatically adapts to the time\nscales of the observed signals. It approximates a SARIMA model at the get-go,\nand auto-tunes to the statistics of the signal and its covariates, without the\nneed for supervision, as more data is observed. The resulting system, which we\ncall STRIC, outperforms both state-of-the-art robust statistical methods and\ndeep neural network architectures on multiple anomaly detection benchmarks.",
+  "citation": 1
+}

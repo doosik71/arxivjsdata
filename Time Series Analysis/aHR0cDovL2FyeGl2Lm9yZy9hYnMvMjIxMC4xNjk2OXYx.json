@@ -1,0 +1,8 @@
+{
+  "title": "Forecasting Hierarchical Time Series",
+  "authors": "Seema Sangari, Xinyan Zhang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2210.16969v1",
+  "abstract": "This paper addresses a common problem with hierarchical time series. Time\nseries analysis demands the series for a model to be the sum of multiple series\nat corresponding sub-levels. Hierarchical Time Series presents a two-fold\nproblem. First, each individual time series model at each level in the\nhierarchy must be estimated separately. Second, those models must maintain\ntheir hierarchical structure over the specified period of time, which is\ncomplicated by performance degradation of the higher-level models in the\nhierarchy. This performance loss is attributable to the summation of the\nbottom-level time series models. In this paper, the proposed methodology works\nto correct this degradation of performance through a top-down approach using\nodds, time series and systems of linear equations. Vertically, the total counts\nof corresponding series at each sub-level are captured while horizontally odds\nare computed to establish and preserve the relationship between each respective\ntime series model at each level. The results, based on root mean square\npercentage error with simulated hierarchical time series data, are promising.",
+  "citation": 0
+}

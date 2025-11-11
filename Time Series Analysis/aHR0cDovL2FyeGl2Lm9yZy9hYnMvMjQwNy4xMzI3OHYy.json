@@ -1,0 +1,8 @@
+{
+  "title": "Deep Time Series Models: A Comprehensive Survey and Benchmark",
+  "authors": "Yuxuan Wang, Haixu Wu, Jiaxiang Dong, Yong Liu, Chen Wang, Mingsheng Long, Jianmin Wang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2407.13278v2",
+  "abstract": "Time series, characterized by a sequence of data points organized in a\ndiscrete-time order, are ubiquitous in real-world scenarios. Unlike other data\nmodalities, time series present unique challenges due to their intricate and\ndynamic nature, including the entanglement of nonlinear patterns and\ntime-variant trends. Analyzing such data is of great significance in practical\napplications and has been extensively studied for centuries. Recent years have\nwitnessed remarkable breakthroughs in the time series community, with\ntechniques shifting from traditional statistical methods to contemporary deep\nlearning models. In this paper, we delve into the design of deep time series\nmodels across various analysis tasks and review the existing literature from\ntwo perspectives: basic modules and model architectures. Further, we develop\nand release Time Series Library (TSLib) as a fair benchmark of deep time series\nmodels for diverse analysis tasks. TSLib implements 30 prominent models, covers\n30 datasets from different domains, and supports five prevalent analysis tasks.\nBased on TSLib, we thoroughly evaluate 13 advanced deep time series models\nacross diverse tasks. Empirical results indicate that models with specific\nstructures are well-suited for distinct analytical tasks, providing insights\nfor research and adoption of deep time series models. Code and datasets are\navailable at https://github.com/thuml/Time-Series-Library.",
+  "citation": 179
+}

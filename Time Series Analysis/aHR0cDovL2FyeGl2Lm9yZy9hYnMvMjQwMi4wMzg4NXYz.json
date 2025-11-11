@@ -1,0 +1,8 @@
+{
+  "title": "MOMENT: A Family of Open Time-series Foundation Models",
+  "authors": "Mononito Goswami, Konrad Szafer, Arjun Choudhry, Yifu Cai, Shuo Li, Artur Dubrawski",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.03885v3",
+  "abstract": "We introduce MOMENT, a family of open-source foundation models for\ngeneral-purpose time series analysis. Pre-training large models on time series\ndata is challenging due to (1) the absence of a large and cohesive public time\nseries repository, and (2) diverse time series characteristics which make\nmulti-dataset training onerous. Additionally, (3) experimental benchmarks to\nevaluate these models, especially in scenarios with limited resources, time,\nand supervision, are still in their nascent stages. To address these\nchallenges, we compile a large and diverse collection of public time series,\ncalled the Time series Pile, and systematically tackle time series-specific\nchallenges to unlock large-scale multi-dataset pre-training. Finally, we build\non recent work to design a benchmark to evaluate time series foundation models\non diverse tasks and datasets in limited supervision settings. Experiments on\nthis benchmark demonstrate the effectiveness of our pre-trained models with\nminimal data and task-specific fine-tuning. Finally, we present several\ninteresting empirical observations about large pre-trained time series models.\nPre-trained models (AutonLab/MOMENT-1-large) and Time Series Pile\n(AutonLab/Timeseries-PILE) are available on Huggingface.",
+  "citation": 388
+}

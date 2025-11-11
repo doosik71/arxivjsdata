@@ -1,0 +1,8 @@
+{
+  "title": "LSTM-Autoencoder based Anomaly Detection for Indoor Air Quality Time\n  Series Data",
+  "authors": "Yuanyuan Wei, Julian Jang-Jaccard, Wen Xu, Fariza Sabrina, Seyit Camtepe, Mikael Boulic",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2204.06701v1",
+  "abstract": "Anomaly detection for indoor air quality (IAQ) data has become an important\narea of research as the quality of air is closely related to human health and\nwell-being. However, traditional statistics and shallow machine learning-based\napproaches in anomaly detection in the IAQ area could not detect anomalies\ninvolving the observation of correlations across several data points (i.e.,\noften referred to as long-term dependences). We propose a hybrid deep learning\nmodel that combines LSTM with Autoencoder for anomaly detection tasks in IAQ to\naddress this issue. In our approach, the LSTM network is comprised of multiple\nLSTM cells that work with each other to learn the long-term dependences of the\ndata in a time-series sequence. Autoencoder identifies the optimal threshold\nbased on the reconstruction loss rates evaluated on every data across all\ntime-series sequences. Our experimental results, based on the Dunedin CO2\ntime-series dataset obtained through a real-world deployment of the schools in\nNew Zealand, demonstrate a very high and robust accuracy rate (99.50%) that\noutperforms other similar models.",
+  "citation": 276
+}

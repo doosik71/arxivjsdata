@@ -1,0 +1,8 @@
+{
+  "title": "Multivariate Time Series Anomaly Detection via Dynamic Graph Forecasting",
+  "authors": "Katrina Chen, Mingbin Feng, Tony S. Wirjanto",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.02051v1",
+  "abstract": "Anomalies in univariate time series often refer to abnormal values and\ndeviations from the temporal patterns from majority of historical observations.\nIn multivariate time series, anomalies also refer to abnormal changes in the\ninter-series relationship, such as correlation, over time. Existing studies\nhave been able to model such inter-series relationships through graph neural\nnetworks. However, most works settle on learning a static graph globally or\nwithin a context window to assist a time series forecasting task or a\nreconstruction task, whose objective is not tailored to explicitly detect the\nabnormal relationship. Some other works detect anomalies based on\nreconstructing or forecasting a list of inter-series graphs, which\ninadvertently weakens their power to capture temporal patterns within the data\ndue to the discrete nature of graphs. In this study, we propose DyGraphAD, a\nmultivariate time series anomaly detection framework based upon a list of\ndynamic inter-series graphs. The core idea is to detect anomalies based on the\ndeviation of inter-series relationships and intra-series temporal patterns from\nnormal to anomalous states, by leveraging the evolving nature of the graphs in\norder to assist a graph forecasting task and a time series forecasting task\nsimultaneously. Our numerical experiments on real-world datasets demonstrate\nthat DyGraphAD has superior performance than baseline anomaly detection\napproaches.",
+  "citation": 30
+}

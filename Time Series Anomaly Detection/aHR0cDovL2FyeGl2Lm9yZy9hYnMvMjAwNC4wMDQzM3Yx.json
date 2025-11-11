@@ -1,0 +1,8 @@
+{
+  "title": "Anomaly Detection in Univariate Time-series: A Survey on the\n  State-of-the-Art",
+  "authors": "Mohammad Braei, Sebastian Wagner",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2004.00433v1",
+  "abstract": "Anomaly detection for time-series data has been an important research field\nfor a long time. Seminal work on anomaly detection methods has been focussing\non statistical approaches. In recent years an increasing number of machine\nlearning algorithms have been developed to detect anomalies on time-series.\nSubsequently, researchers tried to improve these techniques using (deep) neural\nnetworks. In the light of the increasing number of anomaly detection methods,\nthe body of research lacks a broad comparative evaluation of statistical,\nmachine learning and deep learning methods. This paper studies 20 univariate\nanomaly detection methods from the all three categories. The evaluation is\nconducted on publicly available datasets, which serve as benchmarks for\ntime-series anomaly detection. By analyzing the accuracy of each method as well\nas the computation time of the algorithms, we provide a thorough insight about\nthe performance of these anomaly detection approaches, alongside some general\nnotion of which method is suited for a certain type of data.",
+  "citation": 419
+}

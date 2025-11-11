@@ -1,0 +1,7 @@
+{
+  "title": "A Comparison of Speech Data Augmentation Methods Using S3PRL Toolkit",
+  "authors": "Mina Huh, Ruchira Ray, Corey Karnei",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2303.00510v2",
+  "abstract": "Data augmentations are known to improve robustness in speech-processing\ntasks. In this study, we summarize and compare different data augmentation\nstrategies using S3PRL toolkit. We explore how HuBERT and wav2vec perform using\ndifferent augmentation techniques (SpecAugment, Gaussian Noise, Speed\nPerturbation) for Phoneme Recognition (PR) and Automatic Speech Recognition\n(ASR) tasks. We evaluate model performance in terms of phoneme error rate (PER)\nand word error rate (WER). From the experiments, we observed that SpecAugment\nslightly improves the performance of HuBERT and wav2vec on the original\ndataset. Also, we show that models trained using the Gaussian Noise and Speed\nPerturbation dataset are more robust when tested with augmented test sets."
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Network structure of multivariate time series",
+  "authors": "Lucas Lacasa, Vincenzo Nicosia, Vito Latora",
+  "year": 2014,
+  "url": "http://arxiv.org/abs/1408.0925v2",
+  "abstract": "Our understanding of a variety of phenomena in physics, biology and economics\ncrucially depends on the analysis of multivariate time series. While a wide\nrange of tools and techniques for time series analysis already exist, the\nincreasing availability of massive data structures calls for new approaches for\nmultidimensional signal processing. We present here a non-parametric method to\nanalyse multivariate time series, based on the mapping of a multidimensional\ntime series into a multilayer network, which allows to extract information on a\nhigh dimensional dynamical system through the analysis of the structure of the\nassociated multiplex network. The method is simple to implement, general,\nscalable, does not require ad hoc phase space partitioning, and is thus\nsuitable for the analysis of large, heterogeneous and non-stationary time\nseries. We show that simple structural descriptors of the associated multiplex\nnetworks allow to extract and quantify nontrivial properties of coupled chaotic\nmaps, including the transition between different dynamical phases and the onset\nof various types of synchronization. As a concrete example we then study\nfinancial time series, showing that a multiplex network analysis can\nefficiently discriminate crises from periods of financial stability, where\nstandard methods based on time-series symbolization often fail.",
+  "citation": 241
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Event2Graph: Event-driven Bipartite Graph for Multivariate Time-series\n  Anomaly Detection",
+  "authors": "Yuhang Wu, Mengting Gu, Lan Wang, Yusan Lin, Fei Wang, Hao Yang",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2108.06783v1",
+  "abstract": "Modeling inter-dependencies between time-series is the key to achieve high\nperformance in anomaly detection for multivariate time-series data. The\nde-facto solution to model the dependencies is to feed the data into a\nrecurrent neural network (RNN). However, the fully connected network structure\nunderneath the RNN (either GRU or LSTM) assumes a static and complete\ndependency graph between time-series, which may not hold in many real-world\napplications. To alleviate this assumption, we propose a dynamic bipartite\ngraph structure to encode the inter-dependencies between time-series. More\nconcretely, we model time series as one type of nodes, and the time series\nsegments (regarded as event) as another type of nodes, where the edge between\ntwo types of nodes describe a temporal pattern occurred on a specific time\nseries at a certain time. Based on this design, relations between time series\ncan be explicitly modelled via dynamic connections to event nodes, and the\nmultivariate time-series anomaly detection problem can be formulated as a\nself-supervised, edge stream prediction problem in dynamic graphs. We conducted\nextensive experiments to demonstrate the effectiveness of the design.",
+  "citation": 15
+}

@@ -1,0 +1,8 @@
+{
+  "title": "NVAE-GAN Based Approach for Unsupervised Time Series Anomaly Detection",
+  "authors": "Liang Xu, Liying Zheng, Weijun Li, Zhenbo Chen, Weishun Song, Yue Deng, Yongzhe Chang, Jing Xiao, Bo Yuan",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2101.02908v1",
+  "abstract": "In recent studies, Lots of work has been done to solve time series anomaly\ndetection by applying Variational Auto-Encoders (VAEs). Time series anomaly\ndetection is a very common but challenging task in many industries, which plays\nan important role in network monitoring, facility maintenance, information\nsecurity, and so on. However, it is very difficult to detect anomalies in time\nseries with high accuracy, due to noisy data collected from real world, and\ncomplicated abnormal patterns. From recent studies, we are inspired by Nouveau\nVAE (NVAE) and propose our anomaly detection model: Time series to Image VAE\n(T2IVAE), an unsupervised model based on NVAE for univariate series,\ntransforming 1D time series to 2D image as input, and adopting the\nreconstruction error to detect anomalies. Besides, we also apply the Generative\nAdversarial Networks based techniques to T2IVAE training strategy, aiming to\nreduce the overfitting. We evaluate our model performance on three datasets,\nand compare it with other several popular models using F1 score. T2IVAE\nachieves 0.639 on Numenta Anomaly Benchmark, 0.651 on public dataset from NASA,\nand 0.504 on our dataset collected from real-world scenario, outperforms other\ncomparison models.",
+  "citation": 17
+}
