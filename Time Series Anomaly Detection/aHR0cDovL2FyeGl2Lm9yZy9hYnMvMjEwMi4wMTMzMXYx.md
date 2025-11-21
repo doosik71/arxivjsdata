@@ -41,8 +41,14 @@ Longyuan Li, Junchi Yan,Member, IEEE,, Haiyang Wang, and Yaohui JinMember, IEEE,
    - 이 평활도 정규화는 모델이 이상치에 과적합되는 것을 방지하고 '정상' 패턴에 집중하도록 유도합니다.
 3. **목적 함수 및 학습:**
    - SISVAE의 학습 목적 함수는 ELBO(Evidence Lower Bound)에 평활도 손실을 추가하여 구성됩니다:
-     $$ \mathcal{L}_{\text{SISVAE}} = \sum_{t=1}^T \left\{ -D*{KL}(q*{\varphi}(z*t | x*{\le t}, z*{\lt t}) \| p*{\theta}(z*t | x*{\lt t}, z*{\lt t})) + \log p*{\theta}(x*t | z*{\le t}, x*{\lt t}) + \lambda D*{KL}(p*{\theta}(\hat{x}*{t-1} | \dots) \| p\_{\theta}(\hat{x}\_t | \dots)) \right\} $$
-   - 확률적 경사 변분 베이즈(SGVB) 추정기와 역전파(backpropagation)를 사용하여 파라미터 $\theta$와 $\varphi$를 최적화합니다.
+     $$
+     \begin{aligned}
+     \mathcal{L}_{\text{SISVAE}} = \sum_{t=1}^T \Big\{ & D_{KL}(q_{\phi}(z_t | x_{\le t}, z_{\lt t}) \| p_{\theta}(z_t | x_{\lt t}, z_{\lt t})) \newline
+     & + \log p_{\theta}(x_t | z_{\le t}, x_{\lt t}) \newline
+     & + \lambda D_{KL}(p_{\theta}(\hat{x}_{t-1} | z_{\lt t-1}, x_{\lt t-1}) \| p_{\theta}(\hat{x}_t | z_{\lt t}, x_{\lt t})) \Big\}
+     \end{aligned} \tag{20}
+     $$
+   - **확률적 경사 변분 베이즈(SGVB)** 추정기와 역전파(backpropagation)를 사용하여 파라미터 $\theta$와 $\phi$를 최적화합니다.
    - 긴 시계열은 슬라이딩 윈도우 기법으로 짧은 청크로 분할하여 학습 안정성을 높입니다.
 4. **이상치 점수 계산:**
    - **재구성 오차(Reconstruction Error):** $e_{m,t} = \|x_{m,t} - \mu_{m,t}\|$. 비정상 분산 데이터에 취약합니다.
