@@ -34,17 +34,17 @@ Chris U. Carmona, François-Xavier Aubet, Valentin Flunkert, Jan Gasthaus
   - 핵심 아이디어는 $w^{(s)}$에 이상이 없는 경우 $z$와 $z^{(c)}$가 유사해야 하며, 이상이 있는 경우 서로 멀어져야 한다는 것입니다.
   - **Contextual Hypersphere Loss**는 기존 HSC 손실을 확장한 것으로, 하이퍼스피어의 중심을 컨텍스트 표현 $z^{(c)}$로 동적으로 설정합니다. 손실 함수는 다음과 같습니다:
     $$ (1-y_i) \left\| \phi(w_i;\theta) - \phi(w_i^{(c)};\theta) \right\|^2_2 - y_i \log \left( 1-\exp \left( -\left\| \phi(w_i;\theta) - \phi(w_i^{(c)};\theta) \right\|^2_2 \right) \right) $$
-        여기서 $y_i$는 해당 윈도우의 이상 레이블(0: 정상, 1: 이상)이며, $\| \cdot \|_2^2$는 Euclidean distance의 제곱입니다.
+    여기서 $y_i$는 해당 윈도우의 이상 레이블(0: 정상, 1: 이상)이며, $\| \cdot \|_2^2$는 Euclidean distance의 제곱입니다.
 
 - **NCAD 아키텍처:**
 
   1. **신경망 인코더 $\phi(\cdot; \theta)$:** 입력 시퀀스를 $R^E$ 공간의 표현 벡터로 매핑합니다. TCN(Temporal Convolutional Network)에 지수 확장(exponentially dilated) 인과 컨볼루션(causal convolutions) 및 적응형 맥스 풀링(adaptive max-pooling)을 사용합니다.
   2. **거리 함수 $dist(\cdot, \cdot)$:** 임베딩 벡터 $z$와 $z^{(c)}$ 사이의 유사도를 계산합니다. 실험에서는 Euclidean distance($L_2$ norm)를 사용했습니다.
-  3. **확률적 스코어링 함수 `$\mathcal{L}(z) = \exp(-|z|)$`:** $dist(z, z^{(c)})$를 이상 확률로 변환하여 컨텍스트 윈도우의 임베딩을 중심으로 하는 구형 결정 경계(spherical decision boundary)를 생성합니다.
+  3. **확률적 스코어링 함수 $\mathcal{L}(z) = \exp(-|z|)$:** $dist(z, z^{(c)})$를 이상 확률로 변환하여 컨텍스트 윈도우의 임베딩을 중심으로 하는 구형 결정 경계(spherical decision boundary)를 생성합니다.
 
 - **데이터 증강 기법:**
   - **Contextual Outlier Exposure (COE):** 훈련 시 의심 윈도우 $w^{(s)}$의 일부 값을 다른 시계열에서 가져온 값으로 대체하여 컨텍스트와 일치하지 않는 OOD(Out-of-Distribution) 예시를 생성합니다. 다변량 시계열의 경우, 무작위로 차원(dimension)을 선택하여 교체합니다.
-  - **Anomaly Injection (Point Outliers, `po`):** 시계열의 무작위 시점에 주변 값의 IQR(Inter-Quartile Range)에 비례하는 스파이크(spike)를 추가하여 단일 지점 이상을 주입합니다.
+  - **Anomaly Injection (Point Outliers, po):** 시계열의 무작위 시점에 주변 값의 IQR(Inter-Quartile Range)에 비례하는 스파이크(spike)를 추가하여 단일 지점 이상을 주입합니다.
   - **Window Mixup:** 훈련 배치에서 두 개의 윈도우와 그에 상응하는 레이블을 무작위 계수 $\lambda$로 볼록 조합(convex combination)하여 새로운 훈련 예시와 부드러운 레이블(soft labels)을 생성합니다. 이는 의사결정 경계를 부드럽게 하고 일반화 능력을 향상시킵니다.
 
 ## 📊 Results
