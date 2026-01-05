@@ -1,0 +1,8 @@
+{
+  "title": "Active Learning with Importance Sampling",
+  "authors": "Muni Sreenivas Pydi, Vishnu Suresh Lokhande",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1910.04371v1",
+  "abstract": "We consider an active learning setting where the algorithm has access to a large pool of unlabeled data and a small pool of labeled data. In each iteration, the algorithm chooses few unlabeled data points and obtains their labels from an oracle. In this paper, we consider a probabilistic querying procedure to choose the points to be labeled. We propose an algorithm for Active Learning with Importance Sampling (ALIS), and derive upper bounds on the true loss incurred by the algorithm for any arbitrary probabilistic sampling procedure. Further, we propose an optimal sampling distribution that minimizes the upper bound on the true loss.",
+  "citation": 3
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Efficient Graph-Based Active Learning with Probit Likelihood via Gaussian Approximations",
+  "authors": "Kevin Miller, Hao Li, Andrea L. Bertozzi",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.11126v1",
+  "abstract": "We present a novel adaptation of active learning to graph-based semi-supervised learning (SSL) under non-Gaussian Bayesian models. We present an approximation of non-Gaussian distributions to adapt previously Gaussian-based acquisition functions to these more general cases. We develop an efficient rank-one update for applying \"look-ahead\" based methods as well as model retraining. We also introduce a novel \"model change\" acquisition function based on these approximations that further expands the available collection of active learning acquisition functions for such methods.",
+  "citation": 17
+}

@@ -1,0 +1,8 @@
+{
+  "title": "DECAL: DEployable Clinical Active Learning",
+  "authors": "Yash-yee Logan, Mohit Prabhushankar, Ghassan AlRegib",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2206.10120v2",
+  "abstract": "Conventional machine learning systems that operate on natural images assume the presence of attributes within the images that lead to some decision. However, decisions in medical domain are a resultant of attributes within medical diagnostic scans and electronic medical records (EMR). Hence, active learning techniques that are developed for natural images are insufficient for handling medical data. We focus on reducing this insufficiency by designing a deployable clinical active learning (DECAL) framework within a bi-modal interface so as to add practicality to the paradigm. Our approach is a \"plug-in\" method that makes natural image based active learning algorithms generalize better and faster. We find that on two medical datasets on three architectures and five learning strategies, DECAL increases generalization across 20 rounds by approximately 4.81%. DECAL leads to a 5.59% and 7.02% increase in average accuracy as an initialization strategy for optical coherence tomography (OCT) and X-Ray respectively. Our active learning results were achieved using 3000 (5%) and 2000 (38%) samples of OCT and X-Ray data respectively.",
+  "citation": 10
+}

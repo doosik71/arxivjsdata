@@ -1,0 +1,8 @@
+{
+  "title": "Active Learning Methods based on Statistical Leverage Scores",
+  "authors": "Cem Orhan, Oznur Tastan",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1812.02497v1",
+  "abstract": "In many real-world machine learning applications, unlabeled data are abundant whereas class labels are expensive and scarce. An active learner aims to obtain a model of high accuracy with as few labeled instances as possible by effectively selecting useful examples for labeling. We propose a new selection criterion that is based on statistical leverage scores and present two novel active learning methods based on this criterion: ALEVS for querying single example at each iteration and DBALEVS for querying a batch of examples. To assess the representativeness of the examples in the pool, ALEVS and DBALEVS use the statistical leverage scores of the kernel matrices computed on the examples of each class. Additionally, DBALEVS selects a diverse a set of examples that are highly representative but are dissimilar to already labeled examples through maximizing a submodular set function defined with the statistical leverage scores and the kernel matrix computed on the pool of the examples. The submodularity property of the set scoring function let us identify batches with a constant factor approximate to the optimal batch in an efficient manner. Our experiments on diverse datasets show that querying based on leverage scores is a powerful strategy for active learning.",
+  "citation": 2
+}

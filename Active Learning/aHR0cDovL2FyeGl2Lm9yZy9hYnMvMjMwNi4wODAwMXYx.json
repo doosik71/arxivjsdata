@@ -1,0 +1,8 @@
+{
+  "title": "A Markovian Formalism for Active Querying",
+  "authors": "Sid Ijju",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.08001v1",
+  "abstract": "Active learning algorithms have been an integral part of recent advances in artificial intelligence. However, the research in the field is widely varying and lacks an overall organizing leans. We outline a Markovian formalism for the field of active learning and survey the literature to demonstrate the organizing capability of our proposed formalism. Our formalism takes a partially observable Markovian system approach to the active learning process as a whole. We specifically outline how querying, dataset augmentation, reward updates, and other aspects of active learning can be viewed as a transition between meta-states in a Markovian system, and give direction into how other aspects of active learning can fit into our formalism.",
+  "citation": 1
+}

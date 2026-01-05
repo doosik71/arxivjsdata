@@ -1,0 +1,8 @@
+{
+  "title": "DeepAL: Deep Active Learning in Python",
+  "authors": "Kuan-Hao Huang",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2111.15258v1",
+  "abstract": "We present DeepAL, a Python library that implements several common strategies for active learning, with a particular emphasis on deep active learning. DeepAL provides a simple and unified framework based on PyTorch that allows users to easily load custom datasets, build custom data handlers, and design custom strategies without much modification of codes. DeepAL is open-source on Github and welcome any contribution.",
+  "citation": 27
+}

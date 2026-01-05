@@ -1,0 +1,8 @@
+{
+  "title": "Active Reinforcement Learning: Observing Rewards at a Cost",
+  "authors": "David Krueger, Jan Leike, Owain Evans, John Salvatier",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2011.06709v2",
+  "abstract": "Active reinforcement learning (ARL) is a variant on reinforcement learning where the agent does not observe the reward unless it chooses to pay a query cost c > 0. The central question of ARL is how to quantify the long-term value of reward information. Even in multi-armed bandits, computing the value of this information is intractable and we have to rely on heuristics. We propose and evaluate several heuristic approaches for ARL in multi-armed bandits and (tabular) Markov decision processes, and discuss and illustrate some challenging aspects of the ARL problem.",
+  "citation": 47
+}

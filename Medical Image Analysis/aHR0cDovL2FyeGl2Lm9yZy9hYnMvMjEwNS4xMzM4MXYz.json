@@ -1,0 +1,8 @@
+{
+  "title": "Recent advances and clinical applications of deep learning in medical image analysis",
+  "authors": "Xuxin Chen, Ximin Wang, Ke Zhang, Kar-Ming Fung, Theresa C. Thai, Kathleen Moore, Robert S. Mannel, Hong Liu, Bin Zheng, Yuchen Qiu",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2105.13381v3",
+  "abstract": "Deep learning has received extensive research interest in developing new medical image processing algorithms, and deep learning based models have been remarkably successful in a variety of medical imaging tasks to support disease detection and diagnosis. Despite the success, the further improvement of deep learning models in medical image analysis is majorly bottlenecked by the lack of large-sized and well-annotated datasets. In the past five years, many studies have focused on addressing this challenge. In this paper, we reviewed and summarized these recent studies to provide a comprehensive overview of applying deep learning methods in various medical image analysis tasks. Especially, we emphasize the latest progress and contributions of state-of-the-art unsupervised and semi-supervised deep learning in medical image analysis, which are summarized based on different application scenarios, including classification, segmentation, detection, and image registration. We also discuss the major technical challenges and suggest the possible solutions in future research efforts.",
+  "citation": 1065
+}

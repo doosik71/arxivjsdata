@@ -1,0 +1,8 @@
+{
+  "title": "Online Active Learning for Soft Sensor Development using Semi-Supervised Autoencoders",
+  "authors": "Davide Cacciarelli, Murat Kulahci, John Tyssedal",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2212.13067v3",
+  "abstract": "Data-driven soft sensors are extensively used in industrial and chemical processes to predict hard-to-measure process variables whose real value is difficult to track during routine operations. The regression models used by these sensors often require a large number of labeled examples, yet obtaining the label information can be very expensive given the high time and cost required by quality inspections. In this context, active learning methods can be highly beneficial as they can suggest the most informative labels to query. However, most of the active learning strategies proposed for regression focus on the offline setting. In this work, we adapt some of these approaches to the stream-based scenario and show how they can be used to select the most informative data points. We also demonstrate how to use a semi-supervised architecture based on orthogonal autoencoders to learn salient features in a lower dimensional space. The Tennessee Eastman Process is used to compare the predictive performance of the proposed approaches.",
+  "citation": 13
+}

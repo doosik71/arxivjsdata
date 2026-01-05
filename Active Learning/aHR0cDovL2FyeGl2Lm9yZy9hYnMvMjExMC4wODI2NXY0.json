@@ -1,0 +1,8 @@
+{
+  "title": "Knowledge-driven Active Learning",
+  "authors": "Gabriele Ciravegna, Frédéric Precioso, Alessandro Betti, Kevin Mottin, Marco Gori",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2110.08265v4",
+  "abstract": "The deployment of Deep Learning (DL) models is still precluded in those contexts where the amount of supervised data is limited. To answer this issue, active learning strategies aim at minimizing the amount of labelled data required to train a DL model. Most active strategies are based on uncertain sample selection, and even often restricted to samples lying close to the decision boundary. These techniques are theoretically sound, but an understanding of the selected samples based on their content is not straightforward, further driving non-experts to consider DL as a black-box. For the first time, here we propose to take into consideration common domain-knowledge and enable non-expert users to train a model with fewer samples. In our Knowledge-driven Active Learning (KAL) framework, rule-based knowledge is converted into logic constraints and their violation is checked as a natural guide for sample selection. We show that even simple relationships among data and output classes offer a way to spot predictions for which the model need supervision. We empirically show that KAL (i) outperforms many active learning strategies, particularly in those contexts where domain knowledge is rich, (ii) it discovers data distribution lying far from the initial training data, (iii) it ensures domain experts that the provided knowledge is acquired by the model, (iv) it is suitable for regression and object recognition tasks unlike uncertainty-based strategies, and (v) its computational demand is low.",
+  "citation": 9
+}

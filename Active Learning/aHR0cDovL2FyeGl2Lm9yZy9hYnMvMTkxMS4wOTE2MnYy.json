@@ -1,0 +1,8 @@
+{
+  "title": "Deep Active Learning: Unified and Principled Method for Query and Training",
+  "authors": "Changjian Shui, Fan Zhou, Christian Gagné, Boyu Wang",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1911.09162v2",
+  "abstract": "In this paper, we are proposing a unified and principled method for both the querying and training processes in deep batch active learning. We are providing theoretical insights from the intuition of modeling the interactive procedure in active learning as distribution matching, by adopting the Wasserstein distance. As a consequence, we derived a new training loss from the theoretical analysis, which is decomposed into optimizing deep neural network parameters and batch query selection through alternative optimization. In addition, the loss for training a deep neural network is naturally formulated as a min-max optimization problem through leveraging the unlabeled data information. Moreover, the proposed principles also indicate an explicit uncertainty-diversity trade-off in the query batch selection. Finally, we evaluate our proposed method on different benchmarks, consistently showing better empirical performances and a better time-efficient query strategy compared to the baselines.",
+  "citation": 223
+}

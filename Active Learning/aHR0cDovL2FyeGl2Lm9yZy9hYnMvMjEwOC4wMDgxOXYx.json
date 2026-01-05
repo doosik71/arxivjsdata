@@ -1,0 +1,8 @@
+{
+  "title": "Active Learning in Gaussian Process State Space Model",
+  "authors": "Hon Sum Alec Yu, Dingling Yao, Christoph Zimmer, Marc Toussaint, Duy Nguyen-Tuong",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2108.00819v1",
+  "abstract": "We investigate active learning in Gaussian Process state-space models (GPSSM). Our problem is to actively steer the system through latent states by determining its inputs such that the underlying dynamics can be optimally learned by a GPSSM. In order that the most informative inputs are selected, we employ mutual information as our active learning criterion. In particular, we present two approaches for the approximation of mutual information for the GPSSM given latent states. The proposed approaches are evaluated in several physical systems where we actively learn the underlying non-linear dynamics represented by the state-space model.",
+  "citation": 8
+}

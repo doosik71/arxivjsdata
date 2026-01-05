@@ -1,0 +1,8 @@
+{
+  "title": "Characterizing active learning environments in physics using latent profile analysis",
+  "authors": "Kelley Commeford, Eric Brewe, Adrienne Traxler",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2105.02897v1",
+  "abstract": "The vast majority of research involving active learning pedagogies uses passive lecture methods as a baseline. We propose to move beyond such comparisons to understand the mechanisms that make different active learning styles unique. Here, we use COPUS observations to record student and instructor activities in six known styles of active learning in physics, and use latent profile analysis to classify these observations. Latent profile analysis using two profiles successfully groups COPUS profiles into interactive lecture-like and other. Five latent profiles successfully sorts observations into interactive lecture-like, Modeling Instruction, ISLE labs, Context-Rich problems labs, and recitation/discussion-like. This analysis serves as a proof of concept, and suggests instructional differences across pedagogies that can be further investigated using this method.",
+  "citation": 20
+}

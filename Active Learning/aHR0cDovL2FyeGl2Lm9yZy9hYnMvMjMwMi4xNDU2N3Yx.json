@@ -1,0 +1,8 @@
+{
+  "title": "Active Learning with Combinatorial Coverage",
+  "authors": "Sai Prathyush Katragadda, Tyler Cody, Peter Beling, Laura Freeman",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.14567v1",
+  "abstract": "Active learning is a practical field of machine learning that automates the process of selecting which data to label. Current methods are effective in reducing the burden of data labeling but are heavily model-reliant. This has led to the inability of sampled data to be transferred to new models as well as issues with sampling bias. Both issues are of crucial concern in machine learning deployment. We propose active learning methods utilizing combinatorial coverage to overcome these issues. The proposed methods are data-centric, as opposed to model-centric, and through our experiments we show that the inclusion of coverage in active learning leads to sampling data that tends to be the best in transferring to better performing models and has a competitive sampling bias compared to benchmark methods.",
+  "citation": 8
+}

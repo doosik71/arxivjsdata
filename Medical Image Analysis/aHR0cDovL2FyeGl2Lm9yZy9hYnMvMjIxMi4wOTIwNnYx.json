@@ -1,0 +1,8 @@
+{
+  "title": "Segmentation Ability Map: Interpret deep features for medical image segmentation",
+  "authors": "Sheng He, Yanfang Feng, P. Ellen Grant, Yangming Ou",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2212.09206v1",
+  "abstract": "Deep convolutional neural networks (CNNs) have been widely used for medical image segmentation. In most studies, only the output layer is exploited to compute the final segmentation results and the hidden representations of the deep learned features have not been well understood. In this paper, we propose a prototype segmentation (ProtoSeg) method to compute a binary segmentation map based on deep features. We measure the segmentation abilities of the features by computing the Dice between the feature segmentation map and ground-truth, named as the segmentation ability score (SA score for short). The corresponding SA score can quantify the segmentation abilities of deep features in different layers and units to understand the deep neural networks for segmentation. In addition, our method can provide a mean SA score which can give a performance estimation of the output on the test images without ground-truth. Finally, we use the proposed ProtoSeg method to compute the segmentation map directly on input images to further understand the segmentation ability of each input image. Results are presented on segmenting tumors in brain MRI, lesions in skin images, COVID-related abnormality in CT images, prostate segmentation in abdominal MRI, and pancreatic mass segmentation in CT images. Our method can provide new insights for interpreting and explainable AI systems for medical image segmentation.\n  Our code is available on: \\url{https://github.com/shengfly/ProtoSeg}.",
+  "citation": 41
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Active Learning in Video Tracking",
+  "authors": "Sima Behpour",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1912.12557v3",
+  "abstract": "Active learning methods, like uncertainty sampling, combined with probabilistic prediction techniques have achieved success in various problems like image classification and text classification. For more complex multivariate prediction tasks, the relationships between labels play an important role in designing structured classifiers with better performance. However, computational time complexity limits prevalent probabilistic methods from effectively supporting active learning. Specifically, while non-probabilistic methods based on structured support vector machines can be tractably applied to predicting bipartite matchings, conditional random fields are intractable for these structures. We propose an adversarial approach for active learning with structured prediction domains that is tractable for matching. We evaluate this approach algorithmically in an important structured prediction problems: object tracking in videos. We demonstrate better accuracy and computational efficiency for our proposed method.",
+  "citation": 3
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Active Learning by Query by Committee with Robust Divergences",
+  "authors": "Hideitsu Hino, Shinto Eguchi",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.10013v1",
+  "abstract": "Active learning is a widely used methodology for various problems with high measurement costs. In active learning, the next object to be measured is selected by an acquisition function, and measurements are performed sequentially. The query by committee is a well-known acquisition function. In conventional methods, committee disagreement is quantified by the Kullback--Leibler divergence. In this paper, the measure of disagreement is defined by the Bregman divergence, which includes the Kullback--Leibler divergence as an instance, and the dual $γ$-power divergence. As a particular class of the Bregman divergence, the $β$-divergence is considered. By deriving the influence function, we show that the proposed method using $β$-divergence and dual $γ$-power divergence are more robust than the conventional method in which the measure of disagreement is defined by the Kullback--Leibler divergence. Experimental results show that the proposed method performs as well as or better than the conventional method."
+}

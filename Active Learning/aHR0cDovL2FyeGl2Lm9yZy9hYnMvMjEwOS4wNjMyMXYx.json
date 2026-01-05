@@ -1,0 +1,8 @@
+{
+  "title": "Mitigating Sampling Bias and Improving Robustness in Active Learning",
+  "authors": "Ranganath Krishnan, Alok Sinha, Nilesh Ahuja, Mahesh Subedar, Omesh Tickoo, Ravi Iyer",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.06321v1",
+  "abstract": "This paper presents simple and efficient methods to mitigate sampling bias in active learning while achieving state-of-the-art accuracy and model robustness. We introduce supervised contrastive active learning by leveraging the contrastive loss for active learning under a supervised setting. We propose an unbiased query strategy that selects informative data samples of diverse feature representations with our methods: supervised contrastive active learning (SCAL) and deep feature modeling (DFM). We empirically demonstrate our proposed methods reduce sampling bias, achieve state-of-the-art accuracy and model calibration in an active learning setup with the query computation 26x faster than Bayesian active learning by disagreement and 11x faster than CoreSet. The proposed SCAL method outperforms by a big margin in robustness to dataset shift and out-of-distribution.",
+  "citation": 14
+}

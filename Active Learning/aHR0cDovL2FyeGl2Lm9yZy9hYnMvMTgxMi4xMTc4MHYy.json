@@ -1,0 +1,8 @@
+{
+  "title": "Weakly Supervised Active Learning with Cluster Annotation",
+  "authors": "Fábio Perez, Rémi Lebret, Karl Aberer",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1812.11780v2",
+  "abstract": "In this work, we introduce a novel framework that employs cluster annotation to boost active learning by reducing the number of human interactions required to train deep neural networks. Instead of annotating single samples individually, humans can also label clusters, producing a higher number of annotated samples with the cost of a small label error. Our experiments show that the proposed framework requires 82% and 87% less human interactions for CIFAR-10 and EuroSAT datasets respectively when compared with the fully-supervised training while maintaining similar performance on the test set.",
+  "citation": 10
+}

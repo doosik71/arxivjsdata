@@ -1,0 +1,8 @@
+{
+  "title": "Batch Active Learning from the Perspective of Sparse Approximation",
+  "authors": "Maohao Shen, Bowen Jiang, Jacky Yibo Zhang, Oluwasanmi Koyejo",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.00246v2",
+  "abstract": "Active learning enables efficient model training by leveraging interactions between machine learning agents and human annotators. We study and propose a novel framework that formulates batch active learning from the sparse approximation's perspective. Our active learning method aims to find an informative subset from the unlabeled data pool such that the corresponding training loss function approximates its full data pool counterpart. We realize the framework as sparsity-constrained discontinuous optimization problems, which explicitly balance uncertainty and representation for large-scale applications and could be solved by greedy or proximal iterative hard thresholding algorithms. The proposed method can adapt to various settings, including both Bayesian and non-Bayesian neural networks. Numerical experiments show that our work achieves competitive performance across different settings with lower computational complexity.",
+  "citation": 3
+}

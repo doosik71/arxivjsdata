@@ -1,0 +1,8 @@
+{
+  "title": "Compute-Efficient Active Learning",
+  "authors": "Gábor Németh, Tamás Matuszka",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2401.07639v1",
+  "abstract": "Active learning, a powerful paradigm in machine learning, aims at reducing labeling costs by selecting the most informative samples from an unlabeled dataset. However, the traditional active learning process often demands extensive computational resources, hindering scalability and efficiency. In this paper, we address this critical issue by presenting a novel method designed to alleviate the computational burden associated with active learning on massive datasets. To achieve this goal, we introduce a simple, yet effective method-agnostic framework that outlines how to strategically choose and annotate data points, optimizing the process for efficiency while maintaining model performance. Through case studies, we demonstrate the effectiveness of our proposed method in reducing computational costs while maintaining or, in some cases, even surpassing baseline model outcomes. Code is available at https://github.com/aimotive/Compute-Efficient-Active-Learning.",
+  "citation": 3
+}
