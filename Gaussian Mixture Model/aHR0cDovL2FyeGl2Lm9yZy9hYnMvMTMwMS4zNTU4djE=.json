@@ -1,0 +1,8 @@
+{
+  "title": "Model Selection for Gaussian Mixture Models",
+  "authors": "Tao Huang, Heng Peng, Kun Zhang",
+  "year": 2013,
+  "url": "http://arxiv.org/abs/1301.3558v1",
+  "abstract": "This paper is concerned with an important issue in finite mixture modelling, the selection of the number of mixing components. We propose a new penalized likelihood method for model selection of finite multivariate Gaussian mixture models. The proposed method is shown to be statistically consistent in determining of the number of components. A modified EM algorithm is developed to simultaneously select the number of components and to estimate the mixing weights, i.e. the mixing probabilities, and unknown parameters of Gaussian distributions. Simulations and a real data analysis are presented to illustrate the performance of the proposed method.",
+  "citation": 197
+}

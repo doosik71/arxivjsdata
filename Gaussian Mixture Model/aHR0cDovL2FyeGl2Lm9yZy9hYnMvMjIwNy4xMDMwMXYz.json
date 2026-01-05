@@ -1,0 +1,7 @@
+{
+  "title": "Bayesian Sparse Gaussian Mixture Model in High Dimensions",
+  "authors": "Dapeng Yao, Fangzheng Xie, Yanxun Xu",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2207.10301v3",
+  "abstract": "We study the sparse high-dimensional Gaussian mixture model when the number of clusters is allowed to grow with the sample size. A minimax lower bound for parameter estimation is established, and we show that a constrained maximum likelihood estimator achieves the minimax lower bound. However, this optimization-based estimator is computationally intractable because the objective function is highly nonconvex and the feasible set involves discrete structures. To address the computational challenge, we propose a Bayesian approach to estimate high-dimensional Gaussian mixtures whose cluster centers exhibit sparsity using a continuous spike-and-slab prior. Posterior inference can be efficiently computed using an easy-to-implement Gibbs sampler. We further prove that the posterior contraction rate of the proposed Bayesian method is minimax optimal. The mis-clustering rate is obtained as a by-product using tools from matrix perturbation theory. The proposed Bayesian sparse Gaussian mixture model does not require pre-specifying the number of clusters, which can be adaptively estimated via the Gibbs sampler. The validity and usefulness of the proposed method is demonstrated through simulation studies and the analysis of a real-world single-cell RNA sequencing dataset."
+}

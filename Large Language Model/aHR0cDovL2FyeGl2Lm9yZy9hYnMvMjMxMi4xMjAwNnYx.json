@@ -1,0 +1,8 @@
+{
+  "title": "Can ChatGPT be Your Personal Medical Assistant?",
+  "authors": "Md. Rafiul Biswas, Ashhadul Islam, Zubair Shah, Wajdi Zaghouani, Samir Brahim Belhaouari",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.12006v1",
+  "abstract": "The advanced large language model (LLM) ChatGPT has shown its potential in different domains and remains unbeaten due to its characteristics compared to other LLMs. This study aims to evaluate the potential of using a fine-tuned ChatGPT model as a personal medical assistant in the Arabic language. To do so, this study uses publicly available online questions and answering datasets in Arabic language. There are almost 430K questions and answers for 20 disease-specific categories. GPT-3.5-turbo model was fine-tuned with a portion of this dataset. The performance of this fine-tuned model was evaluated through automated and human evaluation. The automated evaluations include perplexity, coherence, similarity, and token count. Native Arabic speakers with medical knowledge evaluated the generated text by calculating relevance, accuracy, precision, logic, and originality. The overall result shows that ChatGPT has a bright future in medical assistance.",
+  "citation": 5
+}

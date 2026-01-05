@@ -1,0 +1,8 @@
+{
+  "title": "MoEC: Mixture of Expert Clusters",
+  "authors": "Yuan Xie, Shaohan Huang, Tianyu Chen, Furu Wei",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2207.09094v1",
+  "abstract": "Sparsely Mixture of Experts (MoE) has received great interest due to its promising scaling capability with affordable computational overhead. MoE converts dense layers into sparse experts, and utilizes a gated routing network to make experts conditionally activated. However, as the number of experts grows, MoE with outrageous parameters suffers from overfitting and sparse data allocation. Such problems are especially severe on tasks with limited data, thus hindering the progress for MoE models to improve performance by scaling up. In this work, we propose Mixture of Expert Clusters - a general approach to enable expert layers to learn more diverse and appropriate knowledge by imposing variance-based constraints on the routing stage. We further propose a cluster-level expert dropout strategy specifically designed for the expert cluster structure. Our experiments reveal that MoEC could improve performance on machine translation and natural language understanding tasks, and raise the performance upper bound for scaling up experts under limited data. We also verify that MoEC plays a positive role in mitigating overfitting and sparse data allocation.",
+  "citation": 27
+}

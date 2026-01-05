@@ -1,0 +1,7 @@
+{
+  "title": "Optimal transport for vector Gaussian mixture models",
+  "authors": "Jiening Zhu, Kaiming Xu, Allen Tannenbaum",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2012.09226v3",
+  "abstract": "Vector-valued Gaussian mixtures form an important special subset of vector-valued distributions. In general, vector-valued distributions constitute natural representations for physical entities, which can mutate or transit among alternative manifestations distributed in a given space. A key example is color imagery. In this note, we vectorize the Gaussian mixture model and study several different optimal mass transport related problems associated to such models. The benefits of using vector Gaussian mixture for optimal mass transport include computational efficiency and the ability to preserve structure."
+}

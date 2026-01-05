@@ -1,0 +1,7 @@
+{
+  "title": "Optimal transport for Gaussian mixture models",
+  "authors": "Yongxin Chen, Tryphon T. Georgiou, Allen Tannenbaum",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1710.07876v2",
+  "abstract": "We present an optimal mass transport framework on the space of Gaussian mixture models, which are widely used in statistical inference. Our method leads to a natural way to compare, interpolate and average Gaussian mixture models. Basically, we study such models on a certain submanifold of probability densities with certain structure. Different aspects of this framework are discussed and several examples are presented to illustrate the results. This method represents our first attempt to study optimal transport problems for more general probability densities with structures."
+}
