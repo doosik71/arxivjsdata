@@ -1,0 +1,8 @@
+{
+  "title": "On Evolving Attention Towards Domain Adaptation",
+  "authors": "Kekai Sheng, Ke Li, Xiawu Zheng, Jian Liang, Weiming Dong, Feiyue Huang, Rongrong Ji, Xing Sun",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2103.13561v1",
+  "abstract": "Towards better unsupervised domain adaptation (UDA). Recently, researchers propose various domain-conditioned attention modules and make promising progresses. However, considering that the configuration of attention, i.e., the type and the position of attention module, affects the performance significantly, it is more generalized to optimize the attention configuration automatically to be specialized for arbitrary UDA scenario. For the first time, this paper proposes EvoADA: a novel framework to evolve the attention configuration for a given UDA task without human intervention. In particular, we propose a novel search space containing diverse attention configurations. Then, to evaluate the attention configurations and make search procedure UDA-oriented (transferability + discrimination), we apply a simple and effective evaluation strategy: 1) training the network weights on two domains with off-the-shelf domain adaptation methods; 2) evolving the attention configurations under the guide of the discriminative ability on the target domain. Experiments on various kinds of cross-domain benchmarks, i.e., Office-31, Office-Home, CUB-Paintings, and Duke-Market-1510, reveal that the proposed EvoADA consistently boosts multiple state-of-the-art domain adaptation approaches, and the optimal attention configurations help them achieve better performance.",
+  "citation": 11
+}

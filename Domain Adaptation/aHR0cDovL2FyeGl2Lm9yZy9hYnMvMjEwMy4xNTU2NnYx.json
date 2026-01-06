@@ -1,0 +1,8 @@
+{
+  "title": "Contrastive Domain Adaptation",
+  "authors": "Mamatha Thota, Georgios Leontidis",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2103.15566v1",
+  "abstract": "Recently, contrastive self-supervised learning has become a key component for learning visual representations across many computer vision tasks and benchmarks. However, contrastive learning in the context of domain adaptation remains largely underexplored. In this paper, we propose to extend contrastive learning to a new domain adaptation setting, a particular situation occurring where the similarity is learned and deployed on samples following different probability distributions without access to labels. Contrastive learning learns by comparing and contrasting positive and negative pairs of samples in an unsupervised setting without access to source and target labels. We have developed a variation of a recently proposed contrastive learning framework that helps tackle the domain adaptation problem, further identifying and removing possible negatives similar to the anchor to mitigate the effects of false negatives. Extensive experiments demonstrate that the proposed method adapts well, and improves the performance on the downstream domain adaptation task.",
+  "citation": 104
+}

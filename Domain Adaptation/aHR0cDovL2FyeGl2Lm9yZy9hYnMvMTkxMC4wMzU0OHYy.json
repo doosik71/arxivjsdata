@@ -1,0 +1,8 @@
+{
+  "title": "Multi-Source Domain Adaptation and Semi-Supervised Domain Adaptation with Focus on Visual Domain Adaptation Challenge 2019",
+  "authors": "Yingwei Pan, Yehao Li, Qi Cai, Yang Chen, Ting Yao",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1910.03548v2",
+  "abstract": "This notebook paper presents an overview and comparative analysis of our systems designed for the following two tasks in Visual Domain Adaptation Challenge (VisDA-2019): multi-source domain adaptation and semi-supervised domain adaptation.\n  Multi-Source Domain Adaptation: We investigate both pixel-level and feature-level adaptation for multi-source domain adaptation task, i.e., directly hallucinating labeled target sample via CycleGAN and learning domain-invariant feature representations through self-learning. Moreover, the mechanism of fusing features from different backbones is further studied to facilitate the learning of domain-invariant classifiers. Source code and pre-trained models are available at \\url{https://github.com/Panda-Peter/visda2019-multisource}.\n  Semi-Supervised Domain Adaptation: For this task, we adopt a standard self-learning framework to construct a classifier based on the labeled source and target data, and generate the pseudo labels for unlabeled target data. These target data with pseudo labels are then exploited to re-training the classifier in a following iteration. Furthermore, a prototype-based classification module is additionally utilized to strengthen the predictions. Source code and pre-trained models are available at \\url{https://github.com/Panda-Peter/visda2019-semisupervised}.",
+  "citation": 4
+}

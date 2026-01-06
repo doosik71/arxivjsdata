@@ -1,0 +1,8 @@
+{
+  "title": "Multiple Classifiers Based Maximum Classifier Discrepancy for Unsupervised Domain Adaptation",
+  "authors": "Yiju Yang, Taejoon Kim, Guanghui Wang",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2108.00610v2",
+  "abstract": "Adversarial training based on the maximum classifier discrepancy between two classifier structures has achieved great success in unsupervised domain adaptation tasks for image classification. The approach adopts the structure of two classifiers, though simple and intuitive, the learned classification boundary may not well represent the data property in the new domain. In this paper, we propose to extend the structure to multiple classifiers to further boost its performance. To this end, we develop a very straightforward approach to adding more classifiers. We employ the principle that the classifiers are different from each other to construct a discrepancy loss function for multiple classifiers. The proposed construction method of loss function makes it possible to add any number of classifiers to the original framework. The proposed approach is validated through extensive experimental evaluations. We demonstrate that, on average, adopting the structure of three classifiers normally yields the best performance as a trade-off between accuracy and efficiency. With minimum extra computational costs, the proposed approach can significantly improve the performance of the original algorithm. The source code of the proposed approach can be downloaded from \\url{https://github.com/rucv/MMCD\\_DA}.",
+  "citation": 4
+}

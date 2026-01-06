@@ -1,0 +1,8 @@
+{
+  "title": "Robustified Domain Adaptation",
+  "authors": "Jiajin Zhang, Hanqing Chao, Pingkun Yan",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2011.09563v2",
+  "abstract": "Unsupervised domain adaptation (UDA) is widely used to transfer knowledge from a labeled source domain to an unlabeled target domain with different data distribution. While extensive studies attested that deep learning models are vulnerable to adversarial attacks, the adversarial robustness of models in domain adaptation application has largely been overlooked. This paper points out that the inevitable domain distribution deviation in UDA is a critical barrier to model robustness on the target domain. To address the problem, we propose a novel Class-consistent Unsupervised Robust Domain Adaptation (CURDA) framework for training robust UDA models. With the introduced contrastive robust training and source anchored adversarial contrastive losses, our proposed CURDA framework can effectively robustify UDA models by simultaneously minimizing the data distribution deviation and the distance between target domain clean-adversarial pairs without creating classification confusion. Experiments on several public benchmarks show that CURDA can significantly improve model robustness in the target domain with only minor cost of accuracy on the clean samples.",
+  "citation": 7
+}

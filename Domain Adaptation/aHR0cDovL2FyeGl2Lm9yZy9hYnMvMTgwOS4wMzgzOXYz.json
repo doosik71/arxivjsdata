@@ -1,0 +1,7 @@
+{
+  "title": "Unsupervised Domain Adaptation Based on Source-guided Discrepancy",
+  "authors": "Seiichi Kuroki, Nontawat Charoenphakdee, Han Bao, Junya Honda, Issei Sato, Masashi Sugiyama",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1809.03839v3",
+  "abstract": "Unsupervised domain adaptation is the problem setting where data generating distributions in the source and target domains are different, and labels in the target domain are unavailable. One important question in unsupervised domain adaptation is how to measure the difference between the source and target domains. A previously proposed discrepancy that does not use the source domain labels requires high computational cost to estimate and may lead to a loose generalization error bound in the target domain. To mitigate these problems, we propose a novel discrepancy called source-guided discrepancy (S-disc), which exploits labels in the source domain. As a consequence, S-disc can be computed efficiently with a finite sample convergence guarantee. In addition, we show that S-disc can provide a tighter generalization error bound than the one based on an existing discrepancy. Finally, we report experimental results that demonstrate the advantages of S-disc over the existing discrepancies."
+}

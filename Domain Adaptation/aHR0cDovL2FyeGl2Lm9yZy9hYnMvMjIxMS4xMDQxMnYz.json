@@ -1,0 +1,8 @@
+{
+  "title": "Video Unsupervised Domain Adaptation with Deep Learning: A Comprehensive Survey",
+  "authors": "Yuecong Xu, Haozhi Cao, Zhenghua Chen, Xiaoli Li, Lihua Xie, Jianfei Yang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.10412v3",
+  "abstract": "Video analysis tasks such as action recognition have received increasing research interest with growing applications in fields such as smart healthcare, thanks to the introduction of large-scale datasets and deep learning-based representations. However, video models trained on existing datasets suffer from significant performance degradation when deployed directly to real-world applications due to domain shifts between the training public video datasets (source video domains) and real-world videos (target video domains). Further, with the high cost of video annotation, it is more practical to use unlabeled videos for training. To tackle performance degradation and address concerns in high video annotation cost uniformly, the video unsupervised domain adaptation (VUDA) is introduced to adapt video models from the labeled source domain to the unlabeled target domain by alleviating video domain shift, improving the generalizability and portability of video models. This paper surveys recent progress in VUDA with deep learning. We begin with the motivation of VUDA, followed by its definition, and recent progress of methods for both closed-set VUDA and VUDA under different scenarios, and current benchmark datasets for VUDA research. Eventually, future directions are provided to promote further VUDA research. The repository of this survey is provided at https://github.com/xuyu0010/awesome-video-domain-adaptation.",
+  "citation": 24
+}

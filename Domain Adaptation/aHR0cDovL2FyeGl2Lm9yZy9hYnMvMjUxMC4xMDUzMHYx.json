@@ -1,0 +1,8 @@
+{
+  "title": "Reinforced Domain Selection for Continuous Domain Adaptation",
+  "authors": "Hanbing Liu, Huaze Tang, Yanru Wu, Yang Li, Xiao-Ping Zhang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2510.10530v1",
+  "abstract": "Continuous Domain Adaptation (CDA) effectively bridges significant domain shifts by progressively adapting from the source domain through intermediate domains to the target domain. However, selecting intermediate domains without explicit metadata remains a substantial challenge that has not been extensively explored in existing studies. To tackle this issue, we propose a novel framework that combines reinforcement learning with feature disentanglement to conduct domain path selection in an unsupervised CDA setting. Our approach introduces an innovative unsupervised reward mechanism that leverages the distances between latent domain embeddings to facilitate the identification of optimal transfer paths. Furthermore, by disentangling features, our method facilitates the calculation of unsupervised rewards using domain-specific features and promotes domain adaptation by aligning domain-invariant features. This integrated strategy is designed to simultaneously optimize transfer paths and target task performance, enhancing the effectiveness of domain adaptation processes. Extensive empirical evaluations on datasets such as Rotated MNIST and ADNI demonstrate substantial improvements in prediction accuracy and domain selection efficiency, establishing our method's superiority over traditional CDA approaches.",
+  "citation": 0
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Domain-Augmented Domain Adaptation",
+  "authors": "Qiuhao Zeng, Tianze Luo, Boyu Wang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.10000v1",
+  "abstract": "Unsupervised domain adaptation (UDA) enables knowledge transfer from the labelled source domain to the unlabeled target domain by reducing the cross-domain discrepancy. However, most of the studies were based on direct adaptation from the source domain to the target domain and have suffered from large domain discrepancies. To overcome this challenge, in this paper, we propose the domain-augmented domain adaptation (DADA) to generate pseudo domains that have smaller discrepancies with the target domain, to enhance the knowledge transfer process by minimizing the discrepancy between the target domain and pseudo domains. Furthermore, we design a pseudo-labeling method for DADA by projecting representations from the target domain to multiple pseudo domains and taking the averaged predictions on the classification from the pseudo domains as the pseudo labels. We conduct extensive experiments with the state-of-the-art domain adaptation methods on four benchmark datasets: Office Home, Office-31, VisDA2017, and Digital datasets. The results demonstrate the superiority of our model.",
+  "citation": 4
+}

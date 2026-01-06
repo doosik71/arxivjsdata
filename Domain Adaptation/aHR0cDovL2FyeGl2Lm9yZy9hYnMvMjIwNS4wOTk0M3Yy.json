@@ -1,0 +1,8 @@
+{
+  "title": "Explainable Supervised Domain Adaptation",
+  "authors": "Vidhya Kamakshi, Narayanan C Krishnan",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2205.09943v2",
+  "abstract": "Domain adaptation techniques have contributed to the success of deep learning. Leveraging knowledge from an auxiliary source domain for learning in labeled data-scarce target domain is fundamental to domain adaptation. While these techniques result in increasing accuracy, the adaptation process, particularly the knowledge leveraged from the source domain, remains unclear. This paper proposes an explainable by design supervised domain adaptation framework - XSDA-Net. We integrate a case-based reasoning mechanism into the XSDA-Net to explain the prediction of a test instance in terms of similar-looking regions in the source and target train images. We empirically demonstrate the utility of the proposed framework by curating the domain adaptation settings on datasets popularly known to exhibit part-based explainability.",
+  "citation": 5
+}

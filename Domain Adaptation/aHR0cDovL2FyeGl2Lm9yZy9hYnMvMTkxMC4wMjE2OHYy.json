@@ -1,0 +1,8 @@
+{
+  "title": "Cross lingual transfer learning for zero-resource domain adaptation",
+  "authors": "Alberto Abad, Peter Bell, Andrea Carmantini, Steve Renals",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1910.02168v2",
+  "abstract": "We propose a method for zero-resource domain adaptation of DNN acoustic models, for use in low-resource situations where the only in-language training data available may be poorly matched to the intended target domain. Our method uses a multi-lingual model in which several DNN layers are shared between languages. This architecture enables domain adaptation transforms learned for one well-resourced language to be applied to an entirely different low-resource language. First, to develop the technique we use English as a well-resourced language and take Spanish to mimic a low-resource language. Experiments in domain adaptation between the conversational telephone speech (CTS) domain and broadcast news (BN) domain demonstrate a 29% relative WER improvement on Spanish BN test data by using only English adaptation data. Second, we demonstrate the effectiveness of the method for low-resource languages with a poor match to the well-resourced language. Even in this scenario, the proposed method achieves relative WER improvements of 18-27% by using solely English data for domain adaptation. Compared to other related approaches based on multi-task and multi-condition training, the proposed method is able to better exploit well-resource language data for improved acoustic modelling of the low-resource target domain.",
+  "citation": 30
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Medical Image Segmentation with InTEnt: Integrated Entropy Weighting for Single Image Test-Time Adaptation",
+  "authors": "Haoyu Dong, Nicholas Konz, Hanxue Gu, Maciej A. Mazurowski",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.09604v2",
+  "abstract": "Test-time adaptation (TTA) refers to adapting a trained model to a new domain during testing. Existing TTA techniques rely on having multiple test images from the same domain, yet this may be impractical in real-world applications such as medical imaging, where data acquisition is expensive and imaging conditions vary frequently. Here, we approach such a task, of adapting a medical image segmentation model with only a single unlabeled test image. Most TTA approaches, which directly minimize the entropy of predictions, fail to improve performance significantly in this setting, in which we also observe the choice of batch normalization (BN) layer statistics to be a highly important yet unstable factor due to only having a single test domain example. To overcome this, we propose to instead integrate over predictions made with various estimates of target domain statistics between the training and test statistics, weighted based on their entropy statistics. Our method, validated on 24 source/target domain splits across 3 medical image datasets surpasses the leading method by 2.9% Dice coefficient on average.",
+  "citation": 12
+}

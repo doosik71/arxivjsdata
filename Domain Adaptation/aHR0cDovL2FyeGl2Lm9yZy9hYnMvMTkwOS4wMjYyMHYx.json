@@ -1,0 +1,8 @@
+{
+  "title": "Multi-layer Domain Adaptation for Deep Convolutional Networks",
+  "authors": "Ozan Ciga, Jianan Chen, Anne Martel",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1909.02620v1",
+  "abstract": "Despite their success in many computer vision tasks, convolutional networks tend to require large amounts of labeled data to achieve generalization. Furthermore, the performance is not guaranteed on a sample from an unseen domain at test time, if the network was not exposed to similar samples from that domain at training time. This hinders the adoption of these techniques in clinical setting where the imaging data is scarce, and where the intra- and inter-domain variance of the data can be substantial. We propose a domain adaptation technique that is especially suitable for deep networks to alleviate this requirement of labeled data. Our method utilizes gradient reversal layers and Squeezeand-Excite modules to stabilize the training in deep networks. The proposed method was applied to publicly available histopathology and chest X-ray databases and achieved superior performance to existing state-of-the-art networks with and without domain adaptation. Depending on the application, our method can improve multi-class classification accuracy by 5-20% compared to DANN introduced in (Ganin, 2014).",
+  "citation": 16
+}

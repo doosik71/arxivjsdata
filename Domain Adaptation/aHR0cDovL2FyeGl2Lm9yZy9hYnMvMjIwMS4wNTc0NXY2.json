@@ -1,0 +1,8 @@
+{
+  "title": "Deep Optimal Transport for Domain Adaptation on SPD Manifolds",
+  "authors": "Ce Ju, Cuntai Guan",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2201.05745v6",
+  "abstract": "Recent progress in geometric deep learning has drawn increasing attention from the machine learning community toward domain adaptation on symmetric positive definite (SPD) manifolds, especially for neuroimaging data that often suffer from distribution shifts across sessions. These data, typically represented as covariance matrices of brain signals, inherently lie on SPD manifolds due to their symmetry and positive definiteness. However, conventional domain adaptation methods often overlook this geometric structure when applied directly to covariance matrices, which can result in suboptimal performance. To address this issue, we introduce a new geometric deep learning framework that combines optimal transport theory with the geometry of SPD manifolds. Our approach aligns data distributions while respecting the manifold structure, effectively reducing both marginal and conditional discrepancies. We validate our method on three cross-session brain computer interface datasets, KU, BNCI2014001, and BNCI2015001, where it consistently outperforms baseline approaches while maintaining the intrinsic geometry of the data. We also provide quantitative results and visualizations to better illustrate the behavior of the learned embeddings.",
+  "citation": 8
+}

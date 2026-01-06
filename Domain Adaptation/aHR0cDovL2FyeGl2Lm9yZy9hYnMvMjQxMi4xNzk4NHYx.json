@@ -1,0 +1,8 @@
+{
+  "title": "ICPR 2024 Competition on Domain Adaptation and GEneralization for Character Classification (DAGECC)",
+  "authors": "Sofia Marino, Jennifer Vandoni, Emanuel Aldea, Ichraq Lemghari, Sylvie Le Hégarat-Mascle, Frédéric Jurie",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.17984v1",
+  "abstract": "In this companion paper for the DAGECC (Domain Adaptation and GEneralization for Character Classification) competition organized within the frame of the ICPR 2024 conference, we present the general context of the tasks we proposed to the community, we introduce the data that were prepared for the competition and we provide a summary of the results along with a description of the top three winning entries. The competition was centered around domain adaptation and generalization, and our core aim is to foster interest and facilitate advancement on these topics by providing a high-quality, lightweight, real world dataset able to support fast prototyping and validation of novel ideas.",
+  "citation": 0
+}

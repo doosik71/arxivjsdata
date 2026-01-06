@@ -1,0 +1,8 @@
+{
+  "title": "OneRing: A Simple Method for Source-free Open-partial Domain Adaptation",
+  "authors": "Shiqi Yang, Yaxing Wang, Kai Wang, Shangling Jui, Joost van de Weijer",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2206.03600v2",
+  "abstract": "In this paper, we investigate Source-free Open-partial Domain Adaptation (SF-OPDA), which addresses the situation where there exist both domain and category shifts between source and target domains. Under the SF-OPDA setting, which aims to address data privacy concerns, the model cannot access source data anymore during target adaptation. We propose a novel training scheme to learn a (n+1)-way classifier to predict the n source classes and the unknown class, where samples of only known source categories are available for training. Furthermore, for target adaptation, we simply adopt a weighted entropy minimization to adapt the source pretrained model to the unlabeled target domain without source data. In experiments, we show our simple method surpasses current OPDA approaches which demand source data during adaptation. When augmented with a closed-set domain adaptation approach during target adaptation, our source-free method further outperforms the current state-of-the-art OPDA method by 2.5%, 7.2% and 13% on Office-31, Office-Home and VisDA respectively.",
+  "citation": 4
+}

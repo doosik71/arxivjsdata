@@ -1,0 +1,8 @@
+{
+  "title": "Semi-Supervised Adversarial Discriminative Domain Adaptation",
+  "authors": "Thai-Vu Nguyen, Anh Nguyen, Nghia Le, Bac Le",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.13016v2",
+  "abstract": "Domain adaptation is a potential method to train a powerful deep neural network, which can handle the absence of labeled data. More precisely, domain adaptation solving the limitation called dataset bias or domain shift when the training dataset and testing dataset are extremely different. Adversarial adaptation method becoming popular among other domain adaptation methods. Relies on the idea of GAN, adversarial domain adaptation tries to minimize the distribution between training and testing datasets base on the adversarial object. However, some conventional adversarial domain adaptation methods cannot handle large domain shifts between two datasets or the generalization ability of these methods are inefficient. In this paper, we propose an improved adversarial domain adaptation method called Semi-Supervised Adversarial Discriminative Domain Adaptation (SADDA), which can overcome the limitation of other domain adaptation. We also show that SADDA has better performance than other adversarial adaptation methods and illustrate the promise of our method on digit classification and emotion recognition problems.",
+  "citation": 19
+}

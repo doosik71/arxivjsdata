@@ -1,0 +1,8 @@
+{
+  "title": "Domain Adaptation with Incomplete Target Domains",
+  "authors": "Zhenpeng Li, Jianan Jiang, Yuhong Guo, Tiantian Tang, Chengxiang Zhuo, Jieping Ye",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2012.01606v2",
+  "abstract": "Domain adaptation, as a task of reducing the annotation cost in a target domain by exploiting the existing labeled data in an auxiliary source domain, has received a lot of attention in the research community. However, the standard domain adaptation has assumed perfectly observed data in both domains, while in real world applications the existence of missing data can be prevalent. In this paper, we tackle a more challenging domain adaptation scenario where one has an incomplete target domain with partially observed data. We propose an Incomplete Data Imputation based Adversarial Network (IDIAN) model to address this new domain adaptation challenge. In the proposed model, we design a data imputation module to fill the missing feature values based on the partial observations in the target domain, while aligning the two domains via deep adversarial adaption. We conduct experiments on both cross-domain benchmark tasks and a real world adaptation task with imperfect target domains. The experimental results demonstrate the effectiveness of the proposed method.",
+  "citation": 2
+}

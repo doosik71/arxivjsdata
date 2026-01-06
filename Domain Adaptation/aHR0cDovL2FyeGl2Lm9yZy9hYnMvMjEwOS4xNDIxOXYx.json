@@ -1,0 +1,8 @@
+{
+  "title": "Unsupervised Domain Adaptation in Semantic Segmentation Based on Pixel Alignment and Self-Training",
+  "authors": "Hexin Dong, Fei Yu, Jie Zhao, Bin Dong, Li Zhang",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.14219v1",
+  "abstract": "This paper proposes an unsupervised cross-modality domain adaptation approach based on pixel alignment and self-training. Pixel alignment transfers ceT1 scans to hrT2 modality, helping to reduce domain shift in the training segmentation model. Self-training adapts the decision boundary of the segmentation network to fit the distribution of hrT2 scans. Experiment results show that PAST has outperformed the non-UDA baseline significantly, and it received rank-2 on CrossMoDA validation phase Leaderboard with a mean Dice score of 0.8395.",
+  "citation": 18
+}

@@ -1,0 +1,8 @@
+{
+  "title": "1st Place Solution to NeurIPS 2022 Challenge on Visual Domain Adaptation",
+  "authors": "Daehan Kim, Minseok Seo, YoungJin Jeon, Dong-Geol Choi",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.14596v1",
+  "abstract": "The Visual Domain Adaptation(VisDA) 2022 Challenge calls for an unsupervised domain adaptive model in semantic segmentation tasks for industrial waste sorting. In this paper, we introduce the SIA_Adapt method, which incorporates several methods for domain adaptive models. The core of our method in the transferable representation from large-scale pre-training. In this process, we choose a network architecture that differs from the state-of-the-art for domain adaptation. After that, self-training using pseudo-labels helps to make the initial adaptation model more adaptable to the target domain. Finally, the model soup scheme helped to improve the generalization performance in the target domain. Our method SIA_Adapt achieves 1st place in the VisDA2022 challenge. The code is available on https: //github.com/DaehanKim-Korea/VisDA2022_Winner_Solution.",
+  "citation": 1
+}

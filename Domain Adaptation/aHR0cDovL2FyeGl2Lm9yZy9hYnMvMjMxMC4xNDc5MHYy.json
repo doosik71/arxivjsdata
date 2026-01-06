@@ -1,0 +1,8 @@
+{
+  "title": "Weighted Joint Maximum Mean Discrepancy Enabled Multi-Source-Multi-Target Unsupervised Domain Adaptation Fault Diagnosis",
+  "authors": "Zixuan Wang, Haoran Tang, Haibo Wang, Bo Qin, Mark D. Butala, Weiming Shen, Hongwei Wang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2310.14790v2",
+  "abstract": "Despite the remarkable results that can be achieved by data-driven intelligent fault diagnosis techniques, they presuppose the same distribution of training and test data as well as sufficient labeled data. Various operating states often exist in practical scenarios, leading to the problem of domain shift that hinders the effectiveness of fault diagnosis. While recent unsupervised domain adaptation methods enable cross-domain fault diagnosis, they struggle to effectively utilize information from multiple source domains and achieve effective diagnosis faults in multiple target domains simultaneously. In this paper, we innovatively proposed a weighted joint maximum mean discrepancy enabled multi-source-multi-target unsupervised domain adaptation (WJMMD-MDA), which realizes domain adaptation under multi-source-multi-target scenarios in the field of fault diagnosis for the first time. The proposed method extracts sufficient information from multiple labeled source domains and achieves domain alignment between source and target domains through an improved weighted distance loss. As a result, domain-invariant and discriminative features between multiple source and target domains are learned with cross-domain fault diagnosis realized. The performance of the proposed method is evaluated in comprehensive comparative experiments on three datasets, and the experimental results demonstrate the superiority of this method.",
+  "citation": 0
+}
