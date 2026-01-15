@@ -1,0 +1,7 @@
+{
+  "title": "R1-RE: Cross-Domain Relation Extraction with RLVR",
+  "authors": "Runpeng Dai, Tong Zheng, Run Yang, Kaixian Yu, Hongtu Zhu",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2507.04642v2",
+  "abstract": "Relation extraction (RE) is a core task in natural language processing. Traditional approaches typically frame RE as a supervised learning problem, directly mapping context to labels-an approach that often suffers from poor out-of-domain (OOD) generalization. Inspired by the workflow of human annotators, we reframe RE as a reasoning task guided by annotation guidelines and introduce R1-RE, the first reinforcement learning with verifiable reward (RLVR) framework for RE tasks. Our method elicits the reasoning abilities of small language models for annotation tasks, resulting in significantly improved OOD robustness. We evaluate our approach on the public Sem-2010 dataset and a private MDKG dataset. The R1-RE-7B model attains an average OOD accuracy of approximately 70%, on par with leading proprietary models such as GPT-4o. Additionally, our comprehensive analysis provides novel insights into the training dynamics and emergent reasoning behaviors of the RLVR paradigm for RE."
+}

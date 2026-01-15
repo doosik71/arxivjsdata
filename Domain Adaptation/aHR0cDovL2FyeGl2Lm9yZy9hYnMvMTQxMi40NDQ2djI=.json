@@ -1,0 +1,8 @@
+{
+  "title": "Domain-Adversarial Neural Networks",
+  "authors": "Hana Ajakan, Pascal Germain, Hugo Larochelle, François Laviolette, Mario Marchand",
+  "year": 2014,
+  "url": "http://arxiv.org/abs/1412.4446v2",
+  "abstract": "We introduce a new representation learning algorithm suited to the context of domain adaptation, in which data at training and test time come from similar but different distributions. Our algorithm is directly inspired by theory on domain adaptation suggesting that, for effective domain transfer to be achieved, predictions must be made based on a data representation that cannot discriminate between the training (source) and test (target) domains. We propose a training objective that implements this idea in the context of a neural network, whose hidden layer is trained to be predictive of the classification task, but uninformative as to the domain of the input. Our experiments on a sentiment analysis classification benchmark, where the target domain data available at training time is unlabeled, show that our neural network for domain adaption algorithm has better performance than either a standard neural network or an SVM, even if trained on input features extracted with the state-of-the-art marginalized stacked denoising autoencoders of Chen et al. (2012).",
+  "citation": 517
+}

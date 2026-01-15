@@ -1,0 +1,8 @@
+{
+  "title": "A State-of-the-Art SQL Reasoning Model using RLVR",
+  "authors": "Alnur Ali, Ashutosh Baheti, Jonathan Chang, Ta-Chung Chi, Brandon Cui, Andrew Drozdov, Jonathan Frankle, Abhay Gupta, Pallavi Koppol, Sean Kulinski, Jonathan Li, Dipendra Misra, Krista Opsahl-Ong, Jose Javier Gonzalez Ortiz, Matei Zaharia, Yue Zhang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.21459v1",
+  "abstract": "Developing custom reasoning models via Reinforcement Learning (RL) that can incorporate organization-specific knowledge has great potential to address problems faced by enterprise customers. In many of these problems, the reward function is verifiable, a setting termed RL with Verifiable Rewards (RLVR). We apply RLVR to a popular data science benchmark called BIRD that measures the ability of an AI agent to convert a natural language query for a database to SQL executions. We apply a simple and general-purpose training recipe involving careful prompt and model selection, a warm-up stage using our offline RL approach called TAO, followed by rigorous online RLVR training. With no additional training data beyond the BIRD training set and no use of proprietary models, our very first submission to the BIRD leaderboard reached state-of-the-art accuracy on the private test set: 73.56% without self-consistency and 75.68% with self-consistency. In the latter case, our model also required fewer generations than the second-best approach. While BIRD is only a proxy task, the simplicity of our framework makes it broadly applicable to enterprise domains such as business intelligence, data science, and coding.",
+  "citation": 3
+}

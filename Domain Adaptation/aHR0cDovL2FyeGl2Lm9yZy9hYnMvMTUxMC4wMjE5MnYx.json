@@ -1,0 +1,8 @@
+{
+  "title": "Simultaneous Deep Transfer Across Domains and Tasks",
+  "authors": "Eric Tzeng, Judy Hoffman, Trevor Darrell, Kate Saenko",
+  "year": 2015,
+  "url": "http://arxiv.org/abs/1510.02192v1",
+  "abstract": "Recent reports suggest that a generic supervised deep CNN model trained on a large-scale dataset reduces, but does not remove, dataset bias. Fine-tuning deep models in a new domain can require a significant amount of labeled data, which for many applications is simply not available. We propose a new CNN architecture to exploit unlabeled and sparsely labeled target domain data. Our approach simultaneously optimizes for domain invariance to facilitate domain transfer and uses a soft label distribution matching loss to transfer information between tasks. Our proposed adaptation method offers empirical performance which exceeds previously published results on two standard benchmark visual domain adaptation tasks, evaluated across supervised and semi-supervised adaptation settings.",
+  "citation": 1725
+}

@@ -1,0 +1,8 @@
+{
+  "title": "A Grassmann Manifold Handbook: Basic Geometry and Computational Aspects",
+  "authors": "Thomas Bendokat, Ralf Zimmermann, P. -A. Absil",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2011.13699v3",
+  "abstract": "The Grassmann manifold of linear subspaces is important for the mathematical modelling of a multitude of applications, ranging from problems in machine learning, computer vision and image processing to low-rank matrix optimization problems, dynamic low-rank decompositions and model reduction. With this mostly expository work, we aim to provide a collection of the essential facts and formulae on the geometry of the Grassmann manifold in a fashion that is fit for tackling the aforementioned problems with matrix-based algorithms. Moreover, we expose the Grassmann geometry both from the approach of representing subspaces with orthogonal projectors and when viewed as a quotient space of the orthogonal group, where subspaces are identified as equivalence classes of (orthogonal) bases. This bridges the associated research tracks and allows for an easy transition between these two approaches.\n  Original contributions include a modified algorithm for computing the Riemannian logarithm map on the Grassmannian that is advantageous numerically but also allows for a more elementary, yet more complete description of the cut locus and the conjugate points. We also derive a formula for parallel transport along geodesics in the orthogonal projector perspective, formulae for the derivative of the exponential map, as well as a formula for Jacobi fields vanishing at one point.",
+  "citation": 198
+}

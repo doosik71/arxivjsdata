@@ -1,0 +1,7 @@
+{
+  "title": "Studying the Korean Word-Chain Game with RLVR: Mitigating Reward Conflicts via Curriculum Learning",
+  "authors": "Donghwan Rho",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2510.03394v2",
+  "abstract": "Reinforcement learning with verifiable rewards (RLVR) is a promising approach for training large language models (LLMs) with stronger reasoning abilities. It has also been applied to a variety of logic puzzles. In this work, we study the Korean word-chain game using RLVR. We show that rule-derived rewards can naturally conflict, and demonstrate through experiments that a curriculum-learning scheme mitigates these conflicts. Our findings motivate further studies of puzzle tasks in diverse languages."
+}

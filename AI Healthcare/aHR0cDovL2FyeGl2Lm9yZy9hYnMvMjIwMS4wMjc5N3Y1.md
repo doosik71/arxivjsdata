@@ -57,7 +57,7 @@ SHAOXIONG JI, XIAOBO LI, WEI SUN, HANG DONG, ARA TAALAS, YIJIA ZHANG, HONGHAN WU
 학습된 은닉 표현을 의료 코드로 매핑하여 최종 분류 결과를 생성합니다.
 
 - **완전 연결 레이어 (Fully Connected Layer)**: 가장 간단한 디코더로, 선형 투영 후 `Sigmoid` 활성화 함수를 사용하여 예측 로짓을 생성합니다 ($\hat{y} = \mathrm{Sigmoid}(\mathrm{Pooling}(\mathrm{HW}^T))$ [157, 147]).
-- **신경망 어텐션 디코더 (Neural Attention Decoders)**: `Label-wise Attention Network (LAN)` [131]와 같이 의료 코드와 관련된 중요한 정보에 초점을 맞춰 코드 예측을 강화합니다 (`A = \mathrm{Softmax}(\mathrm{HU})$ [131, 77, 104, 123]). `Structured self-attention` [110, 14]도 활용됩니다.
+- **신경망 어텐션 디코더 (Neural Attention Decoders)**: `Label-wise Attention Network (LAN)` [131]와 같이 의료 코드와 관련된 중요한 정보에 초점을 맞춰 코드 예측을 강화합니다 ($A = \mathrm{Softmax}(\mathrm{HU})$ [131, 77, 104, 123]). `Structured self-attention` [110, 14]도 활용됩니다.
 - **계층적 디코더 (Hierarchical Decoders)**: `ICD` 코드의 계층적 구조를 활용하여 보다 구조화된 예측을 수행합니다 (`JointLAAT` [173], `RPGNet` [180]).
 - **멀티태스크 디코더 (Multitask Decoders)**: 여러 코딩 시스템을 동시에 처리하며 `multitask learning`을 통해 예측 정확도를 높입니다 (`MT-RAM` [161], `MARN` [162]).
 - **Few-shot/Zero-shot 디코더 (Few-shot/Zero-shot Decoders)**: 학습 데이터에 거의 없거나 전혀 없는 코드를 예측하는 것을 목표로 합니다. 임상 문서와 레이블 벡터 간의 의미 일치를 계산하는 검색 태스크로 정의됩니다 ($\tilde{y}_i = \mathrm{Sigmoid}(e_i^\top v_i)$ [151, 120, 159]).

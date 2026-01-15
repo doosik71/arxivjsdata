@@ -1,0 +1,8 @@
+{
+  "title": "Optimal Transport for Domain Adaptation",
+  "authors": "Nicolas Courty, Rémi Flamary, Devis Tuia, Alain Rakotomamonjy",
+  "year": 2015,
+  "url": "http://arxiv.org/abs/1507.00504v2",
+  "abstract": "Domain adaptation from one data space (or domain) to another is one of the most challenging tasks of modern data analytics. If the adaptation is done correctly, models built on a specific data space become more robust when confronted to data depicting the same semantic concepts (the classes), but observed by another observation system with its own specificities. Among the many strategies proposed to adapt a domain to another, finding a common representation has shown excellent properties: by finding a common representation for both domains, a single classifier can be effective in both and use labelled samples from the source domain to predict the unlabelled samples of the target domain. In this paper, we propose a regularized unsupervised optimal transportation model to perform the alignment of the representations in the source and target domains. We learn a transportation plan matching both PDFs, which constrains labelled samples in the source domain to remain close during transport. This way, we exploit at the same time the few labeled information in the source and the unlabelled distributions observed in both domains. Experiments in toy and challenging real visual adaptation examples show the interest of the method, that consistently outperforms state of the art approaches.",
+  "citation": 1424
+}
