@@ -1,0 +1,8 @@
+{
+  "title": "DITTO: Offline Imitation Learning with World Models",
+  "authors": "Branton DeMoss, Paul Duckworth, Jakob Foerster, Nick Hawes, Ingmar Posner",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.03086v2",
+  "abstract": "For imitation learning algorithms to scale to real-world challenges, they must handle high-dimensional observations, offline learning, and policy-induced covariate-shift. We propose DITTO, an offline imitation learning algorithm which addresses all three of these problems. DITTO optimizes a novel distance metric in the latent space of a learned world model: First, we train a world model on all available trajectory data, then, the imitation agent is unrolled from expert start states in the learned model, and penalized for its latent divergence from the expert dataset over multiple time steps. We optimize this multi-step latent divergence using standard reinforcement learning algorithms, which provably induces imitation learning, and empirically achieves state-of-the art performance and sample efficiency on a range of Atari environments from pixels, without any online environment access. We also adapt other standard imitation learning algorithms to the world model setting, and show that this considerably improves their performance. Our results show how creative use of world models can lead to a simple, robust, and highly-performant policy-learning framework.",
+  "citation": 22
+}

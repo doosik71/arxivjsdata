@@ -1,0 +1,8 @@
+{
+  "title": "Burn-In Demonstrations for Multi-Modal Imitation Learning",
+  "authors": "Alex Kuefler, Mykel J. Kochenderfer",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1710.05090v1",
+  "abstract": "Recent work on imitation learning has generated policies that reproduce expert behavior from multi-modal data. However, past approaches have focused only on recreating a small number of distinct, expert maneuvers, or have relied on supervised learning techniques that produce unstable policies. This work extends InfoGAIL, an algorithm for multi-modal imitation learning, to reproduce behavior over an extended period of time. Our approach involves reformulating the typical imitation learning setting to include \"burn-in demonstrations\" upon which policies are conditioned at test time. We demonstrate that our approach outperforms standard InfoGAIL in maximizing the mutual information between predicted and unseen style labels in road scene simulations, and we show that our method leads to policies that imitate expert autonomous driving systems over long time horizons.",
+  "citation": 34
+}

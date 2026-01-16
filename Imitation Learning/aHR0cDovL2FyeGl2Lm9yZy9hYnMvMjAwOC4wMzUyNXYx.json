@@ -1,0 +1,8 @@
+{
+  "title": "Non-Adversarial Imitation Learning and its Connections to Adversarial Methods",
+  "authors": "Oleg Arenz, Gerhard Neumann",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.03525v1",
+  "abstract": "Many modern methods for imitation learning and inverse reinforcement learning, such as GAIL or AIRL, are based on an adversarial formulation. These methods apply GANs to match the expert's distribution over states and actions with the implicit state-action distribution induced by the agent's policy. However, by framing imitation learning as a saddle point problem, adversarial methods can suffer from unstable optimization, and convergence can only be shown for small policy updates. We address these problems by proposing a framework for non-adversarial imitation learning. The resulting algorithms are similar to their adversarial counterparts and, thus, provide insights for adversarial imitation learning methods. Most notably, we show that AIRL is an instance of our non-adversarial formulation, which enables us to greatly simplify its derivations and obtain stronger convergence guarantees. We also show that our non-adversarial formulation can be used to derive novel algorithms by presenting a method for offline imitation learning that is inspired by the recent ValueDice algorithm, but does not rely on small policy updates for convergence. In our simulated robot experiments, our offline method for non-adversarial imitation learning seems to perform best when using many updates for policy and discriminator at each iteration and outperforms behavioral cloning and ValueDice.",
+  "citation": 19
+}

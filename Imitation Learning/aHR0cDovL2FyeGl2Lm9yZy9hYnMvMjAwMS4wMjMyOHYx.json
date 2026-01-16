@@ -1,0 +1,7 @@
+{
+  "title": "The Past and Present of Imitation Learning: A Citation Chain Study",
+  "authors": "Nishanth Kumar",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2001.02328v1",
+  "abstract": "Imitation Learning is a promising area of active research. Over the last 30 years, Imitation Learning has advanced significantly and been used to solve difficult tasks ranging from Autonomous Driving to playing Atari games. In the course of this development, different methods for performing Imitation Learning have fallen into and out of favor. In this paper, I explore the development of these different methods and attempt to examine how the field has progressed. I focus my analysis on surveying 4 landmark papers that sequentially build upon each other to develop increasingly impressive Imitation Learning methods."
+}

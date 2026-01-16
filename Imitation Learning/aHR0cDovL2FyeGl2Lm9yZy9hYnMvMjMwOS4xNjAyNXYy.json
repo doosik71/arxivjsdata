@@ -1,0 +1,7 @@
+{
+  "title": "Symbolic Imitation Learning: From Black-Box to Explainable Driving Policies",
+  "authors": "Iman Sharifi, Mustafa Yildirim, Saber Fallah",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.16025v2",
+  "abstract": "Current imitation learning approaches, predominantly based on deep neural networks (DNNs), offer efficient mechanisms for learning driving policies from real-world datasets. However, they suffer from inherent limitations in interpretability and generalizability--issues of critical importance in safety-critical domains such as autonomous driving. In this paper, we introduce Symbolic Imitation Learning (SIL), a novel framework that leverages Inductive Logic Programming (ILP) to derive explainable and generalizable driving policies from synthetic datasets. We evaluate SIL on real-world HighD and NGSim datasets, comparing its performance with state-of-the-art neural imitation learning methods using metrics such as collision rate, lane change efficiency, and average speed. The results indicate that SIL significantly enhances policy transparency while maintaining strong performance across varied driving conditions. These findings highlight the potential of integrating ILP into imitation learning to promote safer and more reliable autonomous systems."
+}

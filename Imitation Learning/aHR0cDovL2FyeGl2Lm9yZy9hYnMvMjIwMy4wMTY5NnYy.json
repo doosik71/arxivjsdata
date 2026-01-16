@@ -1,0 +1,8 @@
+{
+  "title": "Fail-Safe Adversarial Generative Imitation Learning",
+  "authors": "Philipp Geiger, Christoph-Nikolas Straehle",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2203.01696v2",
+  "abstract": "For flexible yet safe imitation learning (IL), we propose theory and a modular method, with a safety layer that enables a closed-form probability density/gradient of the safe generative continuous policy, end-to-end generative adversarial training, and worst-case safety guarantees. The safety layer maps all actions into a set of safe actions, and uses the change-of-variables formula plus additivity of measures for the density. The set of safe actions is inferred by first checking safety of a finite sample of actions via adversarial reachability analysis of fallback maneuvers, and then concluding on the safety of these actions' neighborhoods using, e.g., Lipschitz continuity. We provide theoretical analysis showing the robustness advantage of using the safety layer already during training (imitation error linear in the horizon) compared to only using it at test time (up to quadratic error). In an experiment on real-world driver interaction data, we empirically demonstrate tractability, safety and imitation performance of our approach.",
+  "citation": 2
+}

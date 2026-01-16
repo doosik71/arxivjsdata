@@ -1,0 +1,8 @@
+{
+  "title": "ScrollNet: Dynamic Weight Importance for Continual Learning",
+  "authors": "Fei Yang, Kai Wang, Joost van de Weijer",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2308.16567v1",
+  "abstract": "The principle underlying most existing continual learning (CL) methods is to prioritize stability by penalizing changes in parameters crucial to old tasks, while allowing for plasticity in other parameters. The importance of weights for each task can be determined either explicitly through learning a task-specific mask during training (e.g., parameter isolation-based approaches) or implicitly by introducing a regularization term (e.g., regularization-based approaches). However, all these methods assume that the importance of weights for each task is unknown prior to data exposure. In this paper, we propose ScrollNet as a scrolling neural network for continual learning. ScrollNet can be seen as a dynamic network that assigns the ranking of weight importance for each task before data exposure, thus achieving a more favorable stability-plasticity tradeoff during sequential task learning by reassigning this ranking for different tasks. Additionally, we demonstrate that ScrollNet can be combined with various CL methods, including regularization-based and replay-based approaches. Experimental results on CIFAR100 and TinyImagenet datasets show the effectiveness of our proposed method. We release our code at https://github.com/FireFYF/ScrollNet.git.",
+  "citation": 6
+}

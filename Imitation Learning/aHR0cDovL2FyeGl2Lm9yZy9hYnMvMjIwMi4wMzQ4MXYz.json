@@ -1,0 +1,8 @@
+{
+  "title": "A Ranking Game for Imitation Learning",
+  "authors": "Harshit Sikchi, Akanksha Saran, Wonjoon Goo, Scott Niekum",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.03481v3",
+  "abstract": "We propose a new framework for imitation learning -- treating imitation as a two-player ranking-based game between a policy and a reward. In this game, the reward agent learns to satisfy pairwise performance rankings between behaviors, while the policy agent learns to maximize this reward. In imitation learning, near-optimal expert data can be difficult to obtain, and even in the limit of infinite data cannot imply a total ordering over trajectories as preferences can. On the other hand, learning from preferences alone is challenging as a large number of preferences are required to infer a high-dimensional reward function, though preference data is typically much easier to collect than expert demonstrations. The classical inverse reinforcement learning (IRL) formulation learns from expert demonstrations but provides no mechanism to incorporate learning from offline preferences and vice versa. We instantiate the proposed ranking-game framework with a novel ranking loss giving an algorithm that can simultaneously learn from expert demonstrations and preferences, gaining the advantages of both modalities. Our experiments show that the proposed method achieves state-of-the-art sample efficiency and can solve previously unsolvable tasks in the Learning from Observation (LfO) setting. Project video and code can be found at https://hari-sikchi.github.io/rank-game/",
+  "citation": 24
+}

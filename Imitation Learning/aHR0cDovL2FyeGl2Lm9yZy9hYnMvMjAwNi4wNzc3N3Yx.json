@@ -1,0 +1,8 @@
+{
+  "title": "Active Imitation Learning from Multiple Non-Deterministic Teachers: Formulation, Challenges, and Algorithms",
+  "authors": "Khanh Nguyen, Hal Daumé",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.07777v1",
+  "abstract": "We formulate the problem of learning to imitate multiple, non-deterministic teachers with minimal interaction cost. Rather than learning a specific policy as in standard imitation learning, the goal in this problem is to learn a distribution over a policy space. We first present a general framework that efficiently models and estimates such a distribution by learning continuous representations of the teacher policies. Next, we develop Active Performance-Based Imitation Learning (APIL), an active learning algorithm for reducing the learner-teacher interaction cost in this framework. By making query decisions based on predictions of future progress, our algorithm avoids the pitfalls of traditional uncertainty-based approaches in the face of teacher behavioral uncertainty. Results on both toy and photo-realistic navigation tasks show that APIL significantly reduces the numbers of interactions with teachers without compromising on performance. Moreover, it is robust to various degrees of teacher behavioral uncertainty.",
+  "citation": 4
+}

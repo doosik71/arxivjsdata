@@ -1,0 +1,8 @@
+{
+  "title": "Continual Learning Beyond a Single Model",
+  "authors": "Thang Doan, Seyed Iman Mirzadeh, Mehrdad Farajtabar",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.09826v3",
+  "abstract": "A growing body of research in continual learning focuses on the catastrophic forgetting problem. While many attempts have been made to alleviate this problem, the majority of the methods assume a single model in the continual learning setup. In this work, we question this assumption and show that employing ensemble models can be a simple yet effective method to improve continual performance. However, ensembles' training and inference costs can increase significantly as the number of models grows. Motivated by this limitation, we study different ensemble models to understand their benefits and drawbacks in continual learning scenarios. Finally, to overcome the high compute cost of ensembles, we leverage recent advances in neural network subspace to propose a computationally cheap algorithm with similar runtime to a single model yet enjoying the performance benefits of ensembles.",
+  "citation": 22
+}

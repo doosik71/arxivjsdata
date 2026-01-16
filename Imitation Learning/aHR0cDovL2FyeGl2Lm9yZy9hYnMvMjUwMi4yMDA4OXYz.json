@@ -1,0 +1,8 @@
+{
+  "title": "RIZE: Adaptive Regularization for Imitation Learning",
+  "authors": "Adib Karimi, Mohammad Mehdi Ebadzadeh",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.20089v3",
+  "abstract": "We propose a novel Inverse Reinforcement Learning (IRL) method that mitigates the rigidity of fixed reward structures and the limited flexibility of implicit reward regularization. Building on the Maximum Entropy IRL framework, our approach incorporates a squared temporal-difference (TD) regularizer with adaptive targets that evolve dynamically during training, thereby imposing adaptive bounds on recovered rewards and promoting robust decision-making. To capture richer return information, we integrate distributional RL into the learning process. Empirically, our method achieves expert-level performance on complex MuJoCo and Adroit environments, surpassing baseline methods on the Humanoid-v2 task with limited expert demonstrations. Extensive experiments and ablation studies further validate the effectiveness of the approach and provide insights into reward dynamics in imitation learning. Our source code is available at https://github.com/adibka/RIZE.",
+  "citation": 1
+}

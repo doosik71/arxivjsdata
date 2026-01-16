@@ -1,0 +1,8 @@
+{
+  "title": "From One Hand to Multiple Hands: Imitation Learning for Dexterous Manipulation from Single-Camera Teleoperation",
+  "authors": "Yuzhe Qin, Hao Su, Xiaolong Wang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2204.12490v2",
+  "abstract": "We propose to perform imitation learning for dexterous manipulation with multi-finger robot hand from human demonstrations, and transfer the policy to the real robot hand. We introduce a novel single-camera teleoperation system to collect the 3D demonstrations efficiently with only an iPad and a computer. One key contribution of our system is that we construct a customized robot hand for each user in the physical simulator, which is a manipulator resembling the same kinematics structure and shape of the operator's hand. This provides an intuitive interface and avoid unstable human-robot hand retargeting for data collection, leading to large-scale and high quality data. Once the data is collected, the customized robot hand trajectories can be converted to different specified robot hands (models that are manufactured) to generate training demonstrations. With imitation learning using our data, we show large improvement over baselines with multiple complex manipulation tasks. Importantly, we show our learned policy is significantly more robust when transferring to the real robot. More videos can be found in the https://yzqin.github.io/dex-teleop-imitation .",
+  "citation": 152
+}

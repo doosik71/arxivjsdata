@@ -1,0 +1,8 @@
+{
+  "title": "To Follow or not to Follow: Selective Imitation Learning from Observations",
+  "authors": "Youngwoon Lee, Edward S. Hu, Zhengyu Yang, Joseph J. Lim",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1912.07670v1",
+  "abstract": "Learning from demonstrations is a useful way to transfer a skill from one agent to another. While most imitation learning methods aim to mimic an expert skill by following the demonstration step-by-step, imitating every step in the demonstration often becomes infeasible when the learner and its environment are different from the demonstration. In this paper, we propose a method that can imitate a demonstration composed solely of observations, which may not be reproducible with the current agent. Our method, dubbed selective imitation learning from observations (SILO), selects reachable states in the demonstration and learns how to reach the selected states. Our experiments on both simulated and real robot environments show that our method reliably performs a new task by following a demonstration. Videos and code are available at https://clvrai.com/silo .",
+  "citation": 20
+}

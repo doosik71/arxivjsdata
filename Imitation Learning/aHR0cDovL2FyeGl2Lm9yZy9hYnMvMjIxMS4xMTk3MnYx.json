@@ -1,0 +1,8 @@
+{
+  "title": "imitation: Clean Imitation Learning Implementations",
+  "authors": "Adam Gleave, Mohammad Taufeeque, Juan Rocamonde, Erik Jenner, Steven H. Wang, Sam Toyer, Maximilian Ernestus, Nora Belrose, Scott Emmons, Stuart Russell",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.11972v1",
+  "abstract": "imitation provides open-source implementations of imitation and reward learning algorithms in PyTorch. We include three inverse reinforcement learning (IRL) algorithms, three imitation learning algorithms and a preference comparison algorithm. The implementations have been benchmarked against previous results, and automated tests cover 98% of the code. Moreover, the algorithms are implemented in a modular fashion, making it simple to develop novel algorithms in the framework. Our source code, including documentation and examples, is available at https://github.com/HumanCompatibleAI/imitation",
+  "citation": 45
+}

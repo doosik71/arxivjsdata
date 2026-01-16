@@ -1,0 +1,8 @@
+{
+  "title": "Neural Random Forest Imitation",
+  "authors": "Christoph Reinders, Bodo Rosenhahn",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1911.10829v2",
+  "abstract": "We present Neural Random Forest Imitation - a novel approach for transforming random forests into neural networks. Existing methods propose a direct mapping and produce very inefficient architectures. In this work, we introduce an imitation learning approach by generating training data from a random forest and learning a neural network that imitates its behavior. This implicit transformation creates very efficient neural networks that learn the decision boundaries of a random forest. The generated model is differentiable, can be used as a warm start for fine-tuning, and enables end-to-end optimization. Experiments on several real-world benchmark datasets demonstrate superior performance, especially when training with very few training examples. Compared to state-of-the-art methods, we significantly reduce the number of network parameters while achieving the same or even improved accuracy due to better generalization.",
+  "citation": 2
+}

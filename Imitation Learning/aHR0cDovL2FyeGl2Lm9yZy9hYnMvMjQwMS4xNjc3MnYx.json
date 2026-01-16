@@ -1,0 +1,7 @@
+{
+  "title": "Extrinsicaly Rewarded Soft Q Imitation Learning with Discriminator",
+  "authors": "Ryoma Furuyama, Daiki Kuyoshi, Satoshi Yamane",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2401.16772v1",
+  "abstract": "Imitation learning is often used in addition to reinforcement learning in environments where reward design is difficult or where the reward is sparse, but it is difficult to be able to imitate well in unknown states from a small amount of expert data and sampling data. Supervised learning methods such as Behavioral Cloning do not require sampling data, but usually suffer from distribution shift. The methods based on reinforcement learning, such as inverse reinforcement learning and Generative Adversarial imitation learning (GAIL), can learn from only a few expert data. However, they often need to interact with the environment. Soft Q imitation learning (SQIL) addressed the problems, and it was shown that it could learn efficiently by combining Behavioral Cloning and soft Q-learning with constant rewards. In order to make this algorithm more robust to distribution shift, we propose more efficient and robust algorithm by adding to this method a reward function based on adversarial inverse reinforcement learning that rewards the agent for performing actions in status similar to the demo. We call this algorithm Discriminator Soft Q Imitation Learning (DSQIL). We evaluated it on MuJoCo environments."
+}

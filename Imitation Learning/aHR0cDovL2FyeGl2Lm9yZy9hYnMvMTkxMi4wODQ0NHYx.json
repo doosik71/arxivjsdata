@@ -1,0 +1,7 @@
+{
+  "title": "Relational Mimic for Visual Adversarial Imitation Learning",
+  "authors": "Lionel Blondé, Yichuan Charlie Tang, Jian Zhang, Russ Webb",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1912.08444v1",
+  "abstract": "In this work, we introduce a new method for imitation learning from video demonstrations. Our method, Relational Mimic (RM), improves on previous visual imitation learning methods by combining generative adversarial networks and relational learning. RM is flexible and can be used in conjunction with other recent advances in generative adversarial imitation learning to better address the need for more robust and sample-efficient approaches. In addition, we introduce a new neural network architecture that improves upon the previous state-of-the-art in reinforcement learning and illustrate how increasing the relational reasoning capabilities of the agent enables the latter to achieve increasingly higher performance in a challenging locomotion task with pixel inputs. Finally, we study the effects and contributions of relational learning in policy evaluation, policy improvement and reward learning through ablation studies."
+}

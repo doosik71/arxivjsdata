@@ -1,0 +1,8 @@
+{
+  "title": "Imitation Learning for Generalizable Self-driving Policy with Sim-to-real Transfer",
+  "authors": "Zoltán Lőrincz, Márton Szemenyei, Róbert Moni",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2206.10797v1",
+  "abstract": "Imitation Learning uses the demonstrations of an expert to uncover the optimal policy and it is suitable for real-world robotics tasks as well. In this case, however, the training of the agent is carried out in a simulation environment due to safety, economic and time constraints. Later, the agent is applied in the real-life domain using sim-to-real methods. In this paper, we apply Imitation Learning methods that solve a robotics task in a simulated environment and use transfer learning to apply these solutions in the real-world environment. Our task is set in the Duckietown environment, where the robotic agent has to follow the right lane based on the input images of a single forward-facing camera. We present three Imitation Learning and two sim-to-real methods capable of achieving this task. A detailed comparison is provided on these techniques to highlight their advantages and disadvantages.",
+  "citation": 0
+}

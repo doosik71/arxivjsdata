@@ -1,0 +1,8 @@
+{
+  "title": "A Dual Approach to Imitation Learning from Observations with Offline Datasets",
+  "authors": "Harshit Sikchi, Caleb Chuck, Amy Zhang, Scott Niekum",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.08805v2",
+  "abstract": "Demonstrations are an effective alternative to task specification for learning agents in settings where designing a reward function is difficult. However, demonstrating expert behavior in the action space of the agent becomes unwieldy when robots have complex, unintuitive morphologies. We consider the practical setting where an agent has a dataset of prior interactions with the environment and is provided with observation-only expert demonstrations. Typical learning from observations approaches have required either learning an inverse dynamics model or a discriminator as intermediate steps of training. Errors in these intermediate one-step models compound during downstream policy learning or deployment. We overcome these limitations by directly learning a multi-step utility function that quantifies how each action impacts the agent's divergence from the expert's visitation distribution. Using the principle of duality, we derive DILO (Dual Imitation Learning from Observations), an algorithm that can leverage arbitrary suboptimal data to learn imitating policies without requiring expert actions. DILO reduces the learning from observations problem to that of simply learning an actor and a critic, bearing similar complexity to vanilla offline RL. This allows DILO to gracefully scale to high dimensional observations, and demonstrate improved performance across the board. Project page (code and videos): $\\href{https://hari-sikchi.github.io/dilo/}{\\text{hari-sikchi.github.io/dilo/}}$",
+  "citation": 8
+}

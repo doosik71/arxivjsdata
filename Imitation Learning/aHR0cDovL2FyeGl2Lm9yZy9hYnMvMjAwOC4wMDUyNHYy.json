@@ -1,0 +1,8 @@
+{
+  "title": "Interactive Imitation Learning in State-Space",
+  "authors": "Snehal Jauhri, Carlos Celemin, Jens Kober",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.00524v2",
+  "abstract": "Imitation Learning techniques enable programming the behavior of agents through demonstrations rather than manual engineering. However, they are limited by the quality of available demonstration data. Interactive Imitation Learning techniques can improve the efficacy of learning since they involve teachers providing feedback while the agent executes its task. In this work, we propose a novel Interactive Learning technique that uses human feedback in state-space to train and improve agent behavior (as opposed to alternative methods that use feedback in action-space). Our method titled Teaching Imitative Policies in State-space~(TIPS) enables providing guidance to the agent in terms of `changing its state' which is often more intuitive for a human demonstrator. Through continuous improvement via corrective feedback, agents trained by non-expert demonstrators using TIPS outperformed the demonstrator and conventional Imitation Learning agents.",
+  "citation": 26
+}

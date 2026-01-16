@@ -1,0 +1,8 @@
+{
+  "title": "Genetic Imitation Learning by Reward Extrapolation",
+  "authors": "Boyuan Zheng, Jianlong Zhou, Fang Chen",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2301.07182v1",
+  "abstract": "Imitation learning demonstrates remarkable performance in various domains. However, imitation learning is also constrained by many prerequisites. The research community has done intensive research to alleviate these constraints, such as adding the stochastic policy to avoid unseen states, eliminating the need for action labels, and learning from the suboptimal demonstrations. Inspired by the natural reproduction process, we proposed a method called GenIL that integrates the Genetic Algorithm with imitation learning. The involvement of the Genetic Algorithm improves the data efficiency by reproducing trajectories with various returns and assists the model in estimating more accurate and compact reward function parameters. We tested GenIL in both Atari and Mujoco domains, and the result shows that it successfully outperforms the previous extrapolation methods over extrapolation accuracy, robustness, and overall policy performance when input data is limited.",
+  "citation": 1
+}

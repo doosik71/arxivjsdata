@@ -1,0 +1,8 @@
+{
+  "title": "Convergence of Value Aggregation for Imitation Learning",
+  "authors": "Ching-An Cheng, Byron Boots",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1801.07292v1",
+  "abstract": "Value aggregation is a general framework for solving imitation learning problems. Based on the idea of data aggregation, it generates a policy sequence by iteratively interleaving policy optimization and evaluation in an online learning setting. While the existence of a good policy in the policy sequence can be guaranteed non-asymptotically, little is known about the convergence of the sequence or the performance of the last policy. In this paper, we debunk the common belief that value aggregation always produces a convergent policy sequence with improving performance. Moreover, we identify a critical stability condition for convergence and provide a tight non-asymptotic bound on the performance of the last policy. These new theoretical insights let us stabilize problems with regularization, which removes the inconvenient process of identifying the best policy in the policy sequence in stochastic problems.",
+  "citation": 29
+}

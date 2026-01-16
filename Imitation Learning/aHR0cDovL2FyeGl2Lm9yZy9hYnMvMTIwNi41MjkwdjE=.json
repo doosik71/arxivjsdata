@@ -1,0 +1,8 @@
+{
+  "title": "Imitation Learning with a Value-Based Prior",
+  "authors": "Umar Syed, Robert E. Schapire",
+  "year": 2012,
+  "url": "http://arxiv.org/abs/1206.5290v1",
+  "abstract": "The goal of imitation learning is for an apprentice to learn how to behave in a stochastic environment by observing a mentor demonstrating the correct behavior. Accurate prior knowledge about the correct behavior can reduce the need for demonstrations from the mentor. We present a novel approach to encoding prior knowledge about the correct behavior, where we assume that this prior knowledge takes the form of a Markov Decision Process (MDP) that is used by the apprentice as a rough and imperfect model of the mentor's behavior. Specifically, taking a Bayesian approach, we treat the value of a policy in this modeling MDP as the log prior probability of the policy. In other words, we assume a priori that the mentor's behavior is likely to be a high value policy in the modeling MDP, though quite possibly different from the optimal policy. We describe an efficient algorithm that, given a modeling MDP and a set of demonstrations by a mentor, provably converges to a stationary point of the log posterior of the mentor's policy, where the posterior is computed with respect to the \"value based\" prior. We also present empirical evidence that this prior does in fact speed learning of the mentor's policy, and is an improvement in our experiments over similar previous methods.",
+  "citation": 15
+}

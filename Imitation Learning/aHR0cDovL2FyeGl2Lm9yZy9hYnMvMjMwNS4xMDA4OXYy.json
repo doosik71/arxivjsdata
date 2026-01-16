@@ -1,0 +1,7 @@
+{
+  "title": "A proof of imitation of Wasserstein inverse reinforcement learning for multi-objective optimization",
+  "authors": "Akira Kitaoka, Riki Eto",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.10089v2",
+  "abstract": "We prove Wasserstein inverse reinforcement learning enables the learner's reward values to imitate the expert's reward values in a finite iteration for multi-objective optimizations. Moreover, we prove Wasserstein inverse reinforcement learning enables the learner's optimal solutions to imitate the expert's optimal solutions for multi-objective optimizations with lexicographic order."
+}

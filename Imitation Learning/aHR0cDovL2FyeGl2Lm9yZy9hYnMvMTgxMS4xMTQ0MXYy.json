@@ -1,0 +1,8 @@
+{
+  "title": "Trajectory-based Learning for Ball-in-Maze Games",
+  "authors": "Sujoy Paul, Jeroen van Baar",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1811.11441v2",
+  "abstract": "Deep Reinforcement Learning has shown tremendous success in solving several games and tasks in robotics. However, unlike humans, it generally requires a lot of training instances. Trajectories imitating to solve the task at hand can help to increase sample-efficiency of deep RL methods. In this paper, we present a simple approach to use such trajectories, applied to the challenging Ball-in-Maze Games, recently introduced in the literature. We show that in spite of not using human-generated trajectories and just using the simulator as a model to generate a limited number of trajectories, we can get a speed-up of about 2-3x in the learning process. We also discuss some challenges we observed while using trajectory-based learning for very sparse reward functions.",
+  "citation": 1
+}

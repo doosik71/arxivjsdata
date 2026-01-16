@@ -1,0 +1,8 @@
+{
+  "title": "Imitation Learning with Sinkhorn Distances",
+  "authors": "Georgios Papagiannis, Yunpeng Li",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.09167v2",
+  "abstract": "Imitation learning algorithms have been interpreted as variants of divergence minimization problems. The ability to compare occupancy measures between experts and learners is crucial in their effectiveness in learning from demonstrations. In this paper, we present tractable solutions by formulating imitation learning as minimization of the Sinkhorn distance between occupancy measures. The formulation combines the valuable properties of optimal transport metrics in comparing non-overlapping distributions with a cosine distance cost defined in an adversarially learned feature space. This leads to a highly discriminative critic network and optimal transport plan that subsequently guide imitation learning. We evaluate the proposed approach using both the reward metric and the Sinkhorn distance metric on a number of MuJoCo experiments. For the implementation and reproducing results please refer to the following repository https://github.com/gpapagiannis/sinkhorn-imitation.",
+  "citation": 38
+}

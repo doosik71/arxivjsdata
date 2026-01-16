@@ -1,0 +1,8 @@
+{
+  "title": "Deconfounding Imitation Learning with Variational Inference",
+  "authors": "Risto Vuorio, Pim de Haan, Johann Brehmer, Hanno Ackermann, Daniel Dijkman, Taco Cohen",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.02667v2",
+  "abstract": "Standard imitation learning can fail when the expert demonstrators have different sensory inputs than the imitating agent. This is because partial observability gives rise to hidden confounders in the causal graph. In previous work, to work around the confounding problem, policies have been trained using query access to the expert's policy or inverse reinforcement learning (IRL). However, both approaches have drawbacks as the expert's policy may not be available and IRL can be unstable in practice. Instead, we propose to train a variational inference model to infer the expert's latent information and use it to train a latent-conditional policy. We prove that using this method, under strong assumptions, the identification of the correct imitation learning policy is theoretically possible from expert demonstrations alone. In practice, we focus on a setting with less strong assumptions where we use exploration data for learning the inference model. We show in theory and practice that this algorithm converges to the correct interventional policy, solves the confounding issue, and can under certain assumptions achieve an asymptotically optimal imitation performance.",
+  "citation": 4
+}

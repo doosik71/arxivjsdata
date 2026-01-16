@@ -1,0 +1,8 @@
+{
+  "title": "Diverse Imitation Learning via Self-Organizing Generative Models",
+  "authors": "Arash Vahabpour, Tianyi Wang, Qiujing Lu, Omead Pooladzandi, Vwani Roychowdhury",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2205.03484v1",
+  "abstract": "Imitation learning is the task of replicating expert policy from demonstrations, without access to a reward function. This task becomes particularly challenging when the expert exhibits a mixture of behaviors. Prior work has introduced latent variables to model variations of the expert policy. However, our experiments show that the existing works do not exhibit appropriate imitation of individual modes. To tackle this problem, we adopt an encoder-free generative model for behavior cloning (BC) to accurately distinguish and imitate different modes. Then, we integrate it with GAIL to make the learning robust towards compounding errors at unseen states. We show that our method significantly outperforms the state of the art across multiple experiments.",
+  "citation": 4
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Adversarial Imitation Learning from Visual Observations using Latent Information",
+  "authors": "Vittorio Giammarino, James Queeney, Ioannis Ch. Paschalidis",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.17371v3",
+  "abstract": "We focus on the problem of imitation learning from visual observations, where the learning agent has access to videos of experts as its sole learning source. The challenges of this framework include the absence of expert actions and the partial observability of the environment, as the ground-truth states can only be inferred from pixels. To tackle this problem, we first conduct a theoretical analysis of imitation learning in partially observable environments. We establish upper bounds on the suboptimality of the learning agent with respect to the divergence between the expert and the agent latent state-transition distributions. Motivated by this analysis, we introduce an algorithm called Latent Adversarial Imitation from Observations, which combines off-policy adversarial imitation techniques with a learned latent representation of the agent's state from sequences of observations. In experiments on high-dimensional continuous robotic tasks, we show that our model-free approach in latent space matches state-of-the-art performance. Additionally, we show how our method can be used to improve the efficiency of reinforcement learning from pixels by leveraging expert videos. To ensure reproducibility, we provide free access to our code."
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Rethinking Adversarial Inverse Reinforcement Learning: Policy Imitation, Transferable Reward Recovery and Algebraic Equilibrium Proof",
+  "authors": "Yangchun Zhang, Qiang Liu, Weiming Li, Yirui Zhou",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.14593v4",
+  "abstract": "Adversarial inverse reinforcement learning (AIRL) stands as a cornerstone approach in imitation learning, yet it faces criticisms from prior studies. In this paper, we rethink AIRL and respond to these criticisms. Criticism 1 lies in Inadequate Policy Imitation. We show that substituting the built-in algorithm with soft actor-critic (SAC) during policy updating (requires multi-iterations) significantly enhances the efficiency of policy imitation. Criticism 2 lies in Limited Performance in Transferable Reward Recovery Despite SAC Integration. While we find that SAC indeed exhibits a significant improvement in policy imitation, it introduces drawbacks to transferable reward recovery. We prove that the SAC algorithm itself is not feasible to disentangle the reward function comprehensively during the AIRL training process, and propose a hybrid framework, PPO-AIRL + SAC, for a satisfactory transfer effect. Criticism 3 lies in Unsatisfactory Proof from the Perspective of Potential Equilibrium. We reanalyze it from an algebraic theory perspective.",
+  "citation": 0
+}

@@ -1,0 +1,8 @@
+{
+  "title": "A Statistical Guarantee for Representation Transfer in Multitask Imitation Learning",
+  "authors": "Bryan Chan, Karime Pereida, James Bergstra",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.01589v1",
+  "abstract": "Transferring representation for multitask imitation learning has the potential to provide improved sample efficiency on learning new tasks, when compared to learning from scratch. In this work, we provide a statistical guarantee indicating that we can indeed achieve improved sample efficiency on the target task when a representation is trained using sufficiently diverse source tasks. Our theoretical results can be readily extended to account for commonly used neural network architectures with realistic assumptions. We conduct empirical analyses that align with our theoretical findings on four simulated environments$\\unicode{x2014}$in particular leveraging more data from source tasks can improve sample efficiency on learning in the new task.",
+  "citation": 1
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Active Third-Person Imitation Learning",
+  "authors": "Timo Klein, Susanna Weinberger, Adish Singla, Sebastian Tschiatschek",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.16365v1",
+  "abstract": "We consider the problem of third-person imitation learning with the additional challenge that the learner must select the perspective from which they observe the expert. In our setting, each perspective provides only limited information about the expert's behavior, and the learning agent must carefully select and combine information from different perspectives to achieve competitive performance. This setting is inspired by real-world imitation learning applications, e.g., in robotics, a robot might observe a human demonstrator via camera and receive information from different perspectives depending on the camera's position. We formalize the aforementioned active third-person imitation learning problem, theoretically analyze its characteristics, and propose a generative adversarial network-based active learning approach. Empirically, we demstrate that our proposed approach can effectively learn from expert demonstrations and explore the importance of different architectural choices for the learner's performance.",
+  "citation": 1
+}

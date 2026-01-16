@@ -1,0 +1,8 @@
+{
+  "title": "Complex Skill Acquisition Through Simple Skill Imitation Learning",
+  "authors": "Pranay Pasula",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.10281v4",
+  "abstract": "Humans often think of complex tasks as combinations of simpler subtasks in order to learn those complex tasks more efficiently. For example, a backflip could be considered a combination of four subskills: jumping, tucking knees, rolling backwards, and thrusting arms downwards. Motivated by this line of reasoning, we propose a new algorithm that trains neural network policies on simple, easy-to-learn skills in order to cultivate latent spaces that accelerate imitation learning of complex, hard-to-learn skills. We focus on the case in which the complex task comprises a concurrent (and possibly sequential) combination of the simpler subtasks, and therefore our algorithm can be seen as a novel approach to concurrent hierarchical imitation learning. We evaluate our algorithm on difficult tasks in a high-dimensional environment and find that it consistently outperforms a state-of-the-art baseline in training speed and overall performance.",
+  "citation": 0
+}

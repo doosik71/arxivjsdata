@@ -1,0 +1,7 @@
+{
+  "title": "Robust Imitation Learning from Noisy Demonstrations",
+  "authors": "Voot Tangkaratt, Nontawat Charoenphakdee, Masashi Sugiyama",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2010.10181v3",
+  "abstract": "Robust learning from noisy demonstrations is a practical but highly challenging problem in imitation learning. In this paper, we first theoretically show that robust imitation learning can be achieved by optimizing a classification risk with a symmetric loss. Based on this theoretical finding, we then propose a new imitation learning method that optimizes the classification risk by effectively combining pseudo-labeling with co-training. Unlike existing methods, our method does not require additional labels or strict assumptions about noise distributions. Experimental results on continuous-control benchmarks show that our method is more robust compared to state-of-the-art methods."
+}

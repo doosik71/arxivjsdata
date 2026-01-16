@@ -1,0 +1,7 @@
+{
+  "title": "Online Baum-Welch algorithm for Hierarchical Imitation Learning",
+  "authors": "Vittorio Giammarino, Ioannis Ch. Paschalidis",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2103.12197v1",
+  "abstract": "The options framework for hierarchical reinforcement learning has increased its popularity in recent years and has made improvements in tackling the scalability problem in reinforcement learning. Yet, most of these recent successes are linked with a proper options initialization or discovery. When an expert is available, the options discovery problem can be addressed by learning an options-type hierarchical policy directly from expert demonstrations. This problem is referred to as hierarchical imitation learning and can be handled as an inference problem in a Hidden Markov Model, which is done via an Expectation-Maximization type algorithm. In this work, we propose a novel online algorithm to perform hierarchical imitation learning in the options framework. Further, we discuss the benefits of such an algorithm and compare it with its batch version in classical reinforcement learning benchmarks. We show that this approach works well in both discrete and continuous environments and, under certain conditions, it outperforms the batch version."
+}

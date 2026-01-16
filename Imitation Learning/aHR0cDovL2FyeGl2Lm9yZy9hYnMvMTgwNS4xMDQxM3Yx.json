@@ -1,0 +1,8 @@
+{
+  "title": "Fast Policy Learning through Imitation and Reinforcement",
+  "authors": "Ching-An Cheng, Xinyan Yan, Nolan Wagener, Byron Boots",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1805.10413v1",
+  "abstract": "Imitation learning (IL) consists of a set of tools that leverage expert demonstrations to quickly learn policies. However, if the expert is suboptimal, IL can yield policies with inferior performance compared to reinforcement learning (RL). In this paper, we aim to provide an algorithm that combines the best aspects of RL and IL. We accomplish this by formulating several popular RL and IL algorithms in a common mirror descent framework, showing that these algorithms can be viewed as a variation on a single approach. We then propose LOKI, a strategy for policy learning that first performs a small but random number of IL iterations before switching to a policy gradient RL method. We show that if the switching time is properly randomized, LOKI can learn to outperform a suboptimal expert and converge faster than running policy gradient from scratch. Finally, we evaluate the performance of LOKI experimentally in several simulated environments.",
+  "citation": 89
+}

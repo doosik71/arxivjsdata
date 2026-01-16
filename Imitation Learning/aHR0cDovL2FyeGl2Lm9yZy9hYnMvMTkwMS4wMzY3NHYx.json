@@ -1,0 +1,7 @@
+{
+  "title": "On the Global Convergence of Imitation Learning: A Case for Linear Quadratic Regulator",
+  "authors": "Qi Cai, Mingyi Hong, Yongxin Chen, Zhaoran Wang",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1901.03674v1",
+  "abstract": "We study the global convergence of generative adversarial imitation learning for linear quadratic regulators, which is posed as minimax optimization. To address the challenges arising from non-convex-concave geometry, we analyze the alternating gradient algorithm and establish its Q-linear rate of convergence to a unique saddle point, which simultaneously recovers the globally optimal policy and reward function. We hope our results may serve as a small step towards understanding and taming the instability in imitation learning as well as in more general non-convex-concave alternating minimax optimization that arises from reinforcement learning and generative adversarial learning."
+}

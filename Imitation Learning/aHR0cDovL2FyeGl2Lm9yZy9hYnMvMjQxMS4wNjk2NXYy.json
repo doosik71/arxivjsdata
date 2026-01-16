@@ -1,0 +1,7 @@
+{
+  "title": "Imitation from Diverse Behaviors: Wasserstein Quality Diversity Imitation Learning with Single-Step Archive Exploration",
+  "authors": "Xingrui Yu, Zhenglin Wan, David Mark Bossens, Yueming Lyu, Qing Guo, Ivor W. Tsang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.06965v2",
+  "abstract": "Learning diverse and high-performance behaviors from a limited set of demonstrations is a grand challenge. Traditional imitation learning methods usually fail in this task because most of them are designed to learn one specific behavior even with multiple demonstrations. Therefore, novel techniques for \\textit{quality diversity imitation learning}, which bridges the quality diversity optimization and imitation learning methods, are needed to solve the above challenge. This work introduces Wasserstein Quality Diversity Imitation Learning (WQDIL), which 1) improves the stability of imitation learning in the quality diversity setting with latent adversarial training based on a Wasserstein Auto-Encoder (WAE), and 2) mitigates a behavior-overfitting issue using a measure-conditioned reward function with a single-step archive exploration bonus. Empirically, our method significantly outperforms state-of-the-art IL methods, achieving near-expert or beyond-expert QD performance on the challenging continuous control tasks derived from MuJoCo environments."
+}

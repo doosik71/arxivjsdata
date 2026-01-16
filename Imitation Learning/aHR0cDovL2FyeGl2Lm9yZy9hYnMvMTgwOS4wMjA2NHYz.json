@@ -1,0 +1,8 @@
+{
+  "title": "Sample-Efficient Imitation Learning via Generative Adversarial Nets",
+  "authors": "Lionel Blondé, Alexandros Kalousis",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1809.02064v3",
+  "abstract": "GAIL is a recent successful imitation learning architecture that exploits the adversarial training procedure introduced in GANs. Albeit successful at generating behaviours similar to those demonstrated to the agent, GAIL suffers from a high sample complexity in the number of interactions it has to carry out in the environment in order to achieve satisfactory performance. We dramatically shrink the amount of interactions with the environment necessary to learn well-behaved imitation policies, by up to several orders of magnitude. Our framework, operating in the model-free regime, exhibits a significant increase in sample-efficiency over previous methods by simultaneously a) learning a self-tuned adversarially-trained surrogate reward and b) leveraging an off-policy actor-critic architecture. We show that our approach is simple to implement and that the learned agents remain remarkably stable, as shown in our experiments that span a variety of continuous control tasks. Video visualisations available at: \\url{https://youtu.be/-nCsqUJnRKU}.",
+  "citation": 88
+}

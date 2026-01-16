@@ -1,0 +1,8 @@
+{
+  "title": "Imitation Learning Approach for AI Driving Olympics Trained on Real-world and Simulation Data Simultaneously",
+  "authors": "Mikita Sazanovich, Konstantin Chaika, Kirill Krinkin, Aleksei Shpilman",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.03514v1",
+  "abstract": "In this paper, we describe our winning approach to solving the Lane Following Challenge at the AI Driving Olympics Competition through imitation learning on a mixed set of simulation and real-world data. AI Driving Olympics is a two-stage competition: at stage one, algorithms compete in a simulated environment with the best ones advancing to a real-world final. One of the main problems that participants encounter during the competition is that algorithms trained for the best performance in simulated environments do not hold up in a real-world environment and vice versa. Classic control algorithms also do not translate well between tasks since most of them have to be tuned to specific driving conditions such as lighting, road type, camera position, etc. To overcome this problem, we employed the imitation learning algorithm and trained it on a dataset collected from sources both from simulation and real-world, forcing our model to perform equally well in all environments.",
+  "citation": 2
+}

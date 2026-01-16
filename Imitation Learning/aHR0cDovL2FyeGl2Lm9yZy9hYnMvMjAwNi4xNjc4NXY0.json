@@ -1,0 +1,8 @@
+{
+  "title": "Lipschitzness Is All You Need To Tame Off-policy Generative Adversarial Imitation Learning",
+  "authors": "Lionel Blondé, Pablo Strasser, Alexandros Kalousis",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.16785v4",
+  "abstract": "Despite the recent success of reinforcement learning in various domains, these approaches remain, for the most part, deterringly sensitive to hyper-parameters and are often riddled with essential engineering feats allowing their success. We consider the case of off-policy generative adversarial imitation learning, and perform an in-depth review, qualitative and quantitative, of the method. We show that forcing the learned reward function to be local Lipschitz-continuous is a sine qua non condition for the method to perform well. We then study the effects of this necessary condition and provide several theoretical results involving the local Lipschitzness of the state-value function. We complement these guarantees with empirical evidence attesting to the strong positive effect that the consistent satisfaction of the Lipschitzness constraint on the reward has on imitation performance. Finally, we tackle a generic pessimistic reward preconditioning add-on spawning a large class of reward shaping methods, which makes the base method it is plugged into provably more robust, as shown in several additional theoretical guarantees. We then discuss these through a fine-grained lens and share our insights. Crucially, the guarantees derived and reported in this work are valid for any reward satisfying the Lipschitzness condition, nothing is specific to imitation. As such, these may be of independent interest.",
+  "citation": 24
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Compressed imitation learning",
+  "authors": "Nathan Zhao, Beicheng Lou",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2009.11697v1",
+  "abstract": "In analogy to compressed sensing, which allows sample-efficient signal reconstruction given prior knowledge of its sparsity in frequency domain, we propose to utilize policy simplicity (Occam's Razor) as a prior to enable sample-efficient imitation learning. We first demonstrated the feasibility of this scheme on linear case where state-value function can be sampled directly. We also extended the scheme to scenarios where only actions are visible and scenarios where the policy is obtained from nonlinear network. The method is benchmarked against behavior cloning and results in significantly higher scores with limited expert demonstrations."
+}

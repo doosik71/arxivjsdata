@@ -1,0 +1,8 @@
+{
+  "title": "On Value Discrepancy of Imitation Learning",
+  "authors": "Tian Xu, Ziniu Li, Yang Yu",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1911.07027v1",
+  "abstract": "Imitation learning trains a policy from expert demonstrations. Imitation learning approaches have been designed from various principles, such as behavioral cloning via supervised learning, apprenticeship learning via inverse reinforcement learning, and GAIL via generative adversarial learning. In this paper, we propose a framework to analyze the theoretical property of imitation learning approaches based on discrepancy propagation analysis. Under the infinite-horizon setting, the framework leads to the value discrepancy of behavioral cloning in an order of O((1-γ)^{-2}). We also show that the framework leads to the value discrepancy of GAIL in an order of O((1-γ)^{-1}). It implies that GAIL has less compounding errors than behavioral cloning, which is also verified empirically in this paper. To the best of our knowledge, we are the first one to analyze GAIL's performance theoretically. The above results indicate that the proposed framework is a general tool to analyze imitation learning approaches. We hope our theoretical results can provide insights for future improvements in imitation learning algorithms.",
+  "citation": 12
+}

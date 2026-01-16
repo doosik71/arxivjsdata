@@ -1,0 +1,8 @@
+{
+  "title": "Latent Policies for Adversarial Imitation Learning",
+  "authors": "Tianyu Wang, Nikhil Karnwal, Nikolay Atanasov",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2206.11299v1",
+  "abstract": "This paper considers learning robot locomotion and manipulation tasks from expert demonstrations. Generative adversarial imitation learning (GAIL) trains a discriminator that distinguishes expert from agent transitions, and in turn use a reward defined by the discriminator output to optimize a policy generator for the agent. This generative adversarial training approach is very powerful but depends on a delicate balance between the discriminator and the generator training. In high-dimensional problems, the discriminator training may easily overfit or exploit associations with task-irrelevant features for transition classification. A key insight of this work is that performing imitation learning in a suitable latent task space makes the training process stable, even in challenging high-dimensional problems. We use an action encoder-decoder model to obtain a low-dimensional latent action space and train a LAtent Policy using Adversarial imitation Learning (LAPAL). The encoder-decoder model can be trained offline from state-action pairs to obtain a task-agnostic latent action representation or online, simultaneously with the discriminator and generator training, to obtain a task-aware latent action representation. We demonstrate that LAPAL training is stable, with near-monotonic performance improvement, and achieves expert performance in most locomotion and manipulation tasks, while a GAIL baseline converges slower and does not achieve expert performance in high-dimensional environments.",
+  "citation": 5
+}

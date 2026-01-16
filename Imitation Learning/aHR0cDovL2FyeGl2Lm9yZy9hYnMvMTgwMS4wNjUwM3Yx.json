@@ -1,0 +1,8 @@
+{
+  "title": "Global overview of Imitation Learning",
+  "authors": "Alexandre Attia, Sharone Dayan",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1801.06503v1",
+  "abstract": "Imitation Learning is a sequential task where the learner tries to mimic an expert's action in order to achieve the best performance. Several algorithms have been proposed recently for this task. In this project, we aim at proposing a wide review of these algorithms, presenting their main features and comparing them on their performance and their regret bounds.",
+  "citation": 78
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Hindsight Generative Adversarial Imitation Learning",
+  "authors": "Naijun Liu, Tao Lu, Yinghao Cai, Boyao Li, Shuo Wang",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1903.07854v1",
+  "abstract": "Compared to reinforcement learning, imitation learning (IL) is a powerful paradigm for training agents to learn control policies efficiently from expert demonstrations. However, in most cases, obtaining demonstration data is costly and laborious, which poses a significant challenge in some scenarios. A promising alternative is to train agent learning skills via imitation learning without expert demonstrations, which, to some extent, would extremely expand imitation learning areas. To achieve such expectation, in this paper, we propose Hindsight Generative Adversarial Imitation Learning (HGAIL) algorithm, with the aim of achieving imitation learning satisfying no need of demonstrations. Combining hindsight idea with the generative adversarial imitation learning (GAIL) framework, we realize implementing imitation learning successfully in cases of expert demonstration data are not available. Experiments show that the proposed method can train policies showing comparable performance to current imitation learning methods. Further more, HGAIL essentially endows curriculum learning mechanism which is critical for learning policies.",
+  "citation": 6
+}

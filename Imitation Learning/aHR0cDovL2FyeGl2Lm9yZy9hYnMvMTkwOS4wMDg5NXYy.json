@@ -1,0 +1,7 @@
+{
+  "title": "Federated Imitation Learning: A Privacy Considered Imitation Learning Framework for Cloud Robotic Systems with Heterogeneous Sensor Data",
+  "authors": "Boyi Liu, Lujia Wang, Ming Liu, Cheng-Zhong Xu",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1909.00895v2",
+  "abstract": "Humans are capable of learning a new behavior by observing others perform the skill. Robots can also implement this by imitation learning. Furthermore, if with external guidance, humans will master the new behavior more efficiently. So how can robots implement this? To address the issue, we present Federated Imitation Learning (FIL) in the paper. Firstly, a knowledge fusion algorithm deployed on the cloud for fusing knowledge from local robots is presented. Then, effective transfer learning methods in FIL are introduced. With FIL, a robot is capable of utilizing knowledge from other robots to increase its imitation learning. FIL considers information privacy and data heterogeneity when robots share knowledge. It is suitable to be deployed in cloud robotic systems. Finally, we conduct experiments of a simplified self-driving task for robots (cars). The experimental results demonstrate that FIL is capable of increasing imitation learning of local robots in cloud robotic systems."
+}

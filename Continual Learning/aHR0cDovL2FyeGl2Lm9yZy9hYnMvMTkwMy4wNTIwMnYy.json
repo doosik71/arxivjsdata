@@ -1,0 +1,8 @@
+{
+  "title": "Continual Learning in Practice",
+  "authors": "Tom Diethe, Tom Borchert, Eno Thereska, Borja Balle, Neil Lawrence",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1903.05202v2",
+  "abstract": "This paper describes a reference architecture for self-maintaining systems that can learn continually, as data arrives. In environments where data evolves, we need architectures that manage Machine Learning (ML) models in production, adapt to shifting data distributions, cope with outliers, retrain when necessary, and adapt to new tasks. This represents continual AutoML or Automatically Adaptive Machine Learning. We describe the challenges and proposes a reference architecture.",
+  "citation": 78
+}

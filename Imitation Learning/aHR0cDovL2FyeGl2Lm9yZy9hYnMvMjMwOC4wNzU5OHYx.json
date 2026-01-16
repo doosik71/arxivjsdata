@@ -1,0 +1,7 @@
+{
+  "title": "Generating Personas for Games with Multimodal Adversarial Imitation Learning",
+  "authors": "William Ahlberg, Alessandro Sestini, Konrad Tollmar, Linus Gisslén",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2308.07598v1",
+  "abstract": "Reinforcement learning has been widely successful in producing agents capable of playing games at a human level. However, this requires complex reward engineering, and the agent's resulting policy is often unpredictable. Going beyond reinforcement learning is necessary to model a wide range of human playstyles, which can be difficult to represent with a reward function. This paper presents a novel imitation learning approach to generate multiple persona policies for playtesting. Multimodal Generative Adversarial Imitation Learning (MultiGAIL) uses an auxiliary input parameter to learn distinct personas using a single-agent model. MultiGAIL is based on generative adversarial imitation learning and uses multiple discriminators as reward models, inferring the environment reward by comparing the agent and distinct expert policies. The reward from each discriminator is weighted according to the auxiliary input. Our experimental analysis demonstrates the effectiveness of our technique in two environments with continuous and discrete action spaces."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "On Combining Expert Demonstrations in Imitation Learning via Optimal Transport",
+  "authors": "Ilana Sebag, Samuel Cohen, Marc Peter Deisenroth",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2307.10810v1",
+  "abstract": "Imitation learning (IL) seeks to teach agents specific tasks through expert demonstrations. One of the key approaches to IL is to define a distance between agent and expert and to find an agent policy that minimizes that distance. Optimal transport methods have been widely used in imitation learning as they provide ways to measure meaningful distances between agent and expert trajectories. However, the problem of how to optimally combine multiple expert demonstrations has not been widely studied. The standard method is to simply concatenate state (-action) trajectories, which is problematic when trajectories are multi-modal. We propose an alternative method that uses a multi-marginal optimal transport distance and enables the combination of multiple and diverse state-trajectories in the OT sense, providing a more sensible geometric average of the demonstrations. Our approach enables an agent to learn from several experts, and its efficiency is analyzed on OpenAI Gym control environments and demonstrates that the standard method is not always optimal."
+}

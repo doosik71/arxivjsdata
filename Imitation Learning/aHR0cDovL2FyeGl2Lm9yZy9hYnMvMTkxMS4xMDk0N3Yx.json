@@ -1,0 +1,8 @@
+{
+  "title": "State Alignment-based Imitation Learning",
+  "authors": "Fangchen Liu, Zhan Ling, Tongzhou Mu, Hao Su",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1911.10947v1",
+  "abstract": "Consider an imitation learning problem that the imitator and the expert have different dynamics models. Most of the current imitation learning methods fail because they focus on imitating actions. We propose a novel state alignment-based imitation learning method to train the imitator to follow the state sequences in expert demonstrations as much as possible. The state alignment comes from both local and global perspectives and we combine them into a reinforcement learning framework by a regularized policy update objective. We show the superiority of our method on standard imitation learning settings and imitation learning settings where the expert and imitator have different dynamics models.",
+  "citation": 101
+}

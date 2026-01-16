@@ -1,0 +1,8 @@
+{
+  "title": "Learning Topology Actions for Power Grid Control: A Graph-Based Soft-Label Imitation Learning Approach",
+  "authors": "Mohamed Hassouna, Clara Holzhüter, Malte Lehna, Matthijs de Jong, Jan Viebahn, Bernhard Sick, Christoph Scholz",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.15190v2",
+  "abstract": "The rising proportion of renewable energy in the electricity mix introduces significant operational challenges for power grid operators. Effective power grid management demands adaptive decision-making strategies capable of handling dynamic conditions. With the increase in complexity, more and more Deep Learning (DL) approaches have been proposed to find suitable grid topologies for congestion management. In this work, we contribute to this research by introducing a novel Imitation Learning (IL) approach that leverages soft labels derived from simulated topological action outcomes, thereby capturing multiple viable actions per state. Unlike traditional IL methods that rely on hard labels to enforce a single optimal action, our method constructs soft labels that capture the effectiveness of actions that prove suitable in resolving grid congestion. To further enhance decision-making, we integrate Graph Neural Networks (GNNs) to encode the structural properties of power grids, ensuring that the topology-aware representations contribute to better agent performance. Our approach significantly outperforms its hard-label counterparts as well as state-of-the-art Deep Reinforcement Learning (DRL) baseline agents. Most notably, it achieves a 17% better performance compared to the greedy expert agent from which the imitation targets were derived.",
+  "citation": 6
+}

@@ -1,0 +1,7 @@
+{
+  "title": "The Pitfalls of Imitation Learning when Actions are Continuous",
+  "authors": "Max Simchowitz, Daniel Pfrommer, Ali Jadbabaie",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.09722v4",
+  "abstract": "We study the problem of imitating an expert demonstrator in a discrete-time, continuous state-and-action control system. We show that, even if the dynamics satisfy a control-theoretic property called exponential stability (i.e. the effects of perturbations decay exponentially quickly), and the expert is smooth and deterministic, any smooth, deterministic imitator policy necessarily suffers error on execution that is exponentially larger, as a function of problem horizon, than the error under the distribution of expert training data. Our negative result applies to any algorithm which learns solely from expert data, including both behavior cloning and offline-RL algorithms, unless the algorithm produces highly \"improper\" imitator policies--those which are non-smooth, non-Markovian, or which exhibit highly state-dependent stochasticity--or unless the expert trajectory distribution is sufficiently \"spread.\" We provide experimental evidence of the benefits of these more complex policy parameterizations, explicating the benefits of today's popular policy parameterizations in robot learning (e.g. action-chunking and diffusion policies). We also establish a host of complementary negative and positive results for imitation in control systems."
+}

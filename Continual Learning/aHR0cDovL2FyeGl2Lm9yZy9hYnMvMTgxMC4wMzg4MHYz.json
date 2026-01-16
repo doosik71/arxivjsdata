@@ -1,0 +1,8 @@
+{
+  "title": "Continual State Representation Learning for Reinforcement Learning using Generative Replay",
+  "authors": "Hugo Caselles-Dupré, Michael Garcia-Ortiz, David Filliat",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1810.03880v3",
+  "abstract": "We consider the problem of building a state representation model in a continual fashion. As the environment changes, the aim is to efficiently compress the sensory state's information without losing past knowledge. The learned features are then fed to a Reinforcement Learning algorithm to learn a policy. We propose to use Variational Auto-Encoders for state representation, and Generative Replay, i.e. the use of generated samples, to maintain past knowledge. We also provide a general and statistically sound method for automatic environment change detection. Our method provides efficient state representation as well as forward transfer, and avoids catastrophic forgetting. The resulting model is capable of incrementally learning information without using past data and with a bounded system size.",
+  "citation": 20
+}

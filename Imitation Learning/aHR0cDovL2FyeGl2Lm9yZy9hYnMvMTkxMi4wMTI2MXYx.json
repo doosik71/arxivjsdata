@@ -1,0 +1,7 @@
+{
+  "title": "Continuous Online Learning and New Insights to Online Imitation Learning",
+  "authors": "Jonathan Lee, Ching-An Cheng, Ken Goldberg, Byron Boots",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1912.01261v1",
+  "abstract": "Online learning is a powerful tool for analyzing iterative algorithms. However, the classic adversarial setup sometimes fails to capture certain regularity in online problems in practice. Motivated by this, we establish a new setup, called Continuous Online Learning (COL), where the gradient of online loss function changes continuously across rounds with respect to the learner's decisions. We show that COL covers and more appropriately describes many interesting applications, from general equilibrium problems (EPs) to optimization in episodic MDPs. Using this new setup, we revisit the difficulty of achieving sublinear dynamic regret. We prove that there is a fundamental equivalence between achieving sublinear dynamic regret in COL and solving certain EPs, and we present a reduction from dynamic regret to both static regret and convergence rate of the associated EP. At the end, we specialize these new insights into online imitation learning and show improved understanding of its learning stability."
+}

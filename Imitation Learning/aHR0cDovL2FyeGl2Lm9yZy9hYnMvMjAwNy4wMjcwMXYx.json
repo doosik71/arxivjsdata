@@ -1,0 +1,8 @@
+{
+  "title": "Scaling Imitation Learning in Minecraft",
+  "authors": "Artemij Amiranashvili, Nicolai Dorka, Wolfram Burgard, Vladlen Koltun, Thomas Brox",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.02701v1",
+  "abstract": "Imitation learning is a powerful family of techniques for learning sensorimotor coordination in immersive environments. We apply imitation learning to attain state-of-the-art performance on hard exploration problems in the Minecraft environment. We report experiments that highlight the influence of network architecture, loss function, and data augmentation. An early version of our approach reached second place in the MineRL competition at NeurIPS 2019. Here we report stronger results that can be used as a starting point for future competition entries and related research. Our code is available at https://github.com/amiranas/minerl_imitation_learning.",
+  "citation": 19
+}

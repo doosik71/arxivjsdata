@@ -1,0 +1,8 @@
+{
+  "title": "One-Shot Imitation Learning: A Pose Estimation Perspective",
+  "authors": "Pietro Vitiello, Kamil Dreczkowski, Edward Johns",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2310.12077v1",
+  "abstract": "In this paper, we study imitation learning under the challenging setting of: (1) only a single demonstration, (2) no further data collection, and (3) no prior task or object knowledge. We show how, with these constraints, imitation learning can be formulated as a combination of trajectory transfer and unseen object pose estimation. To explore this idea, we provide an in-depth study on how state-of-the-art unseen object pose estimators perform for one-shot imitation learning on ten real-world tasks, and we take a deep dive into the effects that camera calibration, pose estimation error, and spatial generalisation have on task success rates. For videos, please visit https://www.robot-learning.uk/pose-estimation-perspective.",
+  "citation": 29
+}

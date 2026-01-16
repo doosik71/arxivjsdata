@@ -1,0 +1,7 @@
+{
+  "title": "Phase-Amplitude Reduction-Based Imitation Learning",
+  "authors": "Satoshi Yamamori, Jun Morimoto",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.03735v2",
+  "abstract": "In this study, we propose the use of the phase-amplitude reduction method to construct an imitation learning framework. Imitating human movement trajectories is recognized as a promising strategy for generating a range of human-like robot movements. Unlike previous dynamical system-based imitation learning approaches, our proposed method allows the robot not only to imitate a limit cycle trajectory but also to replicate the transient movement from the initial or disturbed state to the limit cycle. Consequently, our method offers a safer imitation learning approach that avoids generating unpredictable motions immediately after disturbances or from a specified initial state. We first validated our proposed method by reconstructing a simple limit-cycle attractor. We then compared the proposed approach with a conventional method on a lemniscate trajectory tracking task with a simulated robot arm. Our findings confirm that our proposed method can more accurately generate transient movements to converge on a target periodic attractor compared to the previous standard approach. Subsequently, we applied our method to a real robot arm to imitate periodic human movements."
+}

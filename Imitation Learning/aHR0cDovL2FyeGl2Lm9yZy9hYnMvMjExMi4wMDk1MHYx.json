@@ -1,0 +1,8 @@
+{
+  "title": "Quantile Filtered Imitation Learning",
+  "authors": "David Brandfonbrener, William F. Whitney, Rajesh Ranganath, Joan Bruna",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2112.00950v1",
+  "abstract": "We introduce quantile filtered imitation learning (QFIL), a novel policy improvement operator designed for offline reinforcement learning. QFIL performs policy improvement by running imitation learning on a filtered version of the offline dataset. The filtering process removes $ s,a $ pairs whose estimated Q values fall below a given quantile of the pushforward distribution over values induced by sampling actions from the behavior policy. The definitions of both the pushforward Q distribution and resulting value function quantile are key contributions of our method. We prove that QFIL gives us a safe policy improvement step with function approximation and that the choice of quantile provides a natural hyperparameter to trade off bias and variance of the improvement step. Empirically, we perform a synthetic experiment illustrating how QFIL effectively makes a bias-variance tradeoff and we see that QFIL performs well on the D4RL benchmark.",
+  "citation": 12
+}
