@@ -1,0 +1,8 @@
+{
+  "title": "Maximum Density Divergence for Domain Adaptation",
+  "authors": "Li Jingjing, Chen Erpeng, Ding Zhengming, Zhu Lei, Lu Ke, Shen Heng Tao",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2004.12615v1",
+  "abstract": "Unsupervised domain adaptation addresses the problem of transferring knowledge from a well-labeled source domain to an unlabeled target domain where the two domains have distinctive data distributions. Thus, the essence of domain adaptation is to mitigate the distribution divergence between the two domains. The state-of-the-art methods practice this very idea by either conducting adversarial training or minimizing a metric which defines the distribution gaps. In this paper, we propose a new domain adaptation method named Adversarial Tight Match (ATM) which enjoys the benefits of both adversarial training and metric learning. Specifically, at first, we propose a novel distance loss, named Maximum Density Divergence (MDD), to quantify the distribution divergence. MDD minimizes the inter-domain divergence (\"match\" in ATM) and maximizes the intra-class density (\"tight\" in ATM). Then, to address the equilibrium challenge issue in adversarial domain adaptation, we consider leveraging the proposed MDD into adversarial domain adaptation framework. At last, we tailor the proposed MDD as a practical learning loss and report our ATM. Both empirical evaluation and theoretical analysis are reported to verify the effectiveness of the proposed method. The experimental results on four benchmarks, both classical and large-scale, show that our method is able to achieve new state-of-the-art performance on most evaluations. Codes and datasets used in this paper are available at {\\it github.com/lijin118/ATM}.",
+  "citation": 389
+}

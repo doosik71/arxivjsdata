@@ -1,0 +1,7 @@
+{
+  "title": "CheXplain: Enabling Physicians to Explore and UnderstandData-Driven, AI-Enabled Medical Imaging Analysis",
+  "authors": "Yao Xie, Melody Chen, David Kao, Ge Gao, Xiang 'Anthony' Chen",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2001.05149v2",
+  "abstract": "The recent development of data-driven AI promises to automate medical diagnosis; however, most AI functions as 'black boxes' to physicians with limited computational knowledge. Using medical imaging as a point of departure, we conducted three iterations of design activities to formulate CheXplain---a system that enables physicians to explore and understand AI-enabled chest X-ray analysis: (1) a paired survey between referring physicians and radiologists reveals whether, when, and what kinds of explanations are needed; (2) a low-fidelity prototype co-designed with three physicians formulates eight key features; and (3) a high-fidelity prototype evaluated by another six physicians provides detailed summative insights on how each feature enables the exploration and understanding of AI. We summarize by discussing recommendations for future work to design and implement explainable medical AI systems that encompass four recurring themes: motivation, constraint, explanation, and justification."
+}

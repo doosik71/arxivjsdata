@@ -1,0 +1,8 @@
+{
+  "title": "Improved Reinforcement Learning with Curriculum",
+  "authors": "Joseph West, Frederic Maire, Cameron Browne, Simon Denman",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1903.12328v2",
+  "abstract": "Humans tend to learn complex abstract concepts faster if examples are presented in a structured manner. For instance, when learning how to play a board game, usually one of the first concepts learned is how the game ends, i.e. the actions that lead to a terminal state (win, lose or draw). The advantage of learning end-games first is that once the actions which lead to a terminal state are understood, it becomes possible to incrementally learn the consequences of actions that are further away from a terminal state - we call this an end-game-first curriculum. Currently the state-of-the-art machine learning player for general board games, AlphaZero by Google DeepMind, does not employ a structured training curriculum; instead learning from the entire game at all times. By employing an end-game-first training curriculum to train an AlphaZero inspired player, we empirically show that the rate of learning of an artificial player can be improved during the early stages of training when compared to a player not using a training curriculum.",
+  "citation": 0
+}

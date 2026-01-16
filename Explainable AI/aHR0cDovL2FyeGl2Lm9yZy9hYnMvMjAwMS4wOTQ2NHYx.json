@@ -1,0 +1,7 @@
+{
+  "title": "Explainable Artificial Intelligence and Machine Learning: A reality rooted perspective",
+  "authors": "Frank Emmert-Streib, Olli Yli-Harja, Matthias Dehmer",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2001.09464v1",
+  "abstract": "We are used to the availability of big data generated in nearly all fields of science as a consequence of technological progress. However, the analysis of such data possess vast challenges. One of these relates to the explainability of artificial intelligence (AI) or machine learning methods. Currently, many of such methods are non-transparent with respect to their working mechanism and for this reason are called black box models, most notably deep learning methods. However, it has been realized that this constitutes severe problems for a number of fields including the health sciences and criminal justice and arguments have been brought forward in favor of an explainable AI. In this paper, we do not assume the usual perspective presenting explainable AI as it should be, but rather we provide a discussion what explainable AI can be. The difference is that we do not present wishful thinking but reality grounded properties in relation to a scientific theory beyond physics."
+}

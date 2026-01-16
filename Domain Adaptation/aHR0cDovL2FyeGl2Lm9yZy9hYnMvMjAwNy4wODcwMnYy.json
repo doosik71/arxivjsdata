@@ -1,0 +1,8 @@
+{
+  "title": "DACS: Domain Adaptation via Cross-domain Mixed Sampling",
+  "authors": "Wilhelm Tranheden, Viktor Olsson, Juliano Pinto, Lennart Svensson",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.08702v2",
+  "abstract": "Semantic segmentation models based on convolutional neural networks have recently displayed remarkable performance for a multitude of applications. However, these models typically do not generalize well when applied on new domains, especially when going from synthetic to real data. In this paper we address the problem of unsupervised domain adaptation (UDA), which attempts to train on labelled data from one domain (source domain), and simultaneously learn from unlabelled data in the domain of interest (target domain). Existing methods have seen success by training on pseudo-labels for these unlabelled images. Multiple techniques have been proposed to mitigate low-quality pseudo-labels arising from the domain shift, with varying degrees of success. We propose DACS: Domain Adaptation via Cross-domain mixed Sampling, which mixes images from the two domains along with the corresponding labels and pseudo-labels. These mixed samples are then trained on, in addition to the labelled data itself. We demonstrate the effectiveness of our solution by achieving state-of-the-art results for GTA5 to Cityscapes, a common synthetic-to-real semantic segmentation benchmark for UDA.",
+  "citation": 525
+}

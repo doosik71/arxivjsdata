@@ -1,0 +1,7 @@
+{
+  "title": "What Does Explainable AI Really Mean? A New Conceptualization of Perspectives",
+  "authors": "Derek Doran, Sarah Schulz, Tarek R. Besold",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1710.00794v1",
+  "abstract": "We characterize three notions of explainable AI that cut across research fields: opaque systems that offer no insight into its algo- rithmic mechanisms; interpretable systems where users can mathemat- ically analyze its algorithmic mechanisms; and comprehensible systems that emit symbols enabling user-driven explanations of how a conclusion is reached. The paper is motivated by a corpus analysis of NIPS, ACL, COGSCI, and ICCV/ECCV paper titles showing differences in how work on explainable AI is positioned in various fields. We close by introducing a fourth notion: truly explainable systems, where automated reasoning is central to output crafted explanations without requiring human post processing as final step of the generative process."
+}

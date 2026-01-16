@@ -1,0 +1,8 @@
+{
+  "title": "A gray-box approach for curriculum learning",
+  "authors": "Francesco Foglino, Matteo Leonetti, Simone Sagratella, Ruggiero Seccia",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1906.06812v1",
+  "abstract": "Curriculum learning is often employed in deep reinforcement learning to let the agent progress more quickly towards better behaviors. Numerical methods for curriculum learning in the literature provides only initial heuristic solutions, with little to no guarantee on their quality. We define a new gray-box function that, including a suitable scheduling problem, can be effectively used to reformulate the curriculum learning problem. We propose different efficient numerical methods to address this gray-box reformulation. Preliminary numerical results on a benchmark task in the curriculum learning literature show the viability of the proposed approach.",
+  "citation": 0
+}

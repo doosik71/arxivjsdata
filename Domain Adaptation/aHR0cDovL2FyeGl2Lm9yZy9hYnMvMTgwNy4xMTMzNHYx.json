@@ -1,0 +1,8 @@
+{
+  "title": "Unsupervised Domain Adaptive Re-Identification: Theory and Practice",
+  "authors": "Liangchen Song, Cheng Wang, Lefei Zhang, Bo Du, Qian Zhang, Chang Huang, Xinggang Wang",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1807.11334v1",
+  "abstract": "We study the problem of unsupervised domain adaptive re-identification (re-ID) which is an active topic in computer vision but lacks a theoretical foundation. We first extend existing unsupervised domain adaptive classification theories to re-ID tasks. Concretely, we introduce some assumptions on the extracted feature space and then derive several loss functions guided by these assumptions. To optimize them, a novel self-training scheme for unsupervised domain adaptive re-ID tasks is proposed. It iteratively makes guesses for unlabeled target data based on an encoder and trains the encoder based on the guessed labels. Extensive experiments on unsupervised domain adaptive person re-ID and vehicle re-ID tasks with comparisons to the state-of-the-arts confirm the effectiveness of the proposed theories and self-training framework. Our code is available at \\url{https://github.com/LcDog/DomainAdaptiveReID}.",
+  "citation": 424
+}

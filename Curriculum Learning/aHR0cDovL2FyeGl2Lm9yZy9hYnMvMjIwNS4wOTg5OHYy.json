@@ -1,0 +1,8 @@
+{
+  "title": "Let the Model Decide its Curriculum for Multitask Learning",
+  "authors": "Neeraj Varshney, Swaroop Mishra, Chitta Baral",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2205.09898v2",
+  "abstract": "Curriculum learning strategies in prior multi-task learning approaches arrange datasets in a difficulty hierarchy either based on human perception or by exhaustively searching the optimal arrangement. However, human perception of difficulty may not always correlate well with machine interpretation leading to poor performance and exhaustive search is computationally expensive. Addressing these concerns, we propose two classes of techniques to arrange training instances into a learning curriculum based on difficulty scores computed via model-based approaches. The two classes i.e Dataset-level and Instance-level differ in granularity of arrangement. Through comprehensive experiments with 12 datasets, we show that instance-level and dataset-level techniques result in strong representations as they lead to an average performance improvement of 4.17% and 3.15% over their respective baselines. Furthermore, we find that most of this improvement comes from correctly answering the difficult instances, implying a greater efficacy of our techniques on difficult tasks.",
+  "citation": 0
+}

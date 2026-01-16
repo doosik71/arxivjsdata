@@ -1,0 +1,8 @@
+{
+  "title": "Teacher-student curriculum learning for reinforcement learning",
+  "authors": "Yanick Schraner",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2210.17368v1",
+  "abstract": "Reinforcement learning (rl) is a popular paradigm for sequential decision making problems. The past decade's advances in rl have led to breakthroughs in many challenging domains such as video games, board games, robotics, and chip design. The sample inefficiency of deep reinforcement learning methods is a significant obstacle when applying rl to real-world problems. Transfer learning has been applied to reinforcement learning such that the knowledge gained in one task can be applied when training in a new task. Curriculum learning is concerned with sequencing tasks or data samples such that knowledge can be transferred between those tasks to learn a target task that would otherwise be too difficult to solve. Designing a curriculum that improves sample efficiency is a complex problem. In this thesis, we propose a teacher-student curriculum learning setting where we simultaneously train a teacher that selects tasks for the student while the student learns how to solve the selected task. Our method is independent of human domain knowledge and manual curriculum design. We evaluated our methods on two reinforcement learning benchmarks: grid world and the challenging Google Football environment. With our method, we can improve the sample efficiency and generality of the student compared to tabula-rasa reinforcement learning.",
+  "citation": 0
+}

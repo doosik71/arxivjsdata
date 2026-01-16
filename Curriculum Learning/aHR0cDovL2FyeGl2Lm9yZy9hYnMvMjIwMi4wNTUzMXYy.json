@@ -1,0 +1,8 @@
+{
+  "title": "Cyclical Curriculum Learning",
+  "authors": "H. Toprak Kesgin, M. Fatih Amasyali",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.05531v2",
+  "abstract": "Artificial neural networks (ANN) are inspired by human learning. However, unlike human education, classical ANN does not use a curriculum. Curriculum Learning (CL) refers to the process of ANN training in which examples are used in a meaningful order. When using CL, training begins with a subset of the dataset and new samples are added throughout the training, or training begins with the entire dataset and the number of samples used is reduced. With these changes in training dataset size, better results can be obtained with curriculum, anti-curriculum, or random-curriculum methods than the vanilla method. However, a generally efficient CL method for various architectures and data sets is not found. In this paper, we propose cyclical curriculum learning (CCL), in which the data size used during training changes cyclically rather than simply increasing or decreasing. Instead of using only the vanilla method or only the curriculum method, using both methods cyclically like in CCL provides more successful results. We tested the method on 18 different data sets and 15 architectures in image and text classification tasks and obtained more successful results than no-CL and existing CL methods. We also have shown theoretically that it is less erroneous to apply CL and vanilla cyclically instead of using only CL or only vanilla method. The code of Cyclical Curriculum is available at https://github.com/CyclicalCurriculum/Cyclical-Curriculum.",
+  "citation": 0
+}

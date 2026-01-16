@@ -1,0 +1,8 @@
+{
+  "title": "Data Distribution-based Curriculum Learning",
+  "authors": "Shonal Chaudhry, Anuraganand Sharma",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.07352v2",
+  "abstract": "The order of training samples can have a significant impact on the performance of a classifier. Curriculum learning is a method of ordering training samples from easy to hard. This paper proposes the novel idea of a curriculum learning approach called Data Distribution-based Curriculum Learning (DDCL). DDCL uses the data distribution of a dataset to build a curriculum based on the order of samples. Two types of scoring methods known as DDCL (Density) and DDCL (Point) are used to score training samples thus determining their training order. DDCL (Density) uses the sample density to assign scores while DDCL (Point) utilises the Euclidean distance for scoring. We evaluate the proposed DDCL approach by conducting experiments on multiple datasets using a neural network, support vector machine and random forest classifier. Evaluation results show that the application of DDCL improves the average classification accuracy for all datasets compared to standard evaluation without any curriculum. Moreover, analysis of the error losses for a single training epoch reveals that convergence is faster when using DDCL over the no curriculum method.",
+  "citation": 0
+}

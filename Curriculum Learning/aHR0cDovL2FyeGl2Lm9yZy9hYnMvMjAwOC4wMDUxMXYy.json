@@ -1,0 +1,8 @@
+{
+  "title": "Curriculum Learning with a Progression Function",
+  "authors": "Andrea Bassich, Francesco Foglino, Matteo Leonetti, Daniel Kudenko",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.00511v2",
+  "abstract": "Curriculum Learning for Reinforcement Learning is an increasingly popular technique that involves training an agent on a sequence of intermediate tasks, called a Curriculum, to increase the agent's performance and learning speed. This paper introduces a novel paradigm for curriculum generation based on progression and mapping functions. While progression functions specify the complexity of the environment at any given time, mapping functions generate environments of a specific complexity. Different progression functions are introduced, including an autonomous online task progression based on the agent's performance. Our approach's benefits and wide applicability are shown by empirically comparing its performance to two state-of-the-art Curriculum Learning algorithms on six domains.",
+  "citation": 0
+}
