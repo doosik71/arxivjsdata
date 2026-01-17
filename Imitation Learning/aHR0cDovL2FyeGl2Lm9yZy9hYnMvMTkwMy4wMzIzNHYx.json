@@ -3,5 +3,6 @@
   "authors": "Vaibhav Saxena, Srinivasan Sivanandan, Pulkit Mathur",
   "year": 2019,
   "url": "http://arxiv.org/abs/1903.03234v1",
-  "abstract": "Adversarial methods for imitation learning have been shown to perform well on various control tasks. However, they require a large number of environment interactions for convergence. In this paper, we propose an end-to-end differentiable adversarial imitation learning algorithm in a Dyna-like framework for switching between model-based planning and model-free learning from expert data. Our results on both discrete and continuous environments show that our approach of using model-based planning along with model-free learning converges to an optimal policy with fewer number of environment interactions in comparison to the state-of-the-art learning methods."
+  "abstract": "Adversarial methods for imitation learning have been shown to perform well on various control tasks. However, they require a large number of environment interactions for convergence. In this paper, we propose an end-to-end differentiable adversarial imitation learning algorithm in a Dyna-like framework for switching between model-based planning and model-free learning from expert data. Our results on both discrete and continuous environments show that our approach of using model-based planning along with model-free learning converges to an optimal policy with fewer number of environment interactions in comparison to the state-of-the-art learning methods.",
+  "citation": 1
 }
