@@ -1,0 +1,8 @@
+{
+  "title": "FedHealth 2: Weighted Federated Transfer Learning via Batch Normalization for Personalized Healthcare",
+  "authors": "Yiqiang Chen, Wang Lu, Jindong Wang, Xin Qin",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2106.01009v2",
+  "abstract": "The success of machine learning applications often needs a large quantity of data. Recently, federated learning (FL) is attracting increasing attention due to the demand for data privacy and security, especially in the medical field. However, the performance of existing FL approaches often deteriorates when there exist domain shifts among clients, and few previous works focus on personalization in healthcare. In this article, we propose FedHealth 2, an extension of FedHealth \\cite{chen2020fedhealth} to tackle domain shifts and get personalized models for local clients. FedHealth 2 obtains the client similarities via a pretrained model, and then it averages all weighted models with preserving local batch normalization. Wearable activity recognition and COVID-19 auxiliary diagnosis experiments have evaluated that FedHealth 2 can achieve better accuracy (10%+ improvement for activity recognition) and personalized healthcare without compromising privacy and security.",
+  "citation": 28
+}

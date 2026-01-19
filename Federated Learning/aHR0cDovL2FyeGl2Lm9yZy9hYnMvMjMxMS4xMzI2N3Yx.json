@@ -1,0 +1,8 @@
+{
+  "title": "FedFN: Feature Normalization for Alleviating Data Heterogeneity Problem in Federated Learning",
+  "authors": "Seongyoon Kim, Gihun Lee, Jaehoon Oh, Se-Young Yun",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.13267v1",
+  "abstract": "Federated Learning (FL) is a collaborative method for training models while preserving data privacy in decentralized settings. However, FL encounters challenges related to data heterogeneity, which can result in performance degradation. In our study, we observe that as data heterogeneity increases, feature representation in the FedAVG model deteriorates more significantly compared to classifier weight. Additionally, we observe that as data heterogeneity increases, the gap between higher feature norms for observed classes, obtained from local models, and feature norms of unobserved classes widens, in contrast to the behavior of classifier weight norms. This widening gap extends to encompass the feature norm disparities between local and the global models. To address these issues, we introduce Federated Averaging with Feature Normalization Update (FedFN), a straightforward learning method. We demonstrate the superior performance of FedFN through extensive experiments, even when applied to pretrained ResNet18. Subsequently, we confirm the applicability of FedFN to foundation models.",
+  "citation": 8
+}

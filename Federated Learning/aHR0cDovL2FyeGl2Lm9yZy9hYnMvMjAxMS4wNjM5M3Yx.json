@@ -1,0 +1,8 @@
+{
+  "title": "Heterogeneous Data-Aware Federated Learning",
+  "authors": "Lixuan Yang, Cedric Beliard, Dario Rossi",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2011.06393v1",
+  "abstract": "Federated learning (FL) is an appealing concept to perform distributed training of Neural Networks (NN) while keeping data private. With the industrialization of the FL framework, we identify several problems hampering its successful deployment, such as presence of non i.i.d data, disjoint classes, signal multi-modality across datasets. In this work, we address these problems by proposing a novel method that not only (1) aggregates generic model parameters (e.g. a common set of task generic NN layers) on server (e.g. in traditional FL), but also (2) keeps a set of parameters (e.g, a set of task specific NN layer) specific to each client. We validate our method on the traditionally used public benchmarks (e.g., Femnist) as well as on our proprietary collected dataset (i.e., traffic classification). Results show the benefit of our method, with significant advantage on extreme cases.",
+  "citation": 17
+}

@@ -1,0 +1,8 @@
+{
+  "title": "A Compressive Sensing Approach for Federated Learning over Massive MIMO Communication Systems",
+  "authors": "Yo-Seb Jeon, Mohammad Mohammadi Amiri, Jun Li, H. Vincent Poor",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2003.08059v2",
+  "abstract": "Federated learning is a privacy-preserving approach to train a global model at a central server by collaborating with wireless devices, each with its own local training data set. In this paper, we present a compressive sensing approach for federated learning over massive multiple-input multiple-output communication systems in which the central server equipped with a massive antenna array communicates with the wireless devices. One major challenge in system design is to reconstruct local gradient vectors accurately at the central server, which are computed-and-sent from the wireless devices. To overcome this challenge, we first establish a transmission strategy to construct sparse transmitted signals from the local gradient vectors at the devices. We then propose a compressive sensing algorithm enabling the server to iteratively find the linear minimum-mean-square-error (LMMSE) estimate of the transmitted signal by exploiting its sparsity. We also derive an analytical threshold for the residual error at each iteration, to design the stopping criterion of the proposed algorithm. We show that for a sparse transmitted signal, the proposed algorithm requires less computationally complexity than LMMSE. Simulation results demonstrate that the presented approach outperforms conventional linear beamforming approaches and reduces the performance gap between federated learning and centralized learning with perfect reconstruction.",
+  "citation": 98
+}

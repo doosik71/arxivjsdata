@@ -1,0 +1,8 @@
+{
+  "title": "Flotta: a Secure and Flexible Spark-inspired Federated Learning Framework",
+  "authors": "Claudio Bonesana, Daniele Malpetti, Sandra Mitrović, Francesca Mangili, Laura Azzimonti",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.13473v1",
+  "abstract": "We present Flotta, a Federated Learning framework designed to train machine learning models on sensitive data distributed across a multi-party consortium conducting research in contexts requiring high levels of security, such as the biomedical field. Flotta is a Python package, inspired in several aspects by Apache Spark, which provides both flexibility and security and allows conducting research using solely machines internal to the consortium. In this paper, we describe the main components of the framework together with a practical use case to illustrate the framework's capabilities and highlight its security, flexibility and user-friendliness.",
+  "citation": 1
+}

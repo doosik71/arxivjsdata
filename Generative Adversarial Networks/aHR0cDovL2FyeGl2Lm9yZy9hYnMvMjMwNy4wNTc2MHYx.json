@@ -1,0 +1,8 @@
+{
+  "title": "Line Art Colorization of Fakemon using Generative Adversarial Neural Networks",
+  "authors": "Erick Oliveira Rodrigues, Esteban Clua, Giovani Bernardes Vitor",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2307.05760v1",
+  "abstract": "This work proposes a complete methodology to colorize images of Fakemon, anime-style monster-like creatures. In addition, we propose algorithms to extract the line art from colorized images as well as to extract color hints. Our work is the first in the literature to use automatic color hint extraction, to train the networks specifically with anime-styled creatures and to combine the Pix2Pix and CycleGAN approaches, two different generative adversarial networks that create a single final result. Visual results of the colorizations are feasible but there is still room for improvement.",
+  "citation": 7
+}

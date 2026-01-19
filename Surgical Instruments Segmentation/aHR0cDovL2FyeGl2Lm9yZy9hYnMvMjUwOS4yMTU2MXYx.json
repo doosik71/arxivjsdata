@@ -1,0 +1,8 @@
+{
+  "title": "Unsupervised Defect Detection for Surgical Instruments",
+  "authors": "Joseph Huang, Yichi Zhang, Jingxi Yu, Wei Chen, Seunghyun Hwang, Qiang Qiu, Amy R. Reibman, Edward J. Delp, Fengqing Zhu",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.21561v1",
+  "abstract": "Ensuring the safety of surgical instruments requires reliable detection of visual defects. However, manual inspection is prone to error, and existing automated defect detection methods, typically trained on natural/industrial images, fail to transfer effectively to the surgical domain. We demonstrate that simply applying or fine-tuning these approaches leads to issues: false positive detections arising from textured backgrounds, poor sensitivity to small, subtle defects, and inadequate capture of instrument-specific features due to domain shift. To address these challenges, we propose a versatile method that adapts unsupervised defect detection methods specifically for surgical instruments. By integrating background masking, a patch-based analysis strategy, and efficient domain adaptation, our method overcomes these limitations, enabling the reliable detection of fine-grained defects in surgical instrument imagery.",
+  "citation": 0
+}

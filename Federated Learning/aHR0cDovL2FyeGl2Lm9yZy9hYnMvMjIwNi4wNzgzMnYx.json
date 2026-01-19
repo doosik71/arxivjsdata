@@ -1,0 +1,8 @@
+{
+  "title": "Adaptive Expert Models for Personalization in Federated Learning",
+  "authors": "Martin Isaksson, Edvin Listo Zec, Rickard Cöster, Daniel Gillblad, Šarūnas Girdzijauskas",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2206.07832v1",
+  "abstract": "Federated Learning (FL) is a promising framework for distributed learning when data is private and sensitive. However, the state-of-the-art solutions in this framework are not optimal when data is heterogeneous and non-Independent and Identically Distributed (non-IID). We propose a practical and robust approach to personalization in FL that adjusts to heterogeneous and non-IID data by balancing exploration and exploitation of several global models. To achieve our aim of personalization, we use a Mixture of Experts (MoE) that learns to group clients that are similar to each other, while using the global models more efficiently. We show that our approach achieves an accuracy up to 29.78 % and up to 4.38 % better compared to a local model in a pathological non-IID setting, even though we tune our approach in the IID setting.",
+  "citation": 6
+}

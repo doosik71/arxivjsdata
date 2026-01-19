@@ -1,0 +1,8 @@
+{
+  "title": "Abnormal Client Behavior Detection in Federated Learning",
+  "authors": "Suyi Li, Yong Cheng, Yang Liu, Wei Wang, Tianjian Chen",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1910.09933v2",
+  "abstract": "In federated learning systems, clients are autonomous in that their behaviors are not fully governed by the server. Consequently, a client may intentionally or unintentionally deviate from the prescribed course of federated model training, resulting in abnormal behaviors, such as turning into a malicious attacker or a malfunctioning client. Timely detecting those anomalous clients is therefore critical to minimize their adverse impacts. In this work, we propose to detect anomalous clients at the server side. In particular, we generate low-dimensional surrogates of model weight vectors and use them to perform anomaly detection. We evaluate our solution through experiments on image classification model training over the FEMNIST dataset. Experimental results show that the proposed detection-based approach significantly outperforms the conventional defense-based methods.",
+  "citation": 153
+}

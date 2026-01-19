@@ -1,0 +1,8 @@
+{
+  "title": "Rethinking Multidimensional Discriminator Output for Generative Adversarial Networks",
+  "authors": "Mengyu Dai, Haibin Hang, Anuj Srivastava",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.03378v3",
+  "abstract": "The study of multidimensional discriminator (critic) output for Generative Adversarial Networks has been underexplored in the literature. In this paper, we generalize the Wasserstein GAN framework to take advantage of multidimensional critic output and explore its properties. We also introduce a square-root velocity transformation (SRVT) block which favors training in the multidimensional setting. Proofs of properties are based on our proposed maximal p-centrality discrepancy, which is bounded above by p-Wasserstein distance and fits the Wasserstein GAN framework with multidimensional critic output n. Especially when n = 1 and p = 1, the proposed discrepancy equals 1-Wasserstein distance. Theoretical analysis and empirical evidence show that high-dimensional critic output has its advantage on distinguishing real and fake distributions, and benefits faster convergence and diversity of results.",
+  "citation": 3
+}

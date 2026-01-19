@@ -1,0 +1,8 @@
+{
+  "title": "Proportional Fairness in Federated Learning",
+  "authors": "Guojun Zhang, Saber Malekmohammadi, Xi Chen, Yaoliang Yu",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.01666v5",
+  "abstract": "With the increasingly broad deployment of federated learning (FL) systems in the real world, it is critical but challenging to ensure fairness in FL, i.e. reasonably satisfactory performances for each of the numerous diverse clients. In this work, we introduce and study a new fairness notion in FL, called proportional fairness (PF), which is based on the relative change of each client's performance. From its connection with the bargaining games, we propose PropFair, a novel and easy-to-implement algorithm for finding proportionally fair solutions in FL and study its convergence properties. Through extensive experiments on vision and language datasets, we demonstrate that PropFair can approximately find PF solutions, and it achieves a good balance between the average performances of all clients and of the worst 10% clients. Our code is available at \\url{https://github.com/huawei-noah/Federated-Learning/tree/main/FairFL}.",
+  "citation": 22
+}

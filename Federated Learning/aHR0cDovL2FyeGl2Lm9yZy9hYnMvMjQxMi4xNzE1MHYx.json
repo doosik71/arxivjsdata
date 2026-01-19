@@ -1,0 +1,8 @@
+{
+  "title": "SplitFedZip: Learned Compression for Data Transfer Reduction in Split-Federated Learning",
+  "authors": "Chamani Shiranthika, Hadi Hadizadeh, Parvaneh Saeedi, Ivan V. Bajić",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.17150v1",
+  "abstract": "Federated Learning (FL) enables multiple clients to train a collaborative model without sharing their local data. Split Learning (SL) allows a model to be trained in a split manner across different locations. Split-Federated (SplitFed) learning is a more recent approach that combines the strengths of FL and SL. SplitFed minimizes the computational burden of FL by balancing computation across clients and servers, while still preserving data privacy. This makes it an ideal learning framework across various domains, especially in healthcare, where data privacy is of utmost importance. However, SplitFed networks encounter numerous communication challenges, such as latency, bandwidth constraints, synchronization overhead, and a large amount of data that needs to be transferred during the learning process. In this paper, we propose SplitFedZip -- a novel method that employs learned compression to reduce data transfer in SplitFed learning. Through experiments on medical image segmentation, we show that learned compression can provide a significant data communication reduction in SplitFed learning, while maintaining the accuracy of the final trained model. The implementation is available at: \\url{https://github.com/ChamaniS/SplitFedZip}.",
+  "citation": 1
+}

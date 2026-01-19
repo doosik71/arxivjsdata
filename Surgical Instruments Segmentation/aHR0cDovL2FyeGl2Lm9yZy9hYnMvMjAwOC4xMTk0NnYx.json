@@ -1,0 +1,8 @@
+{
+  "title": "Unsupervised Surgical Instrument Segmentation via Anchor Generation and Semantic Diffusion",
+  "authors": "Daochang Liu, Yuhui Wei, Tingting Jiang, Yizhou Wang, Rulin Miao, Fei Shan, Ziyu Li",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.11946v1",
+  "abstract": "Surgical instrument segmentation is a key component in developing context-aware operating rooms. Existing works on this task heavily rely on the supervision of a large amount of labeled data, which involve laborious and expensive human efforts. In contrast, a more affordable unsupervised approach is developed in this paper. To train our model, we first generate anchors as pseudo labels for instruments and background tissues respectively by fusing coarse handcrafted cues. Then a semantic diffusion loss is proposed to resolve the ambiguity in the generated anchors via the feature correlation between adjacent video frames. In the experiments on the binary instrument segmentation task of the 2017 MICCAI EndoVis Robotic Instrument Segmentation Challenge dataset, the proposed method achieves 0.71 IoU and 0.81 Dice score without using a single manual annotation, which is promising to show the potential of unsupervised learning for surgical tool segmentation.",
+  "citation": 30
+}

@@ -1,0 +1,8 @@
+{
+  "title": "A Generalization Method of Partitioned Activation Function for Complex Number",
+  "authors": "HyeonSeok Lee, Hyo Seon Park",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1802.02987v1",
+  "abstract": "A method to convert real number partitioned activation function into complex number one is provided. The method has 4em variations; 1 has potential to get holomorphic activation, 2 has potential to conserve complex angle, and the last 1 guarantees interaction between real and imaginary parts. The method has been applied to LReLU and SELU as examples. The complex number activation function is an building block of complex number ANN, which has potential to properly deal with complex number problems. But the complex activation is not well established yet. Therefore, we propose a way to extend the partitioned real activation to complex number.",
+  "citation": 7
+}

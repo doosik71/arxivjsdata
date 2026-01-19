@@ -1,0 +1,8 @@
+{
+  "title": "Federated Learning with GAN-based Data Synthesis for Non-IID Clients",
+  "authors": "Zijian Li, Jiawei Shao, Yuyi Mao, Jessie Hui Wang, Jun Zhang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2206.05507v1",
+  "abstract": "Federated learning (FL) has recently emerged as a popular privacy-preserving collaborative learning paradigm. However, it suffers from the non-independent and identically distributed (non-IID) data among clients. In this paper, we propose a novel framework, named Synthetic Data Aided Federated Learning (SDA-FL), to resolve this non-IID challenge by sharing synthetic data. Specifically, each client pretrains a local generative adversarial network (GAN) to generate differentially private synthetic data, which are uploaded to the parameter server (PS) to construct a global shared synthetic dataset. To generate confident pseudo labels for the synthetic dataset, we also propose an iterative pseudo labeling mechanism performed by the PS. A combination of the local private dataset and synthetic dataset with confident pseudo labels leads to nearly identical data distributions among clients, which improves the consistency among local models and benefits the global aggregation. Extensive experiments evidence that the proposed framework outperforms the baseline methods by a large margin in several benchmark datasets under both the supervised and semi-supervised settings.",
+  "citation": 61
+}

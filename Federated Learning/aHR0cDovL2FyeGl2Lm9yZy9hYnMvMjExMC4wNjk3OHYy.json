@@ -1,0 +1,8 @@
+{
+  "title": "WAFFLE: Weighted Averaging for Personalized Federated Learning",
+  "authors": "Martin Beaussart, Felix Grimberg, Mary-Anne Hartley, Martin Jaggi",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2110.06978v2",
+  "abstract": "In federated learning, model personalization can be a very effective strategy to deal with heterogeneous training data across clients. We introduce WAFFLE (Weighted Averaging For Federated LEarning), a personalized collaborative machine learning algorithm that leverages stochastic control variates for faster convergence. WAFFLE uses the Euclidean distance between clients' updates to weigh their individual contributions and thus minimize the personalized model loss on the specific agent of interest. Through a series of experiments, we compare our new approach to two recent personalized federated learning methods--Weight Erosion and APFL--as well as two general FL methods--Federated Averaging and SCAFFOLD. Performance is evaluated using two categories of non-identical client data distributions--concept shift and label skew--on two image data sets (MNIST and CIFAR10). Our experiments demonstrate the comparative effectiveness of WAFFLE, as it achieves or improves accuracy with faster convergence.",
+  "citation": 18
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Distribution-Controlled Client Selection to Improve Federated Learning Strategies",
+  "authors": "Christoph Düsing, Philipp Cimiano",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.20877v1",
+  "abstract": "Federated learning (FL) is a distributed learning paradigm that allows multiple clients to jointly train a shared model while maintaining data privacy. Despite its great potential for domains with strict data privacy requirements, the presence of data imbalance among clients is a thread to the success of FL, as it causes the performance of the shared model to decrease. To address this, various studies have proposed enhancements to existing FL strategies, particularly through client selection methods that mitigate the detrimental effects of data imbalance. In this paper, we propose an extension to existing FL strategies, which selects active clients that best align the current label distribution with one of two target distributions, namely a balanced distribution or the federations combined label distribution. Subsequently, we empirically verify the improvements through our distribution-controlled client selection on three common FL strategies and two datasets. Our results show that while aligning the label distribution with a balanced distribution yields the greatest improvements facing local imbalance, alignment with the federation's combined label distribution is superior for global imbalance.",
+  "citation": 1
+}

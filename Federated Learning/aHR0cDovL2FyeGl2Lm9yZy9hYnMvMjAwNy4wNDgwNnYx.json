@@ -1,0 +1,8 @@
+{
+  "title": "Client Adaptation improves Federated Learning with Simulated Non-IID Clients",
+  "authors": "Laura Rieger, Rasmus M. Th. Høegh, Lars K. Hansen",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.04806v1",
+  "abstract": "We present a federated learning approach for learning a client adaptable, robust model when data is non-identically and non-independently distributed (non-IID) across clients. By simulating heterogeneous clients, we show that adding learned client-specific conditioning improves model performance, and the approach is shown to work on balanced and imbalanced data set from both audio and image domains. The client adaptation is implemented by a conditional gated activation unit and is particularly beneficial when there are large differences between the data distribution for each client, a common scenario in federated learning.",
+  "citation": 6
+}

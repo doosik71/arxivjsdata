@@ -1,0 +1,8 @@
+{
+  "title": "Survey of Privacy Threats and Countermeasures in Federated Learning",
+  "authors": "Masahiro Hayashitani, Junki Mori, Isamu Teranishi",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.00342v2",
+  "abstract": "Federated learning is widely considered to be as a privacy-aware learning method because no training data is exchanged directly between clients. Nevertheless, there are threats to privacy in federated learning, and privacy countermeasures have been studied. However, we note that common and unique privacy threats among typical types of federated learning have not been categorized and described in a comprehensive and specific way. In this paper, we describe privacy threats and countermeasures for the typical types of federated learning; horizontal federated learning, vertical federated learning, and transfer federated learning.",
+  "citation": 1
+}

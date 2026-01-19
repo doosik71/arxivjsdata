@@ -1,0 +1,8 @@
+{
+  "title": "FedQuad: Federated Stochastic Quadruplet Learning to Mitigate Data Heterogeneity",
+  "authors": "Ozgu Goksu, Nicolas Pugeault",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.04107v1",
+  "abstract": "Federated Learning (FL) provides decentralised model training, which effectively tackles problems such as distributed data and privacy preservation. However, the generalisation of global models frequently faces challenges from data heterogeneity among clients. This challenge becomes even more pronounced when datasets are limited in size and class imbalance. To address data heterogeneity, we propose a novel method, \\textit{FedQuad}, that explicitly optimises smaller intra-class variance and larger inter-class variance across clients, thereby decreasing the negative impact of model aggregation on the global model over client representations. Our approach minimises the distance between similar pairs while maximising the distance between negative pairs, effectively disentangling client data in the shared feature space. We evaluate our method on the CIFAR-10 and CIFAR-100 datasets under various data distributions and with many clients, demonstrating superior performance compared to existing approaches. Furthermore, we provide a detailed analysis of metric learning-based strategies within both supervised and federated learning paradigms, highlighting their efficacy in addressing representational learning challenges in federated settings.",
+  "citation": 0
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Global Outlier Detection in a Federated Learning Setting with Isolation Forest",
+  "authors": "Daniele Malpetti, Laura Azzimonti",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.13466v1",
+  "abstract": "We present a novel strategy for detecting global outliers in a federated learning setting, targeting in particular cross-silo scenarios. Our approach involves the use of two servers and the transmission of masked local data from clients to one of the servers. The masking of the data prevents the disclosure of sensitive information while still permitting the identification of outliers. Moreover, to further safeguard privacy, a permutation mechanism is implemented so that the server does not know which client owns any masked data point. The server performs outlier detection on the masked data, using either Isolation Forest or its extended version, and then communicates outlier information back to the clients, allowing them to identify and remove outliers in their local datasets before starting any subsequent federated model training. This approach provides comparable results to a centralized execution of Isolation Forest algorithms on plain data.",
+  "citation": 3
+}

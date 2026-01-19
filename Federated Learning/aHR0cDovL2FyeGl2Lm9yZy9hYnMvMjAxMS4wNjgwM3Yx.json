@@ -1,0 +1,8 @@
+{
+  "title": "Federated Learning System without Model Sharing through Integration of Dimensional Reduced Data Representations",
+  "authors": "Anna Bogdanova, Akie Nakai, Yukihiko Okada, Akira Imakura, Tetsuya Sakurai",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2011.06803v1",
+  "abstract": "Dimensionality Reduction is a commonly used element in a machine learning pipeline that helps to extract important features from high-dimensional data. In this work, we explore an alternative federated learning system that enables integration of dimensionality reduced representations of distributed data prior to a supervised learning task, thus avoiding model sharing among the parties. We compare the performance of this approach on image classification tasks to three alternative frameworks: centralized machine learning, individual machine learning, and Federated Averaging, and analyze potential use cases for a federated learning system without model sharing. Our results show that our approach can achieve similar accuracy as Federated Averaging and performs better than Federated Averaging in a small-user setting.",
+  "citation": 30
+}

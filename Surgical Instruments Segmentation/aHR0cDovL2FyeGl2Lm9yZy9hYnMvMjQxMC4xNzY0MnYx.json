@@ -1,0 +1,8 @@
+{
+  "title": "Surgical Scene Segmentation by Transformer With Asymmetric Feature Enhancement",
+  "authors": "Cheng Yuan, Yutong Ban",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.17642v1",
+  "abstract": "Surgical scene segmentation is a fundamental task for robotic-assisted laparoscopic surgery understanding. It often contains various anatomical structures and surgical instruments, where similar local textures and fine-grained structures make the segmentation a difficult task. Vision-specific transformer method is a promising way for surgical scene understanding. However, there are still two main challenges. Firstly, the absence of inner-patch information fusion leads to poor segmentation performance. Secondly, the specific characteristics of anatomy and instruments are not specifically modeled. To tackle the above challenges, we propose a novel Transformer-based framework with an Asymmetric Feature Enhancement module (TAFE), which enhances local information and then actively fuses the improved feature pyramid into the embeddings from transformer encoders by a multi-scale interaction attention strategy. The proposed method outperforms the SOTA methods in several different surgical segmentation tasks and additionally proves its ability of fine-grained structure recognition. Code is available at https://github.com/cyuan-sjtu/ViT-asym.",
+  "citation": 0
+}

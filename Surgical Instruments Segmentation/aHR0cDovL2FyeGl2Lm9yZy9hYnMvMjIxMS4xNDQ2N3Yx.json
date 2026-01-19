@@ -1,0 +1,8 @@
+{
+  "title": "Self-Supervised Surgical Instrument 3D Reconstruction from a Single Camera Image",
+  "authors": "Ange Lou, Xing Yao, Ziteng Liu, Jintong Han, Jack Noble",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.14467v1",
+  "abstract": "Surgical instrument tracking is an active research area that can provide surgeons feedback about the location of their tools relative to anatomy. Recent tracking methods are mainly divided into two parts: segmentation and object detection. However, both can only predict 2D information, which is limiting for application to real-world surgery. An accurate 3D surgical instrument model is a prerequisite for precise predictions of the pose and depth of the instrument. Recent single-view 3D reconstruction methods are only used in natural object reconstruction and do not achieve satisfying reconstruction accuracy without 3D attribute-level supervision. Further, those methods are not suitable for the surgical instruments because of their elongated shapes. In this paper, we firstly propose an end-to-end surgical instrument reconstruction system -- Self-supervised Surgical Instrument Reconstruction (SSIR). With SSIR, we propose a multi-cycle-consistency strategy to help capture the texture information from a slim instrument while only requiring a binary instrument label map. Experiments demonstrate that our approach improves the reconstruction quality of surgical instruments compared to other self-supervised methods and achieves promising results.",
+  "citation": 7
+}

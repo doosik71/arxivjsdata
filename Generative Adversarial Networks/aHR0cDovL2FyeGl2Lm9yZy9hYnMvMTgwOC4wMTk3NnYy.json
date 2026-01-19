@@ -1,0 +1,8 @@
+{
+  "title": "Adversarial Vision Challenge",
+  "authors": "Wieland Brendel, Jonas Rauber, Alexey Kurakin, Nicolas Papernot, Behar Veliqi, Marcel Salathé, Sharada P. Mohanty, Matthias Bethge",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1808.01976v2",
+  "abstract": "The NIPS 2018 Adversarial Vision Challenge is a competition to facilitate measurable progress towards robust machine vision models and more generally applicable adversarial attacks. This document is an updated version of our competition proposal that was accepted in the competition track of 32nd Conference on Neural Information Processing Systems (NIPS 2018).",
+  "citation": 61
+}

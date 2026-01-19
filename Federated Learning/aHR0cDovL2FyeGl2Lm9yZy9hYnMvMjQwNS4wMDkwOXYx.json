@@ -1,0 +1,8 @@
+{
+  "title": "Quantum Federated Learning Experiments in the Cloud with Data Encoding",
+  "authors": "Shiva Raj Pokhrel, Naman Yash, Jonathan Kua, Gang Li, Lei Pan",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.00909v1",
+  "abstract": "Quantum Federated Learning (QFL) is an emerging concept that aims to unfold federated learning (FL) over quantum networks, enabling collaborative quantum model training along with local data privacy. We explore the challenges of deploying QFL on cloud platforms, emphasizing quantum intricacies and platform limitations. The proposed data-encoding-driven QFL, with a proof of concept (GitHub Open Source) using genomic data sets on quantum simulators, shows promising results.",
+  "citation": 9
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Cluster Based Secure Multi-Party Computation in Federated Learning for Histopathology Images",
+  "authors": "S. Maryam Hosseini, Milad Sikaroudi, Morteza Babaei, H. R. Tizhoosh",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2208.10919v1",
+  "abstract": "Federated learning (FL) is a decentralized method enabling hospitals to collaboratively learn a model without sharing private patient data for training. In FL, participant hospitals periodically exchange training results rather than training samples with a central server. However, having access to model parameters or gradients can expose private training data samples. To address this challenge, we adopt secure multiparty computation (SMC) to establish a privacy-preserving federated learning framework. In our proposed method, the hospitals are divided into clusters. After local training, each hospital splits its model weights among other hospitals in the same cluster such that no single hospital can retrieve other hospitals' weights on its own. Then, all hospitals sum up the received weights, sending the results to the central server. Finally, the central server aggregates the results, retrieving the average of models' weights and updating the model without having access to individual hospitals' weights. We conduct experiments on a publicly available repository, The Cancer Genome Atlas (TCGA). We compare the performance of the proposed framework with differential privacy and federated averaging as the baseline. The results reveal that compared to differential privacy, our framework can achieve higher accuracy with no privacy leakage risk at a cost of higher communication overhead.",
+  "citation": 19
+}

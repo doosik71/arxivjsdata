@@ -1,0 +1,8 @@
+{
+  "title": "Federated Quantum Natural Gradient Descent for Quantum Federated Learning",
+  "authors": "Jun Qi",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2209.00564v1",
+  "abstract": "The heart of Quantum Federated Learning (QFL) is associated with a distributed learning architecture across several local quantum devices and a more efficient training algorithm for the QFL is expected to minimize the communication overhead among different quantum participants. In this work, we put forth an efficient learning algorithm, namely federated quantum natural gradient descent (FQNGD), applied in a QFL framework which consists of the variational quantum circuit (VQC)-based quantum neural networks (QNN). The FQNGD algorithm admits much fewer training iterations for the QFL model to get converged and it can significantly reduce the total communication cost among local quantum devices. Compared with other federated learning algorithms, our experiments on a handwritten digit classification dataset corroborate the effectiveness of the FQNGD algorithm for the QFL in terms of a faster convergence rate on the training dataset and higher accuracy on the test one.",
+  "citation": 26
+}

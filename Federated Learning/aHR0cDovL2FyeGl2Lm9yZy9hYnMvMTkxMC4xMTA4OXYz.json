@@ -1,0 +1,8 @@
+{
+  "title": "Real-World Image Datasets for Federated Learning",
+  "authors": "Jiahuan Luo, Xueyang Wu, Yun Luo, Anbu Huang, Yunfeng Huang, Yang Liu, Qiang Yang",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1910.11089v3",
+  "abstract": "Federated learning is a new machine learning paradigm which allows data parties to build machine learning models collaboratively while keeping their data secure and private. While research efforts on federated learning have been growing tremendously in the past two years, most existing works still depend on pre-existing public datasets and artificial partitions to simulate data federations due to the lack of high-quality labeled data generated from real-world edge applications. Consequently, advances on benchmark and model evaluations for federated learning have been lagging behind. In this paper, we introduce a real-world image dataset. The dataset contains more than 900 images generated from 26 street cameras and 7 object categories annotated with detailed bounding box. The data distribution is non-IID and unbalanced, reflecting the characteristic real-world federated learning scenarios. Based on this dataset, we implemented two mainstream object detection algorithms (YOLO and Faster R-CNN) and provided an extensive benchmark on model performance, efficiency, and communication in a federated learning setting. Both the dataset and algorithms are made publicly available.",
+  "citation": 150
+}

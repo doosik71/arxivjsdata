@@ -1,0 +1,8 @@
+{
+  "title": "Efficient Vertical Federated Learning with Secure Aggregation",
+  "authors": "Xinchi Qiu, Heng Pan, Wanru Zhao, Chenyang Ma, Pedro Porto Buarque de Gusmão, Nicholas D. Lane",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.11236v1",
+  "abstract": "The majority of work in privacy-preserving federated learning (FL) has been focusing on horizontally partitioned datasets where clients share the same sets of features and can train complete models independently. However, in many interesting problems, such as financial fraud detection and disease detection, individual data points are scattered across different clients/organizations in vertical federated learning. Solutions for this type of FL require the exchange of gradients between participants and rarely consider privacy and security concerns, posing a potential risk of privacy leakage. In this work, we present a novel design for training vertical FL securely and efficiently using state-of-the-art security modules for secure aggregation. We demonstrate empirically that our method does not impact training performance whilst obtaining 9.1e2 ~3.8e4 speedup compared to homomorphic encryption (HE).",
+  "citation": 6
+}

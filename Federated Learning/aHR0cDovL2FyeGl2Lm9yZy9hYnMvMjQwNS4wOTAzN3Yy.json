@@ -1,0 +1,8 @@
+{
+  "title": "SSFL: Discovering Sparse Unified Subnetworks at Initialization for Efficient Federated Learning",
+  "authors": "Riyasat Ohib, Bishal Thapaliya, Gintare Karolina Dziugaite, Jingyu Liu, Vince Calhoun, Sergey Plis",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.09037v2",
+  "abstract": "In this work, we propose Salient Sparse Federated Learning (SSFL), a streamlined approach for sparse federated learning with efficient communication. SSFL identifies a sparse subnetwork prior to training, leveraging parameter saliency scores computed separately on local client data in non-IID scenarios, and then aggregated, to determine a global mask. Only the sparse model weights are trained and communicated each round between the clients and the server. On standard benchmarks including CIFAR-10, CIFAR-100, and Tiny-ImageNet, SSFL consistently improves the accuracy sparsity trade off, achieving more than 20\\% relative error reduction on CIFAR-10 compared to the strongest sparse baseline, while reducing communication costs by $2 \\times$ relative to dense FL. Finally, in a real-world federated learning deployment, SSFL delivers over $2.3 \\times$ faster communication time, underscoring its practical efficiency.",
+  "citation": 0
+}

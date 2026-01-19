@@ -1,0 +1,8 @@
+{
+  "title": "BARNet: Bilinear Attention Network with Adaptive Receptive Fields for Surgical Instrument Segmentation",
+  "authors": "Zhen-Liang Ni, Gui-Bin Bian, Guan-An Wang, Xiao-Hu Zhou, Zeng-Guang Hou, Xiao-Liang Xie, Zhen Li, Yu-Han Wang",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2001.07093v4",
+  "abstract": "Surgical instrument segmentation is extremely important for computer-assisted surgery. Different from common object segmentation, it is more challenging due to the large illumination and scale variation caused by the special surgical scenes. In this paper, we propose a novel bilinear attention network with adaptive receptive field to solve these two challenges. For the illumination variation, the bilinear attention module can capture second-order statistics to encode global contexts and semantic dependencies between local pixels. With them, semantic features in challenging areas can be inferred from their neighbors and the distinction of various semantics can be boosted. For the scale variation, our adaptive receptive field module aggregates multi-scale features and automatically fuses them with different weights. Specifically, it encodes the semantic relationship between channels to emphasize feature maps with appropriate scales, changing the receptive field of subsequent convolutions. The proposed network achieves the best performance 97.47% mean IOU on Cata7 and comes first place on EndoVis 2017 by 10.10% IOU overtaking second-ranking method.",
+  "citation": 35
+}

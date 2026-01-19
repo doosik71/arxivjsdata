@@ -1,0 +1,8 @@
+{
+  "title": "Asynchronous Federated Learning with Bidirectional Quantized Communications and Buffered Aggregation",
+  "authors": "Tomas Ortega, Hamid Jafarkhani",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2308.00263v1",
+  "abstract": "Asynchronous Federated Learning with Buffered Aggregation (FedBuff) is a state-of-the-art algorithm known for its efficiency and high scalability. However, it has a high communication cost, which has not been examined with quantized communications. To tackle this problem, we present a new algorithm (QAFeL), with a quantization scheme that establishes a shared \"hidden\" state between the server and clients to avoid the error propagation caused by direct quantization. This approach allows for high precision while significantly reducing the data transmitted during client-server interactions. We provide theoretical convergence guarantees for QAFeL and corroborate our analysis with experiments on a standard benchmark.",
+  "citation": 11
+}

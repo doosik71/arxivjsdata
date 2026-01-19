@@ -1,0 +1,8 @@
+{
+  "title": "AMNCutter: Affinity-Attention-Guided Multi-View Normalized Cutter for Unsupervised Surgical Instrument Segmentation",
+  "authors": "Mingyu Sheng, Jianan Fan, Dongnan Liu, Ron Kikinis, Weidong Cai",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.03695v2",
+  "abstract": "Surgical instrument segmentation (SIS) is pivotal for robotic-assisted minimally invasive surgery, assisting surgeons by identifying surgical instruments in endoscopic video frames. Recent unsupervised surgical instrument segmentation (USIS) methods primarily rely on pseudo-labels derived from low-level features such as color and optical flow, but these methods show limited effectiveness and generalizability in complex and unseen endoscopic scenarios. In this work, we propose a label-free unsupervised model featuring a novel module named Multi-View Normalized Cutter (m-NCutter). Different from previous USIS works, our model is trained using a graph-cutting loss function that leverages patch affinities for supervision, eliminating the need for pseudo-labels. The framework adaptively determines which affinities from which levels should be prioritized. Therefore, the low- and high-level features and their affinities are effectively integrated to train a label-free unsupervised model, showing superior effectiveness and generalization ability. We conduct comprehensive experiments across multiple SIS datasets to validate our approach's state-of-the-art (SOTA) performance, robustness, and exceptional potential as a pre-trained model. Our code is released at https://github.com/MingyuShengSMY/AMNCutter.",
+  "citation": 2
+}

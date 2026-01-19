@@ -1,0 +1,8 @@
+{
+  "title": "A few-shot Label Unlearning in Vertical Federated Learning",
+  "authors": "Hanlin Gu, Hong Xi Tae, Chee Seng Chan, Lixin Fan",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.10922v1",
+  "abstract": "This paper addresses the critical challenge of unlearning in Vertical Federated Learning (VFL), an area that has received limited attention compared to horizontal federated learning. We introduce the first approach specifically designed to tackle label unlearning in VFL, focusing on scenarios where the active party aims to mitigate the risk of label leakage. Our method leverages a limited amount of labeled data, utilizing manifold mixup to augment the forward embedding of insufficient data, followed by gradient ascent on the augmented embeddings to erase label information from the models. This combination of augmentation and gradient ascent enables high unlearning effectiveness while maintaining efficiency, completing the unlearning procedure within seconds. Extensive experiments conducted on diverse datasets, including MNIST, CIFAR10, CIFAR100, and ModelNet, validate the efficacy and scalability of our approach. This work represents a significant advancement in federated learning, addressing the unique challenges of unlearning in VFL while preserving both privacy and computational efficiency.",
+  "citation": 3
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Learning Motion Flows for Semi-supervised Instrument Segmentation from Robotic Surgical Video",
+  "authors": "Zixu Zhao, Yueming Jin, Xiaojie Gao, Qi Dou, Pheng-Ann Heng",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.02501v1",
+  "abstract": "Performing low hertz labeling for surgical videos at intervals can greatly releases the burden of surgeons. In this paper, we study the semi-supervised instrument segmentation from robotic surgical videos with sparse annotations. Unlike most previous methods using unlabeled frames individually, we propose a dual motion based method to wisely learn motion flows for segmentation enhancement by leveraging temporal dynamics. We firstly design a flow predictor to derive the motion for jointly propagating the frame-label pairs given the current labeled frame. Considering the fast instrument motion, we further introduce a flow compensator to estimate intermediate motion within continuous frames, with a novel cycle learning strategy. By exploiting generated data pairs, our framework can recover and even enhance temporal consistency of training sequences to benefit segmentation. We validate our framework with binary, part, and type tasks on 2017 MICCAI EndoVis Robotic Instrument Segmentation Challenge dataset. Results show that our method outperforms the state-of-the-art semi-supervised methods by a large margin, and even exceeds fully supervised training on two tasks.",
+  "citation": 56
+}

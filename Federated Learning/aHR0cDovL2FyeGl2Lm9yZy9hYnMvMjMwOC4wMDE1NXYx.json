@@ -1,0 +1,8 @@
+{
+  "title": "Federated Learning for Data and Model Heterogeneity in Medical Imaging",
+  "authors": "Hussain Ahmad Madni, Rao Muhammad Umer, Gian Luca Foresti",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2308.00155v1",
+  "abstract": "Federated Learning (FL) is an evolving machine learning method in which multiple clients participate in collaborative learning without sharing their data with each other and the central server. In real-world applications such as hospitals and industries, FL counters the challenges of data heterogeneity and model heterogeneity as an inevitable part of the collaborative training. More specifically, different organizations, such as hospitals, have their own private data and customized models for local training. To the best of our knowledge, the existing methods do not effectively address both problems of model heterogeneity and data heterogeneity in FL. In this paper, we exploit the data and model heterogeneity simultaneously, and propose a method, MDH-FL (Exploiting Model and Data Heterogeneity in FL) to solve such problems to enhance the efficiency of the global model in FL. We use knowledge distillation and a symmetric loss to minimize the heterogeneity and its impact on the model performance. Knowledge distillation is used to solve the problem of model heterogeneity, and symmetric loss tackles with the data and label heterogeneity. We evaluate our method on the medical datasets to conform the real-world scenario of hospitals, and compare with the existing methods. The experimental results demonstrate the superiority of the proposed approach over the other existing methods.",
+  "citation": 7
+}

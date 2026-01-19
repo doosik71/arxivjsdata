@@ -1,0 +1,8 @@
+{
+  "title": "Comparative Evaluation of Clustered Federated Learning Methods",
+  "authors": "Michael Ben Ali, Omar El-Rifai, Imen Megdiche, André Peninou, Olivier Teste",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.14212v2",
+  "abstract": "Over recent years, Federated Learning (FL) has proven to be one of the most promising methods of distributed learning which preserves data privacy. As the method evolved and was confronted to various real-world scenarios, new challenges have emerged. One such challenge is the presence of highly heterogeneous (often referred as non-IID) data distributions among participants of the FL protocol. A popular solution to this hurdle is Clustered Federated Learning (CFL), which aims to partition clients into groups where the distribution are homogeneous. In the literature, state-of-the-art CFL algorithms are often tested using a few cases of data heterogeneities, without systematically justifying the choices. Further, the taxonomy used for differentiating the different heterogeneity scenarios is not always straightforward. In this paper, we explore the performance of two state-of-theart CFL algorithms with respect to a proposed taxonomy of data heterogeneities in federated learning (FL). We work with three image classification datasets and analyze the resulting clusters against the heterogeneity classes using extrinsic clustering metrics. Our objective is to provide a clearer understanding of the relationship between CFL performances and data heterogeneity scenarios.",
+  "citation": 0
+}

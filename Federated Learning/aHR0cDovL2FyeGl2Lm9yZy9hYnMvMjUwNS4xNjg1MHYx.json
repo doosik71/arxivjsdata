@@ -1,0 +1,8 @@
+{
+  "title": "ATR-Bench: A Federated Learning Benchmark for Adaptation, Trust, and Reasoning",
+  "authors": "Tajamul Ashraf, Mohammed Mohsen Peerzada, Moloud Abdar, Yutong Xie, Yuyin Zhou, Xiaofeng Liu, Iqra Altaf Gillani, Janibul Bashir",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.16850v1",
+  "abstract": "Federated Learning (FL) has emerged as a promising paradigm for collaborative model training while preserving data privacy across decentralized participants. As FL adoption grows, numerous techniques have been proposed to tackle its practical challenges. However, the lack of standardized evaluation across key dimensions hampers systematic progress and fair comparison of FL methods. In this work, we introduce ATR-Bench, a unified framework for analyzing federated learning through three foundational dimensions: Adaptation, Trust, and Reasoning. We provide an in-depth examination of the conceptual foundations, task formulations, and open research challenges associated with each theme. We have extensively benchmarked representative methods and datasets for adaptation to heterogeneous clients and trustworthiness in adversarial or unreliable environments. Due to the lack of reliable metrics and models for reasoning in FL, we only provide literature-driven insights for this dimension. ATR-Bench lays the groundwork for a systematic and holistic evaluation of federated learning with real-world relevance. We will make our complete codebase publicly accessible and a curated repository that continuously tracks new developments and research in the FL literature.",
+  "citation": 0
+}

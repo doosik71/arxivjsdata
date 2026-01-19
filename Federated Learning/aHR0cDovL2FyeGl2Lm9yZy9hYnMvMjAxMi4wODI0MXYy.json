@@ -1,0 +1,8 @@
+{
+  "title": "CosSGD: Communication-Efficient Federated Learning with a Simple Cosine-Based Quantization",
+  "authors": "Yang He, Hui-Po Wang, Maximilian Zenk, Mario Fritz",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2012.08241v2",
+  "abstract": "Federated learning is a promising framework to mitigate data privacy and computation concerns. However, the communication cost between the server and clients has become the major bottleneck for successful deployment. Despite notable progress in gradient compression, the existing quantization methods require further improvement when low-bits compression is applied, especially the overall systems often degenerate a lot when quantization are applied in double directions to compress model weights and gradients. In this work, we propose a simple cosine-based nonlinear quantization and achieve impressive results in compressing round-trip communication costs. We are not only able to compress model weights and gradients at higher ratios than previous methods, but also achieve competing model performance at the same time. Further, our approach is highly suitable for federated learning problems since it has low computational complexity and requires only a little additional data to recover the compressed information. Extensive experiments have been conducted on image classification and brain tumor semantic segmentation using the CIFAR-10, and BraTS datasets where we show state-of-the-art effectiveness and impressive communication efficiency.",
+  "citation": 10
+}

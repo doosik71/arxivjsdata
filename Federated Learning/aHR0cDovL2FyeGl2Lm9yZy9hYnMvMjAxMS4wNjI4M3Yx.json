@@ -1,0 +1,8 @@
+{
+  "title": "Fed-Focal Loss for imbalanced data classification in Federated Learning",
+  "authors": "Dipankar Sarkar, Ankur Narang, Sumit Rai",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2011.06283v1",
+  "abstract": "The Federated Learning setting has a central server coordinating the training of a model on a network of devices. One of the challenges is variable training performance when the dataset has a class imbalance. In this paper, we address this by introducing a new loss function called Fed-Focal Loss. We propose to address the class imbalance by reshaping cross-entropy loss such that it down-weights the loss assigned to well-classified examples along the lines of focal loss. Additionally, by leveraging a tunable sampling framework, we take into account selective client model contributions on the central server to further focus the detector during training and hence improve its robustness. Using a detailed experimental analysis with the VIRTUAL (Variational Federated Multi-Task Learning) approach, we demonstrate consistently superior performance in both the balanced and unbalanced scenarios for MNIST, FEMNIST, VSN and HAR benchmarks. We obtain a more than 9% (absolute percentage) improvement in the unbalanced MNIST benchmark. We further show that our technique can be adopted across multiple Federated Learning algorithms to get improvements.",
+  "citation": 57
+}

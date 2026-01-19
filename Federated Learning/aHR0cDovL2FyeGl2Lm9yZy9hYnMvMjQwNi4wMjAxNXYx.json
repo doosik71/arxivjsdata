@@ -1,0 +1,8 @@
+{
+  "title": "Parameterizing Federated Continual Learning for Reproducible Research",
+  "authors": "Bart Cox, Jeroen Galjaard, Aditya Shankar, Jérémie Decouchant, Lydia Y. Chen",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.02015v1",
+  "abstract": "Federated Learning (FL) systems evolve in heterogeneous and ever-evolving environments that challenge their performance. Under real deployments, the learning tasks of clients can also evolve with time, which calls for the integration of methodologies such as Continual Learning. To enable research reproducibility, we propose a set of experimental best practices that precisely capture and emulate complex learning scenarios. Our framework, Freddie, is the first entirely configurable framework for Federated Continual Learning (FCL), and it can be seamlessly deployed on a large number of machines thanks to the use of Kubernetes and containerization. We demonstrate the effectiveness of Freddie on two use cases, (i) large-scale FL on CIFAR100 and (ii) heterogeneous task sequence on FCL, which highlight unaddressed performance challenges in FCL scenarios.",
+  "citation": 1
+}

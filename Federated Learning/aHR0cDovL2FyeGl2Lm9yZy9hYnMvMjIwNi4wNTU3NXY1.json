@@ -1,0 +1,8 @@
+{
+  "title": "MammoFL: Mammographic Breast Density Estimation using Federated Learning",
+  "authors": "Ramya Muthukrishnan, Angelina Heyler, Keshava Katti, Sarthak Pati, Walter Mankowski, Aprupa Alahari, Michael Sanborn, Emily F. Conant, Christopher Scott, Stacey Winham, Celine Vachon, Pratik Chaudhari, Despina Kontos, Spyridon Bakas",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2206.05575v5",
+  "abstract": "In this study, we automate quantitative mammographic breast density estimation with neural networks and show that this tool is a strong use case for federated learning on multi-institutional datasets. Our dataset included bilateral CC-view and MLO-view mammographic images from two separate institutions. Two U-Nets were separately trained on algorithm-generated labels to perform segmentation of the breast and dense tissue from these images and subsequently calculate breast percent density (PD). The networks were trained with federated learning and compared to three non-federated baselines, one trained on each single-institution dataset and one trained on the aggregated multi-institution dataset. We demonstrate that training on multi-institution datasets is critical to algorithm generalizability. We further show that federated learning on multi-institutional datasets improves model generalization to unseen data at nearly the same level as centralized training on multi-institutional datasets, indicating that federated learning can be applied to our method to improve algorithm generalizability while maintaining patient privacy.",
+  "citation": 6
+}

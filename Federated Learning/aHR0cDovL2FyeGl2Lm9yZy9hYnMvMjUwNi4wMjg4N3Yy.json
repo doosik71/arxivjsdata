@@ -1,0 +1,8 @@
+{
+  "title": "Overcoming Challenges of Partial Client Participation in Federated Learning : A Comprehensive Review",
+  "authors": "Mrinmay Sen, Shruti Aparna, Rohit Agarwal, Chalavadi Krishna Mohan",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.02887v2",
+  "abstract": "Federated Learning (FL) is a learning mechanism that falls under the distributed training umbrella, which collaboratively trains a shared global model without disclosing the raw data from different clients. This paper presents an extensive survey on the impact of partial client participation in federated learning. While much of the existing research focuses on addressing issues such as generalization, robustness, and fairness caused by data heterogeneity under the assumption of full client participation, limited attention has been given to the practical and theoretical challenges arising from partial client participation, which is common in real-world scenarios. This survey provides an in-depth review of existing FL methods designed to cope with partial client participation. We offer a comprehensive analysis supported by theoretical insights and empirical findings, along with a structured categorization of these methods, highlighting their respective advantages and disadvantages.",
+  "citation": 0
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Federated Learning with Unbiased Gradient Aggregation and Controllable Meta Updating",
+  "authors": "Xin Yao, Tianchi Huang, Rui-Xiao Zhang, Ruiyu Li, Lifeng Sun",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1910.08234v3",
+  "abstract": "Federated learning (FL) aims to train machine learning models in the decentralized system consisting of an enormous amount of smart edge devices. Federated averaging (FedAvg), the fundamental algorithm in FL settings, proposes on-device training and model aggregation to avoid the potential heavy communication costs and privacy concerns brought by transmitting raw data. However, through theoretical analysis we argue that 1) the multiple steps of local updating will result in gradient biases and 2) there is an inconsistency between the expected target distribution and the optimization objectives following the training paradigm in FedAvg. To tackle these problems, we first propose an unbiased gradient aggregation algorithm with the keep-trace gradient descent and the gradient evaluation strategy. Then we introduce an additional controllable meta updating procedure with a small set of data samples, indicating the expected target distribution, to provide a clear and consistent optimization objective. Both the two improvements are model- and task-agnostic and can be applied individually or together. Experimental results demonstrate that the proposed methods are faster in convergence and achieve higher accuracy with different network architectures in various FL settings.",
+  "citation": 110
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Generative Adversarial Networks (GANs) in Networking: A Comprehensive Survey & Evaluation",
+  "authors": "Hojjat Navidan, Parisa Fard Moshiri, Mohammad Nabati, Reza Shahbazian, Seyed Ali Ghorashi, Vahid Shah-Mansouri, David Windridge",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2105.04184v1",
+  "abstract": "Despite the recency of their conception, Generative Adversarial Networks (GANs) constitute an extensively researched machine learning sub-field for the creation of synthetic data through deep generative modeling. GANs have consequently been applied in a number of domains, most notably computer vision, in which they are typically used to generate or transform synthetic images. Given their relative ease of use, it is therefore natural that researchers in the field of networking (which has seen extensive application of deep learning methods) should take an interest in GAN-based approaches. The need for a comprehensive survey of such activity is therefore urgent. In this paper, we demonstrate how this branch of machine learning can benefit multiple aspects of computer and communication networks, including mobile networks, network analysis, internet of things, physical layer, and cybersecurity. In doing so, we shall provide a novel evaluation framework for comparing the performance of different models in non-image applications, applying this to a number of reference network datasets.",
+  "citation": 179
+}

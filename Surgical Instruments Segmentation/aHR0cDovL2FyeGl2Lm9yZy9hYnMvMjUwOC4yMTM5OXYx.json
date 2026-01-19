@@ -1,0 +1,8 @@
+{
+  "title": "Identifying Surgical Instruments in Laparoscopy Using Deep Learning Instance Segmentation",
+  "authors": "Sabrina Kletz, Klaus Schoeffmann, Jenny Benois-Pineau, Heinrich Husslein",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2508.21399v1",
+  "abstract": "Recorded videos from surgeries have become an increasingly important information source for the field of medical endoscopy, since the recorded footage shows every single detail of the surgery. However, while video recording is straightforward these days, automatic content indexing - the basis for content-based search in a medical video archive - is still a great challenge due to the very special video content. In this work, we investigate segmentation and recognition of surgical instruments in videos recorded from laparoscopic gynecology. More precisely, we evaluate the achievable performance of segmenting surgical instruments from their background by using a region-based fully convolutional network for instance-aware (1) instrument segmentation as well as (2) instrument recognition. While the first part addresses only binary segmentation of instances (i.e., distinguishing between instrument or background) we also investigate multi-class instrument recognition (i.e., identifying the type of instrument). Our evaluation results show that even with a moderately low number of training examples, we are able to localize and segment instrument regions with a pretty high accuracy. However, the results also reveal that determining the particular instrument is still very challenging, due to the inherently high similarity of surgical instruments.",
+  "citation": 63
+}

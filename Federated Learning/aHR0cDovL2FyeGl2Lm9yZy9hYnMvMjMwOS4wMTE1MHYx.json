@@ -1,0 +1,8 @@
+{
+  "title": "FedFwd: Federated Learning without Backpropagation",
+  "authors": "Seonghwan Park, Dahun Shin, Jinseok Chung, Namhoon Lee",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.01150v1",
+  "abstract": "In federated learning (FL), clients with limited resources can disrupt the training efficiency. A potential solution to this problem is to leverage a new learning procedure that does not rely on backpropagation (BP). We present a novel approach to FL called FedFwd that employs a recent BP-free method by Hinton (2022), namely the Forward Forward algorithm, in the local training process. FedFwd can reduce a significant amount of computations for updating parameters by performing layer-wise local updates, and therefore, there is no need to store all intermediate activation values during training. We conduct various experiments to evaluate FedFwd on standard datasets including MNIST and CIFAR-10, and show that it works competitively to other BP-dependent FL methods.",
+  "citation": 6
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Federated Learning Challenges and Opportunities: An Outlook",
+  "authors": "Jie Ding, Eric Tramel, Anit Kumar Sahu, Shuang Wu, Salman Avestimehr, Tao Zhang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.00807v1",
+  "abstract": "Federated learning (FL) has been developed as a promising framework to leverage the resources of edge devices, enhance customers' privacy, comply with regulations, and reduce development costs. Although many methods and applications have been developed for FL, several critical challenges for practical FL systems remain unaddressed. This paper provides an outlook on FL development, categorized into five emerging directions of FL, namely algorithm foundation, personalization, hardware and security constraints, lifelong learning, and nonstandard data. Our unique perspectives are backed by practical observations from large-scale federated systems for edge devices.",
+  "citation": 103
+}
