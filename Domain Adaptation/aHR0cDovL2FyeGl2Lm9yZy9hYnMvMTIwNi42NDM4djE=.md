@@ -47,7 +47,7 @@ Yuan Shiyuanshi, Fei Shafeisha
    - **타겟 도메인 판별적 클러스터링 ($I_t(X; \hat{Y})$)**: 타겟 데이터 $X$와 추정된 레이블 $\hat{Y}$ 간의 상호 정보 $I_t(X; \hat{Y}) = H[\hat{p}_0] - \frac{1}{M} \sum_t H[\hat{p}_t]$를 최대화한다. 이는 타겟 데이터의 레이블 혼란도를 줄여 클러스터링이 잘 되도록 유도한다 ($H[\cdot]$는 엔트로피).
    - **소스-타겟 도메인 판별 불가능성 ($I_{st}(X; Q)$)**: 데이터 인스턴스 $X$와 해당 도메인 레이블 $Q$ (소스=1, 타겟=0) 간의 상호 정보 $I_{st}(X; Q) = H[\hat{q}_0] - \frac{1}{N+M} \sum_i H[\hat{q}_i]$를 최소화한다. 이는 두 도메인이 새로운 특징 공간에서 서로 구별하기 어렵게 만들어 도메인 불변성을 확보한다.
 4. **최적화 문제**: 최종 최적화 문제는 다음과 같다:
-   $$ \text{minimize} \quad -I*t(X; \hat{Y}) + \lambda I*{st}(X; Q) $$
+   $$ \text{minimize} \quad -I_t(X; \hat{Y}) + \lambda I_{st}(X; Q) $$
     $$ \text{subject to} \quad \text{Trace}(L^T L) \leq d $$
     여기서 $\lambda$는 규제 계수, $d$는 특징 부분 공간의 차원을 제어한다. 이 문제는 비볼록(non-convex) 최적화이므로 그래디언트 기반 방법을 사용하며, PCA 또는 LMNN으로 초기화하여 지역 최적화를 완화한다.
 5. **모델 선택**: 타겟 도메인에 레이블이 없으므로, 소스 도메인 분류 오차 $\epsilon_S$가 최소가 되는 $\lambda$ 및 $d$를 선택하여 하이퍼파라미터 튜닝을 수행한다.

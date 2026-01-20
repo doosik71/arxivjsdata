@@ -33,12 +33,12 @@ DANN은 다음과 같은 단계로 학습됩니다.
    - $h(x)$를 바탕으로 $x$가 소스 도메인에서 왔는지(1) 타겟 도메인에서 왔는지(0)를 예측하는 도메인 분류기 $o(x) = \text{sigm}(d+u^T h(x))$.
 2. **훈련 목표 함수**:
    - 소스 도메인 $S=\{(x_i^s, y_i^s)\}_{i=1}^m$에 대한 분류 손실을 최소화합니다.
-     $$ L*{cls}(f(x_i^s), y_i^s) = -\log f*{y_i^s}(x_i^s) $$
+     $$ L_{cls}(f(x_i^s), y_i^s) = -\log f_{y_i^s}(x_i^s) $$
    - 소스 $h(x_i^s)$와 타겟 $h(x_i^t)$ 표현 간의 도메인 구별 손실 $L_d$를 사용하여 도메인 분류기가 소스 및 타겟 도메인을 구분하지 못하도록 만듭니다.
-     $$ L*{dom}(o(x), z) = -z\log(o(x)) - (1-z)\log(1-o(x)) $$
-     도메인 분류기가 잘 분류하지 못하도록 하기 위해, $L*{dom}$을 *최대화*하는 방식으로 학습됩니다.
+     $$ L_{dom}(o(x), z) = -z\log(o(x)) - (1-z)\log(1-o(x)) $$
+     도메인 분류기가 잘 분류하지 못하도록 하기 위해, $L_{dom}$을 *최대화*하는 방식으로 학습됩니다.
    - 최종 목표 함수는 다음과 같은 min-max 형태를 가집니다:
-     $$ \min*{W,V,b,c} \left[ \frac{1}{m} \sum*{i=1}^m L*{cls}(f(x_i^s), y_i^s) + \lambda \max*{u,d} \left( -\frac{1}{m} \sum*{i=1}^m L*{dom}(o(x*i^s), 1) - \frac{1}{m'} \sum*{i=1}^{m'} L\_{dom}(o(x_i^t), 0) \right) \right] $$
+     $$ \min_{W,V,b,c} \left[ \frac{1}{m} \sum_{i=1}^m L_{cls}(f(x_i^s), y_i^s) + \lambda \max_{u,d} \left( -\frac{1}{m} \sum_{i=1}^m L_{dom}(o(x_i^s), 1) - \frac{1}{m'} \sum_{i=1}^{m'} L_{dom}(o(x_i^t), 0) \right) \right] $$
         여기서 $\lambda > 0$는 도메인 적응 정규화 항의 가중치를 조절하는 하이퍼파라미터입니다.
 3. **학습 알고리즘 (Algorithm 1)**:
    - 확률적 경사 하강법(SGD)을 사용하여 최적화합니다.
