@@ -3,5 +3,6 @@
   "authors": "Hassan Gharoun, Fereshteh Momenifar, Fang Chen, Amir H. Gandomi",
   "year": 2023,
   "url": "http://arxiv.org/abs/2303.07502v1",
-  "abstract": "Despite its astounding success in learning deeper multi-dimensional data, the\nperformance of deep learning declines on new unseen tasks mainly due to its\nfocus on same-distribution prediction. Moreover, deep learning is notorious for\npoor generalization from few samples. Meta-learning is a promising approach\nthat addresses these issues by adapting to new tasks with few-shot datasets.\nThis survey first briefly introduces meta-learning and then investigates\nstate-of-the-art meta-learning methods and recent advances in: (I)\nmetric-based, (II) memory-based, (III), and learning-based methods. Finally,\ncurrent challenges and insights for future researches are discussed."
+  "abstract": "Despite its astounding success in learning deeper multi-dimensional data, the\nperformance of deep learning declines on new unseen tasks mainly due to its\nfocus on same-distribution prediction. Moreover, deep learning is notorious for\npoor generalization from few samples. Meta-learning is a promising approach\nthat addresses these issues by adapting to new tasks with few-shot datasets.\nThis survey first briefly introduces meta-learning and then investigates\nstate-of-the-art meta-learning methods and recent advances in: (I)\nmetric-based, (II) memory-based, (III), and learning-based methods. Finally,\ncurrent challenges and insights for future researches are discussed.",
+  "citation": 165
 }

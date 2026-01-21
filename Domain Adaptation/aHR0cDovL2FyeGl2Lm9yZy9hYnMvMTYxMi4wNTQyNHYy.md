@@ -1,4 +1,4 @@
-# Unsupervised Pixel–Level Domain Adaptation with Generative Adversarial Networks
+# Unsupervised Pixel-Level Domain Adaptation with Generative Adversarial Networks
 
 Konstantinos Bousmalis, Nathan Silberman, David Dohan, Dumitru Erhan, Dilip Krishnan
 
@@ -45,9 +45,9 @@ PixelDA 모델은 생성자($G$), 판별자($D$), 그리고 작업별 분류기(
    - 이미지 $x \in \{X_f, X_t\}$에 대해 작업별 레이블 $\hat{y}$를 할당합니다.
    - 도메인 적응 과정과 분리되어 있어, 작업에 따라 유연하게 변경할 수 있습니다.
 4. **학습 목표 (Minimax Optimization)**:
-   $$ \min*{\theta_G, \theta_T} \max*{\theta_D} \alpha L_d(D,G) + \beta L_t(G,T) + \gamma L_c(G) $$
+   $$ \min_{\theta_G, \theta_T} \max_{\theta_D} \alpha L_d(D,G) + \beta L_t(G,T) + \gamma L_c(G) $$
    - **도메인 손실 ($L_d$)**: 생성자가 $D$를 속여 타겟 도메인 이미지와 구별할 수 없는 이미지를 생성하도록 유도하는 표준 GAN의 적대적 손실입니다.
-     $$ L*d(D,G) = E*{x*t}[\log D(x_t; \theta_D)] + E*{x_s,z}[\log(1-D(G(x_s,z;\theta_G);\theta_D))] $$
+     $$ L_d(D,G) = E_{x_t}[\log D(x_t; \theta_D)] + E_{x_s,z}[\log(1-D(G(x_s,z;\theta_G);\theta_D))] $$
    - **작업별 손실 ($L_t$)**:
      - 분류의 경우: Softmax 교차 엔트로피 손실.
      - 모델 불안정성과 클래스 할당 변화를 피하기 위해 적응된 이미지 $G(x_s,z)$와 원본 소스 이미지 $x_s$ **모두**에 대해 $T$를 훈련합니다.
@@ -55,7 +55,7 @@ PixelDA 모델은 생성자($G$), 판별자($D$), 그리고 작업별 분류기(
    - **콘텐츠 유사성 손실 ($L_c$)**: (객체가 검은 배경에 렌더링된 경우와 같이 사전 지식이 있을 때 선택적으로 사용)
      - 생성된 전경(foreground)과 소스 전경 간의 차이를 패널티하는 마스크드 쌍별 평균 제곱 오차(masked pairwise mean squared error, MPSE)를 사용합니다.
      - 생성 과정을 원본 이미지 콘텐츠에 고정시키고 훈련을 안정화하는 데 도움을 줍니다.
-       $$ L*c(G) = E*{x*s,z} \left[ \frac{1}{k} \left\|(x_s - G(x_s,z;\theta_G)) \circ m\right\|*{2}^{2} - \frac{1}{k^2} \left( (x_s - G(x_s,z;\theta_G))^{T} m \right)^{2} \right] $$
+       $$ L_c(G) = E_{x_s,z} \left[ \frac{1}{k} \left\|(x_s - G(x_s,z;\theta_G)) \circ m\right\|_{2}^{2} - \frac{1}{k^2} \left( (x_s - G(x_s,z;\theta_G))^{T} m \right)^{2} \right] $$
         여기서 $m$은 이진 마스크, $k$는 픽셀 수, $\circ$는 아다마르 곱(Hadamard product)입니다.
 5. **훈련 과정**: $(\theta_D, \theta_T)$와 $\theta_G$ 매개변수를 교대로 업데이트하는 방식으로 최적화됩니다. Adam 옵티마이저를 사용합니다.
 
@@ -87,4 +87,4 @@ PixelDA 모델은 생성자($G$), 판별자($D$), 그리고 작업별 분류기(
 
 ## 📌 TL;DR
 
-레이블링된 데이터셋 구축의 높은 비용 문제를 해결하기 위해, 이 논문은 **GAN 기반의 픽셀 수준 도메인 적응(PixelDA)** 방법을 제안합니다. 이 방법은 소스 도메인 이미지를 타겟 도메인의 스타일을 갖도록 변환하며, 기존 도메인 적응 방법과 달리 **작업별 아키텍처와 도메인 적응 과정을 분리**합니다. 또한, 학습 안정화를 위한 **작업별 손실($L_t$) 및 콘텐츠 유사성 손실($L_c$)**을 도입하여, MNIST, LineMod와 같은 데이터셋에서 기존 SOTA 성능을 크게 뛰어넘는 동시에, 훈련 시 보지 못한 클래스에도 **높은 일반화 성능**을 보입니다. 이는 합성 데이터의 실제 적용 가능성을 크게 높이는 중요한 기여입니다.
+레이블링된 데이터셋 구축의 높은 비용 문제를 해결하기 위해, 이 논문은 **GAN 기반의 픽셀 수준 도메인 적응(PixelDA)** 방법을 제안합니다. 이 방법은 소스 도메인 이미지를 타겟 도메인의 스타일을 갖도록 변환하며, 기존 도메인 적응 방법과 달리 **작업별 아키텍처와 도메인 적응 과정을 분리**합니다. 또한, 학습 안정화를 위한 **작업별 손실($L_t$) 및 콘텐츠 유사성 손실($L_c$)** 을 도입하여, MNIST, LineMod와 같은 데이터셋에서 기존 SOTA 성능을 크게 뛰어넘는 동시에, 훈련 시 보지 못한 클래스에도 **높은 일반화 성능**을 보입니다. 이는 합성 데이터의 실제 적용 가능성을 크게 높이는 중요한 기여입니다.

@@ -1,0 +1,8 @@
+{
+  "title": "Stochastic-based Patch Filtering for Few-Shot Learning",
+  "authors": "Javier Rodenas, Eduardo Aguilar, Petia Radeva",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2508.10066v1",
+  "abstract": "Food images present unique challenges for few-shot learning models due to their visual complexity and variability. For instance, a pasta dish might appear with various garnishes on different plates and in diverse lighting conditions and camera perspectives. This problem leads to losing focus on the most important elements when comparing the query with support images, resulting in misclassification. To address this issue, we propose Stochastic-based Patch Filtering for Few-Shot Learning (SPFF) to attend to the patch embeddings that show greater correlation with the class representation. The key concept of SPFF involves the stochastic filtering of patch embeddings, where patches less similar to the class-aware embedding are more likely to be discarded. With patch embedding filtered according to the probability of appearance, we use a similarity matrix that quantifies the relationship between the query image and its respective support images. Through a qualitative analysis, we demonstrate that SPFF effectively focuses on patches where class-specific food features are most prominent while successfully filtering out non-relevant patches. We validate our approach through extensive experiments on few-shot classification benchmarks: Food-101, VireoFood-172 and UECFood-256, outperforming the existing SoA methods.",
+  "citation": 0
+}

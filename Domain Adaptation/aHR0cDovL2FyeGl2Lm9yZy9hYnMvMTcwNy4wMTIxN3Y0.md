@@ -32,20 +32,20 @@ WDGRL은 특징 추출기(Feature Extractor), 도메인 비평가(Domain Critic)
 
    - **특징 추출기($f_g$):** 입력 $x$를 $d$차원 특징 표현 $h = f_g(x)$으로 매핑하여 도메인 불변 특징을 학습합니다.
    - **도메인 비평가($f_w$):** 특징 추출기가 생성한 소스 표현 $h^s = f_g(x^s)$와 타겟 표현 $h^t = f_g(x^t)$ 사이의 경험적 Wasserstein 거리($W_1(P_{h}^{s}, P_{h}^{t})$)를 추정합니다.
-   - **Wasserstein 거리 추정:** 듀얼 형식(dual formulation)을 사용하여 비평가 손실 $L_{wd}$를 최대화함으로써 Wasserstein 거리를 추정합니다:
-     $$ L*{wd}(x^s, x^t) = \frac{1}{n_s}\sum*{x^s \in X^s} f*w(f_g(x^s)) - \frac{1}{n_t}\sum*{x^t \in X^t} f_w(f_g(x^t)) $$
-   - **기울기 페널티($L_{grad}$):** 비평가 $f_w$의 1-Lipschitz 제약 조건을 강제하기 위해, 소스 및 타겟 표현 사이의 임의의 점 $\hat{h}$에 대해 기울기 페널티를 적용합니다:
-     $$ L*{grad}(\hat{h}) = (\left\| \nabla*{\hat{h}} f*w(\hat{h}) \right\|\_2 - 1)^2 $$
-     비평가의 최적화 목표는 $\max*{\theta*w} \{L*{wd} - \gamma L\_{grad}\}$ 입니다.
+   - **Wasserstein 거리 추정:** 듀얼 형식(dual formulation)을 사용하여 비평가 손실 $\mathcal{L}_{wd}$를 최대화함으로써 Wasserstein 거리를 추정합니다:
+     $$ \mathcal{L}_{wd}(x^s, x^t) = \frac{1}{n_s}\sum_{x^s \in X^s} f_w(f_g(x^s)) - \frac{1}{n_t}\sum_{x^t \in X^t} f_w(f_g(x^t)) \tag{4} $$
+   - **기울기 페널티($\mathcal{L}_{grad}$):** 비평가 $f_w$의 1-Lipschitz 제약 조건을 강제하기 위해, 소스 및 타겟 표현 사이의 임의의 점 $\hat{h}$에 대해 기울기 페널티를 적용합니다:
+     $$ \mathcal{L}_{grad}(\hat{h}) = (\left\| \nabla_{\hat{h}} f_w(\hat{h}) \right\|_2 - 1)^2 \tag{5} $$
+     비평가의 최적화 목표는 $\max_{\theta_w} \{\mathcal{L}_{wd} - \gamma \mathcal{L}_{grad}\}$ 입니다.
 
 2. **분류기 결합:**
 
    - 학습된 도메인 불변 표현이 분류에도 효과적이도록, 특징 추출기 뒤에 분류기($f_c$)를 추가합니다.
-   - 분류기 손실($L_c$)은 레이블된 소스 데이터를 사용하여 교차 엔트로피로 정의됩니다:
-     $$ L*c(x^s, y^s) = -\frac{1}{n_s} \sum*{i=1}^{n*s} \sum*{k=1}^l \mathbf{1}(y_i^s=k) \cdot \log f_c(f_g(x_i^s))\_k $$
+   - 분류기 손실($\mathcal{L}_c$)은 레이블된 소스 데이터를 사용하여 교차 엔트로피로 정의됩니다:
+     $$ \mathcal{L}_c(x^s, y^s) = -\frac{1}{n_s} \sum_{i=1}^{n_s} \sum_{k=1}^l \mathbf{1}(y_i^s=k) \cdot \log f_c(f_g(x_i^s))_k \tag{8} $$
    - 최종 목표 함수는 분류 손실과 Wasserstein 거리 추정의 조합입니다:
-     $$ \min*{\theta_g, \theta_c} \left\{ L_c + \lambda \max*{\theta*w} [L*{wd} - \gamma L\_{grad}] \right\} $$
-        여기서 $\lambda$는 판별적(discriminative) 및 전이 가능(transferable) 특징 학습 간의 균형을 조절합니다.
+     $$ \min_{\theta_g, \theta_c} \left\{ \mathcal{L}_c + \lambda \max_{\theta_w} [\mathcal{L}_{wd} - \gamma \mathcal{L}_{grad}] \right\} \tag{9} $$
+     여기서 $\lambda$는 판별적(discriminative) 및 전이 가능(transferable) 특징 학습 간의 균형을 조절합니다.
 
 3. **학습 알고리즘:**
    - 표준 역전파(back-propagation)와 두 단계의 반복 학습을 사용합니다.

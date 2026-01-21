@@ -1,0 +1,8 @@
+{
+  "title": "Shot in the Dark: Few-Shot Learning with No Base-Class Labels",
+  "authors": "Zitian Chen, Subhransu Maji, Erik Learned-Miller",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2010.02430v2",
+  "abstract": "Few-shot learning aims to build classifiers for new classes from a small number of labeled examples and is commonly facilitated by access to examples from a distinct set of 'base classes'. The difference in data distribution between the test set (novel classes) and the base classes used to learn an inductive bias often results in poor generalization on the novel classes. To alleviate problems caused by the distribution shift, previous research has explored the use of unlabeled examples from the novel classes, in addition to labeled examples of the base classes, which is known as the transductive setting. In this work, we show that, surprisingly, off-the-shelf self-supervised learning outperforms transductive few-shot methods by 3.9% for 5-shot accuracy on miniImageNet without using any base class labels. This motivates us to examine more carefully the role of features learned through self-supervision in few-shot learning. Comprehensive experiments are conducted to compare the transferability, robustness, efficiency, and the complementarity of supervised and self-supervised features.",
+  "citation": 23
+}

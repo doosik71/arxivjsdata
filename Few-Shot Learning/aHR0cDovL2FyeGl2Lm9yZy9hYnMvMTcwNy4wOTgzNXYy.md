@@ -28,23 +28,23 @@ Zhenguo Li, Fengwei Zhou, Fei Chen, Hang Li
 Meta-SGD는 학습기의 초기화, 업데이트 방향, 학습률을 모두 학습하는 새로운 옵티마이저 형태의 메타 학습기입니다.
 
 1. **메타 학습기 정의**:
-   - 기존 SGD의 업데이트 식 $\theta_{t} = \theta_{t-1} - \alpha \nabla L_{T}(\theta_{t-1})$와 달리, Meta-SGD는 한 번의 업데이트로 학습기를 적응시킵니다:
-     $$ \theta' = \theta - \alpha \circ \nabla L\_{T}(\theta) $$
+   - 기존 SGD의 업데이트 식 $\theta^t = \theta^{t-1} - \alpha \nabla \mathcal{L}_\mathcal{T}(\theta^{t-1})$와 달리, Meta-SGD는 한 번의 업데이트로 학습기를 적응시킵니다:
+     $$ \theta' = \theta - \alpha \circ \nabla \mathcal{L}_\mathcal{T}(\theta) \tag{2}$$
      여기서,
      - $\theta$: 메타 학습을 통해 학습되는 학습기의 초기 매개변수입니다. 새로운 태스크에 대한 학습기를 초기화하는 데 사용됩니다.
-     - $\alpha$: $\theta$와 동일한 크기의 벡터로, 메타 학습을 통해 학습되는 매개변수입니다. 이 $\alpha$는 업데이트의 **방향**과 **학습률**을 동시에 결정합니다.
+     - $\alpha$: $\theta$와 동일한 차원의 벡터로, 메타 학습을 통해 학습되는 매개변수입니다. 이 $\alpha$는 업데이트의 **방향**과 **학습률**을 동시에 결정합니다.
      - $\circ$: 원소별 곱셈(element-wise product)을 나타냅니다.
-   - $\alpha \circ \nabla L_{T}(\theta)$ 항은 단순히 기울기 $\nabla L_{T}(\theta)$를 따르지 않고, 학습된 $\alpha$에 의해 조정된 업데이트 방향과 암시적인 학습률을 갖게 됩니다.
+   - $\alpha \circ \nabla \mathcal{L}_\mathcal{T}(\theta)$ 항은 단순히 기울기 $\nabla \mathcal{L}_\mathcal{T}(\theta)$를 따르지 않고, 학습된 $\alpha$에 의해 조정된 업데이트 방향과 암시적인 학습률을 갖게 됩니다.
 2. **메타 훈련 목표**:
-   - 메타 학습기의 목표는 주어진 태스크 분포 $p(T)$에서 학습기가 새로운 태스크에 대해 가장 잘 일반화되도록 초기 매개변수 $\theta$와 학습률/방향 매개변수 $\alpha$를 학습하는 것입니다.
+   - 메타 학습기의 목표는 주어진 태스크 분포 $p(\mathcal{T})$에서 학습기가 새로운 태스크에 대해 가장 잘 일반화되도록 초기 매개변수 $\theta$와 학습률/방향 매개변수 $\alpha$를 학습하는 것입니다.
    - **지도 학습 (Supervised Learning)**:
-     $$ \min*{\theta, \alpha} E*{T \sim p(T)} [L_{test(T)}(\theta')] = E*{T \sim p(T)} [L*{test(T)}(\theta - \alpha \circ \nabla L\_{train(T)}(\theta))] $$
-   - **강화 학습 (Reinforcement Learning)**: 태스크 $T$를 MDP(Markov Decision Process)로 간주하며, 손실 $L_T(\theta)$는 음의 기대 할인 보상(negative expected discounted reward)입니다.
-     $$ \min*{\theta, \alpha} E*{T \sim p(T)} [L_T(\theta')] = E\_{T \sim p(T)} [L_T(\theta - \alpha \circ \nabla L_T(\theta))] $$
+     $$ \min_{\theta, \alpha} E_{\mathcal{T} \sim p(\mathcal{T})} [\mathcal{L}_{test(\mathcal{T})}(\theta')] = E_{\mathcal{T} \sim p(\mathcal{T})} [\mathcal{L}_{test(\mathcal{T})}(\theta - \alpha \circ \nabla \mathcal{L}_{train(\mathcal{T})}(\theta))] \tag{3} $$
+   - **강화 학습 (Reinforcement Learning)**: 태스크 $\mathcal{T}$를 MDP(Markov Decision Process)로 간주하며, 손실 $\mathcal{L}_\mathcal{T}(\theta)$는 음의 기대 할인 보상(negative expected discounted reward)입니다.
+     $$ \min_{\theta, \alpha} E_{\mathcal{T} \sim p(T)} [\mathcal{L}_\mathcal{T}(\theta')] = E_{\mathcal{T} \sim p(\mathcal{T})} [\mathcal{L}_\mathcal{T}(\theta - \alpha \circ \nabla \mathcal{L}_\mathcal{T}(\theta))] \tag{5} $$
 3. **최적화**:
    - 위의 목표 함수는 $\theta$와 $\alpha$에 대해 미분 가능하므로, 바깥 루프(outer loop)에서 SGD를 사용하여 $\theta$와 $\alpha$를 업데이트합니다 (알고리즘 1, 2 참조).
-   - **알고리즘 1 (지도 학습)**: 각 배치 태스크 $T_i$에 대해 $\theta$를 사용하여 $\nabla L_{train(T_i)}(\theta)$를 계산하고, 이를 통해 $\theta'_i$를 얻은 후, $L_{test(T_i)}(\theta'_i)$를 기준으로 $\theta, \alpha$를 업데이트합니다.
-   - **알고리즘 2 (강화 학습)**: 정책 $f_\theta$를 사용하여 N1개의 궤적(trajectories)을 샘플링하고 정책 기울기(policy gradient) $\nabla L_T(\theta)$를 계산합니다. $\theta'_i$를 얻은 후, N2개의 궤적을 샘플링하여 일반화 손실을 계산하고, 이 손실의 기울기를 사용하여 $\theta, \alpha$를 업데이트합니다.
+   - **알고리즘 1 (지도 학습)**: 각 배치 태스크 $\mathcal{T}_i$에 대해 $\theta$를 사용하여 $\nabla \mathcal{L}_{train(\mathcal{T}_i)}(\theta)$를 계산하고, 이를 통해 $\theta'_i$를 얻은 후, $\mathcal{L}_{test(\mathcal{T}_i)}(\theta'_i)$를 기준으로 $\theta, \alpha$를 업데이트합니다.
+   - **알고리즘 2 (강화 학습)**: 정책 $f_\theta$를 사용하여 N1개의 궤적(trajectories)을 샘플링하고 정책 기울기(policy gradient) $\nabla \mathcal{L}_\mathcal{T}(\theta)$를 계산합니다. $\theta'_i$를 얻은 후, N2개의 궤적을 샘플링하여 일반화 손실을 계산하고, 이 손실의 기울기를 사용하여 $\theta, \alpha$를 업데이트합니다.
 
 ## 📊 Results
 

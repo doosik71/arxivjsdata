@@ -30,33 +30,48 @@ Mingsheng Long, Han Zhu, Jianmin Wang, Michael I. Jordan
 
    - CNN (AlexNet, ResNet)을 전이 파이프라인으로 확장합니다.
    - 활성화가 안전하게 전이될 수 없는 "도메인 특정 계층"($L$)을 식별합니다 (예: AlexNet의 경우 $\{fc6, fc7, fc8\}$, ResNet의 경우 $\{pool5, fc\}$).
-   - 이러한 계층의 결합 활성화 $P(Z_{s1}, \ldots, Z_{s|L|})$ 및 $Q(Z_{t1}, \ldots, Z_{t|L|})$는 원래의 결합 분포 $P(X_s, Y_s)$ 및 $Q(X_t, Y_t)$의 대리자(surrogates)로 간주됩니다.
+   - 이러한 계층의 결합 활성화 $P(Z^{s1}, \ldots, Z^{s|\mathcal{L}|})$ 및 $Q(Z^{t1}, \ldots, Z^{t|\mathcal{L}|})$는 원래의 결합 분포 $P(X^s, Y^s)$ 및 $Q(X^t, Y^t)$의 대리자(surrogates)로 간주됩니다.
 
 2. **결합 최대 평균 불일치 (JMMD)**:
 
-   - 결합 분포의 힐베르트 공간 임베딩을 사용하여 두 결합 분포 $P(Z_{s1}, \ldots, Z_{s|L|})$와 $Q(Z_{t1}, \ldots, Z_{t|L|})$ 간의 불일치를 측정하기 위해 정의됩니다.
+   - 결합 분포의 힐베르트 공간 임베딩을 사용하여 두 결합 분포 $P(\mathbf{Z}^{s1}, \ldots, \mathbf{Z}^{s|\mathcal{L}|})$와 $Q(\mathbf{Z}^{t1}, \ldots, \mathbf{Z}^{t|\mathcal{L}|})$ 간의 불일치를 측정하기 위해 정의됩니다.
    - JMMD는 다음과 같이 정의됩니다:
-     $$ D*L(P,Q) = \| C*{Z*{s,1:|L|}}(P) - C*{Z*{t,1:|L|}}(Q) \|*{ \otimes*{l=1}^{|L|} \mathcal{H}\_l }^2 $$
-     여기서 $C*{Z*{s,1:|L|}}(P)$는 소스 도메인의 결합 분포에 대한 커널 평균 임베딩이며, $\otimes*{l=1}^{|L|} \phi*l(x_l)$은 텐서곱 힐베르트 공간의 특징 맵으로 내적 $\langle \otimes*{l=1}^{|L|} \phi*l(x_l), \otimes*{l=1}^{|L|} \phi*l(x'\_l) \rangle = \prod*{l=1}^{|L|} k_l(x_l, x'\_l)$을 만족합니다.
+     $$ D_\mathcal{L}(P,Q) = \| \mathcal{C}_{\mathbf{Z}^{s,1:|\mathcal{L}|}}(P) - \mathcal{C}_{\mathbf{Z}^{t,1:|\mathcal{L}|}}(Q) \|_{ \otimes_{l=1}^{|\mathcal{L}|} \mathcal{H}^l }^2 \tag{8} $$
+     여기서 $C_{\mathbf{Z}^{s,1:|L|}}(P)$는 소스 도메인의 결합 분포에 대한 커널 평균 임베딩이며, $\otimes_{l=1}^{|L|} \phi_l(x_l)$은 텐서곱 힐베르트 공간의 특징 맵으로 내적 $\langle \otimes_{l=1}^{|L|} \phi_l(x_l), \otimes_{l=1}^{|L|} \phi_l(x'_l) \rangle = \prod_{l=1}^{|L|} k_l(x_l, x'_l)$을 만족합니다.
    - 경험적 추정량은 다음과 같습니다:
-     $$ \hat{D}_L(P,Q) = \frac{1}{n_s^2} \sum_{i=1}^{n*s} \sum*{j=1}^{n*s} \prod*{l \in L} k*l(z*{si}^l, z*{sj}^l) + \frac{1}{n_t^2} \sum*{i=1}^{n*t} \sum*{j=1}^{n*t} \prod*{l \in L} k*l(z*{ti}^l, z*{tj}^l) - \frac{2}{n_s n_t} \sum*{i=1}^{n*s} \sum*{j=1}^{n*t} \prod*{l \in L} k*l(z*{si}^l, z\_{tj}^l) $$
+     $$
+     \begin{aligned}
+     \hat{D}_\mathcal{L}(P,Q) = & \; \frac{1}{n_s^2} \sum_{i=1}^{n_s} \sum_{j=1}^{n_s} \prod_{l \in \mathcal{L}} k^l(\mathbf{z}_i^{sl}, \mathbf{z}_j^{sl}) \\ & + \frac{1}{n_t^2} \sum_{i=1}^{n_t} \sum_{j=1}^{n_t} \prod_{l \in \mathcal{L}} k^l(\mathbf{z}_i^{tl}, \mathbf{z}_j^{tl}) \\ & - \frac{2}{n_s n_t} \sum_{i=1}^{n_s} \sum_{j=1}^{n_t} \prod_{l \in \mathcal{L}} k^l(\mathbf{z}_i^{sl}, \mathbf{z}_j^{tl})
+     \end{aligned} \tag{9}
+     $$
      이는 서로 다른 계층의 변수들 간의 상호작용을 포착합니다.
    - 효율적인 확장을 위해 *선형 시간 비편향 추정량*을 사용합니다:
-     $$ \hat{D}_L(P,Q) = \frac{2}{n} \sum_{i=1}^{n/2} \left( \prod*{l \in L} k_l(z*{s(2i-1)}^l, z*{s(2i)}^l) + \prod*{l \in L} k*l(z*{t(2i-1)}^l, z*{t(2i)}^l) \right) - \frac{2}{n} \sum*{i=1}^{n/2} \left( \prod*{l \in L} k_l(z*{s(2i-1)}^l, z*{t(2i)}^l) + \prod*{l \in L} k*l(z*{t(2i-1)}^l, z\_{s(2i)}^l) \right) $$
+     $$
+     \begin{aligned}
+     \hat{D}_\mathcal{L}(P,Q) = & \; \frac{2}{n} \sum_{i=1}^{n/2} \left( \prod_{l \in \mathcal{L}} k^l(\mathbf{z}_{2i-1}^{sl}, \mathbf{z}_{2i}^{sl}) + \prod_{l \in \mathcal{L}} k^l(\mathbf{z}_{2i-1}^{tl}, \mathbf{z}_{2i}^{tl}) \right) \\
+     & - \frac{2}{n} \sum_{i=1}^{n/2} \left( \prod_{l \in \mathcal{L}} k^l(\mathbf{z}_{2i-1}^{sl}, \mathbf{z}_{2i}^{tl}) + \prod_{l \in \mathcal{L}} k^l(\mathbf{z}_{2i-1}^{tl}, \mathbf{z}_{2i}^{sl}) \right)
+     \end{aligned} \tag{11}
+     $$
 
 3. **최적화 목표 (JAN)**:
 
    - 소스 분류 손실과 JMMD 페널티의 합을 최소화합니다:
-     $$ \min*f \frac{1}{n_s} \sum*{i=1}^{n*s} J(f(x*{si}), y\_{si}) + \lambda \hat{D}\_L(P,Q) $$
-        여기서 $J(\cdot, \cdot)$는 교차 엔트로피 손실이며, $\lambda$는 트레이드오프 매개변수입니다.
+     $$
+     \min_f \frac{1}{n_s} \sum_{i=1}^{n_s} J(f(\mathbf{x}_i^s), \mathbf{y}_i^s) + \lambda \hat{D}_\mathcal{L}(P,Q)
+     \tag{10}
+     $$
+     여기서 $J(\cdot, \cdot)$는 교차 엔트로피 손실이며, $\lambda$는 트레이드오프 매개변수입니다.
 
 4. **적대적 결합 적응 네트워크 (JAN-A)**:
 
    - 커널 기반 MMD의 잠재적 문제점(기울기 소실, 풍부하지 않은 함수 클래스)을 해결하기 위해 적대적 학습을 도입합니다.
    - JMMD 부분에 여러 완전 연결 계층(매개변수 $\theta$로 구성)을 추가합니다.
    - 최소-최대 (minimax) 목표를 최적화합니다:
-     $$ \min*f \max*\theta \frac{1}{n*s} \sum*{i=1}^{n*s} J(f(x*{si}), y\_{si}) + \lambda \hat{D}\_L(P,Q; \theta) $$
-        도메인 판별자(JMMD with $\theta$)는 소스 및 타겟 분포의 구별 가능성을 *최대화*하도록 훈련되고, 특징 추출기 $f$는 이러한 구별 가능성(및 분류 손실)을 *최소화*하도록 훈련됩니다.
+     $$
+     \min_f \max_\theta \frac{1}{n_s} \sum_{i=1}^{n_s} J(f(\mathbf{x}_i^s), \mathbf{y}_i^s) + \lambda \hat{D}_\mathcal{L}(P,Q; \theta)
+     \tag{12}
+     $$
+     도메인 판별자(JMMD with $\theta$)는 소스 및 타겟 분포의 구별 가능성을 *최대화*하도록 훈련되고, 특징 추출기 $f$는 이러한 구별 가능성(및 분류 손실)을 *최소화*하도록 훈련됩니다.
 
 5. **학습**:
    - 역전파를 사용한 확률적 경사 하강법(SGD)을 사용합니다.

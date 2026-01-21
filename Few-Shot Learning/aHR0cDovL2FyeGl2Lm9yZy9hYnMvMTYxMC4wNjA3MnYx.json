@@ -3,5 +3,6 @@
   "authors": "Tom Bosc",
   "year": 2016,
   "url": "http://arxiv.org/abs/1610.06072v1",
-  "abstract": "Meta-learning consists in learning learning algorithms. We use a Long Short\nTerm Memory (LSTM) based network to learn to compute on-line updates of the\nparameters of another neural network. These parameters are stored in the cell\nstate of the LSTM. Our framework allows to compare learned algorithms to\nhand-made algorithms within the traditional train and test methodology. In an\nexperiment, we learn a learning algorithm for a one-hidden layer Multi-Layer\nPerceptron (MLP) on non-linearly separable datasets. The learned algorithm is\nable to update parameters of both layers and generalise well on similar\ndatasets."
+  "abstract": "Meta-learning consists in learning learning algorithms. We use a Long Short\nTerm Memory (LSTM) based network to learn to compute on-line updates of the\nparameters of another neural network. These parameters are stored in the cell\nstate of the LSTM. Our framework allows to compare learned algorithms to\nhand-made algorithms within the traditional train and test methodology. In an\nexperiment, we learn a learning algorithm for a one-hidden layer Multi-Layer\nPerceptron (MLP) on non-linearly separable datasets. The learned algorithm is\nable to update parameters of both layers and generalise well on similar\ndatasets.",
+  "citation": 11
 }

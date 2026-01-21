@@ -1,0 +1,8 @@
+{
+  "title": "A Strong Baseline for Molecular Few-Shot Learning",
+  "authors": "Philippe Formont, Hugo Jeannin, Pablo Piantanida, Ismail Ben Ayed",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.02314v2",
+  "abstract": "Few-shot learning has recently attracted significant interest in drug discovery, with a recent, fast-growing literature mostly involving convoluted meta-learning strategies. We revisit the more straightforward fine-tuning approach for molecular data, and propose a regularized quadratic-probe loss based on the the Mahalanobis distance. We design a dedicated block-coordinate descent optimizer, which avoid the degenerate solutions of our loss. Interestingly, our simple fine-tuning approach achieves highly competitive performances in comparison to state-of-the-art methods, while being applicable to black-box settings and removing the need for specific episodic pre-training strategies. Furthermore, we introduce a new benchmark to assess the robustness of the competing methods to domain shifts. In this setting, our fine-tuning baseline obtains consistently better results than meta-learning methods.",
+  "citation": 2
+}

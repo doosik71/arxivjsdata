@@ -1,0 +1,8 @@
+{
+  "title": "Proxy Network for Few Shot Learning",
+  "authors": "Bin Xiao, Chien-Liang Liu, Wen-Hoar Hsaio",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2009.04292v1",
+  "abstract": "The use of a few examples for each class to train a predictive model that can be generalized to novel classes is a crucial and valuable research direction in artificial intelligence. This work addresses this problem by proposing a few-shot learning (FSL) algorithm called proxy network under the architecture of meta-learning. Metric-learning based approaches assume that the data points within the same class should be close, whereas the data points in the different classes should be separated as far as possible in the embedding space. We conclude that the success of metric-learning based approaches lies in the data embedding, the representative of each class, and the distance metric. In this work, we propose a simple but effective end-to-end model that directly learns proxies for class representative and distance metric from data simultaneously. We conduct experiments on CUB and mini-ImageNet datasets in 1-shot-5-way and 5-shot-5-way scenarios, and the experimental results demonstrate the superiority of our proposed method over state-of-the-art methods. Besides, we provide a detailed analysis of our proposed method.",
+  "citation": 6
+}

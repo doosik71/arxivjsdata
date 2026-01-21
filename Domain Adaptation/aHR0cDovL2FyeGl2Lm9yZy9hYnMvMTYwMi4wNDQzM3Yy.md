@@ -37,22 +37,34 @@ Mingsheng Long, Han Zhu, Jianmin Wang, and Michael I. Jordan
 2. **특징 적응 (Feature Adaptation):**
    - 사전 훈련된 CNN(예: AlexNet)의 컨볼루션 레이어 특징을 미세 조정(fine-tuning)합니다.
    - 마지막 특징 레이어 위에 병목(bottleneck) 레이어 `fcb`를 추가하여 특징 차원을 줄입니다.
-   - 여러 레이어 $L=\{\text{fcb}, \text{fcc}\}$ 의 특징들을 텐서 곱($\otimes$)으로 융합하여 $z_i^s, z_j^t$ 를 생성합니다.
+   - 여러 레이어 $L=\{\text{fcb}, \text{fcc}\}$ 의 특징들을 텐서 곱($\otimes$)으로 융합하여 $\mathbf{z}_i^s, \mathbf{z}_j^t$ 를 생성합니다.
    - 융합된 특징에 대해 소스와 타겟 도메인 간의 최대 평균 불일치(MMD)를 최소화합니다 (텐서 MMD):
-     $$ \min*{f_S, f_T} D*{\mathcal{L}}(D*s, D_t) = \frac{1}{n_s^2} \sum*{i,j=1}^{n*s} k(z_i^s, z_j^s) + \frac{1}{n_t^2} \sum*{i,j=1}^{n*t} k(z_i^t, z_j^t) - \frac{2}{n_s n_t} \sum*{i=1}^{n*s} \sum*{j=1}^{n_t} k(z_i^s, z_j^t) $$
-        여기서 $k(\cdot, \cdot)$는 가우시안 커널이며, 텐서의 벡터화에 정의됩니다.
+     $$
+     \begin{aligned}
+     \min_{f_S, f_T} D_{\mathcal{L}}(\mathcal{D}_s, \mathcal{D}_t) = & \; \frac{1}{n_s^2} \sum_{i,j=1}^{n_s} k(\mathbf{z}_i^s, \mathbf{z}_j^s) \\
+     & + \frac{1}{n_t^2} \sum_{i,j=1}^{n_t} k(\mathbf{z}_i^t, \mathbf{z}_j^t) \\
+     & - \frac{2}{n_s n_t} \sum_{i=1}^{n*s} \sum_{j=1}^{n_t} k(\mathbf{z}_i^s, \mathbf{z}_j^t)
+     \end{aligned}
+     \tag{2}
+     $$
+     여기서 $k(\cdot, \cdot)$는 가우시안 커널이며, 텐서의 벡터화에 정의됩니다.
 3. **분류기 적응 (Classifier Adaptation):**
    - 소스 분류기 $f_S(x)$ 와 타겟 분류기 $f_T(x)$ 가 잔여 함수 $\Delta f(x)$ 만큼 다르다고 가정합니다:
-     $$ f_S(x) = f_T(x) + \Delta f(x) $$
+     $$f_S(x) = f_T(x) + \Delta f(x) \tag{3}$$
    - 딥 잔여 학습 [8]의 아이디어를 확장하여, `fcc` 레이어의 출력인 $f_T(x)$ 를 입력으로 받고 잔여 레이어(`fc1-fc2`)를 통해 $\Delta f(x)$ 를 학습한 뒤 $f_T(x)$ 에 더하여 $f_S(x)$ 를 출력하는 잔여 블록을 구성합니다.
    - $f_S(x)$ 를 잔여 블록의 출력으로 설정하여 소스 레이블 데이터로 더 잘 훈련될 수 있도록 합니다.
    - **엔트로피 최소화:** 타겟 레이블 데이터가 없으므로, 타겟 분류기 $f_t(x)$ 가 타겟 데이터의 저밀도 영역을 통과하도록 유도하기 위해 타겟 데이터에 대한 $f_t(x)$ 의 엔트로피를 최소화합니다:
-     $$ \min*{f_t} \frac{1}{n_t} \sum*{i=1}^{n_t} H(f_t(x_i^t)) $$
+     $$\min_{f_t} \frac{1}{n_t} \sum_{i=1}^{n_t} H(f_t(\mathbf{x}_i^t)) \tag{4}$$
         여기서 $H(\cdot)$는 엔트로피 함수입니다.
 4. **잔여 전이 네트워크 (RTN) 최종 목적 함수:**
    - 특징 학습, 특징 적응, 분류기 적응을 통합하는 종합적인 목적 함수를 최적화합니다:
-     $$ \min*{f_S=f_T+\Delta f} \frac{1}{n_s} \sum*{i=1}^{n*s} L(f_s(x_i^s), y_i^s) + \gamma \frac{1}{n_t} \sum*{i=1}^{n*t} H(f_t(x_i^t)) + \lambda D*{\mathcal{L}}(D_s, D_t) $$
-        여기서 $L$ 은 교차 엔트로피 손실(cross-entropy loss), $\lambda$ 와 $\gamma$ 는 각각 텐서 MMD 페널티와 엔트로피 페널티에 대한 균형 매개변수입니다.
+     $$
+     \begin{aligned}
+     \min_{f_S=f_T+\Delta f} \frac{1}{n_s} \sum_{i=1}^{n_s} L(f_s(\mathbf{x}_i^s), y_i^s) + \gamma \frac{1}{n_t} \sum_{i=1}^{n_t} H(f_t(\mathbf{x}_i^t)) + \lambda D_{\mathcal{L}}(\mathcal{D}_s, \mathcal{D}_t)
+     \end{aligned}
+     \tag{5}
+     $$
+     여기서 $L$ 은 교차 엔트로피 손실(cross-entropy loss), $\lambda$ 와 $\gamma$ 는 각각 텐서 MMD 페널티와 엔트로피 페널티에 대한 균형 매개변수입니다.
 5. **훈련:**
    - ImageNet으로 사전 훈련된 AlexNet 모델을 사용하여 미세 조정합니다.
    - 표준 역전파(back-propagation) 알고리즘을 사용합니다.
