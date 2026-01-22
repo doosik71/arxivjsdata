@@ -1,0 +1,8 @@
+{
+  "title": "RADAR: Mechanistic Pathways for Detecting Data Contamination in LLM Evaluation",
+  "authors": "Ashish Kattamuri, Harshwardhan Fartale, Arpita Vats, Rahul Raja, Ishita Prasad",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2510.08931v1",
+  "abstract": "Data contamination poses a significant challenge to reliable LLM evaluation, where models may achieve high performance by memorizing training data rather than demonstrating genuine reasoning capabilities. We introduce RADAR (Recall vs. Reasoning Detection through Activation Representation), a novel framework that leverages mechanistic interpretability to detect contamination by distinguishing recall-based from reasoning-based model responses. RADAR extracts 37 features spanning surface-level confidence trajectories and deep mechanistic properties including attention specialization, circuit dynamics, and activation flow patterns. Using an ensemble of classifiers trained on these features, RADAR achieves 93\\% accuracy on a diverse evaluation set, with perfect performance on clear cases and 76.7\\% accuracy on challenging ambiguous examples. This work demonstrates the potential of mechanistic interpretability for advancing LLM evaluation beyond traditional surface-level metrics.",
+  "citation": 0
+}

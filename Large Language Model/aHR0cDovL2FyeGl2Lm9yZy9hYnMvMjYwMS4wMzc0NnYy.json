@@ -1,0 +1,8 @@
+{
+  "title": "Whose Facts Win? LLM Source Preferences under Knowledge Conflicts",
+  "authors": "Jakob Schuster, Vagrant Gautam, Katja Markert",
+  "year": 2026,
+  "url": "http://arxiv.org/abs/2601.03746v2",
+  "abstract": "As large language models (LLMs) are more frequently used in retrieval-augmented generation pipelines, it is increasingly relevant to study their behavior under knowledge conflicts. Thus far, the role of the source of the retrieved information has gone unexamined. We address this gap with a novel framework to investigate how source preferences affect LLM resolution of inter-context knowledge conflicts in English, motivated by interdisciplinary research on credibility. With a comprehensive, tightly-controlled evaluation of 13 open-weight LLMs, we find that LLMs prefer institutionally-corroborated information (e.g., government or newspaper sources) over information from people and social media. However, these source preferences can be reversed by simply repeating information from less credible sources. To mitigate repetition effects and maintain consistent preferences, we propose a novel method that reduces repetition bias by up to 99.8%, while also maintaining at least 88.8% of original preferences. We release all data and code to encourage future work on credibility and source preferences in knowledge-intensive NLP.",
+  "citation": 0
+}

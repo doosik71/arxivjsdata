@@ -1,0 +1,8 @@
+{
+  "title": "Mind the Gap: Comparing Model- vs Agentic-Level Red Teaming with Action-Graph Observability on GPT-OSS-20B",
+  "authors": "Ilham Wicaksono, Zekun Wu, Rahul Patel, Theo King, Adriano Koshiyama, Philip Treleaven",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.17259v1",
+  "abstract": "As the industry increasingly adopts agentic AI systems, understanding their unique vulnerabilities becomes critical. Prior research suggests that security flaws at the model level do not fully capture the risks present in agentic deployments, where models interact with tools and external environments. This paper investigates this gap by conducting a comparative red teaming analysis of GPT-OSS-20B, a 20-billion parameter open-source model. Using our observability framework AgentSeer to deconstruct agentic systems into granular actions and components, we apply iterative red teaming attacks with harmful objectives from HarmBench at two distinct levels: the standalone model and the model operating within an agentic loop. Our evaluation reveals fundamental differences between model level and agentic level vulnerability profiles. Critically, we discover the existence of agentic-only vulnerabilities, attack vectors that emerge exclusively within agentic execution contexts while remaining inert against standalone models. Agentic level iterative attacks successfully compromise objectives that completely failed at the model level, with tool-calling contexts showing 24\\% higher vulnerability than non-tool contexts. Conversely, certain model-specific exploits work exclusively at the model level and fail when transferred to agentic contexts, demonstrating that standalone model vulnerabilities do not always generalize to deployed systems.",
+  "citation": 0
+}

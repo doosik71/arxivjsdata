@@ -1,0 +1,8 @@
+{
+  "title": "Mini-Omni2: Towards Open-source GPT-4o with Vision, Speech and Duplex Capabilities",
+  "authors": "Zhifei Xie, Changqiao Wu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.11190v3",
+  "abstract": "GPT-4o, an all-encompassing model, represents a milestone in the development of large multi-modal language models. It can understand visual, auditory, and textual modalities, directly output audio, and support flexible duplex interaction. Models from the open-source community often achieve some functionalities of GPT-4o, such as visual understanding and voice chat. Nevertheless, training a unified model that incorporates all modalities is challenging due to the complexities of multi-modal data, intricate model architectures, and training processes. In this paper, we introduce Mini-Omni2, a visual-audio assistant capable of providing real-time, end-to-end voice responses to visoin and audio queries. By integrating pretrained visual and auditory encoders, Mini-Omni2 maintains performance in individual modalities. We propose a three-stage training process to align modalities, allowing the language model to handle multi-modal inputs and outputs after training on a limited dataset. For interaction, we introduce a command-based interruption mechanism, enabling more flexible interaction with users. To the best of our knowledge, Mini-Omni2 is one of the closest reproductions of GPT-4o, which have similar form of functionality, and we hope it can offer valuable insights for subsequent research.",
+  "citation": 71
+}

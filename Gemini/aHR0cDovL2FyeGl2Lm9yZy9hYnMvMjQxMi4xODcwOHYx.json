@@ -1,0 +1,8 @@
+{
+  "title": "CAG: Chunked Augmented Generation for Google Chrome's Built-in Gemini Nano",
+  "authors": "Vivek Vellaiyappan Surulimuthu, Aditya Karnam Gururaj Rao",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.18708v1",
+  "abstract": "We present Chunked Augmented Generation (CAG), an architecture specifically designed to overcome the context window limitations of Google Chrome's built-in Gemini Nano model. While Chrome's integration of Gemini Nano represents a significant advancement in bringing AI capabilities directly to the browser, its restricted context window poses challenges for processing large inputs. CAG addresses this limitation through intelligent input chunking and processing strategies, enabling efficient handling of extensive content while maintaining the model's performance within browser constraints. Our implementation demonstrates particular efficacy in processing large documents and datasets directly within Chrome, making sophisticated AI capabilities accessible through the browser without external API dependencies. Get started now at https://github.com/vivekVells/cag-js.",
+  "citation": 0
+}

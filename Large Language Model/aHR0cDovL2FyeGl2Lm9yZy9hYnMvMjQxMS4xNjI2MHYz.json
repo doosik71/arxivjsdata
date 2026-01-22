@@ -1,0 +1,8 @@
+{
+  "title": "Unraveling Arithmetic in Large Language Models: The Role of Algebraic Structures",
+  "authors": "Fu-Chieh Chang, You-Chen Lin, Pei-Yuan Wu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.16260v3",
+  "abstract": "Large language models (LLMs) have demonstrated remarkable mathematical capabilities, largely driven by chain-of-thought (CoT) prompting, which decomposes complex reasoning into step-by-step solutions. This approach has enabled significant advancements, as evidenced by performance on benchmarks like GSM8K and MATH. However, the mechanisms underlying LLMs' ability to perform arithmetic in a single step of CoT remain poorly understood. Existing studies debate whether LLMs encode numerical values or rely on symbolic reasoning, while others explore attention and multi-layered processing in arithmetic tasks. In this work, we propose that LLMs learn arithmetic by capturing algebraic structures, such as commutativity and identity properties. Since these structures are observable through input-output relationships, they can generalize to unseen data. We empirically demonstrate that LLMs can learn algebraic structures using a custom dataset of arithmetic problems, as well as providing theoretical evidence showing that, under specific configurations of weights and biases, the transformer-based LLMs can generate embeddings that remain invariant to both permutations of input tokens and the presence of identity elements. Our findings indicate that leveraging algebraic structures can enhance the LLMs' arithmetic capabilities, offering insights into improving their arithmetic performance.",
+  "citation": 1
+}

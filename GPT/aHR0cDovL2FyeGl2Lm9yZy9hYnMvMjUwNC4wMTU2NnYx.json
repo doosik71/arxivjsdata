@@ -1,0 +1,8 @@
+{
+  "title": "GPT Adoption and the Impact of Disclosure Policies",
+  "authors": "Cathy Yang, David Restrepo Amariles, Leo Allen, Aurore Troussel",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2504.01566v1",
+  "abstract": "Generative Pre-trained Transformers (GPTs), particularly Large Language Models (LLMs) like ChatGPT, have proven effective in content generation and productivity enhancement. However, legal risks associated with these tools lead to adoption variance and concealment of AI use within organizations. This study examines the impact of disclosure on ChatGPT adoption in legal, audit and advisory roles in consulting firms through the lens of agency theory. We conducted a survey experiment to evaluate agency costs in the context of unregulated corporate use of ChatGPT, with a particular focus on how mandatory disclosure influences information asymmetry and misaligned interests. Our findings indicate that in the absence of corporate regulations, such as an AI policy, firms may incur agency costs, which can hinder the full benefits of GPT adoption. While disclosure policies reduce information asymmetry, they do not significantly lower overall agency costs due to managers undervaluing analysts' contributions with GPT use. Finally, we examine the scope of existing regulations in Europe and the United States regarding disclosure requirements, explore the sharing of risk and responsibility within firms, and analyze how incentive mechanisms promote responsible AI adoption.",
+  "citation": 1
+}

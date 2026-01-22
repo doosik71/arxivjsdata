@@ -1,0 +1,8 @@
+{
+  "title": "On the Failure of the Smart Approach of the GPT Cryptosystem",
+  "authors": "Herve Tale Kalachi",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2010.15678v1",
+  "abstract": "This paper describes a new algorithm for breaking the smart approach of the GPT cryptosystem. We show that by puncturing the public code several times on specific positions, we get a public code on which applying the Frobenius operator appropriately allows to build an alternative secret key.",
+  "citation": 0
+}

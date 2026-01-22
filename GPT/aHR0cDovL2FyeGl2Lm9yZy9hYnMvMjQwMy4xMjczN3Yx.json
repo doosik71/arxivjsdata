@@ -1,0 +1,8 @@
+{
+  "title": "Navigating Compiler Errors with AI Assistance -- A Study of GPT Hints in an Introductory Programming Course",
+  "authors": "Maciej Pankiewicz, Ryan S. Baker",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.12737v1",
+  "abstract": "We examined the efficacy of AI-assisted learning in an introductory programming course at the university level by using a GPT-4 model to generate personalized hints for compiler errors within a platform for automated assessment of programming assignments. The control group had no access to GPT hints. In the experimental condition GPT hints were provided when a compiler error was detected, for the first half of the problems in each module. For the latter half of the module, hints were disabled. Students highly rated the usefulness of GPT hints. In affect surveys, the experimental group reported significantly higher levels of focus and lower levels of confrustion (confusion and frustration) than the control group. For the six most commonly occurring error types we observed mixed results in terms of performance when access to GPT hints was enabled for the experimental group. However, in the absence of GPT hints, the experimental group's performance surpassed the control group for five out of the six error types.",
+  "citation": 13
+}

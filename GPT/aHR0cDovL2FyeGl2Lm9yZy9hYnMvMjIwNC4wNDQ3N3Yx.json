@@ -1,0 +1,8 @@
+{
+  "title": "FoundationLayerNorm: Scaling BERT and GPT to 1,000 Layers",
+  "authors": "Dezhou Shen",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2204.04477v1",
+  "abstract": "The mainstream BERT/GPT model contains only 10 to 20 layers, and there is little literature to discuss the training of deep BERT/GPT. This paper proposes a simple yet effective method to stabilize BERT and GPT training. We successfully scale up BERT and GPT to 1,000 layers, which is an order of magnitude deeper than previous BERT and GPT. The proposed method FoundationLayerNormalization enables efficient training of deep neural networks and is validated at the 1000-layer scale.",
+  "citation": 1
+}

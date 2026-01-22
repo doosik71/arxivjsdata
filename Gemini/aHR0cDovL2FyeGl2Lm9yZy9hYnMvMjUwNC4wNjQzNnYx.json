@@ -1,0 +1,8 @@
+{
+  "title": "Language-Dependent Political Bias in AI: A Study of ChatGPT and Gemini",
+  "authors": "Dogus Yuksel, Mehmet Cem Catalbas, Bora Oc",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2504.06436v1",
+  "abstract": "As leading examples of large language models, ChatGPT and Gemini claim to provide accurate and unbiased information, emphasizing their commitment to political neutrality and avoidance of personal bias. This research investigates the political tendency of large language models and the existence of differentiation according to the query language. For this purpose, ChatGPT and Gemini were subjected to a political axis test using 14 different languages. The findings of the study suggest that these large language models do exhibit political tendencies, with both models demonstrating liberal and leftist biases. A comparative analysis revealed that Gemini exhibited a more pronounced liberal and left-wing tendency compared to ChatGPT. The study also found that these political biases varied depending on the language used for inquiry. The study delves into the factors that constitute political tendencies and linguistic differentiation, exploring differences in the sources and scope of educational data, structural and grammatical features of languages, cultural and political contexts, and the model's response to linguistic features. From this standpoint, and an ethical perspective, it is proposed that artificial intelligence tools should refrain from asserting a lack of political tendencies and neutrality, instead striving for political neutrality and executing user queries by incorporating these tendencies.",
+  "citation": 2
+}

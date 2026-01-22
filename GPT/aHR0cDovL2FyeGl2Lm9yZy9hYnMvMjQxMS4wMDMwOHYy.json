@@ -1,0 +1,8 @@
+{
+  "title": "GPT for Games: An Updated Scoping Review (2020-2024)",
+  "authors": "Daijin Yang, Erica Kleinman, Casper Harteveld",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.00308v2",
+  "abstract": "Due to GPT's impressive generative capabilities, its applications in games are expanding rapidly. To offer researchers a comprehensive understanding of the current applications and identify both emerging trends and unexplored areas, this paper introduces an updated scoping review of 177 articles, 122 of which were published in 2024, to explore GPT's potential for games. By coding and synthesizing the papers, we identify five prominent applications of GPT in current game research: procedural content generation, mixed-initiative game design, mixed-initiative gameplay, playing games, and game user research. Drawing on insights from these application areas and emerging research, we propose future studies should focus on expanding the technical boundaries of the GPT models and exploring the complex interaction dynamics between them and users. This review aims to illustrate the state of the art in innovative GPT applications in games, offering a foundation to enrich game development and enhance player experiences through cutting-edge AI innovations.",
+  "citation": 22
+}

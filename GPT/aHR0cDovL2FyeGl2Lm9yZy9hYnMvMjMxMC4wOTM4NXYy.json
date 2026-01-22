@@ -1,0 +1,8 @@
+{
+  "title": "PIM-GPT: A Hybrid Process-in-Memory Accelerator for Autoregressive Transformers",
+  "authors": "Yuting Wu, Ziyu Wang, Wei D. Lu",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2310.09385v2",
+  "abstract": "Decoder-only Transformer models such as GPT have demonstrated exceptional performance in text generation, by autoregressively predicting the next token. However, the efficacy of running GPT on current hardware systems is bounded by low compute-to-memory-ratio and high memory access. Process-in-memory (PIM) architectures can minimize off-chip data movement and utilize high internal bandwidth. They stand out as promising candidates for accelerating memory-bounded tasks such as GPT inference.\n  In this work, we propose a PIM accelerator, PIM-GPT, which achieves end-to-end acceleration of GPT inference with high performance and high energy efficiency. PIM-GPT leverages DRAM-based PIM designs for executing multiply-accumulate (MAC) operations directly in the DRAM chips, eliminating the need to move matrix data off-chip. Non-linear functions and data communication is supported by an application specific integrated chip (ASIC). At the software level, mapping schemes are designed to maximize data locality and computation parallelism by concatenating and partitioning matrices among DRAM channels and banks to utilize all available in-memory computation units. The efficiency of the PIM-GPT architecture is verified through circuit synthesis and an event-driven clock-cycle accurate simulator. Overall, PIM-GPT achieves 41$-$137$\\times$, 631$-$1074$\\times$ speedup and 123$-$383$\\times$, 320$-$602$\\times$ energy efficiency over GPU and CPU baseline on 8 GPT models with up to 1.4 billion parameters.",
+  "citation": 16
+}

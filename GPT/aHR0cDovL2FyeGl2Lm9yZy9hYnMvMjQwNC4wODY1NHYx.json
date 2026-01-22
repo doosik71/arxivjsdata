@@ -1,0 +1,8 @@
+{
+  "title": "Optimal path for Biomedical Text Summarization Using Pointer GPT",
+  "authors": "Hyunkyung Han, Jaesik Choi",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.08654v1",
+  "abstract": "Biomedical text summarization is a critical tool that enables clinicians to effectively ascertain patient status. Traditionally, text summarization has been accomplished with transformer models, which are capable of compressing long documents into brief summaries. However, transformer models are known to be among the most challenging natural language processing (NLP) tasks. Specifically, GPT models have a tendency to generate factual errors, lack context, and oversimplify words. To address these limitations, we replaced the attention mechanism in the GPT model with a pointer network. This modification was designed to preserve the core values of the original text during the summarization process. The effectiveness of the Pointer-GPT model was evaluated using the ROUGE score. The results demonstrated that Pointer-GPT outperformed the original GPT model. These findings suggest that pointer networks can be a valuable addition to EMR systems and can provide clinicians with more accurate and informative summaries of patient medical records. This research has the potential to usher in a new paradigm in EMR systems and to revolutionize the way that clinicians interact with patient medical records.",
+  "citation": 1
+}

@@ -1,0 +1,8 @@
+{
+  "title": "GPT-PPG: A GPT-based Foundation Model for Photoplethysmography Signals",
+  "authors": "Zhaoliang Chen, Cheng Ding, Saurabh Kataria, Runze Yan, Minxiao Wang, Randall Lee, Xiao Hu",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.08015v1",
+  "abstract": "This study introduces a novel application of a Generative Pre-trained Transformer (GPT) model tailored for photoplethysmography (PPG) signals, serving as a foundation model for various downstream tasks. Adapting the standard GPT architecture to suit the continuous characteristics of PPG signals, our approach demonstrates promising results. Our models are pre-trained on our extensive dataset that contains more than 200 million 30s PPG samples. We explored different supervised fine-tuning techniques to adapt our model to downstream tasks, resulting in performance comparable to or surpassing current state-of-the-art (SOTA) methods in tasks like atrial fibrillation detection. A standout feature of our GPT model is its inherent capability to perform generative tasks such as signal denoising effectively, without the need for further fine-tuning. This success is attributed to the generative nature of the GPT framework.",
+  "citation": 11
+}

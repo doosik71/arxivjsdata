@@ -1,0 +1,8 @@
+{
+  "title": "GEMINI: A Natural Language System for Spoken-Language Understanding",
+  "authors": "John Dowding, Jean Mark Gawron, Doug Appelt, John Bear, Lynn Cherny, Robert Moore, Douglas Moran",
+  "year": 1994,
+  "url": "http://arxiv.org/abs/cmp-lg/9407007v1",
+  "abstract": "Gemini is a natural language understanding system developed for spoken language applications. The paper describes the architecture of Gemini, paying particular attention to resolving the tension between robustness and overgeneration. Gemini features a broad-coverage unification-based grammar of English, fully interleaved syntactic and semantic processing in an all-paths, bottom-up parser, and an utterance-level parser to find interpretations of sentences that might not be analyzable as complete sentences. Gemini also includes novel components for recognizing and correcting grammatical disfluencies, and for doing parse preferences. This paper presents a component-by-component view of Gemini, providing detailed relevant measurements of size, efficiency, and performance.",
+  "citation": 400
+}

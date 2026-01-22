@@ -1,0 +1,8 @@
+{
+  "title": "A First Look at GPT Apps: Landscape and Vulnerability",
+  "authors": "Zejun Zhang, Li Zhang, Xin Yuan, Anlan Zhang, Mengwei Xu, Feng Qian",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.15105v3",
+  "abstract": "Following OpenAI's introduction of GPTs, a surge in GPT apps has led to the launch of dedicated LLM app stores. Nevertheless, given its debut, there is a lack of sufficient understanding of this new ecosystem. To fill this gap, this paper presents a first comprehensive longitudinal (5-month) study of the evolution, landscape, and vulnerability of the emerging LLM app ecosystem, focusing on two GPT app stores: \\textit{GPTStore.AI} and the official \\textit{OpenAI GPT Store}. Specifically, we develop two automated tools and a TriLevel configuration extraction strategy to efficiently gather metadata (\\ie names, creators, descriptions, \\etc) and user feedback for all GPT apps across these two stores, as well as configurations (\\ie system prompts, knowledge files, and APIs) for the top 10,000 popular apps. Our extensive analysis reveals: (1) the user enthusiasm for GPT apps consistently rises, whereas creator interest plateaus within three months of GPTs' launch; (2) nearly 90\\% system prompts can be easily accessed due to widespread failure to secure GPT app configurations, leading to considerable plagiarism and duplication among apps. Our findings highlight the necessity of enhancing the LLM app ecosystem by the app stores, creators, and users.",
+  "citation": 27
+}

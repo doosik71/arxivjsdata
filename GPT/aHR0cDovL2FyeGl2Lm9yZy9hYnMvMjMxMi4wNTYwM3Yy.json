@@ -1,0 +1,8 @@
+{
+  "title": "Sim-GPT: Text Similarity via GPT Annotated Data",
+  "authors": "Shuhe Wang, Beiming Cao, Shengyu Zhang, Xiaoya Li, Jiwei Li, Fei Wu, Guoyin Wang, Eduard Hovy",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.05603v2",
+  "abstract": "Due to the lack of a large collection of high-quality labeled sentence pairs with textual similarity scores, existing approaches for Semantic Textual Similarity (STS) mostly rely on unsupervised techniques or training signals that are only partially correlated with textual similarity, e.g., NLI-based datasets. To tackle this issue, in this paper, we propose the strategy of measuring text similarity via GPT annotated data (Sim-GPT for short). The core idea of Sim-GPT is to generate data with STS labels using GPT-4, based on which an STS model is trained. Sim-GPT framework utilizes LLMs to provide a substantial amount of reliable annotated data filling the gap of the lack of training signals for STS. Sim-GPT is trained on a one-time generated dataset using BERT or RoBERTa as the backbone, which offers long-term savings in cost and speed compared to repeatedly invoking LLMs for each sentence pair. Trained on the examples from GPT-4 (371K), Sim-GPT yields SOTA performances on the widely-used seven STS benchmarks: +0.99 over supervised-SimCSE, and +0.42 over the current SOTA PromCSE model. To encourage further advancements of the field, we release both models and the 371K annotated examples from GPT-4. Code, models and annotated data are available at: https://github.com/ShuheWang1998/Sim-GPT.",
+  "citation": 4
+}

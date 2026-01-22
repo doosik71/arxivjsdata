@@ -1,0 +1,8 @@
+{
+  "title": "How good is GPT at writing political speeches for the White House?",
+  "authors": "Jacques Savoy",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.14617v1",
+  "abstract": "Using large language models (LLMs), computers are able to generate a written text in response to a us er request. As this pervasive technology can be applied in numerous contexts, this study analyses the written style of one LLM called GPT by comparing its generated speeches with those of the recent US presidents. To achieve this objective, the State of the Union (SOTU) addresses written by Reagan to Biden are contrasted to those produced by both GPT-3.5 and GPT-4.o versions. Compared to US presidents, GPT tends to overuse the lemma \"we\" and produce shorter messages with, on average, longer sentences. Moreover, GPT opts for an optimistic tone, opting more often for political (e.g., president, Congress), symbolic (e.g., freedom), and abstract terms (e.g., freedom). Even when imposing an author's style to GPT, the resulting speech remains distinct from addresses written by the target author. Finally, the two GPT versions present distinct characteristics, but both appear overall dissimilar to true presidential messages.",
+  "citation": 0
+}

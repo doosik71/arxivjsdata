@@ -1,0 +1,8 @@
+{
+  "title": "Adapting GPT, GPT-2 and BERT Language Models for Speech Recognition",
+  "authors": "Xianrui Zheng, Chao Zhang, Philip C. Woodland",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2108.07789v2",
+  "abstract": "Language models (LMs) pre-trained on massive amounts of text, in particular bidirectional encoder representations from Transformers (BERT), generative pre-training (GPT), and GPT-2, have become a key technology for many natural language processing tasks. In this paper, we present results using fine-tuned GPT, GPT-2, and their combination for automatic speech recognition (ASR). Unlike unidirectional LM GPT and GPT-2, BERT is bidirectional whose direct product of the output probabilities is no longer a valid language prior probability. A conversion method is proposed to compute the correct language prior probability based on bidirectional LM outputs in a mathematically exact way. Experimental results on the widely used AMI and Switchboard ASR tasks showed that the combination of the fine-tuned GPT and GPT-2 outperformed the combination of three neural LMs with different architectures trained from scratch on the in-domain text by up to a 12% relative word error rate reduction (WERR). Furthermore, on the AMI corpus, the proposed conversion for language prior probabilities enables BERT to obtain an extra 3% relative WERR, and the combination of BERT, GPT and GPT-2 results in further improvements.",
+  "citation": 110
+}

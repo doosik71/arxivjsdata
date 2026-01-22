@@ -1,0 +1,8 @@
+{
+  "title": "GPT in Sheep's Clothing: The Risk of Customized GPTs",
+  "authors": "Sagiv Antebi, Noam Azulay, Edan Habler, Ben Ganon, Asaf Shabtai, Yuval Elovici",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2401.09075v1",
+  "abstract": "In November 2023, OpenAI introduced a new service allowing users to create custom versions of ChatGPT (GPTs) by using specific instructions and knowledge to guide the model's behavior. We aim to raise awareness of the fact that GPTs can be used maliciously, posing privacy and security risks to their users.",
+  "citation": 9
+}

@@ -1,0 +1,8 @@
+{
+  "title": "The Emergence of Economic Rationality of GPT",
+  "authors": "Yiting Chen, Tracy Xiao Liu, You Shan, Songfa Zhong",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.12763v3",
+  "abstract": "As large language models (LLMs) like GPT become increasingly prevalent, it is essential that we assess their capabilities beyond language processing. This paper examines the economic rationality of GPT by instructing it to make budgetary decisions in four domains: risk, time, social, and food preferences. We measure economic rationality by assessing the consistency of GPT's decisions with utility maximization in classic revealed preference theory. We find that GPT's decisions are largely rational in each domain and demonstrate higher rationality score than those of human subjects in a parallel experiment and in the literature. Moreover, the estimated preference parameters of GPT are slightly different from human subjects and exhibit a lower degree of heterogeneity. We also find that the rationality scores are robust to the degree of randomness and demographic settings such as age and gender, but are sensitive to contexts based on the language frames of the choice situations. These results suggest the potential of LLMs to make good decisions and the need to further understand their capabilities, limitations, and underlying mechanisms.",
+  "citation": 237
+}

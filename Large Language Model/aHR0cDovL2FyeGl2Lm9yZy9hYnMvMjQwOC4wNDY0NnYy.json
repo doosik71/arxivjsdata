@@ -1,0 +1,8 @@
+{
+  "title": "Efficacy of Large Language Models in Systematic Reviews",
+  "authors": "Aaditya Shah, Shridhar Mehendale, Siddha Kanthi",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2408.04646v2",
+  "abstract": "This study investigates the effectiveness of Large Language Models (LLMs) in interpreting existing literature through a systematic review of the relationship between Environmental, Social, and Governance (ESG) factors and financial performance. The primary objective is to assess how LLMs can replicate a systematic review on a corpus of ESG-focused papers. We compiled and hand-coded a database of 88 relevant papers published from March 2020 to May 2024. Additionally, we used a set of 238 papers from a previous systematic review of ESG literature from January 2015 to February 2020. We evaluated two current state-of-the-art LLMs, Meta AI's Llama 3 8B and OpenAI's GPT-4o, on the accuracy of their interpretations relative to human-made classifications on both sets of papers. We then compared these results to a \"Custom GPT\" and a fine-tuned GPT-4o Mini model using the corpus of 238 papers as training data. The fine-tuned GPT-4o Mini model outperformed the base LLMs by 28.3% on average in overall accuracy on prompt 1. At the same time, the \"Custom GPT\" showed a 3.0% and 15.7% improvement on average in overall accuracy on prompts 2 and 3, respectively. Our findings reveal promising results for investors and agencies to leverage LLMs to summarize complex evidence related to ESG investing, thereby enabling quicker decision-making and a more efficient market.",
+  "citation": 5
+}

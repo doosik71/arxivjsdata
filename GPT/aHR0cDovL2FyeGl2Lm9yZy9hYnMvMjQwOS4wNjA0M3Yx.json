@@ -1,0 +1,8 @@
+{
+  "title": "Identifying the sources of ideological bias in GPT models through linguistic variation in output",
+  "authors": "Christina Walker, Joan C. Timoneda",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.06043v1",
+  "abstract": "Extant work shows that generative AI models such as GPT-3.5 and 4 perpetuate social stereotypes and biases. One concerning but less explored source of bias is ideology. Do GPT models take ideological stances on politically sensitive topics? In this article, we provide an original approach to identifying ideological bias in generative models, showing that bias can stem from both the training data and the filtering algorithm. We leverage linguistic variation in countries with contrasting political attitudes to evaluate bias in average GPT responses to sensitive political topics in those languages. First, we find that GPT output is more conservative in languages that map well onto conservative societies (i.e., Polish), and more liberal in languages used uniquely in liberal societies (i.e., Swedish). This result provides strong evidence of training data bias in GPT models. Second, differences across languages observed in GPT-3.5 persist in GPT-4, even though GPT-4 is significantly more liberal due to OpenAI's filtering policy. Our main takeaway is that generative model training must focus on high-quality, curated datasets to reduce bias, even if it entails a compromise in training data size. Filtering responses after training only introduces new biases and does not remove the underlying training biases.",
+  "citation": 3
+}

@@ -1,0 +1,8 @@
+{
+  "title": "GPTs Window Shopping: An analysis of the Landscape of Custom ChatGPT Models",
+  "authors": "Benjamin Zi Hao Zhao, Muhammad Ikram, Mohamed Ali Kaafar",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.10547v1",
+  "abstract": "OpenAI's ChatGPT initiated a wave of technical iterations in the space of Large Language Models (LLMs) by demonstrating the capability and disruptive power of LLMs. OpenAI has prompted large organizations to respond with their own advancements and models to push the LLM performance envelope. OpenAI has prompted large organizations to respond with their own advancements and models to push the LLM performance envelope. OpenAI's success in spotlighting AI can be partially attributed to decreased barriers to entry, enabling any individual with an internet-enabled device to interact with LLMs. What was previously relegated to a few researchers and developers with necessary computing resources is now available to all. A desire to customize LLMs to better accommodate individual needs prompted OpenAI's creation of the GPT Store, a central platform where users can create and share custom GPT models. Customization comes in the form of prompt-tuning, analysis of reference resources, browsing, and external API interactions, alongside a promise of revenue sharing for created custom GPTs. In this work, we peer into the window of the GPT Store and measure its impact. Our analysis constitutes a large-scale overview of the store exploring community perception, GPT details, and the GPT authors, in addition to a deep-dive into a 3rd party storefront indexing user-submitted GPTs, exploring if creators seek to monetize their creations in the absence of OpenAI's revenue sharing.",
+  "citation": 10
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Assessing Prompt Injection Risks in 200+ Custom GPTs",
+  "authors": "Jiahao Yu, Yuhang Wu, Dong Shu, Mingyu Jin, Sabrina Yang, Xinyu Xing",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.11538v2",
+  "abstract": "In the rapidly evolving landscape of artificial intelligence, ChatGPT has been widely used in various applications. The new feature - customization of ChatGPT models by users to cater to specific needs has opened new frontiers in AI utility. However, this study reveals a significant security vulnerability inherent in these user-customized GPTs: prompt injection attacks. Through comprehensive testing of over 200 user-designed GPT models via adversarial prompts, we demonstrate that these systems are susceptible to prompt injections. Through prompt injection, an adversary can not only extract the customized system prompts but also access the uploaded files. This paper provides a first-hand analysis of the prompt injection, alongside the evaluation of the possible mitigation of such attacks. Our findings underscore the urgent need for robust security frameworks in the design and deployment of customizable GPT models. The intent of this paper is to raise awareness and prompt action in the AI community, ensuring that the benefits of GPT customization do not come at the cost of compromised security and privacy.",
+  "citation": 75
+}

@@ -1,0 +1,8 @@
+{
+  "title": "GPT-4 to GPT-3.5: 'Hold My Scalpel' -- A Look at the Competency of OpenAI's GPT on the Plastic Surgery In-Service Training Exam",
+  "authors": "Jonathan D. Freedman, Ian A. Nappier",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.01503v1",
+  "abstract": "The Plastic Surgery In-Service Training Exam (PSITE) is an important indicator of resident proficiency and serves as a useful benchmark for evaluating OpenAI's GPT. Unlike many of the simulated tests or practice questions shown in the GPT-4 Technical Paper, the multiple-choice questions evaluated here are authentic PSITE questions. These questions offer realistic clinical vignettes that a plastic surgeon commonly encounters in practice and scores highly correlate with passing the written boards required to become a Board Certified Plastic Surgeon. Our evaluation shows dramatic improvement of GPT-4 (without vision) over GPT-3.5 with both the 2022 and 2021 exams respectively increasing the score from 8th to 88th percentile and 3rd to 99th percentile. The final results of the 2023 PSITE are set to be released on April 11, 2023, and this is an exciting moment to continue our research with a fresh exam. Our evaluation pipeline is ready for the moment that the exam is released so long as we have access via OpenAI to the GPT-4 API. With multimodal input, we may achieve superhuman performance on the 2023.",
+  "citation": 7
+}

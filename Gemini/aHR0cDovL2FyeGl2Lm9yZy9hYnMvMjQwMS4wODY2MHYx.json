@@ -1,0 +1,8 @@
+{
+  "title": "Gemini Pro Defeated by GPT-4V: Evidence from Education",
+  "authors": "Gyeong-Geon Lee, Ehsan Latif, Lehong Shi, Xiaoming Zhai",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2401.08660v1",
+  "abstract": "This study compared the classification performance of Gemini Pro and GPT-4V in educational settings. Employing visual question answering (VQA) techniques, the study examined both models' abilities to read text-based rubrics and then automatically score student-drawn models in science education. We employed both quantitative and qualitative analyses using a dataset derived from student-drawn scientific models and employing NERIF (Notation-Enhanced Rubrics for Image Feedback) prompting methods. The findings reveal that GPT-4V significantly outperforms Gemini Pro in terms of scoring accuracy and Quadratic Weighted Kappa. The qualitative analysis reveals that the differences may be due to the models' ability to process fine-grained texts in images and overall image classification performance. Even adapting the NERIF approach by further de-sizing the input images, Gemini Pro seems not able to perform as well as GPT-4V. The findings suggest GPT-4V's superior capability in handling complex multimodal educational tasks. The study concludes that while both models represent advancements in AI, GPT-4V's higher performance makes it a more suitable tool for educational applications involving multimodal data interpretation.",
+  "citation": 34
+}

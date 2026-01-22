@@ -1,0 +1,8 @@
+{
+  "title": "Notes on the Mathematical Structure of GPT LLM Architectures",
+  "authors": "Spencer Becker-Kahn",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.19370v1",
+  "abstract": "An exposition of the mathematics underpinning the neural network architecture of a GPT-3-style LLM.",
+  "citation": 1
+}
