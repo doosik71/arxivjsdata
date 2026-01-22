@@ -1,0 +1,8 @@
+{
+  "title": "Automatic Tip Detection of Surgical Instruments in Biportal Endoscopic Spine Surgery",
+  "authors": "Sue Min Cho, Young-Gon Kim, Jinhoon Jeong, Ho-jin Lee, Namkug Kim",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1911.02755v2",
+  "abstract": "Some endoscopic surgeries require a surgeon to hold the endoscope with one hand and the surgical instruments with the other hand to perform the actual surgery with correct vision. Recent technical advances in deep learning as well as in robotics can introduce robotics to these endoscopic surgeries. This can have numerous advantages by freeing one hand of the surgeon, which will allow the surgeon to use both hands and to use more intricate and sophisticated techniques. Recently, deep learning with convolutional neural network achieves state-of-the-art results in computer vision. Therefore, the aim of this study is to automatically detect the tip of the instrument, localize a point, and evaluate detection accuracy in biportal endoscopic spine surgery. The localized point could be used for the controller's inputs of robotic endoscopy in these types of endoscopic surgeries.",
+  "citation": 30
+}

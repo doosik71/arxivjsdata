@@ -1,0 +1,7 @@
+{
+  "title": "Concurrent Segmentation and Localization for Tracking of Surgical Instruments",
+  "authors": "Iro Laina, Nicola Rieke, Christian Rupprecht, Josué Page Vizcaíno, Abouzar Eslami, Federico Tombari, Nassir Navab",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1703.10701v2",
+  "abstract": "Real-time instrument tracking is a crucial requirement for various computer-assisted interventions. In order to overcome problems such as specular reflections and motion blur, we propose a novel method that takes advantage of the interdependency between localization and segmentation of the surgical tool. In particular, we reformulate the 2D instrument pose estimation as heatmap regression and thereby enable a concurrent, robust and near real-time regression of both tasks via deep learning. As demonstrated by our experimental results, this modeling leads to a significantly improved performance than directly regressing the tool position and allows our method to outperform the state of the art on a Retinal Microsurgery benchmark and the MICCAI EndoVis Challenge 2015."
+}

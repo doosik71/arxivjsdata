@@ -1,0 +1,8 @@
+{
+  "title": "Towards Better Surgical Instrument Segmentation in Endoscopic Vision: Multi-Angle Feature Aggregation and Contour Supervision",
+  "authors": "Fangbo Qin, Shan Lin, Yangming Li, Randall A. Bly, Kris S. Moe, Blake Hannaford",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2002.10675v2",
+  "abstract": "Accurate and real-time surgical instrument segmentation is important in the endoscopic vision of robot-assisted surgery, and significant challenges are posed by frequent instrument-tissue contacts and continuous change of observation perspective. For these challenging tasks more and more deep neural networks (DNN) models are designed in recent years. We are motivated to propose a general embeddable approach to improve these current DNN segmentation models without increasing the model parameter number. Firstly, observing the limited rotation-invariance performance of DNN, we proposed the Multi-Angle Feature Aggregation (MAFA) method, leveraging active image rotation to gain richer visual cues and make the prediction more robust to instrument orientation changes. Secondly, in the end-to-end training stage, the auxiliary contour supervision is utilized to guide the model to learn the boundary awareness, so that the contour shape of segmentation mask is more precise. The proposed method is validated with ablation experiments on the novel Sinus-Surgery datasets collected from surgeons' operations, and is compared to the existing methods on a public dataset collected with a da Vinci Xi Robot.",
+  "citation": 54
+}

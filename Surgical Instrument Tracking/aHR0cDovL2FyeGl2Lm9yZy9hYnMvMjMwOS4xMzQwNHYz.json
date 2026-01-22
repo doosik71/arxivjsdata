@@ -1,0 +1,8 @@
+{
+  "title": "Weakly Supervised YOLO Network for Surgical Instrument Localization in Endoscopic Videos",
+  "authors": "Rongfeng Wei, Jinlin Wu, Xuexue Bai, Ming Feng, Zhen Lei, Hongbin Liu, Zhen Chen",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.13404v3",
+  "abstract": "In minimally invasive surgery, surgical instrument localization is a crucial task for endoscopic videos, which enables various applications for improving surgical outcomes. However, annotating the instrument localization in endoscopic videos is tedious and labor-intensive. In contrast, obtaining the category information is easy and efficient in real-world applications. To fully utilize the category information and address the localization problem, we propose a weakly supervised localization framework named WS-YOLO for surgical instruments. By leveraging the instrument category information as the weak supervision, our WS-YOLO framework adopts an unsupervised multi-round training strategy for the localization capability training. We validate our WS-YOLO framework on the Endoscopic Vision Challenge 2023 dataset, which achieves remarkable performance in the weakly supervised surgical instrument localization. The source code is available at https://github.com/Breezewrf/WS-YOLO.",
+  "citation": 1
+}

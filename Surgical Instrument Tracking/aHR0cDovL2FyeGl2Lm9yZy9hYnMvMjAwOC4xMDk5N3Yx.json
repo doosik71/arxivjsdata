@@ -1,0 +1,7 @@
+{
+  "title": "Design of mechanical structure and tracking control system for 5 DOF surgical robot",
+  "authors": "SM Sajadi, SH Mahdioun, AA Ghavifekr",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.10997v1",
+  "abstract": "In this paper, the tracking control problem for 5 DOF surgical robot which is affected by tremor of surgeons' hand is considered. Mechanical modeling and dynamic analysis of a robotic arm in slave subsystem of a telesurgery system will be discussed and the reasons for selecting the appropriate materials for different parts of robot will be explained. It would be required this robot, which will do the main part of the surgery, be controlled based on the uncertain properties of the tissues of patients body. Improved Lyapunov Based control method with uncertainty observer is applied to improve the accuracy of tracking procedure for a surgical manipulator to track a specified reference signal in the presence of tremor that is modeled as constant bounded disturbance. Based on the disturbance rejection scheme, tracking controllers are constructed which are asymptotically stabilizing in the sense of Lyapunov. The control strategy was implemented using a PC interface. Computer simulation results demonstrate that accurate trajectory tracking can be achieved by using the proposed controllers."
+}
