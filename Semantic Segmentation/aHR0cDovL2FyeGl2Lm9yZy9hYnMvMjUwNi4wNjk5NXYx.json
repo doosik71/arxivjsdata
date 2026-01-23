@@ -1,0 +1,8 @@
+{
+  "title": "Technical Report for ICRA 2025 GOOSE 3D Semantic Segmentation Challenge: Adaptive Point Cloud Understanding for Heterogeneous Robotic Systems",
+  "authors": "Xiaoya Zhang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.06995v1",
+  "abstract": "This technical report presents the implementation details of the winning solution for the ICRA 2025 GOOSE 3D Semantic Segmentation Challenge. This challenge focuses on semantic segmentation of 3D point clouds from diverse unstructured outdoor environments collected from multiple robotic platforms. This problem was addressed by implementing Point Prompt Tuning (PPT) integrated with Point Transformer v3 (PTv3) backbone, enabling adaptive processing of heterogeneous LiDAR data through platform-specific conditioning and cross-dataset class alignment strategies. The model is trained without requiring additional external data. As a result, this approach achieved substantial performance improvements with mIoU increases of up to 22.59% on challenging platforms compared to the baseline PTv3 model, demonstrating the effectiveness of adaptive point cloud understanding for field robotics applications.",
+  "citation": 1
+}

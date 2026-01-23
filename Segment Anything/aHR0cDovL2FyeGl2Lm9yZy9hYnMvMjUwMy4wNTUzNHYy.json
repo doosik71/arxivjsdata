@@ -1,0 +1,8 @@
+{
+  "title": "S4M: 4-points to Segment Anything",
+  "authors": "Adrien Meyer, Lorenzo Arboit, Giuseppe Massimiani, Shih-Min Yin, Didier Mutter, Nicolas Padoy",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.05534v2",
+  "abstract": "Purpose: The Segment Anything Model (SAM) promises to ease the annotation bottleneck in medical segmentation, but overlapping anatomy and blurred boundaries make its point prompts ambiguous, leading to cycles of manual refinement to achieve precise masks. Better prompting strategies are needed.\n  Methods: We propose a structured prompting strategy using 4 points as a compact instance-level shape description. We study two 4-point variants: extreme points and the proposed major/minor axis endpoints, inspired by ultrasound measurement practice. SAM cannot fully exploit such structured prompts because it treats all points identically and lacks geometry-aware reasoning. To address this, we introduce S4M (4-points to Segment Anything), which augments SAM to interpret 4 points as relational cues rather than isolated clicks. S4M expands the prompt space with role-specific embeddings and adds an auxiliary \"Canvas\" pretext task that sketches coarse masks directly from prompts, fostering geometry-aware reasoning.\n  Results: Across eight datasets in ultrasound and surgical endoscopy, S4M improves segmentation by +3.42 mIoU over a strong SAM baseline at equal prompt budget. An annotation study with three clinicians further shows that major/minor prompts enable faster annotation.\n  Conclusion: S4M increases performance, reduces annotation effort, and aligns prompting with clinical practice, enabling more scalable dataset development in medical imaging.",
+  "citation": 0
+}

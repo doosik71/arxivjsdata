@@ -1,0 +1,8 @@
+{
+  "title": "FastSmoothSAM: A Fast Smooth Method For Segment Anything Model",
+  "authors": "Jiasheng Xu, Yewang Chen",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2507.15008v1",
+  "abstract": "Accurately identifying and representing object edges is a challenging task in computer vision and image processing. The Segment Anything Model (SAM) has significantly influenced the field of image segmentation, but suffers from high memory consumption and long inference times, limiting its efficiency in real-time applications. To address these limitations, Fast Segment Anything (FastSAM) was proposed, achieving real-time segmentation. However, FastSAM often generates jagged edges that deviate from the true object shapes. Therefore, this paper introduces a novel refinement approach using B-Spline curve fitting techniques to enhance the edge quality in FastSAM. Leveraging the robust shape control and flexible geometric construction of B-Splines, a four-stage refining process involving two rounds of curve fitting is employed to effectively smooth jagged edges. This approach significantly improves the visual quality and analytical accuracy of object edges without compromising critical geometric information. The proposed method improves the practical utility of FastSAM by improving segmentation accuracy while maintaining real-time processing capabilities. This advancement unlocks greater potential for FastSAM technology in various real-world scenarios, such as industrial automation, medical imaging, and autonomous systems, where precise and efficient edge recognition is crucial.",
+  "citation": 0
+}

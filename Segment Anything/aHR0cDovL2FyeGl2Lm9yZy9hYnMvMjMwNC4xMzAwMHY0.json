@@ -1,0 +1,8 @@
+{
+  "title": "Segment anything, from space?",
+  "authors": "Simiao Ren, Francesco Luzi, Saad Lahrichi, Kaleb Kassaw, Leslie M. Collins, Kyle Bradbury, Jordan M. Malof",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.13000v4",
+  "abstract": "Recently, the first foundation model developed specifically for image segmentation tasks was developed, termed the \"Segment Anything Model\" (SAM). SAM can segment objects in input imagery based on cheap input prompts, such as one (or more) points, a bounding box, or a mask. The authors examined the \\textit{zero-shot} image segmentation accuracy of SAM on a large number of vision benchmark tasks and found that SAM usually achieved recognition accuracy similar to, or sometimes exceeding, vision models that had been trained on the target tasks. The impressive generalization of SAM for segmentation has major implications for vision researchers working on natural imagery. In this work, we examine whether SAM's performance extends to overhead imagery problems and help guide the community's response to its development. We examine SAM's performance on a set of diverse and widely studied benchmark tasks. We find that SAM does often generalize well to overhead imagery, although it fails in some cases due to the unique characteristics of overhead imagery and its common target objects. We report on these unique systematic failure cases for remote sensing imagery that may comprise useful future research for the community.",
+  "citation": 114
+}

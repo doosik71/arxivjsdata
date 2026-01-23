@@ -22,7 +22,7 @@ Gemini Robotics Team, Google DeepMind
 
 * **기존 로봇 제어 접근 방식:** 이전 연구들(Ahn et al., 2022; Kwon et al., 2024; Liang et al., 2023; Vemprala et al., 2023)은 로봇 제어를 위해 여러 모델을 조합해야 했으나, Gemini 2.0은 필요한 모든 기능을 단일 모델에 통합합니다.
 * **소량샷 학습 (Few-shot learning):** (Di Palo and Johns, 2024)의 방법을 확장하여, Gemini Robotics-ER은 외부 모델 없이 시각적 키포인트와 객체 포즈를 직접 추출하여 소량샷 모방 학습을 수행합니다.
-* **비전-언어-액션(VLA) 및 멀티태스크 학습:** 𝛑<sub>0</sub> (Beyer et al., 2024; Black et al., 2024) 및 ALOHA Unleashed (Zhao et al., 2025)에서 영감을 받은 멀티태스크 확산 정책(Chi et al., 2024)과 같은 최신 모델들을 성능 비교를 위한 베이스라인으로 사용했습니다.
+* **비전-언어-액션(VLA) 및 멀티태스크 학습:** $\pi_0$ (Beyer et al., 2024; Black et al., 2024) 및 ALOHA Unleashed (Zhao et al., 2025)에서 영감을 받은 멀티태스크 확산 정책(Chi et al., 2024)과 같은 최신 모델들을 성능 비교를 위한 베이스라인으로 사용했습니다.
 * **로봇 안전 연구:** Google AI Principles (Google, 2025), Gemini 모델의 이전 안전 릴리스 (Gemini-Team et al., 2023; Kavukcuoglu et al., 2022)를 준수하며, ASIMOV-datasets (Sermanet et al., 2025a,b) 및 Constitutional AI (Ahn et al., 2024; Bai et al., 2022; Huang et al., 2024; Kundu et al., 2023; Sermanet et al., 2025a)를 활용한 안전성 평가 및 완화 노력을 언급했습니다.
 
 ## 🛠️ Methodology
@@ -53,7 +53,7 @@ Gemini Robotics Team, Google DeepMind
 * **제로샷 로봇 제어:** 시뮬레이션에서 Gemini 2.0 Flash는 평균 27%의 성공률을 보인 반면, Gemini Robotics-ER은 53%로 거의 두 배의 성능 향상을 보였습니다.
 * **소량샷 로봇 제어:** Gemini 2.0 Flash는 시뮬레이션에서 51%, Gemini Robotics-ER은 시뮬레이션 및 실제 환경에서 65%의 성공률을 달성하여, 특히 섬세한 작업에서 큰 개선을 보여주었습니다.
 * **Gemini Robotics (기본 성능):**
-  * 다양하고 섬세한 조작 작업에서 SOTA 베이스라인(𝛑<sub>0</sub> re-implement, Multi-task diffusion)을 능가했으며, 특히 변형 가능한 객체 조작에서 탁월한 성능을 보였습니다.
+  * 다양하고 섬세한 조작 작업에서 SOTA 베이스라인($\pi_0$ re-implement, Multi-task diffusion)을 능가했으며, 특히 변형 가능한 객체 조작에서 탁월한 성능을 보였습니다.
   * 학습되지 않은 환경, 객체, 지시에서도 새로운 언어 지시를 정확하게 따르며 높은 일반화 능력을 입증했습니다.
 * **긴 시야 작업 특화:** 종이접기 여우나 도시락 포장과 같은 6가지 긴 시야의 고도로 섬세한 작업에서 평균 79%의 성공률을 달성했으며, 도시락 포장 작업에서는 100% 성공률을 보이며 특화된 베이스라인을 크게 능가했습니다.
 * **강화된 추론 및 일반화:** 추론 강화 버전의 Gemini Robotics는 단일 단계 추론, 의미론적 지식, 공간 이해를 요구하는 OOD(Out-of-Distribution) 시나리오에서 바닐라 모델보다 훨씬 높은 성공률을 기록했습니다.

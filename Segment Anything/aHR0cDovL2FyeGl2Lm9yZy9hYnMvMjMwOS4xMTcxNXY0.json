@@ -1,0 +1,8 @@
+{
+  "title": "Deshadow-Anything: When Segment Anything Model Meets Zero-shot shadow removal",
+  "authors": "Xiao Feng Zhang, Tian Yi Song, Jia Wei Yao",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.11715v4",
+  "abstract": "Segment Anything (SAM), an advanced universal image segmentation model trained on an expansive visual dataset, has set a new benchmark in image segmentation and computer vision. However, it faced challenges when it came to distinguishing between shadows and their backgrounds. To address this, we developed Deshadow-Anything, considering the generalization of large-scale datasets, and we performed Fine-tuning on large-scale datasets to achieve image shadow removal. The diffusion model can diffuse along the edges and textures of an image, helping to remove shadows while preserving the details of the image. Furthermore, we design Multi-Self-Attention Guidance (MSAG) and adaptive input perturbation (DDPM-AIP) to accelerate the iterative training speed of diffusion. Experiments on shadow removal tasks demonstrate that these methods can effectively improve image restoration performance.",
+  "citation": 3
+}

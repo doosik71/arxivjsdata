@@ -1,0 +1,8 @@
+{
+  "title": "ClickSAM: Fine-tuning Segment Anything Model using click prompts for ultrasound image segmentation",
+  "authors": "Aimee Guo, Grace Fei, Hemanth Pasupuleti, Jing Wang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.05902v4",
+  "abstract": "The newly released Segment Anything Model (SAM) is a popular tool used in image processing due to its superior segmentation accuracy, variety of input prompts, training capabilities, and efficient model design. However, its current model is trained on a diverse dataset not tailored to medical images, particularly ultrasound images. Ultrasound images tend to have a lot of noise, making it difficult to segment out important structures. In this project, we developed ClickSAM, which fine-tunes the Segment Anything Model using click prompts for ultrasound images. ClickSAM has two stages of training: the first stage is trained on single-click prompts centered in the ground-truth contours, and the second stage focuses on improving the model performance through additional positive and negative click prompts. By comparing the first stage predictions to the ground-truth masks, true positive, false positive, and false negative segments are calculated. Positive clicks are generated using the true positive and false negative segments, and negative clicks are generated using the false positive segments. The Centroidal Voronoi Tessellation algorithm is then employed to collect positive and negative click prompts in each segment that are used to enhance the model performance during the second stage of training. With click-train methods, ClickSAM exhibits superior performance compared to other existing models for ultrasound image segmentation.",
+  "citation": 7
+}

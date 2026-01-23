@@ -1,0 +1,8 @@
+{
+  "title": "Solution for CVPR 2024 UG2+ Challenge Track on All Weather Semantic Segmentation",
+  "authors": "Jun Yu, Yunxiang Zhang, Fengzhao Sun, Leilei Wang, Renjie Lu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.05837v1",
+  "abstract": "In this report, we present our solution for the semantic segmentation in adverse weather, in UG2+ Challenge at CVPR 2024. To achieve robust and accurate segmentation results across various weather conditions, we initialize the InternImage-H backbone with pre-trained weights from the large-scale joint dataset and enhance it with the state-of-the-art Upernet segmentation method. Specifically, we utilize offline and online data augmentation approaches to extend the train set, which helps us to further improve the performance of the segmenter. As a result, our proposed solution demonstrates advanced performance on the test set and achieves 3rd position in this challenge.",
+  "citation": 0
+}

@@ -1,0 +1,8 @@
+{
+  "title": "SAD: Segment Any RGBD",
+  "authors": "Jun Cen, Yizheng Wu, Kewei Wang, Xingyi Li, Jingkang Yang, Yixuan Pei, Lingdong Kong, Ziwei Liu, Qifeng Chen",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.14207v1",
+  "abstract": "The Segment Anything Model (SAM) has demonstrated its effectiveness in segmenting any part of 2D RGB images. However, SAM exhibits a stronger emphasis on texture information while paying less attention to geometry information when segmenting RGB images. To address this limitation, we propose the Segment Any RGBD (SAD) model, which is specifically designed to extract geometry information directly from images. Inspired by the natural ability of humans to identify objects through the visualization of depth maps, SAD utilizes SAM to segment the rendered depth map, thus providing cues with enhanced geometry information and mitigating the issue of over-segmentation. We further include the open-vocabulary semantic segmentation in our framework, so that the 3D panoptic segmentation is fulfilled. The project is available on https://github.com/Jun-CEN/SegmentAnyRGBD.",
+  "citation": 21
+}
