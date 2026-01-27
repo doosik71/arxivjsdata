@@ -1,0 +1,8 @@
+{
+  "title": "PPG-Distill: Efficient Photoplethysmography Signals Analysis via Foundation Model Distillation",
+  "authors": "Juntong Ni, Saurabh Kataria, Shengpu Tang, Carl Yang, Xiao Hu, Wei Jin",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.19215v2",
+  "abstract": "Photoplethysmography (PPG) is widely used in wearable health monitoring, yet large PPG foundation models remain difficult to deploy on resource-limited devices. We present PPG-Distill, a knowledge distillation framework that transfers both global and local knowledge through prediction-, feature-, and patch-level distillation. PPG-Distill incorporates morphology distillation to preserve local waveform patterns and rhythm distillation to capture inter-patch temporal structures. On heart rate estimation and atrial fibrillation detection, PPG-Distill improves student performance by up to 21.8% while achieving 7X faster inference and reducing memory usage by 19X, enabling efficient PPG analysis on wearables.",
+  "citation": 2
+}

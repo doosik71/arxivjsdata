@@ -1,0 +1,8 @@
+{
+  "title": "Effects of non-physiological blood pressure artefacts on measures of cerebral autoregulation",
+  "authors": "Adam Mahdi, Erica Rutter, Stephen J. Payne",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1612.09486v1",
+  "abstract": "Cerebral autoregulation refers to regulation mechanisms that aim to maintain cerebral blood flow approximately constant. It is often assessed by autoregulation index (ARI), which uses arterial blood pressure and cerebral blood flow velocity time series to produce a ten-scale index of autoregulation performance (0 denoting the absence of and 9 the strongest autoregulation). Unfortunately, data are rarely free from various artefacts. Here, we consider four of the most common non-physiological blood pressure artefacts (saturation, square wave, reduced pulse pressure and impulse) and study their effects on ARI for a range of different artefact sizes. We show that a sufficiently large saturation and square wave always result in ARI reaching the maximum value of 9. The pulse pressure reduction and impulse artefact lead to a more diverse behaviour. Finally, we characterised the critical size of artefacts, defined as the minimum artefact size that, on average, leads to a 10\\% deviation of ARI",
+  "citation": 0
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Design and Simulation of Capacitive Pressure Sensor for Blood Pressure Sensing Application",
+  "authors": "Rishabh Bhooshan Mishra, S. Santosh Kumar, Ravindra Mukhiya",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2301.12917v1",
+  "abstract": "This paper presents the mathematical modeling-based design and simulation of normal mode MEMS capacitive pressure sensor for blood pressure sensing application. The normal blood pressure of human being is 120/80 mmHg. But this range varies in case of any stress, hypertension and some other health issues. Analytical simulation is implemented using MATLAB. Basically, normal mode capacitive pressure sensors have a fixed plate and a moveable diaphragm which deflects on application of pressure with the condition that it must not touch the fixed plate. Deflection depends on material as well as thickness, shape and size of diaphragm which can be of circular, elliptical, square or rectangular shape. In this paper, circular shape is chosen due to higher sensitivity compared to other diaphragm shapes. Deflection, base capacitance, change in capacitance after applying pressure and sensitivity are reported for systolic and diastolic blood pressure monitoring application, and study involves determining the optimized design for the sensor. Diaphragm deflection shows linear variation with applied pressure, which follows Hooks law. The variation in capacitance is logarithmic function of applied pressure, which is utilized for analytical simulation.",
+  "citation": 16
+}

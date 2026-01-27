@@ -1,0 +1,8 @@
+{
+  "title": "Optimization and Deployment of Deep Neural Networks for PPG-based Blood Pressure Estimation Targeting Low-power Wearables",
+  "authors": "Alessio Burrello, Francesco Carlucci, Giovanni Pollo, Xiaying Wang, Massimo Poncino, Enrico Macii, Luca Benini, Daniele Jahier Pagliari",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.07485v1",
+  "abstract": "PPG-based Blood Pressure (BP) estimation is a challenging biosignal processing task for low-power devices such as wearables. State-of-the-art Deep Neural Networks (DNNs) trained for this task implement either a PPG-to-BP signal-to-signal reconstruction or a scalar BP value regression and have been shown to outperform classic methods on the largest and most complex public datasets. However, these models often require excessive parameter storage or computational effort for wearable deployment, exceeding the available memory or incurring too high latency and energy consumption. In this work, we describe a fully-automated DNN design pipeline, encompassing HW-aware Neural Architecture Search (NAS) and Quantization, thanks to which we derive accurate yet lightweight models, that can be deployed on an ultra-low-power multicore System-on-Chip (SoC), GAP8. Starting from both regression and signal-to-signal state-of-the-art models on four public datasets, we obtain optimized versions that achieve up to 4.99% lower error or 73.36% lower size at iso-error. Noteworthy, while the most accurate SoA network on the largest dataset can not fit the GAP8 memory, all our optimized models can; our most accurate DNN consumes as little as 0.37 mJ while reaching the lowest MAE of 8.08 on Diastolic BP estimation.",
+  "citation": 6
+}

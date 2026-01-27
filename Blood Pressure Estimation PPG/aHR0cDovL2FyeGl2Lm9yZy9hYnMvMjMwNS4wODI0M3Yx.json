@@ -1,0 +1,7 @@
+{
+  "title": "The use of LEDs as a light source for fluorescence pressure measurements",
+  "authors": "Rustem Khasanov, Matthias Elender, Stefan Klotz",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.08243v1",
+  "abstract": "We discuss the use of commercial high-power light emitting diodes (LEDs) as a light source for fluorescence pressure measurements. A relatively broad light emitting spectra of single color LEDs (in comparison with lasers) do not prevent producing narrow fluorescence lines at least for two widely used pressure indicator materials, namely ruby (Cr$^{3+}$:Al$_2$O$_3$) and strontium tetraborate (Sm$^{2+}$:SrB$_4$O$_7$). Strongest responses of both pressure indicators were detected for the green color LEDs with the average wavelength $λ_{\\rm av}\\sim 530$ nm. LEDs might be easily implemented for producing fiber coupled, as well as the parallel light sources. LEDs were found to be efficient to replace laser sources in piston-cylinder cell and diamond anvil cell fluorescence pressure measurement setups."
+}

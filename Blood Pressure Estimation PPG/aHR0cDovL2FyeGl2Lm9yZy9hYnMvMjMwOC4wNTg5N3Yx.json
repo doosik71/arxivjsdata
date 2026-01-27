@@ -1,0 +1,7 @@
+{
+  "title": "Development of a One Dollar Blood Pressure Monitor",
+  "authors": "Yinan Xuan, Ava J. Fascetti, Colin Barry, Edward J. Wang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2308.05897v1",
+  "abstract": "BPClip is an ultra-low-cost cuffless blood pressure monitor. As a universal smartphone attachment, BPClip leverages the computational imaging power of smartphones to perform oscillometry based blood pressure measurements. This paper examines different design considerations in BPClip's development. The cost and accuracy of blood pressure measurements are the central design goals. Both of these requirements are achieved with the initial prototype that achieves a $0.80 USD material cost and a mean absolute error of 8.72 and 5.49 mmHg for systolic and diastolic blood pressure, respectively. Since a main motivator to develop BPClip is making blood pressure monitoring more accessible, usability is also central to the design. User studies were conducted throughout the design process to inform the most intuitive and accessible design features. In this paper, we demystify the design process to share effective design practices with future developers working towards expanding health monitoring access beyond traditional clinical settings."
+}

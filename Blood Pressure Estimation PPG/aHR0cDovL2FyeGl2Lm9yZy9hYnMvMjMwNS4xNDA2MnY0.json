@@ -1,0 +1,8 @@
+{
+  "title": "Amplitude-Independent Machine Learning for PPG through Visibility Graphs and Transfer Learning",
+  "authors": "Yuyang Miao, Harry J. Davies, Danilo P. Mandic",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.14062v4",
+  "abstract": "Photoplethysmography (PPG) refers to the measurement of variations in blood volume using light and is a feature of most wearable devices. The PPG signals provide insight into the body's circulatory system and can be employed to extract various bio-features, such as heart rate and vascular ageing. Although several algorithms have been proposed for this purpose, many exhibit limitations, including heavy reliance on human calibration, high signal quality requirements, and a lack of generalisation. In this paper, we introduce a PPG signal processing framework that integrates graph theory and computer vision algorithms, to provide an analysis framework which is amplitude-independent and invariant to affine transformations. It also requires minimal preprocessing, fuses information through RGB channels and exhibits robust generalisation across tasks and datasets. The proposed VGTL-net achieves state-of-the-art performance in the prediction of vascular ageing and demonstrates robust estimation of continuous blood pressure waveforms.",
+  "citation": 1
+}

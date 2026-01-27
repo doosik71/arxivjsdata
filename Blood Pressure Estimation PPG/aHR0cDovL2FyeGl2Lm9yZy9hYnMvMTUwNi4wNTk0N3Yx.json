@@ -1,0 +1,7 @@
+{
+  "title": "Comparison of methods of automatic blood pressure measurement in the same device",
+  "authors": "Maksym Sikorsky, Anton Soroka, Vitaliy Mosiychuk, Oleg Sharpan",
+  "year": 2015,
+  "url": "http://arxiv.org/abs/1506.05947v1",
+  "abstract": "Comparison of tacho-oscillographic and oscillometric methods for human blood pressure measurement with cuff occlusion in the same device at the same time is described. For this purpose the measurement system and software for signal processing that realize these methods in the same device was developed. Experiment shows that oscillometric method with photoplethysmographic (PPG) sensors does not require empiric criteria to search systolic and diastolic blood pressure parameters due to possibility to apply correlation analysis. Perspectives of applying oscillometric method with PPG sensors in automatic blood pressure monitors is showed."
+}

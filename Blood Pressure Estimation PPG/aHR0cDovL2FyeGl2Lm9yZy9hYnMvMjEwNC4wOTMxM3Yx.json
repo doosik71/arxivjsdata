@@ -1,0 +1,7 @@
+{
+  "title": "Assessment of deep learning based blood pressure prediction from PPG and rPPG signals",
+  "authors": "Fabian Schrumpf, Patrick Frenzel, Christoph Aust, Georg Osterhoff, Mirco Fuchs",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2104.09313v1",
+  "abstract": "Exploiting photoplethysmography signals (PPG) for non-invasive blood pressure (BP) measurement is interesting for various reasons. First, PPG can easily be measured using fingerclip sensors. Second, camera-based approaches allow to derive remote PPG (rPPG) signals similar to PPG and therefore provide the opportunity for non-invasive measurements of BP. Various methods relying on machine learning techniques have recently been published. Performances are often reported as the mean average error (MAE) on the data which is problematic. This work aims to analyze the PPG- and rPPG-based BP prediction error with respect to the underlying data distribution. First, we train established neural network (NN) architectures and derive an appropriate parameterization of input segments drawn from continuous PPG signals. Second, we apply this parameterization to a larger PPG dataset and train NNs to predict BP. The resulting prediction errors increase towards less frequent BP values. Third, we use transfer learning to train the NNs for rPPG based BP prediction. The resulting performances are similar to the PPG-only case. Finally, we apply a personalization technique and retrain our NNs with subject-specific data. This slightly reduces the prediction errors."
+}

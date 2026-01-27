@@ -1,0 +1,7 @@
+{
+  "title": "Novel Blood Pressure Waveform Reconstruction from Photoplethysmography using Cycle Generative Adversarial Networks",
+  "authors": "Milad Asgari Mehrabadi, Seyed Amir Hossein Aqajari, Amir Hosein Afandizadeh Zargari, Nikil Dutt, Amir M. Rahmani",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2201.09976v1",
+  "abstract": "Continuous monitoring of blood pressure (BP)can help individuals manage their chronic diseases such as hypertension, requiring non-invasive measurement methods in free-living conditions. Recent approaches fuse Photoplethysmograph (PPG) and electrocardiographic (ECG) signals using different machine and deep learning approaches to non-invasively estimate BP; however, they fail to reconstruct the complete signal, leading to less accurate models. In this paper, we propose a cycle generative adversarial network (CycleGAN) based approach to extract a BP signal known as ambulatory blood pressure (ABP) from a clean PPG signal. Our approach uses a cycle generative adversarial network that extends theGAN architecture for domain translation, and outperforms state-of-the-art approaches by up to 2x in BP estimation."
+}
