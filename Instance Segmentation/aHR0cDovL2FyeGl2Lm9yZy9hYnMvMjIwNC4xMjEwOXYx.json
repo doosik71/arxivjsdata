@@ -1,0 +1,8 @@
+{
+  "title": "Instance-Specific Feature Propagation for Referring Segmentation",
+  "authors": "Chang Liu, Xudong Jiang, Henghui Ding",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2204.12109v1",
+  "abstract": "Referring segmentation aims to generate a segmentation mask for the target instance indicated by a natural language expression. There are typically two kinds of existing methods: one-stage methods that directly perform segmentation on the fused vision and language features; and two-stage methods that first utilize an instance segmentation model for instance proposal and then select one of these instances via matching them with language features. In this work, we propose a novel framework that simultaneously detects the target-of-interest via feature propagation and generates a fine-grained segmentation mask. In our framework, each instance is represented by an Instance-Specific Feature (ISF), and the target-of-referring is identified by exchanging information among all ISFs using our proposed Feature Propagation Module (FPM). Our instance-aware approach learns the relationship among all objects, which helps to better locate the target-of-interest than one-stage methods. Comparing to two-stage methods, our approach collaboratively and interactively utilizes both vision and language information for synchronous identification and segmentation. In the experimental tests, our method outperforms previous state-of-the-art methods on all three RefCOCO series datasets.",
+  "citation": 67
+}

@@ -1,0 +1,8 @@
+{
+  "title": "BARIS: Boundary-Aware Refinement with Environmental Degradation Priors for Robust Underwater Instance Segmentation",
+  "authors": "Pin-Chi Pan, Soo-Chang Pei",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2504.19643v1",
+  "abstract": "Underwater instance segmentation is challenging due to adverse visual conditions such as light attenuation, scattering, and color distortion, which degrade model performance. In this work, we propose BARIS-Decoder (Boundary-Aware Refinement Decoder for Instance Segmentation), a framework that enhances segmentation accuracy through feature refinement. To address underwater degradations, we introduce the Environmental Robust Adapter (ERA), which efficiently models underwater degradation patterns while reducing trainable parameters by over 90\\% compared to full fine-tuning. The integration of BARIS-Decoder with ERA-tuning, referred to as BARIS-ERA, achieves state-of-the-art performance, surpassing Mask R-CNN by 3.4 mAP with a Swin-B backbone and 3.8 mAP with ConvNeXt V2. Our findings demonstrate the effectiveness of BARIS-ERA in advancing underwater instance segmentation, providing a robust and efficient solution.",
+  "citation": 0
+}

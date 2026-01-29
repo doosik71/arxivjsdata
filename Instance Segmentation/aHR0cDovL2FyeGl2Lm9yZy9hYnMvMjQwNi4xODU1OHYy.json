@@ -1,0 +1,8 @@
+{
+  "title": "BAISeg: Boundary Assisted Weakly Supervised Instance Segmentation",
+  "authors": "Tengbo Wang, Yu Bai",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.18558v2",
+  "abstract": "How to extract instance-level masks without instance-level supervision is the main challenge of weakly supervised instance segmentation (WSIS). Popular WSIS methods estimate a displacement field (DF) via learning inter-pixel relations and perform clustering to identify instances. However, the resulting instance centroids are inherently unstable and vary significantly across different clustering algorithms. In this paper, we propose Boundary-Assisted Instance Segmentation (BAISeg), which is a novel paradigm for WSIS that realizes instance segmentation with pixel-level annotations. BAISeg comprises an instance-aware boundary detection (IABD) branch and a semantic segmentation branch. The IABD branch identifies instances by predicting class-agnostic instance boundaries rather than instance centroids, therefore, it is different from previous DF-based approaches. In particular, we proposed the Cascade Fusion Module (CFM) and the Deep Mutual Attention (DMA) in the IABD branch to obtain rich contextual information and capture instance boundaries with weak responses. During the training phase, we employed Pixel-to-Pixel Contrast to enhance the discriminative capacity of the IABD branch. This further strengthens the continuity and closedness of the instance boundaries. Extensive experiments on PASCAL VOC 2012 and MS COCO demonstrate the effectiveness of our approach, and we achieve considerable performance with only pixel-level annotations. The code will be available at https://github.com/wsis-seg/BAISeg.",
+  "citation": 1
+}

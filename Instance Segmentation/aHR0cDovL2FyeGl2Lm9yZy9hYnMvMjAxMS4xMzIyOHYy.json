@@ -1,0 +1,8 @@
+{
+  "title": "MultiStar: Instance Segmentation of Overlapping Objects with Star-Convex Polygons",
+  "authors": "Florin C. Walter, Sebastian Damrich, Fred A. Hamprecht",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2011.13228v2",
+  "abstract": "Instance segmentation of overlapping objects in biomedical images remains a largely unsolved problem. We take up this challenge and present MultiStar, an extension to the popular instance segmentation method StarDist. The key novelty of our method is that we identify pixels at which objects overlap and use this information to improve proposal sampling and to avoid suppressing proposals of truly overlapping objects. This allows us to apply the ideas of StarDist to images with overlapping objects, while incurring only a small overhead compared to the established method. MultiStar shows promising results on two datasets and has the advantage of using a simple and easy to train network architecture.",
+  "citation": 23
+}

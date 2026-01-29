@@ -1,0 +1,8 @@
+{
+  "title": "Instance Segmentation XXL-CT Challenge of a Historic Airplane",
+  "authors": "Roland Gruber, Johann Christopher Engster, Markus Michen, Nele Blum, Maik Stille, Stefan Gerth, Thomas Wittenberg",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.02928v1",
+  "abstract": "Instance segmentation of compound objects in XXL-CT imagery poses a unique challenge in non-destructive testing. This complexity arises from the lack of known reference segmentation labels, limited applicable segmentation tools, as well as partially degraded image quality. To asses recent advancements in the field of machine learning-based image segmentation, the \"Instance Segmentation XXL-CT Challenge of a Historic Airplane\" was conducted. The challenge aimed to explore automatic or interactive instance segmentation methods for an efficient delineation of the different aircraft components, such as screws, rivets, metal sheets or pressure tubes. We report the organization and outcome of this challenge and describe the capabilities and limitations of the submitted segmentation methods.",
+  "citation": 2
+}

@@ -1,0 +1,7 @@
+{
+  "title": "MSTA3D: Multi-scale Twin-attention for 3D Instance Segmentation",
+  "authors": "Duc Dang Trung Tran, Byeongkeun Kang, Yeejin Lee",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.01781v3",
+  "abstract": "Recently, transformer-based techniques incorporating superpoints have become prevalent in 3D instance segmentation. However, they often encounter an over-segmentation problem, especially noticeable with large objects. Additionally, unreliable mask predictions stemming from superpoint mask prediction further compound this issue. To address these challenges, we propose a novel framework called MSTA3D. It leverages multi-scale feature representation and introduces a twin-attention mechanism to effectively capture them. Furthermore, MSTA3D integrates a box query with a box regularizer, offering a complementary spatial constraint alongside semantic queries. Experimental evaluations on ScanNetV2, ScanNet200 and S3DIS datasets demonstrate that our approach surpasses state-of-the-art 3D instance segmentation methods."
+}

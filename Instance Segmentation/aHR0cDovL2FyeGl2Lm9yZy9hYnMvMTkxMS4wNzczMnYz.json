@@ -1,0 +1,8 @@
+{
+  "title": "Oriented Boxes for Accurate Instance Segmentation",
+  "authors": "Patrick Follmann, Rebecca König",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1911.07732v3",
+  "abstract": "State-of-the-art instance-aware semantic segmentation algorithms use axis-aligned bounding boxes as an intermediate processing step to infer the final instance mask output. This often leads to coarse and inaccurate mask proposals due to the following reasons: Axis-aligned boxes have a high background to foreground pixel-ratio, there is a strong variation of mask targets with respect to the underlying box, and neighboring instances frequently reach into the axis-aligned bounding box of the instance mask of interest. In this work, we overcome these problems by proposing to use oriented boxes as the basis to infer instance masks. We show that oriented instance segmentation improves the mask predictions, especially when objects are diagonally aligned, touching, or overlapping each other. We evaluate our model on the D2S and Screws datasets and show that we can significantly improve the mask accuracy by 10% and 12% mAP compared to instance segmentation using axis-aligned bounding boxes, respectively. On the newly introduced Pill Bags dataset we outperform the baseline using only 10% of the mask annotations.",
+  "citation": 13
+}

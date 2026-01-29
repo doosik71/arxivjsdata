@@ -1,0 +1,8 @@
+{
+  "title": "Panoptic Instance Segmentation on Pigs",
+  "authors": "Johannes Brünger, Maria Gentz, Imke Traulsen, Reinhard Koch",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2005.10499v1",
+  "abstract": "The behavioural research of pigs can be greatly simplified if automatic recognition systems are used. Especially systems based on computer vision have the advantage that they allow an evaluation without affecting the normal behaviour of the animals. In recent years, methods based on deep learning have been introduced and have shown pleasingly good results. Especially object and keypoint detectors have been used to detect the individual animals. Despite good results, bounding boxes and sparse keypoints do not trace the contours of the animals, resulting in a lot of information being lost. Therefore this work follows the relatively new definition of a panoptic segmentation and aims at the pixel accurate segmentation of the individual pigs. For this a framework of a neural network for semantic segmentation, different network heads and postprocessing methods is presented. With the resulting instance segmentation masks further information like the size or weight of the animals could be estimated. The method is tested on a specially created data set with 1000 hand-labeled images and achieves detection rates of around 95% (F1 Score) despite disturbances such as occlusions and dirty lenses.",
+  "citation": 11
+}

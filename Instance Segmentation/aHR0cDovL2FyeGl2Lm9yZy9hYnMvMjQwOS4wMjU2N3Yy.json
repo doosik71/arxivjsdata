@@ -1,0 +1,8 @@
+{
+  "title": "Evaluation Study on SAM 2 for Class-agnostic Instance-level Segmentation",
+  "authors": "Jialun Pei, Zhangjun Zhou, Tiantian Zhang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.02567v2",
+  "abstract": "Segment Anything Model (SAM) has demonstrated powerful zero-shot segmentation performance in natural scenes. The recently released Segment Anything Model 2 (SAM2) has further heightened researchers' expectations towards image segmentation capabilities. To evaluate the performance of SAM2 on class-agnostic instance-level segmentation tasks, we adopt different prompt strategies for SAM2 to cope with instance-level tasks for three relevant scenarios: Salient Instance Segmentation (SIS), Camouflaged Instance Segmentation (CIS), and Shadow Instance Detection (SID). In addition, to further explore the effectiveness of SAM2 in segmenting granular object structures, we also conduct detailed tests on the high-resolution Dichotomous Image Segmentation (DIS) benchmark to assess the fine-grained segmentation capability. Qualitative and quantitative experimental results indicate that the performance of SAM2 varies significantly across different scenarios. Besides, SAM2 is not particularly sensitive to segmenting high-resolution fine details. We hope this technique report can drive the emergence of SAM2-based adapters, aiming to enhance the performance ceiling of large vision models on class-agnostic instance segmentation tasks.",
+  "citation": 9
+}

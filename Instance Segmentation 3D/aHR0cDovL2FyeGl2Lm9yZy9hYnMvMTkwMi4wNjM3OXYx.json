@@ -1,0 +1,7 @@
+{
+  "title": "PointIT: A Fast Tracking Framework Based on 3D Instance Segmentation",
+  "authors": "Yuan Wang, Yang Yu, Ming Liu",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1902.06379v1",
+  "abstract": "Recently most popular tracking frameworks focus on 2D image sequences. They seldom track the 3D object in point clouds. In this paper, we propose PointIT, a fast, simple tracking method based on 3D on-road instance segmentation. Firstly, we transform 3D LiDAR data into the spherical image with the size of 64 x 512 x 4 and feed it into instance segment model to get the predicted instance mask for each class. Then we use MobileNet as our primary encoder instead of the original ResNet to reduce the computational complexity. Finally, we extend the Sort algorithm with this instance framework to realize tracking in the 3D LiDAR point cloud data. The model is trained on the spherical images dataset with the corresponding instance label masks which are provided by KITTI 3D Object Track dataset. According to the experiment results, our network can achieve on Average Precision (AP) of 0.617 and the performance of multi-tracking task has also been improved."
+}

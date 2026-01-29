@@ -1,0 +1,8 @@
+{
+  "title": "Understanding Self-Supervised Features for Learning Unsupervised Instance Segmentation",
+  "authors": "Paul Engstler, Luke Melas-Kyriazi, Christian Rupprecht, Iro Laina",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.14665v1",
+  "abstract": "Self-supervised learning (SSL) can be used to solve complex visual tasks without human labels. Self-supervised representations encode useful semantic information about images, and as a result, they have already been used for tasks such as unsupervised semantic segmentation. In this paper, we investigate self-supervised representations for instance segmentation without any manual annotations. We find that the features of different SSL methods vary in their level of instance-awareness. In particular, DINO features, which are known to be excellent semantic descriptors, lack behind MAE features in their sensitivity for separating instances.",
+  "citation": 7
+}

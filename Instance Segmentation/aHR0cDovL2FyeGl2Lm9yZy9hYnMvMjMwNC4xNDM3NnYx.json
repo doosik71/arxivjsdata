@@ -1,0 +1,8 @@
+{
+  "title": "Zero-shot Unsupervised Transfer Instance Segmentation",
+  "authors": "Gyungin Shin, Samuel Albanie, Weidi Xie",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.14376v1",
+  "abstract": "Segmentation is a core computer vision competency, with applications spanning a broad range of scientifically and economically valuable domains. To date, however, the prohibitive cost of annotation has limited the deployment of flexible segmentation models. In this work, we propose Zero-shot Unsupervised Transfer Instance Segmentation (ZUTIS), a framework that aims to meet this challenge. The key strengths of ZUTIS are: (i) no requirement for instance-level or pixel-level annotations; (ii) an ability of zero-shot transfer, i.e., no assumption on access to a target data distribution; (iii) a unified framework for semantic and instance segmentations with solid performance on both tasks compared to state-of-the-art unsupervised methods. While comparing to previous work, we show ZUTIS achieves a gain of 2.2 mask AP on COCO-20K and 14.5 mIoU on ImageNet-S with 919 categories for instance and semantic segmentations, respectively. The code is made publicly available.",
+  "citation": 7
+}

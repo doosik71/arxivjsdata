@@ -1,0 +1,8 @@
+{
+  "title": "Task-Specific Data Augmentation and Inference Processing for VIPriors Instance Segmentation Challenge",
+  "authors": "Bo Yan, Xingran Zhao, Yadong Li, Hongbin Wang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.11282v1",
+  "abstract": "Instance segmentation is applied widely in image editing, image analysis and autonomous driving, etc. However, insufficient data is a common problem in practical applications. The Visual Inductive Priors(VIPriors) Instance Segmentation Challenge has focused on this problem. VIPriors for Data-Efficient Computer Vision Challenges ask competitors to train models from scratch in a data-deficient setting, but there are some visual inductive priors that can be used. In order to address the VIPriors instance segmentation problem, we designed a Task-Specific Data Augmentation(TS-DA) strategy and Inference Processing(TS-IP) strategy. The main purpose of task-specific data augmentation strategy is to tackle the data-deficient problem. And in order to make the most of visual inductive priors, we designed a task-specific inference processing strategy. We demonstrate the applicability of proposed method on VIPriors Instance Segmentation Challenge. The segmentation model applied is Hybrid Task Cascade based detector on the Swin-Base based CBNetV2 backbone. Experimental results demonstrate that proposed method can achieve a competitive result on the test set of 2022 VIPriors Instance Segmentation Challenge, with 0.531 AP@0.50:0.95.",
+  "citation": 6
+}

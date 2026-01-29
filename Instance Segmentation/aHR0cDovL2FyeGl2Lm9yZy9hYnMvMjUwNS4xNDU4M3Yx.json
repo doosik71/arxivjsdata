@@ -1,0 +1,8 @@
+{
+  "title": "Instance Segmentation for Point Sets",
+  "authors": "Abhimanyu Talwar, Julien Laasri",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.14583v1",
+  "abstract": "Recently proposed neural network architectures like PointNet [QSMG16] and PointNet++ [QYSG17] have made it possible to apply Deep Learning to 3D point sets. The feature representations of shapes learned by these two networks enabled training classifiers for Semantic Segmentation, and more recently for Instance Segmentation via the Similarity Group Proposal Network (SGPN) [WYHN17]. One area of improvement which has been highlighted by SGPN's authors, pertains to use of memory intensive similarity matrices which occupy memory quadratic in the number of points. In this report, we attempt to tackle this issue through use of two sampling based methods, which compute Instance Segmentation on a sub-sampled Point Set, and then extrapolate labels to the complete set using the nearest neigbhour approach. While both approaches perform equally well on large sub-samples, the random-based strategy gives the most improvements in terms of speed and memory usage.",
+  "citation": 0
+}

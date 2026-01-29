@@ -1,0 +1,8 @@
+{
+  "title": "Localized Interactive Instance Segmentation",
+  "authors": "Soumajit Majumder, Angela Yao",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2010.09140v2",
+  "abstract": "In current interactive instance segmentation works, the user is granted a free hand when providing clicks to segment an object; clicks are allowed on background pixels and other object instances far from the target object. This form of interaction is highly inconsistent with the end goal of efficiently isolating objects of interest. In our work, we propose a clicking scheme wherein user interactions are restricted to the proximity of the object. In addition, we propose a novel transformation of the user-provided clicks to generate a weak localization prior on the object which is consistent with image structures such as edges, textures etc. We demonstrate the effectiveness of our proposed clicking scheme and localization strategy through detailed experimentation in which we raise state-of-the-art on several standard interactive segmentation benchmarks.",
+  "citation": 86
+}

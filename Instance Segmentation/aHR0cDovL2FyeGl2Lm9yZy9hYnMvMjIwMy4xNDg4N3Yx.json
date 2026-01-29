@@ -1,0 +1,8 @@
+{
+  "title": "HUNIS: High-Performance Unsupervised Nuclei Instance Segmentation",
+  "authors": "Vasileios Magoulianitis, Yijing Yang, C. -C. Jay Kuo",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2203.14887v1",
+  "abstract": "A high-performance unsupervised nuclei instance segmentation (HUNIS) method is proposed in this work. HUNIS consists of two-stage block-wise operations. The first stage includes: 1) adaptive thresholding of pixel intensities, 2) incorporation of nuclei size/shape priors and 3) removal of false positive nuclei instances. Then, HUNIS conducts the second stage segmentation by receiving guidance from the first one. The second stage exploits the segmentation masks obtained in the first stage and leverages color and shape distributions for a more accurate segmentation. The main purpose of the two-stage design is to provide pixel-wise pseudo-labels from the first to the second stage. This self-supervision mechanism is novel and effective. Experimental results on the MoNuSeg dataset show that HUNIS outperforms all other unsupervised methods by a substantial margin. It also has a competitive standing among state-of-the-art supervised methods.",
+  "citation": 2
+}

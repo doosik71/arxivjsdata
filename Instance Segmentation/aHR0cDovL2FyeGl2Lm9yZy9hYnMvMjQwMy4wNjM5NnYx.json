@@ -1,0 +1,8 @@
+{
+  "title": "A Segmentation Foundation Model for Diverse-type Tumors",
+  "authors": "Jianhao Xie, Ziang Zhang, Guibo Luo, Yuesheng Zhu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.06396v1",
+  "abstract": "Large pre-trained models with their numerous model parameters and extensive training datasets have shown excellent performance in various tasks. Many publicly available medical image datasets do not have a sufficient amount of data so there are few large-scale models in medical imaging. We propose a large-scale Tumor Segmentation Foundation Model (TSFM) with 1.6 billion parameters using Resblock-backbone and Transformer-bottleneck,which has good transfer ability for downstream tasks. To make TSFM exhibit good performance in tumor segmentation, we make full use of the strong spatial correlation between tumors and organs in the medical image, innovatively fuse 7 tumor datasets and 3 multi-organ datasets to build a 3D medical dataset pool, including 2779 cases with totally 300k medical images, whose size currently exceeds many other single publicly available datasets. TSFM is the pre-trained model for medical image segmentation, which also can be transferred to multiple downstream tasks for fine-tuning learning. The average performance of our pre-trained model is 2% higher than that of nnU-Net across various tumor types. In the transfer learning task, TSFM only needs 5% training epochs of nnU-Net to achieve similar performance and can surpass nnU-Net by 2% on average with 10% training epoch. Pre-trained TSFM and its code will be released soon.",
+  "citation": 0
+}

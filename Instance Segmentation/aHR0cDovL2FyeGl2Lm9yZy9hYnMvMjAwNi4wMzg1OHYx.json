@@ -1,0 +1,8 @@
+{
+  "title": "Instance segmentation of buildings using keypoints",
+  "authors": "Qingyu Li, Lichao Mou, Yuansheng Hua, Yao Sun, Pu Jin, Yilei Shi, Xiao Xiang Zhu",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.03858v1",
+  "abstract": "Building segmentation is of great importance in the task of remote sensing imagery interpretation. However, the existing semantic segmentation and instance segmentation methods often lead to segmentation masks with blurred boundaries. In this paper, we propose a novel instance segmentation network for building segmentation in high-resolution remote sensing images. More specifically, we consider segmenting an individual building as detecting several keypoints. The detected keypoints are subsequently reformulated as a closed polygon, which is the semantic boundary of the building. By doing so, the sharp boundary of the building could be preserved. Experiments are conducted on selected Aerial Imagery for Roof Segmentation (AIRS) dataset, and our method achieves better performance in both quantitative and qualitative results with comparison to the state-of-the-art methods. Our network is a bottom-up instance segmentation method that could well preserve geometric details.",
+  "citation": 33
+}

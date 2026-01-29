@@ -1,0 +1,8 @@
+{
+  "title": "FlowCut: Unsupervised Video Instance Segmentation via Temporal Mask Matching",
+  "authors": "Alp Eren Sari, Paolo Favaro",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.13174v1",
+  "abstract": "We propose FlowCut, a simple and capable method for unsupervised video instance segmentation consisting of a three-stage framework to construct a high-quality video dataset with pseudo labels. To our knowledge, our work is the first attempt to curate a video dataset with pseudo-labels for unsupervised video instance segmentation. In the first stage, we generate pseudo-instance masks by exploiting the affinities of features from both images and optical flows. In the second stage, we construct short video segments containing high-quality, consistent pseudo-instance masks by temporally matching them across the frames. In the third stage, we use the YouTubeVIS-2021 video dataset to extract our training instance segmentation set, and then train a video segmentation model. FlowCut achieves state-of-the-art performance on the YouTubeVIS-2019, YouTubeVIS-2021, DAVIS-2017, and DAVIS-2017 Motion benchmarks.",
+  "citation": 0
+}

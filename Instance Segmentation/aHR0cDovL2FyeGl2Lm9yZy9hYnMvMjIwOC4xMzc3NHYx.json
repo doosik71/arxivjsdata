@@ -1,0 +1,8 @@
+{
+  "title": "Boundary-Aware Network for Abdominal Multi-Organ Segmentation",
+  "authors": "Shishuai Hu, Zehui Liao, Yong Xia",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2208.13774v1",
+  "abstract": "Automated abdominal multi-organ segmentation is a crucial yet challenging task in the computer-aided diagnosis of abdominal organ-related diseases. Although numerous deep learning models have achieved remarkable success in many medical image segmentation tasks, accurate segmentation of abdominal organs remains challenging, due to the varying sizes of abdominal organs and the ambiguous boundaries among them. In this paper, we propose a boundary-aware network (BA-Net) to segment abdominal organs on CT scans and MRI scans. This model contains a shared encoder, a boundary decoder, and a segmentation decoder. The multi-scale deep supervision strategy is adopted on both decoders, which can alleviate the issues caused by variable organ sizes. The boundary probability maps produced by the boundary decoder at each scale are used as attention to enhance the segmentation feature maps. We evaluated the BA-Net on the Abdominal Multi-Organ Segmentation (AMOS) Challenge dataset and achieved an average Dice score of 89.29$\\%$ for multi-organ segmentation on CT scans and an average Dice score of 71.92$\\%$ on MRI scans. The results demonstrate that BA-Net is superior to nnUNet on both segmentation tasks.",
+  "citation": 1
+}

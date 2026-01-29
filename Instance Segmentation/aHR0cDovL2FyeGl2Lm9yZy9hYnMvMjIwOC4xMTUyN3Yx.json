@@ -1,0 +1,8 @@
+{
+  "title": "Fast and Precise Binary Instance Segmentation of 2D Objects for Automotive Applications",
+  "authors": "Darshan Ganganna Ravindra, Laslo Dinges, Al-Hamadi Ayoub, Vasili Baranau",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2208.11527v1",
+  "abstract": "In this paper, we focus on improving binary 2D instance segmentation to assist humans in labeling ground truth datasets with polygons. Humans labeler just have to draw boxes around objects, and polygons are generated automatically. To be useful, our system has to run on CPUs in real-time. The most usual approach for binary instance segmentation involves encoder-decoder networks. This report evaluates state-of-the-art encoder-decoder networks and proposes a method for improving instance segmentation quality using these networks. Alongside network architecture improvements, our proposed method relies upon providing extra information to the network input, so-called extreme points, i.e. the outermost points on the object silhouette. The user can label them instead of a bounding box almost as quickly. The bounding box can be deduced from the extreme points as well. This method produces better IoU compared to other state-of-the-art encoder-decoder networks and also runs fast enough when it is deployed on a CPU.",
+  "citation": 0
+}

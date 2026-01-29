@@ -1,0 +1,8 @@
+{
+  "title": "2nd Place Solution for MOSE Track in CVPR 2024 PVUW workshop: Complex Video Object Segmentation",
+  "authors": "Zhensong Xu, Jiangtao Yao, Chengjing Wu, Ting Liu, Luoqi Liu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.08192v1",
+  "abstract": "Complex video object segmentation serves as a fundamental task for a wide range of downstream applications such as video editing and automatic data annotation. Here we present the 2nd place solution in the MOSE track of PVUW 2024. To mitigate problems caused by tiny objects, similar objects and fast movements in MOSE. We use instance segmentation to generate extra pretraining data from the valid and test set of MOSE. The segmented instances are combined with objects extracted from COCO to augment the training data and enhance semantic representation of the baseline model. Besides, motion blur is added during training to increase robustness against image blur induced by motion. Finally, we apply test time augmentation (TTA) and memory strategy to the inference stage. Our method ranked 2nd in the MOSE track of PVUW 2024, with a $\\mathcal{J}$ of 0.8007, a $\\mathcal{F}$ of 0.8683 and a $\\mathcal{J}$\\&$\\mathcal{F}$ of 0.8345.",
+  "citation": 1
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Nuclei instance segmentation and classification in histopathology images with StarDist",
+  "authors": "Martin Weigert, Uwe Schmidt",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2203.02284v3",
+  "abstract": "Instance segmentation and classification of nuclei is an important task in computational pathology. We show that StarDist, a deep learning nuclei segmentation method originally developed for fluorescence microscopy, can be extended and successfully applied to histopathology images. This is substantiated by conducting experiments on the Lizard dataset, and through entering the Colon Nuclei Identification and Counting (CoNIC) challenge 2022, where our approach achieved the first spot on the leaderboard for the segmentation and classification task for both the preliminary and final test phase.",
+  "citation": 120
+}

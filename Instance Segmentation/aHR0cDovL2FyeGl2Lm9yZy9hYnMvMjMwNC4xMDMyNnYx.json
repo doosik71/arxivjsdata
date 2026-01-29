@@ -1,0 +1,8 @@
+{
+  "title": "Ensembling Instance and Semantic Segmentation for Panoptic Segmentation",
+  "authors": "Mehmet Yildirim, Yogesh Langhe",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.10326v1",
+  "abstract": "We demonstrate our solution for the 2019 COCO panoptic segmentation task. Our method first performs instance segmentation and semantic segmentation separately, then combines the two to generate panoptic segmentation results. To enhance the performance, we add several expert models of Mask R-CNN in instance segmentation to tackle the data imbalance problem in the training data; also HTC model is adopted yielding our best instance segmentation results. In semantic segmentation, we trained several models with various backbones and use an ensemble strategy which further boosts the segmentation results. In the end, we analyze various combinations of instance and semantic segmentation, and report on their performance for the final panoptic segmentation results. Our best model achieves $PQ$ 47.1 on 2019 COCO panoptic test-dev data.",
+  "citation": 1
+}

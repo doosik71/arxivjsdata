@@ -1,0 +1,8 @@
+{
+  "title": "ISTR: End-to-End Instance Segmentation with Transformers",
+  "authors": "Jie Hu, Liujuan Cao, Yao Lu, ShengChuan Zhang, Yan Wang, Ke Li, Feiyue Huang, Ling Shao, Rongrong Ji",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2105.00637v2",
+  "abstract": "End-to-end paradigms significantly improve the accuracy of various deep-learning-based computer vision models. To this end, tasks like object detection have been upgraded by replacing non-end-to-end components, such as removing non-maximum suppression by training with a set loss based on bipartite matching. However, such an upgrade is not applicable to instance segmentation, due to its significantly higher output dimensions compared to object detection. In this paper, we propose an instance segmentation Transformer, termed ISTR, which is the first end-to-end framework of its kind. ISTR predicts low-dimensional mask embeddings, and matches them with ground truth mask embeddings for the set loss. Besides, ISTR concurrently conducts detection and segmentation with a recurrent refinement strategy, which provides a new way to achieve instance segmentation compared to the existing top-down and bottom-up frameworks. Benefiting from the proposed end-to-end mechanism, ISTR demonstrates state-of-the-art performance even with approximation-based suboptimal embeddings. Specifically, ISTR obtains a 46.8/38.6 box/mask AP using ResNet50-FPN, and a 48.1/39.9 box/mask AP using ResNet101-FPN, on the MS COCO dataset. Quantitative and qualitative results reveal the promising potential of ISTR as a solid baseline for instance-level recognition. Code has been made available at: https://github.com/hujiecpp/ISTR.",
+  "citation": 137
+}

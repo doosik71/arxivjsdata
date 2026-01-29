@@ -1,0 +1,8 @@
+{
+  "title": "Incremental Learning on Food Instance Segmentation",
+  "authors": "Huu-Thanh Nguyen, Yu Cao, Chong-Wah Ngo, Wing-Kwong Chan",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.15910v1",
+  "abstract": "Food instance segmentation is essential to estimate the serving size of dishes in a food image. The recent cutting-edge techniques for instance segmentation are deep learning networks with impressive segmentation quality and fast computation. Nonetheless, they are hungry for data and expensive for annotation. This paper proposes an incremental learning framework to optimize the model performance given a limited data labelling budget. The power of the framework is a novel difficulty assessment model, which forecasts how challenging an unlabelled sample is to the latest trained instance segmentation model. The data collection procedure is divided into several stages, each in which a new sample package is collected. The framework allocates the labelling budget to the most difficult samples. The unlabelled samples that meet a certain qualification from the assessment model are used to generate pseudo-labels. Eventually, the manual labels and pseudo-labels are sent to the training data to improve the instance segmentation model. On four large-scale food datasets, our proposed framework outperforms current incremental learning benchmarks and achieves competitive performance with the model trained on fully annotated samples.",
+  "citation": 2
+}

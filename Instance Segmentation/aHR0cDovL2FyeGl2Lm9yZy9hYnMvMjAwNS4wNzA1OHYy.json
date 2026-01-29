@@ -1,0 +1,8 @@
+{
+  "title": "Reinforced Coloring for End-to-End Instance Segmentation",
+  "authors": "Tuan Tran Anh, Khoa Nguyen-Tuan, Tran Minh Quan, Won-Ki Jeong",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2005.07058v2",
+  "abstract": "Instance segmentation is one of the actively studied research topics in computer vision in which many objects of interest should be separated individually. While many feed-forward networks produce high-quality segmentation on different types of images, their results often suffer from topological errors (merging or splitting) for segmentation of many objects, requiring post-processing. Existing iterative methods, on the other hand, extract a single object at a time using discriminative knowledge-based properties (shapes, boundaries, etc.) without relying on post-processing, but they do not scale well. To exploit the advantages of conventional single-object-per-step segmentation methods without impairing the scalability, we propose a novel iterative deep reinforcement learning agent that learns how to differentiate multiple objects in parallel. Our reward function for the trainable agent is designed to favor grouping pixels belonging to the same object using a graph coloring algorithm. We demonstrate that the proposed method can efficiently perform instance segmentation of many objects without heavy post-processing.",
+  "citation": 7
+}

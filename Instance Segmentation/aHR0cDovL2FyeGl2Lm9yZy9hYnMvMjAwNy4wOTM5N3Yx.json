@@ -1,0 +1,8 @@
+{
+  "title": "Weakly Supervised Instance Segmentation by Learning Annotation Consistent Instances",
+  "authors": "Aditya Arun, C. V. Jawahar, M. Pawan Kumar",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.09397v1",
+  "abstract": "Recent approaches for weakly supervised instance segmentations depend on two components: (i) a pseudo label generation model that provides instances which are consistent with a given annotation; and (ii) an instance segmentation model, which is trained in a supervised manner using the pseudo labels as ground-truth. Unlike previous approaches, we explicitly model the uncertainty in the pseudo label generation process using a conditional distribution. The samples drawn from our conditional distribution provide accurate pseudo labels due to the use of semantic class aware unary terms, boundary aware pairwise smoothness terms, and annotation aware higher order terms. Furthermore, we represent the instance segmentation model as an annotation agnostic prediction distribution. In contrast to previous methods, our representation allows us to define a joint probabilistic learning objective that minimizes the dissimilarity between the two distributions. Our approach achieves state of the art results on the PASCAL VOC 2012 data set, outperforming the best baseline by 4.2% mAP@0.5 and 4.8% mAP@0.75.",
+  "citation": 82
+}

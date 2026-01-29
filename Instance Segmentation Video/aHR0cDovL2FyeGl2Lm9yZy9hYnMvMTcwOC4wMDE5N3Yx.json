@@ -1,0 +1,8 @@
+{
+  "title": "Video Object Segmentation with Re-identification",
+  "authors": "Xiaoxiao Li, Yuankai Qi, Zhe Wang, Kai Chen, Ziwei Liu, Jianping Shi, Ping Luo, Xiaoou Tang, Chen Change Loy",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1708.00197v1",
+  "abstract": "Conventional video segmentation methods often rely on temporal continuity to propagate masks. Such an assumption suffers from issues like drifting and inability to handle large displacement. To overcome these issues, we formulate an effective mechanism to prevent the target from being lost via adaptive object re-identification. Specifically, our Video Object Segmentation with Re-identification (VS-ReID) model includes a mask propagation module and a ReID module. The former module produces an initial probability map by flow warping while the latter module retrieves missing instances by adaptive matching. With these two modules iteratively applied, our VS-ReID records a global mean (Region Jaccard and Boundary F measure) of 0.699, the best performance in 2017 DAVIS Challenge.",
+  "citation": 64
+}

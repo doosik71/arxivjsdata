@@ -1,0 +1,8 @@
+{
+  "title": "Relational Prior Knowledge Graphs for Detection and Instance Segmentation",
+  "authors": "Osman Ülger, Yu Wang, Ysbrand Galama, Sezer Karaoglu, Theo Gevers, Martin R. Oswald",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2310.07573v1",
+  "abstract": "Humans have a remarkable ability to perceive and reason about the world around them by understanding the relationships between objects. In this paper, we investigate the effectiveness of using such relationships for object detection and instance segmentation. To this end, we propose a Relational Prior-based Feature Enhancement Model (RP-FEM), a graph transformer that enhances object proposal features using relational priors. The proposed architecture operates on top of scene graphs obtained from initial proposals and aims to concurrently learn relational context modeling for object detection and instance segmentation. Experimental evaluations on COCO show that the utilization of scene graphs, augmented with relational priors, offer benefits for object detection and instance segmentation. RP-FEM demonstrates its capacity to suppress improbable class predictions within the image while also preventing the model from generating duplicate predictions, leading to improvements over the baseline model on which it is built.",
+  "citation": 5
+}

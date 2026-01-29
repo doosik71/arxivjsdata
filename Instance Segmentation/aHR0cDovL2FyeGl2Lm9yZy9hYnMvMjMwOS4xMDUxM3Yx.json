@@ -1,0 +1,8 @@
+{
+  "title": "Uncertainty Estimation in Instance Segmentation with Star-convex Shapes",
+  "authors": "Qasim M. K. Siddiqui, Sebastian Starke, Peter Steinbach",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.10513v1",
+  "abstract": "Instance segmentation has witnessed promising advancements through deep neural network-based algorithms. However, these models often exhibit incorrect predictions with unwarranted confidence levels. Consequently, evaluating prediction uncertainty becomes critical for informed decision-making. Existing methods primarily focus on quantifying uncertainty in classification or regression tasks, lacking emphasis on instance segmentation. Our research addresses the challenge of estimating spatial certainty associated with the location of instances with star-convex shapes. Two distinct clustering approaches are evaluated which compute spatial and fractional certainty per instance employing samples by the Monte-Carlo Dropout or Deep Ensemble technique. Our study demonstrates that combining spatial and fractional certainty scores yields improved calibrated estimation over individual certainty scores. Notably, our experimental results show that the Deep Ensemble technique alongside our novel radial clustering approach proves to be an effective strategy. Our findings emphasize the significance of evaluating the calibration of estimated certainties for model reliability and decision-making.",
+  "citation": 2
+}

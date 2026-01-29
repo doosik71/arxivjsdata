@@ -1,0 +1,8 @@
+{
+  "title": "Iterative Learning for Instance Segmentation",
+  "authors": "Tuomas Sormunen, Arttu Lämsä, Miguel Bordallo Lopez",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.09110v1",
+  "abstract": "Instance segmentation is a computer vision task where separate objects in an image are detected and segmented. State-of-the-art deep neural network models require large amounts of labeled data in order to perform well in this task. Making these annotations is time-consuming. We propose for the first time, an iterative learning and annotation method that is able to detect, segment and annotate instances in datasets composed of multiple similar objects. The approach requires minimal human intervention and needs only a bootstrapping set containing very few annotations. Experiments on two different datasets show the validity of the approach in different applications related to visual inspection.",
+  "citation": 3
+}

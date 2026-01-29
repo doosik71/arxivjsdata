@@ -1,0 +1,8 @@
+{
+  "title": "RefineVIS: Video Instance Segmentation with Temporal Attention Refinement",
+  "authors": "Andre Abrantes, Jiang Wang, Peng Chu, Quanzeng You, Zicheng Liu",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.04774v1",
+  "abstract": "We introduce a novel framework called RefineVIS for Video Instance Segmentation (VIS) that achieves good object association between frames and accurate segmentation masks by iteratively refining the representations using sequence context. RefineVIS learns two separate representations on top of an off-the-shelf frame-level image instance segmentation model: an association representation responsible for associating objects across frames and a segmentation representation that produces accurate segmentation masks. Contrastive learning is utilized to learn temporally stable association representations. A Temporal Attention Refinement (TAR) module learns discriminative segmentation representations by exploiting temporal relationships and a novel temporal contrastive denoising technique. Our method supports both online and offline inference. It achieves state-of-the-art video instance segmentation accuracy on YouTube-VIS 2019 (64.4 AP), Youtube-VIS 2021 (61.4 AP), and OVIS (46.1 AP) datasets. The visualization shows that the TAR module can generate more accurate instance segmentation masks, particularly for challenging cases such as highly occluded objects.",
+  "citation": 0
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Weakly-Supervised 3D Medical Image Segmentation using Geometric Prior and Contrastive Similarity",
+  "authors": "Hao Du, Qihua Dong, Yan Xu, Jing Liao",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.02125v1",
+  "abstract": "Medical image segmentation is almost the most important pre-processing procedure in computer-aided diagnosis but is also a very challenging task due to the complex shapes of segments and various artifacts caused by medical imaging, (i.e., low-contrast tissues, and non-homogenous textures). In this paper, we propose a simple yet effective segmentation framework that incorporates the geometric prior and contrastive similarity into the weakly-supervised segmentation framework in a loss-based fashion. The proposed geometric prior built on point cloud provides meticulous geometry to the weakly-supervised segmentation proposal, which serves as better supervision than the inherent property of the bounding-box annotation (i.e., height and width). Furthermore, we propose contrastive similarity to encourage organ pixels to gather around in the contrastive embedding space, which helps better distinguish low-contrast tissues. The proposed contrastive embedding space can make up for the poor representation of the conventionally-used gray space. Extensive experiments are conducted to verify the effectiveness and the robustness of the proposed weakly-supervised segmentation framework. The proposed framework is superior to state-of-the-art weakly-supervised methods on the following publicly accessible datasets: LiTS 2017 Challenge, KiTS 2021 Challenge, and LPBA40. We also dissect our method and evaluate the performance of each component.",
+  "citation": 17
+}

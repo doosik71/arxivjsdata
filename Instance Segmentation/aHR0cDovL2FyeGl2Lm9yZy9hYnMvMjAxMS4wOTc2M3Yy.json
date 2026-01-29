@@ -1,0 +1,8 @@
+{
+  "title": "Attention-Based Transformers for Instance Segmentation of Cells in Microstructures",
+  "authors": "Tim Prangemeier, Christoph Reich, Heinz Koeppl",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2011.09763v2",
+  "abstract": "Detecting and segmenting object instances is a common task in biomedical applications. Examples range from detecting lesions on functional magnetic resonance images, to the detection of tumours in histopathological images and extracting quantitative single-cell information from microscopy imagery, where cell segmentation is a major bottleneck. Attention-based transformers are state-of-the-art in a range of deep learning fields. They have recently been proposed for segmentation tasks where they are beginning to outperforming other methods. We present a novel attention-based cell detection transformer (Cell-DETR) for direct end-to-end instance segmentation. While the segmentation performance is on par with a state-of-the-art instance segmentation method, Cell-DETR is simpler and faster. We showcase the method's contribution in a the typical use case of segmenting yeast in microstructured environments, commonly employed in systems or synthetic biology. For the specific use case, the proposed method surpasses the state-of-the-art tools for semantic segmentation and additionally predicts the individual object instances. The fast and accurate instance segmentation performance increases the experimental information yield for a posteriori data processing and makes online monitoring of experiments and closed-loop optimal experimental design feasible.",
+  "citation": 142
+}

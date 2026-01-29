@@ -1,0 +1,8 @@
+{
+  "title": "3D-Aware Instance Segmentation and Tracking in Egocentric Videos",
+  "authors": "Yash Bhalgat, Vadim Tschernezki, Iro Laina, João F. Henriques, Andrea Vedaldi, Andrew Zisserman",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2408.09860v2",
+  "abstract": "Egocentric videos present unique challenges for 3D scene understanding due to rapid camera motion, frequent object occlusions, and limited object visibility. This paper introduces a novel approach to instance segmentation and tracking in first-person video that leverages 3D awareness to overcome these obstacles. Our method integrates scene geometry, 3D object centroid tracking, and instance segmentation to create a robust framework for analyzing dynamic egocentric scenes. By incorporating spatial and temporal cues, we achieve superior performance compared to state-of-the-art 2D approaches. Extensive evaluations on the challenging EPIC Fields dataset demonstrate significant improvements across a range of tracking and segmentation consistency metrics. Specifically, our method outperforms the next best performing approach by $7$ points in Association Accuracy (AssA) and $4.5$ points in IDF1 score, while reducing the number of ID switches by $73\\%$ to $80\\%$ across various object categories. Leveraging our tracked instance segmentations, we showcase downstream applications in 3D object reconstruction and amodal video object segmentation in these egocentric settings.",
+  "citation": 4
+}

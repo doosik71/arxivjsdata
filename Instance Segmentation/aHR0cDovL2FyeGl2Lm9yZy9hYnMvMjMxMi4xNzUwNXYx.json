@@ -1,0 +1,8 @@
+{
+  "title": "Leveraging Open-Vocabulary Diffusion to Camouflaged Instance Segmentation",
+  "authors": "Tuan-Anh Vu, Duc Thanh Nguyen, Qing Guo, Binh-Son Hua, Nhat Minh Chung, Ivor W. Tsang, Sai-Kit Yeung",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.17505v1",
+  "abstract": "Text-to-image diffusion techniques have shown exceptional capability of producing high-quality images from text descriptions. This indicates that there exists a strong correlation between the visual and textual domains. In addition, text-image discriminative models such as CLIP excel in image labelling from text prompts, thanks to the rich and diverse information available from open concepts. In this paper, we leverage these technical advances to solve a challenging problem in computer vision: camouflaged instance segmentation. Specifically, we propose a method built upon a state-of-the-art diffusion model, empowered by open-vocabulary to learn multi-scale textual-visual features for camouflaged object representations. Such cross-domain representations are desirable in segmenting camouflaged objects where visual cues are subtle to distinguish the objects from the background, especially in segmenting novel objects which are not seen in training. We also develop technically supportive components to effectively fuse cross-domain features and engage relevant features towards respective foreground objects. We validate our method and compare it with existing ones on several benchmark datasets of camouflaged instance segmentation and generic open-vocabulary instance segmentation. Experimental results confirm the advances of our method over existing ones. We will publish our code and pre-trained models to support future research.",
+  "citation": 5
+}

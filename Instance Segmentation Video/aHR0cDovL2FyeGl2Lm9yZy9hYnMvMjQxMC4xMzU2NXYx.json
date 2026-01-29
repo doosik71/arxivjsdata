@@ -1,0 +1,8 @@
+{
+  "title": "SDI-Paste: Synthetic Dynamic Instance Copy-Paste for Video Instance Segmentation",
+  "authors": "Sahir Shrestha, Weihao Li, Gao Zhu, Nick Barnes",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.13565v1",
+  "abstract": "Data augmentation methods such as Copy-Paste have been studied as effective ways to expand training datasets while incurring minimal costs. While such methods have been extensively implemented for image level tasks, we found no scalable implementation of Copy-Paste built specifically for video tasks. In this paper, we leverage the recent growth in video fidelity of generative models to explore effective ways of incorporating synthetically generated objects into existing video datasets to artificially expand object instance pools. We first procure synthetic video sequences featuring objects that morph dynamically with time. Our carefully devised pipeline automatically segments then copy-pastes these dynamic instances across the frames of any target background video sequence. We name our video data augmentation pipeline Synthetic Dynamic Instance Copy-Paste, and test it on the complex task of Video Instance Segmentation which combines detection, segmentation and tracking of object instances across a video sequence. Extensive experiments on the popular Youtube-VIS 2021 dataset using two separate popular networks as baselines achieve strong gains of +2.9 AP (6.5%) and +2.1 AP (4.9%). We make our code and models publicly available.",
+  "citation": 1
+}

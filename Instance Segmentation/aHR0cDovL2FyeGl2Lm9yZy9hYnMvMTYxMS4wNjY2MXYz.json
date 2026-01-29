@@ -1,0 +1,8 @@
+{
+  "title": "Gland Instance Segmentation Using Deep Multichannel Neural Networks",
+  "authors": "Yan Xu, Yang Li, Yipei Wang, Mingyuan Liu, Yubo Fan, Maode Lai, Eric I-Chao Chang",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1611.06661v3",
+  "abstract": "Objective: A new image instance segmentation method is proposed to segment individual glands (instances) in colon histology images. This process is challenging since the glands not only need to be segmented from a complex background, they must also be individually identified. Methods: We leverage the idea of image-to-image prediction in recent deep learning by designing an algorithm that automatically exploits and fuses complex multichannel information - regional, location, and boundary cues - in gland histology images. Our proposed algorithm, a deep multichannel framework, alleviates heavy feature design due to the use of convolutional neural networks and is able to meet multifarious requirements by altering channels. Results: Compared with methods reported in the 2015 MICCAI Gland Segmentation Challenge and other currently prevalent instance segmentation methods, we observe state-of-the-art results based on the evaluation metrics. Conclusion: The proposed deep multichannel algorithm is an effective method for gland instance segmentation. Significance: The generalization ability of our model not only enable the algorithm to solve gland instance segmentation problems, but the channel is also alternative that can be replaced for a specific task.",
+  "citation": 171
+}

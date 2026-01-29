@@ -1,0 +1,8 @@
+{
+  "title": "Deep Level Set for Box-supervised Instance Segmentation in Aerial Images",
+  "authors": "Wentong Li, Yijie Chen, Wenyu Liu, Jianke Zhu",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2112.03451v1",
+  "abstract": "Box-supervised instance segmentation has recently attracted lots of research efforts while little attention is received in aerial image domain. In contrast to the general object collections, aerial objects have large intra-class variances and inter-class similarity with complex background. Moreover, there are many tiny objects in the high-resolution satellite images. This makes the recent pairwise affinity modeling method inevitably to involve the noisy supervision with the inferior results. To tackle these problems, we propose a novel aerial instance segmentation approach, which drives the network to learn a series of level set functions for the aerial objects with only box annotations in an end-to-end fashion. Instead of learning the pairwise affinity, the level set method with the carefully designed energy functions treats the object segmentation as curve evolution, which is able to accurately recover the object's boundaries and prevent the interference from the indistinguishable background and similar objects. The experimental results demonstrate that the proposed approach outperforms the state-of-the-art box-supervised instance segmentation methods. The source code is available at https://github.com/LiWentomng/boxlevelset.",
+  "citation": 2
+}

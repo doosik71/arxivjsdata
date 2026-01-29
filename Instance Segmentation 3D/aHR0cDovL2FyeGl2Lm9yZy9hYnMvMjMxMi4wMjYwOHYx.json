@@ -1,0 +1,8 @@
+{
+  "title": "Panoptica -- instance-wise evaluation of 3D semantic and instance segmentation maps",
+  "authors": "Florian Kofler, Hendrik Möller, Josef A. Buchner, Ezequiel de la Rosa, Ivan Ezhov, Marcel Rosier, Isra Mekki, Suprosanna Shit, Moritz Negwer, Rami Al-Maskari, Ali Ertürk, Shankeeth Vinayahalingam, Fabian Isensee, Sarthak Pati, Daniel Rueckert, Jan S. Kirschke, Stefan K. Ehrlich, Annika Reinke, Bjoern Menze, Benedikt Wiestler, Marie Piraud",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.02608v1",
+  "abstract": "This paper introduces panoptica, a versatile and performance-optimized package designed for computing instance-wise segmentation quality metrics from 2D and 3D segmentation maps. panoptica addresses the limitations of existing metrics and provides a modular framework that complements the original intersection over union-based panoptic quality with other metrics, such as the distance metric Average Symmetric Surface Distance. The package is open-source, implemented in Python, and accompanied by comprehensive documentation and tutorials. panoptica employs a three-step metrics computation process to cover diverse use cases. The efficacy of panoptica is demonstrated on various real-world biomedical datasets, where an instance-wise evaluation is instrumental for an accurate representation of the underlying clinical task. Overall, we envision panoptica as a valuable tool facilitating in-depth evaluation of segmentation methods.",
+  "citation": 8
+}

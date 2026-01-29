@@ -1,0 +1,8 @@
+{
+  "title": "Multi-Stage Segmentation and Cascade Classification Methods for Improving Cardiac MRI Analysis",
+  "authors": "Vitalii Slobodzian, Pavlo Radiuk, Oleksander Barmak, Iurii Krak",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.09386v1",
+  "abstract": "The segmentation and classification of cardiac magnetic resonance imaging are critical for diagnosing heart conditions, yet current approaches face challenges in accuracy and generalizability. In this study, we aim to further advance the segmentation and classification of cardiac magnetic resonance images by introducing a novel deep learning-based approach. Using a multi-stage process with U-Net and ResNet models for segmentation, followed by Gaussian smoothing, the method improved segmentation accuracy, achieving a Dice coefficient of 0.974 for the left ventricle and 0.947 for the right ventricle. For classification, a cascade of deep learning classifiers was employed to distinguish heart conditions, including hypertrophic cardiomyopathy, myocardial infarction, and dilated cardiomyopathy, achieving an average accuracy of 97.2%. The proposed approach outperformed existing models, enhancing segmentation accuracy and classification precision. These advancements show promise for clinical applications, though further validation and interpretation across diverse imaging protocols is necessary.",
+  "citation": 3
+}

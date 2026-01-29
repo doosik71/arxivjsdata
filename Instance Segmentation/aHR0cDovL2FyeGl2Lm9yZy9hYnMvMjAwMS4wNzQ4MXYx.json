@@ -1,0 +1,8 @@
+{
+  "title": "Joint Learning of Instance and Semantic Segmentation for Robotic Pick-and-Place with Heavy Occlusions in Clutter",
+  "authors": "Kentaro Wada, Kei Okada, Masayuki Inaba",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2001.07481v1",
+  "abstract": "We present joint learning of instance and semantic segmentation for visible and occluded region masks. Sharing the feature extractor with instance occlusion segmentation, we introduce semantic occlusion segmentation into the instance segmentation model. This joint learning fuses the instance- and image-level reasoning of the mask prediction on the different segmentation tasks, which was missing in the previous work of learning instance segmentation only (instance-only). In the experiments, we evaluated the proposed joint learning comparing the instance-only learning on the test dataset. We also applied the joint learning model to 2 different types of robotic pick-and-place tasks (random and target picking) and evaluated its effectiveness to achieve real-world robotic tasks.",
+  "citation": 29
+}

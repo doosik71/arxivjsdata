@@ -1,0 +1,8 @@
+{
+  "title": "Applying Eigencontours to PolarMask-Based Instance Segmentation",
+  "authors": "Wonhui Park, Dongkwon Jin, Chang-Su Kim",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2208.11258v1",
+  "abstract": "Eigencontours are the first data-driven contour descriptors based on singular value decomposition. Based on the implementation of ESE-Seg, eigencontours were applied to the instance segmentation task successfully. In this report, we incorporate eigencontours into the PolarMask network for instance segmentation. Experimental results demonstrate that the proposed algorithm yields better results than PolarMask on two instance segmentation datasets of COCO2017 and SBD. Also, we analyze the characteristics of eigencontours qualitatively. Our codes are available at https://github.com/dnjs3594/Eigencontours.",
+  "citation": 0
+}

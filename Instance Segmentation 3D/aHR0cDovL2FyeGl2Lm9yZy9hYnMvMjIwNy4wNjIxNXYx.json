@@ -1,0 +1,8 @@
+{
+  "title": "YOLO2U-Net: Detection-Guided 3D Instance Segmentation for Microscopy",
+  "authors": "Amirkoushyar Ziabari, Derek C. Rose, Abbas Shirinifard, David Solecki",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2207.06215v1",
+  "abstract": "Microscopy imaging techniques are instrumental for characterization and analysis of biological structures. As these techniques typically render 3D visualization of cells by stacking 2D projections, issues such as out-of-plane excitation and low resolution in the $z$-axis may pose challenges (even for human experts) to detect individual cells in 3D volumes as these non-overlapping cells may appear as overlapping. In this work, we introduce a comprehensive method for accurate 3D instance segmentation of cells in the brain tissue. The proposed method combines the 2D YOLO detection method with a multi-view fusion algorithm to construct a 3D localization of the cells. Next, the 3D bounding boxes along with the data volume are input to a 3D U-Net network that is designed to segment the primary cell in each 3D bounding box, and in turn, to carry out instance segmentation of cells in the entire volume. The promising performance of the proposed method is shown in comparison with some current deep learning-based 3D instance segmentation methods.",
+  "citation": 4
+}

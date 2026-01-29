@@ -1,0 +1,7 @@
+{
+  "title": "Deep Learning Based Instance Segmentation in 3D Biomedical Images Using Weak Annotation",
+  "authors": "Zhuo Zhao, Lin Yang, Hao Zheng, Ian H. Guldner, Siyuan Zhang, Danny Z. Chen",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1806.11137v1",
+  "abstract": "Instance segmentation in 3D images is a fundamental task in biomedical image analysis. While deep learning models often work well for 2D instance segmentation, 3D instance segmentation still faces critical challenges, such as insufficient training data due to various annotation difficulties in 3D biomedical images. Common 3D annotation methods (e.g., full voxel annotation) incur high workloads and costs for labeling enough instances for training deep learning 3D instance segmentation models. In this paper, we propose a new weak annotation approach for training a fast deep learning 3D instance segmentation model without using full voxel mask annotation. Our approach needs only 3D bounding boxes for all instances and full voxel annotation for a small fraction of the instances, and uses a novel two-stage 3D instance segmentation model utilizing these two kinds of annotation, respectively. We evaluate our approach on several biomedical image datasets, and the experimental results show that (1) with full annotated boxes and a small amount of masks, our approach can achieve similar performance as the best known methods using full annotation, and (2) with similar annotation time, our approach outperforms the best known methods that use full annotation."
+}

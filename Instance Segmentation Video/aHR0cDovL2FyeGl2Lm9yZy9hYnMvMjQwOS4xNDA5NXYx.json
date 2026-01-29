@@ -1,0 +1,8 @@
+{
+  "title": "Foundation Models for Amodal Video Instance Segmentation in Automated Driving",
+  "authors": "Jasmin Breitenstein, Franz Jünger, Andreas Bär, Tim Fingscheidt",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.14095v1",
+  "abstract": "In this work, we study amodal video instance segmentation for automated driving. Previous works perform amodal video instance segmentation relying on methods trained on entirely labeled video data with techniques borrowed from standard video instance segmentation. Such amodally labeled video data is difficult and expensive to obtain and the resulting methods suffer from a trade-off between instance segmentation and tracking performance. To largely solve this issue, we propose to study the application of foundation models for this task. More precisely, we exploit the extensive knowledge of the Segment Anything Model (SAM), while fine-tuning it to the amodal instance segmentation task. Given an initial video instance segmentation, we sample points from the visible masks to prompt our amodal SAM. We use a point memory to store those points. If a previously observed instance is not predicted in a following frame, we retrieve its most recent points from the point memory and use a point tracking method to follow those points to the current frame, together with the corresponding last amodal instance mask. This way, while basing our method on an amodal instance segmentation, we nevertheless obtain video-level amodal instance segmentation results. Our resulting S-AModal method achieves state-of-the-art results in amodal video instance segmentation while resolving the need for amodal video-based labels. Code for S-AModal is available at https://github.com/ifnspaml/S-AModal.",
+  "citation": 2
+}

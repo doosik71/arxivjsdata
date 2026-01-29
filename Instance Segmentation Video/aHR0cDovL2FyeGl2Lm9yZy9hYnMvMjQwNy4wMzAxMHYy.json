@@ -1,0 +1,8 @@
+{
+  "title": "CAVIS: Context-Aware Video Instance Segmentation",
+  "authors": "Seunghun Lee, Jiwan Seo, Kiljoon Han, Minwoo Choi, Sunghoon Im",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2407.03010v2",
+  "abstract": "In this paper, we introduce the Context-Aware Video Instance Segmentation (CAVIS), a novel framework designed to enhance instance association by integrating contextual information adjacent to each object. To efficiently extract and leverage this information, we propose the Context-Aware Instance Tracker (CAIT), which merges contextual data surrounding the instances with the core instance features to improve tracking accuracy. Additionally, we design the Prototypical Cross-frame Contrastive (PCC) loss, which ensures consistency in object-level features across frames, thereby significantly enhancing matching accuracy. CAVIS demonstrates superior performance over state-of-the-art methods on all benchmark datasets in video instance segmentation (VIS) and video panoptic segmentation (VPS). Notably, our method excels on the OVIS dataset, known for its particularly challenging videos. Project page: https://seung-hun-lee.github.io/projects/CAVIS/",
+  "citation": 4
+}

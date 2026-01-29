@@ -1,0 +1,8 @@
+{
+  "title": "INSTA-YOLO: Real-Time Instance Segmentation",
+  "authors": "Eslam Mohamed, Abdelrahman Shaker, Ahmad El-Sallab, Mayada Hadhoud",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2102.06777v3",
+  "abstract": "Instance segmentation has gained recently huge attention in various computer vision applications. It aims at providing different IDs to different object of the scene, even if they belong to the same class. This is useful in various scenarios, especially in occlusions. Instance segmentation is usually performed as a two-stage pipeline. First, an object is detected, then semantic segmentation within the detected box area. This process involves costly up-sampling, especially for the segmentation part. Moreover, for some applications, such as LiDAR point clouds and aerial object detection, it is often required to predict oriented boxes, which add extra complexity to the two-stage pipeline. In this paper, we propose Insta-YOLO, a novel one-stage end-to-end deep learning model for real-time instance segmentation. The proposed model is inspired by the YOLO one-shot object detector, with the box regression loss is replaced with polynomial regression in the localization head. This modification enables us to skip the segmentation up-sampling decoder altogether and produces the instance segmentation contour from the polynomial output coefficients. In addition, this architecture is a natural fit for oriented objects. We evaluate our model on three datasets, namely, Carnva, Cityscapes and Airbus. The results show our model achieves competitive accuracy in terms of mAP with significant improvement in speed by 2x on GTX-1080 GPU.",
+  "citation": 49
+}

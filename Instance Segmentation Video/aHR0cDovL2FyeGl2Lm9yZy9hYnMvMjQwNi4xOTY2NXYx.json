@@ -1,0 +1,8 @@
+{
+  "title": "PM-VIS+: High-Performance Video Instance Segmentation without Video Annotation",
+  "authors": "Zhangjing Yang, Dun Liu, Xin Wang, Zhe Li, Barathwaj Anandan, Yi Wu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.19665v1",
+  "abstract": "Video instance segmentation requires detecting, segmenting, and tracking objects in videos, typically relying on costly video annotations. This paper introduces a method that eliminates video annotations by utilizing image datasets. The PM-VIS algorithm is adapted to handle both bounding box and instance-level pixel annotations dynamically. We introduce ImageNet-bbox to supplement missing categories in video datasets and propose the PM-VIS+ algorithm to adjust supervision based on annotation types. To enhance accuracy, we use pseudo masks and semi-supervised optimization techniques on unannotated video data. This method achieves high video instance segmentation performance without manual video annotations, offering a cost-effective solution and new perspectives for video instance segmentation applications. The code will be available in https://github.com/ldknight/PM-VIS-plus",
+  "citation": 0
+}

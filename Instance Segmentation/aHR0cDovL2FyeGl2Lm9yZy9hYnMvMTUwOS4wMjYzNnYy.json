@@ -1,0 +1,8 @@
+{
+  "title": "Proposal-free Network for Instance-level Object Segmentation",
+  "authors": "Xiaodan Liang, Yunchao Wei, Xiaohui Shen, Jianchao Yang, Liang Lin, Shuicheng Yan",
+  "year": 2015,
+  "url": "http://arxiv.org/abs/1509.02636v2",
+  "abstract": "Instance-level object segmentation is an important yet under-explored task. The few existing studies are almost all based on region proposal methods to extract candidate segments and then utilize object classification to produce final results. Nonetheless, generating accurate region proposals itself is quite challenging. In this work, we propose a Proposal-Free Network (PFN ) to address the instance-level object segmentation problem, which outputs the instance numbers of different categories and the pixel-level information on 1) the coordinates of the instance bounding box each pixel belongs to, and 2) the confidences of different categories for each pixel, based on pixel-to-pixel deep convolutional neural network. All the outputs together, by using any off-the-shelf clustering method for simple post-processing, can naturally generate the ultimate instance-level object segmentation results. The whole PFN can be easily trained in an end-to-end way without the requirement of a proposal generation stage. Extensive evaluations on the challenging PASCAL VOC 2012 semantic segmentation benchmark demonstrate that the proposed PFN solution well beats the state-of-the-arts for instance-level object segmentation. In particular, the $AP^r$ over 20 classes at 0.5 IoU reaches 58.7% by PFN, significantly higher than 43.8% and 46.3% by the state-of-the-art algorithms, SDS [9] and [16], respectively.",
+  "citation": 293
+}

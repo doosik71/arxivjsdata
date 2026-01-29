@@ -1,0 +1,8 @@
+{
+  "title": "Instance Segmentation GNNs for One-Shot Conformal Tracking at the LHC",
+  "authors": "Savannah Thais, Gage DeZoort",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2103.06509v1",
+  "abstract": "3D instance segmentation remains a challenging problem in computer vision. Particle tracking at colliders like the LHC can be conceptualized as an instance segmentation task: beginning from a point cloud of hits in a particle detector, an algorithm must identify which hits belong to individual particle trajectories and extract track properties. Graph Neural Networks (GNNs) have shown promising performance on standard instance segmentation tasks. In this work we demonstrate the applicability of instance segmentation GNN architectures to particle tracking; moreover, we re-imagine the traditional Cartesian space approach to track-finding and instead work in a conformal geometry that allows the GNN to identify tracks and extract parameters in a single shot.",
+  "citation": 7
+}

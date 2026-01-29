@@ -1,0 +1,8 @@
+{
+  "title": "On generalisability of segment anything model for nuclear instance segmentation in histology images",
+  "authors": "Kesi Xu, Lea Goetz, Nasir Rajpoot",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2401.14248v1",
+  "abstract": "Pre-trained on a large and diverse dataset, the segment anything model (SAM) is the first promptable foundation model in computer vision aiming at object segmentation tasks. In this work, we evaluate SAM for the task of nuclear instance segmentation performance with zero-shot learning and finetuning. We compare SAM with other representative methods in nuclear instance segmentation, especially in the context of model generalisability. To achieve automatic nuclear instance segmentation, we propose using a nuclei detection model to provide bounding boxes or central points of nu-clei as visual prompts for SAM in generating nuclear instance masks from histology images.",
+  "citation": 2
+}

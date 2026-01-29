@@ -1,0 +1,8 @@
+{
+  "title": "NINEPINS: Nuclei Instance Segmentation with Point Annotations",
+  "authors": "Ting-An Yen, Hung-Chun Hsu, Pushpak Pati, Maria Gabrani, Antonio Foncubierta-Rodríguez, Pau-Choo Chung",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.13556v1",
+  "abstract": "Deep learning-based methods are gaining traction in digital pathology, with an increasing number of publications and challenges that aim at easing the work of systematically and exhaustively analyzing tissue slides. These methods often achieve very high accuracies, at the cost of requiring large annotated datasets to train. This requirement is especially difficult to fulfill in the medical field, where expert knowledge is essential. In this paper we focus on nuclei segmentation, which generally requires experienced pathologists to annotate the nuclear areas in gigapixel histological images. We propose an algorithm for instance segmentation that uses pseudo-label segmentations generated automatically from point annotations, as a method to reduce the burden for pathologists. With the generated segmentation masks, the proposed method trains a modified version of HoVer-Net model to achieve instance segmentation. Experimental results show that the proposed method is robust to inaccuracies in point annotations and comparison with Hover-Net trained with fully annotated instance masks shows that a degradation in segmentation performance does not always imply a degradation in higher order tasks such as tissue classification.",
+  "citation": 4
+}

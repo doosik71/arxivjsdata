@@ -1,0 +1,8 @@
+{
+  "title": "MaskUno: Switch-Split Block For Enhancing Instance Segmentation",
+  "authors": "Jawad Haidar, Marc Mouawad, Imad Elhajj, Daniel Asmar",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2407.21498v1",
+  "abstract": "Instance segmentation is an advanced form of image segmentation which, beyond traditional segmentation, requires identifying individual instances of repeating objects in a scene. Mask R-CNN is the most common architecture for instance segmentation, and improvements to this architecture include steps such as benefiting from bounding box refinements, adding semantics, or backbone enhancements. In all the proposed variations to date, the problem of competing kernels (each class aims to maximize its own accuracy) persists when models try to synchronously learn numerous classes. In this paper, we propose mitigating this problem by replacing mask prediction with a Switch-Split block that processes refined ROIs, classifies them, and assigns them to specialized mask predictors. We name the method MaskUno and test it on various models from the literature, which are then trained on multiple classes using the benchmark COCO dataset. An increase in the mean Average Precision (mAP) of 2.03% was observed for the high-performing DetectoRS when trained on 80 classes. MaskUno proved to enhance the mAP of instance segmentation models regardless of the number and typ",
+  "citation": 0
+}

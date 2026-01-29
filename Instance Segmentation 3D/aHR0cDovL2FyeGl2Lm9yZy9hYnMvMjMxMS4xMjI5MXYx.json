@@ -1,0 +1,8 @@
+{
+  "title": "Instance-aware 3D Semantic Segmentation powered by Shape Generators and Classifiers",
+  "authors": "Bo Sun, Qixing Huang, Xiangru Huang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.12291v1",
+  "abstract": "Existing 3D semantic segmentation methods rely on point-wise or voxel-wise feature descriptors to output segmentation predictions. However, these descriptors are often supervised at point or voxel level, leading to segmentation models that can behave poorly at instance-level. In this paper, we proposed a novel instance-aware approach for 3D semantic segmentation. Our method combines several geometry processing tasks supervised at instance-level to promote the consistency of the learned feature representation. Specifically, our methods use shape generators and shape classifiers to perform shape reconstruction and classification tasks for each shape instance. This enforces the feature representation to faithfully encode both structural and local shape information, with an awareness of shape instances. In the experiments, our method significantly outperform existing approaches in 3D semantic segmentation on several public benchmarks, such as Waymo Open Dataset, SemanticKITTI and ScanNetV2.",
+  "citation": 0
+}

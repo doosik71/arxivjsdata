@@ -1,0 +1,8 @@
+{
+  "title": "The Devil is in Classification: A Simple Framework for Long-tail Object Detection and Instance Segmentation",
+  "authors": "Tao Wang, Yu Li, Bingyi Kang, Junnan Li, Junhao Liew, Sheng Tang, Steven Hoi, Jiashi Feng",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.11978v5",
+  "abstract": "Most existing object instance detection and segmentation models only work well on fairly balanced benchmarks where per-category training sample numbers are comparable, such as COCO. They tend to suffer performance drop on realistic datasets that are usually long-tailed. This work aims to study and address such open challenges. Specifically, we systematically investigate performance drop of the state-of-the-art two-stage instance segmentation model Mask R-CNN on the recent long-tail LVIS dataset, and unveil that a major cause is the inaccurate classification of object proposals. Based on such an observation, we first consider various techniques for improving long-tail classification performance which indeed enhance instance segmentation results. We then propose a simple calibration framework to more effectively alleviate classification head bias with a bi-level class balanced sampling approach. Without bells and whistles, it significantly boosts the performance of instance segmentation for tail classes on the recent LVIS dataset and our sampled COCO-LT dataset. Our analysis provides useful insights for solving long-tail instance detection and segmentation problems, and the straightforward \\emph{SimCal} method can serve as a simple but strong baseline. With the method we have won the 2019 LVIS challenge. Codes and models are available at https://github.com/twangnh/SimCal.",
+  "citation": 6
+}

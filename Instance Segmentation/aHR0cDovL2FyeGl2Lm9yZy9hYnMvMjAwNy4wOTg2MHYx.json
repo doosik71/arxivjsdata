@@ -1,0 +1,8 @@
+{
+  "title": "Learning Gaussian Instance Segmentation in Point Clouds",
+  "authors": "Shih-Hung Liu, Shang-Yi Yu, Shao-Chi Wu, Hwann-Tzong Chen, Tyng-Luh Liu",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.09860v1",
+  "abstract": "This paper presents a novel method for instance segmentation of 3D point clouds. The proposed method is called Gaussian Instance Center Network (GICN), which can approximate the distributions of instance centers scattered in the whole scene as Gaussian center heatmaps. Based on the predicted heatmaps, a small number of center candidates can be easily selected for the subsequent predictions with efficiency, including i) predicting the instance size of each center to decide a range for extracting features, ii) generating bounding boxes for centers, and iii) producing the final instance masks. GICN is a single-stage, anchor-free, and end-to-end architecture that is easy to train and efficient to perform inference. Benefited from the center-dictated mechanism with adaptive instance size selection, our method achieves state-of-the-art performance in the task of 3D instance segmentation on ScanNet and S3DIS datasets.",
+  "citation": 59
+}

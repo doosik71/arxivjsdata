@@ -1,0 +1,7 @@
+{
+  "title": "OSIS: Efficient One-stage Network for 3D Instance Segmentation",
+  "authors": "Chuan Tang, Xi Yang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2303.07011v1",
+  "abstract": "Current 3D instance segmentation models generally use multi-stage methods to extract instance objects, including clustering, feature extraction, and post-processing processes. However, these multi-stage approaches rely on hyperparameter settings and hand-crafted processes, which restrict the inference speed of the model. In this paper, we propose a new 3D point cloud instance segmentation network, named OSIS. OSIS is a one-stage network, which directly segments instances from 3D point cloud data using neural network. To segment instances directly from the network, we propose an instance decoder, which decodes instance features from the network into instance segments. Our proposed OSIS realizes the end-to-end training by bipartite matching, therefore, our network does not require computationally expensive post-processing steps such as non maximum suppression (NMS) and clustering during inference. The results show that our network finally achieves excellent performance in the commonly used indoor scene instance segmentation dataset, and the inference speed of our network is only an average of 138ms per scene, which substantially exceeds the previous fastest method."
+}

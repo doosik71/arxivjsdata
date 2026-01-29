@@ -1,0 +1,8 @@
+{
+  "title": "Implicit Feature Refinement for Instance Segmentation",
+  "authors": "Lufan Ma, Tiancai Wang, Bin Dong, Jiangpeng Yan, Xiu Li, Xiangyu Zhang",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2112.04709v1",
+  "abstract": "We propose a novel implicit feature refinement module for high-quality instance segmentation. Existing image/video instance segmentation methods rely on explicitly stacked convolutions to refine instance features before the final prediction. In this paper, we first give an empirical comparison of different refinement strategies,which reveals that the widely-used four consecutive convolutions are not necessary. As an alternative, weight-sharing convolution blocks provides competitive performance. When such block is iterated for infinite times, the block output will eventually convergeto an equilibrium state. Based on this observation, the implicit feature refinement (IFR) is developed by constructing an implicit function. The equilibrium state of instance features can be obtained by fixed-point iteration via a simulated infinite-depth network. Our IFR enjoys several advantages: 1) simulates an infinite-depth refinement network while only requiring parameters of single residual block; 2) produces high-level equilibrium instance features of global receptive field; 3) serves as a plug-and-play general module easily extended to most object recognition frameworks. Experiments on the COCO and YouTube-VIS benchmarks show that our IFR achieves improved performance on state-of-the-art image/video instance segmentation frameworks, while reducing the parameter burden (e.g.1% AP improvement on Mask R-CNN with only 30.0% parameters in mask head). Code is made available at https://github.com/lufanma/IFR.git",
+  "citation": 8
+}

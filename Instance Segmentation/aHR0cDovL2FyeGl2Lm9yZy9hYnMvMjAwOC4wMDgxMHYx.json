@@ -1,0 +1,8 @@
+{
+  "title": "CASNet: Common Attribute Support Network for image instance and panoptic segmentation",
+  "authors": "Xiaolong Liu, Yuqing Hou, Anbang Yao, Yurong Chen, Keqiang Li",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.00810v1",
+  "abstract": "Instance segmentation and panoptic segmentation is being paid more and more attention in recent years. In comparison with bounding box based object detection and semantic segmentation, instance segmentation can provide more analytical results at pixel level. Given the insight that pixels belonging to one instance have one or more common attributes of current instance, we bring up an one-stage instance segmentation network named Common Attribute Support Network (CASNet), which realizes instance segmentation by predicting and clustering common attributes. CASNet is designed in the manner of fully convolutional and can implement training and inference from end to end. And CASNet manages predicting the instance without overlaps and holes, which problem exists in most of current instance segmentation algorithms. Furthermore, it can be easily extended to panoptic segmentation through minor modifications with little computation overhead. CASNet builds a bridge between semantic and instance segmentation from finding pixel class ID to obtaining class and instance ID by operations on common attribute. Through experiment for instance and panoptic segmentation, CASNet gets mAP 32.8% and PQ 59.0% on Cityscapes validation dataset by joint training, and mAP 36.3% and PQ 66.1% by separated training mode. For panoptic segmentation, CASNet gets state-of-the-art performance on the Cityscapes validation dataset.",
+  "citation": 3
+}

@@ -1,0 +1,8 @@
+{
+  "title": "An Instance Segmentation Dataset of Yeast Cells in Microstructures",
+  "authors": "Christoph Reich, Tim Prangemeier, André O. Françani, Heinz Koeppl",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.07597v4",
+  "abstract": "Extracting single-cell information from microscopy data requires accurate instance-wise segmentations. Obtaining pixel-wise segmentations from microscopy imagery remains a challenging task, especially with the added complexity of microstructured environments. This paper presents a novel dataset for segmenting yeast cells in microstructures. We offer pixel-wise instance segmentation labels for both cells and trap microstructures. In total, we release 493 densely annotated microscopy images. To facilitate a unified comparison between novel segmentation algorithms, we propose a standardized evaluation strategy for our dataset. The aim of the dataset and evaluation strategy is to facilitate the development of new cell segmentation approaches. The dataset is publicly available at https://christophreich1996.github.io/yeast_in_microstructures_dataset/ .",
+  "citation": 2
+}

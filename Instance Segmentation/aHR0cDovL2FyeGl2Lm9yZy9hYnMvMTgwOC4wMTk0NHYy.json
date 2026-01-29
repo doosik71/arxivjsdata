@@ -1,0 +1,8 @@
+{
+  "title": "V-FCNN: Volumetric Fully Convolution Neural Network For Automatic Atrial Segmentation",
+  "authors": "Nicoló Savioli, Giovanni Montana, Pablo Lamata",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1808.01944v2",
+  "abstract": "Atrial Fibrillation (AF) is a common electro-physiological cardiac disorder that causes changes in the anatomy of the atria. A better characterization of these changes is desirable for the definition of clinical biomarkers, furthermore, thus there is a need for its fully automatic segmentation from clinical images. In this work, we present an architecture based on 3D-convolution kernels, a Volumetric Fully Convolution Neural Network (V-FCNN), able to segment the entire volume in a one-shot, and consequently integrate the implicit spatial redundancy present in high-resolution images. A loss function based on the mixture of both Mean Square Error (MSE) and Dice Loss (DL) is used, in an attempt to combine the ability to capture the bulk shape as well as the reduction of local errors products by over-segmentation. Results demonstrate a reasonable performance in the middle region of the atria along with the impact of the challenges of capturing the variability of the pulmonary veins or the identification of the valve plane that separates the atria to the ventricle. A final dice of $92.5\\%$ in $54$ patients ($4752$ atria test slices in total) is shown.",
+  "citation": 16
+}

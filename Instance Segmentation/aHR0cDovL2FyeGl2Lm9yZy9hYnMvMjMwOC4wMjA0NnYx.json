@@ -1,0 +1,8 @@
+{
+  "title": "UGainS: Uncertainty Guided Anomaly Instance Segmentation",
+  "authors": "Alexey Nekrasov, Alexander Hermans, Lars Kuhnert, Bastian Leibe",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2308.02046v1",
+  "abstract": "A single unexpected object on the road can cause an accident or may lead to injuries. To prevent this, we need a reliable mechanism for finding anomalous objects on the road. This task, called anomaly segmentation, can be a stepping stone to safe and reliable autonomous driving. Current approaches tackle anomaly segmentation by assigning an anomaly score to each pixel and by grouping anomalous regions using simple heuristics. However, pixel grouping is a limiting factor when it comes to evaluating the segmentation performance of individual anomalous objects. To address the issue of grouping multiple anomaly instances into one, we propose an approach that produces accurate anomaly instance masks. Our approach centers on an out-of-distribution segmentation model for identifying uncertain regions and a strong generalist segmentation model for anomaly instances segmentation. We investigate ways to use uncertain regions to guide such a segmentation model to perform segmentation of anomalous instances. By incorporating strong object priors from a generalist model we additionally improve the per-pixel anomaly segmentation performance. Our approach outperforms current pixel-level anomaly segmentation methods, achieving an AP of 80.08% and 88.98% on the Fishyscapes Lost and Found and the RoadAnomaly validation sets respectively. Project page: https://vision.rwth-aachen.de/ugains",
+  "citation": 15
+}

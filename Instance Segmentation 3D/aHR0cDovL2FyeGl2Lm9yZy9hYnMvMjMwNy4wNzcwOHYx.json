@@ -1,0 +1,8 @@
+{
+  "title": "PSGformer: Enhancing 3D Point Cloud Instance Segmentation via Precise Semantic Guidance",
+  "authors": "Lei Pan, Wuyang Luan, Yuan Zheng, Qiang Fu, Junhui Li",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2307.07708v1",
+  "abstract": "Most existing 3D instance segmentation methods are derived from 3D semantic segmentation models. However, these indirect approaches suffer from certain limitations. They fail to fully leverage global and local semantic information for accurate prediction, which hampers the overall performance of the 3D instance segmentation framework. To address these issues, this paper presents PSGformer, a novel 3D instance segmentation network. PSGformer incorporates two key advancements to enhance the performance of 3D instance segmentation. Firstly, we propose a Multi-Level Semantic Aggregation Module, which effectively captures scene features by employing foreground point filtering and multi-radius aggregation. This module enables the acquisition of more detailed semantic information from global and local perspectives. Secondly, PSGformer introduces a Parallel Feature Fusion Transformer Module that independently processes super-point features and aggregated features using transformers. The model achieves a more comprehensive feature representation by the features which connect global and local features. We conducted extensive experiments on the ScanNetv2 dataset. Notably, PSGformer exceeds compared state-of-the-art methods by 2.2% on ScanNetv2 hidden test set in terms of mAP. Our code and models will be publicly released.",
+  "citation": 0
+}

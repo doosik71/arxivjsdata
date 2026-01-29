@@ -1,0 +1,8 @@
+{
+  "title": "Nuclear Instance Segmentation using a Proposal-Free Spatially Aware Deep Learning Framework",
+  "authors": "Navid Alemi Koohbanani, Mostafa Jahanifar, Ali Gooya, Nasir Rajpoot",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1908.10356v1",
+  "abstract": "Nuclear segmentation in histology images is a challenging task due to significant variations in the shape and appearance of nuclei. One of the main hurdles in nuclear instance segmentation is overlapping nuclei where a smart algorithm is needed to separate each nucleus. In this paper, we introduce a proposal-free deep learning based framework to address these challenges. To this end, we propose a spatially-aware network (SpaNet) to capture spatial information in a multi-scale manner. A dual-head variation of the SpaNet is first utilized to predict the pixel-wise segmentation and centroid detection maps of nuclei. Based on these outputs, a single-head SpaNet predicts the positional information related to each nucleus instance. Spectral clustering method is applied on the output of the last SpaNet, which utilizes the nuclear mask and the Gaussian-like detection map for determining the connected components and associated cluster identifiers, respectively. The output of the clustering method is the final nuclear instance segmentation mask. We applied our method on a publicly available multi-organ data set and achieved state-of-the-art performance for nuclear segmentation.",
+  "citation": 46
+}

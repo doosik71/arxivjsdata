@@ -1,0 +1,8 @@
+{
+  "title": "Weakly Supervised Instance Segmentation by Deep Community Learning",
+  "authors": "Jaedong Hwang, Seohyun Kim, Jeany Son, Bohyung Han",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2001.11207v3",
+  "abstract": "We present a weakly supervised instance segmentation algorithm based on deep community learning with multiple tasks. This task is formulated as a combination of weakly supervised object detection and semantic segmentation, where individual objects of the same class are identified and segmented separately. We address this problem by designing a unified deep neural network architecture, which has a positive feedback loop of object detection with bounding box regression, instance mask generation, instance segmentation, and feature extraction. Each component of the network makes active interactions with others to improve accuracy, and the end-to-end trainability of our model makes our results more robust and reproducible. The proposed algorithm achieves state-of-the-art performance in the weakly supervised setting without any additional training such as Fast R-CNN and Mask R-CNN on the standard benchmark dataset. The implementation of our algorithm is available on the project webpage: https://cv.snu.ac.kr/research/WSIS_CL.",
+  "citation": 25
+}

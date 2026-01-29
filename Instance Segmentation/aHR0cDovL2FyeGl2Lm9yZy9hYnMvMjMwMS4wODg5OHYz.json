@@ -1,0 +1,8 @@
+{
+  "title": "Recurrent Generic Contour-based Instance Segmentation with Progressive Learning",
+  "authors": "Hao Feng, Keyi Zhou, Wengang Zhou, Yufei Yin, Jiajun Deng, Qi Sun, Houqiang Li",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2301.08898v3",
+  "abstract": "Contour-based instance segmentation has been actively studied, thanks to its flexibility and elegance in processing visual objects within complex backgrounds. In this work, we propose a novel deep network architecture, i.e., PolySnake, for generic contour-based instance segmentation. Motivated by the classic Snake algorithm, the proposed PolySnake achieves superior and robust segmentation performance with an iterative and progressive contour refinement strategy. Technically, PolySnake introduces a recurrent update operator to estimate the object contour iteratively. It maintains a single estimate of the contour that is progressively deformed toward the object boundary. At each iteration, PolySnake builds a semantic-rich representation for the current contour and feeds it to the recurrent operator for further contour adjustment. Through the iterative refinements, the contour progressively converges to a stable status that tightly encloses the object instance. Beyond the scope of general instance segmentation, extensive experiments are conducted to validate the effectiveness and generalizability of our PolySnake in two additional specific task scenarios, including scene text detection and lane detection. The results demonstrate that the proposed PolySnake outperforms the existing advanced methods on several multiple prevalent benchmarks across the three tasks. The codes and pre-trained models are available at https://github.com/fh2019ustc/PolySnake",
+  "citation": 5
+}

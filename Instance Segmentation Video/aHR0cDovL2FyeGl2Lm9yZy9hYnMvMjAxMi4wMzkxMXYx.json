@@ -1,0 +1,7 @@
+{
+  "title": "Learning Video Instance Segmentation with Recurrent Graph Neural Networks",
+  "authors": "Joakim Johnander, Emil Brissman, Martin Danelljan, Michael Felsberg",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2012.03911v1",
+  "abstract": "Most existing approaches to video instance segmentation comprise multiple modules that are heuristically combined to produce the final output. Formulating a purely learning-based method instead, which models both the temporal aspect as well as a generic track management required to solve the video instance segmentation task, is a highly challenging problem. In this work, we propose a novel learning formulation, where the entire video instance segmentation problem is modelled jointly. We fit a flexible model to our formulation that, with the help of a graph neural network, processes all available new information in each frame. Past information is considered and processed via a recurrent connection. We demonstrate the effectiveness of the proposed approach in comprehensive experiments. Our approach, operating at over 25 FPS, outperforms previous video real-time methods. We further conduct detailed ablative experiments that validate the different aspects of our approach."
+}

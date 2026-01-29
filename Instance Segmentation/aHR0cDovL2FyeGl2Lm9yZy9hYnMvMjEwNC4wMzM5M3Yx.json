@@ -1,0 +1,8 @@
+{
+  "title": "Contour Proposal Networks for Biomedical Instance Segmentation",
+  "authors": "Eric Upschulte, Stefan Harmeling, Katrin Amunts, Timo Dickscheid",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2104.03393v1",
+  "abstract": "We present a conceptually simple framework for object instance segmentation called Contour Proposal Network (CPN), which detects possibly overlapping objects in an image while simultaneously fitting closed object contours using an interpretable, fixed-sized representation based on Fourier Descriptors. The CPN can incorporate state of the art object detection architectures as backbone networks into a single-stage instance segmentation model that can be trained end-to-end. We construct CPN models with different backbone networks, and apply them to instance segmentation of cells in datasets from different modalities. In our experiments, we show CPNs that outperform U-Nets and Mask R-CNNs in instance segmentation accuracy, and present variants with execution times suitable for real-time applications. The trained models generalize well across different domains of cell types. Since the main assumption of the framework are closed object contours, it is applicable to a wide range of detection problems also outside the biomedical domain. An implementation of the model architecture in PyTorch is freely available.",
+  "citation": 73
+}

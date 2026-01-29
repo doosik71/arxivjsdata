@@ -1,0 +1,8 @@
+{
+  "title": "Vocabulary-Free 3D Instance Segmentation with Vision and Language Assistant",
+  "authors": "Guofeng Mei, Luigi Riz, Yiming Wang, Fabio Poiesi",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2408.10652v2",
+  "abstract": "Most recent 3D instance segmentation methods are open vocabulary, offering a greater flexibility than closed-vocabulary methods. Yet, they are limited to reasoning within a specific set of concepts, \\ie the vocabulary, prompted by the user at test time. In essence, these models cannot reason in an open-ended fashion, i.e., answering \"List the objects in the scene.''. We introduce the first method to address 3D instance segmentation in a setting that is void of any vocabulary prior, namely a vocabulary-free setting. We leverage a large vision-language assistant and an open-vocabulary 2D instance segmenter to discover and ground semantic categories on the posed images. To form 3D instance mask, we first partition the input point cloud into dense superpoints, which are then merged into 3D instance masks. We propose a novel superpoint merging strategy via spectral clustering, accounting for both mask coherence and semantic coherence that are estimated from the 2D object instance masks. We evaluate our method using ScanNet200 and Replica, outperforming existing methods in both vocabulary-free and open-vocabulary settings. Code will be made available. Project page: https://gfmei.github.io/PoVo",
+  "citation": 4
+}

@@ -1,0 +1,8 @@
+{
+  "title": "GMT: Guided Mask Transformer for Leaf Instance Segmentation",
+  "authors": "Feng Chen, Sotirios A. Tsaftaris, Mario Valerio Giuffrida",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.17109v3",
+  "abstract": "Leaf instance segmentation is a challenging multi-instance segmentation task, aiming to separate and delineate each leaf in an image of a plant. Accurate segmentation of each leaf is crucial for plant-related applications such as the fine-grained monitoring of plant growth and crop yield estimation. This task is challenging because of the high similarity (in shape and colour), great size variation, and heavy occlusions among leaf instances. Furthermore, the typically small size of annotated leaf datasets makes it more difficult to learn the distinctive features needed for precise segmentation. We hypothesise that the key to overcoming the these challenges lies in the specific spatial patterns of leaf distribution. In this paper, we propose the Guided Mask Transformer (GMT), which leverages and integrates leaf spatial distribution priors into a Transformer-based segmentor. These spatial priors are embedded in a set of guide functions that map leaves at different positions into a more separable embedding space. Our GMT consistently outperforms the state-of-the-art on three public plant datasets. Our code is available at https://github.com/vios-s/gmt-leaf-ins-seg.",
+  "citation": 3
+}

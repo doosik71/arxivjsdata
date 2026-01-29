@@ -1,0 +1,8 @@
+{
+  "title": "Instance Segmentation of Dislocations in TEM Images",
+  "authors": "Karina Ruzaeva, Kishan Govind, Marc Legros, Stefan Sandfeld",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.03499v1",
+  "abstract": "Quantitative Transmission Electron Microscopy (TEM) during in-situ straining experiment is able to reveal the motion of dislocations -- linear defects in the crystal lattice of metals. In the domain of materials science, the knowledge about the location and movement of dislocations is important for creating novel materials with superior properties. A long-standing problem, however, is to identify the position and extract the shape of dislocations, which would ultimately help to create a digital twin of such materials. In this work, we quantitatively compare state-of-the-art instance segmentation methods, including Mask R-CNN and YOLOv8. The dislocation masks as the results of the instance segmentation are converted to mathematical lines, enabling quantitative analysis of dislocation length and geometry -- important information for the domain scientist, which we then propose to include as a novel length-aware quality metric for estimating the network performance. Our segmentation pipeline shows a high accuracy suitable for all domain-specific, further post-processing. Additionally, our physics-based metric turns out to perform much more consistently than typically used pixel-wise metrics.",
+  "citation": 5
+}

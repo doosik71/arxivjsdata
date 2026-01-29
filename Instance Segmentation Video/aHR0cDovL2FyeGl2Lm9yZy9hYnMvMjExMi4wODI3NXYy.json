@@ -1,0 +1,7 @@
+{
+  "title": "SeqFormer: Sequential Transformer for Video Instance Segmentation",
+  "authors": "Junfeng Wu, Yi Jiang, Song Bai, Wenqing Zhang, Xiang Bai",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2112.08275v2",
+  "abstract": "In this work, we present SeqFormer for video instance segmentation. SeqFormer follows the principle of vision transformer that models instance relationships among video frames. Nevertheless, we observe that a stand-alone instance query suffices for capturing a time sequence of instances in a video, but attention mechanisms shall be done with each frame independently. To achieve this, SeqFormer locates an instance in each frame and aggregates temporal information to learn a powerful representation of a video-level instance, which is used to predict the mask sequences on each frame dynamically. Instance tracking is achieved naturally without tracking branches or post-processing. On YouTube-VIS, SeqFormer achieves 47.4 AP with a ResNet-50 backbone and 49.0 AP with a ResNet-101 backbone without bells and whistles. Such achievement significantly exceeds the previous state-of-the-art performance by 4.6 and 4.4, respectively. In addition, integrated with the recently-proposed Swin transformer, SeqFormer achieves a much higher AP of 59.3. We hope SeqFormer could be a strong baseline that fosters future research in video instance segmentation, and in the meantime, advances this field with a more robust, accurate, neat model. The code is available at https://github.com/wjf5203/SeqFormer."
+}

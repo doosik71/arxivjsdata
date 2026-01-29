@@ -1,0 +1,8 @@
+{
+  "title": "gen2seg: Generative Models Enable Generalizable Instance Segmentation",
+  "authors": "Om Khangaonkar, Hamed Pirsiavash",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.15263v2",
+  "abstract": "By pretraining to synthesize coherent images from perturbed inputs, generative models inherently learn to understand object boundaries and scene compositions. How can we repurpose these generative representations for general-purpose perceptual organization? We finetune Stable Diffusion and MAE (encoder+decoder) for category-agnostic instance segmentation using our instance coloring loss exclusively on a narrow set of object types (indoor furnishings and cars). Surprisingly, our models exhibit strong zero-shot generalization, accurately segmenting objects of types and styles unseen in finetuning (and in many cases, MAE's ImageNet-1K pretraining too). Our best-performing models closely approach the heavily supervised SAM when evaluated on unseen object types and styles, and outperform it when segmenting fine structures and ambiguous boundaries. In contrast, existing promptable segmentation architectures or discriminatively pretrained models fail to generalize. This suggests that generative models learn an inherent grouping mechanism that transfers across categories and domains, even without internet-scale pretraining. Code, pretrained models, and demos are available on our website.",
+  "citation": 0
+}

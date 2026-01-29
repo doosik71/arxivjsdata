@@ -1,0 +1,8 @@
+{
+  "title": "ISDA: Position-Aware Instance Segmentation with Deformable Attention",
+  "authors": "Kaining Ying, Zhenhua Wang, Cong Bai, Pengfei Zhou",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.12251v1",
+  "abstract": "Most instance segmentation models are not end-to-end trainable due to either the incorporation of proposal estimation (RPN) as a pre-processing or non-maximum suppression (NMS) as a post-processing. Here we propose a novel end-to-end instance segmentation method termed ISDA. It reshapes the task into predicting a set of object masks, which are generated via traditional convolution operation with learned position-aware kernels and features of objects. Such kernels and features are learned by leveraging a deformable attention network with multi-scale representation. Thanks to the introduced set-prediction mechanism, the proposed method is NMS-free. Empirically, ISDA outperforms Mask R-CNN (the strong baseline) by 2.6 points on MS-COCO, and achieves leading performance compared with recent models. Code will be available soon.",
+  "citation": 11
+}

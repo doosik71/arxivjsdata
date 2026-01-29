@@ -1,0 +1,8 @@
+{
+  "title": "Unsupervised Instance Segmentation with Superpixels",
+  "authors": "Cuong Manh Hoang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.05352v1",
+  "abstract": "Instance segmentation is essential for numerous computer vision applications, including robotics, human-computer interaction, and autonomous driving. Currently, popular models bring impressive performance in instance segmentation by training with a large number of human annotations, which are costly to collect. For this reason, we present a new framework that efficiently and effectively segments objects without the need for human annotations. Firstly, a MultiCut algorithm is applied to self-supervised features for coarse mask segmentation. Then, a mask filter is employed to obtain high-quality coarse masks. To train the segmentation network, we compute a novel superpixel-guided mask loss, comprising hard loss and soft loss, with high-quality coarse masks and superpixels segmented from low-level image features. Lastly, a self-training process with a new adaptive loss is proposed to improve the quality of predicted masks. We conduct experiments on public datasets in instance segmentation and object detection to demonstrate the effectiveness of the proposed framework. The results show that the proposed framework outperforms previous state-of-the-art methods.",
+  "citation": 2
+}

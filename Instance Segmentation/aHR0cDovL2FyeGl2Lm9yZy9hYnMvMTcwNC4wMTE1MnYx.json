@@ -1,0 +1,8 @@
+{
+  "title": "Pose2Instance: Harnessing Keypoints for Person Instance Segmentation",
+  "authors": "Subarna Tripathi, Maxwell Collins, Matthew Brown, Serge Belongie",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1704.01152v1",
+  "abstract": "Human keypoints are a well-studied representation of people.We explore how to use keypoint models to improve instance-level person segmentation. The main idea is to harness the notion of a distance transform of oracle provided keypoints or estimated keypoint heatmaps as a prior for person instance segmentation task within a deep neural network. For training and evaluation, we consider all those images from COCO where both instance segmentation and human keypoints annotations are available. We first show how oracle keypoints can boost the performance of existing human segmentation model during inference without any training. Next, we propose a framework to directly learn a deep instance segmentation model conditioned on human pose. Experimental results show that at various Intersection Over Union (IOU) thresholds, in a constrained environment with oracle keypoints, the instance segmentation accuracy achieves 10% to 12% relative improvements over a strong baseline of oracle bounding boxes. In a more realistic environment, without the oracle keypoints, the proposed deep person instance segmentation model conditioned on human pose achieves 3.8% to 10.5% relative improvements comparing with its strongest baseline of a deep network trained only for segmentation.",
+  "citation": 25
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Robust Semantic Segmentation of Brain Tumor Regions from 3D MRIs",
+  "authors": "Andriy Myronenko, Ali Hatamizadeh",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2001.02040v1",
+  "abstract": "Multimodal brain tumor segmentation challenge (BraTS) brings together researchers to improve automated methods for 3D MRI brain tumor segmentation. Tumor segmentation is one of the fundamental vision tasks necessary for diagnosis and treatment planning of the disease. Previous years winning methods were all deep-learning based, thanks to the advent of modern GPUs, which allow fast optimization of deep convolutional neural network architectures. In this work, we explore best practices of 3D semantic segmentation, including conventional encoder-decoder architecture, as well combined loss functions, in attempt to further improve the segmentation accuracy. We evaluate the method on BraTS 2019 challenge."
+}

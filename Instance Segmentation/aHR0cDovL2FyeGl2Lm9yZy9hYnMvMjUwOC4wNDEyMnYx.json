@@ -1,0 +1,8 @@
+{
+  "title": "Conditional Latent Diffusion Models for Zero-Shot Instance Segmentation",
+  "authors": "Maximilian Ulmer, Wout Boerdijk, Rudolph Triebel, Maximilian Durner",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2508.04122v1",
+  "abstract": "This paper presents OC-DiT, a novel class of diffusion models designed for object-centric prediction, and applies it to zero-shot instance segmentation. We propose a conditional latent diffusion framework that generates instance masks by conditioning the generative process on object templates and image features within the diffusion model's latent space. This allows our model to effectively disentangle object instances through the diffusion process, which is guided by visual object descriptors and localized image cues. Specifically, we introduce two model variants: a coarse model for generating initial object instance proposals, and a refinement model that refines all proposals in parallel. We train these models on a newly created, large-scale synthetic dataset comprising thousands of high-quality object meshes. Remarkably, our model achieves state-of-the-art performance on multiple challenging real-world benchmarks, without requiring any retraining on target data. Through comprehensive ablation studies, we demonstrate the potential of diffusion models for instance segmentation tasks.",
+  "citation": 0
+}

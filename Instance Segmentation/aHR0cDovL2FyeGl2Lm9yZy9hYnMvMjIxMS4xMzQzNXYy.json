@@ -1,0 +1,8 @@
+{
+  "title": "A Benchmark of Long-tailed Instance Segmentation with Noisy Labels",
+  "authors": "Guanlin Li, Guowen Xu, Tianwei Zhang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.13435v2",
+  "abstract": "In this paper, we consider the instance segmentation task on a long-tailed dataset, which contains label noise, i.e., some of the annotations are incorrect. There are two main reasons making this case realistic. First, datasets collected from real world usually obey a long-tailed distribution. Second, for instance segmentation datasets, as there are many instances in one image and some of them are tiny, it is easier to introduce noise into the annotations. Specifically, we propose a new dataset, which is a large vocabulary long-tailed dataset containing label noise for instance segmentation. Furthermore, we evaluate previous proposed instance segmentation algorithms on this dataset. The results indicate that the noise in the training dataset will hamper the model in learning rare categories and decrease the overall performance, and inspire us to explore more effective approaches to address this practical challenge. The code and dataset are available in https://github.com/GuanlinLee/Noisy-LVIS.",
+  "citation": 0
+}

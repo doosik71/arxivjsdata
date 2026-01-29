@@ -1,0 +1,8 @@
+{
+  "title": "Deep Learning based Food Instance Segmentation using Synthetic Data",
+  "authors": "D. Park, J. Lee, J. Lee, K. Lee",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2107.07191v2",
+  "abstract": "In the process of intelligently segmenting foods in images using deep neural networks for diet management, data collection and labeling for network training are very important but labor-intensive tasks. In order to solve the difficulties of data collection and annotations, this paper proposes a food segmentation method applicable to real-world through synthetic data. To perform food segmentation on healthcare robot systems, such as meal assistance robot arm, we generate synthetic data using the open-source 3D graphics software Blender placing multiple objects on meal plate and train Mask R-CNN for instance segmentation. Also, we build a data collection system and verify our segmentation model on real-world food data. As a result, on our real-world dataset, the model trained only synthetic data is available to segment food instances that are not trained with 52.2% mask AP@all, and improve performance by +6.4%p after fine-tuning comparing to the model trained from scratch. In addition, we also confirm the possibility and performance improvement on the public dataset for fair analysis. Our code and pre-trained weights are avaliable online at: https://github.com/gist-ailab/Food-Instance-Segmentation",
+  "citation": 41
+}

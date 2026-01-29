@@ -1,0 +1,8 @@
+{
+  "title": "A SAM-based Solution for Hierarchical Panoptic Segmentation of Crops and Weeds Competition",
+  "authors": "Khoa Dang Nguyen, Thanh-Hai Phung, Hoang-Giang Cao",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.13578v1",
+  "abstract": "Panoptic segmentation in agriculture is an advanced computer vision technique that provides a comprehensive understanding of field composition. It facilitates various tasks such as crop and weed segmentation, plant panoptic segmentation, and leaf instance segmentation, all aimed at addressing challenges in agriculture. Exploring the application of panoptic segmentation in agriculture, the 8th Workshop on Computer Vision in Plant Phenotyping and Agriculture (CVPPA) hosted the challenge of hierarchical panoptic segmentation of crops and weeds using the PhenoBench dataset. To tackle the tasks presented in this competition, we propose an approach that combines the effectiveness of the Segment AnyThing Model (SAM) for instance segmentation with prompt input from object detection models. Specifically, we integrated two notable approaches in object detection, namely DINO and YOLO-v8. Our best-performing model achieved a PQ+ score of 81.33 based on the evaluation metrics of the competition.",
+  "citation": 9
+}

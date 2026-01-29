@@ -1,0 +1,8 @@
+{
+  "title": "Probabilistic Deep Learning for Instance Segmentation",
+  "authors": "Josef Lorenz Rumberger, Lisa Mais, Dagmar Kainmueller",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.10678v2",
+  "abstract": "Probabilistic convolutional neural networks, which predict distributions of predictions instead of point estimates, led to recent advances in many areas of computer vision, from image reconstruction to semantic segmentation. Besides state of the art benchmark results, these networks made it possible to quantify local uncertainties in the predictions. These were used in active learning frameworks to target the labeling efforts of specialist annotators or to assess the quality of a prediction in a safety-critical environment. However, for instance segmentation problems these methods are not frequently used so far. We seek to close this gap by proposing a generic method to obtain model-inherent uncertainty estimates within proposal-free instance segmentation models. Furthermore, we analyze the quality of the uncertainty estimates with a metric adapted from semantic segmentation. We evaluate our method on the BBBC010 C.\\ elegans dataset, where it yields competitive performance while also predicting uncertainty estimates that carry information about object-level inaccuracies like false splits and false merges. We perform a simulation to show the potential use of such uncertainty estimates in guided proofreading.",
+  "citation": 14
+}

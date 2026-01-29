@@ -1,0 +1,8 @@
+{
+  "title": "A Survey on Instance Segmentation: State of the art",
+  "authors": "Abdul Mueed Hafiz, Ghulam Mohiuddin Bhat",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.00047v1",
+  "abstract": "Object detection or localization is an incremental step in progression from coarse to fine digital image inference. It not only provides the classes of the image objects, but also provides the location of the image objects which have been classified. The location is given in the form of bounding boxes or centroids. Semantic segmentation gives fine inference by predicting labels for every pixel in the input image. Each pixel is labelled according to the object class within which it is enclosed. Furthering this evolution, instance segmentation gives different labels for separate instances of objects belonging to the same class. Hence, instance segmentation may be defined as the technique of simultaneously solving the problem of object detection as well as that of semantic segmentation. In this survey paper on instance segmentation -- its background, issues, techniques, evolution, popular datasets, related work up to the state of the art and future scope have been discussed. The paper provides valuable information for those who want to do research in the field of instance segmentation.",
+  "citation": 0
+}

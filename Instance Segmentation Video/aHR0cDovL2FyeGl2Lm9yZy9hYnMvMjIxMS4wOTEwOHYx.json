@@ -1,0 +1,8 @@
+{
+  "title": "Robust Online Video Instance Segmentation with Track Queries",
+  "authors": "Zitong Zhan, Daniel McKee, Svetlana Lazebnik",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.09108v1",
+  "abstract": "Recently, transformer-based methods have achieved impressive results on Video Instance Segmentation (VIS). However, most of these top-performing methods run in an offline manner by processing the entire video clip at once to predict instance mask volumes. This makes them incapable of handling the long videos that appear in challenging new video instance segmentation datasets like UVO and OVIS. We propose a fully online transformer-based video instance segmentation model that performs comparably to top offline methods on the YouTube-VIS 2019 benchmark and considerably outperforms them on UVO and OVIS. This method, called Robust Online Video Segmentation (ROVIS), augments the Mask2Former image instance segmentation model with track queries, a lightweight mechanism for carrying track information from frame to frame, originally introduced by the TrackFormer method for multi-object tracking. We show that, when combined with a strong enough image segmentation architecture, track queries can exhibit impressive accuracy while not being constrained to short videos.",
+  "citation": 11
+}

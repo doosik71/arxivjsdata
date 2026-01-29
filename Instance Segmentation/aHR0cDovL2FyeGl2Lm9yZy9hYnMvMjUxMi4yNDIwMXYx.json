@@ -1,0 +1,8 @@
+{
+  "title": "BATISNet: Instance Segmentation of Tooth Point Clouds with Boundary Awareness",
+  "authors": "Yating Cai, Yanghui Xu, Zehua Hu, Jiazhou Chen, Jing Huang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2512.24201v1",
+  "abstract": "Accurate segmentation of the tooth point cloud is of great significance for diagnosis clinical assisting and treatment planning. Existing methods mostly employ semantic segmentation, focusing on the semantic feature between different types of teeth. However, due to the tightly packed structure of teeth, unclear boundaries, and the diversity of complex cases such as missing teeth, malposed teeth, semantic segmentation often struggles to achieve satisfactory results when dealing with complex dental cases. To address these issues, this paper propose BATISNet, a boundary-aware instance network for tooth point cloud segmentation. This network model consists of a feature extraction backbone and an instance segmentation module. It not only focuses on extracting the semantic features of different types of teeth but also learns the instance features of individual teeth. It helps achieve more robust and accurate tooth instance segmentation in complex clinical scenarios such as missing teeth and malposed teeth. Additionally, to further enhance the completeness and accuracy of tooth boundary segmentation, a boundary-aware loss function is designed to specifically supervise the boundary segmentation between instances. It mitigates effectively tooth adhesion and boundary ambiguity issues. Extensive experimental results show that BATISNet outperforms existing methods in tooth integrity segmentation, providing more reliable and detailed data support for practical clinical applications.",
+  "citation": 0
+}

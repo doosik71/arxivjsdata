@@ -1,0 +1,8 @@
+{
+  "title": "Salient Instance Segmentation with Region and Box-level Annotations",
+  "authors": "Jialun Pei, He Tang, Tianyang Cheng, Chuanbo Chen",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.08246v3",
+  "abstract": "Salient instance segmentation is a new challenging task that received widespread attention in the saliency detection area. The new generation of saliency detection provides a strong theoretical and technical basis for video surveillance. Due to the limited scale of the existing dataset and the high mask annotations cost, plenty of supervision source is urgently needed to train a well-performing salient instance model. In this paper, we aim to train a novel salient instance segmentation framework by an inexact supervision without resorting to laborious labeling. To this end, we present a cyclic global context salient instance segmentation network (CGCNet), which is supervised by the combination of salient regions and bounding boxes from the ready-made salient object detection datasets. To locate salient instance more accurately, a global feature refining layer is proposed that dilates the features of the region of interest (ROI) to the global context in a scene. Meanwhile, a labeling updating scheme is embedded in the proposed framework to update the coarse-grained labels for next iteration. Experiment results demonstrate that the proposed end-to-end framework trained by inexact supervised annotations can be competitive to the existing fully supervised salient instance segmentation methods. Without bells and whistles, our proposed method achieves a mask AP of 58.3% in the test set of Dataset1K that outperforms the mainstream state-of-the-art methods.",
+  "citation": 4
+}

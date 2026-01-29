@@ -1,0 +1,7 @@
+{
+  "title": "Advanced Deep Networks for 3D Mitochondria Instance Segmentation",
+  "authors": "Mingxing Li, Chang Chen, Xiaoyu Liu, Wei Huang, Yueyi Zhang, Zhiwei Xiong",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2104.07961v4",
+  "abstract": "Mitochondria instance segmentation from electron microscopy (EM) images has seen notable progress since the introduction of deep learning methods. In this paper, we propose two advanced deep networks, named Res-UNet-R and Res-UNet-H, for 3D mitochondria instance segmentation from Rat and Human samples. Specifically, we design a simple yet effective anisotropic convolution block and deploy a multi-scale training strategy, which together boost the segmentation performance. Moreover, we enhance the generalizability of the trained models on the test set by adding a denoising operation as pre-processing. In the Large-scale 3D Mitochondria Instance Segmentation Challenge at ISBI 2021, our method ranks the 1st place. Code is available at https://github.com/Limingxing00/MitoEM2021-Challenge."
+}

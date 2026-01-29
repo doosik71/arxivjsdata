@@ -1,0 +1,8 @@
+{
+  "title": "Self-Prediction for Joint Instance and Semantic Segmentation of Point Clouds",
+  "authors": "Jinxian Liu, Minghui Yu, Bingbing Ni, Ye Chen",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.13344v1",
+  "abstract": "We develop a novel learning scheme named Self-Prediction for 3D instance and semantic segmentation of point clouds. Distinct from most existing methods that focus on designing convolutional operators, our method designs a new learning scheme to enhance point relation exploring for better segmentation. More specifically, we divide a point cloud sample into two subsets and construct a complete graph based on their representations. Then we use label propagation algorithm to predict labels of one subset when given labels of the other subset. By training with this Self-Prediction task, the backbone network is constrained to fully explore relational context/geometric/shape information and learn more discriminative features for segmentation. Moreover, a general associated framework equipped with our Self-Prediction scheme is designed for enhancing instance and semantic segmentation simultaneously, where instance and semantic representations are combined to perform Self-Prediction. Through this way, instance and semantic segmentation are collaborated and mutually reinforced. Significant performance improvements on instance and semantic segmentation compared with baseline are achieved on S3DIS and ShapeNet. Our method achieves state-of-the-art instance segmentation results on S3DIS and comparable semantic segmentation results compared with state-of-the-arts on S3DIS and ShapeNet when we only take PointNet++ as the backbone network.",
+  "citation": 33
+}
