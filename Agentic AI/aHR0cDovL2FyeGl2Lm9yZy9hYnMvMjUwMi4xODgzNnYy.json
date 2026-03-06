@@ -1,0 +1,8 @@
+{
+  "title": "REALM-Bench: A Benchmark for Evaluating Multi-Agent Systems on Real-world, Dynamic Planning and Scheduling Tasks",
+  "authors": "Longling Geng, Edward Y. Chang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.18836v2",
+  "abstract": "This benchmark suite provides a comprehensive evaluation framework for assessing both individual LLMs and multi-agent systems in Real-world planning and scheduling scenarios. The suite encompasses 14 designed planning and scheduling problems that progress from basic to highly complex, incorporating key aspects such as multi-agent coordination, inter-agent dependencies, and dynamic environmental disruptions. Each problem can be scaled along three dimensions: the number of parallel planning threads, the complexity of inter-dependencies, and the frequency of unexpected disruptions requiring Real-time adaptation. The benchmark includes 14 detailed problem specifications, 15 comparison methods including Random, LPT, SPT, STPT, MPSR, DRL-Liu, GP, GEP, LSO, SPT/TWKR, DRL-Chen, DRL-Zhang, 2+ evaluation metrics, and baseline implementations using 3+ LLMs including GPT-4o, Claude-3.7, DeepSeek-R1, and 4 contemporary frameworks including LangGraph, AutoGen, CrewAI, and Swarm, enabling rigorous testing of both single-agent and multi-agent planning capabilities. Through standardized evaluation criteria and scalable complexity, this benchmark aims to be opened to public, and drive progress in developing more adaptable, robust, and scalable AI planning systems for Real-world applications.",
+  "citation": 14
+}

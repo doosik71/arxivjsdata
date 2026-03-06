@@ -1,0 +1,8 @@
+{
+  "title": "DeepResearch$^{\\text{Eco}}$: A Recursive Agentic Workflow for Complex Scientific Question Answering in Ecology",
+  "authors": "Jennifer D'Souza, Endres Keno Sander, Andrei Aioanei",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2507.10522v1",
+  "abstract": "We introduce DeepResearch$^{\\text{Eco}}$, a novel agentic LLM-based system for automated scientific synthesis that supports recursive, depth- and breadth-controlled exploration of original research questions -- enhancing search diversity and nuance in the retrieval of relevant scientific literature. Unlike conventional retrieval-augmented generation pipelines, DeepResearch enables user-controllable synthesis with transparent reasoning and parameter-driven configurability, facilitating high-throughput integration of domain-specific evidence while maintaining analytical rigor. Applied to 49 ecological research questions, DeepResearch achieves up to a 21-fold increase in source integration and a 14.9-fold rise in sources integrated per 1,000 words. High-parameter settings yield expert-level analytical depth and contextual diversity.\n  Source code available at: https://github.com/sciknoworg/deep-research.",
+  "citation": 1
+}

@@ -1,0 +1,8 @@
+{
+  "title": "AutoGen Studio: A No-Code Developer Tool for Building and Debugging Multi-Agent Systems",
+  "authors": "Victor Dibia, Jingya Chen, Gagan Bansal, Suff Syed, Adam Fourney, Erkang Zhu, Chi Wang, Saleema Amershi",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2408.15247v1",
+  "abstract": "Multi-agent systems, where multiple agents (generative AI models + tools) collaborate, are emerging as an effective pattern for solving long-running, complex tasks in numerous domains. However, specifying their parameters (such as models, tools, and orchestration mechanisms etc,.) and debugging them remains challenging for most developers. To address this challenge, we present AUTOGEN STUDIO, a no-code developer tool for rapidly prototyping, debugging, and evaluating multi-agent workflows built upon the AUTOGEN framework. AUTOGEN STUDIO offers a web interface and a Python API for representing LLM-enabled agents using a declarative (JSON-based) specification. It provides an intuitive drag-and-drop UI for agent workflow specification, interactive evaluation and debugging of workflows, and a gallery of reusable agent components. We highlight four design principles for no-code multi-agent developer tools and contribute an open-source implementation at https://github.com/microsoft/autogen/tree/main/samples/apps/autogen-studio",
+  "citation": 21
+}

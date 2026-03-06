@@ -1,0 +1,8 @@
+{
+  "title": "Call Graph Profiling for Multi Agent Systems",
+  "authors": "Dinh Doan Van Bien, David Lillis, Rem W. Collier",
+  "year": 2015,
+  "url": "http://arxiv.org/abs/1508.02677v1",
+  "abstract": "The design, implementation and testing of Multi Agent Systems is typically a very complex task. While a number of specialist agent programming languages and toolkits have been created to aid in the development of such systems, the provision of associated development tools still lags behind those available for other programming paradigms. This includes tools such as debuggers and profilers to help analyse system behaviour, performance and efficiency. AgentSpotter is a profiling tool designed specifically to operate on the concepts of agent-oriented programming. This paper extends previous work on AgentSpotter by discussing its Call Graph View, which presents system performance information, with reference to the communication between the agents in the system. This is aimed at aiding developers in examining the effect that agent communication has on the processing requirements of the system.",
+  "citation": 11
+}

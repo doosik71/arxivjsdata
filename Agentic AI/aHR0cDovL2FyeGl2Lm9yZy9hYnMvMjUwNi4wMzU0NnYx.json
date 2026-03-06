@@ -1,0 +1,8 @@
+{
+  "title": "From Virtual Agents to Robot Teams: A Multi-Robot Framework Evaluation in High-Stakes Healthcare Context",
+  "authors": "Yuanchen Bai, Zijian Ding, Angelique Taylor",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.03546v1",
+  "abstract": "Advancements in generative models have enabled multi-agent systems (MAS) to perform complex virtual tasks such as writing and code generation, which do not generalize well to physical multi-agent robotic teams. Current frameworks often treat agents as conceptual task executors rather than physically embodied entities, and overlook critical real-world constraints such as spatial context, robotic capabilities (e.g., sensing and navigation). To probe this gap, we reconfigure and stress-test a hierarchical multi-agent robotic team built on the CrewAI framework in a simulated emergency department onboarding scenario. We identify five persistent failure modes: role misalignment; tool access violations; lack of in-time handling of failure reports; noncompliance with prescribed workflows; bypassing or false reporting of task completion. Based on this analysis, we propose three design guidelines emphasizing process transparency, proactive failure recovery, and contextual grounding. Our work informs the development of more resilient and robust multi-agent robotic systems (MARS), including opportunities to extend virtual multi-agent frameworks to the real world.",
+  "citation": 3
+}

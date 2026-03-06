@@ -1,0 +1,8 @@
+{
+  "title": "AgentGuard: Runtime Verification of AI Agents",
+  "authors": "Roham Koohestani",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.23864v1",
+  "abstract": "The rapid evolution to autonomous, agentic AI systems introduces significant risks due to their inherent unpredictability and emergent behaviors; this also renders traditional verification methods inadequate and necessitates a shift towards probabilistic guarantees where the question is no longer if a system will fail, but the probability of its failure within given constraints. This paper presents AgentGuard, a framework for runtime verification of Agentic AI systems that provides continuous, quantitative assurance through a new paradigm called Dynamic Probabilistic Assurance. AgentGuard operates as an inspection layer that observes an agent's raw I/O and abstracts it into formal events corresponding to transitions in a state model. It then uses online learning to dynamically build and update a Markov Decision Process (MDP) that formally models the agent's emergent behavior. Using probabilistic model checking, the framework then verifies quantitative properties in real-time.",
+  "citation": 3
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Will Agents Replace Us? Perceptions of Autonomous Multi-Agent AI",
+  "authors": "Nikola Balic",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.02055v1",
+  "abstract": "Autonomous multi-agent AI systems are poised to transform various industries, particularly software development and knowledge work. Understanding current perceptions among professionals is crucial for anticipating adoption challenges, ethical considerations, and future workforce development. This study analyzes responses from 130 participants to a survey on the capabilities, impact, and governance of AI agents. We explore expected timelines for AI replacing programmers, identify perceived barriers to deployment, and examine beliefs about responsibility when agents make critical decisions. Key findings reveal three distinct clusters of respondents. While the study explored factors associated with current AI agent deployment, the initial logistic regression model did not yield statistically significant predictors, suggesting that deployment decisions are complex and may be influenced by factors not fully captured or that a larger sample is needed. These insights highlight the need for organizations to address compliance concerns (a commonly cited barrier) and establish clear governance frameworks as they integrate autonomous agents into their workflows.",
+  "citation": 1
+}

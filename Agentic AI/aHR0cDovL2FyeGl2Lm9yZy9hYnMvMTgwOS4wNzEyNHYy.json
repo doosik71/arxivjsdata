@@ -1,0 +1,8 @@
+{
+  "title": "Pommerman: A Multi-Agent Playground",
+  "authors": "Cinjon Resnick, Wes Eldridge, David Ha, Denny Britz, Jakob Foerster, Julian Togelius, Kyunghyun Cho, Joan Bruna",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1809.07124v2",
+  "abstract": "We present Pommerman, a multi-agent environment based on the classic console game Bomberman. Pommerman consists of a set of scenarios, each having at least four players and containing both cooperative and competitive aspects. We believe that success in Pommerman will require a diverse set of tools and methods, including planning, opponent/teammate modeling, game theory, and communication, and consequently can serve well as a multi-agent benchmark. To date, we have already hosted one competition, and our next one will be featured in the NIPS 2018 competition track.",
+  "citation": 129
+}

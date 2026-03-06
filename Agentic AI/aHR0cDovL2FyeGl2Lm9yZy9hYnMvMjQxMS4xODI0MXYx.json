@@ -1,0 +1,8 @@
+{
+  "title": "Exploration of LLM Multi-Agent Application Implementation Based on LangGraph+CrewAI",
+  "authors": "Zhihua Duan, Jialin Wang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.18241v1",
+  "abstract": "With the rapid development of large model technology, the application of agent technology in various fields is becoming increasingly widespread, profoundly changing people's work and lifestyles. In complex and dynamic systems, multi-agents achieve complex tasks that are difficult for a single agent to complete through division of labor and collaboration among agents. This paper discusses the integrated application of LangGraph and CrewAI. LangGraph improves the efficiency of information transmission through graph architecture, while CrewAI enhances team collaboration capabilities and system performance through intelligent task allocation and resource management. The main research contents of this paper are: (1) designing the architecture of agents based on LangGraph for precise control; (2) enhancing the capabilities of agents based on CrewAI to complete a variety of tasks. This study aims to delve into the application of LangGraph and CrewAI in multi-agent systems, providing new perspectives for the future development of agent technology, and promoting technological progress and application innovation in the field of large model intelligent agents.",
+  "citation": 35
+}

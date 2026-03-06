@@ -1,0 +1,8 @@
+{
+  "title": "Can AI be Accountable?",
+  "authors": "Andrew L. Kun",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2510.26057v1",
+  "abstract": "The AI we use is powerful, and its power is increasing rapidly. If this powerful AI is to serve the needs of consumers, voters, and decision makers, then it is imperative that the AI is accountable. In general, an agent is accountable to a forum if the forum can request information from the agent about its actions, if the forum and the agent can discuss this information, and if the forum can sanction the agent. Unfortunately, in too many cases today's AI is not accountable -- we cannot question it, enter into a discussion with it, let alone sanction it. In this chapter we relate the general definition of accountability to AI, we illustrate what it means for AI to be accountable and unaccountable, and we explore approaches that can improve our chances of living in a world where all AI is accountable to those who are affected by it.",
+  "citation": 0
+}

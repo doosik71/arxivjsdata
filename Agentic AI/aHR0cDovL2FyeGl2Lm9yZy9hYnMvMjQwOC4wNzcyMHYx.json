@@ -1,0 +1,8 @@
+{
+  "title": "Re-Thinking Process Mining in the AI-Based Agents Era",
+  "authors": "Alessandro Berti, Mayssa Maatallah, Urszula Jessen, Michal Sroka, Sonia Ayachi Ghannouchi",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2408.07720v1",
+  "abstract": "Large Language Models (LLMs) have emerged as powerful conversational interfaces, and their application in process mining (PM) tasks has shown promising results. However, state-of-the-art LLMs struggle with complex scenarios that demand advanced reasoning capabilities. In the literature, two primary approaches have been proposed for implementing PM using LLMs: providing textual insights based on a textual abstraction of the process mining artifact, and generating code executable on the original artifact. This paper proposes utilizing the AI-Based Agents Workflow (AgWf) paradigm to enhance the effectiveness of PM on LLMs. This approach allows for: i) the decomposition of complex tasks into simpler workflows, and ii) the integration of deterministic tools with the domain knowledge of LLMs. We examine various implementations of AgWf and the types of AI-based tasks involved. Additionally, we discuss the CrewAI implementation framework and present examples related to process mining.",
+  "citation": 7
+}

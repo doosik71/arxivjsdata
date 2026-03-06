@@ -1,0 +1,8 @@
+{
+  "title": "Med-Bot: An AI-Powered Assistant to Provide Accurate and Reliable Medical Information",
+  "authors": "Ahan Bhatt, Nandan Vaghela",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.09648v1",
+  "abstract": "This paper introduces Med-Bot, an AI-powered chatbot designed to provide users with accurate and reliable medical information. Utilizing advanced libraries and frameworks such as PyTorch, Chromadb, Langchain and Autogptq, Med-Bot is built to handle the complexities of natural language understanding in a healthcare context. The integration of llamaassisted data processing and AutoGPT-Q provides enhanced performance in processing and responding to queries based on PDFs of medical literature, ensuring that users receive precise and trustworthy information. This research details the methodologies employed in developing Med-Bot and evaluates its effectiveness in disseminating healthcare information.",
+  "citation": 8
+}

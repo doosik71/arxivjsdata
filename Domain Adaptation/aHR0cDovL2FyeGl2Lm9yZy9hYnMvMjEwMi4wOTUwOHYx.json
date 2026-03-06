@@ -1,0 +1,8 @@
+{
+  "title": "Domain Adaptation for Medical Image Analysis: A Survey",
+  "authors": "Hao Guan, Mingxia Liu",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2102.09508v1",
+  "abstract": "Machine learning techniques used in computer-aided medical image analysis usually suffer from the domain shift problem caused by different distributions between source/reference data and target data. As a promising solution, domain adaptation has attracted considerable attention in recent years. The aim of this paper is to survey the recent advances of domain adaptation methods in medical image analysis. We first present the motivation of introducing domain adaptation techniques to tackle domain heterogeneity issues for medical image analysis. Then we provide a review of recent domain adaptation models in various medical image analysis tasks. We categorize the existing methods into shallow and deep models, and each of them is further divided into supervised, semi-supervised and unsupervised methods. We also provide a brief summary of the benchmark medical image datasets that support current domain adaptation research. This survey will enable researchers to gain a better understanding of the current status, challenges.",
+  "citation": 1181
+}

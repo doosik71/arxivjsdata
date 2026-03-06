@@ -1,0 +1,8 @@
+{
+  "title": "Exploring utilization of generative AI for research and education in data-driven materials science",
+  "authors": "Takahiro Misawa, Ai Koizumi, Ryo Tamura, Kazuyoshi Yoshimi",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2504.08817v2",
+  "abstract": "Generative AI has recently had a profound impact on various fields, including daily life, research, and education. To explore its efficient utilization in data-driven materials science, we organized a hackathon -- AIMHack2024 -- in July 2024. In this hackathon, researchers from fields such as materials science, information science, bioinformatics, and condensed matter physics worked together to explore how generative AI can facilitate research and education. Based on the results of the hackathon, this paper presents topics related to (1) conducting AI-assisted software trials, (2) building AI tutors for software, and (3) developing GUI applications for software. While generative AI continues to evolve rapidly, this paper provides an early record of its application in data-driven materials science and highlights strategies for integrating AI into research and education.",
+  "citation": 2
+}

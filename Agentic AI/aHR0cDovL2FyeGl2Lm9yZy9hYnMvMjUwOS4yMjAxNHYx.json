@@ -1,0 +1,8 @@
+{
+  "title": "Lightweight Structured Multimodal Reasoning for Clinical Scene Understanding in Robotics",
+  "authors": "Saurav Jha, Stefan K. Ehrlich",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2509.22014v1",
+  "abstract": "Healthcare robotics requires robust multimodal perception and reasoning to ensure safety in dynamic clinical environments. Current Vision-Language Models (VLMs) demonstrate strong general-purpose capabilities but remain limited in temporal reasoning, uncertainty estimation, and structured outputs needed for robotic planning. We present a lightweight agentic multimodal framework for video-based scene understanding. Combining the Qwen2.5-VL-3B-Instruct model with a SmolAgent-based orchestration layer, it supports chain-of-thought reasoning, speech-vision fusion, and dynamic tool invocation. The framework generates structured scene graphs and leverages a hybrid retrieval module for interpretable and adaptive reasoning. Evaluations on the Video-MME benchmark and a custom clinical dataset show competitive accuracy and improved robustness compared to state-of-the-art VLMs, demonstrating its potential for applications in robot-assisted surgery, patient monitoring, and decision support.",
+  "citation": 0
+}

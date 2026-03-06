@@ -1,0 +1,8 @@
+{
+  "title": "Trustworthy AI in the Agentic Lakehouse: from Concurrency to Governance",
+  "authors": "Jacopo Tagliabue, Federico Bianchi, Ciro Greco",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2511.16402v1",
+  "abstract": "Even as AI capabilities improve, most enterprises do not consider agents trustworthy enough to work on production data. In this paper, we argue that the path to trustworthy agentic workflows begins with solving the infrastructure problem first: traditional lakehouses are not suited for agent access patterns, but if we design one around transactions, governance follows. In particular, we draw an operational analogy to MVCC in databases and show why a direct transplant fails in a decoupled, multi-language setting. We then propose an agent-first design, Bauplan, that reimplements data and compute isolation in the lakehouse. We conclude by sharing a reference implementation of a self-healing pipeline in Bauplan, which seamlessly couples agent reasoning with all the desired guarantees for correctness and trust.",
+  "citation": 1
+}
