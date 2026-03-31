@@ -62,7 +62,7 @@ Sakib Mahmud, Nabil Ibtehaz, Amith Khandakar, Anas Tahir, Tawsifur Rahman, Khand
   * UCI 데이터셋에서 SBP 및 DBP 예측 모두 **BHS Grade A**를 달성했으며, DBP는 거의 100%의 예측이 Grade A 기준을 충족했습니다.
   * AAMI 표준도 SBP 평균 오차 0.09 mmHg, 표준 편차 0.94 mmHg; DBP 평균 오차 -0.019 mmHg, 표준 편차 2.876 mmHg로 기준을 크게 상회하며 충족했습니다.
 * **고혈압 분류:** DBP 예측의 전반적인 정확도는 98.95%, SBP는 94.14%였습니다. Normotension 그룹에서 가장 높은 분류 성능을 보였습니다.
-* **통계 분석:** SBP 및 DBP 예측은 지상 진실(ground truths)과 각각 0.991 및 0.996의 높은 Pearson 상관 계수를 보였습니다. Bland-Altman 플롯에서도 대부분의 오차는 5 mmHg 범위 내에 있었고, 오차 크기는 혈압 범위에 걸쳐 일정하게 유지되었습니다.
+* **통계 분석:** SBP 및 DBP 예측은 실측값(ground truths)과 각각 0.991 및 0.996의 높은 Pearson 상관 계수를 보였습니다. Bland-Altman 플롯에서도 대부분의 오차는 5 mmHg 범위 내에 있었고, 오차 크기는 혈압 범위에 걸쳐 일정하게 유지되었습니다.
 * **외부 데이터셋 검증 (BCG):** UCI 데이터셋으로 훈련된 모델이 BCG 데이터셋에서 SBP $\text{MAE} = 2.728 \text{ mmHg}$, DBP $\text{MAE} = 1.166 \text{ mmHg}$를 기록하며 우수한 일반화 성능을 입증했습니다.
 
 ## 🧠 통찰 및 논의

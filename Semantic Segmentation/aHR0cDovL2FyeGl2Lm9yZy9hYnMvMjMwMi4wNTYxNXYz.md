@@ -74,7 +74,7 @@ Yankai Jiang, Mingze Sun, Heng Guo, Xiaoyu Bai, Ke Yan, Le Lu, Minfeng Xu
   * `Alice`는 UNETR, Swin UNETR, nnFormer와 같은 ViT 기반 분할 프레임워크에 적용되었을 때 평균 DSC(Dice Similarity Coefficient)에서 86.87%, NSD(Normalized Surface Dice)에서 91.28%를 달성하며, 기존 최상위 SSL 방법(MoCo v3, DINO, IBOT, SIM, MAE, CMAE 등)보다 최소 2.22% (DSC) 높은 성능을 보였습니다.
   * 특히 의료 영상에 특화된 medical MAE [64] 및 Tang et al. [45]의 프레임워크보다 우수했습니다.
   * CNN 기반 SOTA 방법들과 비교했을 때도 `Alice`는 훨씬 우수한 성능을 기록했습니다. (표 2)
-  * 정성적 결과(그림 4)에서도 `Alice`는 더 날카로운 경계와 지상 진실(ground truth)에 일관된 분할 결과를 보여주었습니다.
+  * 정성적 결과(그림 4)에서도 `Alice`는 더 날카로운 경계와 정답(ground truth)에 일관된 분할 결과를 보여주었습니다.
 
 * **BTCV 다중 장기 분할**:
   * `Alice`는 앙상블 전략 없이도 BTCV 오프라인 및 온라인 테스트 세트에서 각각 86.76% 및 88.58%의 경쟁력 있는 DSC를 달성했습니다. (표 3)

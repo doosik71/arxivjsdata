@@ -38,7 +38,7 @@ PaLM-E의 핵심 아이디어는 사전 훈련된 언어 모델(PaLM)의 언어 
    - **State estimation vectors:** 장면의 객체 상태를 나타내는 벡터($s \in R^S$)를 MLP($\phi_{state}$)를 통해 언어 임베딩 공간으로 매핑합니다.
    - **Vision Transformer (ViT):** 이미지를 여러 토큰 임베딩으로 매핑하며, ViT의 임베딩 차원($\tilde{k}$)이 언어 모델과 다를 경우 학습된 어파인 변환($\psi$)을 통해 조정합니다. (예: ViT-4B, ViT-22B)
    - **Object-centric representations:** ViT 표현을 객체 인스턴스 마스크($M_j$)를 사용하여 개별 객체로 분해하여 $x_{j, 1:m} = \phi_{ViT}(M_j \circ I)$와 같이 나타냅니다.
-   - **Object Scene Representation Transformer (OSRT):** 지상 진실 세분화(ground-truth segmentation) 없이 3D-중심 신경 장면 표현을 학습하여 장면을 객체 슬롯($o_j = \bar{\phi}_{OSRT}(I_{1:v})_j \in R^{\bar{k}}$)으로 분해합니다. 각 슬롯은 MLP($\psi$)를 통해 언어 임베딩 공간으로 투영됩니다.
+   - **Object Scene Representation Transformer (OSRT):** 정답 세분화(ground-truth segmentation) 없이 3D-중심 신경 장면 표현을 학습하여 장면을 객체 슬롯($o_j = \bar{\phi}_{OSRT}(I_{1:v})_j \in R^{\bar{k}}$)으로 분해합니다. 각 슬롯은 MLP($\psi$)를 통해 언어 임베딩 공간으로 투영됩니다.
    - **Entity referrals:** OSRT와 같은 객체 중심 표현의 경우, 입력 프롬프트의 객체에 해당하는 다중 양식 토큰을 `Object 1 is <obj1>. ... Object j is <objj>.`와 같이 레이블링하여 PaLM-E가 생성된 출력 문장에서 `objj`와 같은 특수 토큰을 통해 객체를 참조할 수 있도록 합니다.
 4. **로봇 제어 루프와의 통합:**
    - PaLM-E가 임베디드 계획 또는 제어 작업을 해결하는 경우, 저수준 명령을 조건화하는 텍스트를 생성합니다.

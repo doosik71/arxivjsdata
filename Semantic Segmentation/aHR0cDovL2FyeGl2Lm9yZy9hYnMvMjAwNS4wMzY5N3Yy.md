@@ -54,7 +54,7 @@ Mathilde Bateson, Hoel Kervadec, Jose Dolz, Hervé Lombaert, and Ismail Ben Ayed
   * `AdaEnt`와 `AdaSource`는 `Oracle` (최고 성능 82.3% IP, 89.0% Wat)의 성능에 매우 근접했습니다. HD 값도 유사한 경향을 보였습니다.
 * **정성적 결과:**
   * `NoAdaptation` 모델은 대상 데이터에서 IVD 구조를 제대로 복구하지 못하고, 엔트로피 맵에서 높은 불확실성을 보입니다.
-  * `AdaSource`와 `AdaEnt`는 지상 진실(ground truth)에 훨씬 가까운, 더 규칙적인 경계를 가진 분할 마스크를 생성합니다.
+  * `AdaSource`와 `AdaEnt`는 정답(ground truth)에 훨씬 가까운, 더 규칙적인 경계를 가진 분할 마스크를 생성합니다.
   * `AdaEnt`는 `AdaSource`와 `Oracle`보다 훨씬 낮은 예측 엔트로피를 보여, IVD 경계를 따라서만 높은 엔트로피 활성화가 나타나 높은 확신을 가지고 정확한 예측을 수행함을 입증했습니다.
 
 ## 🧠 Insights & Discussion

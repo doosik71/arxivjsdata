@@ -41,7 +41,7 @@ Amirreza Shaban, Shray Bansal, Zhen Liu, Irfan Essa, Byron Boots
 **훈련 절차:**
 
 - 각 반복에서 훈련 세트 $D_{\text{train}}$에서 지원 세트 $S$, 쿼리 이미지 $I_q$, 해당 이진 마스크 $M_q$를 샘플링하여 원-샷 작업을 시뮬레이션합니다.
-- 지상 진실 마스크의 로그 우도(log likelihood)를 최대화합니다.
+- 정답 마스크의 로그 우도(log likelihood)를 최대화합니다.
 - SGD(Stochastic Gradient Descent)를 사용하며, VGG 네트워크는 FCN보다 빠르게 과적합되므로 학습률 승수를 0.1로 설정합니다.
 
 **k-샷 확장:**

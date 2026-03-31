@@ -4,7 +4,7 @@ Konstantinos Bousmalis, Nathan Silberman, David Dohan, Dumitru Erhan, Dilip Kris
 
 ## 🧩 Problem to Solve
 
-최신 기계 학습 알고리즘, 특히 딥러닝 모델 학습을 위한 대규모의 잘 주석된(annotated) 이미지 데이터셋을 수집하는 것은 많은 작업에서 엄청나게 비쌉니다. 이의 매력적인 대안은 지상 진실(ground-truth) 주석이 자동으로 생성되는 합성(synthetic) 데이터를 렌더링하는 것입니다. 그러나 합성 이미지로만 훈련된 모델은 실제 이미지에 대해 일반화하는 데 어려움을 겪는(domain gap) 문제가 있습니다. 기존 비지도 도메인 적응(unsupervised domain adaptation) 방법들은 이러한 한계를 극복하기 위해 두 도메인 간의 표현을 매핑하거나 도메인 불변(domain-invariant) 특징을 추출하려 했지만, 타겟 도메인에서만 지도 학습된 모델만큼의 성능에는 미치지 못했습니다.
+최신 기계 학습 알고리즘, 특히 딥러닝 모델 학습을 위한 대규모의 잘 주석된(annotated) 이미지 데이터셋을 수집하는 것은 많은 작업에서 엄청나게 비쌉니다. 이의 매력적인 대안은 정답(ground-truth) 주석이 자동으로 생성되는 합성(synthetic) 데이터를 렌더링하는 것입니다. 그러나 합성 이미지로만 훈련된 모델은 실제 이미지에 대해 일반화하는 데 어려움을 겪는(domain gap) 문제가 있습니다. 기존 비지도 도메인 적응(unsupervised domain adaptation) 방법들은 이러한 한계를 극복하기 위해 두 도메인 간의 표현을 매핑하거나 도메인 불변(domain-invariant) 특징을 추출하려 했지만, 타겟 도메인에서만 지도 학습된 모델만큼의 성능에는 미치지 못했습니다.
 
 ## ✨ Key Contributions
 

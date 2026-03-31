@@ -77,7 +77,7 @@ YuXuan Liu, Abhishek Gupta, Pieter Abbeel, Sergey Levine
 
 - **시뮬레이션 환경에서의 비교 평가 (Fig 4)**:
   - **4가지 조작 작업**: 도달(reaching), 밀기(pushing), 쓸기(sweeping), 치기(striking).
-  - **비교 대상**: Oracle (지상 진실 보상), 제안 방법 (Ours), Pretrained Visual Features [9], Third Person Imitation Learning (TPIL) [7], Generative Adversarial Imitation Learning (GAIL) [8].
+  - **비교 대상**: Oracle (정답 보상), 제안 방법 (Ours), Pretrained Visual Features [9], Third Person Imitation Learning (TPIL) [7], Generative Adversarial Imitation Learning (GAIL) [8].
   - **결과**: 제안 방법은 모든 시뮬레이션 작업에서 성공적으로 학습되었으며, 가장 높은 성공률을 보였습니다. 특히, 사전 훈련된 시각 특징 기반 방법만이 쓸기 작업에서 약간의 개선을 보였을 뿐, 다른 기존 방법들은 도달, 밀기, 치기 작업에서 거의 성공하지 못했습니다. 이는 맥락 차이가 있는 모방 학습 문제가 매우 어렵다는 것을 시사합니다.
 - **어블레이션 연구 (Ablation Study) (Fig 6)**:
   - 모델 학습의 다양한 손실 함수($L_{\text{trans}}$, $L_{\text{rec}}$, $L_{\text{align}}$)와 보상 함수의 구성 요소($\hat{R}_{\text{feat}}$, $\hat{R}_{\text{img}}$)의 중요성을 평가했습니다.

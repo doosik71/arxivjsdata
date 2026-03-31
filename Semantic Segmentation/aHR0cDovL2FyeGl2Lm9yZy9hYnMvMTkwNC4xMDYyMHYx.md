@@ -77,7 +77,7 @@ Yunsheng Li, Lu Yuan, Nuno Vasconcelos
 - **최신 기술(State-of-Art)과의 비교:**
   - **GTA5 $\to$ Cityscapes:** ResNet101 백본 사용 시 본 연구 방법은 48.5 mIoU를 달성하여 Cycada(42.7), AdaptSegNet(41.4), DCAN(41.7), CLAN(43.2) 등 기존 SOTA 방법들을 크게 뛰어넘습니다(Cycada 대비 6% 개선). VGG16 백본 사용 시에도 41.3 mIoU로 SOTA를 달성합니다.
   - **SYNTHIA $\to$ Cityscapes:** GTA5보다 도메인 간극이 크고 카테고리 중복이 적음에도 불구하고, 기존 방법들보다 최소 4% 이상 더 나은 성능을 보여줍니다.
-- **상한선(Upper Bound)과의 성능 격차:** 본 방법은 기존 방법들에 비해 성능 격차를 크게 줄였지만, 실제 데이터에 지상 진실(ground truth) 레이블로 직접 훈련된 모델의 상한선(예: GTA5 $\to$ Cityscapes, ResNet101 기준 65.1 mIoU)과 비교하면 여전히 최소 16.6%의 격차가 존재하여, 개선의 여지가 있음을 시사합니다.
+- **상한선(Upper Bound)과의 성능 격차:** 본 방법은 기존 방법들에 비해 성능 격차를 크게 줄였지만, 실제 데이터에 정답(ground truth) 레이블로 직접 훈련된 모델의 상한선(예: GTA5 $\to$ Cityscapes, ResNet101 기준 65.1 mIoU)과 비교하면 여전히 최소 16.6%의 격차가 존재하여, 개선의 여지가 있음을 시사합니다.
 
 ## 🧠 Insights & Discussion
 
