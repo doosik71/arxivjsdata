@@ -1,0 +1,8 @@
+{
+  "title": "QuickDraw: Fast Visualization, Analysis and Active Learning for Medical Image Segmentation",
+  "authors": "Daniel Syomichev, Padmini Gopinath, Guang-Lin Wei, Eric Chang, Ian Gordon, Amanuel Seifu, Rahul Pemmaraju, Neehar Peri, James Purtilo",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.09885v1",
+  "abstract": "Analyzing CT scans, MRIs and X-rays is pivotal in diagnosing and treating diseases. However, detecting and identifying abnormalities from such medical images is a time-intensive process that requires expert analysis and is prone to interobserver variability. To mitigate such issues, machine learning-based models have been introduced to automate and significantly reduce the cost of image segmentation. Despite significant advances in medical image analysis in recent years, many of the latest models are never applied in clinical settings because state-of-the-art models do not easily interface with existing medical image viewers. To address these limitations, we propose QuickDraw, an open-source framework for medical image visualization and analysis that allows users to upload DICOM images and run off-the-shelf models to generate 3D segmentation masks. In addition, our tool allows users to edit, export, and evaluate segmentation masks to iteratively improve state-of-the-art models through active learning. In this paper, we detail the design of our tool and present survey results that highlight the usability of our software. Notably, we find that QuickDraw reduces the time to manually segment a CT scan from four hours to six minutes and reduces machine learning-assisted segmentation time by 10\\% compared to prior work. Our code and documentation are available at https://github.com/qd-seg/quickdraw",
+  "citation": 1
+}

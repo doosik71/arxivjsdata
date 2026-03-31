@@ -1,0 +1,7 @@
+{
+  "title": "SegNAS3D: Network Architecture Search with Derivative-Free Global Optimization for 3D Image Segmentation",
+  "authors": "Ken C. L. Wong, Mehdi Moradi",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1909.05962v1",
+  "abstract": "Deep learning has largely reduced the need for manual feature selection in image segmentation. Nevertheless, network architecture optimization and hyperparameter tuning are mostly manual and time consuming. Although there are increasing research efforts on network architecture search in computer vision, most works concentrate on image classification but not segmentation, and there are very limited efforts on medical image segmentation especially in 3D. To remedy this, here we propose a framework, SegNAS3D, for network architecture search of 3D image segmentation. In this framework, a network architecture comprises interconnected building blocks that consist of operations such as convolution and skip connection. By representing the block structure as a learnable directed acyclic graph, hyperparameters such as the number of feature channels and the option of using deep supervision can be learned together through derivative-free global optimization. Experiments on 43 3D brain magnetic resonance images with 19 structures achieved an average Dice coefficient of 82%. Each architecture search required less than three days on three GPUs and produced architectures that were much smaller than the state-of-the-art manually created architectures."
+}

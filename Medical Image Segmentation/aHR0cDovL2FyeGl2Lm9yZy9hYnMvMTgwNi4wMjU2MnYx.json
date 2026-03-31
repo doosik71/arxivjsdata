@@ -1,0 +1,7 @@
+{
+  "title": "On the Effect of Inter-observer Variability for a Reliable Estimation of Uncertainty of Medical Image Segmentation",
+  "authors": "Alain Jungo, Raphael Meier, Ekin Ermis, Marcela Blatti-Moreno, Evelyn Herrmann, Roland Wiest, Mauricio Reyes",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1806.02562v1",
+  "abstract": "Uncertainty estimation methods are expected to improve the understanding and quality of computer-assisted methods used in medical applications (e.g., neurosurgical interventions, radiotherapy planning), where automated medical image segmentation is crucial. In supervised machine learning, a common practice to generate ground truth label data is to merge observer annotations. However, as many medical image tasks show a high inter-observer variability resulting from factors such as image quality, different levels of user expertise and domain knowledge, little is known as to how inter-observer variability and commonly used fusion methods affect the estimation of uncertainty of automated image segmentation. In this paper we analyze the effect of common image label fusion techniques on uncertainty estimation, and propose to learn the uncertainty among observers. The results highlight the negative effect of fusion methods applied in deep learning, to obtain reliable estimates of segmentation uncertainty. Additionally, we show that the learned observers' uncertainty can be combined with current standard Monte Carlo dropout Bayesian neural networks to characterize uncertainty of model's parameters."
+}

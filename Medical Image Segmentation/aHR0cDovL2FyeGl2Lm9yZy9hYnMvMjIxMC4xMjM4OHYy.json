@@ -1,0 +1,7 @@
+{
+  "title": "Diversity-Promoting Ensemble for Medical Image Segmentation",
+  "authors": "Mariana-Iuliana Georgescu, Radu Tudor Ionescu, Andreea-Iuliana Miron",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2210.12388v2",
+  "abstract": "Medical image segmentation is an actively studied task in medical imaging, where the precision of the annotations is of utter importance towards accurate diagnosis and treatment. In recent years, the task has been approached with various deep learning systems, among the most popular models being U-Net. In this work, we propose a novel strategy to generate ensembles of different architectures for medical image segmentation, by leveraging the diversity (decorrelation) of the models forming the ensemble. More specifically, we utilize the Dice score among model pairs to estimate the correlation between the outputs of the two models forming each pair. To promote diversity, we select models with low Dice scores among each other. We carry out gastro-intestinal tract image segmentation experiments to compare our diversity-promoting ensemble (DiPE) with another strategy to create ensembles based on selecting the top scoring U-Net models. Our empirical results show that DiPE surpasses both individual models as well as the ensemble creation strategy based on selecting the top scoring models."
+}

@@ -1,0 +1,8 @@
+{
+  "title": "SliceMamba with Neural Architecture Search for Medical Image Segmentation",
+  "authors": "Chao Fan, Hongyuan Yu, Yan Huang, Liang Wang, Zhenghan Yang, Xibin Jia",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2407.08481v2",
+  "abstract": "Despite the progress made in Mamba-based medical image segmentation models, existing methods utilizing unidirectional or multi-directional feature scanning mechanisms struggle to effectively capture dependencies between neighboring positions, limiting the discriminant representation learning of local features. These local features are crucial for medical image segmentation as they provide critical structural information about lesions and organs. To address this limitation, we propose SliceMamba, a simple and effective locally sensitive Mamba-based medical image segmentation model. SliceMamba includes an efficient Bidirectional Slice Scan module (BSS), which performs bidirectional feature slicing and employs varied scanning mechanisms for sliced features with distinct shapes. This design ensures that spatially adjacent features remain close in the scanning sequence, thereby improving segmentation performance. Additionally, to fit the varying sizes and shapes of lesions and organs, we further introduce an Adaptive Slice Search method to automatically determine the optimal feature slice method based on the characteristics of the target data. Extensive experiments on two skin lesion datasets (ISIC2017 and ISIC2018), two polyp segmentation (Kvasir and ClinicDB) datasets, and one multi-organ segmentation dataset (Synapse) validate the effectiveness of our method.",
+  "citation": 5
+}

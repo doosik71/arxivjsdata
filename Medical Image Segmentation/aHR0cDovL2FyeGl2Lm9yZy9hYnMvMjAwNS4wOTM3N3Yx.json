@@ -1,0 +1,7 @@
+{
+  "title": "hidden markov random fields and cuckoo search method for medical image segmentation",
+  "authors": "EL-Hachemi Guerrout, Ramdane Mahiou, Dominique Michelucci, Boukabene Randa, Ouali Assia",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2005.09377v1",
+  "abstract": "Segmentation of medical images is an essential part in the process of diagnostics. Physicians require an automatic, robust and valid results. Hidden Markov Random Fields (HMRF) provide powerful model. This latter models the segmentation problem as the minimization of an energy function. Cuckoo search (CS) algorithm is one of the recent nature-inspired meta-heuristic algorithms. It has shown its efficiency in many engineering optimization problems. In this paper, we use three cuckoo search algorithm to achieve medical image segmentation."
+}

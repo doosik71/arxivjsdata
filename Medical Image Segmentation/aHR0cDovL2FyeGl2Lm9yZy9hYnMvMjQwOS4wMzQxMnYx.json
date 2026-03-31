@@ -1,0 +1,8 @@
+{
+  "title": "TG-LMM: Enhancing Medical Image Segmentation Accuracy through Text-Guided Large Multi-Modal Model",
+  "authors": "Yihao Zhao, Enhao Zhong, Cuiyun Yuan, Yang Li, Man Zhao, Chunxia Li, Jun Hu, Chenbin Liu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.03412v1",
+  "abstract": "We propose TG-LMM (Text-Guided Large Multi-Modal Model), a novel approach that leverages textual descriptions of organs to enhance segmentation accuracy in medical images. Existing medical image segmentation methods face several challenges: current medical automatic segmentation models do not effectively utilize prior knowledge, such as descriptions of organ locations; previous text-visual models focus on identifying the target rather than improving the segmentation accuracy; prior models attempt to use prior knowledge to enhance accuracy but do not incorporate pre-trained models. To address these issues, TG-LMM integrates prior knowledge, specifically expert descriptions of the spatial locations of organs, into the segmentation process. Our model utilizes pre-trained image and text encoders to reduce the number of training parameters and accelerate the training process. Additionally, we designed a comprehensive image-text information fusion structure to ensure thorough integration of the two modalities of data. We evaluated TG-LMM on three authoritative medical image datasets, encompassing the segmentation of various parts of the human body. Our method demonstrated superior performance compared to existing approaches, such as MedSAM, SAM and nnUnet.",
+  "citation": 1
+}

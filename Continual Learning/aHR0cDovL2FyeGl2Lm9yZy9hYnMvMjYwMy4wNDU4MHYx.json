@@ -1,0 +1,7 @@
+{
+  "title": "Why Do Neural Networks Forget: A Study of Collapse in Continual Learning",
+  "authors": "Yunqin Zhu, Jun Jin",
+  "year": 2026,
+  "url": "http://arxiv.org/abs/2603.04580v1",
+  "abstract": "Catastrophic forgetting is a major problem in continual learning, and lots of approaches arise to reduce it. However, most of them are evaluated through task accuracy, which ignores the internal model structure. Recent research suggests that structural collapse leads to loss of plasticity, as evidenced by changes in effective rank (eRank). This indicates a link to forgetting, since the networks lose the ability to expand their feature space to learn new tasks, which forces the network to overwrite existing representations. Therefore, in this study, we investigate the correlation between forgetting and collapse through the measurement of both weight and activation eRank. To be more specific, we evaluated four architectures, including MLP, ConvGRU, ResNet-18, and Bi-ConvGRU, in the split MNIST and Split CIFAR-100 benchmarks. Those models are trained through the SGD, Learning-without-Forgetting (LwF), and Experience Replay (ER) strategies separately. The results demonstrate that forgetting and collapse are strongly related, and different continual learning strategies help models preserve both capacity and performance in different efficiency."
+}

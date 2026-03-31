@@ -1,0 +1,8 @@
+{
+  "title": "KM-UNet KAN Mamba UNet for medical image segmentation",
+  "authors": "Yibo Zhang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2501.02559v1",
+  "abstract": "Medical image segmentation is a critical task in medical imaging analysis. Traditional CNN-based methods struggle with modeling long-range dependencies, while Transformer-based models, despite their success, suffer from quadratic computational complexity. To address these limitations, we propose KM-UNet, a novel U-shaped network architecture that combines the strengths of Kolmogorov-Arnold Networks (KANs) and state-space models (SSMs). KM-UNet leverages the Kolmogorov-Arnold representation theorem for efficient feature representation and SSMs for scalable long-range modeling, achieving a balance between accuracy and computational efficiency. We evaluate KM-UNet on five benchmark datasets: ISIC17, ISIC18, CVC, BUSI, and GLAS. Experimental results demonstrate that KM-UNet achieves competitive performance compared to state-of-the-art methods in medical image segmentation tasks. To the best of our knowledge, KM-UNet is the first medical image segmentation framework integrating KANs and SSMs. This work provides a valuable baseline and new insights for the development of more efficient and interpretable medical image segmentation systems. The code is open source at https://github.com/2760613195/KM_UNet\n  Keywords:KAN,Manba, state-space models,UNet, Medical image segmentation, Deep learning",
+  "citation": 7
+}

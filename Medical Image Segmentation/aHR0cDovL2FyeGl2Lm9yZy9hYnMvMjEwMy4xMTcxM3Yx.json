@@ -1,0 +1,7 @@
+{
+  "title": "Spatially Dependent U-Nets: Highly Accurate Architectures for Medical Imaging Segmentation",
+  "authors": "João B. S. Carvalho, João A. Santinha, Đorđe Miladinović, Joachim M. Buhmann",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2103.11713v1",
+  "abstract": "In clinical practice, regions of interest in medical imaging often need to be identified through a process of precise image segmentation. The quality of this image segmentation step critically affects the subsequent clinical assessment of the patient status. To enable high accuracy, automatic image segmentation, we introduce a novel deep neural network architecture that exploits the inherent spatial coherence of anatomical structures and is well equipped to capture long-range spatial dependencies in the segmented pixel/voxel space. In contrast to the state-of-the-art solutions based on convolutional layers, our approach leverages on recently introduced spatial dependency layers that have an unbounded receptive field and explicitly model the inductive bias of spatial coherence. Our method performs favourably to commonly used U-Net and U-Net++ architectures as demonstrated by improved Dice and Jaccardscore in three different medical segmentation tasks: nuclei segmentation in microscopy images, polyp segmentation in colonoscopy videos, and liver segmentation in abdominal CT scans."
+}

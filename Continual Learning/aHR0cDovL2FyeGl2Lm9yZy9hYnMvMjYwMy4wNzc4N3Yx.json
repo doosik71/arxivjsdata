@@ -1,0 +1,8 @@
+{
+  "title": "Vision Transformers that Never Stop Learning",
+  "authors": "Caihao Sun, Mingqi Yuan, Shiyuan Wang, Jiayu Chen",
+  "year": 2026,
+  "url": "http://arxiv.org/abs/2603.07787v1",
+  "abstract": "Loss of plasticity refers to the progressive inability of a model to adapt to new tasks and poses a fundamental challenge for continual learning. While this phenomenon has been extensively studied in homogeneous neural architectures, such as multilayer perceptrons, its mechanisms in structurally heterogeneous, attention-based models such as Vision Transformers (ViTs) remain underexplored. In this work, we present a systematic investigation of loss of plasticity in ViTs, including a fine-grained diagnosis using local metrics that capture parameter diversity and utilization. Our analysis reveals that stacked attention modules exhibit increasing instability that exacerbates plasticity loss, while feed-forward network modules suffer even more pronounced degradation. Furthermore, we evaluate several approaches for mitigating plasticity loss. The results indicate that methods based on parameter re-initialization fail to recover plasticity in ViTs, whereas approaches that explicitly regulate the update process are more effective. Motivated by this insight, we propose ARROW, a geometry-aware optimizer that preserves plasticity by adaptively reshaping gradient directions using an online curvature estimate for the attention module. Extensive experiments show that ARROW effectively improves plasticity and maintains better performance on newly encountered tasks.",
+  "citation": 0
+}

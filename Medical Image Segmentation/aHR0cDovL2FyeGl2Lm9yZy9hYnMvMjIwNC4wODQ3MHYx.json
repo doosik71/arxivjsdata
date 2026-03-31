@@ -1,0 +1,8 @@
+{
+  "title": "U-Net and its variants for Medical Image Segmentation : A short review",
+  "authors": "Vinay Ummadi",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2204.08470v1",
+  "abstract": "The paper is a short review of medical image segmentation using U-Net and its variants. As we understand going through a medical images is not an easy job for any clinician either radiologist or pathologist. Analysing medical images is the only way to perform non-invasive diagnosis. Segmenting out the regions of interest has significant importance in medical images and is key for diagnosis. This paper also gives a bird eye view of how medical image segmentation has evolved. Also discusses challenge's and success of the deep neural architectures. Following how different hybrid architectures have built upon strong techniques from visual recognition tasks. In the end we will see current challenges and future directions for medical image segmentation(MIS).",
+  "citation": 9
+}

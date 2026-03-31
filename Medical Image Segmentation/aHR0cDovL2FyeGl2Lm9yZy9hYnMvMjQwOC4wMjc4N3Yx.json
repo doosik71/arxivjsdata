@@ -1,0 +1,8 @@
+{
+  "title": "Segmentation Style Discovery: Application to Skin Lesion Images",
+  "authors": "Kumar Abhishek, Jeremy Kawahara, Ghassan Hamarneh",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2408.02787v1",
+  "abstract": "Variability in medical image segmentation, arising from annotator preferences, expertise, and their choice of tools, has been well documented. While the majority of multi-annotator segmentation approaches focus on modeling annotator-specific preferences, they require annotator-segmentation correspondence. In this work, we introduce the problem of segmentation style discovery, and propose StyleSeg, a segmentation method that learns plausible, diverse, and semantically consistent segmentation styles from a corpus of image-mask pairs without any knowledge of annotator correspondence. StyleSeg consistently outperforms competing methods on four publicly available skin lesion segmentation (SLS) datasets. We also curate ISIC-MultiAnnot, the largest multi-annotator SLS dataset with annotator correspondence, and our results show a strong alignment, using our newly proposed measure AS2, between the predicted styles and annotator preferences. The code and the dataset are available at https://github.com/sfu-mial/StyleSeg.",
+  "citation": 3
+}

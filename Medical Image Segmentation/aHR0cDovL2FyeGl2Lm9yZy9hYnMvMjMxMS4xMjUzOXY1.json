@@ -1,0 +1,8 @@
+{
+  "title": "GMISeg: General Medical Image Segmentation without Re-Training",
+  "authors": "Jing Xu",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.12539v5",
+  "abstract": "Deep learning models have become the dominant method for medical image segmentation. However, they often struggle to be generalisable to unknown tasks involving new anatomical structures, labels, or shapes. In these cases, the model needs to be re-trained for the new tasks, posing a significant challenge for non-machine learning experts and requiring a considerable time investment. Here I developed a general model that can solve unknown medical image segmentation tasks without requiring additional training. Given an example set of images and visual prompts for defining new segmentation tasks, GMISeg (General Medical Image Segmentation) leverages a pre-trained image encoder based on ViT and applies a low-rank fine-tuning strategy to the prompt encoder and mask decoder to fine-tune the model without in an efficient manner. I evaluated the performance of the proposed method on medical image datasets with different imaging modalities and anatomical structures. The proposed method facilitated the deployment of pre-trained AI models to new segmentation works in a user-friendly way.",
+  "citation": 2
+}

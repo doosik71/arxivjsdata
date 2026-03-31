@@ -1,0 +1,7 @@
+{
+  "title": "From CNN to Transformer: A Review of Medical Image Segmentation Models",
+  "authors": "Wenjian Yao, Jiajun Bai, Wei Liao, Yuheng Chen, Mengjuan Liu, Yao Xie",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2308.05305v1",
+  "abstract": "Medical image segmentation is an important step in medical image analysis, especially as a crucial prerequisite for efficient disease diagnosis and treatment. The use of deep learning for image segmentation has become a prevalent trend. The widely adopted approach currently is U-Net and its variants. Additionally, with the remarkable success of pre-trained models in natural language processing tasks, transformer-based models like TransUNet have achieved desirable performance on multiple medical image segmentation datasets. In this paper, we conduct a survey of the most representative four medical image segmentation models in recent years. We theoretically analyze the characteristics of these models and quantitatively evaluate their performance on two benchmark datasets (i.e., Tuberculosis Chest X-rays and ovarian tumors). Finally, we discuss the main challenges and future trends in medical image segmentation. Our work can assist researchers in the related field to quickly establish medical segmentation models tailored to specific regions."
+}
