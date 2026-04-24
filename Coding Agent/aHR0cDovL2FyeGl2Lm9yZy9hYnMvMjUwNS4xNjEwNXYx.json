@@ -1,0 +1,8 @@
+{
+  "title": "Sums and differences of sets (improvement over AlphaEvolve)",
+  "authors": "Robert Gerbicz",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.16105v1",
+  "abstract": "On May 14, 2025, DeepMind announced that AlphaEvolve, a large language model applied to a set of mathematical problems, had matched or exceeded the best known bounds on several problems. In the case of the sum and difference of sets problem, AlphaEvolve, using a set of $54265$ integers, improved the known lower bound of $θ=1.14465$ to $θ=1.1584$. In this paper, we present an improved bound $θ=1.173050$ using an explicit construction of a U set that contains more than $10^{43546}$ elements. For fast integer and floating-point arithmetic, we used the (free) GMP library.",
+  "citation": 4
+}
