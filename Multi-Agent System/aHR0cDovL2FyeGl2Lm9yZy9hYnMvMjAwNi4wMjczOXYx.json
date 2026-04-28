@@ -1,0 +1,8 @@
+{
+  "title": "The Multi-Agent Programming Contest: A résumé",
+  "authors": "Tobias Ahlbrecht, Jürgen Dix, Niklas Fiekas, Tabajara Krausburg",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.02739v1",
+  "abstract": "The Multi-Agent Programming Contest, MAPC, is an annual event organized since 2005 out of Clausthal University of Technology. Its aim is to investigate the potential of using decentralized, autonomously acting intelligent agents, by providing a complex scenario to be solved in a competitive environment. For this we need suitable benchmarks where agent-based systems can shine. We present previous editions of the contest and also its current scenario and results from its use in the 2019 MAPC with a special focus on its suitability. We conclude with lessons learned over the years.",
+  "citation": 7
+}
