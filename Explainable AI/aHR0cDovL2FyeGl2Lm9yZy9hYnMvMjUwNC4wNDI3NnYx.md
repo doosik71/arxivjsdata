@@ -31,17 +31,17 @@ Keerthi Devireddy
 - **XAI 방법**:
   - **모델 불가지론적 방법**:
     - **LIME**: 입력 데이터에 변형을 가하고, 모델의 예측 변화를 관찰하여 관심 인스턴스 주변의 동작을 모방하는 간단한 선형 모델을 훈련합니다.
-      $$ \arg \min*{g \in G} L(f,g,\pi*{x}) + \Omega(g) $$
+      $$ \arg \min_{g \in G} L(f,g,\pi_{x}) + \Omega(g) $$
             여기서 $L(f,g,\pi_{x})$는 $g$가 $f$를 모방하도록 하는 손실 함수이며, $\pi_{x}$는 $x$에 가까운 교란 인스턴스에 더 높은 가중치를 부여하고, $\Omega(g)$는 $g$의 해석 가능성(예: 희소성 제약)을 규제합니다.
     - **SHAP**: 특징의 다른 연합(coalition)에 대한 기여도를 기반으로 특징 중요도를 할당합니다.
-      $$ \varphi*{i} = \sum*{S \subseteq N \setminus \{i\}} \frac{|S|!(|N|-|S|-1)!}{|N|!} (f(S \cup \{i\})-f(S)) $$
+      $$ \varphi_{i} = \sum_{S \subseteq N \setminus \{i\}} \frac{|S|!(|N|-|S|-1)!}{|N|!} (f(S \cup \{i\})-f(S)) $$
             여기서 $S$는 특징의 부분 집합, $N$은 모든 특징의 집합, $f(S)$는 $S$에 있는 특징만 고려했을 때의 모델 출력입니다.
   - **모델 특정적 방법**:
     - **Grad-CAM**: CNN의 합성곱 계층 특징 맵에 대한 클래스 점수의 기울기를 계산하여 이미지에서 가장 영향력 있는 영역을 시각화합니다.
-      $$ L*{c} = \text{ReLU} \left( \sum*{k} \alpha*{c}^{k} A^{k} \right) $$
-            여기서 $A^{k}$는 합성곱 계층 $k$의 활성화 맵이며, $\alpha*{c}^{k}$는 중요도 가중치로, $\alpha_{c}^{k} = \frac{1}{Z} \sum_{i} \sum_{j} \frac{\partial y_{c}}{\partial A_{ij}^{k}}$ 입니다.
+      $$ L_{c} = \text{ReLU} \left( \sum_{k} \alpha_{c}^{k} A^{k} \right) $$
+            여기서 $A^{k}$는 합성곱 계층 $k$의 활성화 맵이며, $\alpha_{c}^{k}$는 중요도 가중치로, $\alpha_{c}^{k} = \frac{1}{Z} \sum_{i} \sum_{j} \frac{\partial y_{c}}{\partial A_{ij}^{k}}$ 입니다.
     - **Guided Backpropagation**: 표준 역전파를 수정하여 음의 기울기를 억제하고, 오직 양의, 클래스 관련 특징만 전파되도록 합니다.
-      $$ R*{l} = \max(0,R*{l+1})\cdot \max\left(0, \frac{\partial y}{\partial x}\right) $$
+      $$ R_{l} = \max(0,R_{l+1})\cdot \max\left(0, \frac{\partial y}{\partial x}\right) $$
             여기서 $R_l$은 계층 $l$에서의 관련성입니다.
 
 ## 📊 Results

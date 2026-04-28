@@ -46,8 +46,8 @@ Yuchen Zhang, Tianle Liu, Mingsheng Long, Michael I. Jordan
 4. **적대적 학습 알고리즘**:
    - MDD를 최소화하는 미니맥스(minimax) 최적화 문제를 해결하기 위해 적대적 표현 학습(adversarial representation learning) 방법을 제안합니다.
    - 최적화 문제는 다음과 같습니다:
-     $$ \min*{f,\psi} \mathbb{E}(\hat{\mathcal{P}}) + \eta D*\gamma(\hat{\mathcal{P}},\hat{\mathcal{Q}}) $$
-        $$ \max*{f'} D*\gamma(\hat{\mathcal{P}},\hat{\mathcal{Q}}) $$
+     $$ \min_{f,\psi} \mathbb{E}(\hat{\mathcal{P}}) + \eta D*\gamma(\hat{\mathcal{P}},\hat{\mathcal{Q}}) $$
+        $$ \max_{f'} D*\gamma(\hat{\mathcal{P}},\hat{\mathcal{Q}}) $$
         여기서 $\psi$는 특징 추출기, $f$는 메인 분류기, $f'$는 보조 분류기이며, $D_\gamma(\hat{\mathcal{P}},\hat{\mathcal{Q}})$는 MDD를 근사하는 항입니다.
    - 실제 구현에서는 마진 손실 대신 결합된 크로스 엔트로피 손실(combined cross-entropy loss)을 사용합니다.
      - 소스 도메인: $- \log[\sigma_{y_s}(f(\psi(x_s)))]$ 및 $- \log[\sigma_{h_f(\psi(x_s))}(f'(\psi(x_s)))]$

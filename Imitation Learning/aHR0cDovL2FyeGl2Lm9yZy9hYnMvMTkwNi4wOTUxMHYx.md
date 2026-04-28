@@ -30,14 +30,14 @@ Tanmay Gangwani, Joel Lehman, Qiang Liu, Jian Peng
 
    - 기존 GAIL의 상태-행동 방문 분포 일치 목표 $D_{JS}[\rho_{\pi}(s,a) || \rho_E(s,a)]$를 POMDP 환경에 맞게 신념-행동 방문 분포 일치 $D_{JS}[\rho_{\pi}(b,a) || \rho_E(b,a)]$로 수정합니다.
    - 이 목표는 생성적 적대 신경망(GAN)의 최소-최대(min-max) 목표로 근사화됩니다:
-     $$ \min*{\phi,\theta} \max*{\omega} \tilde{E}_{(b,a) \sim M_E} [\log D_{\omega}(b,a)] + \tilde{E}_{(b,a) \sim \pi,T} [\log(1-D_{\omega}(b,a))] $$
+     $$ \min_{\phi,\theta} \max_{\omega} \tilde{E}_{(b,a) \sim M_E} [\log D_{\omega}(b,a)] + \tilde{E}_{(b,a) \sim \pi,T} [\log(1-D_{\omega}(b,a))] $$
         여기서 $b = B_{\phi}(h)$는 신념 모듈 $B_{\phi}$가 생성한 신념 표현입니다.
 
 2. **정책 모듈 $\pi_{\theta}(a_t|b_t)$:**
 
    - 신념 $b_t$에 조건화된 행동 분포를 학습합니다.
    - 정책은 판별자 $D_{\omega}$로부터 얻은 보상 $r(b,a) = -\log(1-D^*(b,a))$를 사용하여 A2C(Actor-Critic)와 같은 정책 경사(policy gradient) 알고리즘으로 업데이트됩니다.
-     $$ \nabla*{\theta} D*{JS}(\theta;\phi) \approx \tilde{E}_{(b,a) \sim \pi,T} [\nabla_{\theta} \log \pi*{\theta}(a|b) \hat{Q}*{\pi}(b,a)] $$
+     $$ \nabla_{\theta} D_{JS}(\theta;\phi) \approx \tilde{E}_{(b,a) \sim \pi,T} [\nabla_{\theta} \log \pi_{\theta}(a|b) \hat{Q}_{\pi}(b,a)] $$
 
 3. **신념 모듈 $B_{\phi}$:**
 
@@ -45,11 +45,11 @@ Tanmay Gangwani, Joel Lehman, Qiang Liu, Jian Peng
    - **작업 인지 학습:** 정책과 동일한 모방 학습 손실 $L_{IM}(\phi) := D_{JS}(\theta,\phi)$를 사용하여 공동으로 학습됩니다. 이는 신념 표현이 정책 학습 목표에 직접적으로 기여하도록 합니다.
    - **신념 정규화:** 신념 퇴화를 방지하고 강건성을 높이기 위해 상호 정보량 극대화를 기반으로 세 가지 보조 손실을 추가합니다:
      - **순방향 정규화 ($L_f$):** 미래 관측치 $o_{t+k}$를 예측합니다.
-       $$ L*f(\phi) = E_R ||o*{t+k} - g(b*{\phi_t}, a*{t:t+k-1})||^2_2 $$
+       $$ L*f(\phi) = E_R ||o_{t+k} - g(b_{\phi_t}, a_{t:t+k-1})||^2_2 $$
      - **역방향 정규화 ($L_i$):** 과거 관측치 $o_{t-k}$를 예측합니다.
-       $$ L*i(\phi) = E_R ||o*{t-k} - g(b*{\phi_t}, a*{t-k:t-1})||^2_2 $$
+       $$ L*i(\phi) = E_R ||o_{t-k} - g(b_{\phi_t}, a_{t-k:t-1})||^2_2 $$
      - **행동 정규화 ($L_a$):** 미래 행동 시퀀스 $a_{t:t+k-1}$를 예측합니다.
-       $$ L*a(\phi) = E_R ||(a*{t:t+k-1}) - g(b*{\phi_t}, o*{t+k})||^2_2 $$
+       $$ L*a(\phi) = E_R ||(a_{t:t+k-1}) - g(b_{\phi_t}, o_{t+k})||^2_2 $$
    - 신념 모듈의 최종 손실은 $L(\phi) = L_{IM} + \lambda_1 L_f + \lambda_2 L_i + \lambda_3 L_a$ 입니다. (여기서 $k$는 다단계 예측의 시간 오프셋을 나타내며, $k=1$ 및 $k=5$를 사용했습니다.)
 
 4. **판별자 $D_{\omega}(b_t,a_t)$:**

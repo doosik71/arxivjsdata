@@ -31,7 +31,7 @@ Yang Zhang, Philip David, Hassan Foroosh, and Boqing Gong
      - 각 이미지에서 특정 카테고리(예: 도로, 건물, 하늘)가 차지하는 픽셀의 비율을 나타내는 레이블 분포 $p_t(c)$를 추정합니다.
      - 이를 위해 레이블이 있는 소스 도메인 데이터를 사용하여 **로지스틱 회귀(Logistic Regression, LR)** 또는 **최근접 이웃(Nearest Neighbor, NN)의 평균**과 같은 모델을 훈련합니다. LR이 실험에서 가장 좋은 성능을 보였습니다.
      - 추정된 분포는 네트워크 예측 $\hat{Y}_t$를 기반으로 다음과 같이 계산됩니다:
-       $$ \hat{p}_t(c) = \frac{1}{WH} \sum_{i=1}^{W} \sum*{j=1}^{H} \left( \frac{\hat{Y}\_t(i,j,c)}{\max*{c'} (\hat{Y}\_t(i,j,c'))} \right)^K, \forall c $$
+       $$ \hat{p}_t(c) = \frac{1}{WH} \sum_{i=1}^{W} \sum_{j=1}^{H} \left( \frac{\hat{Y}_t(i,j,c)}{\max_{c'} (\hat{Y}_t(i,j,c'))} \right)^K, \forall c $$
             여기서 $K > 1$ (실험에서 $K=6$)은 소프트맥스 활성화를 "날카롭게" 만듭니다.
    - **지역 랜드마크 슈퍼픽셀 레이블 분포 추론:**
      - 이미지를 슈퍼픽셀(예: 100개)로 분할하고, 소스 도메인의 슈퍼픽셀에 대해 지배적인 레이블을 사용하여 다중 클래스 SVM을 훈련합니다.
@@ -43,7 +43,7 @@ Yang Zhang, Philip David, Hassan Foroosh, and Boqing Gong
 
    - 최종 분할 네트워크는 레이블이 있는 소스 도메인에 대한 픽셀 단위 교차 엔트로피 손실 $L(Y_s, \hat{Y}_s)$과, 레이블이 없는 타겟 도메인에 대한 추정된 속성 분포 $p_t^k$와 네트워크 예측 $\hat{p}_t^k$ 간의 교차 엔트로피 손실 $C(p_t^k, \hat{p}_t^k)$을 동시에 최소화하도록 훈련됩니다.
    - 전체 목적 함수는 다음과 같습니다:
-     $$ \min*{\gamma} \frac{\gamma}{|S|} \sum*{s \in S} L(Y*s, \hat{Y}\_s) + \frac{1-\gamma}{|T|} \sum*{t \in T} \sum_k C(p^k_t, \hat{p}^k_t) $$
+     $$ \min_{\gamma} \frac{\gamma}{|S|} \sum_{s \in S} L(Y*s, \hat{Y}_s) + \frac{1-\gamma}{|T|} \sum_{t \in T} \sum_k C(p^k_t, \hat{p}^k_t) $$
         여기서 $\gamma \in [0,1]$는 두 손실 항의 균형을 조절합니다.
 
 3. **색상 일관성(Color Constancy) 전처리:**

@@ -33,16 +33,16 @@ Bryan Lim, Stefan Zohren
 1. **시계열 딥 러닝의 기본 구성 요소:**
    - **인코더 ($g_{enc}$):** 과거의 시계열 정보 ($y_{t-k:t}, x_{t-k:t}, s$)를 잠재 변수 $z_t$로 인코딩합니다.
      - **CNN (Convolutional Neural Networks):** 인과적 컨볼루션(causal convolutions) 및 확장 컨볼루션(dilated convolutions)을 사용하여 시간 불변적(time-invariant)이고 지역적인(local) 패턴을 학습합니다. 수용 필드(receptive field) 크기를 통해 과거 정보를 통합합니다.
-       $$ (W\*h)^{(l,t,d*l)} = \sum*{\tau=0}^{\lfloor k/d*l \rfloor} W^{(l,\tau)}h^l*{t-d_l\tau} $$
+       $$ (W\*h)^{(l,t,d*l)} = \sum_{\tau=0}^{\lfloor k/d*l \rfloor} W^{(l,\tau)}h^l_{t-d_l\tau} $$
      - **RNN (Recurrent Neural Networks):** 내부 메모리 상태 $z_t$를 재귀적으로 업데이트하여 과거 정보를 요약합니다. LSTM은 게이트 메커니즘을 통해 장기 의존성 문제를 해결합니다.
-       $$ z*t = \nu(z*{t-1}, y_t, x_t, s) $$
+       $$ z*t = \nu(z_{t-1}, y_t, x_t, s) $$
      - **어텐션 메커니즘 (Attention Mechanisms):** 동적으로 생성된 가중치 $\alpha(\kappa_t, q_\tau)$를 사용하여 과거의 중요한 시점에 직접적으로 초점을 맞춥니다.
-       $$ h*t = \sum*{\tau=0}^{k} \alpha(\kappa*t, q*\tau)v\_{t-\tau} $$
+       $$ h*t = \sum_{\tau=0}^{k} \alpha(\kappa*t, q*\tau)v_{t-\tau} $$
    - **디코더 ($g_{dec}$):** 인코딩된 잠재 변수 $z_t$를 사용하여 최종 예측 $\hat{y}_{t+1}$을 생성합니다.
      - **출력 및 손실 함수:**
        - **점 추정 (Point Estimates):** 이진 분류를 위한 이진 교차 엔트로피 손실 ($L_{classification}$), 연속 값 회귀를 위한 평균 제곱 오차 손실 ($L_{regression}$).
        - **확률론적 예측 (Probabilistic Outputs):** 가우시안 분포의 평균 $\mu(t,\tau)$ 및 분산 $\zeta(t,\tau)^2$과 같은 예측 분포의 파라미터를 출력하여 불확실성을 모델링합니다.
-         $$ y\_{t+\tau} \sim \mathcal{N}(\mu(t,\tau), \zeta(t,\tau)^2) $$
+         $$ y_{t+\tau} \sim \mathcal{N}(\mu(t,\tau), \zeta(t,\tau)^2) $$
 2. **다중 예측 모델:**
    - **반복적 방법 (Iterative Methods):** 자기회귀(autoregressive) 방식으로 예측된 표본을 다음 예측 단계의 입력으로 재귀적으로 사용하여 다중 예측을 생성합니다.
    - **직접적 방법 (Direct Methods):** 시퀀스-투-시퀀스(sequence-to-sequence) 아키텍처를 사용하여 모든 가용한 입력으로부터 직접적으로 전체 예측 구간의 값을 생성합니다.

@@ -33,7 +33,7 @@ PADA는 기존 DANN(Domain Adversarial Neural Network) 프레임워크를 부분
 
    - 타겟 도메인 데이터 $D_t = \{x_i^t\}_{i=1}^{n_t}$에 대해 현재 훈련된 소스 분류기 $G_y(G_f(x_i^t))$의 소프트맥스(softmax) 확률 예측 $\hat{y}_i$를 얻습니다.
    - 타겟 데이터는 이상치 클래스에 속하지 않으므로, 이상치 클래스에 대한 평균 예측 확률은 낮을 것입니다. 이 원리를 이용하여 각 소스 클래스의 기여도를 나타내는 가중치 벡터 $\gamma$를 다음과 같이 계산합니다:
-     $$ \gamma = \frac{1}{n*t} \sum*{i=1}^{n_t} \hat{y}\_i $$
+     $$ \gamma = \frac{1}{n*t} \sum_{i=1}^{n_t} \hat{y}_i $$
    - $\gamma$는 $|C_s|$ 차원 벡터이며, 각 원소 $\gamma_k$는 소스 클래스 $k$의 기여도를 나타냅니다.
    - 계산된 가중치 벡터는 $\gamma \leftarrow \gamma / \max(\gamma)$와 같이 최댓값으로 정규화하여 사용합니다. 이는 공유 클래스에 높은 가중치를, 이상치 클래스에는 낮은 가중치를 부여합니다.
 
@@ -43,15 +43,15 @@ PADA는 기존 DANN(Domain Adversarial Neural Network) 프레임워크를 부분
    - $L_y$: 소스 분류 손실 (예: 크로스 엔트로피)
    - $L_d$: 도메인 판별 손실 (예: 이진 크로스 엔트로피)
    - $\lambda$: 손실 간 균형을 맞추는 하이퍼파라미터
-     $$ C(\theta*f, \theta_y, \theta_d) = \frac{1}{n_s} \sum*{x*i \in D_s} \gamma*{y*i} L_y(G_y(G_f(x_i)), y_i) \\ - \lambda \left( \frac{1}{n_s} \sum*{x*i \in D_s} \gamma*{y*i} L_d(G_d(G_f(x_i)), d_i) + \frac{1}{n_t} \sum*{x*i \in D_t} L_d(G_d(G_f(x_i)), d_i) \right) $$
-    여기서 $y_i$는 소스 데이터 $x_i$의 실제 레이블이며, $\gamma*{y_i}$는 해당 레이블에 대한 클래스 가중치입니다.
+     $$ C(\theta*f, \theta_y, \theta_d) = \frac{1}{n_s} \sum_{x*i \in D_s} \gamma_{y*i} L_y(G_y(G_f(x_i)), y_i) \\ - \lambda \left( \frac{1}{n_s} \sum_{x*i \in D_s} \gamma_{y*i} L_d(G_d(G_f(x_i)), d_i) + \frac{1}{n_t} \sum_{x*i \in D_t} L_d(G_d(G_f(x_i)), d_i) \right) $$
+    여기서 $y_i$는 소스 데이터 $x_i$의 실제 레이블이며, $\gamma_{y_i}$는 해당 레이블에 대한 클래스 가중치입니다.
 
 3. **최적화:** 이 목적 함수는 미니맥스 게임으로 최적화됩니다.
 
    - 특징 추출기($G_f$)와 소스 분류기($G_y$)의 파라미터($\theta_f, \theta_y$)는 목적 함수를 최소화합니다.
    - 도메인 판별기($G_d$)의 파라미터($\theta_d$)는 목적 함수를 최대화합니다.
-     $$ (\hat{\theta}_f, \hat{\theta}\_y) = \arg \min_{\theta*f, \theta_y} C(\theta_f, \theta_y, \theta_d) $$
-    $$ (\hat{\theta}\_d) = \arg \max*{\theta_d} C(\theta_f, \theta_y, \theta_d) $$
+     $$ (\hat{\theta}_f, \hat{\theta}_y) = \arg \min_{\theta*f, \theta_y} C(\theta_f, \theta_y, \theta_d) $$
+    $$ (\hat{\theta}_d) = \arg \max_{\theta_d} C(\theta_f, \theta_y, \theta_d) $$
 
 4. **아키텍처:** ResNet-50과 같은 딥 CNN을 특징 추출기($G_f$)로 사용하며, 그 뒤에 분류기($G_y$)와 도메인 판별기($G_d$)가 연결됩니다. 도메인 판별기 훈련 시에는 Gradient Reversal Layer (GRL)를 사용하여 특징 추출자가 도메인 불변 특징을 학습하도록 유도합니다. 가중치 $\gamma$는 분류기 손실과 소스 도메인에 대한 판별기 손실에 적용됩니다.
 

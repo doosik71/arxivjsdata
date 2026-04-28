@@ -64,7 +64,7 @@ Qianzi Yu, Yang Cao, Yu Kang
    - 유사도 점수: $\text{Score} = 1 - \cos(z_1, z_2)$ (코사인 유사도 사용).
    - 상위 10%의 유사도 점수 집합 $I = \{i | \text{Score}_i \geq h\}$를 선택합니다.
    - 교차 특징 손실은 다음과 같이 계산됩니다:
-     $$ L*{\text{cross}} = \frac{1}{2} \left( \frac{1}{|I|} \sum*{i \in I} \text{Score}(f*{e1}, f_2) + \frac{1}{|I|} \sum*{i \in I} \text{Score}(f\_{e2}, f_1) \right) $$
+     $$ L_{\text{cross}} = \frac{1}{2} \left( \frac{1}{|I|} \sum_{i \in I} \text{Score}(f_{e1}, f_2) + \frac{1}{|I|} \sum_{i \in I} \text{Score}(f_{e2}, f_1) \right) $$
 
 ## 📊 Results
 

@@ -41,8 +41,8 @@ Mamatha Thota, Georgios Leontidis
    - **아키텍처**: ResNet-50 인코더($f(\cdot)$)와 두 개의 비선형 MLP 투영 헤드($g(\cdot)$)로 구성됩니다. 인코더는 무작위로 초기화되어 처음부터 학습됩니다.
    - **데이터 증강**: 각 소스 및 타겟 이미지에 대해 두 개의 증강된 뷰를 생성합니다. (예: $a_s_1$, $a_s_2$).
    - **독립적인 대조 손실**: SimCLR에서 영감을 받아, 대조 손실을 소스 도메인과 타겟 도메인에 대해 독립적으로 계산합니다.
-     $$L_{CONT\_DA} = L_{CONT\_S} + L_{CONT\_T}$$
-     여기서 $L_{CONT\_S}$와 $L_{CONT\_T}$는 각 도메인에서 계산된 NT-Xent 손실의 변형입니다.
+     $$L_{CONT_DA} = L_{CONT_S} + L_{CONT_T}$$
+     여기서 $L_{CONT_S}$와 $L_{CONT_T}$는 각 도메인에서 계산된 NT-Xent 손실의 변형입니다.
 2. **거짓 부정 샘플 제거 (False Negative Removal, FNR)**:
    - 레이블이 없으므로 미니 배치 내에서 앵커 이미지와 동일한 클래스에 속할 수 있는 부정 샘플이 존재할 수 있습니다.
    - 이러한 '거짓 부정 샘플'은 모델 수렴을 방해하고 성능을 저하시킬 수 있습니다.
@@ -50,14 +50,14 @@ Mamatha Thota, Georgios Leontidis
    - FNR이 적용된 대조 손실($L_{FNR}$)은 다음과 같습니다:
      $$L_{FNR} = -log \frac{exp(sim(z_i, z_j)/T)}{\sum_{k=1, (k \neq i, k \neq S_i)}^{2N} sim(z_i, z_k)/T}$$
    - 도메인 적응을 위해 FNR 손실도 소스 및 타겟 도메인에 대해 독립적으로 계산됩니다:
-     $$L_{FNR\_DA} = L_{FNR\_S} + L_{FNR\_T}$$
+     $$L_{FNR_DA} = L_{FNR_S} + L_{FNR_T}$$
 3. **최대 평균 불일치 (Maximum Mean Discrepancy, MMD) 재검토**:
    - MMD는 두 분포의 RKHS (Reproducing Kernel Hilbert Space) 평균 임베딩 간의 거리를 측정하여 도메인 불일치를 명시적으로 최소화합니다.
    - MMD 손실($L_{MMD}$)은 다음과 같이 계산됩니다:
      $$L_{MMD} = \left\| \frac{1}{N} \sum_{i=1}^{N} \phi(x_s_i) - \frac{1}{M} \sum_{j=1}^{M} \phi(x_t_j) \right\|^2_H$$
      이는 최종 손실 함수에 통합되어 소스 및 타겟 특징 분포를 정렬하는 데 사용됩니다.
 4. **학습 및 평가**:
-   - 인코더와 투영 헤드는 $L_{FNR\_DA}$와 $L_{MMD}$를 조합한 총 손실을 역전파하여 업데이트됩니다.
+   - 인코더와 투영 헤드는 $L_{FNR_DA}$와 $L_{MMD}$를 조합한 총 손실을 역전파하여 업데이트됩니다.
    - 사전 학습 후에는 투영 헤드를 버리고, 고정된 인코더 특징 위에 선형 분류기를 학습시켜 성능을 평가합니다 (선형 평가).
    - **다중 뷰 확장**: 두 개의 증강 뷰 외에 네 개의 증강 뷰를 사용하는 실험도 수행됩니다.
 

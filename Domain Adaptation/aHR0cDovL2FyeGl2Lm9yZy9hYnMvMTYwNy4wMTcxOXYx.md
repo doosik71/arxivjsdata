@@ -36,10 +36,10 @@ Deep CORAL은 심층 신경망 내에서 소스 및 타겟 특징 활성화의 2
    - 주어진 소스 데이터 $D_S = \{x_i\}$와 타겟 데이터 $D_T = \{u_i\}$ (각각 $n_S$, $n_T$ 개)에 대해, 각 데이터는 $d$차원 심층 레이어 활성화 $\phi(I)$를 나타냅니다.
    - 소스 및 타겟 특징의 공분산 행렬 $C_S$와 $C_T$를 계산합니다.
    - CORAL 손실 $\mathcal{L}_{\text{CORAL}}$은 이들 공분산 행렬의 차이에 대한 프로베니우스 노름(Frobenius norm)의 제곱으로 정의됩니다:
-     $$ \mathcal{L}\_{\text{CORAL}} = \frac{1}{4d^2} \|C_S - C_T\|^2_F $$
+     $$ \mathcal{L}_{\text{CORAL}} = \frac{1}{4d^2} \|C_S - C_T\|^2_F $$
    - 공분산 행렬은 다음과 같이 계산됩니다:
-     $$ C_S = \frac{1}{n_S-1} (D^{\top}\_S D_S - \frac{1}{n_S}(\mathbf{1}^{\top}D_S)^{\top}(\mathbf{1}^{\top}D_S)) $$
-        $$ C_T = \frac{1}{n_T-1} (D^{\top}\_T D_T - \frac{1}{n_T}(\mathbf{1}^{\top}D_T)^{\top}(\mathbf{1}^{\top}D_T)) $$
+     $$ C_S = \frac{1}{n_S-1} (D^{\top}_S D_S - \frac{1}{n_S}(\mathbf{1}^{\top}D_S)^{\top}(\mathbf{1}^{\top}D_S)) $$
+        $$ C_T = \frac{1}{n_T-1} (D^{\top}_T D_T - \frac{1}{n_T}(\mathbf{1}^{\top}D_T)^{\top}(\mathbf{1}^{\top}D_T)) $$
         여기서 $\mathbf{1}$은 모든 요소가 1인 열 벡터입니다.
    - CORAL 손실은 입력 특징에 대해 미분 가능하며, 역전파를 통해 신경망 파라미터를 업데이트할 수 있습니다.
 
@@ -47,7 +47,7 @@ Deep CORAL은 심층 신경망 내에서 소스 및 타겟 특징 활성화의 2
 
    - 최종 심층 특징이 판별력(discriminative)과 도메인 불변성(domain-invariant)을 모두 갖도록, 분류 손실과 CORAL 손실을 함께 최소화합니다.
    - 총 손실 함수는 다음과 같습니다:
-     $$ \mathcal{L} = \mathcal{L}_{\text{CLASS.}} + \sum_{i=1}^{t} \lambda*i \mathcal{L}*{\text{CORAL}}^{(i)} $$
+     $$ \mathcal{L} = \mathcal{L}_{\text{CLASS.}} + \sum_{i=1}^{t} \lambda*i \mathcal{L}_{\text{CORAL}}^{(i)} $$
         여기서 $\mathcal{L}_{\text{CLASS.}}$는 분류 손실, $\mathcal{L}_{\text{CORAL}}^{(i)}$는 $i$번째 CORAL 손실 레이어의 손실, $t$는 CORAL 손실 레이어의 수, $\lambda_i$는 적응과 분류 정확도 간의 균형을 조절하는 가중치입니다.
    - 훈련 초반에는 분류 손실이 크고 CORAL 손실이 작지만, 훈련이 진행됨에 따라 두 손실이 균형을 이루며 타겟 도메인에서 잘 작동하는 특징을 학습합니다.
 

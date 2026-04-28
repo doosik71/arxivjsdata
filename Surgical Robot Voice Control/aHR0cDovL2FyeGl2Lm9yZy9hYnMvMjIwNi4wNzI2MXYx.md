@@ -34,8 +34,8 @@ $$
 
 $$
 t = \begin{cases}
-\operatorname*{argmin}_{i \in \{0,...,T\}} (p_{0i}) & \text{if } y=0 \\
-\operatorname*{argmax}_{i \in \{0,...,T\}} (p_{yi}) & \text{if } y \neq 0
+\operatorname_{argmin}_{i \in \{0,...,T\}} (p_{0i}) & \text{if } y=0 \\
+\operatorname_{argmax}_{i \in \{0,...,T\}} (p_{yi}) & \text{if } y \neq 0
 \end{cases}
 $$
 
@@ -56,8 +56,8 @@ $$
 
 $$
 t = \begin{cases}
-\operatorname*{argmin}_{i \in \{0,...,T\}} (p_{0i}) & \text{if } y=0 \\
-\left( \operatorname*{argmax}_{i \in \{0,...,T\}} (p_{yi}) - \beta \right)_+ & \text{if } y \neq 0
+\operatorname_{argmin}_{i \in \{0,...,T\}} (p_{0i}) & \text{if } y=0 \\
+\left( \operatorname_{argmax}_{i \in \{0,...,T\}} (p_{yi}) - \beta \right)_+ & \text{if } y \neq 0
 \end{cases}
 $$
 

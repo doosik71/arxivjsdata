@@ -42,23 +42,23 @@ Yongqin Xian, Tobias Lorenz, Bernt Schiele, Zeynep Akata
 2. **특징 생성 (Feature Generation)**:
 
    - **`f-GAN`**: 조건부 GAN으로, 생성자 $G: Z \times C \to X$는 무작위 가우시안 노이즈 $z$와 클래스 임베딩 $c(y)$를 입력받아 CNN 이미지 특징 $\tilde{x}$를 출력합니다. 판별자 $D: X \times C \to [0,1]$은 실제 이미지 특징과 생성된 특징을 구별합니다.
-     $$ \min*G \max_D L*{GAN} = E[\log D(x, c(y))] + E[\log (1 - D(\tilde{x}, c(y)))] $$
+     $$ \min_G \max_D L_{GAN} = E[\log D(x, c(y))] + E[\log (1 - D(\tilde{x}, c(y)))] $$
    - **`f-WGAN`**: 개선된 WGAN [19]을 조건부 설정으로 확장합니다. 판별자 $D: X \times C \to \mathbb{R}$는 시그모이드 레이어를 제거하고 실수 값을 출력합니다. Wasserstein 거리 근사를 최적화하며, 기울기 페널티(gradient penalty)를 통해 1-Lipschitz 제약 조건을 적용합니다.
-     $$ L*{WGAN} = E[D(x, c(y))] - E[D(\tilde{x}, c(y))] - \lambda E[(||\nabla*{\hat{x}} D(\hat{x}, c(y))||\_2 - 1)^2] $$
+     $$ L_{WGAN} = E[D(x, c(y))] - E[D(\tilde{x}, c(y))] - \lambda E[(||\nabla_{\hat{x}} D(\hat{x}, c(y))||_2 - 1)^2] $$
         여기서 $\tilde{x} = G(z, c(y))$, $\hat{x} = \alpha x + (1-\alpha)\tilde{x}$ ($\alpha \sim U(0,1)$).
    - **`f-CLSWGAN` (제안 모델)**: `f-WGAN`에 분류 손실 ($L_{CLS}$)을 추가하여 생성된 특징이 분류에 적합하도록 만듭니다. $L_{CLS}$는 생성된 특징에 대한 음의 로그 가능도이며, 미리 훈련된 선형 Softmax 분류기를 사용하여 계산됩니다. 이 분류 손실은 생성자가 구별 가능한 특징을 생성하도록 강제하는 정규화 역할을 합니다.
-     $$ L*{CLS} = -E*{\tilde{x} \sim p*{\tilde{x}}}[\log P(y | \tilde{x}; \theta)] $$
+     $$ L_{CLS} = -E_{\tilde{x} \sim p_{\tilde{x}}}[\log P(y | \tilde{x}; \theta)] $$
         최종 목적 함수는 다음과 같습니다.
-        $$ \min_G \max_D L*{WGAN} + \beta L\_{CLS} $$
+        $$ \min_G \max_D L_{WGAN} + \beta L_{CLS} $$
         여기서 $\beta$는 분류 손실의 가중치를 조절하는 하이퍼파라미터입니다.
 
 3. **분류 (Classification)**:
    - 생성 모델이 훈련된 후, 각 미본 클래스 $u \in Y_u$에 대해 $c(u)$를 조건으로 무작위 노이즈 $z$를 샘플링하여 원하는 만큼의 합성 CNN 특징 $\tilde{x}$를 생성합니다.
    - 이렇게 생성된 미본 클래스 특징으로 합성 훈련 세트 $\tilde{U} = \{(\tilde{x}, u, c(u))\}$를 구성합니다.
    - **멀티모달 임베딩 (Multimodal Embedding)**: ALE [2], DEVISE [14] 등 기존 ZSL 방법을 본 클래스 데이터 $S$와 합성 미본 클래스 데이터 $\tilde{U}$의 조합으로 훈련하여 더 강력한 분류기를 학습합니다.
-     $$ f(x) = \operatorname{argmax}\_y F(x, c(y); W) $$
+     $$ f(x) = \operatorname{argmax}_y F(x, c(y); W) $$
    - **Softmax**: 표준 Softmax 분류기는 $T=\tilde{U}$ (ZSL) 또는 $T=S \cup \tilde{U}$ (GZSL)에 대해 음의 로그 가능도 손실을 최소화하여 훈련됩니다.
-     $$ \min*\theta -\frac{1}{|T|} \sum*{(x,y) \in T} \log P(y|x; \theta) $$
+     $$ \min_\theta -\frac{1}{|T|} \sum_{(x,y) \in T} \log P(y|x; \theta) $$
 
 ## 📊 Results
 

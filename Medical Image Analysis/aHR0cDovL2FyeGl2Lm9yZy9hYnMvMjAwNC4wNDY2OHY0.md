@@ -32,7 +32,7 @@ Neerav Karani, Ertunc Erdil, Krishna Chaitanya, Ender Konukoglu
 
    - $N_{\phi}$와 $S_{\theta}$는 소스 도메인 훈련 데이터셋 $D_{SD} = \{(x_i, z_i) | i=1, \dots, N\}$에서 지도 학습 방식으로 함께 훈련됩니다.
    - 최적의 파라미터 $\{\theta^{\ast}, \phi^{\ast}\}$는 다음과 같은 손실 함수 $L$을 최소화하여 추정됩니다:
-     $$ \theta^{\ast}, \phi^{\ast} = \argmin*{\theta, \phi} \sum_i L(S*{\theta}(N\_{\phi}(x_i)), z_i) $$
+     $$ \theta^{\ast}, \phi^{\ast} = \argmin_{\theta, \phi} \sum_i L(S_{\theta}(N_{\phi}(x_i)), z_i) $$
    - 이 훈련 후 $S_{\theta}$의 파라미터 $\theta^{\ast}$는 고정되고, $N_{\phi}$의 파라미터 $\phi$만 테스트 시점에 각 이미지에 대해 조정됩니다.
 
 2. **테스트 시점 적응 (Test-Time Adaptation):**
@@ -40,10 +40,10 @@ Neerav Karani, Ertunc Erdil, Krishna Chaitanya, Ender Konukoglu
    - **적응 파라미터 선택:** 도메인 이동이 저수준 강도 통계 및 조직 유형 간의 대비 변화로 나타난다고 가정하고, 상대적으로 얕은 이미지 정규화 CNN $N_{\phi}$의 파라미터 $\phi$만 조정합니다. $N_{\phi}$는 잔차 CNN(Residual CNN)으로 모델링되며, 입력 이미지의 내용을 크게 변경하지 않으면서 대비 변화를 보정할 수 있는 유연성을 제공합니다.
    - **적응 유도 방법:** 레이블 정보나 추가 이미지 없이, 예측된 분할이 소스 도메인 훈련 데이터셋에서 관찰된 것과 유사하게 '타당'해야 한다는 암시적 사전 정보를 활용합니다.
      - **DAE (Denoising Autoencoder) 훈련:** 소스 도메인의 실제 분할 레이블 $z_i$를 사용하여 DAE $D_{\psi}$를 훈련합니다. $D_{\psi}$는 손상된 분할 $Z_c$를 "노이즈 제거"하여 $Z$와 유사한 타당한 분할을 출력하도록 학습됩니다. DAE 훈련은 다음과 같습니다:
-       $$ \psi^{\ast} = \argmin*{\psi} \sum_j \sum_i L(D*{\psi}(z*{cij}), z_i) $$
-       여기서 $z*{cij}$는 실제 레이블 $z_i$를 인위적으로 손상시킨 것입니다 (노이즈 전략: 무작위 패치 복사).
+       $$ \psi^{\ast} = \argmin_{\psi} \sum_j \sum_i L(D_{\psi}(z_{cij}), z_i) $$
+       여기서 $z_{cij}$는 실제 레이블 $z_i$를 인위적으로 손상시킨 것입니다 (노이즈 전략: 무작위 패치 복사).
      - **DAE 기반 적응:** 주어진 테스트 이미지 $x$에 대해, $S_{\theta^{\ast}}(N_{\phi}(x))$에 의해 예측된 분할 $z_c$를 "노이즈가 있는" 분할로 간주하고, 이를 훈련된 DAE $D_{\psi^{\ast}}$에 통과시켜 "노이즈 제거된" 버전 $D_{\psi^{\ast}}(z_c)$를 얻습니다. 그런 다음, $N_{\phi}$의 파라미터 $\phi$를 업데이트하여 예측된 분할 $z_c$가 노이즈 제거된 버전 $D_{\psi^{\ast}}(z_c)$에 가까워지도록 합니다:
-       $$ \hat{\phi} = \argmin*{\phi} L(z_c, D*{\psi^{\ast}}(z*c)); z_c = S*{\theta^{\ast}}(N\_{\phi}(x)) $$
+       $$ \hat{\phi} = \argmin_{\phi} L(z_c, D_{\psi^{\ast}}(z*c)); z_c = S_{\theta^{\ast}}(N_{\phi}(x)) $$
      - 이 최적화는 경사 하강법 변형을 사용하여 반복적으로 수행되며, $L(z_c, D_{\psi^{\ast}}(z_c))$가 최소가 되는 $\hat{\phi}$를 최적 파라미터로 선택합니다. 최종 분할은 $S_{\theta^{\ast}}(N_{\hat{\phi}}(x))$입니다.
 
 3. **큰 도메인 변화를 위한 아틀라스 초기화:** SD와 TD 이미지가 T1w와 T2w MRI처럼 크게 다른 경우, DAE 기반 적응 전에 아핀(affinely) 등록된 아틀라스 $A$를 사용하여 예측 분할을 합리적인 시작점으로 유도하는 스위칭 전략을 사용합니다. $L(z_c, D_{\psi^{\ast}}(z_c))$와 $L(z_c, A)$ 중 하나를 최소화합니다.

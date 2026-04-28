@@ -32,7 +32,7 @@ WaveGlow는 간단한 분포(0 평균 구형 가우시안)에서 샘플링한 $z
    $$ z \sim N(z; 0, I) $$
     $$ x = f*0 \circ f_1 \circ \dots \circ f_k(z) $$
     모델은 데이터의 음의 로그-가능도를 직접 최소화하여 훈련됩니다. 네트워크의 각 레이어가 전단사(bijective)이므로, 변수 변환(change of variables) 공식을 사용하여 가능도를 직접 계산할 수 있습니다.
-    $$ \log p*{\theta}(x) = \log p*{\theta}(z) + \sum*{i=1}^k \log|\det(J(f^{-1}\_i(x)))| $$
+    $$ \log p_{\theta}(x) = \log p_{\theta}(z) + \sum_{i=1}^k \log|\det(J(f^{-1}_i(x)))| $$
 
 2. **Squeeze 연산:**
    네트워크의 순방향 패스에서 8개의 오디오 샘플을 벡터로 묶는 "squeeze" 연산을 수행합니다.
@@ -49,7 +49,7 @@ WaveGlow는 간단한 분포(0 평균 구형 가우시안)에서 샘플링한 $z
      $$ x*a, x_b = \text{split}(x) $$
         $$ (s, t) = \text{WN}(x_a, \text{mel-spectrogram}) $$
         $$ x_b' = s \cdot x_b + t $$
-        $$ f^{-1}*{\text{coupling}}(x) = \text{concat}(x_a, x_b') $$
+        $$ f^{-1}_{\text{coupling}}(x) = \text{concat}(x_a, x_b') $$
         이 레이어는 WN()이 역변환 가능하지 않아도 전체 네트워크의 역변환 가능성을 유지합니다. 야코비안의 로그-행렬식은 $\log|s|$로 단순화됩니다.
 
 4. **Early Outputs:**

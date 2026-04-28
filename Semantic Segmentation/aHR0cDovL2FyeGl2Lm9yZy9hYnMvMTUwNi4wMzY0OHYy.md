@@ -28,7 +28,7 @@ Deepak Pathak, Philipp Krähenbühl, Trevor Darrell
 
 1. **문제 정의:** 픽셀 단위 레이블링을 위해 CNN의 파라미터 $\theta$를 찾는 것이 목표입니다. 이 픽셀 단위 레이블링 $\tilde{Q}_{\text{I}}$는 각 이미지 $I$에 대해 주어진 선형 제약 조건 $A_{\text{I}}\tilde{Q}_{\text{I}} \ge \tilde{b}_{\text{I}}$를 만족해야 합니다.
 2. **잠재 확률 분포 도입:** 위 문제는 네트워크 파라미터 $\theta$에 대해 비볼록이므로, 최적화를 효율적으로 수행하기 위해 의미론적 레이블 $X$에 대한 잠재 확률 분포 $P(X)$를 도입합니다. 제약 조건은 $P(X)$에 적용하고, 네트워크 출력 $Q(X|\theta)$는 $P(X)$와 KL-diver전스(KL-divergence)를 최소화하도록 유도합니다. 즉, 다음 목적 함수를 최적화합니다.
-   $$ \min\_{\theta, P} D(P(X)||Q(X|\theta)) \\ \text{subject to } A\tilde{P} \ge \tilde{b}, \sum_X P(X) = 1 $$
+   $$ \min_{\theta, P} D(P(X)||Q(X|\theta)) \\ \text{subject to } A\tilde{P} \ge \tilde{b}, \sum_X P(X) = 1 $$
     여기서 $D$는 KL-diver전스이며, $P$는 잠재 분포, $Q$는 CNN 출력 분포입니다.
 3. **교대 최적화(Alternating Optimization):**
    - **잠재 분포 $P$ 최적화(CNN 파라미터 $\theta$ 고정 시):** 이 문제는 선형 제약 조건이 있는 볼록 최적화 문제입니다. 그 이중 함수 $L(\lambda) = \lambda^{\text{T}}\tilde{b} - \sum_{\text{i=1}}^{\text{n}} \log (\sum_{\text{l} \in L} \exp(f_{\text{i}}(l;\theta) + A_{\text{i;l}}^{\text{T}}\lambda))$를 투영된 경사 상승법(projected gradient ascent)을 사용하여 최적화합니다. 이는 일반적으로 50회 미만의 반복으로 빠르게 수렴합니다.

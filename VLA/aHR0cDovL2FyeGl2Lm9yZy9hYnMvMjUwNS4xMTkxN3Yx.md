@@ -23,16 +23,16 @@ Fanqi Lin, Ruiqian Nai, Yingdong Hu, Jiacheng You, Junming Zhao, Yang Gao
 
 ### 3.1 Framework of OneTwoVLA
 
-- **문제 정의:** 로봇 제어 정책 $ \pi\_\theta $ 가 매 타임스텝 $ t $마다 추론할지 행동할지 자율적으로 결정하는 능력을 개발합니다.
+- **문제 정의:** 로봇 제어 정책 $ \pi_\theta $ 가 매 타임스텝 $ t $마다 추론할지 행동할지 자율적으로 결정하는 능력을 개발합니다.
 - **추론 모드:**
-  - 입력: 현재 이미지 $ I*{1:n}^t $, 최신 추론 타임스텝의 참조 이미지 $ I*{1:n}^{ref} $, 언어 지침 $ \ell $, 최신 추론 내용 $ R $.
-  - 출력: 업데이트된 추론 내용 $ \hat{R} \sim \pi*\theta(\cdot|I*{1:n}^t, I\_{1:n}^{ref}, \ell, R) $.
+  - 입력: 현재 이미지 $ I_{1:n}^t $, 최신 추론 타임스텝의 참조 이미지 $ I_{1:n}^{ref} $, 언어 지침 $ \ell $, 최신 추론 내용 $ R $.
+  - 출력: 업데이트된 추론 내용 $ \hat{R} \sim \pi*\theta(\cdot|I_{1:n}^t, I_{1:n}^{ref}, \ell, R) $.
 - **행동 모드:**
   - 입력: 위 추론 모드 입력에 로봇의 고유 상태 $ s_t $ 추가.
-  - 출력: 최신 추론 내용에 기반한 행동 청크 $ A*t \sim \pi*\theta(\cdot|I*{1:n}^t, I*{1:n}^{ref}, \ell, R, s_t) $.
+  - 출력: 최신 추론 내용에 기반한 행동 청크 $ A*t \sim \pi*\theta(\cdot|I_{1:n}^t, I_{1:n}^{ref}, \ell, R, s_t) $.
 - **적응형 추론 (Adaptive Inference, Algorithm 1):**
   - 모델은 먼저 두 가지 특수 결정 토큰(decision token, DT) 중 하나를 예측합니다: `[BOR]` (Beginning of Reasoning) 또는 `[BOA]` (Beginning of Action).
-  - `[BOR]`이 예측되면, 모델은 추론 모드에 진입하여 `[EOS]` (End of Sentence) 토큰을 생성할 때까지 텍스트 추론 내용 $ \hat{R} $을 생성합니다. 이 때 $ R $은 $ \hat{R} $로 업데이트되고, $ I\_{ref} $는 $ I_t $로 설정됩니다.
+  - `[BOR]`이 예측되면, 모델은 추론 모드에 진입하여 `[EOS]` (End of Sentence) 토큰을 생성할 때까지 텍스트 추론 내용 $ \hat{R} $을 생성합니다. 이 때 $ R $은 $ \hat{R} $로 업데이트되고, $ I_{ref} $는 $ I_t $로 설정됩니다.
   - `[BOA]`가 예측되면, 모델은 행동 모드에 진입하여 즉시 행동 청크 $ A_t $를 생성합니다.
   - 이 프레임워크는 오류 복구 및 인간-로봇 상호작용을 지원하며, 추론은 특정 중요한 시점에만 발생하여 전체 실행 효율성에 미치는 영향이 적습니다.
 - **모델 구현:**

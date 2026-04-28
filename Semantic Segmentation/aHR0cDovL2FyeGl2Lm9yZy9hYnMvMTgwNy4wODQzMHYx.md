@@ -23,24 +23,24 @@ Kang Dang, Chunluan Zhou, Zhigang Tu, Michael Hoy, Justin Dauwels, Junsong Yuan
 
 본 논문은 종단 간 영역 기반 주체-행동 의미론적 분할 접근 방식을 제안하며, 다음 단계로 구성됩니다.
 
-1. **영역 마스크 생성**: 각 프레임에 대해 FCIS(Fully Convolutional Instance Segmentation) [33] 알고리즘을 사용하여 후보 영역 마스크 $ \{b*i, M_i\}*{i=1}^N $를 생성합니다. 이 때, 특정 데이터셋(예: A2D)에 대해 FCIS를 미세 조정(fine-tuning)하여 관련 없는 배경 영역을 줄이고 고품질 마스크를 얻습니다.
+1. **영역 마스크 생성**: 각 프레임에 대해 FCIS(Fully Convolutional Instance Segmentation) [33] 알고리즘을 사용하여 후보 영역 마스크 $ \{b*i, M_i\}_{i=1}^N $를 생성합니다. 이 때, 특정 데이터셋(예: A2D)에 대해 FCIS를 미세 조정(fine-tuning)하여 관련 없는 배경 영역을 줄이고 고품질 마스크를 얻습니다.
 2. **프론트엔드 모듈 (이중 스트림 네트워크)**:
    - **외형(Appearance) 스트림**: RGB 이미지를 입력으로 받아 외형 정보를 학습합니다.
    - **움직임(Motion) 스트림**: 광학 흐름 이미지를 입력으로 받아 움직임 정보를 학습합니다 (FlowNet [8]을 사용하여 광학 흐름 계산).
    - 각 스트림은 ResNet-101 [9]을 기반으로 하며, 공간 디테일 보존을 위해 마지막 두 레이어를 확장 컨볼루션(dilated convolution)으로 대체하여 출력 해상도를 원본 이미지 크기의 1/8로 높입니다.
    - 두 스트림의 특징 맵은 연결(concatenate)되어 백엔드 모듈의 입력으로 사용됩니다 (조기 융합 전략).
 3. **백엔드 모듈 (영역 기반 분할 네트워크)**:
-   - 프론트엔드에서 얻은 융합된 특징 $X \in \mathbb{R}^{W \times H \times 2C}$와 후보 영역 마스크 $ \{b*i, M_i\}*{i=1}^N $를 입력으로 받습니다.
+   - 프론트엔드에서 얻은 융합된 특징 $X \in \mathbb{R}^{W \times H \times 2C}$와 후보 영역 마스크 $ \{b*i, M_i\}_{i=1}^N $를 입력으로 받습니다.
    - 두 개의 네트워크를 사용하여 주체 레이블 $Y_{\text{actor}} \in \mathbb{R}^{W \times H \times K_{\text{actor}}}$와 행동 레이블 $Y_{\text{action}} \in \mathbb{R}^{W \times H \times K_{\text{action}}}$을 각각 예측합니다.
    - **영역 분류**: 각 바운딩 박스 $b_i$에 대해 ROI 풀링 레이어와 여러 개의 완전 연결(FC) 레이어를 통해 전체 영역 마스크 점수 $s_{i, \text{actor}}$ 및 $s_{i, \text{action}}$를 얻습니다.
    - **영역-픽셀 레이어**: 영역 분류 점수를 픽셀 점수로 변환하여 일관된 레이블링을 강제합니다. 픽셀 $j$에 대한 점수는 다음과 같이 계산됩니다:
-     $$ y*j^{\text{actor}} = \max*{i=1,...,N, j \in b*i} (m*{i,j} \times s*{i, \text{actor}}) $$
-        $$ y_j^{\text{action}} = \max*{i=1,...,N, j \in b*i} (m*{i,j} \times s*{i, \text{action}}) $$
-     여기서 $m*{i,j}$는 픽셀 $j$가 마스크 $i$에 속할 확률을 나타냅니다. 여러 영역 마스크에 속하는 픽셀의 경우, 최대 풀링(max pooling)을 적용하여 레이블링 충돌을 해결합니다.
+     $$ y*j^{\text{actor}} = \max_{i=1,...,N, j \in b*i} (m_{i,j} \times s_{i, \text{actor}}) $$
+        $$ y_j^{\text{action}} = \max_{i=1,...,N, j \in b*i} (m_{i,j} \times s_{i, \text{action}}) $$
+     여기서 $m_{i,j}$는 픽셀 $j$가 마스크 $i$에 속할 확률을 나타냅니다. 여러 영역 마스크에 속하는 픽셀의 경우, 최대 풀링(max pooling)을 적용하여 레이블링 충돌을 해결합니다.
    - 결과로 나온 픽셀 점수는 소프트맥스(softmax) 레이어를 통과하여 클래스 확률을 출력합니다.
    - 훈련 시 각 픽셀 $j$에 대한 손실 함수는 다음과 같습니다:
-     $$ L*{j, \text{loss}} = -\log(p*{j, \text{actor}}(o*{j, \text{actor}})) - \log(p*{j, \text{action}}(o*{j, \text{action}})) $$
-     여기서 $o*{j, \text{actor}}$ 및 $o_{j, \text{action}}$는 각각 주체 및 행동의 실제 레이블입니다.
+     $$ L_{j, \text{loss}} = -\log(p_{j, \text{actor}}(o_{j, \text{actor}})) - \log(p_{j, \text{action}}(o_{j, \text{action}})) $$
+     여기서 $o_{j, \text{actor}}$ 및 $o_{j, \text{action}}$는 각각 주체 및 행동의 실제 레이블입니다.
 4. **네트워크 훈련**: 훈련 가속화를 위해 2단계 훈련 절차를 채택합니다.
    - **1단계**: 프론트엔드 네트워크를 사전 훈련된 모델로 초기화하고, 매개변수가 적은 가벼운 백엔드 네트워크(DeepLab CNN [4] 기반)와 함께 훈련합니다.
    - **2단계**: 프론트엔드 네트워크의 매개변수를 고정하고, 제안하는 영역 기반 백엔드 네트워크의 완전 연결 레이어만 훈련합니다.

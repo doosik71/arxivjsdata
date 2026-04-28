@@ -32,19 +32,19 @@ Hongjing Zhang, Ian Davidson
 2. **아키텍처**:
 
    - **인코더 네트워크 $f(\theta)$**: 입력 데이터 $X$를 저차원 임베딩 공간으로 매핑하는 신경망입니다. 목표는 모든 정상 데이터를 미리 정해진 중심 $c$에 가깝게 클러스터링하는 것입니다. 이 과정은 다음 $L_{SVDD}$ 손실 함수를 최소화하여 수행됩니다.
-     $$ L*{SVDD} = \frac{1}{M} \sum*{i=1}^{M} ||f(\mathbf{x}_i; \theta) - c||^2 + \frac{\alpha}{2} \sum_{l=1}^{L} ||\theta_l||^2 $$
+     $$ L_{SVDD} = \frac{1}{M} \sum_{i=1}^{M} ||f(\mathbf{x}_i; \theta) - c||^2 + \frac{\alpha}{2} \sum_{l=1}^{L} ||\theta_l||^2 $$
         여기서 $M$은 훈련 인스턴스의 수, $\mathbf{x}_i$는 $i$-번째 인스턴스, $\theta$는 인코더의 매개변수, $c$는 미리 정해진 데이터 중심, $\alpha$는 가중치 감쇠(weight decay) 하이퍼파라미터, $\theta_l$은 $l$-번째 레이어의 가중치입니다.
 
    - **분별자 네트워크 $g(\theta_d)$**: 인코더 $f(\theta)$에 의해 학습된 임베딩 $f(X; \theta)$를 기반으로 보호 상태 변수 $Z$의 값을 분류하는 네트워크입니다. $Z$가 이진 변수이므로 시그모이드 함수와 교차 엔트로피 손실을 사용하여 훈련됩니다.
-     $$ L*D = -\frac{1}{M} \sum*{i=1}^{M} (z_i \cdot \log(\hat{z}\_i) + (1 - z_i) \cdot \log(1 - \hat{z}\_i)) $$
+     $$ L*D = -\frac{1}{M} \sum_{i=1}^{M} (z_i \cdot \log(\hat{z}_i) + (1 - z_i) \cdot \log(1 - \hat{z}_i)) $$
         여기서 $z_i$는 실제 보호 상태, $\hat{z}_i$는 예측된 보호 상태, $\theta_d$는 분별자의 매개변수입니다.
 
 3. **적대적 학습**:
 
    - 학습된 임베딩 $f(X; \theta)$가 민감 속성 $Z$와 통계적으로 독립되도록 ($\mathrm{p}(f(X; \theta)|z=0) = \mathrm{p}(f(X; \theta)|z=1)$), 인코더 $f(\theta)$는 분별자 $g(\theta_d)$를 속이도록 훈련됩니다.
    - 이를 위해 적대적 손실 $L_{Adv}$가 정의됩니다.
-     $$ L*{Adv} = L*{SVDD} - \lambda L*D $$
-        여기서 $\lambda$는 양수 하이퍼파라미터로, 분별자 손실 항의 가중치를 조절합니다. $L*{Adv}$를 최소화하는 것은 $L_{SVDD}$를 최소화하면서 동시에 $L_D$를 최대화하는 것과 같습니다 (분별자를 속이는 것).
+     $$ L_{Adv} = L_{SVDD} - \lambda L*D $$
+        여기서 $\lambda$는 양수 하이퍼파라미터로, 분별자 손실 항의 가중치를 조절합니다. $L_{Adv}$를 최소화하는 것은 $L_{SVDD}$를 최소화하면서 동시에 $L_D$를 최대화하는 것과 같습니다 (분별자를 속이는 것).
    - **교대 최적화**: 인코더와 분별자는 미니맥스(min-max) 솔루션을 찾을 때까지 교대로 훈련됩니다.
      - 분별자 $g(\theta_d)$의 매개변수를 고정하고, 인코더 $f(\theta)$를 $L_{SVDD} - \lambda L_D$를 최소화하도록 훈련합니다.
      - 인코더 $f(\theta)$의 매개변수를 고정하고, 분별자 $g(\theta_d)$를 $L_D$를 최소화하도록 훈련합니다.
@@ -57,7 +57,7 @@ Hongjing Zhang, Ian Davidson
    - **Fairness by $p\%$-rule**: 특정 임계값 $t$를 기준으로 이상치로 분류된 인스턴스($s(\mathbf{x}) > t$) 내에서 보호 상태 변수 $z=0$과 $z=1$ 그룹의 비율을 비교합니다. 0에서 1 사이의 값을 가지며, 1에 가까울수록 공정합니다. 이는 이상 그룹의 공정성을 측정합니다.
      $$ \min\left(\frac{P(s(\mathbf{x})>t|z=1)}{P(s(\mathbf{x})>t|z=0)}, \frac{P(s(\mathbf{x})>t|z=0)}{P(s(\mathbf{x})>t|z=1)}\right) \ge \frac{p}{100} $$
    - **Fairness by distribution distance**: 이상 점수 임계값 $t$에 독립적으로, 보호 상태 변수 $z=0$과 $z=1$에 대한 이상 점수 분포 $P$와 $Q$ 사이의 Wasserstein-1 거리(Earth-Mover Distance)를 계산하여 전체적인 공정성을 측정합니다. 이 값이 작을수록 공정합니다.
-     $$ W(P,Q) = \inf*{\gamma \in \Pi(P,Q)} E*{(\mathbf{x},\mathbf{y}) \sim \gamma}[||\mathbf{x}-\mathbf{y}||] $$
+     $$ W(P,Q) = \inf_{\gamma \in \Pi(P,Q)} E_{(\mathbf{x},\mathbf{y}) \sim \gamma}[||\mathbf{x}-\mathbf{y}||] $$
 
 ## 📊 Results
 

@@ -28,7 +28,7 @@ Yaron Lipman, Ricky T. Q. Chen, Heli Ben-Hamu, Maximilian Nickel, Matt Le
 
 1. **Flow Matching (FM) 목표 함수:**
    - 주변 확률 경로 $p_t(x)$와 이를 생성하는 목표 벡터 필드 $u_t(x)$가 주어졌을 때, 학습 가능한 CNF 벡터 필드 $v_t(x)$를 $u_t(x)$에 매칭시키는 목표 함수를 정의합니다.
-   - $$ L*{\text{FM}}(\theta) = E*{t, p_t(x)} ||v_t(x) - u_t(x)||^2 $$
+   - $$ L_{\text{FM}}(\theta) = E_{t, p_t(x)} ||v_t(x) - u_t(x)||^2 $$
    - 하지만 $p_t(x)$와 $u_t(x)$를 직접 알기 어렵기 때문에 이 목표를 그대로 사용하기는 어렵습니다.
 2. **조건부 확률 경로 및 벡터 필드 구성:**
    - 각 데이터 샘플 $x_1$에 대해 조건부 확률 경로 $p_t(x|x_1)$를 정의합니다. 이 경로는 $t=0$에서 단순한 분포($N(x|0,I)$)에서 시작하여 $t=1$에서 $x_1$ 주변에 집중된 분포($N(x|x_1, \sigma^2 I)$)로 이동합니다.
@@ -36,13 +36,13 @@ Yaron Lipman, Ricky T. Q. Chen, Heli Ben-Hamu, Maximilian Nickel, Matt Le
    - **정리 1**은 주변 벡터 필드가 주변 확률 경로를 생성함을 증명하여, 조건부 경로로부터 전체 경로를 모델링하는 이론적 기반을 마련합니다.
 3. **Conditional Flow Matching (CFM) 목표 함수:**
    - 주변 경로와 필드의 다루기 힘든 적분 문제를 피하기 위해, 조건부 벡터 필드 $u_t(x|x_1)$에 직접 회귀하는 CFM 목표 함수를 제안합니다.
-   - $$ L*{\text{CFM}}(\theta) = E*{t, q(x_1), p_t(x|x_1)} ||v_t(x) - u_t(x|x_1)||^2 $$
+   - $$ L_{\text{CFM}}(\theta) = E_{t, q(x_1), p_t(x|x_1)} ||v_t(x) - u_t(x|x_1)||^2 $$
    - **정리 2**는 $L_{\text{FM}}(\theta)$와 $L_{\text{CFM}}(\theta)$의 기울기가 기대값에서 동일함을 증명하여, CFM을 최적화하는 것이 FM을 최적화하는 것과 같음을 보입니다. 이는 효율적인 학습을 가능하게 합니다.
 4. **가우시안 조건부 확률 경로 및 벡터 필드:**
    - 조건부 확률 경로로 $p_t(x|x_1) = N(x|\mu_t(x_1), \sigma_t(x_1)^2 I)$ 형태의 가우시안 분포를 사용합니다.
    - $t=0$에서는 $\mu_0=0, \sigma_0=1$ (표준 가우시안 노이즈), $t=1$에서는 $\mu_1=x_1, \sigma_1=\sigma_{\text{min}}$ (데이터 샘플 $x_1$에 집중된 분포)으로 경계 조건을 설정합니다.
    - **정리 3**은 이러한 가우시안 경로를 생성하는 고유한 벡터 필드 $u_t(x|x_1)$가 다음 형태를 가짐을 증명합니다:
-     $$ u_t(x|x_1) = \frac{\sigma'\_t(x_1)}{\sigma_t(x_1)}(x - \mu_t(x_1)) + \mu'\_t(x_1) $$
+     $$ u_t(x|x_1) = \frac{\sigma'_t(x_1)}{\sigma_t(x_1)}(x - \mu_t(x_1)) + \mu'_t(x_1) $$
 5. **특수 인스턴스:**
    - **Diffusion 조건부 VFs:** 기존의 Variance Exploding (VE) 및 Variance Preserving (VP) Diffusion 경로들이 $\mu_t, \sigma_t$의 특정 함수를 사용하여 FM 프레임워크에 통합될 수 있음을 보여줍니다.
    - **Optimal Transport (OT) 조건부 VFs:** $\mu_t(x_1) = tx_1$ 및 $\sigma_t(x_1) = 1-(1-\sigma_{\text{min}})t$와 같이 평균과 표준편차가 시간 $t$에 따라 선형적으로 변하도록 정의합니다. 이는 두 가우시안 분포 사이의 Optimal Transport 변위 맵에 해당하며, 입자가 항상 직선 궤적과 일정한 속도로 이동하는 특성을 가집니다. 이 OT 벡터 필드는 Diffusion VF보다 학습하기 더 간단합니다.

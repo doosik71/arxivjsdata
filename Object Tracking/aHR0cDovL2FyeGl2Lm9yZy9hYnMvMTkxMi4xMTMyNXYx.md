@@ -38,7 +38,7 @@ Fei Feng, Xiao-Jun Wu, Tianyang Xu, Josef Kittler, Xue-Feng Zhu
 
 1. **상관 필터 재구성**:
    - 기존 CF 알고리즘의 최적화 목적 함수는 다음과 같습니다:
-     $$ \min*{w} \frac{1}{2n} \sum*{i=0}^{n-1} \|y_i - w^T x_i\|^2 + \frac{\lambda}{2} \|w\|^2 $$
+     $$ \min_{w} \frac{1}{2n} \sum_{i=0}^{n-1} \|y_i - w^T x_i\|^2 + \frac{\lambda}{2} \|w\|^2 $$
         여기서 $w$는 필터, $x_i$는 훈련 샘플, $y_i$는 목표 응답, $\lambda$는 정규화 파라미터입니다.
    - 주파수 도메인에서 필터 $w$는 다음과 같이 빠르게 학습됩니다:
      $$ \hat{w} = \frac{\hat{x}^_ \hat{y}}{\hat{x}^_ \hat{x} + \lambda} $$
@@ -49,10 +49,10 @@ Fei Feng, Xiao-Jun Wu, Tianyang Xu, Josef Kittler, Xue-Feng Zhu
    - 프레임 $t$에서, 이전 프레임의 모델 $w_{t-1}$과 후보 이미지 $z$를 사용하여 응답 맵 $R$을 계산합니다.
    - $R$에서 최대 피크는 목표물의 위치이며, 2차 피크들은 잠재적인 방해물(distractor) 또는 가려진(occlusion) 객체로 간주됩니다.
    - 이러한 2차 피크에 해당하는 이미지 블록($d_i$)을 **강력한 음성 샘플**로 정의하고, 이들이 필터에 낮은 응답을 생성하도록 새로운 최적화 목적 함수에 추가합니다:
-     $$ \min*{w} \frac{1}{2n} \sum*{i=0}^{n-1} \|y*i - w^T x_i\|^2 + \frac{1}{2k} \sum*{i=1}^{k} \|0 - w^T d_i\|^2 + \frac{\lambda_1}{2} \|w\|^2 + \frac{\lambda_2}{2} \|w\|^2 $$
+     $$ \min_{w} \frac{1}{2n} \sum_{i=0}^{n-1} \|y*i - w^T x_i\|^2 + \frac{1}{2k} \sum_{i=1}^{k} \|0 - w^T d_i\|^2 + \frac{\lambda_1}{2} \|w\|^2 + \frac{\lambda_2}{2} \|w\|^2 $$
         여기서 $k$는 추가된 음성 샘플의 수이며, 음성 샘플에 대한 목표 응답은 0입니다. $\lambda_1, \lambda_2$는 정규화 파라미터입니다.
    - 이 목적 함수의 주파수 도메인 해는 다음과 같습니다:
-     $$ \hat{w} = \frac{\hat{x}^_ \hat{y}}{\hat{x}^_ \hat{x} + \sum\_{i=1}^{k} \hat{d}\_i^\* \hat{d}\_i + \lambda_1 + \lambda_2} $$
+     $$ \hat{w} = \frac{\hat{x}^_ \hat{y}}{\hat{x}^_ \hat{x} + \sum_{i=1}^{k} \hat{d}_i^\* \hat{d}_i + \lambda_1 + \lambda_2} $$
 3. **관심 지점(Interest Point) 선택 전략**:
    - 응답 맵 $R$에서 얻은 관심 지점 중, 목표물과 **가까운 지점**만 음성 샘플로 포함합니다. 너무 먼 지점은 제외합니다.
    - 관심 지점의 응답 값이 실제 목표물 응답 값의 **20% 이상인 경우**에만 방해 블록으로 고려합니다.

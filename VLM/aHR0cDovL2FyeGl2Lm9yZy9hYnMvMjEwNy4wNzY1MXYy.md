@@ -49,7 +49,7 @@ ALBEF는 이미지 인코더, 텍스트 인코더, 멀티모달 인코더로 구
      - 모멘텀 유니모달 인코더로부터 최신 $M$개의 이미지-텍스트 표현을 저장하는 두 개의 큐를 유지합니다.
      - 이미지-텍스트 유사도 $s(I,T) = g_v(v_{\text{cls}})^{\top} g'_w(w'_{\text{cls}})$ 및 $s(T,I) = g_w(w_{\text{cls}})^{\top} g'_v(v'_{\text{cls}})$를 계산합니다. (여기서 $g', v', w'$는 모멘텀 인코더의 출력을 나타냅니다.)
      - 소프트맥스 정규화된 이미지-텍스트 및 텍스트-이미지 유사도 확률 $p_{\text{i2t}}(I), p_{\text{t2i}}(T)$와 정답 원-핫 유사도 $y_{\text{i2t}}(I), y_{\text{t2i}}(T)$ 간의 교차 엔트로피 손실 $L_{\text{itc}}$를 최소화합니다.
-       $$ L*{\text{itc}} = \frac{1}{2} E*{(I,T) \sim D} \left[ H(y_{\text{i2t}}(I), p_{\text{i2t}}(I)) + H(y_{\text{t2i}}(T), p_{\text{t2i}}(T)) \right] $$
+       $$ L_{\text{itc}} = \frac{1}{2} E_{(I,T) \sim D} \left[ H(y_{\text{i2t}}(I), p_{\text{i2t}}(I)) + H(y_{\text{t2i}}(T), p_{\text{t2i}}(T)) \right] $$
    - **마스크 언어 모델링 (MLM)**:
      - 입력 텍스트 토큰 중 15%를 무작위로 마스킹하고, 이미지와 문맥적 텍스트를 기반으로 마스크된 단어를 예측합니다.
      - 모델의 예측 확률 $p_{\text{msk}}(I, \hat{T})$과 정답 원-핫 분포 $y_{\text{msk}}$ 간의 교차 엔트로피 손실 $L_{\text{mlm}}$를 최소화합니다.
@@ -64,7 +64,7 @@ ALBEF는 이미지 인코더, 텍스트 인코더, 멀티모달 인코더로 구
    - 베이스 모델의 지수 이동 평균(Exponential Moving Average, EMA) 버전인 모멘텀 모델을 지속적으로 업데이트되는 교사 모델로 유지합니다.
    - 모멘텀 모델이 생성한 소프트 유사 타겟(pseudo-targets)을 추가적인 감독 신호로 사용합니다.
    - 예를 들어, ITC의 경우 손실은 다음과 같이 정의됩니다 ($q$는 모멘텀 모델의 유사 타겟 확률 분포).
-     $$ L^{\text{MoD}}_{\text{itc}} = (1-\alpha)L_{\text{itc}} + \frac{\alpha}{2} E*{(I,T) \sim D} \left[ \text{KL}(q*{\text{i2t}}(I) \Vert p*{\text{i2t}}(I)) + \text{KL}(q*{\text{t2i}}(T) \Vert p\_{\text{t2i}}(T)) \right] $$
+     $$ L^{\text{MoD}}_{\text{itc}} = (1-\alpha)L_{\text{itc}} + \frac{\alpha}{2} E_{(I,T) \sim D} \left[ \text{KL}(q_{\text{i2t}}(I) \Vert p_{\text{i2t}}(I)) + \text{KL}(q_{\text{t2i}}(T) \Vert p_{\text{t2i}}(T)) \right] $$
    - MLM 및 다운스트림 태스크에도 유사하게 적용되며, 이는 베이스 모델이 웹 주석과 다른 "합리적인" 출력을 생성하더라도 불이익을 받지 않도록 합니다.
 
 4. **전체 사전 학습 목표**: $L = L_{\text{itc}} + L_{\text{mlm}} + L_{\text{itm}}$ (모멘텀 증류 적용 시 $L^{\text{MoD}}_{\text{itc}}$ 및 $L^{\text{MoD}}_{\text{mlm}}$ 사용).

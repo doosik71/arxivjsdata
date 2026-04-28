@@ -84,22 +84,22 @@ DNN의 순방향 전파(forward propagation)를 레이어별 정보 폐기(infor
 2. **지식 점수 정량화 (Quantification of knowledge points) - 가설 1 검증 지표**
     * **지식 점수의 정의:** 픽셀 단위 엔트로피 $H_i$가 낮은 입력 단위(정보가 덜 폐기됨)는 예측을 위한 판별 정보를 인코딩하는 '지식 점수'로 정의된다.
     * **지식 점수 결정 기준:** 모든 배경 단위(background units) $\Lambda_{bg}$의 평균 엔트로피 $H = E_{i \in \Lambda_{bg}}[H_i]$를 기준선으로 사용한다. 만약 입력 단위 $i$의 엔트로피가 기준선보다 현저히 낮으면 ($H - H_i > b$), 해당 입력 단위는 유효한 지식 점수로 간주된다 ($b$는 임계값).
-    * **지식 점수의 양 ($N_{fg\_point}$, $N_{bg\_point}$):**
-        * $N_{fg\_point}(x)$: 입력 샘플 $x$의 전경(foreground) $\Lambda_{fg}$에 인코딩된 지식 점수의 수.
-        * $N_{bg\_point}(x)$: 입력 샘플 $x$의 배경(background) $\Lambda_{bg}$에 인코딩된 지식 점수의 수.
+    * **지식 점수의 양 ($N_{fg_point}$, $N_{bg_point}$):**
+        * $N_{fg_point}(x)$: 입력 샘플 $x$의 전경(foreground) $\Lambda_{fg}$에 인코딩된 지식 점수의 수.
+        * $N_{bg_point}(x)$: 입력 샘플 $x$의 배경(background) $\Lambda_{bg}$에 인코딩된 지식 점수의 수.
         * $1(\cdot)$은 지시 함수(indicator function)이다.
-        $$ N_{bg\_point}(x) = \sum_{i \in \Lambda_{bg} \text{ w.r.t. } x} 1(H - H_i > b) $$
-        $$ N_{fg\_point}(x) = \sum_{i \in \Lambda_{fg} \text{ w.r.t. } x} 1(H - H_i > b) $$
+        $$ N_{bg_point}(x) = \sum_{i \in \Lambda_{bg} \text{ w.r.t. } x} 1(H - H_i > b) $$
+        $$ N_{fg_point}(x) = \sum_{i \in \Lambda_{fg} \text{ w.r.t. } x} 1(H - H_i > b) $$
     * **지식 점수의 질 ($\lambda$):**
         * 전경 지식 점수와 배경 지식 점수의 합에 대한 전경 지식 점수의 비율로 지식 점수의 질을 평가한다.
-        $$ \lambda = E_{x \in X} \left[ \frac{N_{fg\_point}(x)}{N_{fg\_point}(x) + N_{bg\_point}(x)} \right] $$
+        $$ \lambda = E_{x \in X} \left[ \frac{N_{fg_point}(x)}{N_{fg_point}(x) + N_{bg_point}(x)} \right] $$
         $\lambda$ 값이 크면 DNN의 특징 표현이 신뢰할 수 있음을 나타낸다.
     * **일관성(Coherency) 및 일반성(Generality):** 제안된 엔트로피 기반 방법은 네트워크 설정에 불변하는 지식 표현의 본질을 반영하며, CAM이나 그래디언트 기반 방법과 달리 매개변수 크기에 민감하지 않다. 또한 정보 병목 이론과 같은 이론적 연결성을 통해 일반성을 확보한다.
 
 3. **동시 또는 순차 학습 측정 지표 (Metrics for Learning simultaneously or sequentially) - 가설 2 검증 지표**
     * **가설 2:** KD는 DNN이 다양한 지식 점수를 동시에 학습하도록 하는 반면, 스크래치 학습은 순차적으로 인코딩하는 경향이 있다.
     * **"가중치 거리(weight distance)" 기반 측정:** 에포크 수 대신 가중치 거리(parameters $w_k$의 업데이트 경로)를 사용하여 각 에포크에서의 학습 효과를 평가한다.
-    * **최고 전경 지식 점수 획득 에포크($\hat{m}_x$):** 주어진 샘플 $x$에 대해 DNN이 가장 풍부한 전경 지식 점수 $N_{fg\_k}(x)$를 얻는 에포크를 $\hat{m}_x = \arg \max_k N_{fg\_k}(x)$로 정의한다.
+    * **최고 전경 지식 점수 획득 에포크($\hat{m}_x$):** 주어진 샘플 $x$에 대해 DNN이 가장 풍부한 전경 지식 점수 $N_{fg_k}(x)$를 얻는 에포크를 $\hat{m}_x = \arg \max_k N_{fg_k}(x)$로 정의한다.
     * **측정 지표 ($D_{mean}$, $D_{var}$):**
         * $D_{mean}$: DNN이 가장 풍부한 전경 지식 점수를 얻는 시점까지의 평균 가중치 거리. 작은 $D_{mean}$은 DNN이 지식 점수를 빠르게 학습함을 의미한다.
         * $D_{var}$: 다른 입력 샘플에 대한 최고 전경 지식 점수 획득 시점까지의 가중치 거리의 분산. 작은 $D_{var}$은 DNN이 다른 지식 점수들을 비슷한 속도로 동시에 학습함을 의미한다.
@@ -139,10 +139,10 @@ DNN의 순방향 전파(forward propagation)를 레이어별 정보 폐기(infor
 
 ### **4.2 가설 1 검증: KD는 더 많은 지식 점수를 학습한다.**
 
-* **Teacher, Student, Baseline 간 비교:** Teacher 네트워크는 일반적으로 student 네트워크와 baseline 네트워크보다 더 많은 전경 지식 점수 ($N_{fg\_point}$)와 더 높은 질적 비율 ($\lambda$)을 인코딩했다. Student 네트워크는 baseline 네트워크보다 더 많은 $N_{fg\_point}$와 더 높은 $\lambda$ 값을 보였다 (Table 4). 이는 가설 1을 성공적으로 검증한다.
-* **예외:** ILSVRC-2013 DET 데이터셋의 VGG-16 FC2 레이어에서는 teacher 네트워크가 student보다 적은 $N_{fg\_point}$를 보였는데, 이는 teacher 네트워크의 평균 배경 엔트로피 값이 더 높았기 때문으로 설명된다.
-* **광범위한 검증:** ImageNet에서 사전 훈련되고 미세 조정된 teacher 네트워크를 사용한 실험에서도 이미지 분류, NLP, 3D 포인트 클라우드 분류 등 모든 작업에서 student 네트워크가 baseline보다 일반적으로 더 큰 $N_{fg\_point}$, 더 큰 $\lambda$, 더 작은 $N_{bg\_point}$ 값을 보였다 (Table 5, 6, 7).
-* **배경 지식 점수 증가의 예외:** 일부 student 네트워크에서 baseline보다 더 많은 $N_{bg\_point}$를 인코딩하는 경우가 있었다. 이는 teacher 네트워크가 너무 많은 지식 점수(필요 이상)를 인코딩하여 student 네트워크가 불필요한 지식까지 학습했기 때문으로 설명된다. 그러나 이러한 경우에도 student 네트워크는 여전히 baseline보다 더 큰 전경 지식 점수 비율($\lambda$)을 유지했다.
+* **Teacher, Student, Baseline 간 비교:** Teacher 네트워크는 일반적으로 student 네트워크와 baseline 네트워크보다 더 많은 전경 지식 점수 ($N_{fg_point}$)와 더 높은 질적 비율 ($\lambda$)을 인코딩했다. Student 네트워크는 baseline 네트워크보다 더 많은 $N_{fg_point}$와 더 높은 $\lambda$ 값을 보였다 (Table 4). 이는 가설 1을 성공적으로 검증한다.
+* **예외:** ILSVRC-2013 DET 데이터셋의 VGG-16 FC2 레이어에서는 teacher 네트워크가 student보다 적은 $N_{fg_point}$를 보였는데, 이는 teacher 네트워크의 평균 배경 엔트로피 값이 더 높았기 때문으로 설명된다.
+* **광범위한 검증:** ImageNet에서 사전 훈련되고 미세 조정된 teacher 네트워크를 사용한 실험에서도 이미지 분류, NLP, 3D 포인트 클라우드 분류 등 모든 작업에서 student 네트워크가 baseline보다 일반적으로 더 큰 $N_{fg_point}$, 더 큰 $\lambda$, 더 작은 $N_{bg_point}$ 값을 보였다 (Table 5, 6, 7).
+* **배경 지식 점수 증가의 예외:** 일부 student 네트워크에서 baseline보다 더 많은 $N_{bg_point}$를 인코딩하는 경우가 있었다. 이는 teacher 네트워크가 너무 많은 지식 점수(필요 이상)를 인코딩하여 student 네트워크가 불필요한 지식까지 학습했기 때문으로 설명된다. 그러나 이러한 경우에도 student 네트워크는 여전히 baseline보다 더 큰 전경 지식 점수 비율($\lambda$)을 유지했다.
 * **두 가지 KD 유틸리티:** 저차원 네트워크 출력으로부터의 증류는 주로 신뢰할 수 있는 샘플을 선택하고 신뢰할 수 없는 샘플을 무시하는 두 번째 유틸리티를 보여주었다 (예: MSCOCO 10-클래스 분류에서 student 네트워크는 baseline보다 적은 전경 및 배경 지식 점수를 모두 인코딩함) (Table 8). 반면, 본 연구에서 주로 다룬 고차원 중간 레이어 특징 증류는 teacher 지식 점수를 모방하는 첫 번째 유틸리티를 보여주었다.
 * **지식 점수의 질과 분류 성능 상관관계:** 더 높은 $\lambda$ 값(작업 관련 지식 점수 비율이 높음)을 가진 DNN이 더 나은 분류 성능을 달성하는 경향이 있음을 Figure 2가 보여준다.
 

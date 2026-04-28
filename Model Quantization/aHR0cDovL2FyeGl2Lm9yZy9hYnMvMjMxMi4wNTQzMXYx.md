@@ -35,7 +35,7 @@ Latent Diffusion Models (LDMs)는 텍스트-이미지 생성과 같은 다양한
 1. **상대적 양자화 노이즈 분석 (SQNR)**:
    - 전체 모델 ($\theta_{fp}$)과 양자화된 모델 ($\theta_{q}$)의 출력 차이를 양자화 노이즈로 간주합니다.
    - **SQNR(Signal-to-Quantization-Noise Ratio)**을 핵심 지표로 사용합니다:
-     $$ SQNR*{\xi,t} = 10\log \frac{E*{z}||\xi*{fp}(z_t)||*{2}^{2}}{||\xi*{q}(\hat{z}\_t)-\xi*{fp}(z*t)||*{2}^{2}} $$
+     $$ SQNR_{\xi,t} = 10\log \frac{E_{z}||\xi_{fp}(z_t)||_{2}^{2}}{||\xi_{q}(\hat{z}_t)-\xi_{fp}(z*t)||_{2}^{2}} $$
         여기서 $\xi$는 전체 모델 또는 특정 모듈을 나타냅니다.
    - SQNR은 양자화 노이즈의 **누적성(accumulation)**, **상대적 비교(relative values)**, **효율적인 계산(convenient computation)**이라는 세 가지 주요 속성을 만족하여 민감한 블록/모듈 식별에 적합합니다. 특히, 적은 수의 샘플로 단일 순방향 패스 내에서 효율적으로 계산됩니다.
 2. **전역 하이브리드 양자화 전략**:

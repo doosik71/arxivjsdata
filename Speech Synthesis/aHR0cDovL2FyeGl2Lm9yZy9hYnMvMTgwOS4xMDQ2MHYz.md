@@ -33,7 +33,7 @@ Yutian Chen, Yannis Assael, Brendan Shillingford, David Budden, Scott Reed, Heig
 1. **WaveNet 아키텍처**:
 
    - WaveNet은 자기회귀(autoregressive) 생성 모델로, 오디오 파형 $x = \{x_1, \dots, x_T\}$의 결합 확률 분포를 조건부 확률의 곱으로 분해합니다:
-     $$ p(x|h;w) = \prod*{t=1}^{T} p(x_t|x*{1:t-1}, h;w) $$
+     $$ p(x|h;w) = \prod_{t=1}^{T} p(x_t|x_{1:t-1}, h;w) $$
         여기서 $h$는 조건부 입력, $w$는 모델 파라미터입니다.
    - 멀티 스피커 TTS를 위해 조건부 입력 $h$는 화자 임베딩 벡터 $e_s$, 언어학적 특징 $l$, 기본 주파수 $f_0$ 값으로 구성됩니다.
    - 화자 임베딩 벡터 $e_s$는 WaveNet 파라미터와 함께 학습되는 임베딩 테이블에서 가져옵니다.

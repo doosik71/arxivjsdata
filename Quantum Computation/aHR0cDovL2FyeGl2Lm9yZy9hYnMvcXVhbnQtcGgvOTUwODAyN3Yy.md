@@ -53,7 +53,7 @@ Peter W. Shor
 ### 3. 양자 푸리에 변환 (Quantum Fourier Transform, QFT)
 
 - 상태 $|a\rangle$를 다음 상태로 변환하는 유니타리 행렬 $A_q$를 구현합니다:
-  $$ |a\rangle \rightarrow \frac{1}{\sqrt{q}} \sum\_{c=0}^{q-1} \exp\left(\frac{2\pi iac}{q}\right) |c\rangle $$
+  $$ |a\rangle \rightarrow \frac{1}{\sqrt{q}} \sum_{c=0}^{q-1} \exp\left(\frac{2\pi iac}{q}\right) |c\rangle $$
 - $q=2^l$인 경우, QFT는 $l(l-1)/2$개의 양자 게이트($R_j$와 $S_{j,k}$)를 사용하여 다항 시간 $O((\log q)^2)$ 내에 효율적으로 구현될 수 있습니다. 이는 고전적인 고속 푸리에 변환(FFT) 알고리즘의 양자 버전입니다.
 
 ### 4. 소인수 분해 알고리즘 (Order-Finding Algorithm)
@@ -64,7 +64,7 @@ Peter W. Shor
 2. 두 개의 양자 레지스터를 초기화합니다: $\frac{1}{\sqrt{q}} \sum_{a=0}^{q-1} |a\rangle |0\rangle$. (첫 번째 레지스터를 균일 중첩 상태로 만듭니다.)
 3. 두 번째 레지스터에 $x^a \pmod n$을 가역적으로 계산합니다: $\frac{1}{\sqrt{q}} \sum_{a=0}^{q-1} |a\rangle |x^a \pmod n\rangle$.
 4. 첫 번째 레지스터에 양자 푸리에 변환 $A_q$를 적용합니다:
-   $$ \frac{1}{q} \sum*{a=0}^{q-1} \sum*{c=0}^{q-1} \exp\left(\frac{2\pi iac}{q}\right) |c\rangle |x^a \pmod n\rangle $$
+   $$ \frac{1}{q} \sum_{a=0}^{q-1} \sum_{c=0}^{q-1} \exp\left(\frac{2\pi iac}{q}\right) |c\rangle |x^a \pmod n\rangle $$
 5. 두 레지스터를 측정하여 $|c\rangle$와 $|x^k \pmod n\rangle$를 얻습니다.
 6. 측정된 $c$ 값을 사용하여 $d/r$이 $c/q$에 근접하는 분수임을 이용, 연분수(continued fraction) 확장을 통해 $r$을 찾습니다. $c/q \approx d/r$인 경우, $|c/q - d/r| \le 1/(2q)$ 관계가 성립합니다.
 7. 오더 $r$을 찾으면, 고전적인 알고리즘 $\text{gcd}(x^{r/2}-1, n)$을 사용하여 $n$의 인수를 얻습니다.

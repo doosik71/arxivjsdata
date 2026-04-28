@@ -45,7 +45,7 @@ Zifeng Wu, Chunhua Shen, Anton van den Hengel
    - **목적**: 네트워크가 학습 과정에서 오류가 많거나 예측하기 어려운 "하드(hard) 픽셀"에 집중하도록 하여 학습 효율을 높입니다.
    - **시맨틱 범주 분할**:
      - 현재 모델에 "너무 쉬운(too easy)" 픽셀(예: 예측 확률 $p_{ij}$가 임계값 $t$ 이상인 픽셀)은 학습에서 제외합니다.
-     - $$ \mathcal{L} = -\frac{1}{\sum*{i} \sum*{j} \mathbf{1}\{y*i=j \text{ and } p*{ij} < t\}} \left( \sum*{i} \sum*{j} \mathbf{1}\{y*i=j \text{ and } p*{ij} < t\} \log p\_{ij} \right) $$
+     - $$ \mathcal{L} = -\frac{1}{\sum_{i} \sum_{j} \mathbf{1}\{y*i=j \text{ and } p_{ij} < t\}} \left( \sum_{i} \sum_{j} \mathbf{1}\{y*i=j \text{ and } p_{ij} < t\} \log p_{ij} \right) $$
      - 임계값 $t$는 미니 배치당 일정 수 이상의 픽셀이 유지되도록 모델의 성능에 따라 동적으로 조절됩니다.
    - **지역화 네트워크**: 픽셀의 경계 상자 회귀 손실이 아닌, 예측된 경계 상자와 실제 경계 상자 간의 IoU(Intersection-over-Union) 점수가 낮은(어려운) 픽셀을 선택합니다.
    - **이점**: 배경 픽셀이 객체 픽셀보다 압도적으로 많은 경우처럼 편향된(biased) 훈련 데이터를 자동으로 균형 있게 처리하는 데 효과적입니다.

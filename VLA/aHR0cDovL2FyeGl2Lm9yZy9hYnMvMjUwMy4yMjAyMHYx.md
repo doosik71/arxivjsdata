@@ -26,11 +26,11 @@ CoT-VLA는 두 가지 순차적인 단계로 작동합니다:
 
 1. **서브골 이미지 예측 (Visual Reasoning)**:
    - 현재 관찰 $s_t$ 및 언어 지시 $l$로부터 $n$프레임 앞선 서브골 이미지 $\hat{s}_{t+n}$을 예측합니다.
-   - $$ \hat{s}_{t+n} \sim P_\theta(s\_{t+n} | s_t, l) $$
+   - $$ \hat{s}_{t+n} \sim P_\theta(s_{t+n} | s_t, l) $$
    - 이 단계는 로봇 시연 데이터 $D_r$와 액션 없는 비디오 데이터 $D_v$ 모두를 사용하여 훈련됩니다.
 2. **액션 시퀀스 생성 (Action Generation)**:
    - 현재 관찰 $s_t$, 언어 지시 $l$, 그리고 예측된 서브골 이미지 $\hat{s}_{t+n}$에 기반하여 $m$개의 액션으로 구성된 짧은 액션 시퀀스 $\{\hat{a}_t, ..., \hat{a}_{t+m}\}$을 생성합니다.
-   - $$ \{\hat{a}_t, ..., \hat{a}_{t+m}\} \sim P*\theta(\{a_t, ..., a*{t+m}\} | s*t, l, \hat{s}*{t+n}) $$
+   - $$ \{\hat{a}_t, ..., \hat{a}_{t+m}\} \sim P*\theta(\{a_t, ..., a_{t+m}\} | s*t, l, \hat{s}_{t+n}) $$
    - 이 단계는 로봇 시연 데이터 $D_r$만 사용하여 훈련됩니다.
 
 **기반 모델**: VILA-U [67] (통합 멀티모달 파운데이션 모델)을 기반으로 합니다. VILA-U는 이미지와 텍스트 토큰을 이해하고 생성할 수 있으며, 잔차 양자화(residual quantization)를 사용하여 시각적 특징의 표현 능력을 향상시킵니다.
@@ -38,9 +38,9 @@ CoT-VLA는 두 가지 순차적인 단계로 작동합니다:
 **훈련 절차**:
 
 - **시각 토큰 예측**: 서브골 이미지 생성을 위해 각 훈련 시퀀스 $(l, s_t, s_{t+n})$에서 깊이 변환기(depth transformer)가 LLM 생성 코드 임베딩 $h_j$를 기반으로 잔차 토큰을 예측합니다.
-  - $$ L*{\text{visual}} = - \sum_j \sum*{d=1}^D \log P*\delta(k*{jd} | k\_{j,\lt d}) $$
+  - $$ L_{\text{visual}} = - \sum_j \sum_{d=1}^D \log P*\delta(k_{jd} | k_{j,\lt d}) $$
 - **액션 토큰 예측**: 액션 예측을 위해 각 훈련 시퀀스 $(l, s_t, s_{t+n}, a_t, ..., a_{t+m})$에서 액션 $a_i$는 7개의 토큰으로 표현되며, 각 액션 차원은 독립적으로 이산화됩니다. 액션 토큰 예측에는 완전 어텐션(full attention)을 사용합니다.
-  - $$ L*{\text{action}} = - \sum*{i=1}^m \log P*\theta(a_t ... a*{t+m} | l, s*t, s*{t+n}) $$
+  - $$ L_{\text{action}} = - \sum_{i=1}^m \log P*\theta(a_t ... a_{t+m} | l, s*t, s_{t+n}) $$
 - 전체 손실은 $L = L_{\text{action}} + L_{\text{visual}}$입니다.
 - **액션 청킹 (Action Chunking)**: 단일 액션 대신 $m$개의 액션 시퀀스를 예측하여 성능을 향상시킵니다.
 - **하이브리드 어텐션 (Hybrid Attention)**: 이미지 및 텍스트 생성에는 인과적 어텐션을, 액션 예측에는 완전 어텐션을 사용합니다.

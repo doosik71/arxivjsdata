@@ -30,8 +30,8 @@ $$L = L_{task} + \alpha L_{recon} + \beta L_{difference} + \gamma L_{similarity}
 - **$L_{task}$ (분류 손실):** 소스 도메인에 대해서만 적용되며, 분류 작업의 정확도를 최대화합니다. 주로 교차 엔트로피 손실을 사용합니다.
   $$L_{task} = - \sum_{i=0}^{N_s} y_{s_i} \cdot \log \hat{y}_{s_i}$$
 - **$L_{recon}$ (재구성 손실):** 공유 및 사적 인코더의 출력을 사용하여 원본 이미지를 재구성하며, 양쪽 도메인에 적용됩니다. 스케일 불변 평균 제곱 오차(scale-invariant mean squared error)를 사용하여 이미지의 전반적인 모양 재구성에 집중합니다.
-  $$L_{recon} = \sum_{i=1}^{N_s} L_{si\_mse}(x_{s_i}, \hat{x}_{s_i}) + \sum_{i=1}^{N_t} L_{si\_mse}(x_{t_i}, \hat{x}_{t_i})$$
-  $$L_{si\_mse}(x, \hat{x}) = \frac{1}{k} \|x - \hat{x}\|_2^2 - \frac{1}{k^2} ([x - \hat{x}] \cdot 1_k)^2$$
+  $$L_{recon} = \sum_{i=1}^{N_s} L_{si_mse}(x_{s_i}, \hat{x}_{s_i}) + \sum_{i=1}^{N_t} L_{si_mse}(x_{t_i}, \hat{x}_{t_i})$$
+  $$L_{si_mse}(x, \hat{x}) = \frac{1}{k} \|x - \hat{x}\|_2^2 - \frac{1}{k^2} ([x - \hat{x}] \cdot 1_k)^2$$
 - **$L_{difference}$ (차이 손실):** 각 도메인의 공유 표현($H_c$)과 사적 표현($H_p$) 간에 소프트 하위 공간 직교성(soft subspace orthogonality)을 강제하여 서로 다른 정보를 인코딩하도록 합니다.
   $$L_{difference} = \|H_s^c{}^\top H_s^p\|_F^2 + \|H_t^c{}^\top H_t^p\|_F^2$$
 - **$L_{similarity}$ (유사성 손실):** 공유 인코더에서 추출된 소스 도메인 표현($h_s^c$)과 타겟 도메인 표현($h_t^c$)을 최대한 유사하게 만듭니다. 두 가지 유형의 유사성 손실이 실험되었습니다:
@@ -44,7 +44,7 @@ $$L = L_{task} + \alpha L_{recon} + \beta L_{difference} + \gamma L_{similarity}
 
 - **최첨단 성능 달성:** DSN w/ DANN 모델은 MNIST to MNIST-M, Synthetic Digits to SVHN, SVHN to MNIST, Synthetic Signs to GTSRB, Synthetic Objects to LINEMOD 등 모든 비지도 도메인 적응 시나리오에서 CORAL, MMD, DANN을 포함한 기존의 모든 방법을 능가했습니다. 특히, DANN을 유사성 손실로 사용하는 DSN이 MMD를 사용하는 DSN보다 더 나은 성능을 보였습니다.
 - **차이 손실의 중요성:** $L_{difference}$ 손실을 제거했을 때 모든 시나리오에서 모델 성능이 일관되게 저하되어, 사적-공유 분리가 모델의 강점임을 입증했습니다.
-- **재구성 손실의 효과:** 스케일 불변 평균 제곱 오차($L_{si\_mse}$) 대신 일반 평균 제곱 오차($L_{L2}^{recon}$)를 사용했을 때도 성능이 일관되게 저하되어, 스케일 불변 재구성 손실의 선택이 유효함을 확인했습니다.
+- **재구성 손실의 효과:** 스케일 불변 평균 제곱 오차($L_{si_mse}$) 대신 일반 평균 제곱 오차($L_{L2}^{recon}$)를 사용했을 때도 성능이 일관되게 저하되어, 스케일 불변 재구성 손실의 선택이 유효함을 확인했습니다.
 - **시각화를 통한 해석:** MNIST-M 및 LINEMOD 시나리오에서 공유 및 사적 표현의 재구성 이미지를 시각화하여, 모델이 배경이나 저수준 통계와 같은 도메인 고유 특징을 사적 공간으로 효과적으로 분리하고, 객체의 모양과 같은 공유 특징을 공유 공간에 보존함을 보여주었습니다.
 
 ## 🧠 Insights & Discussion

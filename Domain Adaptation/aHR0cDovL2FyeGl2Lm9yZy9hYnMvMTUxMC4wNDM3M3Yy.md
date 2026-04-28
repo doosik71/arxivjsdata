@@ -27,10 +27,10 @@ Muhammad Ghifary, David Balduzzi, W. Bastiaan Kleijn, and Mengjie Zhang
 
 SCA는 재현 커널 힐베르트 공간(RKHS)에서 '산포(scatter)'라는 기하학적 측도를 활용하여 데이터셋 편향에 불변하는 표현을 학습하는 것을 목표로 합니다. 이는 다음 네 가지 요구 사항을 산포를 통해 정량화하고 최적화하여 달성됩니다.
 
-1. **총 산포(Total Scatter)**: 모든 도메인의 평균 분포에 대한 산포를 나타내며, 데이터 전체의 가변성($ \Psi\_{\phi}(\bar{P}\_X) $)을 최대화하여 Kernel PCA와 유사한 역할을 합니다.
-2. **도메인 산포(Domain Scatter)**: 여러 도메인의 평균 맵(mean map) 간의 산포를 나타내며, 도메인 불일치($ \Psi(\{\mu*{P^1_X}, ..., \mu*{P^m_X}\}) $)를 최소화하여 Maximum Mean Discrepancy (MMD) 및 분포 가변성과 유사한 역할을 합니다.
-3. **클래스 내 산포(Within-Class Scatter)**: 각 클래스 내 샘플들의 산포를 합산한 것으로, 동일 레이블을 공유하는 샘플들의 유사성을 최대화합니다($ \sum*{k=1}^C \Psi*{\phi}(P^l\_{X|k}) $).
-4. **클래스 간 산포(Between-Class Scatter)**: 각 클래스 평균 맵 간의 산포를 나타내며, 다른 레이블을 가진 샘플들의 분리도($ \Psi (\{\mu*{P^l*{X|k=1}}, ..., \mu*{P^l*{X|k=C}}\}) $)를 최대화하여 Fisher의 선형 판별 분석(Fisher's Linear Discriminant)과 유사한 역할을 합니다.
+1. **총 산포(Total Scatter)**: 모든 도메인의 평균 분포에 대한 산포를 나타내며, 데이터 전체의 가변성($ \Psi_{\phi}(\bar{P}_X) $)을 최대화하여 Kernel PCA와 유사한 역할을 합니다.
+2. **도메인 산포(Domain Scatter)**: 여러 도메인의 평균 맵(mean map) 간의 산포를 나타내며, 도메인 불일치($ \Psi(\{\mu_{P^1_X}, ..., \mu_{P^m_X}\}) $)를 최소화하여 Maximum Mean Discrepancy (MMD) 및 분포 가변성과 유사한 역할을 합니다.
+3. **클래스 내 산포(Within-Class Scatter)**: 각 클래스 내 샘플들의 산포를 합산한 것으로, 동일 레이블을 공유하는 샘플들의 유사성을 최대화합니다($ \sum_{k=1}^C \Psi_{\phi}(P^l_{X|k}) $).
+4. **클래스 간 산포(Between-Class Scatter)**: 각 클래스 평균 맵 간의 산포를 나타내며, 다른 레이블을 가진 샘플들의 분리도($ \Psi (\{\mu_{P^l_{X|k=1}}, ..., \mu_{P^l_{X|k=C}}\}) $)를 최대화하여 Fisher의 선형 판별 분석(Fisher's Linear Discriminant)과 유사한 역할을 합니다.
 
 **SCA의 목적 함수**:
 SCA는 다음 비율을 최대화하는 변환 행렬 $ B $를 찾습니다.

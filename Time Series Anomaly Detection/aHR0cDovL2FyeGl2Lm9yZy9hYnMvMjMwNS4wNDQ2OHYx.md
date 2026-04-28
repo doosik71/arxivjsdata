@@ -32,8 +32,8 @@ Yungi Jeong, Eunseok Yang, Jung Hyun Ryu, Imseong Park, Myungjoo Kang
    - **Length adjustment**: 시퀀스 길이를 늘리거나 줄임.
    - **Peak noise**: 단일 피크 값 추가.
 4. **훈련**: 모델은 degraded input을 받아 이진 교차 엔트로피 손실(binary cross entropy loss)을 사용하여 degraded 부분을 정상/이상으로 분류하도록 훈련됩니다.
-   $$ L = - \frac{1}{N} \sum*{t=t*{0}}^{t*{1}} \left( \mathbf{1}*{[t'_{0},t'_{1}]}(t) \cdot \log a*t + (1 - \mathbf{1}*{[t'_{0},t'_{1}]}(t)) \cdot \log(1 - a*t) \right) $$
-   여기서 $\mathbf{1}*{[t'_{0},t'_{1}]}(t)$는 합성 레이블의 역할을 합니다.
+   $$ L = - \frac{1}{N} \sum_{t=t_{0}}^{t_{1}} \left( \mathbf{1}_{[t'_{0},t'_{1}]}(t) \cdot \log a*t + (1 - \mathbf{1}_{[t'_{0},t'_{1}]}(t)) \cdot \log(1 - a*t) \right) $$
+   여기서 $\mathbf{1}_{[t'_{0},t'_{1}]}(t)$는 합성 레이블의 역할을 합니다.
 
 ## 📊 Results
 

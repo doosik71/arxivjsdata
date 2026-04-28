@@ -26,17 +26,17 @@ SFDA 프레임워크는 크게 두 단계로 구성됩니다: 지식 전달(Know
 
 - **소스 도메인 추정**: 생성자 $G$는 임의의 노이즈 $z$를 입력받아 소스 도메인과 유사한 가짜 샘플 $\tilde{x}_{s}$를 생성합니다.
 - **BNS 제약**: 생성된 $\tilde{x}_{s}$의 특징 분포가 고정된 소스 모델 $\tilde{S}$의 배치 정규화 통계(Batch Normalization Statistics, BNS)와 일치하도록 $L_{BNS}$ 손실을 적용합니다.
-  $$ L*{BNS} = \sum*{l} \| \mu*{l}(\tilde{x}*{s}) - \bar{\mu}_{l} \|_{2}^{2} + \sum*{l} \| \sigma*{l}^{2}(\tilde{x}_{s}) - \bar{\sigma}_{l}^{2} \|_{2}^{2} $$
+  $$ L_{BNS} = \sum_{l} \| \mu_{l}(\tilde{x}_{s}) - \bar{\mu}_{l} \|_{2}^{2} + \sum_{l} \| \sigma_{l}^{2}(\tilde{x}_{s}) - \bar{\sigma}_{l}^{2} \|_{2}^{2} $$
   여기서 $\mu_{l}(\tilde{x}_{s})$와 $\sigma_{l}^{2}(\tilde{x}_{s})$는 $l$번째 레이어의 배치 평균과 분산 추정치이며, $\bar{\mu}_{l}$과 $\bar{\sigma}_{l}^{2}$는 $\tilde{S}$에 저장된 소스 도메인의 통계입니다.
 - **의미론적 인식 적대적 지식 전달**: 소스 모델 $\tilde{S}$와 타겟 모델 $S$ 간의 불일치를 활용하여 지식을 전달합니다.
   - **MAE 손실 ($L_{MAE}$)**: 고정된 소스 모델 $\tilde{S}$와 타겟 모델 $S$ (소스 지식 보존을 위해 매개변수를 공유하는)의 출력 간 평균 절대 오차를 계산합니다.
-    $$ L*{MAE} = E*{\tilde{x}_{s}} \left( \frac{1}{C} \| S(\tilde{x}_{s}) - \tilde{y}_{s} \|_{1} \right) $$
+    $$ L_{MAE} = E_{\tilde{x}_{s}} \left( \frac{1}{C} \| S(\tilde{x}_{s}) - \tilde{y}_{s} \|_{1} \right) $$
         여기서 $\tilde{y}_{s} = \tilde{S}(\tilde{x}_{s})$입니다.
   - **듀얼 어텐션 증류 (DAD) 손실**:
     - **$L_{ss}^{DAD}$**: 소스 모델 $\tilde{S}$와 타겟 모델 $S$ 간의 문맥적 관계(contextual relationships) 불일치를 측정합니다. DAM(Dual Attention Module)은 공간 및 채널 어텐션 맵을 추출하여 특징 맵의 장거리 종속성을 포착합니다.
-      $$ L*{ss}^{DAD} = E*{\tilde{x}_{s}} \left( \frac{1}{M} \| A(\tilde{F}_{s}(\tilde{x}_{s})) - A(F_{s}(\tilde{x}_{s})) \|_{1} \right) $$
+      $$ L_{ss}^{DAD} = E_{\tilde{x}_{s}} \left( \frac{1}{M} \| A(\tilde{F}_{s}(\tilde{x}_{s})) - A(F_{s}(\tilde{x}_{s})) \|_{1} \right) $$
     - **$L_{st}^{DAD}$**: 가짜 소스 데이터와 실제 타겟 데이터의 듀얼 어텐션 맵 분포 간의 KL 발산을 최소화하여, 생성자가 타겟 도메인의 사전 어텐션 정보를 활용하도록 유도합니다.
-      $$ L*{st}^{DAD} = E*{\tilde{x}_{s}}[D_{KL}(S(\tilde{F}_{s}(\tilde{x}_{s})), S(F*{t}(x*{t})))] + E*{\tilde{x}*{s}}[D_{KL}(R(\tilde{F}_{s}(\tilde{x}_{s})), R(F_{t}(x_{t})))] $$
+      $$ L_{st}^{DAD} = E_{\tilde{x}_{s}}[D_{KL}(S(\tilde{F}_{s}(\tilde{x}_{s})), S(F_{t}(x_{t})))] + E_{\tilde{x}_{s}}[D_{KL}(R(\tilde{F}_{s}(\tilde{x}_{s})), R(F_{t}(x_{t})))] $$
 - **생성자 ($G$) 최적화**: $G$는 $L_{BNS} - \alpha L_{MAE} - \beta L_{ss}^{DAD} + \tau L_{st}^{DAD}$를 최소화하도록 훈련됩니다.
 - **타겟 모델 ($T$) 최적화**: 초기 지식 전달 단계에서는 $\alpha L_{MAE} + \beta L_{ss}^{DAD}$를 최소화하도록 훈련됩니다.
 
@@ -45,10 +45,10 @@ SFDA 프레임워크는 크게 두 단계로 구성됩니다: 지식 전달(Know
 - **인트라-도메인 패치 수준 자가 감독 모듈 (IPSM)**:
   - 타겟 이미지 $x_t$를 $K \times K$ 크기의 패치 $x_{t,k}$로 분할합니다.
   - 각 패치 $x_{t,k}$에 대한 타겟 모델의 예측 맵 $p_{t,k}$의 평균 엔트로피 점수 $E(x_{t,k})$를 계산합니다.
-    $$ E(x*{t,k}) = - \frac{1}{H_2 W_2} \sum*{h,w} \sum*{c} p*{h,w,c}^{t,k} \log(p\_{h,w,c}^{t,k}) $$
+    $$ E(x_{t,k}) = - \frac{1}{H_2 W_2} \sum_{h,w} \sum_{c} p_{h,w,c}^{t,k} \log(p_{h,w,c}^{t,k}) $$
   - 엔트로피 순위(entropy-ranking)를 통해 배치 내 같은 위치의 패치들을 엔트로피가 낮은 '쉬운(easy)' 그룹 $I_{t,k}^{\circ}$과 높은 '어려운(hard)' 그룹 $I_{t,k}^{\bullet}$으로 나눕니다.
   - **적대적 학습 손실 ($L_{ADV}$)**: 판별자 $D$는 쉬운 패치와 어려운 패치를 구별하고, 타겟 모델 $T$는 어려운 패치를 쉬운 패치처럼 보이게 하여 패치 간의 간극을 줄이도록 훈련됩니다.
-    $$ L*{ADV}(I*{t}^{\bullet},I*{t}^{\circ}) = - \sum*{k}^{K^{2}} \sum*{d,e}^{B/2} \log(1-D(k,i*{t,k}^{e})) + \log(D(k,i\_{t,k}^{d})) $$
+    $$ L_{ADV}(I_{t}^{\bullet},I_{t}^{\circ}) = - \sum_{k}^{K^{2}} \sum_{d,e}^{B/2} \log(1-D(k,i_{t,k}^{e})) + \log(D(k,i_{t,k}^{d})) $$
 - **최종 타겟 모델 목적 함수**: $L_{T AR} + \alpha L_{MAE} + \beta L_{ss}^{DAD} + \gamma L_{ADV}$를 최소화합니다. 여기서 $L_{TAR}$는 타겟 유사 레이블 기반의 자가 감독 손실(예: MaxSquare 손실)입니다.
 
 ## 📊 Results

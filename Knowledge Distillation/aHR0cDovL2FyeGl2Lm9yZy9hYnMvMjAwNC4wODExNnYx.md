@@ -33,7 +33,7 @@ Hideki Oki, Motoshi Abe, Jyunichi Miyao and Takio Kurita
 제안하는 방법은 메트릭 학습의 핵심 아이디어인 트라이플렛 손실을 지식 증류에 적용합니다.
 
 - **제안된 트라이플렛 손실 ($E_{\text{ourKD}}$)**:
-  $$ E*{\text{ourKD}} = \sum*{(a,n) \in \Omega} \max(0, m + ||t(x_a) - s(x_a)||^2_2 - ||t(x_a) - s(x_n)||^2_2) $$
+  $$ E_{\text{ourKD}} = \sum_{(a,n) \in \Omega} \max(0, m + ||t(x_a) - s(x_a)||^2_2 - ||t(x_a) - s(x_n)||^2_2) $$
   - $t(x_a)$: 앵커 샘플 $x_a$에 대한 교사 모델의 출력.
   - $s(x_a)$: 앵커 샘플 $x_a$에 대한 학생 모델의 출력. 이는 트라이플렛의 "긍정"으로 간주됩니다.
   - $s(x_n)$: 앵커 샘플 $x_a$와 다른 클래스에 속하는 샘플 $x_n$에 대한 학생 모델의 출력. 이는 트라이플렛의 "부정"으로 간주됩니다.

@@ -36,7 +36,7 @@ Vim은 Mamba 모델을 컴퓨터 비전에 도입하기 위해 다음 단계를 
    - 입력 이미지 $I \in \mathbb{R}^{H \times W \times C}$를 겹치지 않는 $P \times P$ 크기의 2D 패치 $x_p \in \mathbb{R}^{J \times (P^2 \cdot C)}$로 분할합니다. ($J$는 패치 수)
    - 각 패치를 선형 레이어 $W \in \mathbb{R}^{(P^2 \cdot C) \times D}$를 통해 $D$ 차원 벡터로 투영합니다.
    - ViT에서 영감을 받아 학습 가능한 클래스 토큰($t_{cls}$)을 추가하고, 패치 토큰 시퀀스에 위치 임베딩 $E_{pos} \in \mathbb{R}^{(J+1) \times D}$을 더하여 최종 토큰 시퀀스 $T_0$를 생성합니다.
-     $$ T*0 = [t*{cls}; t*1^p W; t_2^p W; \cdots; t_J^p W] + E*{pos} $$
+     $$ T*0 = [t_{cls}; t*1^p W; t_2^p W; \cdots; t_J^p W] + E_{pos} $$
 
 2. **Vim 블록**:
 
@@ -48,7 +48,7 @@ Vim은 Mamba 모델을 컴퓨터 비전에 도입하기 위해 다음 단계를 
      - $x'_o$를 이용하여 SSM에 필요한 파라미터 $B_o, C_o, \Delta_o$를 선형 투영합니다.
      - $\Delta_o$를 사용하여 연속 시스템 파라미터 $A_o, B_o$를 이산 시스템 파라미터 $\bar{A}_o, \bar{B}_o$로 변환합니다. (ZOH 방식 활용)
      - SSM 재귀를 통해 각 방향의 출력 $y_{forward}$ 및 $y_{backward}$를 계산합니다.
-       $$ h*t = \bar{A} h*{t-1} + \bar{B} x_t $$
+       $$ h*t = \bar{A} h_{t-1} + \bar{B} x_t $$
         $$ y_t = \bar{C} h_t $$
    - $y_{forward}$와 $y_{backward}$를 $z$ 스트림의 게이팅 유닛(SiLU(z))과 곱한 후 합산합니다.
    - 최종 결과에 잔차 연결(residual connection)을 적용하여 $T_l$을 출력합니다.

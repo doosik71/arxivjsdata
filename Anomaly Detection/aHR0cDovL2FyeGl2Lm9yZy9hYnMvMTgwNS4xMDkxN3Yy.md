@@ -55,7 +55,7 @@ Izhak Golan, Ran El-Yaniv
    - 각 조건부 분포 $p(y(T_i(x))|T_i)$는 Dirichlet 분포 $Dir(\alpha_i)$로 근사화됩니다.
    - $\alpha_i$ 파라미터는 훈련 세트 $S$의 이미지들을 $T_i$로 변환한 후 얻은 소프트맥스 응답 벡터들의 집합 $S_i = \{y(T_i(x))|x \in S\}$로부터 최대 가능도 방식으로 추정됩니다($\tilde{\alpha}_i$).
    - 최종 정상 스코어 $n_S(x)$는 다음과 같이 정의됩니다:
-     $$ n*S(x) = \sum*{i=0}^{k-1} \sum\_{j=0}^{k-1} ([\tilde{\alpha}_i]\_j - 1) \log y(T_i(x))\_j $$
+     $$ n*S(x) = \sum_{i=0}^{k-1} \sum_{j=0}^{k-1} ([\tilde{\alpha}_i]_j - 1) \log y(T_i(x))_j $$
         이는 $x$에 무관한 상수 항들을 제거한 간소화된 스코어입니다.
    - 간소화된 버전으로 $\hat{n}_S(x) = \frac{1}{k}\sum_{j=0}^{k-1} [y(T_j(x))]_j$도 초기 연구 단계에서 사용되었으며 좋은 성능을 보였습니다.
 

@@ -32,9 +32,9 @@ CCT-R은 소수의 레이블된 2D 슬라이스 $D_{l} = \{(x^{l}_{i}, y^{l}_{i}
    $$ \mathcal{L}_{cps(A)} = \mathcal{L}_{dice}(P^{u}_{A}, Y^{u}_{B}), \quad \mathcal{L}_{cps(B)} = \mathcal{L}_{dice}(P^{u}_{B}, Y^{u}_{A}) $$
 
 3. **지도 대조 학습 ($\mathcal{L}_{cl}$)** (선택 사항): 픽셀 단위 특징을 공유 임베딩 공간으로 투영하여, 같은 클래스(긍정) 픽셀의 특징은 유사하게, 다른 클래스(부정) 픽셀의 특징은 비유사하게 만듭니다.
-   $$ \mathcal{L}_{cl} = - \frac{1}{|C|} \sum_{c \in C} \frac{1}{|an*{c}|} \sum*{a*{i} \in an*{c}} \log \left[ \frac{\exp(a_{i} \cdot a_{p}/\tau)}{\exp(a_{i} \cdot a_{p}/\tau) + Z} \right] $$
+   $$ \mathcal{L}_{cl} = - \frac{1}{|C|} \sum_{c \in C} \frac{1}{|an_{c}|} \sum_{a_{i} \in an_{c}} \log \left[ \frac{\exp(a_{i} \cdot a_{p}/\tau)}{\exp(a_{i} \cdot a_{p}/\tau) + Z} \right] $$
     여기서 $a_{p}$는 같은 클래스의 모든 다른 픽셀의 평균을 계산하여 얻은 긍정 키입니다:
-   $$ a^{l}_{p} = \frac{1}{|A_{c}|} \sum*{a*{i} \in A*{c}} a*{i} $$
+   $$ a^{l}_{p} = \frac{1}{|A_{c}|} \sum_{a_{i} \in A_{c}} a_{i} $$
 
 CCT-R은 공간 정합 정보를 다음 두 가지 방식으로 통합합니다:
 
@@ -46,10 +46,10 @@ CCT-R은 공간 정합 정보를 다음 두 가지 방식으로 통합합니다:
    - 지도 대조 학습에서 긍정 샘플링을 개선하기 위해 정합 정보를 활용합니다. 앵커 $a_{i}$의 xyz 좌표 $p$를 다른 볼륨 $v_{j}$의 대응하는 좌표 $p_{j}$로 변환합니다: $p_{j} = T_{qj}(p)$.
    - 메모리 뱅크 $B$를 구축하여 다양한 3D 볼륨에서 더 많은 정합된 긍정 샘플 $a^{r}_{p_{j}}$을 제공합니다. 이는 미니 배치 크기에 따른 제약을 피하고 의사 레이블 오류와 무관한 긍정 쌍을 제공합니다.
    - 최종 긍정 키 $a_{p}$는 의사 레이블 기반 긍정 키 $a^{l}_{p}$와 정합 기반 긍정 키 $a^{r}_{p}$의 가중 평균으로 계산됩니다:
-     $$ a*{p} = w*{1}a^{l}_{p} + w_{2}a^{r}\_{p} $$
+     $$ a_{p} = w_{1}a^{l}_{p} + w_{2}a^{r}_{p} $$
 
 최종 손실 함수는 각 모델에 대해 다음과 같습니다:
-$$ \mathcal{L}_{A} = \mathcal{L}_{sup(A)} + w*{cps}\mathcal{L}*{cps(A)} + w*{cl}\mathcal{L}*{cl} + \mathcal{L}\_{rs} $$
+$$ \mathcal{L}_{A} = \mathcal{L}_{sup(A)} + w_{cps}\mathcal{L}_{cps(A)} + w_{cl}\mathcal{L}_{cl} + \mathcal{L}_{rs} $$
 (모델 B도 유사)
 
 ## 📊 Results

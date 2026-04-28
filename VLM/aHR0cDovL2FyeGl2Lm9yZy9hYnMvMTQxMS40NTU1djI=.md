@@ -29,25 +29,25 @@ Oriol Vinyals, Alexander Toshev, Samy Bengio, Dumitru Erhan
 
    - 모델은 주어진 훈련 이미지 $I$에 대한 올바른 설명 $S = \{S_0, S_1, \dots, S_N\}$의 확률 $p(S|I;\theta)$을 최대화하도록 훈련됩니다.
    - 이를 위해 다음의 목적 함수를 사용합니다:
-     $$ \theta^\* = \arg \max*{\theta} \sum*{(I,S)} \log p(S|I;\theta) $$
+     $$ \theta^\* = \arg \max_{\theta} \sum_{(I,S)} \log p(S|I;\theta) $$
    - 문장의 길이가 가변적이므로, 조건부 확률의 연쇄 법칙을 사용하여 다음을 모델링합니다:
-     $$ \log p(S|I) = \sum*{t=0}^{N} \log p(S_t|I, S_0, \dots, S*{t-1}) $$
+     $$ \log p(S|I) = \sum_{t=0}^{N} \log p(S_t|I, S_0, \dots, S_{t-1}) $$
 
 2. **Model Architecture (CNN + LSTM):**
 
    - **Image Encoder (CNN):** 이미지를 고정 길이 벡터 표현으로 인코딩하는 역할을 합니다. 본 연구에서는 ILSVRC 2014 분류 경쟁에서 최신 성능을 달성한 CNN 모델 [12]을 사용하며, ImageNet과 같은 대규모 데이터셋에서 사전 훈련된 가중치를 활용합니다. CNN의 마지막 은닉층 출력이 RNN의 초기 입력으로 사용됩니다.
-     $$ x\_{-1} = \text{CNN}(I) $$
+     $$ x_{-1} = \text{CNN}(I) $$
    - **Sentence Decoder (LSTM):** CNN에서 인코딩된 이미지 벡터와 이전에 생성된 단어를 기반으로 다음 단어를 예측하는 순환 신경망입니다. vanishing 및 exploding gradient 문제를 잘 처리하는 LSTM [10]을 사용합니다.
      - LSTM의 핵심은 메모리 셀 $c$와 세 개의 게이트(입력 게이트 $i_t$, 망각 게이트 $f_t$, 출력 게이트 $o_t$)입니다.
      - 게이트 및 셀 업데이트 방정식은 다음과 같습니다:
-       $$ i*t = \sigma(W*{ix}x*t + W*{im}m*{t-1}) $$
-            $$ f_t = \sigma(W*{fx}x*t + W*{fm}m*{t-1}) $$
-            $$ o_t = \sigma(W*{ox}x*t + W*{om}m*{t-1}) $$
-            $$ c_t = f_t \odot c*{t-1} + i*t \odot h(W*{cx}x*t + W*{cm}m*{t-1}) $$
+       $$ i*t = \sigma(W_{ix}x*t + W_{im}m_{t-1}) $$
+            $$ f_t = \sigma(W_{fx}x*t + W_{fm}m_{t-1}) $$
+            $$ o_t = \sigma(W_{ox}x*t + W_{om}m_{t-1}) $$
+            $$ c_t = f_t \odot c_{t-1} + i*t \odot h(W_{cx}x*t + W_{cm}m_{t-1}) $$
             $$ m_t = o_t \odot c_t $$
-            여기서 $x_t$는 현재 시점의 입력(단어 임베딩), $m*{t-1}$은 이전 시점의 LSTM 출력, $W$는 학습 가능한 가중치 행렬입니다.
+            여기서 $x_t$는 현재 시점의 입력(단어 임베딩), $m_{t-1}$은 이전 시점의 LSTM 출력, $W$는 학습 가능한 가중치 행렬입니다.
      - 최종적으로 $m_t$를 Softmax 함수에 입력하여 다음 단어의 확률 분포 $p_{t+1}$을 생성합니다:
-       $$ p\_{t+1} = \text{Softmax}(m_t) $$
+       $$ p_{t+1} = \text{Softmax}(m_t) $$
    - **Word Embeddings ($W_e$):** 각 단어는 one-hot 벡터로 표현된 후, 학습 가능한 임베딩 행렬 $W_e$를 통해 저차원 밀집 벡터로 변환되어 LSTM의 입력으로 사용됩니다.
      $$ x_t = W_e S_t, \quad t \in \{0 \dots N-1\} $$
         여기서 $S_0$는 특별한 시작 단어, $S_N$은 종료 단어를 나타냅니다. 이미지는 시간 $t=-1$에 한 번만 입력되어 LSTM에 이미지 내용을 전달합니다.
@@ -55,7 +55,7 @@ Oriol Vinyals, Alexander Toshev, Samy Bengio, Dumitru Erhan
 3. **Training:**
 
    - 손실 함수는 각 단계에서 올바른 단어에 대한 음의 로그 우도(negative log likelihood)의 합입니다:
-     $$ L(I,S) = -\sum\_{t=1}^{N} \log p_t(S_t) $$
+     $$ L(I,S) = -\sum_{t=1}^{N} \log p_t(S_t) $$
    - 확률적 경사 하강법(Stochastic Gradient Descent)을 사용하여 LSTM의 모든 파라미터, CNN의 최상위 계층, 단어 임베딩 $W_e$를 최적화합니다.
    - 과적합(overfitting)을 피하기 위해 CNN 가중치는 사전 훈련된 모델로 초기화하고, 드롭아웃(dropout)과 모델 앙상블(ensembling) 기법을 사용합니다.
 

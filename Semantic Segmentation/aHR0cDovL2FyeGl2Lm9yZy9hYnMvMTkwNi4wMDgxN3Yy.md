@@ -38,7 +38,7 @@ ZS3Net은 기존 시맨틱 분할 모델(DeepLabv3+)을 기반으로 하며, 다
    - 클래스 임베딩 벡터 $a$에 따라 이미지 특징 $\hat{x}$를 생성하는 모델 $G(a, z; w)$를 학습합니다. 여기서 $z$는 고정된 다변수 가우시안 분포에서 샘플링된 무작위 노이즈입니다.
    - 생성 모델로는 **Generative Moment Matching Network (GMMN)** [27]을 채택했습니다. GMMN은 실제 데이터 분포와 생성된 분포 간의 **Maximum Mean Discrepancy (MMD)**를 최소화하여 학습됩니다.
    - GMMN 손실 함수:
-     $$ L*{GMMN}(a) = \sum*{x,x' \in X(a)} k(x,x') + \sum*{\hat{x},\hat{x}' \in \hat{X}(a;w)} k(\hat{x},\hat{x}') - 2 \sum*{x \in X(a)} \sum\_{\hat{x} \in \hat{X}(a,w)} k(x,\hat{x}) $$
+     $$ L_{GMMN}(a) = \sum_{x,x' \in X(a)} k(x,x') + \sum_{\hat{x},\hat{x}' \in \hat{X}(a;w)} k(\hat{x},\hat{x}') - 2 \sum_{x \in X(a)} \sum_{\hat{x} \in \hat{X}(a,w)} k(x,\hat{x}) $$
         여기서 $k$는 가우시안 커널입니다.
 
 3. **분류 모델 (Step 2):**

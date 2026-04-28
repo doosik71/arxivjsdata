@@ -23,10 +23,10 @@ Harsh Patel, Shivam Sahni
 - **GNN 모델**:
   - **멀티 헤드 그래프 어텐션 네트워크 (Multi-headed Graph Attention Network, GAT)**를 사용하여 슈퍼픽셀 이미지 분류를 수행합니다.
   - GAT는 자체 어텐션 메커니즘을 통해 각 이웃의 기여도에 대한 상대적 중요성($e_{ij}$)을 학습하고, 소프트맥스($\alpha_{ij}$)를 사용하여 정규화된 어텐션 계수를 계산합니다.
-  - $$ e^{(l)}\_{ij} = \text{ReLU}(\vec{a}^{(l)T}(W^{(l)}h^{(l)}\_i \Vert W^{(l)}h^{(l)}\_j)) $$
-  - $$ \alpha^{(l)}_{ij} = \frac{\exp(e^{(l)}_{ij})}{\sum*{k \in N(i)}\exp(e^{(l)}*{ik})} $$
+  - $$ e^{(l)}_{ij} = \text{ReLU}(\vec{a}^{(l)T}(W^{(l)}h^{(l)}_i \Vert W^{(l)}h^{(l)}_j)) $$
+  - $$ \alpha^{(l)}_{ij} = \frac{\exp(e^{(l)}_{ij})}{\sum_{k \in N(i)}\exp(e^{(l)}_{ik})} $$
   - 여러 어텐션 헤드를 사용하여 학습 안정성을 향상시킵니다.
-  - $$ h^{(l+1)}_i = \Vert_{K=1}^K \sigma\left(\sum*{j \in N(i)} \alpha^{(l)}*{ij} z^{(l)}\_j\right) $$
+  - $$ h^{(l+1)}_i = \Vert_{K=1}^K \sigma\left(\sum_{j \in N(i)} \alpha^{(l)}_{ij} z^{(l)}_j\right) $$
 - **설명 가능성 방법**:
   - `Contrastive Gradient-based Saliency Maps (CGSM)`: 입력에 대한 출력의 기울기에 ReLU를 적용하여 중요도를 측정합니다. ($L_c^{\text{Gradient}} = \Vert \text{ReLU}(\frac{\partial y_c}{\partial x}) \Vert$)
   - `Class Activation Mapping (CAM)`: 마지막 컨볼루션 계층의 특징 맵과 전역 평균 풀링을 사용합니다 (특정 아키텍처 제약). ($L_c^{\text{CAM}}[i,j] = \text{ReLU}(\sum_k w_k^c F_{k,i,j})$)

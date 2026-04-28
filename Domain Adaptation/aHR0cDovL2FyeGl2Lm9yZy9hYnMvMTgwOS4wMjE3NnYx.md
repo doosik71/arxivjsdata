@@ -28,7 +28,7 @@ Zhongyi Pei, Zhangjie Cao, Mingsheng Long, and Jianmin Wang
 MADA는 특징 추출기($G_f$), 레이블 예측기($G_y$), 그리고 $K$개의 클래스별 도메인 판별자($G_d^k$)로 구성됩니다.
 
 1. **기존 도메인 적대적 네트워크(DANN) 목표 함수**:
-   $$ C*0(\theta_f, \theta_y, \theta_d) = \frac{1}{n_s} \sum*{x*i \in D_s} L_y(G_y(G_f(x_i)), y_i) - \frac{\lambda}{n} \sum*{x_i \in (D_s \cup D_t)} L_d(G_d(G_f(x_i)), d_i) $$
+   $$ C*0(\theta_f, \theta_y, \theta_d) = \frac{1}{n_s} \sum_{x*i \in D_s} L_y(G_y(G_f(x_i)), y_i) - \frac{\lambda}{n} \sum_{x_i \in (D_s \cup D_t)} L_d(G_d(G_f(x_i)), d_i) $$
     여기서 $\theta_f, \theta_y$는 $\min$을 목표로 하고, $\theta_d$는 $\max$를 목표로 합니다. $L_y$는 레이블 예측 손실, $L_d$는 도메인 판별 손실입니다.
 
 2. **MADA의 다중 판별자 도입**:
@@ -38,7 +38,7 @@ MADA는 특징 추출기($G_f$), 레이블 예측기($G_y$), 그리고 $K$개의
    타겟 데이터에는 레이블이 없으므로, 레이블 예측기 $G_y(x_i)$의 출력인 클래스별 확률 분포 $\hat{y}_i = G_y(G_f(x_i))$를 활용합니다. 각 데이터 포인트 $x_i$에 대해 $k$-번째 클래스에 할당될 확률 $\hat{y}_i^k$를 해당 $k$-번째 도메인 판별자의 입력 특징 $G_f(x_i)$에 대한 가중치로 사용합니다.
 
 4. **MADA의 목표 함수**:
-   $$ C(\theta*f, \theta_y, \{\theta_d^k\}*{k=1}^K) = \frac{1}{n*s} \sum*{x*i \in D_s} L_y(G_y(G_f(x_i)), y_i) - \frac{\lambda}{n} \sum*{k=1}^K \sum\_{x_i \in D} L_d^k(G_d^k(\hat{y}\_i^k G_f(x_i)), d_i) $$
+   $$ C(\theta*f, \theta_y, \{\theta_d^k\}_{k=1}^K) = \frac{1}{n*s} \sum_{x*i \in D_s} L_y(G_y(G_f(x_i)), y_i) - \frac{\lambda}{n} \sum_{k=1}^K \sum_{x_i \in D} L_d^k(G_d^k(\hat{y}_i^k G_f(x_i)), d_i) $$
 
    - $\theta_f$, $\theta_y$는 이 목표 함수를 **최소화**하고, $\theta_d^k$ ($k=1, \dots, K$)는 이 목표 함수를 **최대화**하는 방향으로 학습됩니다.
    - 이러한 최적화는 특징 추출기 및 레이블 예측기가 도메인 판별자들을 혼동시키고 (도메인 불변 특징 학습), 도메인 판별자들이 소스와 타겟을 구분하도록 (세분화된 도메인 경계 학습) 하는 적대적 과정입니다.

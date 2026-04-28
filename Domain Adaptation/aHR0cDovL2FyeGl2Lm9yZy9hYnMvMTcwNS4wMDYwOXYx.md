@@ -36,7 +36,7 @@ Hongliang Yan, Yukang Ding, Peihua Li, Qilong Wang, Yong Xu, Wangmeng Zuo
 
    - WDAN은 소스 및 타겟 샘플에 대한 경험적 손실과 WMMD 기반 정규화 항을 결합하여 학습됩니다. WMMD 정규화 항은 CNN의 상위 레이어에 추가됩니다.
    - 목표 함수는 다음과 같습니다:
-     $$ \min*{W, \{\hat{y}\_j\}*{j=1}^{N}, \alpha} \frac{1}{M}\sum*{i=1}^{M} \ell(x^s_i, y^s_i; W) + \gamma \frac{1}{N}\sum*{j=1}^{N} \ell(x^t*j, \hat{y}^t_j; W) + \lambda \sum*{l=l*1}^{l_2} \text{MMD}*{l,w}(D^l_s, D^l_t) $$
+     $$ \min_{W, \{\hat{y}_j\}_{j=1}^{N}, \alpha} \frac{1}{M}\sum_{i=1}^{M} \ell(x^s_i, y^s_i; W) + \gamma \frac{1}{N}\sum_{j=1}^{N} \ell(x^t*j, \hat{y}^t_j; W) + \lambda \sum_{l=l*1}^{l_2} \text{MMD}_{l,w}(D^l_s, D^l_t) $$
         여기서 $W$는 모델 파라미터, $\hat{y}_j$는 타겟 샘플의 의사 레이블, $\alpha$는 보조 가중치, $\ell$은 소프트맥스 손실, $\lambda$와 $\gamma$는 트레이드오프 파라미터입니다.
 
 3. **CEM (Classification EM) 알고리즘을 통한 최적화:**

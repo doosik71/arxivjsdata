@@ -49,8 +49,8 @@ Guan Gui, Bin-Bin Gao, Jun Liu, Chengjie Wang, and Yunsheng Wu
      - 바운딩 박스 내부에 있는 픽셀 중 신뢰도 높은 정상 픽셀($\hat{p}_{(i,j)} \geq \tau$)에 대해서는 손실을 0으로 설정하여 잘못된 지도 학습을 방지합니다.
      - 바운딩 박스 외부 픽셀에는 표준 분할 손실 $L_{seg}$를 적용합니다.
      - 최종 약지도 손실:
-       $$ L'_{seg} = M_{box} \odot (1-\delta) \odot L*{seg} + (1-M*{box}) \odot L*{seg} $$
-       여기서 $\delta*{(i,j)} = 1$ (만약 $\hat{p}_{(i,j)} \geq \tau$), 그 외에는 $0$입니다.
+       $$ L'_{seg} = M_{box} \odot (1-\delta) \odot L_{seg} + (1-M_{box}) \odot L_{seg} $$
+       여기서 $\delta_{(i,j)} = 1$ (만약 $\hat{p}_{(i,j)} \geq \tau$), 그 외에는 $0$입니다.
 
 ## 📊 Results
 

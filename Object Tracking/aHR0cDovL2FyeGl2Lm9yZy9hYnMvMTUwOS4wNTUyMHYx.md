@@ -48,10 +48,10 @@ Zhe Chen, Zhibin Hong, and Dacheng Tao,Fellow, IEEE
 - **전통적인 학습 방법 (ASEF)**:
   - MOSSE 이전의 필터들은 배경에 대한 응답을 억제하며 학습되었으나, 온라인 추적에는 느렸습니다.
   - Regularized ASEF는 개별 학습된 정확한 필터들을 평균하여 더 일반적인 필터를 생성하며, 불안정성을 방지하기 위해 정규화 파라미터 $\epsilon$를 분모에 도입합니다:
-    $$ \hat{h}^{_}*{i} = \frac{\hat{y}*{i} \odot \hat{x}^{_}_{i}}{\hat{x}_{i} \odot \hat{x}^{\*}\_{i} + \epsilon} $$
+    $$ \hat{h}^{_}_{i} = \frac{\hat{y}_{i} \odot \hat{x}^{_}_{i}}{\hat{x}_{i} \odot \hat{x}^{\*}_{i} + \epsilon} $$
 - **적응형 상관 필터 (MOSSE)**:
   - MOSSE는 실제 상관 출력과 원하는 상관 출력 간의 제곱 오차 합을 최소화하여 필터 $h$를 찾습니다. 주파수 도메인에서 해는 다음과 같습니다:
-    $$ \hat{h}^{_} = \frac{\sum*{i} \hat{y}*{i} \odot \hat{x}^{_}_{i}}{\sum_{i} \hat{x}_{i} \odot \hat{x}^{\*}_{i}} $$
+    $$ \hat{h}^{_} = \frac{\sum_{i} \hat{y}_{i} \odot \hat{x}^{_}_{i}}{\sum_{i} \hat{x}_{i} \odot \hat{x}^{\*}_{i}} $$
   - 원하는 출력 $y$는 일반적으로 중심에 피크가 있는 2D 가우시안 분포로 생성됩니다.
 - **커널 상관 필터 (KCF/CSK)**:
   - 릿지 회귀 문제(Ridge Regression problem)와 순환 행렬(circulant matrix)을 도입하여 상관 필터를 효과적으로 커널화합니다.
@@ -60,7 +60,7 @@ Zhe Chen, Zhibin Hong, and Dacheng Tao,Fellow, IEEE
   - 듀얼 공간 계수 $\alpha$는 주파수 도메인에서 효율적으로 계산됩니다:
     $$ \hat{\alpha} = \frac{\hat{y}}{\hat{k} + \lambda} $$
   - 검출 시, 새로운 샘플 $z$에 대해 신뢰도 맵 $y$는 다음과 같이 얻어집니다:
-    $$ y = C(k*{xz})\alpha = \mathcal{F}^{-1}(\hat{k}*{xz} \odot \hat{\alpha}) $$
+    $$ y = C(k_{xz})\alpha = \mathcal{F}^{-1}(\hat{k}_{xz} \odot \hat{\alpha}) $$
 - **밀집 시공간 문맥 트래커 (STC)**:
   - 최적화를 통해 학습하는 대신, 객체의 위치에 대한 사전 가능성(likelihood distribution)을 학습합니다.
   - 시공간 문맥 정보와 객체 외형을 모델링하여 추적합니다.
@@ -69,7 +69,7 @@ Zhe Chen, Zhibin Hong, and Dacheng Tao,Fellow, IEEE
 
 - 대부분의 CFTs는 **이동 평균(running average)** 방식을 사용하여 필터를 갱신합니다.
   - **ASEF**:
-    $$ \hat{h}^{_}*{t} = \eta \frac{\hat{y}*{t} \odot \hat{x}^{_}_{t}}{\hat{x}_{t} \odot \hat{x}^{_}\_{t} + \epsilon} + (1-\eta)\hat{h}^{_}\_{t-1} $$
+    $$ \hat{h}^{_}_{t} = \eta \frac{\hat{y}_{t} \odot \hat{x}^{_}_{t}}{\hat{x}_{t} \odot \hat{x}^{_}_{t} + \epsilon} + (1-\eta)\hat{h}^{_}_{t-1} $$
   - **MOSSE**: 분자와 분모를 각각 평균합니다.
   - **KCF**: 듀얼 공간 계수 $\hat{\alpha}_{t}$를 갱신합니다.
 - 장기 추적을 위해 **실패 감지 메커니즘**을 도입하여 오탐지 샘플 학습을 방지합니다 (예: MUSTer, RPAC).

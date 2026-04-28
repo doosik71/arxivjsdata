@@ -31,7 +31,7 @@ Wojciech Zaremba, Ilya Sutskever
    - **이산적 결정 (위치 조정):** 입력/메모리 테이프 헤드 이동($[-1, 0, 1]$), 출력 테이프 예측 여부($[0, 1]$)와 같은 이산적 결정들은 `리인포스(Reinforce)` 알고리즘을 통해 훈련됩니다.
    - **연속적 출력 (콘텐츠):** 메모리에 저장할 벡터, 출력할 심볼 예측과 같은 연속적인 출력은 `역전파(Backpropagation)`를 통해 훈련됩니다.
    - **목표 함수:** 리인포스($p_{\text{reinforce}}$)와 역전파($p_{\text{bp}}$)가 결합된 형태의 기대 로그 확률 합을 최대화합니다:
-     $$ \sum*{[a_1, ..., a_n] \in A^{\dagger}} p*{\text{reinforce}}(a*1, ..., a_n | \theta) \left[ \sum*{i=1}^n \log(p\_{\text{bp}}(y_i | x_1, ..., x_i, a_1, ...a_i, \theta)) \right] $$
+     $$ \sum_{[a_1, ..., a_n] \in A^{\dagger}} p_{\text{reinforce}}(a*1, ..., a_n | \theta) \left[ \sum_{i=1}^n \log(p_{\text{bp}}(y_i | x_1, ..., x_i, a_1, ...a_i, \theta)) \right] $$
 4. **기울기 추정기 분산 감소:** 리인포스 알고리즘의 높은 분산을 줄이기 위해 다음과 같은 기법을 사용합니다.
    - **미래 보상 역전파(Future rewards backpropagation):** 현재 시점 이후의 보상만 해당 시점의 행동에 영향을 미치는 것으로 간주하여 기울기를 계산합니다.
    - **온라인/오프라인 기준선 예측(Online/Offline baseline prediction):** 보상에 기준선(baseline)을 빼서 분산을 줄입니다. 오프라인 기준선은 별도의 LSTM이 전체 입력을 먼저 처리하여 문제의 난이도를 예측하고 더 나은 기준선을 제공합니다.

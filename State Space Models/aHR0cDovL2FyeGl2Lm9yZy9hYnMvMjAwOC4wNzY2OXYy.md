@@ -43,7 +43,7 @@ Albert Gu, Tri Dao, Stefano Ermon, Atri Rudra, and Christopher Ré
      - **Scaled Legendre (LegS)**: 전체 이력 $[0, t]$에 균일한 가중치를 부여하며, 윈도우 크기가 시간에 따라 조정되어 망각을 방지합니다. 이것이 논문의 주요 신규 기여입니다.
 3. **이산 시간(Discrete Time)으로의 전환**:
    - 연속 시간 ODE를 오일러(Euler), 이선형(Bilinear) 또는 영차 홀드(ZOH)와 같은 표준 이산화 기법을 사용하여 이산 시간 선형 재귀식으로 변환합니다. HiPPO-LegS의 경우 이산 재귀식은 다음과 같습니다:
-     $$ c\_{k+1} = \left( I - \frac{A}{k} \right) c_k + \frac{1}{k} B f_k $$
+     $$ c_{k+1} = \left( I - \frac{A}{k} \right) c_k + \frac{1}{k} B f_k $$
    - 이는 타임스탬프가 있는 불규칙 샘플링 데이터도 처리할 수 있게 합니다.
 4. **RNN에 통합**:
    - HiPPO 메모리 메커니즘을 간단한 RNN 모델에 통합하여, 이전 은닉 상태를 전체 이력의 투영된 버전으로 대체합니다. 입력 $x_t$ 또는 특징 $f_t=u(x_t)$에 대해 HiPPO가 특징 $f_t$의 이력을 기억하도록 합니다.

@@ -45,8 +45,8 @@ Xin Jin, Cuiling Lan, Wenjun Zeng, Zhibo Chen
    - 향상된 피처 $\tilde{F}_+$는 정규화된 피처 $\tilde{F}$보다 더 판별적(discriminative)이어야 하므로, 예측 클래스 확률의 엔트로피가 작아져야 합니다.
    - 오염된 피처 $\tilde{F}_-$는 $\tilde{F}$보다 덜 판별적이어야 하므로, 예측 클래스 확률의 엔트로피가 커져야 합니다.
    - 분류 태스크의 경우:
-     $$ L*{SNR,+} = \text{Softplus}(H(\phi(\tilde{f}*+)) - H(\phi(\tilde{f}))) $$
-        $$ L*{SNR,-} = \text{Softplus}(H(\phi(\tilde{f})) - H(\phi(\tilde{f}*-))) $$
+     $$ L_{SNR,+} = \text{Softplus}(H(\phi(\tilde{f}_+)) - H(\phi(\tilde{f}))) $$
+        $$ L_{SNR,-} = \text{Softplus}(H(\phi(\tilde{f})) - H(\phi(\tilde{f}-))) $$
         여기서 $H(\cdot)$는 엔트로피 함수, $\phi(\cdot)$는 FC 레이어와 소프트맥스를 나타내고, $\tilde{f}_+, \tilde{f}, \tilde{f}_-$는 각 피처 맵을 공간 평균 풀링한 피처 벡터입니다.
    - 의미론적 분할 및 객체 검출 태스크에서는 픽셀 또는 바운딩 박스 영역별 엔트로피를 계산하여 손실을 적용합니다.
 

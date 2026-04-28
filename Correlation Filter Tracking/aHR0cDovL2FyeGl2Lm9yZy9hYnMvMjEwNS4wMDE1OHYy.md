@@ -34,20 +34,20 @@ Shuiwang Li, Qijun Zhao, Ziliang Feng, and Li Lu
    - 훈련 샘플 $\{x_k\}_{k=1}^t$로부터 다채널 상관 필터 $f = \{f_l\}_{l=1}^d$를 학습하는 것을 목표로 합니다.
    - 필터 응답 $R(x_k;f) = \sum_{l=1}^d x_k^l \circledcirc f_l$ (여기서 $\circledcirc$는 순환 상관 연산자)는 이상적인 응답 $y$ (2차원 중심 대칭 가우시안 함수)에 가깝도록 학습됩니다.
    - 목적 함수는 다음과 같습니다:
-     $$ \arg \min*f \sum*{k=1}^t \alpha*k \|R(x_k;f) - y\|^2 + \lambda \sum*{l=1}^d \|f_l\|^2 $$
+     $$ \arg \min_f \sum_{k=1}^t \alpha*k \|R(x_k;f) - y\|^2 + \lambda \sum_{l=1}^d \|f_l\|^2 $$
         여기서 $\alpha_k$는 각 샘플의 가중치, $\lambda$는 정규화 계수입니다.
 2. **컨볼루션 필터 기반 추적기의 목적 함수 정의:**
    - 상관 필터의 목적 함수에서 순환 상관 연산자($\circledcirc$)를 순환 컨볼루션 연산자($\circledast$)로 대체합니다.
    - 목적 함수는 다음과 같습니다:
-     $$ \arg \min*f \sum*{k=1}^t \alpha*k \|\sum*{l=1}^d x*k^l \circledast f_l - y\|^2 + \lambda \sum*{l=1}^d \|f_l\|^2 $$
+     $$ \arg \min_f \sum_{k=1}^t \alpha*k \|\sum_{l=1}^d x*k^l \circledast f_l - y\|^2 + \lambda \sum_{l=1}^d \|f_l\|^2 $$
 3. **주파수 도메인 변환 및 최적 솔루션 도출:**
    - 두 목적 함수는 Parseval 정리와 상관/컨볼루션 정리에 따라 주파수 도메인으로 변환될 수 있습니다. 이를 통해 효율적으로 해결 가능한 선형 최소 제곱 문제로 변환됩니다.
    - 주파수 도메인에서 최적의 필터 솔루션 $\hat{f}^*$ (상관)와 $\hat{f}'^*$ (컨볼루션)는 다음과 같은 선형 방정식 시스템을 풀어 얻어집니다:
      - **상관 필터의 최적 솔루션 $\hat{f}^*$:**
-       $$ \hat{f}^\* = \left[\left(\sum_{k=1}^t \alpha_k \hat{X}_k^H \hat{X}_k\right) + \lambda I_{dN}\right]^{-1} \left(\sum\_{k=1}^t \alpha_k \hat{X}\_k^H \hat{y}\right) $$
+       $$ \hat{f}^\* = \left[\left(\sum_{k=1}^t \alpha_k \hat{X}_k^H \hat{X}_k\right) + \lambda I_{dN}\right]^{-1} \left(\sum_{k=1}^t \alpha_k \hat{X}_k^H \hat{y}\right) $$
             여기서 $\hat{X}_k$는 주파수 도메인에서 특징 맵 $\hat{x}_k^l$의 켤레 복소수 형태를 포함하는 행렬입니다.
      - **컨볼루션 필터의 최적 솔루션 $\hat{f}'^*$:**
-       $$ \hat{f}'^\* = \left[\left(\sum_{k=1}^t \alpha_k \hat{X}_k^{'H} \hat{X}_k'\right) + \lambda I_{dN}\right]^{-1} \left(\sum\_{k=1}^t \alpha_k \hat{X}\_k^{'H} \hat{y}\right) $$
+       $$ \hat{f}'^\* = \left[\left(\sum_{k=1}^t \alpha_k \hat{X}_k^{'H} \hat{X}_k'\right) + \lambda I_{dN}\right]^{-1} \left(\sum_{k=1}^t \alpha_k \hat{X}_k^{'H} \hat{y}\right) $$
             여기서 $\hat{X}_k'$는 주파수 도메인에서 특징 맵 $\hat{x}_k^l$을 포함하는 행렬입니다.
 4. **등가성 증명:**
    - 핵심 증명은 $\hat{X}_k = \text{conj}(\hat{X}_k')$ 관계와, 이상적인 응답 $y$가 2D 중심 대칭 가우시안 함수이므로 $\hat{y}$가 실수 값을 가져 $\text{conj}(\hat{y}) = \hat{y}$임을 활용합니다.

@@ -30,7 +30,7 @@ AFT(Attention Free Transformer)는 기존 Transformer의 Multi-Head Attention (M
 
    - 입력 $X$를 선형 변환하여 쿼리 $Q=XW_Q$, 키 $K=XW_K$, 값 $V=XW_V$를 얻습니다.
    - 다음 연산을 수행합니다:
-     $$ Y*t = \sigma_q(Q_t) \odot \frac{\sum*{t'=1}^T \exp(K*{t'} + w*{t,t'}) \odot V*{t'}}{\sum*{t'=1}^T \exp(K*{t'} + w*{t,t'})} $$
+     $$ Y*t = \sigma_q(Q_t) \odot \frac{\sum_{t'=1}^T \exp(K_{t'} + w_{t,t'}) \odot V_{t'}}{\sum_{t'=1}^T \exp(K_{t'} + w_{t,t'})} $$
         여기서 $\odot$는 요소별 곱셈(element-wise product)을 의미하고, $\sigma_q$는 쿼리에 적용되는 비선형 함수(기본값은 시그모이드)입니다. $w \in \mathbb{R}^{T \times T}$는 학습된 쌍별 위치 편향(pair-wise position biases)입니다.
    - 이 연산은 명시적인 어텐션 행렬 계산 없이도 쿼리와 값 사이의 전역 상호작용을 유지하며, 메모리 복잡도는 $O(T d)$입니다.
    - 각 피처 차원마다 독립적인 어텐션 벡터를 가지는 "암묵적 어텐션"으로 해석될 수 있습니다.

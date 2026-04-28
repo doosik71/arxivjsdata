@@ -51,8 +51,8 @@ Sarod Yatawatta
 - **힌트 보조 강화 학습**(**Hint Assisted RL**):
   - **기존 지식 통합**: 외부에서 제공되는 **힌트**(**hint**) $h$를 행동 $a$에 대한 제약으로 사용하여 정책 학습을 개선합니다.
   - **`ADMM` 기반 최적화**: **증강 라그랑지안**(**augmented Lagrangian**) $J_h(\phi)$를 사용하여 정책 손실 함수에 제약 $c(a,h)$를 추가합니다.
-    $$J\_h(\phi) = J(\phi) + \frac{\rho}{2} [c(a\_\phi,h) - \delta]\_+^2 + \lambda [c(a\_\phi,h) - \delta]\_+$$
-    여기서 $[x]\_+ = x$ if $x > 0$ and $[x]\_+ = 0$ otherwise. 이는 힌트가 부정확할 수 있는 가능성을 $\delta$로 표현합니다.
+    $$J_h(\phi) = J(\phi) + \frac{\rho}{2} [c(a_\phi,h) - \delta]_+^2 + \lambda [c(a_\phi,h) - \delta]_+$$
+    여기서 $[x]_+ = x$ if $x > 0$ and $[x]_+ = 0$ otherwise. 이는 힌트가 부정확할 수 있는 가능성을 $\delta$로 표현합니다.
 
 ## 결과
 

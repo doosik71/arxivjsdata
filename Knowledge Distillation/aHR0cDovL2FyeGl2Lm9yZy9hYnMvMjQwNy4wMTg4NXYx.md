@@ -31,21 +31,21 @@ CHUANPENG YANG, WANG LU, YAO ZHU, YIDONG WANG, QIAN CHEN, CHENLONG GAO, BINGJIE 
 
   - **Logits-based methods (로짓 기반 방법)**:
     교사 모델의 최종 출력 로짓 레벨에서 지식을 전달합니다. 학생 모델의 출력 확률 분포가 교사 모델의 분포를 모방하도록 학습합니다.
-    $$ L*{\text{logits}} = KL(p_t \,||\, p_s) = \sum*{j=1}^{C} p*{t_j} \log \left( \frac{p*{t*j}}{p*{s*j}} \right) $$
-    여기서 $p*{s*i} = \frac{\exp(z*{s*i}/\tau)}{\sum*{j=1}^C \exp(z*{s_j}/\tau)}$, $p*{t*i} = \frac{\exp(z*{t*i}/\tau)}{\sum*{j=1}^C \exp(z\_{t_j}/\tau)}$ 이며, $\tau$는 로짓의 부드러움을 조절하는 온도 매개변수입니다. DistillBERT, MINILLM 등이 이 범주에 속합니다.
+    $$ L_{\text{logits}} = KL(p_t \,||\, p_s) = \sum_{j=1}^{C} p_{t_j} \log \left( \frac{p_{t*j}}{p_{s*j}} \right) $$
+    여기서 $p_{s*i} = \frac{\exp(z_{s*i}/\tau)}{\sum_{j=1}^C \exp(z_{s_j}/\tau)}$, $p_{t*i} = \frac{\exp(z_{t*i}/\tau)}{\sum_{j=1}^C \exp(z_{t_j}/\tau)}$ 이며, $\tau$는 로짓의 부드러움을 조절하는 온도 매개변수입니다. DistillBERT, MINILLM 등이 이 범주에 속합니다.
   - **Hint-based methods (힌트 기반 방법)**:
     교사 모델의 중간 레이어 특징을 통해 지식을 전달합니다. 학생 모델이 최종 결과뿐만 아니라 그 결과에 도달하는 과정까지 이해하도록 학습합니다.
-    $$ L\_{\text{hint}} = H(F_s, F_t) = \|F_t - \phi(F_s)\|\_2 $$
+    $$ L_{\text{hint}} = H(F_s, F_t) = \|F_t - \phi(F_s)\|_2 $$
         여기서 $F_s, F_t$는 학생 및 교사 네트워크의 중간 특징이며, $\phi$는 학생 특징을 교사 특징의 차원에 맞추는 함수입니다. TinyBERT, MobileBERT 등이 이 범주에 속합니다.
 
 - **Black-box Knowledge Distillation (블랙박스 지식 증류)**:
   교사 모델의 내부 데이터에 접근할 수 없고, 오직 교사 모델의 출력(API를 통한 예측)만을 활용하여 지식을 전달하는 방법입니다. 주로 LLM의 emergent capabilities를 활용합니다.
   - **In-Context Learning (ICL, 인컨텍스트 학습)**:
     작업 설명과 소수의 예제(demonstrations)로 구성된 자연어 프롬프트를 사용하여 LLM의 소수샷(few-shot) 학습 능력을 학생 모델로 전달합니다.
-    $$ \text{LLM}(\underbrace{I, f(x*1, y_1), \dots, f(x_k, y_k)}*{\text{demonstrations}}, \underbrace{f(x*{k+1})}*{\text{input}}, \underbrace{\_}_{\text{answer}}) \rightarrow \hat{y}_{k+1} $$
+    $$ \text{LLM}(\underbrace{I, f(x*1, y_1), \dots, f(x_k, y_k)}_{\text{demonstrations}}, \underbrace{f(x_{k+1})}_{\text{input}}, \underbrace{_}_{\text{answer}}) \rightarrow \hat{y}_{k+1} $$
   - **Chain-of-Thought (CoT, 사고의 사슬)**:
     단순한 입력-출력 쌍 대신 중간 추론 단계(rationales)를 포함한 프롬프트를 통합하여 LLM의 복잡한 추론 능력을 학생 모델로 증류합니다.
-    $$ \text{LLM}(\underbrace{I, f(x*1, r_1, y_1), \dots, f(x_k, r_k, y_k)}*{\text{demonstrations}}, \underbrace{f(x*{k+1})}*{\text{input}}, \underbrace{\_}_{\text{rational}}, \underbrace{\_}_{\text{answer}}) \rightarrow \hat{r}_{k+1}, \hat{y}_{k+1} $$
+    $$ \text{LLM}(\underbrace{I, f(x*1, r_1, y_1), \dots, f(x_k, r_k, y_k)}_{\text{demonstrations}}, \underbrace{f(x_{k+1})}_{\text{input}}, \underbrace{_}_{\text{rational}}, \underbrace{_}_{\text{answer}}) \rightarrow \hat{r}_{k+1}, \hat{y}_{k+1} $$
   - **Instruction Following (지시 따르기)**:
     자연어 설명이 포함된 구조화된 멀티태스크 데이터셋으로 교사 모델의 지시 따르기 능력을 파인튜닝하여 학생 모델에 전달합니다. Self-instruct, LaMini-LM 등이 이에 해당합니다.
 

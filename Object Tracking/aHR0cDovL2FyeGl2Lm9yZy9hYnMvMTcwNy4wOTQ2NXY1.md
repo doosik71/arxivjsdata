@@ -29,7 +29,7 @@ Yang Zhang, Philip David, Boqing Gong
 
    - 소스 도메인($S$)의 레이블이 있는 이미지에 대한 픽셀 단위 교차 엔트로피(pixel-wise cross-entropy) 손실 $L(Y_{s}, \hat{Y}_{s})$과, 타겟 도메인($T$)의 레이블이 없는 이미지에 대한 추정된 속성 분포 $p^k_{t}$와 네트워크 예측 분포 $\hat{p}^k_{t}$ 간의 교차 엔트로피 $C(p^k_{t}, \hat{p}^k_{t})$를 결합합니다.
    - 전체 손실 함수는 다음과 같습니다:
-     $$ \min*{\gamma} \frac{1}{|S|} \sum*{s \in S} L(Y*{s}, \hat{Y}*{s}) + \frac{1-\gamma}{|T|} \sum*{t \in T} \sum*{k} C(p^k*{t}, \hat{p}^k*{t}) $$
+     $$ \min_{\gamma} \frac{1}{|S|} \sum_{s \in S} L(Y_{s}, \hat{Y}_{s}) + \frac{1-\gamma}{|T|} \sum_{t \in T} \sum_{k} C(p^k_{t}, \hat{p}^k_{t}) $$
         여기서 $k$는 서로 다른 유형의 레이블 분포(전역/지역)를 나타냅니다.
 
 2. **"쉬운" 타겟 속성 추론:**

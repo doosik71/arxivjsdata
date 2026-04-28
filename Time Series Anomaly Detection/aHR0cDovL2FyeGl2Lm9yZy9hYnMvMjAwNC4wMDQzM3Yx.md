@@ -40,7 +40,7 @@ Mohammad Braei, Dr.-Ing. Sebastian Wagner
   - **계산 시간:** 총 학습 시간과 예측(추론) 시간을 합산하여 비교했습니다.
 - **실험 설정:**
   - 데이터 분할: 학습 데이터 30%, 테스트 데이터 70% (딥러닝 모델의 경우 학습 데이터의 10%를 검증 셋으로 사용).
-  - 하이퍼파라미터 튜닝: Naive Model Metric (NMM, $$ \frac{MSE*{Target model}}{MSE*{NaiveModel}} $$)을 최소화하는 방향으로 튜닝하여 예측 모델의 성능을 최적화했습니다. 목표는 NMM을 1 미만으로 유지하는 것입니다.
+  - 하이퍼파라미터 튜닝: Naive Model Metric (NMM, $$ \frac{MSE_{Target model}}{MSE_{NaiveModel}} $$)을 최소화하는 방향으로 튜닝하여 예측 모델의 성능을 최적화했습니다. 목표는 NMM을 1 미만으로 유지하는 것입니다.
   - 소프트웨어: Python, Statsmodels, Scikit-learn, TensorFlow, Keras.
   - 하드웨어: 2xIntel Xeon CPU, 12.4GB RAM, 1xTesla K80 GPU.
 

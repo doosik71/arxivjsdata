@@ -42,7 +42,7 @@ Alireza Rafiei, Ronald Moore, Sina Jahromi, Farshid Hajati, Rishikesan Kamaleswa
 또한, 메타 학습의 이론적 기반을 다음과 같이 설명합니다.
 
 - **작업 분포 관점**: 작업 집합 $T$에 대한 기대 손실 $E_{T \sim p(T)} L(D, \omega)$를 최소화하여 보지 못한 작업에 대한 모델의 일반화 능력을 향상시키는 것을 목표로 합니다.
-- **이중 수준 최적화 관점**: 내부 루프에서 작업별 파라미터 $ \theta^{_(i)}(\omega) = \text{argmin}*{\theta} L*{\text{task}}(\theta, \omega, D\_{\text{source}}^{\text{train}(i)}) $를 최적화하고, 외부 루프에서 메타 파라미터 $ \omega^_ = \text{argmin}_{\omega} \sum_{i=1}^M L*{\text{meta}}(\theta^{\*(i)}(\omega), \omega, D*{\text{source}}^{\text{val}(i)}) $를 최적화하여 학습 프로세스 자체를 학습합니다.
+- **이중 수준 최적화 관점**: 내부 루프에서 작업별 파라미터 $ \theta^{_(i)}(\omega) = \text{argmin}_{\theta} L_{\text{task}}(\theta, \omega, D_{\text{source}}^{\text{train}(i)}) $를 최적화하고, 외부 루프에서 메타 파라미터 $ \omega^_ = \text{argmin}_{\omega} \sum_{i=1}^M L_{\text{meta}}(\theta^{\*(i)}(\omega), \omega, D_{\text{source}}^{\text{val}(i)}) $를 최적화하여 학습 프로세스 자체를 학습합니다.
 
 ## 📊 Results
 

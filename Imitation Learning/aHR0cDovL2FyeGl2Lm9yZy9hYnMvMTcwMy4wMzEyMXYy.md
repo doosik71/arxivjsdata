@@ -35,7 +35,7 @@ Hoang M. Le, Yisong Yue, Peter Carr, Patrick Lucey
    - "인덱스 프리" 문제를 해결하기 위해 역할 학습(role learning)과 역할 기반 인덱스 할당(role-based index assignment)을 제안합니다.
    - 역할은 비지도 방식으로 학습되며, 조정 구조는 그래픽 모델로 표현됩니다.
    - 전체 목적 함수는 모방 손실과 역할 할당 엔트로피를 포함합니다:
-     $$ \min*{\pi_1, \dots, \pi_K, A} \sum*{k=1}^K E*{s_k \sim d*{\pi_k}} [\ell(\pi_k(s_k)) | A, D] - \lambda H(A|D) $$
+     $$ \min_{\pi_1, \dots, \pi_K, A} \sum_{k=1}^K E_{s_k \sim d_{\pi_k}} [\ell(\pi_k(s_k)) | A, D] - \lambda H(A|D) $$
         여기서 $A$는 할당 함수, $H(A|D)$는 역할 할당의 엔트로피입니다.
 
 2. **학습 접근 방식 (교대 최적화 - Algorithm 1):**

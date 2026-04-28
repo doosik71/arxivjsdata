@@ -42,15 +42,15 @@ Ziwei Liu, Xiaoxiao Li, Ping Luo,Member, IEEE, Chen Change Loy,Senior Member, IE
 1. **마르코프 랜덤 필드 (MRF) 정식화:**
 
    - MRF의 에너지 함수는 Unary term $\Phi(y^u_i)$ (픽셀 $i$에 라벨 $u$를 할당하는 비용)과 Pairwise term $\Psi(y^u_i, y^v_j)$ (픽셀 쌍 $(i,j)$에 라벨 $u,v$를 할당하는 패널티)의 합으로 정의된다:
-     $$ E(y) = \sum*{\forall i \in V} \Phi(y^u_i) + \sum*{\forall (i,j) \in E} \Psi(y^u_i, y^v_j) $$
+     $$ E(y) = \sum_{\forall i \in V} \Phi(y^u_i) + \sum_{\forall (i,j) \in E} \Psi(y^u_i, y^v_j) $$
    - **동적 노드 연결(Dynamic Node Linking):** 기존의 정적 격자(grid) 방식 대신, 시공간 문맥 정보를 더 잘 보존하기 위해 동적 노드 연결을 사용한다. 공간 도메인에서는 2D 구조를 유지하고, 시간 도메인에서는 광학 흐름(optical flow)으로 추정된 동일한 시간 궤적 $\Delta_{i \to j}$ 상에 있는 복셀들을 이웃으로 정의한다:
-     $$ (i,j) \in E*t \iff j = i + \Delta*{i \to j} $$
+     $$ (i,j) \in E*t \iff j = i + \Delta_{i \to j} $$
    - **Unary Term:** VGG$_{16}$으로 모델링되며, 픽셀 $i$에 라벨 $u$가 존재할 확률 $p^u_i$를 기반으로 한다:
      $$ \Phi(y^u_i) = - \ln p(y^u_i = 1|I) $$
    - **Pairwise Term (고차 관계 및 라벨 컨텍스트 혼합):** 기존의 단순한 Pairwise term의 한계를 극복하기 위해, DPN은 풍부한 복셀 간 정보를 활용하는 Smoothness term을 정의한다:
-     $$ \Psi(y^u*i,y^v_j) = \sum*{k=1}^K \lambda*k \mu_k(i,u,j,v) \sum*{\forall z \in N_j} d(j,z)p^v_j p^v_z $$
+     $$ \Psi(y^u*i,y^v_j) = \sum_{k=1}^K \lambda*k \mu_k(i,u,j,v) \sum_{\forall z \in N_j} d(j,z)p^v_j p^v_z $$
      - **Local Label Contexts 혼합 ($ \mu_k(i,u,j,v) $):** 라벨 할당 비용을 지역 큐브에서 학습하며, $K$는 혼합 성분의 수를 나타낸다. 이는 픽셀 $i$와 이웃 $j$ 사이의 상대적 위치에 따른 라벨링 비용을 출력한다.
-     - **Triple Penalty ($ \sum\_{\forall z \in N_j} d(j,z)p^v_z $):** 복셀 $i, j$ 및 $j$의 이웃을 포함하는 삼중 패널티를 모델링한다. 이는 $(i,u)$와 $(j,v)$가 호환되면, $(i,u)$가 $j$의 인접 픽셀 $(z,v)$와도 호환되어야 함을 암시한다. $d(j,z)$는 $j$와 $z$ 사이의 시각적/공간적 거리를 나타낸다.
+     - **Triple Penalty ($ \sum_{\forall z \in N_j} d(j,z)p^v_z $):** 복셀 $i, j$ 및 $j$의 이웃을 포함하는 삼중 패널티를 모델링한다. 이는 $(i,u)$와 $(j,v)$가 호환되면, $(i,u)$가 $j$의 인접 픽셀 $(z,v)$와도 호환되어야 함을 암시한다. $d(j,z)$는 $j$와 $z$ 사이의 시각적/공간적 거리를 나타낸다.
 
 2. **추론 (Mean Field 근사):**
 

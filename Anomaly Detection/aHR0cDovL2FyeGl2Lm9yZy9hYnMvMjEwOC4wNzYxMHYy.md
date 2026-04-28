@@ -35,7 +35,7 @@ DRÆM은 재구성 하위 네트워크(reconstructive sub-network)와 판별 하
    - **목표**: 입력 이미지 $I$의 국부 패턴을 정상 샘플의 분포에 더 가깝게 변환하는 인코더-디코더 구조입니다.
    - **훈련**: 시뮬레이터로 생성된 인위적으로 손상된 이미지 $I_a$로부터 원본 이미지 $I$를 재구성하도록 훈련됩니다.
    - **손실 함수**: 패치 기반 SSIM [27] 손실과 $l_2$ 손실을 결합하여 사용합니다.
-     $$ L*{rec}(I, I_r) = \lambda L*{SSIM}(I, I_r) + l_2(I, I_r) $$
+     $$ L_{rec}(I, I_r) = \lambda L_{SSIM}(I, I_r) + l_2(I, I_r) $$
         여기서 $I_r$은 재구성된 이미지입니다.
 
 2. **판별 하위 네트워크 (Discriminative sub-network)**
@@ -46,7 +46,7 @@ DRÆM은 재구성 하위 네트워크(reconstructive sub-network)와 판별 하
    - **손실 함수**: 어려운 예시의 정확한 분할에 대한 견고성을 높이기 위해 Focal Loss [14] ($L_{seg}$)를 적용합니다.
 
 3. **총 손실 함수**: 두 하위 네트워크의 목표를 결합하여 사용됩니다.
-   $$ L(I, I*r, M_a, M) = L*{rec}(I, I*r) + L*{seg}(M_a, M) $$
+   $$ L(I, I*r, M_a, M) = L_{rec}(I, I*r) + L_{seg}(M_a, M) $$
     여기서 $M_a$는 시뮬레이터에서 생성된 실제 이상 분할 마스크이고, $M$은 네트워크의 출력 이상 분할 마스크입니다.
 
 4. **시뮬레이션된 이상 생성 (Simulated Anomaly Generation)**
@@ -64,8 +64,8 @@ DRÆM은 재구성 하위 네트워크(reconstructive sub-network)와 판별 하
 5. **표면 이상 위치 파악 및 감지 (Surface Anomaly Localization and Detection)**
    - 판별 하위 네트워크의 출력인 픽셀 단위 이상 감지 마스크 $M_o$는 이미지 수준의 이상 점수 $\eta$를 추정하는 데 사용됩니다.
    - $M_o$를 평균 필터 컨볼루션 레이어로 평활화한 후, 최대값을 취하여 최종 이미지 수준 이상 점수를 계산합니다:
-     $$ \eta = \max(M*o \* f*{s*f \times s_f}) $$
-     (여기서 $f*{s_f \times s_f}$는 $s_f \times s_f$ 크기의 평균 필터이고, $*$는 컨볼루션 연산자입니다.)
+     $$ \eta = \max(M*o \* f_{s*f \times s_f}) $$
+     (여기서 $f_{s_f \times s_f}$는 $s_f \times s_f$ 크기의 평균 필터이고, $*$는 컨볼루션 연산자입니다.)
 
 ## 📊 Results
 

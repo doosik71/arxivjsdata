@@ -28,11 +28,11 @@ Seyed Kamyar Seyed Ghasemipour, Richard Zemel, Shixiang Gu
 1. **`f`-MAX: `f`-발산 Max-Ent IRL 정식화:**
    - 주어진 `f`-발산 $D_f(ρ_{exp}(s,a)||ρ_π(s,a))$를 최소화하는 것을 목표로 합니다.
    - `f`-GAN [15] 프레임워크를 사용하여 다음의 minimax 최적화 문제를 정의합니다:
-     $$ \min*π \max*{T*ω} E*{(s,a) \sim ρ*{exp}(s,a)}[T*ω(s,a)] - E*{(s,a) \sim ρ*π(s,a)}[f^*(T_ω(s,a))] $$
+     $$ \min_π \max_{T*ω} E_{(s,a) \sim ρ_{exp}(s,a)}[T*ω(s,a)] - E_{(s,a) \sim ρ*π(s,a)}[f^*(T_ω(s,a))] $$
         여기서 $T_ω$는 차별자(discriminator) 역할을 하는 함수이고, $f^*$는 $f$의 볼록 켤레(convex conjugate)입니다.
    - 이를 다음의 반복 최적화 절차로 풀이합니다:
-     - **차별자 업데이트:** $ \max*{T*ω} E*{(s,a) \sim ρ*{exp}(s,a)}[T_ω(s,a)] - E*{(s,a) \sim ρ*π(s,a)}[f^*(T_ω(s,a))] $
-     - **정책 업데이트:** $ \max*π E*{τ \sim π} [ \sum_t f^*(T_ω(s_t,a_t))] $
+     - **차별자 업데이트:** $ \max_{T*ω} E_{(s,a) \sim ρ_{exp}(s,a)}[T_ω(s,a)] - E_{(s,a) \sim ρ*π(s,a)}[f^*(T_ω(s,a))] $
+     - **정책 업데이트:** $ \max*π E_{τ \sim π} [ \sum_t f^*(T_ω(s_t,a_t))] $
    - AIRL [1]은 $f(u) := - \log u$를 선택하여 역 KL 발산 $KL(ρ_π(s,a)||ρ_{exp}(s,a))$을 최소화하는 `f`-MAX의 특수 사례임을 증명합니다.
    - `f`-MAX는 Ho & Ermon [2]의 비용-정규화된 Max-Ent IRL 프레임워크에 속함을 보여줍니다.
 2. **모방 학습 방법 간의 관계 이해:**

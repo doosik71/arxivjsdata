@@ -40,24 +40,24 @@ Swami Sankaranarayanan, Yogesh Balaji, Carlos D. Castillo, Rama Chellappa
 
    - 소스 이미지를 사용하여 $D_{data}$와 $D_{cls}$를 업데이트합니다. $D_{data}$는 실제 소스 이미지를 '실제'로, 생성된 소스 이미지를 '가짜'로 분류하도록 학습하고, $D_{cls}$는 소스 라벨과 일치하도록 분류합니다.
    - 라벨이 없는 타겟 이미지를 기반으로 생성된 타겟 이미지를 '가짜'로 분류하도록 $D_{data}$를 업데이트합니다.
-     $$ L*D = L*{data,src} + L*{cls,src} + L*{adv,tgt} $$
-    $$ L*{data,src} = \max_D E*{x \sim S} [\log(D_{data}(x)) + \log(1 - D_{data}(G(f_g)))] $$
-    $$ L*{cls,src} = \max_D E*{x \sim S} [\log(D_{cls}(x)_y)] $$
-    $$ L*{adv,tgt} = \max_D E*{x \sim T} [\log(1 - D_{data}(G(h_g)))] $$
+     $$ L*D = L_{data,src} + L_{cls,src} + L_{adv,tgt} $$
+    $$ L_{data,src} = \max_D E_{x \sim S} [\log(D_{data}(x)) + \log(1 - D_{data}(G(f_g)))] $$
+    $$ L_{cls,src} = \max_D E_{x \sim S} [\log(D_{cls}(x)_y)] $$
+    $$ L_{adv,tgt} = \max_D E_{x \sim T} [\log(1 - D_{data}(G(h_g)))] $$
 
 2. **생성자 (G) 업데이트**:
 
    - 소스 데이터를 사용하여 $G$를 업데이트하여 $D$를 속이고, 실제와 같으면서 클래스 일관성 있는 이미지를 생성하도록 합니다.
-     $$ L*G = \min_G E*{x \sim S} [-\log(D_{cls}(G(f_g))_y) + \log(1 - D_{data}(G(f_g)))] $$
+     $$ L*G = \min_G E_{x \sim S} [-\log(D_{cls}(G(f_g))_y) + \log(1 - D_{data}(G(f_g)))] $$
 
 3. **특징 추출 네트워크 (F) 및 분류기 (C) 업데이트**:
    - 소스 이미지를 사용하여 $F$와 $C$를 전통적인 지도 학습 방식으로 업데이트합니다 ($L_C$).
    - $F$는 또한 $D$의 적대적 그래디언트를 사용하여 업데이트됩니다. 이는 특징 학습과 이미지 생성 과정이 원활하게 상호작용하도록 합니다.
    - 타겟 데이터를 사용하여 $F$를 업데이트합니다. $F$는 생성된 타겟 이미지가 $D$에 의해 '실제'로 분류되도록 유도하며, 이를 통해 타겟 임베딩이 소스 분포와 정렬되도록 합니다.
-     $$ L*F = L_C + \alpha L*{cls,src} + \beta L*{F*{adv}} $$
-    $$ L*C = \min_C \min_F E*{x \sim S} [-\log(C(F(x))_y)] $$
-    $$ L*{cls,src} = \min_F E*{x \sim S} [-\alpha \log(D_{cls}(G(f_g))_y))] $$
-    $$ L*{F*{adv}} = \min*F E*{x \sim T} [\beta \log(1 - D_{data}(G(h_g)))] $$
+     $$ L*F = L_C + \alpha L_{cls,src} + \beta L_{F_{adv}} $$
+    $$ L*C = \min_C \min_F E_{x \sim S} [-\log(C(F(x))_y)] $$
+    $$ L_{cls,src} = \min_F E_{x \sim S} [-\alpha \log(D_{cls}(G(f_g))_y))] $$
+    $$ L_{F_{adv}} = \min_F E_{x \sim T} [\beta \log(1 - D_{data}(G(h_g)))] $$
     여기서 $\alpha$와 $\beta$는 분류 손실과 적대적 손실 간의 균형을 조절하는 계수입니다. $G$-$D$ 쌍의 생성 능력이 타겟 데이터에 대한 클래스 일관성 있는 임베딩 생성에 필요한 그래디언트를 제공하는 '공생 관계'가 이 방법의 핵심입니다.
 
 ## 📊 Results

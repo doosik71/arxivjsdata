@@ -46,19 +46,19 @@ Joakim Johnander, Martin Danelljan, Emil Brissman, Fahad Shahbaz Khan, Michael F
      - 본 모델은 전경/배경 각각에 대한 기본 구성 요소와 함께, 모델이 정확하게 표현하지 못하는 어려운 예시(hard examples, 방해물 등)를 모델링하기 위한 추가 가우시안 구성 요소를 사용합니다 (총 4개: 전경 기본, 배경 기본, 전경 잔여, 배경 잔여).
      - 첫 프레임에서는 초기 마스크를 사용하여 모델 파라미터를 직접 추론합니다. 이후 프레임에서는 네트워크 예측을 소프트 클래스 레이블로 사용하여 모델을 업데이트합니다.
      - 파라미터 업데이트는 E-M 알고리즘의 M-step과 유사한 방식으로 이루어지며, 학습률 $\lambda$를 사용하여 이전 프레임의 파라미터와 새로 계산된 파라미터를 결합합니다:
-       $$ \tilde{\mu}_{i}{\_k} = \frac{\sum_{p} \alpha*{i}{\_pk} x*{i}{_p}}{\sum_{p} \alpha*{i}{\_pk}} $$
-            $$ \tilde{\Sigma}*{i}{_k} = \frac{\sum_{p} \alpha*{i}{\_pk} \text{diag}\{(x*{i}{_p} - \tilde{\mu}_{i}{_k})^2 + r_k\}}{\sum_{p} \alpha*{i}{\_pk}} $$
-            $$ \mu*{i}{_k} = (1-\lambda)\mu_{i-1}{_k} + \lambda \tilde{\mu}_{i}{_k} $$
+       $$ \tilde{\mu}_{i}{_k} = \frac{\sum_{p} \alpha_{i}{_pk} x_{i}{_p}}{\sum_{p} \alpha_{i}{_pk}} $$
+            $$ \tilde{\Sigma}_{i}{_k} = \frac{\sum_{p} \alpha_{i}{_pk} \text{diag}\{(x_{i}{_p} - \tilde{\mu}_{i}{_k})^2 + r_k\}}{\sum_{p} \alpha_{i}{_pk}} $$
+            $$ \mu_{i}{_k} = (1-\lambda)\mu_{i-1}{_k} + \lambda \tilde{\mu}_{i}{_k} $$
             $$ \Sigma_{i}{_k} = (1-\lambda)\Sigma_{i-1}{_k} + \lambda \tilde{\Sigma}_{i}{_k} $$
-       여기서 $\alpha_{i}{_pk}$는 특징 $x_{i}{\_p}$가 구성 요소 $k$에 할당되는 정도를 나타내는 소프트 할당 변수입니다.
+       여기서 $\alpha_{i}{_pk}$는 특징 $x_{i}{_p}$가 구성 요소 $k$에 할당되는 정도를 나타내는 소프트 할당 변수입니다.
    - **할당 변수($\alpha_{i}{_pk}$) 계산:**
      - 첫 프레임에서는 초기 마스크 $y_p$를 사용하여 $\alpha_{0}{_p0} = 1-y_p$, $\alpha_{0}{_p1} = y_p$로 설정합니다.
      - 이후 프레임에서는 네트워크의 최종 예측 $\tilde{y}_p$를 사용하여 $\alpha_{i}{_p0} = 1-\tilde{y}_p$, $\alpha_{i}{_p1} = \tilde{y}_p$로 설정합니다.
      - 추가적인 가우시안 구성 요소 ($k=2,3$)에 대한 할당 변수는 기본 구성 요소의 예측 오류를 기반으로 계산됩니다:
-       $$ \alpha*{i}{\_p2} = \text{ReLU}(p(z*{i}{_p}=0|x_{i}{_p},\mu_{i}{_0},\Sigma_{i}{_0}) - \alpha_{i}{_p0}) $$
-            $$ \alpha_{i}{_p3} = \text{ReLU}(p(z_{i}{_p}=1|x_{i}{_p},\mu_{i}{_1},\Sigma_{i}{_1}) - \alpha_{i}{\_p1}) $$
+       $$ \alpha_{i}{_p2} = \text{ReLU}(p(z_{i}{_p}=0|x_{i}{_p},\mu_{i}{_0},\Sigma_{i}{_0}) - \alpha_{i}{_p0}) $$
+            $$ \alpha_{i}{_p3} = \text{ReLU}(p(z_{i}{_p}=1|x_{i}{_p},\mu_{i}{_1},\Sigma_{i}{_1}) - \alpha_{i}{_p1}) $$
    - **모듈 출력:** 이전 프레임에서 계산된 모델 파라미터 $\theta_{i-1}$를 기반으로 구성 요소 후방 확률의 로그 값을 출력합니다. 이는 융합 모듈의 컨볼루션 레이어에 입력됩니다.
-     $$ s*{i}{\_pk} = -\frac{\ln|\Sigma*{i-1}{_k}| + (x_{i}{_p}-\mu_{i-1}{_k})^T(\Sigma_{i-1}{_k})^{-1}(x_{i}{_p}-\mu_{i-1}{\_k})}{2} $$
+     $$ s_{i}{_pk} = -\frac{\ln|\Sigma_{i-1}{_k}| + (x_{i}{_p}-\mu_{i-1}{_k})^T(\Sigma_{i-1}{_k})^{-1}(x_{i}{_p}-\mu_{i-1}{_k})}{2} $$
 
 3. **네트워크 학습:**
    - DAVIS2017 [26], YouTube-VOS [32], SynthVOS 데이터셋을 사용하여 종단간 반복 방식으로 학습합니다.

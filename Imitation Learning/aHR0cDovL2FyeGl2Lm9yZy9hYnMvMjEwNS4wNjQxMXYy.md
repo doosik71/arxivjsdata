@@ -62,10 +62,10 @@ Edward Johns
    - 접근 궤적 중 객체는 정지해 있으므로, 여러 이미지로부터의 병목 포즈 예측을 융합하여 정확도를 높입니다.
    - **불확실성 추정**: 예측 $\hat{x}_t$에 대한 가우시안 불확실성 $\hat{\sigma}_t$를 추정하기 위해 세 가지 방법(Dropout, Predicted, Prior)을 탐색합니다. 실험 결과, 검증 오차를 모든 예측에 대한 상수로 사용하는 Prior 방법이 가장 좋은 성능을 보였습니다.
    - **Batch 방법**: 현재까지의 모든 개별 예측 $\hat{x}_0 \dots \hat{x}_t$을 역분산 가중치(inverse-variance weighting)를 사용하여 결합합니다.
-     $$ \bar{x}_t = \frac{\sum_{\tau=0}^{t} \hat{x}_{\tau} / \hat{\sigma}^2_{\tau}}{\sum*{\tau=0}^{t} 1 / \hat{\sigma}^2*{\tau}} $$
+     $$ \bar{x}_t = \frac{\sum_{\tau=0}^{t} \hat{x}_{\tau} / \hat{\sigma}^2_{\tau}}{\sum_{\tau=0}^{t} 1 / \hat{\sigma}^2_{\tau}} $$
    - **Filtering 방법**: 이전 시간 단계의 추정 $\bar{x}_{t-1}$과 현재 시간 단계의 예측 $\hat{x}_t$을 결합합니다. 이는 프로세스 노이즈가 없는 칼만 필터(Kalman filter)의 일종입니다.
-     $$ \bar{x}_t = \frac{(\bar{x}_{t-1} / \bar{\sigma}^2*{t-1}) + (\hat{x}\_t / \hat{\sigma}^2_t)}{(1 / \bar{\sigma}^2*{t-1}) + (1 / \hat{\sigma}^2*t)} $$
-        $$ \bar{\sigma}^2_t = \frac{1}{(1 / \bar{\sigma}^2*{t-1}) + (1 / \hat{\sigma}^2_t)} $$
+     $$ \bar{x}_t = \frac{(\bar{x}_{t-1} / \bar{\sigma}^2_{t-1}) + (\hat{x}_t / \hat{\sigma}^2_t)}{(1 / \bar{\sigma}^2_{t-1}) + (1 / \hat{\sigma}^2*t)} $$
+        $$ \bar{\sigma}^2_t = \frac{1}{(1 / \bar{\sigma}^2_{t-1}) + (1 / \hat{\sigma}^2_t)} $$
 
 5. **"마지막 단계(Last-inch)" 보정**:
 

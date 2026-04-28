@@ -38,7 +38,7 @@ Giuliano Benenti, Giuliano Strini
   - 전체 시스템-환경의 진화는 유니터리 행렬 $U$에 의해 기술됩니다. 이 $U$는 양자 게이트 연산과 원치 않는 시스템-환경 상호작용(결어긋남 유발)을 모두 포함합니다.
   - 최종적으로 환경은 무시되고(환경 자유도에 대한 추적(trace) 연산), $n''$개의 큐비트가 계산 기저(예: Pauli 스핀 연산자 $\sigma_z$의 고유 상태 $|0\rangle$, $|1\rangle$)에서 측정됩니다. 이 측정은 파동 함수 붕괴를 유도하며, 나머지 $n' = n - n''$ 큐비트에 대한 상태 $\rho'$를 얻습니다.
 
-  $$ \rho' = \text{Tr}\_{\text{env}}\left[ U (\rho \otimes |0_m\rangle\langle 0_m|) U^\dagger \right] $$
+  $$ \rho' = \text{Tr}_{\text{env}}\left[ U (\rho \otimes |0_m\rangle\langle 0_m|) U^\dagger \right] $$
 
   - 이 모델은 유한 차원 힐베르트 공간을 갖는 양자 시스템에만 해당된다는 점을 강조합니다.
 

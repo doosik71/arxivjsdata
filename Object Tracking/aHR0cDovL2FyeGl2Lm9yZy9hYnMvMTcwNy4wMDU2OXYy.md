@@ -25,7 +25,7 @@ Roman Pflugfelder, Member, IEEE
 
 1. **추적 문제의 정형화**: 추적 문제를 확률 과정이자 의사결정 함수 $\delta(X(t), Y(t-1))$로 정의합니다. 여기서 $X(t)$는 이미지 시퀀스, $Y(t-1)$은 이전 측정값입니다.
 2. **기능적 분해**: 추적기 함수 $\tau(t)$를 사전 처리 ($\delta_0(\cdot)$), 신경망 ($\sigma(\cdot)$), 사후 처리 ($\delta_1(\cdot)$)의 합성으로 분해합니다.
-   $$ \tau(t) = \delta(X(t), Y(t-1)) = \Delta\_{X(t),Y(t-1)}(\sigma) = \delta_1(\sigma, \delta_0(X(t),Y(t-1))) $$
+   $$ \tau(t) = \delta(X(t), Y(t-1)) = \Delta_{X(t),Y(t-1)}(\sigma) = \delta_1(\sigma, \delta_0(X(t),Y(t-1))) $$
 3. **Lisp-유사 형식론 도입**: 각 추적기의 $\delta_0(\cdot)$, $\sigma(\cdot)$, $\delta_1(\cdot)$ 함수를 Lisp-유사 접두사 표기법으로 기술하여 상세한 설계 비교를 용이하게 합니다 (예: `(setv TP (f_crop T_{t-1}^I B_{t-1}) SP (f_crop T_t^I B_{t-1}))`).
 4. **샴 신경망 분류**: 분석 대상인 9가지 추적기에서 사용된 샴 네트워크 아키텍처를 (i) Two-Channel Siamese, (ii) Pseudo Siamese, (iii) Siamese, (iv) Two-Stream Siamese, (v) Recurrent Siamese의 다섯 가지 클래스로 분류하여 특징을 분석합니다.
 5. **정성적 분석**: 각 추적기의 네트워크 아키텍처, 입출력, 학습 방법 (손실 함수, 훈련 데이터), 추적 방법론 내에서의 신경망 통합 방식 등을 상세하게 분석합니다.

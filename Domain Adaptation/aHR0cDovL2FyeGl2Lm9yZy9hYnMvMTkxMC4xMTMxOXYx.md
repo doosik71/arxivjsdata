@@ -29,7 +29,7 @@ Han-Kai Hsu, Chun-Han Yao, Yi-Hsuan Tsai, Wei-Chih Hung, Hung-Yu Tseng, Maneesh 
   - **탐지 네트워크 (Detection Network):** 객체 탐지 태스크를 위해 Faster R-CNN [24] 프레임워크를 사용합니다. 인코더 $E$가 이미지 특징을 추출하고, 이 특징은 RPN(Region Proposal Network)과 ROI(Region of Interest) 분류기로 구성된 탐지기로 전달됩니다. 손실 함수는 $L_{\text{det}}(E(I)) = L_{\text{rpn}} + L_{\text{cls}} + L_{\text{reg}}$로 정의됩니다.
   - **도메인 판별자 (Domain Discriminator):** 인코더 $E$ 뒤에 도메인 판별자 $D$를 연결하여 특징 $E(I)$가 원본 도메인인지 타겟 도메인인지 구별합니다. 이진 교차 엔트로피 손실 $L_{\text{disc}}$를 사용하여 $P = D(E(I))$가 입력 이미지의 도메인 레이블 $d$와 일치하도록 학습됩니다.
   - **적대적 학습 (Adversarial Learning):** GRL(Gradient Reverse Layer) [6]을 판별자와 탐지 네트워크 사이에 삽입하여 도메인 불변 특징 $E(I)$를 학습합니다. GRL은 역전파 시 기울기 부호를 반전시켜 인코더 $E$가 판별자 $D$를 속이는 특징을 생성하도록 유도합니다. 원본 이미지 $I_S$와 타겟 이미지 $I_T$에 대한 전체 손실 함수는 다음과 같습니다:
-    $$ \min*{E} \max*{D} L(I*S,I_T) = L*{\text{det}}(I*S) + \lambda*{\text{disc}} \left[ L_{\text{disc}}(E(I_S)) + L_{\text{disc}}(E(I_T)) \right] $$
+    $$ \min_{E} \max_{D} L(I*S,I_T) = L_{\text{det}}(I*S) + \lambda_{\text{disc}} \left[ L_{\text{disc}}(E(I_S)) + L_{\text{disc}}(E(I_T)) \right] $$
         여기서 $\lambda_{\text{disc}}$는 판별자 손실의 가중치입니다.
 
 - **점진적 적응 (Progressive Adaptation):**
@@ -40,9 +40,9 @@ Han-Kai Hsu, Chun-Han Yao, Yi-Hsuan Tsai, Wei-Chih Hung, Hung-Yu Tseng, Maneesh 
   - **가중치화된 감독 학습 (Weighted Supervision):**
     - CycleGAN으로 생성된 합성 이미지의 품질은 다양하며, 품질이 낮은 이미지는 이상치(outliers)로 작용하여 탐지 모델을 혼란시킬 수 있습니다.
     - 이 문제를 완화하기 위해 CycleGAN의 판별자 $D_{\text{cycle}}$가 출력하는 타겟 도메인에 속할 확률을 활용하여 각 합성 이미지 $I_F$에 중요도 가중치 $w(I_F)$를 부여합니다.
-      $$ w(I) = \begin{cases} D\_{\text{cycle}}(I), & \text{if } I \in F \\ 1, & \text{otherwise} \end{cases} $$
+      $$ w(I) = \begin{cases} D_{\text{cycle}}(I), & \text{if } I \in F \\ 1, & \text{otherwise} \end{cases} $$
     - 이 가중치 $w(I_F)$는 2단계 적응 시 탐지 손실 함수 $L_{\text{det}}(I_F)$에 곱해져, 품질이 좋은 합성 샘플에 더 큰 가중치를 부여합니다. 최종 가중치화된 손실 함수는 다음과 같습니다:
-      $$ \min*{E} \max*{D} L(I*F,I_T) = w(I_F)L*{\text{det}}(I*F) + \lambda*{\text{disc}} \left[ L_{\text{disc}}(E(I_F)) + L_{\text{disc}}(E(I_T)) \right] $$
+      $$ \min_{E} \max_{D} L(I*F,I_T) = w(I_F)L_{\text{det}}(I*F) + \lambda_{\text{disc}} \left[ L_{\text{disc}}(E(I_F)) + L_{\text{disc}}(E(I_T)) \right] $$
 
 ## 📊 Results
 

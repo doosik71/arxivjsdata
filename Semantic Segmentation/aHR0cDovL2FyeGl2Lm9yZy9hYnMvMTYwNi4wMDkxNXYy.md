@@ -41,7 +41,7 @@ Liang-Chieh Chen, George Papandreou, Iasonas Kokkinos, Kevin Murphy, and Alan L.
    - **문제 해결:** DCNN에서 풀링 및 스트라이딩으로 인한 특징 맵 해상도 감소 문제를 해결합니다.
    - **원리:** 네트워크의 마지막 몇몇 풀링 레이어에서 다운샘플링 연산자를 제거하고, 대신 후속 컨볼루션 레이어의 필터를 업샘플링합니다. 이는 필터 탭 사이에 0(holes, 'trous')을 삽입하는 것과 같습니다.
    - **1D Atrous Convolution 공식:** 입력 신호 $x[i]$와 길이 $K$의 필터 $w[k]$에 대한 출력 $y[i]$는 다음과 같이 정의됩니다.
-     $$ y[i] = \sum\_{k=1}^{K} x[i+r \cdot k]w[k] $$
+     $$ y[i] = \sum_{k=1}^{K} x[i+r \cdot k]w[k] $$
         여기서 $r$은 입력 신호를 샘플링하는 보폭(stride)을 나타내는 **레이트(rate)** 파라미터입니다. $r=1$은 표준 컨볼루션입니다.
    - **효과:**
      - 더 높은 샘플링 레이트로 특징 맵을 계산하여 공간 밀도를 증가시킵니다 (예: 원본 네트워크에서 32배 다운샘플링 대신 8배 다운샘플링).
@@ -58,10 +58,10 @@ Liang-Chieh Chen, George Papandreou, Iasonas Kokkinos, Kevin Murphy, and Alan L.
    - **문제 해결:** DCNN의 공간 정확도 한계와 부드러운 예측으로 인한 경계 흐림 문제를 해결합니다.
    - **원리:** DCNN의 인식 능력과 완전 연결 CRF의 미세한 지역화 정확도를 결합합니다.
    - **에너지 함수:** 픽셀에 대한 레이블 할당 $x$에 대한 에너지 함수는 다음과 같습니다.
-     $$ E(x) = \sum*{i} \theta*{i}(x*{i}) + \sum*{ij} \theta*{ij}(x*{i},x\_{j}) $$
+     $$ E(x) = \sum_{i} \theta_{i}(x_{i}) + \sum_{ij} \theta_{ij}(x_{i},x_{j}) $$
      - **단항 잠재력(Unary potential) $\theta_{i}(x_{i})$:** DCNN에 의해 계산된 픽셀 $i$에서의 레이블 할당 확률 $P(x_{i})$에서 $-\log P(x_{i})$로 정의됩니다.
      - **쌍항 잠재력(Pairwise potential) $\theta_{ij}(x_{i},x_{j})$:** 모든 픽셀 쌍 $i, j$를 연결하는 완전 연결 그래프를 사용합니다.
-       $$ \theta*{ij}(x*{i},x*{j})=\mu(x*{i},x*{j}) \left[ w*{1}\exp\left(-\frac{||p*{i}-p*{j}||^2}{2\sigma*{\alpha}^2} - \frac{||I*{i}-I*{j}||^2}{2\sigma*{\beta}^2}\right) + w*{2}\exp\left(-\frac{||p*{i}-p*{j}||^2}{2\sigma*{\gamma}^2}\right) \right] $$
+       $$ \theta_{ij}(x_{i},x_{j})=\mu(x_{i},x_{j}) \left[ w_{1}\exp\left(-\frac{||p_{i}-p_{j}||^2}{2\sigma_{\alpha}^2} - \frac{||I_{i}-I_{j}||^2}{2\sigma_{\beta}^2}\right) + w_{2}\exp\left(-\frac{||p_{i}-p_{j}||^2}{2\sigma_{\gamma}^2}\right) \right] $$
             여기서 $\mu(x_{i},x_{j}) = 1$ (만약 $x_{i} \neq x_{j}$), 그렇지 않으면 0입니다. 첫 번째 '양방향' 커널은 픽셀 위치($p$)와 RGB 색상($I$)에 모두 의존하며, 유사한 색상과 위치의 픽셀에 유사한 레이블을 부여합니다. 두 번째 커널은 공간적 근접성만 고려하여 부드러움을 강화합니다.
    - **추론:** 평균 필드(mean field) 근사를 통한 효율적인 근사 확률 추론이 가능하며, 고차원 필터링 알고리즘 [84]을 사용하여 빠르게 계산됩니다.
 

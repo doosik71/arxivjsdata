@@ -46,11 +46,11 @@ M. Allan, A. Shvets, T. Kurmann, Z. Zhang, R. Duggal, Y.H. Su, N. Rieke, I. Lain
   - **데이터 증강:** 수평/수직 뒤집기, 확대/축소, 회전, 색상/대비 변경 등 일반적인 공간적/사진측량적 증강 기법을 사용했습니다. 뮌헨 공과대학교(TUM) 팀은 계측기 표면의 반사를 모방하는 독특한 증강 기법을 적용했습니다.
   - **손실 함수:** 범주형 교차 엔트로피(categorical cross entropy), Dice loss, IoU (Intersection-over-Union) 손실이 사용되었습니다.
     - SIAT 팀은 클래스 불균형 처리를 위해 가중치 보상 전략을 사용했습니다:
-      $$ \sigma*i(z) = \frac{k_i \exp(z_i)}{\sum*{j=1}^{m} \exp(z_j)}, \quad i=1,...,m $$
+      $$ \sigma*i(z) = \frac{k_i \exp(z_i)}{\sum_{j=1}^{m} \exp(z_j)}, \quad i=1,...,m $$
             여기서 $k_i$는 클래스 가중치를 나타냅니다.
     - UCL 팀은 다중 스케일 손실을 집계하는 ToolNet [11]을 사용했습니다:
-      $$ \hat{y}^{{(\bar{s})}}(z,\theta) = \sum*{j=1}^{M} w_j \hat{y}^{{(s_j)}}(z,\theta) $$
-            $$ L*{\text{{MSIoU}}}(y,z,\theta) = \bar{\lambda}L*{\text{{IoU}}}(\hat{y}^{{(\bar{s})}},(z,\theta),y) + \sum*{j=1}^{M} \lambda*j L*{\text{{IoU}}}(\hat{y}^{{(s_j)}},(z,\theta),y) $$
+      $$ \hat{y}^{{(\bar{s})}}(z,\theta) = \sum_{j=1}^{M} w_j \hat{y}^{{(s_j)}}(z,\theta) $$
+            $$ L_{\text{{MSIoU}}}(y,z,\theta) = \bar{\lambda}L_{\text{{IoU}}}(\hat{y}^{{(\bar{s})}},(z,\theta),y) + \sum_{j=1}^{M} \lambda*j L_{\text{{IoU}}}(\hat{y}^{{(s_j)}},(z,\theta),y) $$
   - **최적화 기법:** Adam, SGD(Stochastic Gradient Descent) 등이 사용되었습니다.
   - **후처리:** 조건부 랜덤 필드(CRF) [22] (Delhi), 작은 연결 영역 제거 및 경계 제약 적용 (Alberta, TUM) 등이 활용되었습니다.
   - **비(非)심층 학습 접근 방식:** 워싱턴 대학교(UW) 팀은 기계 학습 없이 전통적인 컴퓨터 비전 기법(색상 필터링, GrabCut [26], 이미지 특징 및 흐릿함 평가)을 사용하여 도구 분할을 시도했습니다.

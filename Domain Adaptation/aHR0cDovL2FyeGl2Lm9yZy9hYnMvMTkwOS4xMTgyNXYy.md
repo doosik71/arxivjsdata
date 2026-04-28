@@ -44,9 +44,9 @@ Yu Sun, Eric Tzeng, Trevor Darrell, Alexei A. Efros
 
    - **아키텍처**: 모든 과제(주 과제 $L_0$ 및 자기 지도 과제 $L_k$)는 공통 특징 추출기 $\phi$를 공유하며, 각 과제에는 전용의 낮은 용량의 헤드 $h_k$가 연결됩니다. 이는 헤드들이 고수준 특징을 공유하도록 강제하여 정렬을 유도합니다.
    - **손실 함수**: 주 예측 과제 $L_0$는 레이블이 있는 소스 데이터 $S$에 대해 적용되며, 각 자기 지도 과제 $L_k$는 소스 $S$와 타겟 $T$ 양쪽에서 생성된 자기 지도 샘플에 대해 적용됩니다. 전체 최적화 목표는 다음과 같습니다:
-     $$ \min*{\phi, h_k, k=0...K} \mathcal{L}\_0(S; \phi, h_0) + \sum*{k=1}^K \mathcal{L}_k(S, T; \phi, h_k) $$
-     여기서 $\mathcal{L}\_0(S; \phi, h_0) = \sum_{(x,y) \in S} \mathcal{L}_0(h_0(\phi(x)), y)$ 이고,
-     $\mathcal{L}\_k(S, T; \phi, h_k) = \sum_{(f*k(x), \tilde{y}) \in \mathcal{F}\_k(S)} \mathcal{L}\_k(h_k(\phi(f_k(x))), \tilde{y}) + \sum*{(f_k(x), \tilde{y}) \in \mathcal{F}\_k(T)} \mathcal{L}\_k(h_k(\phi(f_k(x))), \tilde{y})$ 입니다.
+     $$ \min_{\phi, h_k, k=0...K} \mathcal{L}_0(S; \phi, h_0) + \sum_{k=1}^K \mathcal{L}_k(S, T; \phi, h_k) $$
+     여기서 $\mathcal{L}_0(S; \phi, h_0) = \sum_{(x,y) \in S} \mathcal{L}_0(h_0(\phi(x)), y)$ 이고,
+     $\mathcal{L}_k(S, T; \phi, h_k) = \sum_{(f*k(x), \tilde{y}) \in \mathcal{F}_k(S)} \mathcal{L}_k(h_k(\phi(f_k(x))), \tilde{y}) + \sum_{(f_k(x), \tilde{y}) \in \mathcal{F}_k(T)} \mathcal{L}_k(h_k(\phi(f_k(x))), \tilde{y})$ 입니다.
    - **훈련 절차**: SGD를 사용하여 모델을 최적화합니다. 자기 지도 과제의 배치 샘플링 시, 소스와 타겟 도메인에서 각각 절반씩 샘플을 가져와 균형을 유지합니다. 이는 어느 한 도메인이 특징 학습을 지배하지 않도록 합니다.
 
 3. **하이퍼파라미터 튜닝 및 조기 종료 휴리스틱**: UDA 설정에서는 타겟 레이블이 없으므로 검증 세트를 사용할 수 없습니다. 따라서, 본 논문은 다음의 휴리스틱을 제안합니다:

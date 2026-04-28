@@ -32,7 +32,7 @@ Garrett Bingham, William Macke, Risto Miikkulainen
    - **단항 연산자**: $0, 1, x, -x, |x|, x^2, x^3, \sqrt{x}, e^x, e^{-x^2}, \log(1+e^x), \log(|x+\epsilon|), \sin(x), \sinh(x), \text{arcsinh}(x), \cos(x), \cosh(x), \tanh(x), \text{arctanh}(x), \max\{x,0\}, \min\{x,0\}, \sigma(x), \text{erf}(x), \text{sinc}(x)$
    - **이항 연산자**: $x_1+x_2, x_1-x_2, x_1 \cdot x_2, x_1/(x_2+\epsilon), \max\{x_1,x_2\}, \min\{x_1,x_2\}$
    - "코어 유닛(core unit)"은 $binary(unary_1(x), unary_2(x))$ 형태의 활성화 함수입니다.
-   - 탐색 공간 $S_d$는 균형 잡힌 코어 유닛 트리의 집합으로 정의되며, $d$는 트리의 깊이를 나타냅니다. (예: $S_1$은 하나의 코어 유닛, $S_2$는 $core\_unit_1(core\_unit_2(x), core\_unit_3(x))$ 형태)
+   - 탐색 공간 $S_d$는 균형 잡힌 코어 유닛 트리의 집합으로 정의되며, $d$는 트리의 깊이를 나타냅니다. (예: $S_1$은 하나의 코어 유닛, $S_2$는 $core_unit_1(core_unit_2(x), core_unit_3(x))$ 형태)
 
 2. **변이 (Mutation)**
 
@@ -48,7 +48,7 @@ Garrett Bingham, William Macke, Risto Miikkulainen
 
    - $N$개의 활성화 함수로 구성된 초기 모집단으로 시작합니다.
    - 각 함수를 사용하여 신경망을 훈련하고, 유효성 검사 데이터셋에서 얻은 평가 메트릭 $L_i$ (정확도 또는 음수 손실)를 기반으로 적합도 $p_i$를 할당합니다.
-     $$ p*i = \frac{e^{L_i}}{\sum*{j=1..N} e^{L_j}} $$
+     $$ p*i = \frac{e^{L_i}}{\sum_{j=1..N} e^{L_j}} $$
    - 번식을 위해 모집단에서 $2(N-m)$개의 함수를 적합도에 비례하는 확률로 대체하여 선택합니다.
    - 선택된 함수에 교차 및 변이를 적용하여 $N-m$개의 새로운 함수를 생성합니다.
    - 탐색을 증가시키기 위해 $m$개의 무작위로 생성된 함수를 추가하여 다음 세대의 모집단 크기를 다시 $N$으로 만듭니다.

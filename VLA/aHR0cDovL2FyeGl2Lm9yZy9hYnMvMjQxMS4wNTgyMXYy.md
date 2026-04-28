@@ -34,7 +34,7 @@ Pranav Guruprasad, Harshvardhan Sikka, Jaewoo Song, Yangyue Wang, Paul Pu Liang
   - **OpenVLA [22]:** 97만 개의 OpenX 로봇 에피소드에서 훈련된 7B 파라미터 오픈소스 비전-언어-행동 모델이다. SigLIP 및 DinoV2 시각 인코더와 7B Llama 2 언어 모델 백본을 결합하여, 일반화된 로봇 조작 작업에서 뛰어난 성능을 보인다.
 - **평가 지표:**
   - **평균 제곱 오차 (MSE):** 오프라인 로봇 궤적 평가의 주된 지표로 사용된다. 예측 행동과 실제 행동 간의 편차를 제곱하여 계산한다.
-    $$ MSE = \frac{1}{n} \sum\_{i=1}^{n} (y_i - \hat{y}\_i)^2 $$
+    $$ MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 $$
         여기서 $y_i$는 실제 행동, $\hat{y}_i$는 예측 행동, $n$은 관측치 수이다.
   - **평균 MSE (AMSE):** 데이터셋의 모든 타임스텝에 걸친 평균 MSE로, 모델 성능을 직접 비교하는 데 사용된다.
   - **정규화 AMSE (NAMSE):** min-max 정규화된 MSE의 평균으로, 모델 출력 및 데이터셋 행동 공간의 스케일 차이를 보정하여 모델 간 비교의 공정성을 높인다.

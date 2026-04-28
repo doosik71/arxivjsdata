@@ -36,23 +36,23 @@ Yunsheng Li, Lu Yuan, Nuno Vasconcelos
      - 이미지 변환 모델 $F$를 훈련하여 소스 이미지 $S$를 타겟 도메인 스타일의 이미지 $S'$로 변환합니다. 이때 $S'$는 $S$와 동일한 레이블 $Y_{\text{S}}$를 유지합니다.
      - 변환된 $S'$와 실제 타겟 이미지 $T$를 사용하여 분할 적응 모델 $M$을 훈련합니다.
      - $M$의 손실 함수는 다음과 같습니다:
-       $$ \mathcal{L}_{\text{M}} = \lambda_{\text{adv}} \mathcal{L}_{\text{adv}}(M(S'), M(T)) + \mathcal{L}_{\text{seg}}(M(S'), Y*{\text{S}}) $$
-       여기서 $\mathcal{L}*{\text{adv}}$는 $S'$와 $T$의 특징 표현 간 거리를 최소화하는 적대적 손실이며, $\mathcal{L}_{\text{seg}}$는 $S'$에 대한 의미론적 분할 손실입니다.
+       $$ \mathcal{L}_{\text{M}} = \lambda_{\text{adv}} \mathcal{L}_{\text{adv}}(M(S'), M(T)) + \mathcal{L}_{\text{seg}}(M(S'), Y_{\text{S}}) $$
+       여기서 $\mathcal{L}_{\text{adv}}$는 $S'$와 $T$의 특징 표현 간 거리를 최소화하는 적대적 손실이며, $\mathcal{L}_{\text{seg}}$는 $S'$에 대한 의미론적 분할 손실입니다.
    - **역방향 (Backward Direction, $M \to F$):**
      - 업데이트된 분할 적응 모델 $M$을 사용하여 이미지 변환 모델 $F$를 개선합니다.
      - 새로운 **지각 손실($\mathcal{L}_{\text{per}}$)**을 도입하여 원본 이미지와 변환된 이미지 간의 의미론적 일관성을 강제합니다. 이는 $M$의 특징을 사용하여 계산됩니다.
      - $F$의 전체 손실 함수는 다음과 같습니다:
-       $$ \mathcal{L}_{\text{F}} = \lambda_{\text{GAN}}[\mathcal{L}_{\text{GAN}}(S', T) + \mathcal{L}_{\text{GAN}}(S, T')] + \lambda*{\text{recon}}[\mathcal{L}*{\text{recon}}(S, F^{-1}(S')) + \mathcal{L}_{\text{recon}}(T, F(T'))] + \mathcal{L}_{\text{per}}(M(S), M(S')) + \mathcal{L}_{\text{per}}(M(T), M(T')) $$
+       $$ \mathcal{L}_{\text{F}} = \lambda_{\text{GAN}}[\mathcal{L}_{\text{GAN}}(S', T) + \mathcal{L}_{\text{GAN}}(S, T')] + \lambda_{\text{recon}}[\mathcal{L}_{\text{recon}}(S, F^{-1}(S')) + \mathcal{L}_{\text{recon}}(T, F(T'))] + \mathcal{L}_{\text{per}}(M(S), M(S')) + \mathcal{L}_{\text{per}}(M(T), M(T')) $$
        여기서 $\mathcal{L}_{\text{GAN}}$은 $S'$와 $T$의 분포를 유사하게 만드는 GAN 손실, $\mathcal{L}_{\text{recon}}$은 순환 일관성(cycle consistency)을 위한 이미지 재구성 손실입니다.
      - 새로 제안된 지각 손실 $\mathcal{L}_{\text{per}}$는 $M$을 통해 얻은 특징 간의 L1-norm 차이를 측정하며, 재구성 부분의 안정성을 위해 재구성된 이미지에 대한 항도 포함합니다:
-       $$ \mathcal{L}_{\text{per}}(M(S), M(S')) = \lambda_{\text{per}} E*{I*{\text{S}} \sim S}[||M(I_{\text{S}}) - M(I'_{\text{S}})||_{1}] + \lambda*{\text{per_recon}} E*{I*{\text{S}} \sim S}[||M(F^{-1}(I'*{\text{S}})) - M(I*{\text{S}})||*{1}] $$
+       $$ \mathcal{L}_{\text{per}}(M(S), M(S')) = \lambda_{\text{per}} E_{I_{\text{S}} \sim S}[||M(I_{\text{S}}) - M(I'_{\text{S}})||_{1}] + \lambda_{\text{per_recon}} E_{I_{\text{S}} \sim S}[||M(F^{-1}(I'_{\text{S}})) - M(I_{\text{S}})||_{1}] $$
 
 2. **자기-지도 학습 (Self-supervised Learning, SSL) for $M$:**
 
    - $M$의 예측 확률을 기반으로 타겟 데이터 $T$에서 높은 신뢰도를 가진 픽셀에 대한 의사 레이블(pseudo labels) $\hat{Y}_{\text{T}}$를 생성합니다.
    - 이 의사 레이블을 분할 손실에 추가하여 $M$을 훈련합니다.
    - $M$의 손실 함수는 다음과 같이 수정됩니다:
-     $$ \mathcal{L}_{\text{M}} = \lambda_{\text{adv}} \mathcal{L}_{\text{adv}}(M(S'), M(T)) + \mathcal{L}_{\text{seg}}(M(S'), Y*{\text{S}}) + \mathcal{L}*{\text{seg}}(M(T*{\text{ssl}}), \hat{Y}*{\text{T}}) $$
+     $$ \mathcal{L}_{\text{M}} = \lambda_{\text{adv}} \mathcal{L}_{\text{adv}}(M(S'), M(T)) + \mathcal{L}_{\text{seg}}(M(S'), Y_{\text{S}}) + \mathcal{L}_{\text{seg}}(M(T_{\text{ssl}}), \hat{Y}_{\text{T}}) $$
         여기서 $T_{\text{ssl}} \subset T$는 의사 레이블을 가진 타겟 데이터의 부분 집합입니다. $M$이 개선될수록 $T_{\text{ssl}}$의 크기가 커집니다. 픽셀 신뢰도를 판단하는 임계값으로 '최대 확률 임계값(Max Probability Threshold, MPT)'을 사용합니다.
 
 3. **훈련 과정 (Algorithm 1):**

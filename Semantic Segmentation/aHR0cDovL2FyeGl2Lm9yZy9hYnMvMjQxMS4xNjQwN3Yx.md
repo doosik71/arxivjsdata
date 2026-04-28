@@ -32,7 +32,7 @@ Manuel Schwonberg, Claus Werner, Hanno Gottschalk, Carsten Meyer
 * **디코더**: DAFormer 아키텍처 [21]의 ASPP 기반 디코더를 사용했습니다. 계층적 인코더에서는 다중 레벨 특징을 수신하며, 비계층적 EVA02-L에서는 업샘플링 효과가 없습니다.
 * **도메인 시프트 데이터셋**:
   * **합성-실제 시프트**: GTA5 [46], SYNTHIA [47] (소스) → Cityscapes [9] (타겟).
-  * **순수 악천후 시프트**: ACDC [50] 데이터셋 (정상 날씨(D$_{ACDC\_normal}$) → 안개, 비, 눈, 밤(D$_{ACDC\_fog}$, D$_{ACDC\_rain}$, D$_{ACDC\_snow}$, D$_{ACDC\_night}$)). 단일, 잘 정의된 도메인 시프트를 평가하기 위해 사용되었습니다.
+  * **순수 악천후 시프트**: ACDC [50] 데이터셋 (정상 날씨(D$_{ACDC_normal}$) → 안개, 비, 눈, 밤(D$_{ACDC_fog}$, D$_{ACDC_rain}$, D$_{ACDC_snow}$, D$_{ACDC_night}$)). 단일, 잘 정의된 도메인 시프트를 평가하기 위해 사용되었습니다.
   * **도메인 일반화 평가**: Mapillary Vistas [40], BDD100K [69]를 포함한 다양한 실제 데이터셋에서 평가했습니다.
 * **실험 설정**:
   * **프레임워크**: MMSegmentation [8].

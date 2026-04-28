@@ -38,11 +38,11 @@ ADDA는 먼저 일반화된 적대적 비지도 적응 프레임워크를 정의
    - **목표:** 원본 도메인($p_s(x,y)$)과 타겟 도메인($p_t(x,y)$) 간의 매핑 분포 거리($M_s(X_s)$와 $M_t(X_t)$)를 최소화하여 원본 분류 모델 $C_s$를 타겟 도메인에 직접 적용할 수 있도록 합니다.
    - **손실 함수:**
      - **분류 손실 ($L_{\text{cls}}$):** 원본 매핑 $M_s$와 분류기 $C$를 레이블링된 원본 데이터에 대해 훈련합니다.
-       $$ \min*{M_s, C} L*{\text{cls}}(X*s, Y_s) = E*{(x*s, y_s) \sim (X_s, Y_s)} \left[ - \sum*{k=1}^K \mathbf{1}\_{[k=y_s]} \log C(M_s(x_s)) \right] $$
+       $$ \min_{M_s, C} L_{\text{cls}}(X*s, Y_s) = E_{(x*s, y_s) \sim (X_s, Y_s)} \left[ - \sum_{k=1}^K \mathbf{1}_{[k=y_s]} \log C(M_s(x_s)) \right] $$
      - **도메인 판별자 손실 ($L_{\text{adv}}^D$):** 도메인 판별자 $D$는 원본 및 타겟 매핑에서 나온 데이터 포인트가 각각 원본 또는 타겟 도메인에서 왔는지 분류하도록 훈련됩니다.
-       $$ L*{\text{adv}}^D(X_s, X_t, M_s, M_t) = -E*{x*s \sim X_s}[\log D(M_s(x_s))] -E*{x_t \sim X_t}[\log(1-D(M_t(x_t)))] $$
+       $$ L_{\text{adv}}^D(X_s, X_t, M_s, M_t) = -E_{x*s \sim X_s}[\log D(M_s(x_s))] -E_{x_t \sim X_t}[\log(1-D(M_t(x_t)))] $$
      - **매핑 적대적 손실 ($L_{\text{adv}}^M$):** 원본 및 타겟 매핑은 특정 제약 $\psi(M_s, M_t)$ 하에 적대적 목적에 따라 최적화됩니다.
-       $$ \min*{D} L*{\text{adv}}^D(X*s, X_t, M_s, M_t) \\ \min*{M*s, M_t} L*{\text{adv}}^M(X_s, X_t, D) \quad \text{s.t.} \, \psi(M_s, M_t) $$
+       $$ \min_{D} L_{\text{adv}}^D(X*s, X_t, M_s, M_t) \\ \min_{M*s, M_t} L_{\text{adv}}^M(X_s, X_t, D) \quad \text{s.t.} \, \psi(M_s, M_t) $$
    - **설계 선택 요소:**
      - **기반 모델:** 생성 모델 (예: CoGAN) 또는 판별 모델 (예: Gradient Reversal).
      - **가중치 공유:** 가중치 공유(tied weights) 또는 비공유(untied weights).
@@ -53,7 +53,7 @@ ADDA는 먼저 일반화된 적대적 비지도 적응 프레임워크를 정의
    - **기반 모델:** **판별 모델**을 사용합니다. 최종 작업이 판별적 표현 학습이므로, 이미지를 생성하는 데 필요한 파라미터는 불필요하다고 가정합니다.
    - **가중치 공유:** **비공유 가중치(untied weights)**를 사용하여 원본 및 타겟 매핑을 독립적으로 학습합니다. 이는 더 유연한 학습 패러다임을 제공하고 도메인별 특징 추출을 가능하게 합니다.
    - **적대적 손실:** **반전된 레이블을 사용한 표준 GAN 손실**을 사용합니다. 원본 분포가 고정된 상태에서 생성 분포가 이를 모방하도록 학습하는 GAN 설정과 유사하게, 원본 모델을 고정한 채 타겟 모델만 적대적으로 학습하여 원본 분포와 일치시킵니다.
-     $$ L*{\text{adv}}^M(X_s, X_t, D) = -E*{x_t \sim X_t}[\log D(M_t(x_t))] $$
+     $$ L_{\text{adv}}^M(X_s, X_t, D) = -E_{x_t \sim X_t}[\log D(M_t(x_t))] $$
 
 3. **훈련 절차 (단계별 최적화):**
    1. **사전 훈련 (Pre-training):** 레이블링된 원본 데이터($X_s, Y_s$)를 사용하여 원본 인코더 CNN ($M_s$)과 분류기 ($C$)를 $L_{\text{cls}}$로 훈련합니다.

@@ -33,8 +33,8 @@ Krishna Chaitanya, Neerav Karani, Christian F. Baumgartner, Ertunc Erdil, Anton 
 제안하는 방법은 분할 네트워크($S$)의 파라미터($w_S$)와 데이터 생성기($G$)의 파라미터($w_G$)를 동시에 최적화하여 증강 데이터가 분할 작업에 가장 효과적이도록 합니다.
 
 **전반적인 최적화 목표:**
-$$ \min*{w_G} \left( \min*{w*S} L_S(X_L \cup X_G, Y_L \cup Y_G) + L*{reg,G}(X*{UL}) \right) $$
-여기서 $X_L, Y_L$은 라벨링된 데이터, $X_G, Y_G$는 생성된 증강 데이터, $X*{UL}$은 라벨링되지 않은 데이터입니다.
+$$ \min_{w_G} \left( \min_{w*S} L_S(X_L \cup X_G, Y_L \cup Y_G) + L_{reg,G}(X_{UL}) \right) $$
+여기서 $X_L, Y_L$은 라벨링된 데이터, $X_G, Y_G$는 생성된 증강 데이터, $X_{UL}$은 라벨링되지 않은 데이터입니다.
 
 **두 가지 조건부 생성기 (Conditional Generators):**
 
@@ -48,7 +48,7 @@ $$ \min*{w_G} \left( \min*{w*S} L_S(X_L \cup X_G, Y_L \cup Y_G) + L*{reg,G}(X*{U
    - 증강된 쌍: $(x_{G_I}, y_{G_I}) = (x_L + \Delta I, y_L)$.
 
 **규제 손실 ($L_{reg,G_C}$):**
-$$ L*{reg,G_C} = \lambda*{adv} L*{adv,G_C} + \lambda*{LD} L\_{LD,G_C} \quad \text{for } C=V,I $$
+$$ L_{reg,G_C} = \lambda_{adv} L_{adv,G_C} + \lambda_{LD} L_{LD,G_C} \quad \text{for } C=V,I $$
 
 1. **적대적 손실 ($L_{adv,G_C}$):**
    - 표준 GAN 목표를 따르며, 라벨링되지 않은 이미지 $X_{UL}$와 생성된 이미지를 사용하여 판별기 $D_C$를 훈련시킵니다.

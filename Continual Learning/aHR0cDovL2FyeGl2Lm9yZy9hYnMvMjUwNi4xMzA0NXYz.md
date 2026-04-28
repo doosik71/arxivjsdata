@@ -25,8 +25,8 @@ Haiyang Guo, Fanhu Zeng, Fei Zhu, Jiayi Wang, Xukai Wang, Jingang Zhou, Hongbo Z
    - 총 $T$개의 지속 학습 태스크가 순차적으로 주어지며, 태스크 $t$를 학습할 때 $D_t$ 데이터만 접근 가능합니다.
    - 훈련 목표는 $arg \min_{\theta} E_{(x,y) \sim D_t}[\ell(f_{\theta}(x),y))]$이며, LLM의 경우 자기회귀적인 다음 토큰 예측 $p(y|x) = \prod_{i=1}^L p_{\theta}(y_i|x,y_{\lt i})$을 최소화하는 토큰 단위 교차 엔트로피 손실 $\ell(\cdot, \cdot)$을 사용합니다.
    - 이전 태스크에 대한 손실 증가를 허용하는 슬랙 변수 $\varepsilon_i$를 포함한 제약 조건 하에 현재 태스크를 학습합니다:
-     $$ \min*{\theta} \mathcal{L}(\theta) = E*{(x,y)\sim D*t}[\ell(f*{\theta*t}(x),y)] + \sum*{i=1}^{t-1} \varepsilon*i $$
-        $$ s.t. E*{(x,y)\sim D*i}[\ell(f*{\theta*t}(x),y)-\ell(f*{\theta\_{t-1}}(x),y)] \le \varepsilon_i, \varepsilon_i \ge 0; \forall i \in [1, \cdots, t-1] $$
+     $$ \min_{\theta} \mathcal{L}(\theta) = E_{(x,y)\sim D*t}[\ell(f_{\theta*t}(x),y)] + \sum_{i=1}^{t-1} \varepsilon*i $$
+        $$ s.t. E_{(x,y)\sim D*i}[\ell(f_{\theta*t}(x),y)-\ell(f_{\theta_{t-1}}(x),y)] \le \varepsilon_i, \varepsilon_i \ge 0; \forall i \in [1, \cdots, t-1] $$
 2. **평가 지표 정의**: 모델의 지속 학습 능력을 평가하기 위해 **전반적인 성능(Last Accuracy, Average Accuracy)**, **망각 정도(Forgetting Measure, Backward Transfer)**, **일반화 능력(Zero-shot Transfer)** 등 표준화된 지표를 사용합니다.
 3. **지속 학습 방법 분류 (인간 두뇌 메커니즘에서 영감)**:
    - **아키텍처 기반 (Architecture-based)**:

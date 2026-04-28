@@ -32,7 +32,7 @@ Pankaj Malhotra, Anusha Ramakrishnan, Gaurangi Anand, Lovekesh Vig, Puneet Agarw
    - **디코더**: 인코더의 표현을 사용하여 시계열을 재구성합니다.
    - **재구성 순서**: (Sutskever et al., 2014)와 유사하게 시계열을 역순으로 재구성하도록 훈련합니다. 즉, 목표 시계열은 $\{x^{(L)}, x^{(L-1)}, ..., x^{(1)}\}$입니다.
    - **손실 함수**: 정상 훈련 시퀀스 $s_{N}$에 대해 재구성 오류의 L2 norm을 최소화합니다:
-     $$ \sum*{X \in s*{N}} \sum\_{i=1}^{L} \left\|x^{(i)} - x'^{(i)}\right\|^{2} $$
+     $$ \sum_{X \in s_{N}} \sum_{i=1}^{L} \left\|x^{(i)} - x'^{(i)}\right\|^{2} $$
         여기서 $x'^{(i)}$는 $x^{(i)}$의 재구성된 값입니다.
 2. **이상 가능성 계산**:
    - 각 시점 $t_{i}$에서 재구성 오류 벡터 $e^{(i)} = |x^{(i)} - x'^{(i)}|$를 계산합니다.

@@ -27,7 +27,7 @@ Baochen Sun, Jiashi Feng, Kate Saenko
 ## 🛠️ Methodology
 
 1. **목표**: 소스 공분산 행렬($C_S$)에 선형 변환 $A$를 적용하여 타겟 공분산 행렬($C_T$)과의 차이의 프로베니우스 노름(Frobenius norm)을 최소화한다.
-   $$ \min\_{A} \|A^T C_S A - C_T\|^2_F $$
+   $$ \min_{A} \|A^T C_S A - C_T\|^2_F $$
 2. **분석적 해(Analytical Solution)**: 특이값 분해(SVD)를 사용하여 $A^*$에 대한 분석적 해를 도출한다. 이는 직관적으로 다음과 같이 구성된다.
    - **소스 데이터 백색화**: $(U_S \Sigma_S^{+\frac{1}{2}} U_S^T)$는 소스 특성에서 상관 관계를 제거한다.
    - **타겟 공분산으로 다시 색칠**: $(U_{T[1:r]} \Sigma_{T[1:r]}^{\frac{1}{2}} U_{T[1:r]}^T)$은 백색화된 소스 특성에 타겟 도메인의 상관 관계 구조를 추가한다.

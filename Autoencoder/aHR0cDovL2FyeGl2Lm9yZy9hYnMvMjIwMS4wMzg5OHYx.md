@@ -38,7 +38,7 @@ Umberto Michelucci
    - 중간 계층 이후의 계층은 중간 계층 이전의 계층을 미러링하는 대칭적인 구조를 가집니다.
 3. **훈련 목표**:
    - 입력 $x_i$와 재구성된 출력 $\tilde{x}_i$ 간의 차이($\Delta$)를 최소화하는 인코더 $g(\cdot)$와 디코더 $f(\cdot)$의 파라미터를 찾는 것입니다.
-   - $$ \argmin\_{f,g} \left< \left[ \Delta(x_i, f(g(x_i))) \right] \right> $$
+   - $$ \argmin_{f,g} \left< \left[ \Delta(x_i, f(g(x_i))) \right] \right> $$
    - 여기서 $\Delta$는 손실 함수이며, $\left<\cdot\right>$는 모든 관측값에 대한 평균을 나타냅니다.
 4. **정규화 (Regularization)**:
    - 오토인코더가 단순히 항등 함수를 학습하는 것을 방지하고 잠재 표현에 유용한 희소성(sparsity)을 부여하는 데 사용됩니다.
@@ -50,9 +50,9 @@ Umberto Michelucci
    - **Sigmoid**: 입력 $x_i$가 $[0, 1]$ 범위로 정규화되었을 때 적합합니다. ($\sigma(x) = \frac{1}{1 + e^{-x}}$)
 6. **손실 함수**:
    - **평균 제곱 오차 (Mean Squared Error, MSE)**: 대부분의 경우에 사용할 수 있는 일반적인 손실 함수로, 출력 레이어의 활성화 함수나 입력 데이터의 정규화 방식에 크게 구애받지 않습니다.
-     $$ L*{MSE} = \frac{1}{M} \sum*{i=1}^M |x_i - \tilde{x}\_i|^2 $$
+     $$ L_{MSE} = \frac{1}{M} \sum_{i=1}^M |x_i - \tilde{x}_i|^2 $$
    - **이진 교차 엔트로피 (Binary Cross-Entropy, BCE)**: 출력 레이어 활성화 함수가 Sigmoid이고 입력 특성이 $[0, 1]$ 사이로 정규화된 경우에 사용됩니다.
-     $$ L*{CE} = -\frac{1}{M} \sum*{i=1}^M \sum*{j=1}^n \left[ x*{j,i} \log \tilde{x}_{j,i} + (1 - x_{j,i}) \log(1 - \tilde{x}\_{j,i}) \right] $$
+     $$ L_{CE} = -\frac{1}{M} \sum_{i=1}^M \sum_{j=1}^n \left[ x_{j,i} \log \tilde{x}_{j,i} + (1 - x_{j,i}) \log(1 - \tilde{x}_{j,i}) \right] $$
 
 ## 📊 Results
 

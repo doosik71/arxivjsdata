@@ -38,18 +38,18 @@ Yizhe Zhang, Tao Zhou, Shuo Wang, Peixian Liang, Danny Z. Chen
 
    - 훈련 세트의 각 이미지 샘플에 대해 증강된 버전 $(x_{\text{aug}, i}, y_i)$를 얻습니다.
    - **옵션 1 (증강 이미지만 사용)**: 의료 영상 분할 모델 $M$을 오직 SAM 증강 이미지에 대해서만 훈련합니다.
-     $$ \sum*{i=1}^{n} \text{loss}(M(x*{\text{aug}, i}), y_i) $$
+     $$ \sum_{i=1}^{n} \text{loss}(M(x_{\text{aug}, i}), y_i) $$
    - **옵션 2 (원본 및 증강 이미지 모두 사용)**: SAM이 신뢰할 수 없는 사전 맵을 생성할 수 있는 경우를 대비하여 원본 이미지와 SAM 증강 이미지를 모두 사용하여 모델을 훈련합니다.
-     $$ \sum*{i=1}^{n} \beta\text{loss}(M(x_i), y_i) + \lambda\text{loss}(M(x*{\text{aug}, i}), y_i) $$
+     $$ \sum_{i=1}^{n} \beta\text{loss}(M(x_i), y_i) + \lambda\text{loss}(M(x_{\text{aug}, i}), y_i) $$
         (기본적으로 $\beta=1$, $\lambda=1$로 설정됩니다.)
    - 손실 함수로는 공간 교차 엔트로피 손실 또는 Dice 손실이 사용될 수 있으며, Adam [10]과 같은 SGD 기반 최적화 프로그램이 적용됩니다.
 
 4. **SAM 증강 이미지를 이용한 모델 배포 (테스트)**:
    - **옵션 1 (증강 이미지만으로 훈련된 모델)**: 훈련된 모델은 SAM 증강 이미지만을 입력으로 받습니다.
-     $$ \hat{y} = \tau(M(x\_{\text{aug}})) $$
+     $$ \hat{y} = \tau(M(x_{\text{aug}})) $$
    - **옵션 2 (원본 및 증강 이미지 모두로 훈련된 모델)**:
      - **앙상블 (Ensemble)**: 원본 이미지 $x$와 SAM 증강 이미지 $x_{\text{aug}}$를 모두 사용하여 두 번 추론하고 결과를 평균 앙상블합니다.
-       $$ \hat{y} = \tau(M(x) + M(x\_{\text{aug}})) $$
+       $$ \hat{y} = \tau(M(x) + M(x_{\text{aug}})) $$
      - **엔트로피 기반 선택 (Entropy-based Selection)**: 두 출력 후보 중 예측 불확실성(엔트로피)이 더 낮은 것을 선택합니다.
        $$ \hat{y} = \tau(M(x^_)), \quad \text{where } x^_ = \text{argmin}_{x' \in \{x, x_{\text{aug}}\}} \text{Entropy}(\tau(M(x'))) $$
        엔트로피가 낮을수록 모델의 예측 확실성이 높으며, 이는 종종 분할 정확도와 양의 상관관계를 가집니다.

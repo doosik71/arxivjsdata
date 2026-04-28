@@ -42,8 +42,8 @@ Zhicheng Yan, Hao Zhang, Yangqing Jia, Thomas Breuel, Yizhou Yu
   - **1D RNN 사용:** 두 개의 1D RNN(여기서는 LSTM 유닛 [32] 사용)이 독립적인 가중치를 가지며, 수직(또는 수평) 방향으로 반대 방향으로 스캔합니다.
   - **LSTM 유닛:** 망각 게이트($f_t$), 입력 게이트($i_t$), 셀 입력($\tilde{C}_t$), 셀 메모리($C_t$), 출력 게이트($o_t$), 은닉 상태($h_t$)를 포함하여 각 단계 $t$에서 메모리($C_t$) 내용을 적응적으로 망각, 기억, 노출할 수 있도록 합니다.
   - **수식:**
-    $$ (h^F*{y,x}, C^F*{y,x}) = \text{LSTM}_F(I_{y,x}, h^F*{y-1,x}, C^F*{y-1,x}) \text{ for } y=1,..,H $$
-        $$ (h^B*{y,x}, C^B*{y,x}) = \text{LSTM}_B(I_{y,x}, h^B*{y+1,x}, C^B*{y+1,x}) \text{ for } y=H,...,1 $$
+    $$ (h^F_{y,x}, C^F_{y,x}) = \text{LSTM}_F(I_{y,x}, h^F_{y-1,x}, C^F_{y-1,x}) \text{ for } y=1,..,H $$
+        $$ (h^B_{y,x}, C^B_{y,x}) = \text{LSTM}_B(I_{y,x}, h^B_{y+1,x}, C^B_{y+1,x}) \text{ for } y=H,...,1 $$
         여기서 위첨자 $F$와 $B$는 각각 전방(forward) 및 후방(backward) 스캔 방향을 나타냅니다.
   - **특징 맵 생성:** 두 LSTM의 은닉 상태를 연결하여 합성 특징 맵을 생성하며, 이는 동일한 열(column) 내 모든 패치를 포함하는 수용 필드를 가집니다.
   - **순환 레이어 그룹:** 직교하는 스캔 방향을 가진 두 개의 ReNet 레이어(예: 수평 및 수직)를 쌓아 입력 이미지를 완전히 커버하는 출력 특징 맵을 얻습니다.

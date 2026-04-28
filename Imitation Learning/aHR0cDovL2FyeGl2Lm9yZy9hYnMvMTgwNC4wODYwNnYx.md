@@ -35,13 +35,13 @@ Deepak Pathak, Parsa Mahmoudieh, Guanghao Luo, Pulkit Agrawal, Dian Chen, Yide S
      - GSP가 예측한 행동 $\hat{a}_t = \pi(x_t, x_{t+1}; \theta_\pi)$에 대한 다음 관찰 $\hat{x}_{t+1} = f(x_t, \hat{a}_t; \theta_f)$을 계산합니다.
      - GSP는 다음 상태 예측 오차를 최소화하도록 훈련됩니다. 이는 예측된 행동 $\hat{a}_t$이 실제 행동 $a_t$과 다르더라도 동일한 다음 상태로 이끈다면 페널티를 주지 않아 다중 모드 행동 분포 문제를 완화합니다.
      - GSP와 전방 동학 모델은 공동으로 다음 목적 함수를 최소화하도록 학습됩니다:
-       $$ \min*{\theta*\pi, \theta*f} ||x*{t+1} - \tilde{x}_{t+1}||\_2^2 + \lambda||x_{t+1} - \hat{x}\_{t+1}||\_2^2 + L(a_t, \hat{a}\_t) $$
+       $$ \min_{\theta*\pi, \theta*f} ||x_{t+1} - \tilde{x}_{t+1}||_2^2 + \lambda||x_{t+1} - \hat{x}_{t+1}||_2^2 + L(a_t, \hat{a}_t) $$
             여기서 $L(a_t, \hat{a}_t)$는 GSP의 행동 예측 손실입니다. 학습 초기 불안정성을 피하기 위해 전방 모델과 GSP를 각각 사전 훈련한 후 공동 미세 조정을 수행합니다.
    - **다단계 GSP 및 특징 공간 동학**:
      - GSP $\pi_m$을 재귀 신경망(recurrent network)으로 구현하여 가변 길이 행동 시퀀스를 생성합니다.
      - $\pi_m$은 현재 상태 특징 $\phi(x_t)$, 목표 상태 특징 $\phi(x_T)$, 이전 행동 $a_{t-1}$ 및 내부 은닉 표현 $h_{t-1}$을 입력으로 받아 $\hat{a}_t$를 예측합니다.
      - 전방 일관성 손실은 각 단계에서 계산되며 전체 궤적에 대한 행동 예측 손실과 함께 공동으로 최적화됩니다. 특히, 관찰 공간 대신 특징 공간 $\phi(x)$에서 동학을 학습하여 일반화 성능을 높입니다:
-       $$ \min*{\theta*\pi, \theta*f, \theta*\phi} \sum*{t=i}^{T} \left( ||\phi(x*{t+1}) - \tilde{\phi}(x*{t+1})||\_2^2 + \lambda||\phi(x*{t+1}) - \hat{\phi}(x\_{t+1})||\_2^2 + L(a_t, \hat{a}\_t) \right) $$
+       $$ \min_{\theta*\pi, \theta*f, \theta*\phi} \sum_{t=i}^{T} \left( ||\phi(x_{t+1}) - \tilde{\phi}(x_{t+1})||_2^2 + \lambda||\phi(x_{t+1}) - \hat{\phi}(x_{t+1})||_2^2 + L(a_t, \hat{a}_t) \right) $$
 
 2. **목표 인식기(Goal Recognizer) 학습**:
 

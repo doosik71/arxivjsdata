@@ -39,7 +39,7 @@ Rui Shu, Hung H. Bui, Hirokazu Narui, & Stefano Ermon
 VADA는 도메인 적대적 훈련에 클러스터 가정을 위반하는 데 대한 페널티를 추가하여 기존 DANN의 한계를 극복합니다.
 
 - **목표 함수:**
-  $$ \min\_{\theta} L_y(\theta; D_s) + \lambda_d L_d(\theta; D_s, D_t) + \lambda_s L_v(\theta; D_s) + \lambda_t [L_v(\theta; D_t) + L_c(\theta; D_t)] $$
+  $$ \min_{\theta} L_y(\theta; D_s) + \lambda_d L_d(\theta; D_s, D_t) + \lambda_s L_v(\theta; D_s) + \lambda_t [L_v(\theta; D_t) + L_c(\theta; D_t)] $$
   - $L_y(\theta; D_s)$: 레이블된 소스 데이터에 대한 교차 엔트로피 손실.
   - $L_d(\theta; D_s, D_t)$: 소스 및 타겟 도메인 특징 분포를 매칭하기 위한 도메인 적대적 손실.
   - $L_c(\theta; D_t) = -E_{x \sim D_t}[h_{\theta}(x)^T \ln h_{\theta}(x)]$: 타겟 데이터에 대한 조건부 엔트로피 최소화. 분류기가 레이블 없는 타겟 데이터에 대해 높은 확신을 갖도록 강제하여 결정 경계를 데이터로부터 멀리 이동시킵니다.
@@ -53,10 +53,10 @@ DIRT-T는 VADA 모델을 초기화로 사용하여 비보존적 도메인 적응
 - **초기화:** VADA 모델에서 학습된 초기 분류기 $h_{\theta_0}$를 사용합니다.
 - **반복적 결정 경계 정제:** 소스 훈련 신호를 제거하고, 오직 타겟 도메인에서의 클러스터 가정 위반 손실 $L_t(\theta) = L_v(\theta; D_t) + L_c(\theta; D_t)$을 최소화합니다.
 - **자연 경사(Natural Gradient) 사용:** 모델의 파라미터화에 민감한 일반적인 경사 하강법 대신, 분류기의 출력 분포 공간에서의 변화를 측정하는 쿨백-라이블러(Kullback-Leibler, KL) 발산으로 이웃을 정의하여 자연 경사 단계를 취합니다.
-  $$ \min*{\Delta\theta} L_t(\theta + \Delta\theta) \quad \text{s.t.} \quad E*{x \sim D*t}[D*{KL}(h*{\theta}(x) \Vert h*{\theta+\Delta\theta}(x))] \le \epsilon $$
+  $$ \min_{\Delta\theta} L_t(\theta + \Delta\theta) \quad \text{s.t.} \quad E_{x \sim D*t}[D_{KL}(h_{\theta}(x) \Vert h_{\theta+\Delta\theta}(x))] \le \epsilon $$
     이는 일련의 최적화 문제로 근사화됩니다:
-    $$ \min*{\theta_n} \lambda_t L_t(\theta_n) + \beta_t E[D*{KL}(h*{\theta*{n-1}}(x) \Vert h*{\theta_n}(x))] $$
-  여기서 $h*{\theta*{n-1}}$는 "교사(teacher)" 모델로, "학생(student)" 모델 $h*{\theta_n}$이 교사 모델에 가까이 머무르면서 클러스터 가정 위반을 줄이도록 안내합니다.
+    $$ \min_{\theta_n} \lambda_t L_t(\theta_n) + \beta_t E[D_{KL}(h_{\theta_{n-1}}(x) \Vert h_{\theta_n}(x))] $$
+  여기서 $h_{\theta_{n-1}}$는 "교사(teacher)" 모델로, "학생(student)" 모델 $h_{\theta_n}$이 교사 모델에 가까이 머무르면서 클러스터 가정 위반을 줄이도록 안내합니다.
 - **비보존적 도메인 적응에 대한 해석:** DIRT-T는 VADA로부터 학습된 결합 분류기에서 더 나은 타겟 도메인 분류기로 전환할 수 있게 합니다. 타겟 분포에 대한 의사 레이블(pseudo-labeling)을 통해 새로운 "소스" 도메인을 구성하는 재귀적 확장으로 해석될 수 있습니다.
 
 ## 📊 Results

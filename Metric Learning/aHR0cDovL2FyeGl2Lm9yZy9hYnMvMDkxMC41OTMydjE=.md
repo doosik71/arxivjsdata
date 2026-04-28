@@ -52,7 +52,7 @@ Prateek Jain, Brian Kulis, Jason V. Davis, Inderjit S. Dhillon
 
    - 두 양의 정부호 행렬 $W, W_0$ 간의 LogDet 발산은 $D_{\ell d}(W, W_0) = \text{tr}(W W_0^{-1}) - \log \det(W W_0^{-1}) - d$로 정의됩니다.
    - 제약 조건을 만족하면서 $W_0=I$에 가장 가까운 $W$를 찾는 최적화 문제를 제안합니다:
-     $$ \min*{W \succ 0} D*{\ell d}(W, I) \\ \text{s.t. } d_W(x_i, x_j) \le u, \quad (i, j) \in S \\ d_W(x_i, x_j) \ge \ell, \quad (i, j) \in D $$
+     $$ \min_{W \succ 0} D_{\ell d}(W, I) \\ \text{s.t. } d_W(x_i, x_j) \le u, \quad (i, j) \in S \\ d_W(x_i, x_j) \ge \ell, \quad (i, j) \in D $$
    - LogDet 발산은 확장 가능하고 효율적으로 커널화될 수 있어 선택되었습니다.
 
 3. **문제의 커널화 (핵심 정리)**:

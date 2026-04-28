@@ -29,9 +29,9 @@ Yongqin Xian, Bernt Schiele, Zeynep Akata
 - **ZSL 작업 공식화**:
 
   - 훈련 세트 $S = \{(x_n, y_n), n=1...N\}$와 훈련 클래스 $y_n \in Y_{tr}$가 주어졌을 때, 정규화된 경험적 위험을 최소화하는 함수 $f: X \to Y$를 학습합니다.
-    $$ \frac{1}{N} \sum\_{n=1}^{N} L(y_n, f(x_n;W)) + \Omega(W) \quad (1) $$
+    $$ \frac{1}{N} \sum_{n=1}^{N} L(y_n, f(x_n;W)) + \Omega(W) \quad (1) $$
   - 여기서 $f(x;W)$는 입력과 출력 임베딩 간의 매핑을 정의하며, 가장 높은 호환성 점수를 가진 클래스를 예측합니다.
-    $$ f(x;W) = \text{argmax}\_{y \in Y} F(x,y;W) \quad (2) $$
+    $$ f(x;W) = \text{argmax}_{y \in Y} F(x,y;W) \quad (2) $$
   - ZSL은 테스트 이미지를 보지 못한 클래스 $Y_{ts} \subset Y$에 할당하고, GZSL은 테스트 이미지를 본 클래스 또는 보지 못한 클래스 $Y_{tr+ts} \subset Y$에 할당합니다.
 
 - **평가 방법론 분류**:
@@ -48,7 +48,7 @@ Yongqin Xian, Bernt Schiele, Zeynep Akata
   - **평가 기준**:
     - **ZSL**: 클래스별 평균 Top-1 정확도(average per-class top-1 accuracy)를 측정하여 불균형 데이터셋에서의 희소 클래스 성능을 중요하게 평가합니다.
     - **GZSL**: 훈련 클래스($acc_{Y_{tr}}$)와 테스트 클래스($acc_{Y_{ts}}$) 정확도를 모두 고려하는 조화 평균(Harmonic Mean, H)을 사용합니다.
-      $$ H = 2 \cdot (acc*{Y*{tr}} \cdot acc*{Y*{ts}}) / (acc*{Y*{tr}} + acc*{Y*{ts}}) \quad (16) $$
+      $$ H = 2 \cdot (acc_{Y_{tr}} \cdot acc_{Y_{ts}}) / (acc_{Y_{tr}} + acc_{Y_{ts}}) \quad (16) $$
 
 ## 📊 Results
 

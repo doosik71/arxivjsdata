@@ -32,7 +32,7 @@ Yuesheng Xu, Haizhang Zhang
    - $n$개 층의 ReLU 네트워크 $N_n(x)$에 대해, 각 층에 대한 활성화 행렬 시퀀스 $\bar{I}_n = (I_1, \ldots, I_n)$를 도입합니다.
    - $n$개 층 네트워크의 활성화 도메인 $D_{\bar{I}_n, \bar{W}_n, \bar{b}_n}$을 재귀적으로 정의합니다.
    - 재귀적 정의를 통해, 임의의 입력 $x$가 특정 활성화 도메인 $D_{\bar{I}_n, \bar{W}_n, \bar{b}_n}$에 속할 때, $N_n(x)$를 다음과 같이 명시적으로 표현합니다 (Theorem 3.4):
-     $$ N*n(x) = \left(\prod*{i=1}^{n} I*i W_i\right) x + \sum*{i=1}^{n} \left(\prod\_{j=i+1}^{n} I_j W_j\right) I_i b_i $$
+     $$ N*n(x) = \left(\prod_{i=1}^{n} I*i W_i\right) x + \sum_{i=1}^{n} \left(\prod_{j=i+1}^{n} I_j W_j\right) I_i b_i $$
 3. **수렴 조건 도출**:
    - $N_n(x)$가 $L_p$ 공간에서 수렴하려면 위의 명시적 표현의 두 항(무한 행렬 곱과 무한 급수)이 수렴해야 함을 보입니다 (Theorem 3.6).
    - **필요 조건**: 무한 행렬 곱 $\prod_{n=2}^{\infty} I_n W_n$이 수렴하기 위한 충분조건으로 $\sum_{n=2}^{\infty} \|P_n\| < \infty$ (여기서 $W_n = I + P_n$)를 제시하고 (Theorem 4.3), 이를 통해 $W_n \to I$ 및 $b_n \to 0$이 필요함을 보입니다 (Theorem 4.4).

@@ -35,24 +35,24 @@ Jing Zhang, Zewei Ding, Wanqing Li, Philip Ogunbona
 2. **샘플 중요도 가중치 학습 ($D$):**
 
    - 표준 적대적 네트워크 설정과 유사하게 첫 번째 도메인 분류기 $D$를 학습합니다. $D$는 소스 피처 $F_s(x)$와 타겟 피처 $F_t(x)$를 구별합니다.
-   - $ \min*{F_s, F_t} \max*{D} L(D, F*s, F_t) = \mathbb{E}*{x \sim p*s(x)} [\log D(F_s(x))] + \mathbb{E}*{x \sim p_t(x)} [\log(1-D(F_t(x)))] $
+   - $ \min_{F_s, F_t} \max_{D} L(D, F*s, F_t) = \mathbb{E}_{x \sim p*s(x)} [\log D(F_s(x))] + \mathbb{E}_{x \sim p_t(x)} [\log(1-D(F_t(x)))] $
    - 최적의 $D^*(z) = p_s(z) / (p_s(z) + p_t(z))$일 때, 소스 샘플 $z$에 대한 중요도 가중치는 다음과 같이 정의됩니다:
      - $ \tilde{w}(z) = 1 - D^\*(z) = \frac{1}{\frac{p_s(z)}{p_t(z)} + 1} $
      - 이 가중치는 소스 도메인에 대한 확률이 높을수록(즉, 타겟 도메인과 구별될 가능성이 높을수록) 낮아집니다. 이는 이상치 클래스의 샘플이 낮은 가중치를 받도록 합니다.
-   - 가중치는 정규화됩니다: $ w(z) = \tilde{w}(z) / \mathbb{E}\_{z \sim p_s(z)} [\tilde{w}(z)] $.
+   - 가중치는 정규화됩니다: $ w(z) = \tilde{w}(z) / \mathbb{E}_{z \sim p_s(z)} [\tilde{w}(z)] $.
    - 이 $D$의 기울기는 $F_t$ 업데이트에 사용되지 않고, 오직 중요도 가중치 계산에만 사용됩니다.
 
 3. **가중치 기반 도메인 적응 ($D_0, F_t$):**
 
    - 두 번째 도메인 분류기 $D_0$는 가중치가 적용된 소스 샘플 $w(z)F_s(x)$와 타겟 샘플 $F_t(x)$ 간의 도메인 차이를 구별하도록 훈련됩니다. $F_t$는 이 차이를 최소화합니다.
-   - $ \min*{F_t} \max*{D*0} L_w(D_0, F_s, F_t) = \mathbb{E}*{x \sim p*s(x)} [w(z) \log D_0(F_s(x))] + \mathbb{E}*{x \sim p_t(x)} [\log(1-D_0(F_t(x)))] $
+   - $ \min_{F_t} \max_{D*0} L_w(D_0, F_s, F_t) = \mathbb{E}_{x \sim p*s(x)} [w(z) \log D_0(F_s(x))] + \mathbb{E}_{x \sim p_t(x)} [\log(1-D_0(F_t(x)))] $
    - 이 미니맥스 게임은 가중치가 적용된 소스 밀도 $w(z)p_s(z)$와 타겟 밀도 $p_t(z)$ 사이의 젠슨-섀넌 발산을 줄이는 것과 동등합니다.
    - $F_s$와 $F_t$는 서로 다른(unshared) 피처 추출기로, 도메인 특이적(domain-specific) 피처를 학습할 수 있습니다. $F_t$는 $F_s$의 파라미터로 초기화됩니다.
 
 4. **타겟 데이터 구조 보존:**
 
    - $F_t$는 타겟 샘플 $x_t$에 대한 소스 분류기 $C$의 출력 엔트로피를 최소화하도록 추가로 제약됩니다.
-   - $ \min*{F_t} \mathbb{E}*{x \sim p_t(x)} [H(C(F_t(x)))] $
+   - $ \min_{F_t} \mathbb{E}_{x \sim p_t(x)} [H(C(F_t(x)))] $
    - 이 항은 타겟 데이터가 클래스 경계에서 낮은 밀도를 가지도록 유도하여 클래스 분리를 강화합니다. 특히, $C$는 고정된 채로 $F_t$만 제약하여 초기에 잘못된 클래스에 고착되는 부작용을 줄입니다.
 
 5. **전체 목적 함수 및 최적화:**

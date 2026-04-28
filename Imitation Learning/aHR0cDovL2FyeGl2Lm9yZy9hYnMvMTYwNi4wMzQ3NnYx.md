@@ -38,8 +38,8 @@ Jonathan Ho, Stefano Ermon
 
    - 최대 인과 엔트로피 IRL(maximum causal entropy IRL)과 일반적인 볼록 비용 함수 정규화자($\psi$)를 통해 학습된 비용 함수에 대한 강화 학습으로 얻어지는 정책을 수학적으로 특성화합니다.
    - **Proposition 3.2**는 이러한 정책이 다음 최적화 문제를 푼다는 것을 보여줍니다:
-     $$ \min*{\pi \in \Pi} -H(\pi) + \psi^\*(\rho*{\pi} - \rho*{\pi_E}) $$
-        여기서 $H(\pi)$는 정책 $\pi$의 인과 엔트로피, $\rho*{\pi}$는 정책 $\pi$의 점유 측정, $\rho_{\pi_E}$는 전문가 정책 $\pi_E$의 점유 측정이며, $\psi^*$는 $\psi$의 볼록 켤레(convex conjugate)입니다. 이 식은 학습된 정책의 점유 측정이 전문가의 점유 측정에 가깝도록 만드는 것을 목표로 합니다.
+     $$ \min_{\pi \in \Pi} -H(\pi) + \psi^\*(\rho_{\pi} - \rho_{\pi_E}) $$
+        여기서 $H(\pi)$는 정책 $\pi$의 인과 엔트로피, $\rho_{\pi}$는 정책 $\pi$의 점유 측정, $\rho_{\pi_E}$는 전문가 정책 $\pi_E$의 점유 측정이며, $\psi^*$는 $\psi$의 볼록 켤레(convex conjugate)입니다. 이 식은 학습된 정책의 점유 측정이 전문가의 점유 측정에 가깝도록 만드는 것을 목표로 합니다.
    - $\psi$가 상수 함수인 경우, 결과 정책은 전문가의 점유 측정과 정확히 일치한다는 것을 **Corollary 3.2.1**을 통해 보입니다.
 
 2. **새로운 비용 정규화자 $\psi_{\text{GA}}$ 도입:**
@@ -47,7 +47,7 @@ Jonathan Ho, Stefano Ermon
    - 점유 측정 일치를 부드럽게 페널티화하면서도, 기존 도제 학습 알고리즘의 제한적인 비용 클래스($C_{\text{linear}}$, $C_{\text{convex}}$)보다 더 표현력이 풍부한 새로운 비용 정규화자 $\psi_{\text{GA}}$를 제안합니다 (Eq. 13).
    - $\psi_{\text{GA}}$의 볼록 켤레 $\psi^*_{\text{GA}}$는 전문가와 학습된 정책의 상태-행동 쌍을 구별하는 이진 분류 문제의 최적 음의 로그 손실과 동일함을 보입니다 (Eq. 14). 이는 젠슨-섀넌 발산($D_{\text{JS}}(\rho_{\pi}, \rho_{\pi_E})$)과 상수 차이만 있습니다.
    - 결과적으로, GAIL의 최적화 목표는 다음과 같습니다:
-     $$ \min*{\pi} D*{\text{JS}}(\rho*{\pi}, \rho*{\pi_E}) - \lambda H(\pi) $$
+     $$ \min_{\pi} D_{\text{JS}}(\rho_{\pi}, \rho_{\pi_E}) - \lambda H(\pi) $$
      이는 정책의 인과 엔트로피를 정규화하면서 점유 측정 간의 젠슨-섀넌 발산을 최소화합니다.
 
 3. **GAIL (Generative Adversarial Imitation Learning) 알고리즘 (Algorithm 1):**

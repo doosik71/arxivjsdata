@@ -62,7 +62,7 @@ Hyeon-Kyeong Shin, Hyewon Han, Doyeon Kim, Soo-Whan Chung, Hong-Goo Kang
    - **디노이징 손실($L_{DN}$):**
      - 목표: 잡음이 있는 음성 쿼리에서도 강건한 성능을 얻기 위함.
      - 방법: 음향 인코더를 샴(Siamese) 네트워크로 구성하여 깨끗한 음성 임베딩과 잡음 있는 음성 임베딩 간의 평균 제곱 오차(MSE)를 최소화.
-     - $$L_{DN} = ||E_{clean\_A} - E_{noisy\_A}||^2$$
+     - $$L_{DN} = ||E_{clean_A} - E_{noisy_A}||^2$$
    - **단조 매칭 손실($L_{MM}$):**
      - 목표: 어피니티 행렬 $A$에 나타나는 패턴을 강화.
      - 방법: $A$와 수동으로 구축된 목표 패턴 $M_i$ 간의 거리를 최소화.

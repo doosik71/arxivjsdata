@@ -29,7 +29,7 @@ Timothy Hospedales, Antreas Antoniou, Paul Micaelli, Amos Storkey
 
 **1. 메타 학습의 일반적인 공식화 (Bilevel Optimization View):**
 메타 학습은 주로 다음과 같은 이중 수준 최적화 문제로 공식화됩니다:
-$$ \omega^_ = \arg\min*{\omega} \sum*{i=1}^{M} \mathcal{L}\_{meta}(\theta^{_(i)}(\omega), \omega, \mathcal{D}_{val(i)}^{source}) $$
+$$ \omega^_ = \arg\min_{\omega} \sum_{i=1}^{M} \mathcal{L}_{meta}(\theta^{_(i)}(\omega), \omega, \mathcal{D}_{val(i)}^{source}) $$
 $$ \text{s.t.} \quad \theta^{\*(i)}(\omega) = \arg\min_{\theta} \mathcal{L}_{task}(\theta, \omega, \mathcal{D}_{train(i)}^{source}) $$
 여기서 $\mathcal{L}_{meta}$는 외부(upper/meta) 목적 함수이고, $\mathcal{L}_{task}$는 내부(lower/base) 목적 함수입니다. $\omega$는 학습 전략을 정의하는 메타 지식(예: 초기 조건, 하이퍼파라미터, 손실 함수 파라미터화)이며, $\theta$는 $\omega$에 따라 학습되는 베이스 모델 파라미터입니다.
 

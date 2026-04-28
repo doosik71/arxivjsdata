@@ -35,23 +35,23 @@ Zehua Cheng, Di Yuan and Thomas Lukasiewicz
         $$Ent^k_{i,j} = -\frac{1}{|P^k_{i,j}|} \sum_{m \in P^k_{i,j}} (X'^k_i(m) \log(X'^k_i(m)) + (1-X'^k_i(m)) \log(1-X'^k_i(m)))$$
     * **정보성 패치 샘플링:** 앵커 패치에 대해 Top-n 엔트로피 값을 가진 패치를 긍정 패치로, 나머지를 부정 패치로 선정하여 클래스 충돌을 방지하고 정보성 높은 감독 신호를 제공합니다.
 
-2. **의사 라벨 간 어피니티 그래프 유도 대조 손실 (Affinity-Graph-Guided Contrastive Loss between Pseudo Labels, $L_{PL\_AGG}$):**
+2. **의사 라벨 간 어피니티 그래프 유도 대조 손실 (Affinity-Graph-Guided Contrastive Loss between Pseudo Labels, $L_{PL_AGG}$):**
     * 학생 네트워크($\hat{Y}_S$)와 교사 네트워크($\hat{Y}_T$)의 의사 라벨 간에 패치 단위 어피니티 그래프 $A \in \mathbb{R}^{N \times N}$를 구축합니다. 엣지 가중치 $A_{ij}$는 의사 라벨 벡터 $\hat{y}^t_i$와 $\hat{y}^s_j$ 간의 $L_2$ 거리를 기반으로 가우시안 커널을 사용하여 정의됩니다:
         $$A_{ij} = \exp \left( -\frac{||\hat{y}^t_i - \hat{y}^s_j||^2_2}{2\sigma^2} \right)$$
     * 이 손실은 어피니티 그래프의 대각선 요소 $A_{ii}$를 최대화하여 학생 및 교사 예측의 수렴을 촉진하고, 동시에 핵 규범(nuclear norm) $||A||_*$을 최소화하여 저랭크 구조를 추출함으로써 과적합을 방지합니다.
-    * 최종 $L_{PL\_AGG}$ 손실 함수:
-        $$L_{PL\_AGG} = \sum_{i=1}^{N} \exp \left( -\frac{||\hat{y}^t_i - \hat{y}^s_i||^2_2}{2\sigma^2} \right) + \gamma||A||_*$$
+    * 최종 $L_{PL_AGG}$ 손실 함수:
+        $$L_{PL_AGG} = \sum_{i=1}^{N} \exp \left( -\frac{||\hat{y}^t_i - \hat{y}^s_i||^2_2}{2\sigma^2} \right) + \gamma||A||_*$$
 
-3. **어피니티 그래프 유도 하드 네거티브 재가중 (Affinity-Graph-Guided Hard-Negative Reweighting, $L_{RW\_AGG}$):**
+3. **어피니티 그래프 유도 하드 네거티브 재가중 (Affinity-Graph-Guided Hard-Negative Reweighting, $L_{RW_AGG}$):**
     * 어피니티 그래프의 대각선 요소 $A_{ii}$ (낮은 $A_{ii}$는 하드 네거티브 샘플을 나타냄)를 기반으로 하드 네거티브 샘플 $h_k$를 식별합니다. $h_k$는 앵커와 유사하지만 라벨이 다른 샘플입니다.
     * $h_k$는 기존 네거티브 샘플 $n_i, n_j$의 혼합으로 구성됩니다:
         $$h_k = \frac{A_{ii} n_i + (1-A_{ii}) n_j}{||A_{ii} n_i + (1-A_{ii}) n_j||_2}$$
     * 일반적인 대조 학습 손실에 하드 네거티브 샘플을 재가중하여 학습 표현의 판별 능력을 향상시킵니다:
-        $$L_{RW\_AGG} = -\log \frac{\exp(q^T \cdot k^+ / \tau)}{\exp(q^T \cdot k^+ / \tau) + \sum_{h_k \in H} \exp(q^T \cdot h_k / \tau)}$$
+        $$L_{RW_AGG} = -\log \frac{\exp(q^T \cdot k^+ / \tau)}{\exp(q^T \cdot k^+ / \tau) + \sum_{h_k \in H} \exp(q^T \cdot h_k / \tau)}$$
 
 4. **전체 손실 함수 (Overall Loss Function):**
     제안된 프레임워크의 전체 손실 함수는 다음과 같습니다:
-    $$L_{all} = L_{sup} + L_{reg} + L_{PL\_AGG} + L_{RW\_AGG}$$
+    $$L_{all} = L_{sup} + L_{reg} + L_{PL_AGG} + L_{RW_AGG}$$
     여기서 $L_{sup}$는 라벨된 데이터에 대한 지도 학습 손실, $L_{reg}$는 학생 및 교사 네트워크 출력 간의 교차 엔트로피 손실입니다.
 
 ## 📊 Results
@@ -66,7 +66,7 @@ Zehua Cheng, Di Yuan and Thomas Lukasiewicz
 
 **어블레이션 연구 결과:**
 
-* $L_{PL\_AGG}$와 $L_{RW\_AGG}$ 각 모듈의 효과성과 상호 보완성을 입증했습니다. 특히, 어피니티 그래프의 대각선 요소에 기반한 $\lambda||A||_*$ 항의 추가가 성능 향상에 크게 기여함을 확인했습니다.
+* $L_{PL_AGG}$와 $L_{RW_AGG}$ 각 모듈의 효과성과 상호 보완성을 입증했습니다. 특히, 어피니티 그래프의 대각선 요소에 기반한 $\lambda||A||_*$ 항의 추가가 성능 향상에 크게 기여함을 확인했습니다.
 * 패치 단위 클래스 중심 샘플링의 효과를 검증한 결과, 제안된 엔트로피 기반 샘플링 방법이 코사인 유사성이나 클래스 신뢰도 기반 샘플링보다 훨씬 뛰어난 성능을 보였습니다. 이는 부정확한 샘플 분류를 줄이고, 패치 간 불균형 매핑에 대한 더 효율적인 측정을 제공하기 때문입니다.
 
 ## 🧠 Insights & Discussion
@@ -81,5 +81,5 @@ Zehua Cheng, Di Yuan and Thomas Lukasiewicz
 ## 📌 TL;DR
 
 * **문제:** 적은 어노테이션으로 인한 과적합 및 프리텍스트 작업 의존성으로 의료 영상 분할 성능 한계.
-* **해결:** Semi-AGCL(어피니티 그래프 기반 반지도 대조 학습) 제안. 평균 패치 엔트로피 기반 샘플링으로 프리텍스트 없이 견고한 특징 공간 구축. 학생-교사 네트워크 의사 라벨 간 어피니티 그래프 손실($L_{PL\_AGG}$) 및 하드 네거티브 재가중 손실($L_{RW\_AGG}$) 설계로 데이터 내재 구조 활용, 과적합 완화, 일반화 능력 극대화.
+* **해결:** Semi-AGCL(어피니티 그래프 기반 반지도 대조 학습) 제안. 평균 패치 엔트로피 기반 샘플링으로 프리텍스트 없이 견고한 특징 공간 구축. 학생-교사 네트워크 의사 라벨 간 어피니티 그래프 손실($L_{PL_AGG}$) 및 하드 네거티브 재가중 손실($L_{RW_AGG}$) 설계로 데이터 내재 구조 활용, 과적합 완화, 일반화 능력 극대화.
 * **결과:** 5%, 10%의 극히 적은 어노테이션만으로도 SOTA 방법론을 크게 능가하는 분할 성능 달성. 다양한 의료 영상 데이터셋에서 뛰어난 일반화 및 견고성 입증.

@@ -52,8 +52,8 @@ DeepSleepNet-Lite는 DeepSleepNet [18]의 '표현 학습 (representation learnin
    - **Monte Carlo (MC) Dropout** [36]: 테스트 시간에도 드롭아웃을 활성화하여 모델의 불확실성을 정량화합니다.
    - **N번의 샘플링**: 드롭아웃이 적용된 상태에서 입력 시퀀스마다 $N=30$번의 예측을 수행하여 $N$개의 다른 예측 $\hat{p}_{\text{n,i,k}}$를 얻습니다.
    - **평균 및 분산 계산**: 각 수면 단계 $k$에 대한 $N$개 예측의 평균 ($\mu_{\text{i,k}}$)과 분산 ($\sigma_{\text{i,k}}^2$)을 계산합니다.
-     $$ \mu*{\text{i,k}} = \frac{1}{\text{N}} \sum*{\text{n}=1}^{\text{N}} \hat{p}_{\text{n,i,k}} $$
-        $$ \sigma_{\text{i,k}}^2 = \frac{1}{\text{N}} \sum*{\text{n}=1}^{\text{N}} (\hat{p}*{\text{n,i,k}} - \mu\_{\text{i,k}})^2 $$
+     $$ \mu_{\text{i,k}} = \frac{1}{\text{N}} \sum_{\text{n}=1}^{\text{N}} \hat{p}_{\text{n,i,k}} $$
+        $$ \sigma_{\text{i,k}}^2 = \frac{1}{\text{N}} \sum_{\text{n}=1}^{\text{N}} (\hat{p}_{\text{n,i,k}} - \mu_{\text{i,k}})^2 $$
    - **불확실한 예측 식별**: 가장 낮은 $\mu$ 값 또는 가장 높은 $\sigma^2$ 값을 가진 에포크를 불확실한 것으로 간주하여 의사의 검토를 권장합니다.
 
 ## 📊 Results

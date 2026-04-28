@@ -25,7 +25,7 @@ Ozan Sener, Silvio Savarese
 ## 🛠️ Methodology
 
 1. **액티브 러닝 재정의**: CNN의 배치 샘플링 환경에 맞춰 액티브 러닝 문제를 "코어-셋 선택"으로 재정의합니다. 이는 전체 데이터셋($[n]$)에 대한 평균 손실과 레이블링된 서브셋($s$)에 대한 평균 손실 간의 차이, 즉 **코어-셋 손실(Core-Set Loss)**을 최소화하는 것을 목표로 합니다:
-   $$ \min*{s_1 : |s_1| \le b} \left| \frac{1}{n} \sum*{i \in [n]} l(x*i,y_i;A*{s*0 \cup s_1}) - \frac{1}{|s_0+s_1|} \sum*{j \in s*0 \cup s_1} l(x_j,y_j;A*{s_0 \cup s_1}) \right| $$
+   $$ \min_{s_1 : |s_1| \le b} \left| \frac{1}{n} \sum_{i \in [n]} l(x*i,y_i;A_{s*0 \cup s_1}) - \frac{1}{|s_0+s_1|} \sum_{j \in s*0 \cup s_1} l(x_j,y_j;A_{s_0 \cup s_1}) \right| $$
 2. **CNN을 위한 코어-셋 이론**: 레이블 정보 없이 최적화할 수 있도록 코어-셋 손실의 상한(upper bound)을 도출합니다. 이 상한은 데이터 포인트의 기하학적 구조, 특히 데이터셋의 커버링 반경(covering radius) $\delta_s$에 따라 결정됩니다.
    - **Theorem 1**: 손실 함수 $l(\cdot,y,w)$가 $\lambda_l$-Lipschitz 연속이고 회귀 함수 $\eta_c(x)$가 $\lambda_\eta$-Lipschitz 연속이며 $s$가 $[n]$의 $\delta_s$-커버일 때, 코어-셋 손실은 $O(\delta_s) + O(\sqrt{\frac{1}{n}})$으로 바운드됩니다.
    - **Lemma 1**: ReLU 및 Max-Pool 비선형성을 사용하는 CNN의 손실 함수(softmax 출력과 원하는 클래스 확률 간의 $L_2$ 거리)는 입력에 대해 Lipschitz 연속임을 증명하여, Theorem 1이 CNN에 적용됨을 보입니다.

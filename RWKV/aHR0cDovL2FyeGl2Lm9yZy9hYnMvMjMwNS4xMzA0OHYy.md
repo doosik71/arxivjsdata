@@ -31,8 +31,8 @@ Transformer는 자연어 처리(NLP) 분야에 혁신을 가져왔지만, 시퀀
 2. **WKV 연산자**:
    - AFT에서 영감을 받아 $W$를 채널별 벡터로 처리하고 상대 위치에 의해 수정합니다.
    - WKV 연산은 다음과 같은 재귀적 공식으로 정의됩니다:
-     $$ \text{wkv}_t = \frac{\sum_{i=1}^{t-1} e^{-(t-1-i)w + k*i} \odot v_i + e^{u+k_t} \odot v_t}{\sum*{i=1}^{t-1} e^{-(t-1-i)w + k*i} + e^{u+k_t}} $$
-     여기서 $w \in (\mathbb{R}*{\geq 0})^d$는 학습 가능한 시간 감쇠 벡터이며, $u$는 현재 토큰에 대한 가중치 벡터입니다.
+     $$ \text{wkv}_t = \frac{\sum_{i=1}^{t-1} e^{-(t-1-i)w + k*i} \odot v_i + e^{u+k_t} \odot v_t}{\sum_{i=1}^{t-1} e^{-(t-1-i)w + k*i} + e^{u+k_t}} $$
+     여기서 $w \in (\mathbb{R}_{\geq 0})^d$는 학습 가능한 시간 감쇠 벡터이며, $u$는 현재 토큰에 대한 가중치 벡터입니다.
 3. **출력 게이팅 (Output Gating)**: 시계열 혼합 및 채널 혼합 블록 모두에서 수용도 벡터의 시그모이드 ($\sigma(r)$)를 사용하여 출력을 게이팅합니다.
 4. **Transformer와 유사한 훈련**:
    - **시간 병렬 모드**: Transformer와 유사하게, RWKV는 매트릭스 곱셈 $W_\lambda$ ($\lambda \in \{r, k, v, o\}$)을 포함하여 훈련 시 효율적으로 병렬화될 수 있습니다.

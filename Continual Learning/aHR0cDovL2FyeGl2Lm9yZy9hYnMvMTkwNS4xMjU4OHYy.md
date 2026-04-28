@@ -30,7 +30,7 @@ Khurram Javed, Martha White
      - **예측 학습 네트워크 (Prediction Learning Network, PLN)** $g_{\text{W}}(R^d)$: RLN이 생성한 표현 $R^d$를 받아 최종 예측 $Y$를 수행하는 네트워크입니다. $W$는 PLN의 파라미터로, 메타 학습의 내부 루프 및 온라인 학습 시점에 업데이트됩니다.
 2. **OML 메타-목적 함수**:
    - OML은 다음 목적 함수를 최소화하도록 설계되었습니다.
-     $$ \min*{\text{W},\theta} \sum*{T*i \sim p(T)} \text{OML}(\text{W},\theta) \stackrel{\text{def}}{=} \sum*{T*i \sim p(T)} \sum*{S*j^k \sim p(S^k|T_i)} \left[ L*{\text{CLP},i}(U(\text{W},\theta,S_j^k)) \right] $$
+     $$ \min_{\text{W},\theta} \sum_{T*i \sim p(T)} \text{OML}(\text{W},\theta) \stackrel{\text{def}}{=} \sum_{T*i \sim p(T)} \sum_{S*j^k \sim p(S^k|T_i)} \left[ L_{\text{CLP},i}(U(\text{W},\theta,S_j^k)) \right] $$
    - 여기서 $T_i$는 지속 학습 문제의 분포 $p(T)$에서 샘플링된 문제이고, $S_j^k$는 길이 $k$의 데이터 궤적(trajectory)입니다.
    - $U(\text{W}_t,\theta,S_j^k) = (\text{W}_{t+k},\theta)$는 $k$단계의 확률적 경사 하강법(SGD)을 통해 PLN의 가중치 $W$를 업데이트하는 함수를 나타냅니다. 이 내부 루프에서 RLN의 $\theta$는 고정됩니다.
    - OML은 온라인 지속 학습의 효과(예: 치명적인 망각)를 고려하기 위해 $S_k$의 각 데이터 포인트에 대해 한 번의 내부 업데이트를 수행합니다 (MAML-Rep가 전체 배치를 사용하는 것과 대조적).

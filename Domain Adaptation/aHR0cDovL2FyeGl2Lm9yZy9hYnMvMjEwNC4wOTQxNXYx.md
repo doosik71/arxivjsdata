@@ -47,8 +47,8 @@ Jichang Li, Guanbin Li, Yemin Shi, Yizhou Yu
     $$L_{Con} = w(t) \sum_{j=1}^M ||p'_j - p''_j||^2$$
     여기서 $w(t)$는 램프-업 함수입니다.
 - **전체 손실 함수:** 특징 추출기($G$)와 분류기($F$)는 다음 목적 함수를 사용하여 minimax 방식으로 학습됩니다.
-  $$ \theta^_*G = \text{arg min}*{\theta*G} \left( L*{CE} + \lambda L*{AAC} + L*{PL} + L\_{Con} \right) $$
-    $$ \theta^__F = \text{arg min}_{\theta*F} \left( L*{CE} - \lambda L*{AAC} + L*{PL} + L\_{Con} \right) $$
+  $$ \theta^_*G = \text{arg min}_{\theta*G} \left( L_{CE} + \lambda L_{AAC} + L_{PL} + L_{Con} \right) $$
+    $$ \theta^__F = \text{arg min}_{\theta*F} \left( L_{CE} - \lambda L_{AAC} + L_{PL} + L_{Con} \right) $$
 
 ## 📊 Results
 

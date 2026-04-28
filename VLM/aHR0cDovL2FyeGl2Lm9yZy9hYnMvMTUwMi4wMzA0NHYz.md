@@ -40,8 +40,8 @@ Kelvin Xu, Jimmy Lei Ba, Ryan Kiros, Kyunghyun Cho, Aaron Courville, Ruslan Sala
    - LSTM은 `컨텍스트 벡터` $\hat{z}_t$, 이전 은닉 상태 $h_{t-1}$, 그리고 이전에 생성된 단어 $y_{t-1}$에 기반하여 각 시간 단계 $t$에서 하나의 단어 $y_t$를 생성합니다.
    - 컨텍스트 벡터 $\hat{z}_t$는 시간 $t$에 이미지 입력의 관련 부분을 동적으로 표현합니다.
    - 어텐션 모델 $f_{att}(a_i, h_{t-1})$은 각 `annotation vector` $a_i$에 대한 가중치 $\alpha_{ti}$를 계산하며, 이 가중치들은 $\sum_i \alpha_{ti} = 1$을 만족합니다.
-     $$ e*{ti} = f*{att}(a*i, h*{t-1}) $$
-        $$ \alpha*{ti} = \frac{\exp(e*{ti})}{\sum*{k=1}^L \exp(e*{tk})} $$
+     $$ e_{ti} = f_{att}(a*i, h_{t-1}) $$
+        $$ \alpha_{ti} = \frac{\exp(e_{ti})}{\sum_{k=1}^L \exp(e_{tk})} $$
    - 계산된 가중치를 사용하여 컨텍스트 벡터 $\hat{z}_t$를 계산합니다.
    - LSTM의 초기 메모리 상태($c_0$) 및 은닉 상태($h_0$)는 `annotation vector`들의 평균을 두 개의 개별 MLP에 통과시켜 예측됩니다.
    - 딥 출력 계층은 LSTM 상태, 컨텍스트 벡터, 이전 단어를 고려하여 출력 단어의 확률을 계산합니다: $p(y_t|a, y_{1}^{t-1}) \propto \exp(L_o(Ey_{t-1} + L_h h_t + L_z \hat{z}_t))$.

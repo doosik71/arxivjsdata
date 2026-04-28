@@ -24,7 +24,7 @@ GAN 관련 기존 연구들은 주로 GAN 평가, 의료 영상 분야에서의 
 1. **문헌 식별 및 필터링**: 검색된 논문 중 GAN 이외의 생성 모델을 사용한 논문 및 중복 논문을 제외했습니다.
 2. **GAN 원리 및 EHR 데이터 유형 개요**: GAN의 작동 원리(생성자 $G$와 판별자 $D$의 경쟁 학습) 및 아키텍처, 그리고 EHR 데이터의 주요 유형(표 형식, 시계열, 이질적 데이터)을 간략하게 소개합니다.
    - **GAN의 목적 함수**:
-     $$ min*{G} max*{D} V(D,G) = E*{x}[\log D(x)] + E*{z}[\log(1-D(G(z)))] $$
+     $$ min_{G} max_{D} V(D,G) = E_{x}[\log D(x)] + E_{z}[\log(1-D(G(z)))] $$
 3. **GANs for EHRs 애플리케이션 분류**: GAN을 활용한 EHR 관련 연구들을 다음 다섯 가지 주요 애플리케이션으로 분류하여 검토했습니다.
    - 다양한 유형의 EHR 생성 (표 형식, 시계열, 이질적)
    - 준지도 학습 및 데이터 증강
@@ -47,17 +47,17 @@ GAN 관련 기존 연구들은 주로 GAN 평가, 의료 영상 분야에서의 
 - **치료 효과 추정**: `GANITE`, `CWR-GAN`, `MGANITE`, `GAD`, `PSSAM-GAN` 등이 관측 데이터에서 잠재적 결과(counterfactuals)를 생성하고 교란 요인을 제어하여 개별화된 치료 효과(ITE)를 추정하는 데 활용되었습니다.
 - **개인 정보 보호**: `DPGAN`, `PATE-GAN`, `AC-GAN`, `PART-GAN`, `ADS-GAN`, `HealthGAN`, `HCGAN` 등이 차등 프라이버시(Differential Privacy) 보장 또는 재식별성 최소화를 통해 개인 정보 보호를 강화한 합성 EHR 데이터 생성을 목표로 했습니다.
   - **차등 프라이버시($\epsilon$-Differentially Private) 정의**:
-    $$ P(M(D*{1})\in S) \le e^{\epsilon} P(M(D*{2})\in S) $$
+    $$ P(M(D_{1})\in S) \le e^{\epsilon} P(M(D_{2})\in S) $$
         여기서 $D_{1}$과 $D_{2}$는 단일 레코드만 다른 데이터 세트이며, $M$은 차등 프라이버시 알고리즘입니다.
 - **평가 지표**:
   - **정량적 평가**:
     - **차원별 분포 유사성**: 차원별 확률, 평균, K-S 테스트, 지원 범위, Kullback-Leibler Divergence ($K_{KLD}$) 등을 사용합니다.
-      $$ K*{KLD}(P,Q) = \int*{X} P(x)\log\frac{P(x)}{Q(x)}dx $$
+      $$ K_{KLD}(P,Q) = \int_{X} P(x)\log\frac{P(x)}{Q(x)}dx $$
     - **잠재 분포 유사성**: 잠재 공간 표현(LSR), 가중 잠재 차이, log-cluster 지표 등이 활용됩니다.
     - **결합 분포 유사성**: $K_{KLD}$, Jensen-Shannon Divergence ($J_{JSD}$), Wasserstein Distance ($W_{DDD}$), Maximum Mean Discrepancies ($M_{MMD}$), Discriminative score 등이 사용됩니다.
-      $$ J*{JSD}(P,Q) = \frac{1}{2}KLD(P,M)+\frac{1}{2}KLD(Q,M) $$
-            $$ W*{DDD}(P,Q) = \inf*{\gamma\in\Gamma} \int*{X\times X} \left\|x-y\right\|_{2}d\gamma(x,y) $$
-            $$ M_{MMD}^2*k(P,Q):=E*{x,x'}[k(x,x')] + E*{y,y'}[k(y,y')] - 2E*{x,y}[k(x,y)] $$
+      $$ J_{JSD}(P,Q) = \frac{1}{2}KLD(P,M)+\frac{1}{2}KLD(Q,M) $$
+            $$ W_{DDD}(P,Q) = \inf_{\gamma\in\Gamma} \int_{X\times X} \left\|x-y\right\|_{2}d\gamma(x,y) $$
+            $$ M_{MMD}^2*k(P,Q):=E_{x,x'}[k(x,x')] + E_{y,y'}[k(y,y')] - 2E_{x,y}[k(x,y)] $$
     - **차원 간 관계 유사성**: 차원별 예측, Pearson 상관계수, 연관 규칙 마이닝(ARM), 빈번 연관 규칙(FAR) 등이 사용됩니다.
     - **개인 정보 보호**: 차등 프라이버시 보장, 멤버십 추론 공격, 속성 공개 공격, 모델 반전 공격, 식별성, privacy$_{loss}$, 정확 일치 테스트 등이 사용됩니다.
   - **정성적 평가**: 데이터 분포 및 임베딩 시각화, 환자 궤적 비교, 보간 테스트, 임상 전문가 평가, 제약 조건 위반 테스트 등이 이루어집니다.

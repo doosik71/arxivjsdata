@@ -42,15 +42,15 @@ Liang-Chieh Chen, Yukun Zhu, George Papandreou, Florian Schroff, and Hartwig Ada
    - **Pointwise Convolution:** Depthwise Convolution의 출력을 채널에 걸쳐 결합합니다.
    - **Atrous Separable Convolution:** Depthwise Convolution에 Atrous Convolution을 적용하여 계산 복잡도를 크게 줄이면서 성능을 유지하거나 향상시킵니다.
 3. **DeepLabv3를 인코더로 활용:**
-   - DeepLabv3는 Atrous Convolution을 사용하여 임의의 해상도(`output_stride`)로 특징을 추출합니다 (예: $output\_stride=16$ 또는 $8$).
+   - DeepLabv3는 Atrous Convolution을 사용하여 임의의 해상도(`output_stride`)로 특징을 추출합니다 (예: $output_stride=16$ 또는 $8$).
    - Atrous Spatial Pyramid Pooling (ASPP) 모듈과 이미지 레벨 특징(image-level features)을 결합하여 다중 스케일 컨텍스트 정보를 인코딩합니다.
    - 인코더 출력 특징 맵은 풍부한 의미론적 정보를 담고 있습니다 (256 채널).
 4. **제안하는 디코더 모듈:**
-   - 인코더 특징(예: $output\_stride=16$으로 계산된 특징)을 먼저 4배 이중선형 업샘플링(bilinear upsampling)합니다.
+   - 인코더 특징(예: $output_stride=16$으로 계산된 특징)을 먼저 4배 이중선형 업샘플링(bilinear upsampling)합니다.
    - 이 특징을 네트워크 백본의 해당 저수준 특징(low-level features, 예: ResNet-101의 Conv2)과 연결(concatenate)합니다.
    - 저수준 특징의 채널 수를 줄이기 위해 $1 \times 1$ 컨볼루션을 적용합니다 (예: 48개 채널로). 이는 고수준 특징의 중요성을 압도하지 않도록 합니다.
    - 연결된 특징에 몇 개의 $3 \times 3$ 컨볼루션 (예: 두 개의 $3 \times 3$ 컨볼루션, 각 256 필터)을 적용하여 특징을 정교하게 만듭니다.
-   - 마지막으로 4배 이중선형 업샘플링을 다시 수행하여 최종 분할 결과를 얻습니다 (최종 $output\_stride=4$).
+   - 마지막으로 4배 이중선형 업샘플링을 다시 수행하여 최종 분할 결과를 얻습니다 (최종 $output_stride=4$).
 5. **수정된 Aligned Xception 백본:**
    - Xception 모델을 시맨틱 분할 작업에 맞게 수정했습니다.
    - 모든 최대 풀링(max pooling) 연산을 스트라이딩을 포함하는 Depthwise Separable Convolution으로 대체하여 Atrous Separable Convolution을 적용할 수 있도록 했습니다.
@@ -60,7 +60,7 @@ Liang-Chieh Chen, Yukun Zhu, George Papandreou, Florian Schroff, and Hartwig Ada
 
 - **PASCAL VOC 2012 데이터셋:**
   - **ResNet-101 백본 사용 시:**
-    - 제안된 디코더 모듈을 추가함으로써 mIOU (mean Intersection-over-Union)가 크게 향상됩니다 (예: $output\_stride=16$에서 77.21% $\rightarrow$ 78.85%).
+    - 제안된 디코더 모듈을 추가함으로써 mIOU (mean Intersection-over-Union)가 크게 향상됩니다 (예: $output_stride=16$에서 77.21% $\rightarrow$ 78.85%).
     - Multi-scale 입력 및 좌우 반전(Flip)을 함께 사용하면 성능이 더욱 향상됩니다.
   - **수정된 Xception 백본 사용 시:**
     - DeepLabv3+ (Xception) 모델은 PASCAL VOC 2012 테스트 세트에서 87.8% (COCO 사전 학습), 89.0% (JFT 사전 학습 포함)의 mIOU를 달성하여 새로운 최첨단 성능을 기록했습니다.

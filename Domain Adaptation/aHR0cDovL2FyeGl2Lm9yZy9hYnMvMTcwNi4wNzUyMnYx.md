@@ -35,7 +35,7 @@ DAH(Domain Adaptive Hashing) 네트워크는 VGG-F 네트워크를 기반으로 
    - 소스와 타겟 간의 특징 표현 불일치를 최소화하기 위해 다중 커널 최대 평균 불일치(Multi-kernel Maximum Mean Discrepancy, MK-MMD) 손실을 사용합니다.
    - 이는 네트워크의 완전 연결 계층(fc6, fc7, fc8)에서 소스 및 타겟 특징 표현 간의 분포 차이를 줄입니다.
    - 손실 함수는 다음과 같습니다:
-     $$ M(U*s, U_t) = \sum*{l \in F} d_k^2(U_s^l, U_t^l) $$
+     $$ M(U*s, U_t) = \sum_{l \in F} d_k^2(U_s^l, U_t^l) $$
         여기서 $U_s^l$, $U_t^l$은 $l$번째 계층의 소스 및 타겟 출력 표현이며, $d_k^2(.)$는 MK-MMD를 측정합니다.
 
 2. **소스 데이터용 지도 해시 손실 (Supervised Hash Loss):**
@@ -45,17 +45,17 @@ DAH(Domain Adaptive Hashing) 네트워크는 VGG-F 네트워크를 기반으로 
    - 이산적인 해시 코드 제약 $\mathbf{h}_i \in \{-1,+1\}^d$을 $\mathbf{u}_i \in \mathbb{R}^d$로 완화하고, $\text{tanh}()$ 활성화와 배치 정규화를 사용하여 출력을 $[-1, +1]$ 범위로 제한합니다.
    - 또한 양자화 오차를 줄이기 위해 $\sum_{i=1}^{n_s} \| \mathbf{u}_i - \text{sgn}(\mathbf{u}_i) \|_2^2$ 항을 추가합니다.
    - 손실 함수는 다음과 같습니다:
-     $$ L(U*s) = - \sum*{s*{ij} \in S} \left( s*{ij} \mathbf{u}_i^\top \mathbf{u}\_j - \log \left( 1 + \exp(\mathbf{u}\_i^\top \mathbf{u}\_j) \right) \right) + \sum_{i=1}^{n_s} \| \mathbf{u}\_i - \text{sgn}(\mathbf{u}\_i) \|\_2^2 $$
+     $$ L(U*s) = - \sum_{s_{ij} \in S} \left( s_{ij} \mathbf{u}_i^\top \mathbf{u}_j - \log \left( 1 + \exp(\mathbf{u}_i^\top \mathbf{u}_j) \right) \right) + \sum_{i=1}^{n_s} \| \mathbf{u}_i - \text{sgn}(\mathbf{u}_i) \|_2^2 $$
 
 3. **타겟 데이터용 비지도 엔트로피 손실 (Unsupervised Entropy Loss):**
    - 레이블이 없는 타겟 데이터를 위해 각 타겟 샘플이 정확히 하나의 소스 카테고리와 밀접하게 정렬되고 다른 카테고리와는 구별되도록 합니다.
    - 타겟 샘플이 각 소스 카테고리에 속할 확률을 계산하고, 이 확률 벡터의 엔트로피를 최소화하여 원-핫(one-hot) 벡터에 가깝게 만듭니다.
    - 손실 함수는 다음과 같습니다:
-     $$ H(U*s, U_t) = - \frac{1}{n_t} \sum*{i=1}^{n*t} \sum*{j=1}^C p*{ij} \log(p*{ij}) $$
+     $$ H(U*s, U_t) = - \frac{1}{n_t} \sum_{i=1}^{n*t} \sum_{j=1}^C p_{ij} \log(p_{ij}) $$
         여기서 $p_{ij}$는 $i$번째 타겟 데이터 포인트가 $j$번째 카테고리에 할당될 확률입니다.
 
 **최종 목적 함수:** DAH 네트워크는 다음 통합 손실 함수를 최소화하도록 훈련됩니다.
-$$ \min\_{U} J = L(U_s) + \gamma M(U_s, U_t) + \eta H(U_s, U_t) $$
+$$ \min_{U} J = L(U_s) + \gamma M(U_s, U_t) + \eta H(U_s, U_t) $$
 여기서 $\gamma$와 $\eta$는 도메인 적응 및 타겟 엔트로피 손실의 중요도를 제어하는 가중치입니다. 해시 값 $\mathbf{H}$는 네트워크 출력 $\mathbf{U}$에 $\text{sgn}(\cdot)$ 함수를 적용하여 얻습니다.
 
 **네트워크 아키텍처:** VGG-F 네트워크의 `conv1`~`conv5`, `fc6`, `fc7` 계층을 전이 학습(fine-tuning)하고, `fc8` 계층 대신 `hash-fc8` 계층을 도입하여 $d$차원 벡터를 출력합니다. `hash-fc8`은 `fc8` $\rightarrow$ `batch-norm` $\rightarrow$ `tanh()`로 구성되어 그래디언트 소실 문제를 완화하고 안정적인 훈련을 가능하게 합니다.

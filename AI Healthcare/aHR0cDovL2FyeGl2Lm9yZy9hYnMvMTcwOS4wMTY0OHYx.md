@@ -32,18 +32,18 @@ Zhengping Che, Yu Cheng, Shuangfei Zhai, Zhaonan Sun, Yan Liu
 ### 2. ehrGAN: EHR 데이터용 수정된 GAN 모델
 
 - **기본 GAN 목적**:
-  $$ \min*G \max_D E*{x\sim p*{data}(x)}[\log D(x)] + E*{z\sim p*z(z)}[\log (1-D(G(z)))] $$
-  여기서 $p*{data}(x)$는 실제 데이터 분포, $D(x)$는 판별자, $G(z)$는 생성자입니다.
+  $$\min_G \max_D E_{x\sim p_{data}(x)}[\log D(x)] + E_{z\sim p*z(z)}[\log (1-D(G(z)))]$$
+  여기서 $p_{data}(x)$는 실제 데이터 분포, $D(x)$는 판별자, $G(z)$는 생성자입니다.
 - **판별자(Discriminator)**: 기본 CNN 예측 모델의 구조를 채택하고, 최상위 예측 레이어를 단일 시그모이드(sigmoid) 유닛으로 교체하여 입력 데이터가 실제 데이터셋에서 추출되었을 확률을 출력합니다.
 - **생성자(Generator)**:
   - **VCD(Variational Contrastive Divergence) 기반 생성자**: 잠재 벡터 $z$를 합성 샘플 $\tilde{x}$로 변환하는 대신, 실제 샘플 $x$에서 파생된 생성 샘플 $\tilde{x}$에 대한 전이 분포 $p(\tilde{x}|x)$를 학습합니다.
   - **구조**: 인코더-디코더(encoder-decoder) CNN 네트워크로 구성됩니다.
     - 실제 샘플 $x$로부터 인코더를 통해 표현 $h$를 얻습니다.
-    - 표현 $h$는 임의의 이진 마스크 벡터 $m$과 노이즈 벡터 $z$와 혼합되어 $\tilde{h} = m*z + (1-m)*h$를 생성합니다.
+    - 표현 $h$는 임의의 이진 마스크 벡터 $m$과 노이즈 벡터 $z$와 혼합되어 $\tilde{h} = m_z + (1-m)_h$를 생성합니다.
     - $\tilde{h}$를 동일한 디코더에 입력하여 합성 샘플 $\tilde{x}$를 얻습니다.
   - **생성자 목적 함수**:
-    $$ E*{x\sim p*{data}(x)} \left[ \rho \cdot E\_{\tilde{x}\sim p_g(\tilde{x}|x)}[-\log D(\tilde{x})] + (1-\rho)\cdot \|\bar{x}-x\|^2_2 \right] $$
-        여기서 $D$는 판별자 함수, $\rho$는 합성 샘플이 해당 실제 샘플과 얼마나 유사해야 하는지를 제어하는 하이퍼파라미터입니다.
+    $$ E_{x\sim p_{data}(x)} \left[ \rho \cdot E_{\tilde{x}\sim p_g(\tilde{x}|x)}[-\log D(\tilde{x})] + (1-\rho)\cdot \|\bar{x}-x\|^2_2 \right] $$
+    여기서 $D$는 판별자 함수, $\rho$는 합성 샘플이 해당 실제 샘플과 얼마나 유사해야 하는지를 제어하는 하이퍼파라미터입니다.
   - **이점**: 모드 붕괴(mode collapsing) 문제를 완화하고, 훈련 데이터 예제 주변의 데이터 매니폴드에 대한 풍부한 구조를 학습하여 준지도 학습에 유용합니다.
 - **훈련 기법**:
   - 생성자와 판별자를 SGD(Stochastic Gradient Descent)로 반복적으로 최적화합니다.
@@ -55,7 +55,7 @@ Zhengping Che, Yu Cheng, Shuangfei Zhai, Zhaonan Sun, Yan Liu
 
 - **아이디어**: 학습된 ehrGAN의 전이 분포 $p(\tilde{x}|x)$를 사용하여 데이터 증강을 수행합니다.
 - **손실 함수**:
-  $$ \frac{1}{N}\sum*{i=1}^{N}L(x_i,y_i) + \mu\cdot\frac{1}{N}\sum*{i=1}^{N}E\_{\tilde{x}\_i\sim p(\tilde{x}|x_i)}L(\tilde{x}\_i,y_i) $$
+  $$\frac{1}{N}\sum_{i=1}^{N}L(x_i,y_i) + \mu\cdot\frac{1}{N}\sum_{i=1}^{N}E_{\tilde{x}_i\sim p(\tilde{x}|x_i)}L(\tilde{x}_i,y_i)$$
     여기서 $L$은 이진 교차 엔트로피 손실(binary cross-entropy loss), $\mu$는 훈련 데이터와 증강된 데이터의 비율을 조정하는 하이퍼파라미터입니다. 잘 훈련된 생성자는 실제 샘플 $x$와 동일한 클래스에 속할 가능성이 있는 샘플 $\tilde{x}$를 생성하여 분류기에 추가 훈련 데이터를 제공합니다.
 
 ## 📊 Results

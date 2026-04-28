@@ -37,7 +37,7 @@ CCNet은 심층 합성곱 신경망(DCNN)으로 특징 맵 $X$를 추출한 뒤,
      - $H$에 또 다른 1x1 합성곱을 적용하여 값 $V \in \mathbb{R}^{C \times W \times H}$를 생성합니다.
    - **어피니티(Affinity) 연산:** 각 위치 $u$에서 쿼리 $Q_u$를 추출하고, $K$에서 $u$와 같은 행 또는 열에 있는 특징 벡터들($\Omega_u$)을 추출합니다. 이들 간의 상관도 $d_{i,u} = Q_u \Omega_{i,u}^{\text{T}}$를 계산하여 어텐션 맵 $A \in \mathbb{R}^{(H+W-1) \times (W \times H)}$를 생성합니다. $D$에 소프트맥스(softmax)를 적용하여 정규화합니다.
    - **어그리게이션(Aggregation) 연산:** 각 위치 $u$에서 값 $V_u$를 추출하고, $V$에서 $u$와 같은 행 또는 열에 있는 특징 벡터들($\Phi_u$)을 추출합니다. 어텐션 맵 $A$를 기반으로 문맥 정보를 집계합니다:
-     $$ H'_u = \sum_{i=0}^{H+W-1} A*{i,u} \Phi*{i,u} + H_u $$
+     $$ H'_u = \sum_{i=0}^{H+W-1} A_{i,u} \Phi_{i,u} + H_u $$
         여기서 $H'_u$는 최종 출력 특징 맵 $H' \in \mathbb{R}^{C \times W \times H}$의 위치 $u$에 대한 특징 벡터입니다.
 
 3. **재귀적 Criss-Cross Attention (RCCA) 모듈:**
@@ -54,11 +54,11 @@ CCNet은 심층 합성곱 신경망(DCNN)으로 특징 맵 $X$를 추출한 뒤,
    - 최종 손실 $\mathcal{L}$은 시맨틱 분할 손실 $\mathcal{L}_{\text{seg}}$ (교차 엔트로피 손실)과 CCL의 가중치 합으로 구성됩니다:
      $$ \mathcal{L} = \mathcal{L}_{\text{seg}} + \alpha \mathcal{L}_{\text{var}} + \beta \mathcal{L}_{\text{dis}} + \gamma \mathcal{L}_{\text{reg}} $$
    - $\mathcal{L}_{\text{var}}$: 동일 카테고리 픽셀 특징이 해당 카테고리 평균($\mu_c$)에 가깝도록 유도합니다. 견고한 최적화를 위해 구간별 거리 함수($\phi_{\text{var}}$)를 사용합니다.
-     $$ \mathcal{L}_{\text{var}} = \frac{1}{|C|} \sum_{c \in C} \frac{1}{N*c} \sum*{i=1}^{N*c} \phi*{\text{var}}(h*i, \mu_c) $$
-        $$ \phi*{\text{var}} = \begin{cases} \| \mu_c - h_i \| - \delta_d + (\delta_d - \delta_v)^2, & \| \mu_c - h_i \| > \delta_d \\ (\| \mu_c - h_i \| - \delta_v)^2, & \delta_v < \| \mu_c - h_i \| \le \delta_d \\ 0, & \| \mu_c - h_i \| \le \delta_v \end{cases} $$
+     $$ \mathcal{L}_{\text{var}} = \frac{1}{|C|} \sum_{c \in C} \frac{1}{N*c} \sum_{i=1}^{N*c} \phi_{\text{var}}(h*i, \mu_c) $$
+        $$ \phi_{\text{var}} = \begin{cases} \| \mu_c - h_i \| - \delta_d + (\delta_d - \delta_v)^2, & \| \mu_c - h_i \| > \delta_d \\ (\| \mu_c - h_i \| - \delta_v)^2, & \delta_v < \| \mu_c - h_i \| \le \delta_d \\ 0, & \| \mu_c - h_i \| \le \delta_v \end{cases} $$
    - $\mathcal{L}_{\text{dis}}$: 다른 카테고리의 평균 특징들이 서로 멀리 떨어지도록 유도합니다.
-     $$ \mathcal{L}_{\text{dis}} = \frac{1}{|C|(|C|-1)} \sum_{c*a \in C} \sum*{c*b \in C, c_a \ne c_b} \phi*{\text{dis}}(\mu*{c_a}, \mu*{c*b}) $$
-        $$ \phi*{\text{dis}} = \begin{cases} (2\delta*d - \| \mu*{c*a} - \mu*{c*b} \|)^2, & \| \mu*{c*a} - \mu*{c*b} \| \le 2\delta_d \\ 0, & \| \mu*{c*a} - \mu*{c_b} \| > 2\delta_d \end{cases} $$
+     $$ \mathcal{L}_{\text{dis}} = \frac{1}{|C|(|C|-1)} \sum_{c*a \in C} \sum_{c*b \in C, c_a \ne c_b} \phi_{\text{dis}}(\mu_{c_a}, \mu_{c*b}) $$
+        $$ \phi_{\text{dis}} = \begin{cases} (2\delta*d - \| \mu_{c*a} - \mu_{c*b} \|)^2, & \| \mu_{c*a} - \mu_{c*b} \| \le 2\delta_d \\ 0, & \| \mu_{c*a} - \mu_{c_b} \| > 2\delta_d \end{cases} $$
    - $\mathcal{L}_{\text{reg}}$: 모든 카테고리 평균 특징이 원점 방향으로 끌려오도록 유도합니다.
      $$ \mathcal{L}_{\text{reg}} = \frac{1}{|C|} \sum_{c \in C} \| \mu_c \| $$
    - 실험에서는 $\delta_v=0.5$, $\delta_d=1.5$, $\alpha=\beta=1$, $\gamma=0.001$로 설정되었습니다.

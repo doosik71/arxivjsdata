@@ -48,17 +48,17 @@ Jekyll은 Generative Adversarial Network (GAN)을 기반으로 하며, 이미지
    - $D_X$: $F$가 생성한 이미지와 $X$ 도메인의 실제 이미지를 구별합니다.
 3. **손실 함수 ($L(G,F,D_X,D_Y)$)**: 여러 손실 항을 결합하여 질병 주입, 신원 보존, 이미지 품질을 최적화합니다.
    - **적대적 손실 ($L_{adv}$)**: 생성자와 판별자가 서로 경쟁하도록 합니다. Least-squares GAN loss [73]를 사용하여 훈련 안정화와 이미지 품질을 향상시킵니다.
-     $$ L*{GAN}(G,D_Y,X,Y) = E*{y \sim p*{data}(y)}[D_Y(y)^2] + E*{x \sim p*{data}(x)}[(D_Y(G(x))-1)^2] $$
-     총 적대적 손실은 $L*{adv} = L*{GAN}(G,D_Y,X,Y) + L*{GAN}(F,D_X,X,Y)$ 입니다.
+     $$ L_{GAN}(G,D_Y,X,Y) = E_{y \sim p_{data}(y)}[D_Y(y)^2] + E_{x \sim p_{data}(x)}[(D_Y(G(x))-1)^2] $$
+     총 적대적 손실은 $L_{adv} = L_{GAN}(G,D_Y,X,Y) + L_{GAN}(F,D_X,X,Y)$ 입니다.
    - **질병 손실 ($L_{disease}$)**: 미리 학습된 질병 분류기 $S$를 사용하여 생성된 이미지 $G(x)$가 목표 질병 조건 $C_Y$에 속할 확률을 피드백으로 제공합니다. 이는 생성자가 목표 질병을 정확히 주입하도록 강제합니다.
-     $$ L*{disease} = E*{x \sim p\_{data}(x)}[l(S(G(x)|C_Y),C_Y)] $$
+     $$ L_{disease} = E_{x \sim p_{data}(x)}[l(S(G(x)|C_Y),C_Y)] $$
         여기서 $l$은 교차 엔트로피 함수입니다.
    - **사이클 일관성 손실 ($L_{cycle}$)**: 이미지 $x$를 $Y$ 도메인으로 변환($G(x)$)하고 다시 $X$ 도메인으로 재구성($F(G(x))$)했을 때, 원본 $x$와 대부분 유사해야 한다는 아이디어($F(G(x)) \approx x$)를 적용합니다. 이는 가능한 매핑 공간을 줄여 신원 보존에 기여합니다.
-     $$ L*{cycle} = E*{x \sim p*{data}(x)}[\|F(G(x))-x\|_1] + E*{y \sim p\_{data}(y)}[\|G(F(y))-y\|_1] $$
+     $$ L_{cycle} = E_{x \sim p_{data}(x)}[\|F(G(x))-x\|_1] + E_{y \sim p_{data}(y)}[\|G(F(y))-y\|_1] $$
    - **신원 손실 ($L_{identity}$)**: 환자의 신원을 더 효과적으로 보존하기 위해 도입됩니다. 미리 학습된 신원 분류기 $E$의 특정 레이어에서 추출된 특징을 사용하여 원본 이미지와 생성된 이미지의 신원 특징 유사성을 측정하는 지각 손실(perceptual loss)을 사용합니다.
-     $$ L*{identity} = E*{x \in p\_{data}(x)}[\|E(x)-E(G(x))\|_1 + \|E(F(G(x)))-E(G(x))\|_1] $$
+     $$ L_{identity} = E_{x \in p_{data}(x)}[\|E(x)-E(G(x))\|_1 + \|E(F(G(x)))-E(G(x))\|_1] $$
    - **최종 손실 함수**: 각 손실 항의 가중치($\lambda_{adv}, \lambda_{disease}, \lambda_{identity}, \lambda_{cycle}$)를 조절하여 전체 손실을 최적화합니다.
-     $$ L(G,F,D*X,D_Y) = \lambda*{adv}L*{adv} + \lambda*{disease}L*{disease} + \lambda*{identity}L*{identity} + \lambda*{cycle}L\_{cycle} $$
+     $$ L(G,F,D*X,D_Y) = \lambda_{adv}L_{adv} + \lambda_{disease}L_{disease} + \lambda_{identity}L_{identity} + \lambda_{cycle}L_{cycle} $$
 
 **시간 경과에 따른 공격 지속 (질병 진행 모방):**
 

@@ -34,13 +34,13 @@ Xinghang Li, Peiyan Li, Minghuan Liu, Dong Wang, Jirong Liu, Bingyi Kang, Xiao M
    - 4가지 VLA 구조, 8가지 VLM 백본, 3가지 훈련 데이터 레시피를 실험하여 공정한 비교를 가능하게 합니다.
 2. **행동 전처리 및 예측:**
    - **행동 정규화:** 그리퍼의 6D 포즈와 개폐 상태를 포함하는 7-DoF 행동의 각 차원을 학습 데이터의 1사분위수 및 99사분위수를 사용하여 $[-1, 1]$ 범위로 정규화합니다.
-     $$ \tilde{a}\_i = 2 \times (a_i' - a_i^{1st}) / (a_i^{99th} - a_i^{1st}) - 1 $$
+     $$ \tilde{a}_i = 2 \times (a_i' - a_i^{1st}) / (a_i^{99th} - a_i^{1st}) - 1 $$
         여기서 $a_i'$는 클램프된 값입니다.
    - **행동 이산화 (이산 행동 공간용):** 정규화된 행동 $\tilde{a}$를 각 차원별로 256개의 구간으로 이산화하여 VLM의 토크나이저에 사용될 이산 토큰으로 매핑합니다.
    - **연속 행동 예측:** 예측된 행동 시퀀스 $\hat{a}_{t:t+L-1}$와 실제 값 $\tilde{a}_{t:t+L-1}$ 사이의 MSE(위치/방향) 및 BCE(그리퍼 개폐) 손실을 최소화합니다.
-     $$ \ell*{VLA} = \sum*{i=t}^{t+L-1} \left( MSE(\hat{a}_{i,pose}, \tilde{a}_{i,pose}) + \lambda \cdot BCE(a*{i,gripper}, \tilde{a}*{i,gripper}) \right) $$
+     $$ \ell_{VLA} = \sum_{i=t}^{t+L-1} \left( MSE(\hat{a}_{i,pose}, \tilde{a}_{i,pose}) + \lambda \cdot BCE(a_{i,gripper}, \tilde{a}_{i,gripper}) \right) $$
    - **이산 행동 예측:** 각 행동 차원 $j$에 대해 행동 토큰 $ACT_i$를 예측하며, VLM 훈련과 유사하게 교차 엔트로피(CE) 손실을 사용합니다.
-     $$ \ell*{VLA} = \sum*{i=t}^{t+L-1} \sum*{j=1}^{7} CE([ACT]*{j}^i, \tilde{a}\_j^i) $$
+     $$ \ell_{VLA} = \sum_{i=t}^{t+L-1} \sum_{j=1}^{7} CE([ACT]_{j}^i, \tilde{a}_j^i) $$
 3. **VLA 구조 분류 및 구현:**
    - **단일 단계 모델 (One-step Models):** 현재 시점 $t$의 관찰 $o_t$와 언어 지시 $l_{prompt}$만을 사용하여 미래 행동 시퀀스 $\hat{a}_{t:t+L-1}$를 예측합니다.
      - **연속 행동 모델:** VLM 백본이 학습 가능한 토큰 $[LRN]$을 예측하고, MLP가 이를 이용해 행동 벡터를 예측합니다.

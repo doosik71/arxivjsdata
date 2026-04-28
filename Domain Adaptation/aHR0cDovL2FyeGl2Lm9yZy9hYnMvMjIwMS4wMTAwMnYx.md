@@ -32,12 +32,12 @@ Yongchun Zhu, Fuzhen Zhuang, Jindong Wang, Jingwu Chen, Zhiping Shi, Wenjuan Wu,
    - MMD를 확장하여 _조건부 분포_ $P(x^s | y^s=c)$와 $Q(x^t | y^t=c)$ 간의 불일치를 측정합니다.
    - 타겟 도메인 데이터의 레이블이 없으므로, 네트워크의 예측 $\hat{y}_t = f(x_t)$를 가짜 레이블(pseudo-label)로 사용하여 조건부 분포를 추정합니다.
    - CMMD 공식은 다음과 같습니다:
-     $$ \hat{d}_{\mathcal{H}}(X_s,X_t) = \frac{1}{C}\sum_{c=1}^{C} \left\| \frac{1}{n*s^{(c)}} \sum*{x*i^{s(c)} \in D_X^{s(c)}} \varphi(x_i^{s(c)}) - \frac{1}{n_t^{(c)}} \sum*{x*j^{t(c)} \in D_X^{t(c)}} \varphi(x_j^{t(c)}) \right\|*{\mathcal{H}}^2 $$
+     $$ \hat{d}_{\mathcal{H}}(X_s,X_t) = \frac{1}{C}\sum_{c=1}^{C} \left\| \frac{1}{n*s^{(c)}} \sum_{x*i^{s(c)} \in D_X^{s(c)}} \varphi(x_i^{s(c)}) - \frac{1}{n_t^{(c)}} \sum_{x*j^{t(c)} \in D_X^{t(c)}} \varphi(x_j^{t(c)}) \right\|_{\mathcal{H}}^2 $$
         여기서 $C$는 클래스 수, $n_s^{(c)}$와 $n_t^{(c)}$는 각각 소스 및 타겟 도메인의 클래스 $c$에 속하는 샘플 수입니다.
 4. **MRAN(Multi-Representation Adaptation Network):**
    - IAM과 CMMD를 ResNet 기반의 종단 간(end-to-end) 딥러닝 모델에 통합합니다.
    - 전체 손실 함수는 분류 손실(cross-entropy loss)과 다중 표현에 대한 CMMD 적응 손실의 합으로 구성됩니다:
-     $$ \min*f \frac{1}{n_s} \sum*{i=1}^{n_s} J(f(x_i^s), y_i^s) + \lambda \sum_i^{n_r} \hat{d}((h_i \circ g)(X_s), (h_i \circ g)(X_t)) $$
+     $$ \min_f \frac{1}{n_s} \sum_{i=1}^{n_s} J(f(x_i^s), y_i^s) + \lambda \sum_i^{n_r} \hat{d}((h_i \circ g)(X_s), (h_i \circ g)(X_t)) $$
         여기서 $\lambda$는 트레이드오프 파라미터입니다.
    - ImageNet2012로 사전 학습된 모델을 사용하며, SGD(Stochastic Gradient Descent)를 통해 미세 조정(fine-tune)합니다. 학습률 및 $\lambda$는 점진적 스케줄에 따라 조정됩니다.
 

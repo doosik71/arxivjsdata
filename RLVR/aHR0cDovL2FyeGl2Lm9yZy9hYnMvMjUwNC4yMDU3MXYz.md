@@ -33,7 +33,7 @@ Yiping Wang, Qing Yang, Zhiyuan Zeng, Liliang Ren, Liyuan Liu, Baolin Peng, Hao 
 1. **강화 학습 알고리즘**: 기본적으로 GRPO (Group-Normalized Policy Optimization) [8, 2]를 사용하며, PPO [7]로도 유효성을 검증합니다.
 2. **손실 함수**: 세 가지 주요 구성 요소로 이루어집니다.
    - **정책 경사 손실($L'_{\text{PG-GRPO}}$)**: 모델이 더 높은 보상을 받는 응답을 생성하도록 유도합니다. 수학 문제의 경우, 정답 시 1, 오답 시 0의 이진 보상($r_i$)이 부여됩니다. 이 보상은 응답 그룹 내에서 정규화된 이점($A_i$)을 통해 가중됩니다.
-     $$ L'_{\text{PG-GRPO}}(q, \{o_i\}_{i=1}^G, \theta) = - \frac{1}{G} \sum*{i=1}^G \min \left( \frac{\pi*{\theta}(o*i|q)}{\pi*{\theta}^{\text{old}}(o*i|q)} A_i, \text{clip} \left( \frac{\pi*{\theta}(o*i|q)}{\pi*{\theta}^{\text{old}}(o_i|q)}, 1-\epsilon, 1+\epsilon \right) A_i \right) $$
+     $$ L'_{\text{PG-GRPO}}(q, \{o_i\}_{i=1}^G, \theta) = - \frac{1}{G} \sum_{i=1}^G \min \left( \frac{\pi_{\theta}(o*i|q)}{\pi_{\theta}^{\text{old}}(o*i|q)} A_i, \text{clip} \left( \frac{\pi_{\theta}(o*i|q)}{\pi_{\theta}^{\text{old}}(o_i|q)}, 1-\epsilon, 1+\epsilon \right) A_i \right) $$
         여기서 $A_i = \frac{r_i - \text{mean}(\{r_1, ..., r_G\})}{\text{std}(\{r_1, ..., r_G\})}$.
    - **KL 손실($L'_{\text{KL}}$)**: 현재 모델과 참조 모델 간의 KL 발산(Kullback-Leibler divergence)을 측정하여 언어 품질의 급격한 저하를 방지합니다.
    - **엔트로피 손실($L'_{\text{Entropy}}$)**: 음수 계수($\alpha < 0$)와 함께 적용되어 모델 출력의 토큰당 엔트로피를 높여 다양한 추론 경로를 탐색하도록 장려합니다.

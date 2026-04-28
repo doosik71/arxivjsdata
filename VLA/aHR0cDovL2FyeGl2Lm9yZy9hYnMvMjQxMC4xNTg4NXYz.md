@@ -40,14 +40,14 @@ MIMO-VLA는 LLaMA-7B를 백본으로 사용하며, 시각, 언어, 수치 벡터
   - LoRA를 사용하여 트랜스포머 백본을 미세 조정하고, 이미지, 텍스트, 행동 인코딩 및 디코딩 모듈을 전문가 오프라인 데이터셋 $D_{\text{expert}}$(운전 궤적 및 QA 주석 포함)에서 공동으로 학습합니다.
   - **보조 이미지 재구성 작업**: 전치 컨볼루션(transposed convolution) 레이어 $f_{\phi}$를 통해 출력 임베딩에서 입력 이미지 패치를 재구성하여 시각 양식의 특징 학습을 강화합니다.
   - **전체 손실 함수**: 세 가지 손실 항의 가중 합으로 정의됩니다:
-    $$ L = \alpha*{1} L*{\text{language}} + \alpha*{2} L*{\text{action}} + \lambda L\_{\text{image}} $$
+    $$ L = \alpha_{1} L_{\text{language}} + \alpha_{2} L_{\text{action}} + \lambda L_{\text{image}} $$
     - **$L_{\text{language}}$ (텍스트 생성)**: 데이터의 순차적 특성으로 인한 과적합을 방지하기 위해 `레이블 스무딩`을 적용한 교차 엔트로피 손실을 사용합니다.
-      $$ q*{k}^{i} = \begin{cases} 1-\epsilon & \text{if } k=y*{i} \\ \frac{\epsilon}{K-1} & \text{otherwise} \end{cases} $$
-            $$ L*{\text{language}}(\theta) = \frac{1}{N} \sum*{i} \sum*{k} q*{k}^{i} \log p(k|\tau\_{:i-1},\theta) $$
+      $$ q_{k}^{i} = \begin{cases} 1-\epsilon & \text{if } k=y_{i} \\ \frac{\epsilon}{K-1} & \text{otherwise} \end{cases} $$
+            $$ L_{\text{language}}(\theta) = \frac{1}{N} \sum_{i} \sum_{k} q_{k}^{i} \log p(k|\tau_{:i-1},\theta) $$
     - **$L_{\text{action}}$ (행동 예측)**: 실제 행동 $a_{t}$와 예측 행동 $\hat{a}_{t}$ 간의 `평균 제곱 오차(MSE)` 손실을 사용하여 연속적인 행동 값을 직접 예측합니다.
-      $$ L*{\text{action}}(\theta) = \frac{1}{T} \sum*{t=1}^{T} \frac{1}{D} \sum*{d=1}^{D} [(a*{d}^{t} - \pi*{\theta}(\hat{a}*{d}^{t}|\tau\_{t}))^{2}] $$
+      $$ L_{\text{action}}(\theta) = \frac{1}{T} \sum_{t=1}^{T} \frac{1}{D} \sum_{d=1}^{D} [(a_{d}^{t} - \pi_{\theta}(\hat{a}_{d}^{t}|\tau_{t}))^{2}] $$
     - **$L_{\text{image}}$ (이미지 재구성)**: 원본 이미지 $o_{t}$와 재구성된 이미지 패치 간의 픽셀 단위 유클리드 거리(MSE)를 사용합니다.
-      $$ L*{\text{image}}(\theta,\phi) = \frac{1}{L} \sum*{l=1}^{L} \text{mse}(o*{t},f*{\phi}(\pi*{\theta}(g*{\theta}(\tau*{:p*{l}^{t}}^{t}))))) $$
+      $$ L_{\text{image}}(\theta,\phi) = \frac{1}{L} \sum_{l=1}^{L} \text{mse}(o_{t},f_{\phi}(\pi_{\theta}(g_{\theta}(\tau_{:p_{l}^{t}}^{t}))))) $$
   - **그레디언트 공간 분리**: $L_{\text{language}}$는 텍스트 토큰 위치에만, $L_{\text{action}}$는 행동 토큰 위치에만, $L_{\text{image}}$는 이미지 패치 위치에만 영향을 미치도록 명시적으로 구현하여 양식별(modality-specific) 표현 학습을 촉진합니다.
 
 ## 📊 Results

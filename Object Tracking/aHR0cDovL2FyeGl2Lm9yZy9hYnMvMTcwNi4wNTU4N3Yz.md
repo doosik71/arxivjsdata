@@ -41,7 +41,7 @@ Liang-Chieh Chen, George Papandreou, Florian Schroff, Hartwig Adam
   - `3 \times 3` 필터에 큰 atrous rate를 적용할 경우, 유효한 필터 가중치 수가 줄어들어 사실상 `1 \times 1` 컨볼루션처럼 작동하는 문제(Fig. 4)를 해결하기 위해 이미지 레벨 특징을 도입한다.
   - 개선된 ASPP는 `1 \times 1` 컨볼루션 1개, `output_stride=16`일 때 `rate=(6,12,18)`을 가진 `3 \times 3` 컨볼루션 3개, 그리고 전역 평균 풀링 후 `1 \times 1` 컨볼루션과 이중 선형 업샘플링을 거친 이미지 레벨 특징으로 구성된다. 모든 브랜치는 256개 필터와 Batch Normalization을 사용한다.
 - **훈련 프로토콜 상세:**
-  - **학습률 정책:** `(1 - \frac{iter}{max\_iter})^{0.9}` 형태의 "poly" 정책 사용.
+  - **학습률 정책:** `(1 - \frac{iter}{max_iter})^{0.9}` 형태의 "poly" 정책 사용.
   - **Crop Size:** `513 \times 513` 크기의 패치를 훈련 및 테스트에 사용하여 큰 atrous rate가 효과적으로 적용되도록 한다.
   - **Batch Normalization:** ResNet 위에 추가된 모든 모듈에 BN 파라미터를 포함하고 함께 훈련하며, 큰 배치 크기(16)를 사용하여 BN 통계를 계산한다.
   - **로짓 업샘플링:** Ground truth를 다운샘플링하는 대신 최종 로짓을 업샘플링하여 미세한 어노테이션 정보 손실을 방지한다.

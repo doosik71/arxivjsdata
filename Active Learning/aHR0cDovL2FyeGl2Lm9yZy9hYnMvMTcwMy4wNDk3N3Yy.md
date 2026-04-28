@@ -34,7 +34,7 @@ Alex Kendall, Yarin Gal
 
    - **회귀**: 신경망이 예측 평균 $\hat{y}$뿐만 아니라 예측 분산의 로그 값 $s = \log \hat{\sigma}^2$도 출력하도록 합니다.
    - 손실 함수는 다음과 같습니다:
-     $$ \mathcal{L}_{\text{BNN}}(\theta) = \frac{1}{D} \sum_{i} \left( \frac{1}{2} \exp(-s_i) \|y_i - \hat{y}\_i\|^2 + \frac{1}{2} s_i \right) $$
+     $$ \mathcal{L}_{\text{BNN}}(\theta) = \frac{1}{D} \sum_{i} \left( \frac{1}{2} \exp(-s_i) \|y_i - \hat{y}_i\|^2 + \frac{1}{2} s_i \right) $$
         여기서 $\exp(-s_i)$ 항은 학습된 손실 감쇠(attenuation) 역할을 하여 노이즈가 많은 데이터의 영향을 줄입니다.
    - **분류**: 로짓 공간에 가우시안 분포를 적용하여 Heteroscedastic uncertainty를 확장합니다. 신경망은 각 픽셀 $i$에 대한 로짓 $f^W_i$와 로짓 분산 $(\sigma^W_i)^2$을 예측합니다.
    - 몬테카를로 적분을 통해 손실 함수를 근사하며, 이 역시 학습된 손실 감쇠 효과를 가집니다.
@@ -42,7 +42,7 @@ Alex Kendall, Yarin Gal
 3. **두 불확실성의 결합**:
 
    - 회귀 모델의 총 예측 불확실성은 Epistemic uncertainty와 Aleatoric uncertainty의 합으로 근사됩니다:
-     $$ \text{Var}(y) \approx \frac{1}{T} \sum*{t=1}^T \hat{y}\_t^2 - \left(\frac{1}{T} \sum*{t=1}^T \hat{y}_t\right)^2 + \frac{1}{T} \sum_{t=1}^T \hat{\sigma}\_t^2 $$
+     $$ \text{Var}(y) \approx \frac{1}{T} \sum_{t=1}^T \hat{y}_t^2 - \left(\frac{1}{T} \sum_{t=1}^T \hat{y}_t\right)^2 + \frac{1}{T} \sum_{t=1}^T \hat{\sigma}_t^2 $$
      여기서 첫 번째 항은 Epistemic uncertainty, 두 번째 항은 Aleatoric uncertainty에 해당합니다.
 
 4. **구현**: DenseNet 아키텍처를 기반으로 하며, Adam optimizer와 RMS-Prop을 사용하여 훈련했습니다.

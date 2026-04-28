@@ -30,8 +30,8 @@ Bing Xuantinucleon, Naiyan Wang, Tianqi Chen, Mu Li
    $$ y_i = \begin{cases} x_i & \text{if } x_i \ge 0 \\ a_i x_i & \text{if } x_i < 0 \end{cases} $$
 3. **PReLU**: Leaky ReLU와 동일한 형태지만, 음수 입력에 대한 기울기 $a_i$를 훈련 중 역전파를 통해 데이터로부터 학습합니다.
 4. **RReLU**: 훈련 과정에서 음수 입력에 대한 기울기 $a_{ji}$를 균일 분포 $U(l, u)$에서 무작위로 샘플링합니다. (논문 정의상 $l, u \in [0, 1)$이지만, NDSB 우승자 제안에 따라 실험에서는 $U(3, 8)$ 범위가 사용되었습니다.) 테스트 단계에서는 $a_{ji}$를 평균값인 $(l+u)/2$로 고정하여 결정론적인 결과를 얻습니다.
-   $$ y*{ji} = \begin{cases} x*{ji} & \text{if } x*{ji} \ge 0 \\ a*{ji} x*{ji} & \text{if } x*{ji} < 0 \end{cases} $$
-    테스트 시 ($x*{ji} < 0$일 때): $y*{ji} = x\_{ji} \frac{l+u}{2}$
+   $$ y_{ji} = \begin{cases} x_{ji} & \text{if } x_{ji} \ge 0 \\ a_{ji} x_{ji} & \text{if } x_{ji} < 0 \end{cases} $$
+    테스트 시 ($x_{ji} < 0$일 때): $y_{ji} = x_{ji} \frac{l+u}{2}$
 
 **실험 설정:**
 

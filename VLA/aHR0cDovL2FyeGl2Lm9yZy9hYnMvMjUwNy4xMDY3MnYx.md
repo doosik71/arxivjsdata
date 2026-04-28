@@ -52,11 +52,11 @@ Muhayy Ud Din, Waseem Akram, Lyes Saad Saoud, Jan Rosell, Irfan Hussain
 
 - **VLA 데이터셋 벤치마킹:**
   - **작업 복잡성 ($\mathcal{C}_{\text{task}}$):** 다음 요소를 통합하여 정량화합니다: 에피소드당 평균 저수준 행동 수($T$), 구별되는 고수준 기술 수($S$), 순차적 작업 종속성($D$), 언어적 추상화 수준($L$).
-    $$ \mathcal{C}_{\text{task}}(\mathcal{D}) = \alpha_{1}\log(1 + T) + \alpha*{2}S + \alpha*{3}D + \alpha*{4}L $$
-    여기서 $\alpha*{i}$는 가중치이며, 벤치마크에서는 모두 1로 설정됩니다.
+    $$ \mathcal{C}_{\text{task}}(\mathcal{D}) = \alpha_{1}\log(1 + T) + \alpha_{2}S + \alpha_{3}D + \alpha_{4}L $$
+    여기서 $\alpha_{i}$는 가중치이며, 벤치마크에서는 모두 1로 설정됩니다.
   - **모달리티 풍부성 ($\mathcal{C}_{\text{mod}}$):** 다음 요소를 통합하여 정량화합니다: 구별되는 모달리티 수($M$), 평균 품질($Q$), 모달리티 간 시간 정렬 정확도($A$), 추론에 중요한 모달리티 존재 여부($R$).
-    $$ \mathcal{C}_{\text{mod}} = \beta_{1}M + \beta*{2}Q + \beta*{3}A + \beta*{4}R $$
-    여기서 $\beta*{i}$는 가중치이며, 벤치마크에서는 모두 1로 설정됩니다.
+    $$ \mathcal{C}_{\text{mod}} = \beta_{1}M + \beta_{2}Q + \beta_{3}A + \beta_{4}R $$
+    여기서 $\beta_{i}$는 가중치이며, 벤치마크에서는 모두 1로 설정됩니다.
   - **정규화:** $\mathcal{C}_{\text{task}}$는 $[1,5]$ 스케일로, $\mathcal{C}_{\text{mod}}$는 $[2,5]$ 스케일로 정규화됩니다. 데이터셋 규모는 버블 크기로 표현됩니다.
 
 ## 📊 Results

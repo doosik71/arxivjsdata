@@ -44,7 +44,7 @@ Minsoo Kang, Jonghwan Mun, Bohyung Han
 
    - 기본 KD는 학생 네트워크의 출력 분포($l^{(i)}_{s}$)가 교사 네트워크의 출력 분포($l^{(i)}_{t}$)를 모방하도록 학습합니다.
    - 손실 함수 $L_{\text{KD}}$는 교차 엔트로피 손실 $L_{\text{CE}}$와 쿨백-라이블러(KL) 발산 손실 $L_{\text{KL}}$의 가중합으로 정의됩니다:
-     $$ L*{\text{KD}}(l^{(i)}*{s}, l^{(i)}_{t}, y^{(i)}) = \lambda L_{\text{CE}}(l^{(i)}_{s}, y^{(i)}) + (1-\lambda)L_{\text{KL}}(l^{(i)}_{s}, l^{(i)}_{t}) $$
+     $$ L_{\text{KD}}(l^{(i)}_{s}, l^{(i)}_{t}, y^{(i)}) = \lambda L_{\text{CE}}(l^{(i)}_{s}, y^{(i)}) + (1-\lambda)L_{\text{KL}}(l^{(i)}_{s}, l^{(i)}_{t}) $$
         여기서 $L_{\text{CE}}(l^{(i)}_{s}, y^{(i)}) = H(\sigma(l^{(i)}_{s}), y^{(i)})$이고, $L_{\text{KL}}(l^{(i)}_{s}, l^{(i)}_{t}) = T^2 D_{\text{KL}}(\sigma(l^{(i)}_{t}/T)||\sigma(l^{(i)}_{s}/T))$입니다. $T$는 온도(temperature) 파라미터입니다.
 
 2. **오라클 지식 증류(Oracle Knowledge Distillation, OD) 손실:**
@@ -52,7 +52,7 @@ Minsoo Kang, Jonghwan Mun, Bohyung Han
    - 앙상블 교사 모델의 평균 예측 대신, 각 예제에 대해 올바르게 예측한 모델들($u^{(i)}_{j}=1$인 경우)의 예측만을 평균하여 학생 네트워크를 학습합니다.
    - 앙상블 내 $N$개 네트워크 중 $j$-번째 모델이 $x^{(i)}$에 대해 올바른 예측을 했는지 여부를 나타내는 이진 변수를 $u^{(i)}_{j}$라고 할 때, 교사 로그잇은 $\bar{l}^{(i)}_{t} = \frac{\sum_{j=1}^{N} u^{(i)}_{j} l^{(i)}_{t,j}}{\sum_{j=1}^{N} u^{(i)}_{j}}$로 정의됩니다.
    - OD 손실 $L_{\text{OD}}$는 다음과 같습니다:
-     $$ L*{\text{OD}} = \begin{cases} L*{\text{KD}}(l^{(i)}_{s}, \bar{l}^{(i)}_{t}, y^{(i)}) & \text{if } \sum*{j=1}^{N} u^{(i)}*{j} > 0 \\ L*{\text{CE}}(l^{(i)}*{s}, y^{(i)}) & \text{otherwise} \end{cases} $$
+     $$ L_{\text{OD}} = \begin{cases} L_{\text{KD}}(l^{(i)}_{s}, \bar{l}^{(i)}_{t}, y^{(i)}) & \text{if } \sum_{j=1}^{N} u^{(i)}_{j} > 0 \\ L_{\text{CE}}(l^{(i)}_{s}, y^{(i)}) & \text{otherwise} \end{cases} $$
      이는 학생 네트워크가 앙상블 모델의 오라클 예측을 모방하도록 유도하며, 모든 모델이 틀린 경우에는 정답 레이블에 맞춰 학습합니다.
 
 3. **최적 모델 탐색 (KDAS):**

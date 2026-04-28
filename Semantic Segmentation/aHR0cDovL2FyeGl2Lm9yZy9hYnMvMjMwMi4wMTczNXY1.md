@@ -41,7 +41,7 @@ Chenyu You, Weicheng Dai, Yifei Min, Fenglin Liu, David A. Clifton, S. Kevin Zho
     * **손실 함수**:
         * **비지도 인스턴스 판별 손실 ($L_{inst}$)**: 학생 네트워크의 임베딩과 교사 네트워크의 임베딩 간의 Kullback-Leibler 발산(KL divergence)을 사용하여 관계적 유사성을 강제합니다. 이는 모델 붕괴 문제를 완화합니다.
         * **지도 손실 ($L_{sup}$)**: 레이블링된 데이터에 대해 Dice 손실과 교차 엔트로피 손실의 조합을 사용합니다.
-        * **총 손실**: $L = L_{global\_inst} + L_{local\_inst} + L_{sup}$.
+        * **총 손실**: $L = L_{global_inst} + L_{local_inst} + L_{sup}$.
 
 2. **해부학적 대조 미세 조정 (Anatomical Contrastive Fine-tuning, ACF)**:
     * 사전 학습된 네트워크 가중치를 초기화에 사용합니다.

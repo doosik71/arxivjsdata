@@ -23,7 +23,7 @@ Xiaohao Liu, Xiaobo Xia, See-Kiong Ng, Tat-Seng Chua
   - **유연성**: 모델이 새로운 데이터셋에서 효과적으로 학습하고, 멀티모달 대조 학습 목표($Z_{t;t}^{m \top} Z_{t;t}^{m'} \sim p_{t}^{m,m'}$)를 준수해야 합니다.
 - **`DNS` 방법**:
   1. **전역 매개변수 업데이트 식 도출**: $W_t^{m_1} = W_{t-1}^{m_1} - \eta \nabla W_t^{m_1}$ 규칙에 따라 업데이트된 $Z_{t-1;t}^{m_1}$ 및 $Z_{t-1;t}^{m_2}$의 내적 표현을 확장합니다.
-  2. **전역 그래디언트 투영**: 전역 매개변수 업데이트로 인한 총 변화 $\tilde{W}$를 계산합니다: $\tilde{W} = (**W_{t-1}^{m_1}**)^{ \top} \nabla W_t^{m_2} + (**\nabla W_t^{m_1}**)^{ \top} W_{t-1}^{m_2} - \eta (**\nabla W_t^{m_1}**)^{ \top} \nabla W_t^{m_2}$. 안정성을 유지하기 위해, 이 $\tilde{W}$를 이전 지식에 영향을 미치지 않는 $\bar{W} := \tilde{W} - P' \tilde{W} P$로 투영합니다 (**Theorem 3**). 여기서 $P'$와 $P$는 각각 이전 모달리티 $Z_{t-1;*}^{m_1}$와 $Z_{t-1;*}^{m_2}$의 공간 투영 행렬입니다.
+  2. **전역 그래디언트 투영**: 전역 매개변수 업데이트로 인한 총 변화 $\tilde{W}$를 계산합니다: $\tilde{W} = (W_{t-1}^{m_1})^{ \top} \nabla W_t^{m_2} + (\nabla W_t^{m_1})^{ \top} W_{t-1}^{m_2} - \eta (\nabla W_t^{m_1})^{ \top} \nabla W_t^{m_2}$. 안정성을 유지하기 위해, 이 $\tilde{W}$를 이전 지식에 영향을 미치지 않는 $\bar{W} := \tilde{W} - P' \tilde{W} P$로 투영합니다 (**Theorem 3**). 여기서 $P'$와 $P$는 각각 이전 모달리티 $Z_{t-1;*}^{m_1}$와 $Z_{t-1;*}^{m_2}$의 공간 투영 행렬입니다.
   3. **지역 그래디언트 투영**: 실제 모델 업데이트를 위해 각 모달리티의 국소 그래디언트 $\nabla W_t^m$를 다음과 같이 변환합니다 (**Theorem 4**):
      - $\Delta W_t^{m_1} := \nabla W_t^{m_1} - \tilde{P}\nabla W_t^{m_1}P'$
      - $\Delta W_t^{m_2} := \nabla W_t^{m_2} - \tilde{P}'\nabla W_t^{m_2}P$

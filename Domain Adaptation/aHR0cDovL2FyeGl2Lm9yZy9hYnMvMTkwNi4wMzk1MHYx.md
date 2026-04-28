@@ -33,7 +33,7 @@ Woong-Gi Chang, Tackgeun You, Seonguk Seo, Suha Kwak, Bohyung Han
 - **배경:** 일반적인 배치 정규화(BN)는 미니 배치 내 활성화의 평균 $\mu$와 분산 $\sigma^2$을 계산하고, 학습 중 전체 활성화의 이동 평균(exponential moving average) $\bar{\mu}$, $\bar{\sigma}^2$을 추정하여 테스트 시 사용합니다. 그러나 도메인 시프트가 클 경우 소스와 타겟 도메인이 동일한 평균과 분산을 공유하는 것은 부적절합니다.
 - **구현:** DSBN은 각 도메인 $d \in \{S, T\}$에 대해 별도의 배치 정규화 파라미터($\gamma_d$, $\beta_d$) 및 통계치($\mu_d$, $\sigma^2_d$) 세트를 할당합니다.
 - **수식:** 도메인 $d$에 속하는 활성화 $x_d$에 대해 DSBN은 다음과 같이 표현됩니다.
-  $$ \text{DSBN}\_d(x_d[i,j,n];\gamma_d,\beta_d) = \gamma_d \cdot \frac{x_d[i,j,n] - \mu_d}{\sqrt{\sigma^2_d + \epsilon}} + \beta_d $$
+  $$ \text{DSBN}_d(x_d[i,j,n];\gamma_d,\beta_d) = \gamma_d \cdot \frac{x_d[i,j,n] - \mu_d}{\sqrt{\sigma^2_d + \epsilon}} + \beta_d $$
     여기서 $\mu_d$와 $\sigma^2_d$는 각 도메인의 미니 배치 내에서 별도로 계산되며, 학습 중에는 각 도메인별 이동 평균($\bar{\mu}_d$, $\bar{\sigma}^2_d$)이 유지됩니다.
 - **이점:** DSBN은 도메인별 통계 및 affine 파라미터를 학습하여 도메인 고유 정보를 효과적으로 캡처하고, 네트워크가 도메인 불변 특징을 더 잘 학습할 수 있도록 합니다.
 - **다중 소스 확장:** 다중 소스 도메인 적응 시나리오에서는 각 소스 도메인에 추가적인 DSBN 브랜치를 할당하여 쉽게 확장될 수 있습니다.
@@ -46,7 +46,7 @@ Woong-Gi Chang, Tackgeun You, Seonguk Seo, Suha Kwak, Bohyung Han
 - **2단계: 가상 레이블을 통한 자기 학습 (Self-training with Pseudo Labels):**
   - DSBN 계층을 포함하는 최종 네트워크($F_2^d$로 표기)를 학습합니다. 이 단계에서는 소스 도메인에는 실제 레이블, 타겟 도메인에는 1단계에서 얻은 가상 레이블을 사용하여 다중 작업 분류 손실(두 도메인에 대한 교차 엔트로피 손실의 합)을 최소화합니다.
   - **가상 레이블 정제:** 타겟 도메인 샘플 $x$에 대한 가상 레이블 $y'$은 1단계 모델 $F_1^T$와 2단계 모델 $F_2^T$의 예측 점수를 가중 조합하여 점진적으로 정제됩니다.
-    $$ y' = \text{argmax}\_{c \in C} \{ (1-\lambda)F_1^T(x)[c] + \lambda F_2^T(x)[c] \} $$
+    $$ y' = \text{argmax}_{c \in C} \{ (1-\lambda)F_1^T(x)[c] + \lambda F_2^T(x)[c] \} $$
         여기서 $\lambda$는 훈련 진행도에 따라 0에서 1로 점진적으로 증가하는 가중치 팩터($\lambda = \frac{2}{1+\text{exp}(-\gamma \cdot p)} - 1$)입니다. 이는 훈련 초기에 $F_1^T$의 안정적인 예측에 더 의존하고, $F_2^T$가 개선됨에 따라 점차 $F_2^T$의 예측에 더 큰 비중을 두게 합니다.
   - **반복적 정제:** 2단계 학습 절차는 반복적으로 수행될 수 있으며, 각 반복에서 이전 반복의 모델로 업데이트된 가상 레이블을 사용하여 다음 학습을 진행함으로써 추가적인 정확도 향상을 달성합니다.
 

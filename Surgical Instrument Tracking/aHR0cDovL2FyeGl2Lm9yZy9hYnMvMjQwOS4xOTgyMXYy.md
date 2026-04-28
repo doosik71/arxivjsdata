@@ -42,7 +42,7 @@ Bohan Zhan, Wang Zhao, Yi Fang, Bo Du, Francisco Vasconcelos, Danail Stoyanov, D
      - **목적:** 수술 도구가 일반적으로 강체이므로, 동일한 도구 내 포인트 간의 상대적 위치 및 변위가 일관되게 유지되도록 합니다.
      - **방법:** 3D 포인트 정보를 활용하여 K-평균 군집화(K-means clustering)를 통해 동일한 강체 부분에 속하는 포인트를 분류하고, ARAP 손실 $L_{\text{arap}}$를 적용하여 공간적 일관성을 강화합니다.
      - **수식:**
-       $$L_{\text{arap}} = \sum_{(x_{\text{k}}, x_{\text{p}}) \in \Omega_{\text{k,p}}} |d(x_{\text{k\_i}}, x_{\text{k\_j}}) - d(x_{\text{p\_i}}, x_{\text{p\_j}})|$$
+       $$L_{\text{arap}} = \sum_{(x_{\text{k}}, x_{\text{p}}) \in \Omega_{\text{k,p}}} |d(x_{\text{k_i}}, x_{\text{k_j}}) - d(x_{\text{p_i}}, x_{\text{p_j}})|$$
        여기서 $\Omega_{\text{k,p}}$는 동일한 강체 클러스터 내의 모든 쌍별 포인트 집합이고, $d(\cdot, \cdot)$는 유클리드 거리 함수입니다.
 
    - **희소 특징 매칭 가이드 (Sparse Feature Matching Guidance):**

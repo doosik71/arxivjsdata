@@ -52,7 +52,7 @@ Shafin Rahman, Salman H. Khan and Fatih Porikli
 
    - 주어진 이미지 특징 `$x_s$`에 대해, CAPD `$p_s$`는 선형 매핑 `$p_s = W_s^T x_s$`로 정의되며, `$W_s$`는 클래스별 가중치 행렬이다.
    - `$W_s$`는 다음 목적 함수를 최소화하여 학습된다 (Eq. 2):
-     $$ \min*{W_s} \frac{1}{\kappa} \sum*{c=1}^{S} \sum\_{m=1}^{n_c} \log \left( 1 + \exp \left\{ L(x_m^c;W_s) \right\} \right) + \frac{\lambda_s}{2} \|W_s\|\_2^2 $$
+     $$ \min_{W_s} \frac{1}{\kappa} \sum_{c=1}^{S} \sum_{m=1}^{n_c} \log \left( 1 + \exp \left\{ L(x_m^c;W_s) \right\} \right) + \frac{\lambda_s}{2} \|W_s\|_2^2 $$
         여기서 `$L$`은 비용 함수로, 올바른 시맨틱 임베딩 `$e_s$`에 대한 `$p_s$`의 투영(`$\langle p_s, e_s \rangle$`)을 최대화하고, 잘못된 임베딩에 대한 투영을 최소화하도록 설계되었다.
    - SGD를 사용하여 최적화되며, 각 관측 클래스에 대한 `$W_s$` 학습은 병렬로 독립적으로 수행될 수 있다.
 
@@ -60,7 +60,7 @@ Shafin Rahman, Salman H. Khan and Fatih Porikli
    - 미관측 클래스는 훈련 시 이미지가 관측되지 않으므로, `$p_u$`는 관측 클래스 CAPD의 선형 조합으로 근사된다:
      `$p_u = \sum_{s=1}^S \theta_{s,u} p_s = P_S \theta_u$` (Eq. 3).
    - **CAPD에 대한 거리 학습**: 시맨틱 임베딩 공간에서 마할라노비스(Mahalanobis) 거리 측정 `$M$`을 학습하여 유사한 CAPD는 가깝게, dissimilar CAPD는 멀리 떨어뜨린다 (Eq. 4).
-     $$ \max*M \min*{(i,j) \in \bar{A}} d*M^2(p_i, p_j) \quad \text{s.t.} \sum*{(i,j) \in A} d_M^2(p_i, p_j) \leq 1 $$
+     $$ \max*M \min_{(i,j) \in \bar{A}} d*M^2(p_i, p_j) \quad \text{s.t.} \sum_{(i,j) \in A} d_M^2(p_i, p_j) \leq 1 $$
    - 미관측 시맨틱 임베딩 `$e_u$`는 관측 시맨틱 임베딩 `$e_s$`의 선형 조합으로 근사화된다:
      `$\hat{e}_u = \sum_{s=1}^S \alpha_{s,u} e_s = E_S \alpha_u$` (Eq. 5).
    - `$M$`을 활용하여 `$(\hat{e}_u - e_u)^T M (\hat{e}_u - e_u) + \frac{\lambda_u}{2} \|\alpha_u\|_2^2$`를 최소화하여 `$\alpha_u$`를 찾는다 (Eq. 6).
@@ -77,7 +77,7 @@ Shafin Rahman, Salman H. Khan and Fatih Porikli
 - 문제: 기존 ZSL 방법은 훈련 시 관측 클래스에만 의존하므로 GZSL 테스트 시 관측 클래스에 편향되는 경향이 있다.
 - **관측 클래스를 위한 일반화된 CAPD($p_g_s$)**: 각 관측 클래스 `$s$`에 대해 `$p_g_s = P_S \gamma_s$`와 같이 일반화된 CAPD를 개발한다 (Eq. 10).
 - 목적 함수(Eq. 11)는 평균 일반화된 관측 손실(mean generalized seen loss)과 평균 미관측 재구성 손실(mean unseen reconstruction loss) 간의 제곱 차이를 최소화한다. 이는 시맨틱 레이블 임베딩 영역에서만 `$\gamma_s$`를 계산하여 관측-미관측 다양성을 균형 있게 조정한다.
-  $$ \min*\gamma \left\| \frac{1}{S} \sum*{s=1}^S (E*S \gamma_s - e_s)^2 - \frac{1}{U} \sum*{u=1}^U (E*S \alpha_u - e_u)^2 \right\|\_2^2 + \frac{\lambda*\gamma}{2} \sum\_{s=1}^S \|\gamma_s\|\_2^2 $$
+  $$ \min_\gamma \left\| \frac{1}{S} \sum_{s=1}^S (E*S \gamma_s - e_s)^2 - \frac{1}{U} \sum_{u=1}^U (E*S \alpha_u - e_u)^2 \right\|_2^2 + \frac{\lambda*\gamma}{2} \sum_{s=1}^S \|\gamma_s\|_2^2 $$
 - **GZSL 예측**: 관측 클래스의 일반화된 CAPD `$p_g_s$`와 미관측 클래스의 CAPD `$p_u$`를 모두 사용하여 예측한다: `$\hat{y} = \arg \max_{l \in y} \langle p_l, v_l \rangle$`, 여기서 `$p_l \in p_u \cup p_g_s$`이고 `$v_l \in e_S \cup e_U$`.
 
 ### D. Few-shot Learning (FSL)

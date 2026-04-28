@@ -27,9 +27,9 @@ Oriol Vinyals, Alexander Toshev, Samy Bengio, and Dumitru Erhan
 NIC 모델은 이미지를 입력으로 받아 해당 이미지를 설명하는 단어 시퀀스 $S = \{S_0, S_1, \dots, S_N\}$을 생성하는 생성 모델입니다. 모델은 주어진 훈련 이미지 $I$에 대해 목표 설명 문장 $S$의 우도(likelihood) $p(S|I;\theta)$를 최대화하도록 훈련됩니다.
 
 1. **확률 공식화:** 목표는 모델 파라미터 $\theta$에 대해 다음을 최대화하는 것입니다:
-   $$ \theta^{\*} = \arg \max*{\theta} \sum*{(I,S)} \log p(S|I;\theta) $$
+   $$ \theta^{\*} = \arg \max_{\theta} \sum_{(I,S)} \log p(S|I;\theta) $$
     문장의 길이가 가변적이므로, 조건부 확률의 연쇄 법칙(chain rule)을 사용하여 각 단어 $S_t$의 확률을 이전 단어들과 이미지에 기반하여 모델링합니다:
-   $$ \log p(S|I) = \sum*{t=0}^{N} \log p(S_t|I, S_0, \dots, S*{t-1}) $$
+   $$ \log p(S|I) = \sum_{t=0}^{N} \log p(S_t|I, S_0, \dots, S_{t-1}) $$
 
 2. **아키텍처:**
 

@@ -34,16 +34,16 @@ CLIPORT는 다음 네 가지 핵심 원칙을 기반으로 하는 모방 학습(
 ### 언어 조건부 조작 문제 정의
 
 - 정책 $\pi$는 시각적 관측 $o_t$와 영어 명령 $l_t$로 구성된 입력 $\gamma_t = (o_t, l_t)$가 주어졌을 때, 행동 $a_t = (T_{\text{pick}}, T_{\text{place}})$를 출력합니다.
-  $$ \pi(\gamma*t) = \pi(o_t, l_t) \to a_t = (T*{\text{pick}}, T\_{\text{place}}) \in \mathcal{A} $$
+  $$ \pi(\gamma*t) = \pi(o_t, l_t) \to a_t = (T_{\text{pick}}, T_{\text{place}}) \in \mathcal{A} $$
 - 행동 $a=(T_{\text{pick}}, T_{\text{place}})$는 각각 집기(picking) 및 놓기(placing)를 위한 말단 효과기 포즈를 지정합니다. 여기서 $T_{\text{pick}}, T_{\text{place}} \in \text{SE}(2)$입니다.
 
 ### Transporter 기반 Pick-and-Place
 
 - 정책 $\pi$는 Transporter [2]를 사용하여 공간 조작을 수행하도록 학습됩니다.
   - **집기(Pick) 모듈 ($Q_{\text{pick}}$):** $f_{\text{pick}}$ FCN(Fully-Convolutional-Network)은 $\gamma_t$를 입력받아 픽셀별 행동 값 $Q_{\text{pick}} \in \mathbb{R}^{H \times W}$를 출력합니다.
-    $$ T*{\text{pick}} = \text{argmax}*{(u,v)} Q\_{\text{pick}}((u,v)|\gamma_t) $$
+    $$ T_{\text{pick}} = \text{argmax}_{(u,v)} Q_{\text{pick}}((u,v)|\gamma_t) $$
   - **놓기(Place) 모듈 ($Q_{\text{place}}$):** $\Phi_{\text{query}}$ FCN은 $T_{\text{pick}}$을 중심으로 $o_t$를 크롭한 $\gamma_t[T_{\text{pick}}]$과 $l_t$를 입력받아 쿼리 특징 임베딩을 출력합니다. $\Phi_{\text{key}}$ FCN은 전체 $\gamma_t$를 입력받아 키 특징 임베딩을 출력합니다. $Q_{\text{place}}$는 이 쿼리 및 키 특징의 교차 상관(cross-correlation)으로 계산됩니다.
-    $$ Q*{\text{place}}(\Delta\tau|\gamma_t,T*{\text{pick}}) = \left( \Phi*{\text{query}}(\gamma_t[T*{\text{pick}}]) \ast \Phi\_{\text{key}}(\gamma_t) \right)[\Delta\tau] $$
+    $$ Q_{\text{place}}(\Delta\tau|\gamma_t,T_{\text{pick}}) = \left( \Phi_{\text{query}}(\gamma_t[T_{\text{pick}}]) \ast \Phi_{\text{key}}(\gamma_t) \right)[\Delta\tau] $$
       여기서 $\Delta\tau \in \text{SE}(2)$는 잠재적 놓기 포즈를 나타내며, 회전은 $k$개의 이산 각도 회전으로 처리됩니다($k=36$ 사용).
 
 ### 투 스트림(Two-Stream) 아키텍처
@@ -63,7 +63,7 @@ CLIPORT는 다음 네 가지 핵심 원칙을 기반으로 하는 모방 학습(
 
 - **데모 학습:** 전문가 데모 데이터셋 $D$를 사용하여 모방 학습으로 CLIPORT를 학습합니다.
 - **손실 함수:** 전문가 데모 행동의 원-핫(one-hot) 픽셀 인코딩 $Y_{\text{pick}}, Y_{\text{place}}$를 사용하여 모델을 종단 간 지도 학습합니다. 교차 엔트로피 손실(cross-entropy loss)을 사용합니다.
-  $$ L = -E*{Y*{\text{pick}}}[\text{log}V_{\text{pick}}] - E*{Y*{\text{place}}}[\text{log}V_{\text{place}}] $$
+  $$ L = -E_{Y_{\text{pick}}}[\text{log}V_{\text{pick}}] - E_{Y_{\text{place}}}[\text{log}V_{\text{place}}] $$
     여기서 $V_{\text{pick}}=\text{softmax}(Q_{\text{pick}}((u,v)|\gamma_t))$이고 $V_{\text{place}}=\text{softmax}(Q_{\text{place}}((u',v',\omega')|\gamma_t,T_{\text{pick}}))$입니다.
 - **학습 반복:** 단일 작업 모델은 200K 반복, 다중 작업 모델은 600K 반복 학습합니다. 데이터 증강(random $\text{SE}(2)$ 변환)을 사용하여 과적합을 방지하고 공간 등변 표현 학습에 도움을 줍니다.
 
