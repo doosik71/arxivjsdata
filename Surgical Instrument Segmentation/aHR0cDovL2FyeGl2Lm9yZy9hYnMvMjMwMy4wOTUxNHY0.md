@@ -24,17 +24,17 @@ MATIS는 두 단계의 마스크 분류 접근 방식을 사용합니다.
 
 1. **마스크드 어텐션 베이스라인 (Masked Attention Baseline)**:
     * Mask2Former [30]를 베이스라인으로 사용하며, Swin Transformer [23] 백본을 포함합니다.
-    * Mask2Former의 다중 스케일 변형 어텐션 픽셀 디코더($$deformable \ attention \ pixel \ decoder$$)와 마스크드 어텐션 메커니즘을 활용합니다.
-    * $N$개의 학습 가능한 쿼리(learnable queries)를 사용하여 $N$개의 클래스 확률-이진 마스크($$class \ probability-binary \ mask$$) 쌍으로 구성된 고정 크기의 집합 $z$를 예측합니다. (MATIS는 $N=100$을 사용합니다.)
-    * **추론 과정**: 각 클래스에 대해 가능한 인스턴스 수(사전 지식)에 따라 상위 $k$개의 점수를 가진 영역을 선택합니다 ($$k=2$$는 다중 인스턴스, $$k=1$$은 단일 인스턴스 도구). 클래스 빈도 불균형으로 인한 클래스 간 점수 편차를 해결하기 위해 클래스별 점수 임계값도 적용합니다.
+    * Mask2Former의 다중 스케일 변형 어텐션 픽셀 디코더(deformable attention pixel decoder)와 마스크드 어텐션 메커니즘을 활용합니다.
+    * $N$개의 학습 가능한 쿼리(learnable queries)를 사용하여 $N$개의 클래스 확률-이진 마스크(class probability-binary mask) 쌍으로 구성된 고정 크기의 집합 $z$를 예측합니다. (MATIS는 $N=100$을 사용합니다.)
+    * **추론 과정**: 각 클래스에 대해 가능한 인스턴스 수(사전 지식)에 따라 상위 $k$개의 점수를 가진 영역을 선택합니다 ($k=2$는 다중 인스턴스, $k=1$은 단일 인스턴스 도구). 클래스 빈도 불균형으로 인한 클래스 간 점수 편차를 해결하기 위해 클래스별 점수 임계값도 적용합니다.
 
 2. **시간 일관성 모듈 (Temporal Consistency Module)**:
     * TAPIR [34]의 비디오 분석 방법론을 따릅니다.
     * 비디오 분석을 위해 Multi-Scale Vision Transformer (MViT) [32]를 백본으로 사용합니다.
-    * 키프레임($$keyframe$$)을 중심으로 한 시간 윈도우($$time \ window$$)를 사용하여 중간 프레임의 복잡한 시간적 컨텍스트를 인코딩하는 전역 시공간 특징($$spatio-temporal \ features$$)을 계산합니다.
-    * Mask2Former의 세그먼트별 임베딩($$per-segment \ embeddings$$)을 사용하여 TAPIR의 박스 분류 헤드($$box \ classification \ head$$)를 영역 분류 헤드($$region \ classification \ head$$)로 변형합니다.
+    * 키프레임(keyframe)을 중심으로 한 시간 윈도우(time window)를 사용하여 중간 프레임의 복잡한 시간적 컨텍스트를 인코딩하는 전역 시공간 특징(spatio-temporal features)을 계산합니다.
+    * Mask2Former의 세그먼트별 임베딩(per-segment embeddings)을 사용하여 TAPIR의 박스 분류 헤드(box classification head)를 영역 분류 헤드(region classification head)로 변형합니다.
     * 시간 특징을 시간적으로 풀링(pooling)한 후 다층 퍼셉트론(MLP)을 적용하고, 이를 세그먼트별 임베딩의 선형 변환과 연결하여 각 영역을 선형적으로 분류합니다.
-    * **추가 지도 학습**: 풀링된 시간 특징에 또 다른 MLP를 사용하여 중간 프레임에 각 도구가 존재하는지 예측하는 다중 대상 인식 작업을 수행합니다. 이에는 기존 마스크 분류 손실($$mask \ classification \ loss$$)에 이진 교차 엔트로피 손실($$binary \ cross-entropy \ loss$$)이 추가됩니다.
+    * **추가 지도 학습**: 풀링된 시간 특징에 또 다른 MLP를 사용하여 중간 프레임에 각 도구가 존재하는지 예측하는 다중 대상 인식 작업을 수행합니다. 이에는 기존 마스크 분류 손실(mask classification loss)에 이진 교차 엔트로피 손실(binary cross-entropy loss)이 추가됩니다.
 
 * **구현 세부 사항**: 베이스라인은 MS-COCO [35]로 사전 학습된 Mask2Former를 사용하고, 시간 일관성 모듈은 Kinetics 400 [36]으로 사전 학습된 TAPIR를 사용합니다.
 
@@ -50,8 +50,8 @@ MATIS는 두 단계의 마스크 분류 접근 방식을 사용합니다.
 * **MATIS Full (시간 일관성 모듈 포함)**:
   * 모든 전체 평가 지표를 크게 향상시킵니다 (표 1).
   * 예: Endovis 2017 mIoU 71.36% (MATIS Frame 68.79% 대비), Endovis 2018 mIoU 84.26% (MATIS Frame 82.37% 대비).
-  * 비디오 처리와 베이스라인의 지역화된 세그먼트 임베딩($$localized \ segment \ embeddings$$)을 결합하여 낮은 클래스 간 변동성($$interclass \ variability$$)으로 인한 여러 오분류를 수정합니다.
-* **어블레이션 연구**: 클래스별 영역 선택 및 임계값을 결합한 추론 전략이 최적임을 확인했습니다. 시간 일관성 모듈의 Time MLP ($$pooled \ time \ features$$의 선형 투영)와 Presence Supervision (도구 존재에 대한 다중 레이블 분류) 모두 성능을 향상시키며, 이들을 동시에 적용했을 때 가장 좋은 결과를 얻었습니다 (표 4). 장기적인 시간 정보를 활용하는 것이 유리하지만, 너무 작거나 너무 큰 윈도우 크기는 성능 저하를 가져옵니다.
+  * 비디오 처리와 베이스라인의 지역화된 세그먼트 임베딩(localized segment embeddings)을 결합하여 낮은 클래스 간 변동성(interclass variability)으로 인한 여러 오분류를 수정합니다.
+* **어블레이션 연구**: 클래스별 영역 선택 및 임계값을 결합한 추론 전략이 최적임을 확인했습니다. 시간 일관성 모듈의 Time MLP (pooled time features의 선형 투영)와 Presence Supervision (도구 존재에 대한 다중 레이블 분류) 모두 성능을 향상시키며, 이들을 동시에 적용했을 때 가장 좋은 결과를 얻었습니다 (표 4). 장기적인 시간 정보를 활용하는 것이 유리하지만, 너무 작거나 너무 큰 윈도우 크기는 성능 저하를 가져옵니다.
 
 ## 🧠 Insights & Discussion
 
