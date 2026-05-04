@@ -10,7 +10,7 @@ Zeyad Ali Sami Emam, Hong-Min Chu, Ping-Yeh Chiang, Wojciech Czaja, Richard Leap
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 기여는 AL의 대규모 확장 시 발생하는 클래스 불균형 문제를 식별하고, 이를 해결하기 위한 **Balanced Selection (BASE)** 알고리즘을 제안한 것이다. 
+본 논문의 핵심 기여는 AL의 대규모 확장 시 발생하는 클래스 불균형 문제를 식별하고, 이를 해결하기 위한 **Balanced Selection (BASE)** 알고리즘을 제안한 것이다.
 
 BASE의 중심 아이디어는 단순히 모델이 불확실해하는 샘플을 뽑는 것이 아니라, 특성 공간(Feature Space)에서 결정 경계(Decision Boundary)에 가까운 샘플들을 선택하되, 모든 클래스에서 균등한 수의 샘플이 선택되도록 강제하는 것이다. 이를 통해 정보량이 많은 샘플을 확보함과 동시에 클래스 분포의 균형을 유지하여, 대규모 데이터셋에서도 Random Sampling 이상의 성능을 달성할 수 있음을 입증하였다.
 
@@ -19,6 +19,7 @@ BASE의 중심 아이디어는 단순히 모델이 불확실해하는 샘플을 
 기존의 AL 알고리즘은 크게 두 가지 범주로 나뉜다. 첫째는 모델의 예측 불확실성을 측정하는 **Uncertainty-based sampling** (예: Entropy, Least Confidence, Margin sampling)이며, 둘째는 특성 공간에서 데이터의 대표성을 고려하는 **Density-based sampling** (예: Coreset, BADGE)이다.
 
 저자들은 이러한 기존 방식들이 다음과 같은 한계가 있음을 언급한다:
+
 1. **확장성 부족**: Coreset이나 BADGE와 같은 방식은 계산 복잡도가 매우 높아 ImageNet 규모의 데이터셋(약 120만 장)에 적용하기 어렵다.
 2. **클래스 불균형 무시**: 대부분의 알고리즘이 데이터셋이 균형 잡혀 있다는 가정하에 설계되어, ImageNet과 같은 복잡한 데이터셋에서는 특정 클래스만 과도하게 선택하는 경향이 있다.
 3. **SSP와의 상호작용**: 최근 Self-supervised Pretraining (SSP)이 모델 성능을 크게 향상시키고 있으나, SSP가 적용된 초기 가중치 상태에서 AL이 추가적인 이득을 줄 수 있는지에 대한 연구가 부족했다.
@@ -26,9 +27,11 @@ BASE의 중심 아이디어는 단순히 모델이 불확실해하는 샘플을 
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 본 논문은 SSP를 통해 사전 학습된 백본 네트워크를 사용하며, 이후 AL 루프를 통해 선택된 데이터로 분류기(Classifier)를 학습시킨다. 특히 백본을 고정하고 선형 분류기만 학습시키는 **Linear Evaluation** 설정과 전체 네트워크를 미세 조정하는 **End-to-end Finetuning** 설정을 모두 고려한다.
 
 ### Margin Selection (MASE)
+
 BASE의 기초가 되는 MASE는 결정 경계에 가장 가까운 샘플을 선택하는 방식이다. 결정 경계까지의 거리인 Distance to Decision Boundary (DDB)를 다음과 같이 정의한다:
 
 $$DDB(x) = \min_{\epsilon} \|\epsilon\|^2 \text{ s.t. } f(x+\epsilon) \neq f(x)$$
@@ -36,12 +39,13 @@ $$DDB(x) = \min_{\epsilon} \|\epsilon\|^2 \text{ s.t. } f(x+\epsilon) \neq f(x)$
 입력 공간에서 이를 계산하는 것은 비용이 매우 크므로, 저자들은 특성 공간(Feature Space)에서 이 거리를 추정한다. 이는 특성 벡터를 선형 결정 경계의 법선 벡터(Normal Vector)에 투영하는 방식으로 효율적으로 구현된다.
 
 ### Balanced Selection (BASE)
+
 MASE가 전체 샘플 중 상위 $b$개를 뽑는다면, BASE는 클래스별로 균형을 맞추기 위해 **Class-Specific Distance to Decision Boundary (DCSDB)**를 도입한다.
 
-$$DCSDB(x, c) = 
-\begin{cases} 
+$$DCSDB(x, c) =
+\begin{cases}
 \min_{\epsilon} \|\epsilon\|^2 \text{ s.t. } f(x+\epsilon) = c & \text{if } f(x) \neq c \\
-\min_{\epsilon} \|\epsilon\|^2 \text{ s.t. } f(x+\epsilon) \neq c & \text{if } f(x) = c 
+\min_{\epsilon} \|\epsilon\|^2 \text{ s.t. } f(x+\epsilon) \neq c & \text{if } f(x) = c
 \end{cases}$$
 
 **학습 및 선택 절차:**

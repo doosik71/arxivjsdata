@@ -10,7 +10,7 @@ Anusha Nagabandi, Chelsea Finn, Sergey Levine (2019)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 기여는 메타 학습(Meta-learning)과 확률적 작업 관리 메커니즘을 결합한 MOLe(Meta-learning for Online Learning) 알고리즘을 제안한 것이다. 
+본 논문의 핵심 기여는 메타 학습(Meta-learning)과 확률적 작업 관리 메커니즘을 결합한 MOLe(Meta-learning for Online Learning) 알고리즘을 제안한 것이다.
 
 중심적인 아이디어는 두 가지이다. 첫째, 모델-불가지론적 메타 학습(Model-Agnostic Meta-Learning, MAML)을 통해 온라인 SGD(Stochastic Gradient Descent) 업데이트가 매우 적은 횟수의 단계만으로도 효과적으로 작동할 수 있도록 최적의 초기 가중치(prior initialization)를 학습하는 것이다. 둘째, 기대 극대화(Expectation Maximization, EM) 알고리즘과 중국식 레스토랑 프로세스(Chinese Restaurant Process, CRP) 사전 확률을 결합하여, 현재 입력 데이터가 어떤 작업에 해당하는지 추론하고, 필요에 따라 새로운 작업을 생성하거나 기존 작업을 회상하는 혼합 모델(mixture of models) 구조를 유지하는 것이다.
 
@@ -25,9 +25,11 @@ Anusha Nagabandi, Chelsea Finn, Sergey Levine (2019)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 MOLe는 메타 학습을 통해 얻은 사전 모델 $\theta^*$를 시작점으로 하여, 실시간으로 들어오는 데이터 스트림에 대해 여러 개의 작업 전용 모델 $\theta(T_i)$를 유지하고 업데이트하는 구조를 가진다.
 
 ### 온라인 추론 및 업데이트 (EM 알고리즘)
+
 모델은 매 시간 단계 $t$마다 입력 $x_t$에 대해 예측 $\hat{y}_t$를 내놓고, 실제 정답 $y_t$를 받아 모델을 업데이트한다. 이 과정은 EM 알고리즘의 형태로 이루어진다.
 
 **1. E-step: 작업 확률 추론**
@@ -42,12 +44,15 @@ $$\theta_{t+1}(T_i) = \theta_t(T_i) - \beta P_t(T_t = T_i | x_t, y_t) \nabla_{\t
 이 식은 현재 데이터가 해당 작업일 확률이 높을수록 그 작업 모델을 더 많이 업데이트함을 의미한다. 만약 새로운 작업 $T_{new}$가 생성된다면, 이는 메타 학습된 사전 모델 $\theta^*$에서 시작하여 현재 데이터로 한 번 업데이트된 후 작업 집합에 추가된다.
 
 ### 메타 학습을 통한 사전 모델(Prior) 획득
+
 온라인 SGD가 딥러닝 모델에서 효과적으로 작동하게 하기 위해 MAML을 사용하여 $\theta^*$를 학습한다. MAML의 목표는 소수의 그래디언트 단계만으로도 다양한 작업에서 낮은 손실(loss)을 달성할 수 있는 최적의 초기화 지점을 찾는 것이다.
 $$\min_{\theta} \sum_{T} L(\theta - \eta \nabla_{\theta} L(\theta, D_{tr}^T), D_{val}^T)$$
 이렇게 학습된 $\theta^*$는 MOLe의 온라인 단계에서 모든 새로운 작업 모델의 출발점이 되며, 빠른 적응을 가능케 하는 기초 체력이 된다.
 
 ### Model-Based RL 적용 세부 사항
+
 본 논문은 이를 모델 기반 강화학습의 동역학 모델(dynamics model) 학습에 적용하였다.
+
 - **입력 $x_t$**: 과거 $K$개의 상태-액션 쌍의 연결(concatenation)
 - **출력 $y_t$**: 다음 상태들의 시퀀스
 - **모델 구조**: 평균을 예측하는 뉴럴 네트워크(3개 은닉층, 각 500차원, ReLU)와 고정된 분산을 가진 가우시안 분포
@@ -56,15 +61,17 @@ $$\min_{\theta} \sum_{T} L(\theta - \eta \nabla_{\theta} L(\theta, D_{tr}^T), D_
 ## 📊 Results
 
 ### 실험 설정
+
 - **에이전트**: MuJoCo 엔진의 Half-Cheetah 및 Hexapedal Crawler.
 - **테스트 시나리오**: 지형 경사 변화(terrain slopes), 모터 결함(motor malfunctions), 다리 마비(crippling of end-effectors).
-- **비교 대상**: 
-    - $k$-shot adaptation (메타 학습 $\theta^*$에서 매번 새로 적응)
-    - Continued adaptation (메타 학습 $\theta^*$에서 시작하여 계속 그래디언트 업데이트)
-    - Standard Model-based RL (적응 없음)
-    - Model-based RL with online gradient updates (메타 학습 없이 온라인 SGD만 적용)
+- **비교 대상**:
+  - $k$-shot adaptation (메타 학습 $\theta^*$에서 매번 새로 적응)
+  - Continued adaptation (메타 학습 $\theta^*$에서 시작하여 계속 그래디언트 업데이트)
+  - Standard Model-based RL (적응 없음)
+  - Model-based RL with online gradient updates (메타 학습 없이 온라인 SGD만 적용)
 
 ### 주요 결과
+
 1. **지형 경사 변화**: 메타 학습 기반 방법들이 전반적으로 우수했다. 특히 단순 온라인 SGD는 메타 학습된 초기화 없이는 성능이 매우 낮았다.
 2. **모터 결함**: 비정상적으로 변화하는 작업 분포에서 MOLe가 압도적인 성능을 보였다. Continuous adaptation 방식은 최신 데이터에 과적합(overfitting)되어 이전 기술을 잊어버리는 현상이 나타났으나, MOLe는 작업별 모델을 분리 유지함으로써 이를 극복했다.
 3. **다리 마비 (Crawler)**: 다리가 마비되었다가 다시 정상으로 돌아오는 반복적인 상황에서, MOLe는 작업의 전환을 정확히 인식하고 과거의 정상 상태 모델을 회상(recall)하여 빠르게 복구하는 모습을 보였다.

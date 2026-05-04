@@ -28,7 +28,9 @@ Masked Autoencoder(MAE)와 같이 일부를 마스킹하고 이를 복원하는 
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인
+
 InsSeg의 구조는 크게 세 가지 모듈로 구성된다.
+
 1. **Descriptor Learning Module**: 입력 포인트 클라우드에서 특징 기술자를 추출하는 백본 네트워크이다.
 2. **Semantic-guided Instance Clustering Module**: 학습된 기술자와 semantic 레이블을 이용하여 포인트들을 인스턴스 단위로 묶는다.
 3. **Instance-level Supervision Heads**: 클러스터링된 인스턴스를 대상으로 분류 및 재구성 작업을 수행하여 백본의 학습을 돕는다.
@@ -36,22 +38,28 @@ InsSeg의 구조는 크게 세 가지 모듈로 구성된다.
 ### 2. 상세 구성 요소 및 절차
 
 #### (1) Descriptor Learning
+
 입력 포인트 클라우드 $P \in \mathbb{R}^{N \times 3}$를 복셀 그리드로 변환하여 초기 복셀 특징 $F_0 \in \mathbb{R}^{M \times d_0}$를 추출한다. 이후 3D U-Net 백본을 통해 멀티스케일 특징 $F \in \mathbb{R}^{M \times d}$를 생성하고, 이를 통해 각 복셀의 semantic 레이블 $\bar{S}^V$를 예측한다.
 
 #### (2) Semantic-guided Instance Clustering
+
 정답 semantic 레이블과 백본에서 추출된 기술자를 이용하여 Mean-shift clustering을 수행한다. 이때 각 포인트 $p$의 특징 벡터 $f = (p, \lambda_p, d)$를 사용하며, $\lambda_p$는 포인트 $p$ 주변의 기술자 분산의 역수로 정의된다. 클러스터링 반경 $r_p$는 클래스별 특성에 따라 다르게 설정한다(예: 자동차 1m, 보행자 0.5m). 이를 통해 얻어진 인스턴스 집합을 $\{O_k | k=1, \dots, K\}$라고 한다.
 
 #### (3) Instance Classification Head ($H_c$)
-인스턴스 $O_k$에 속한 복셀 특징 $F(O_k)$를 Max-pooling 하여 인스턴스 수준의 특징으로 응축한 후, MLP를 통해 클래스 $\bar{c}_k$를 예측한다. 
+
+인스턴스 $O_k$에 속한 복셀 특징 $F(O_k)$를 Max-pooling 하여 인스턴스 수준의 특징으로 응축한 후, MLP를 통해 클래스 $\bar{c}_k$를 예측한다.
 $$\bar{c}_k = \text{MLP}(\text{max-pool}(F(O_k)))$$
 손실 함수로는 온라인 어려운 예제 마이닝(OHEM) 손실 $L_c$를 사용하여, 예측이 틀린 어려운 샘플에 더 집중하여 학습하게 한다.
 
 #### (4) Shape Reconstruction Head ($H_g$)
+
 인스턴스의 일부를 마스킹하고 전체 형상을 복원하는 작업이다. 인스턴스 $O_k$ 내에서 임의의 복셀 $q$를 선택하고 반경 $r$ 이내의 영역을 마스킹한 특징 $F'(O_k)$를 입력으로 사용한다. PointNet Autoencoder 구조를 통해 마스킹된 영역을 포함한 전체 복셀 중심 위치 $V(O_k)$를 재구성하며, Chamfer Distance(CD)를 손실 함수로 사용한다.
 $$L_g = \text{CD}(H_g(F'(O_k)), V(O_k))$$
 
 ### 3. 학습 절차 및 손실 함수
+
 학습은 2단계로 진행된다.
+
 - **Stage 1**: semantic segmentation 헤드만을 사용하여 백본 네트워크를 먼저 학습시킨다.
 - **Stage 2**: 학습된 백본을 이용해 인스턴스를 클러스터링하고, 분류 및 재구성 헤드를 활성화하여 전체 네트워크를 공동 학습(joint training)시킨다.
 
@@ -62,11 +70,13 @@ $$L = L_s + \lambda_1 L_c + \lambda_2 L_g$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: SemanticKITTI (실외), Waymo Open Dataset (실외), ScanNetV2 (실내)
 - **측정 지표**: mIoU (mean Intersection-over-Union) 및 인스턴스 분류 정확도 ($\text{Acc}_{\text{seg}}$)
 - **비교 대상**: SPVCNN, LidarMultiNet, Cylinder3D, MinkowskiNet 등 최신 SOTA 모델들
 
 ### 2. 주요 결과
+
 - **정량적 성능**: Waymo 데이터셋에서 mIoU $66.13\%$를 달성하여 LidarMultiNet($65.24\%$) 등을 상회하였으며, SemanticKITTI에서도 $65.0\%$의 mIoU로 최상위 성능을 기록하였다.
 - **인스턴스 일관성**: $\text{Acc}_{\text{seg}}$ 지표 분석 결과, 특히 버스(Bus)나 기타 차량(Other vehicle)과 같이 예측 불일치가 자주 발생하는 희귀 클래스에서 성능 향상이 두드러졌다.
 - **범용성**: Point-based, Voxel-based, Cylinder-based 등 다양한 백본 네트워크에 InsSeg 프레임워크를 결합했을 때 모두 일관된 성능 향상이 관찰되었다.
@@ -75,11 +85,13 @@ $$L = L_s + \lambda_1 L_c + \lambda_2 L_g$$
 ## 🧠 Insights & Discussion
 
 **강점**
+
 - **비지도 방식의 효율성**: 정답 인스턴스 레이블 없이도 semantic-guided clustering만으로 충분히 유의미한 인스턴스 정보를 추출하여 학습에 활용할 수 있음을 증명하였다.
 - **백본 독립적 구조**: 특정 아키텍처에 종속되지 않고, 기존의 다양한 3D segmentation 백본 위에 플러그인 형태로 추가하여 성능을 높일 수 있는 범용적인 프레임워크이다.
 - **다각적 특징 학습**: 분류 작업은 전역적인 shape 특징을, 재구성 작업은 지역적인 geometry 특징을 학습하게 하여 상호보완적인 효과를 낸다.
 
 **한계 및 비판적 해석**
+
 - **객체 분리 가정**: 본 방법은 3D 공간에서 객체들이 기하학적으로 어느 정도 분리되어 있다는 가정(isolation property)에 의존한다. 따라서 객체 간 경계가 모호한 2D 이미지 데이터셋에는 직접적으로 적용하기 어렵다.
 - **전역적 오답 위험**: 인스턴스 수준에서 일관성을 강제하기 때문에, 만약 인스턴스 분류 자체가 틀릴 경우 객체 전체가 잘못된 클래스로 예측될 위험이 있다. 이는 포인트 단위의 불일치보다 IoU 관점에서는 더 큰 하락을 불러올 수 있다.
 

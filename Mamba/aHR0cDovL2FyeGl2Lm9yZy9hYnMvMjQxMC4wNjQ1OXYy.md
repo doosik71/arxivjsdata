@@ -4,7 +4,7 @@ Alexis Plaquet, Naohiro Tawara, Marc Delcroix, Shota Horiguchi, Atsushi Ando, an
 
 ## 🧩 Problem to Solve
 
-본 논문은 오디오 녹음 파일에서 "누가 언제 말했는가"를 식별하는 화자 분리(Speaker Diarization) 문제, 특히 End-to-End Neural Diarization (EEND) 기반의 세그멘테이션 모델의 한계를 해결하고자 한다. 
+본 논문은 오디오 녹음 파일에서 "누가 언제 말했는가"를 식별하는 화자 분리(Speaker Diarization) 문제, 특히 End-to-End Neural Diarization (EEND) 기반의 세그멘테이션 모델의 한계를 해결하고자 한다.
 
 기존의 EEND 모델들은 주로 두 가지 아키텍처에 의존해 왔다. 첫째는 BiLSTM과 같은 순환 신경망(RNN)으로, 이는 순차적 데이터 처리에는 적합하지만 메모리 제한으로 인해 장기 의존성(long-term dependencies)을 캡처하는 능력이 부족하다. 둘째는 Attention 기반 모델로, 장기 의존성 모델링 능력은 뛰어나지만 시퀀스 길이에 따라 계산 복잡도가 제곱으로 증가하는 $O(L^2)$의 비용 문제가 발생하며, 많은 경우 데이터의 순차적 특성을 반영하는 positional embedding을 적절히 활용하지 못하는 한계가 있다.
 
@@ -25,30 +25,38 @@ Alexis Plaquet, Naohiro Tawara, Marc Delcroix, Shota Horiguchi, Atsushi Ando, an
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인 (EEND-VC Pipeline)
+
 본 연구는 다음과 같은 단계로 구성된 파이프라인을 사용한다.
+
 1. **특징 추출(Feature Extraction)**: 사전 학습된 WavLM Base 모델을 사용하여 오디오에서 768차원의 특징을 추출한다. 이 모델은 동결(frozen) 상태로 사용된다.
 2. **로컬 EEND 세그멘테이션**: 추출된 특징을 Mamba 또는 BiLSTM 기반의 프로세싱 모듈에 통과시켜 각 프레임별 화자 활성화 여부를 예측한다.
 3. **임베딩 추출 및 클러스터링**: 세그멘테이션 결과에서 겹치지 않는 구간을 선택해 ResNet 기반 모델로 화자 임베딩을 추출하고, Agglomerative Hierarchical Clustering을 통해 최종 화자 ID를 할당한다.
 
 ### 2. Mamba 기반 세그멘테이션 모델 아키텍처
+
 제안된 Mamba 기반 모듈의 상세 구조는 다음과 같다.
+
 - **입력 층**: WavLM의 768차원 특징을 Linear 레이어를 통해 256차원으로 축소하여 모델의 파라미터 수를 최적화한다.
 - **프로세싱 모듈**: 7개의 $\text{ExternalBidirectional Mamba}$ 블록을 체인 형태로 연결하여 구성한다. 이때 내부 상태 차원(state dimension) $d_{state}$는 64로 설정하였다.
 - **출력 층**: 두 개의 Linear 레이어(hidden size 128)를 거쳐 최종 출력 차원 $C$로 변환한다.
 
 ### 3. 학습 목표 및 손실 함수
+
 모델은 두 가지 출력 표현 방식을 비교 분석하였다.
+
 - **Multilabel**: 각 레이블이 개별 화자의 활성화 여부를 나타내며, Permutation-free Binary Cross Entropy (BCE) 손실 함수를 사용한다.
 - **Multiclass Powerset**: 가능한 모든 화자 조합을 하나의 클래스로 인코딩하며, Permutation-free Cross Entropy 손실 함수를 사용한다.
 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: NOTSOFAR-1, MSDWild, VoxConverse 등 8개의 데이터셋을 합친 compound dataset으로 학습하였으며, DIHARD III 데이터셋을 통해 도메인 외(out-of-domain) 평가를 수행하였다.
 - **비교 대상**: BiLSTM 기반 모델, Attention 기반 모델.
 - **주요 지표**: 화자 분리 오류율(Diarization Error Rate, DER).
 
 ### 2. 주요 결과 분석
+
 - **윈도우 크기의 영향**: Oracle Clustering(이상적인 클러스터링) 환경에서는 윈도우 크기가 커질수록 DER이 증가한다. 하지만 전체 파이프라인 관점에서는 Mamba 모델이 $W=30\text{s}$에서 최적의 성능을 보였다. 이는 윈도우가 길어질수록 세그멘테이션 오류는 늘어나지만, 임베딩 추출의 품질이 향상되어 전체 DER이 낮아지는 트레이드-오프 관계가 존재함을 시사한다.
 - **아키텍처 비교**: 동일한 윈도우 크기($W=10\text{s}$)에서 Mamba는 BiLSTM보다 일관되게 우수한 성능을 보였다. 특히 Attention 기반 모델은 학습이 매우 어렵고 비용이 많이 들었으나, Mamba는 훨씬 적은 학습 데이터로도 더 높은 성능을 달성하였다.
 - **정량적 성과**: 제안된 Mamba 기반 시스템은 RAMC, AISHELL-4, MSDWILD 데이터셋에서 SOTA(State-of-the-art) 성능을 달성하였으며, DIHARD III와 AMI에서도 경쟁력 있는 결과를 보여주었다.
@@ -56,9 +64,11 @@ Alexis Plaquet, Naohiro Tawara, Marc Delcroix, Shota Horiguchi, Atsushi Ando, an
 ## 🧠 Insights & Discussion
 
 ### 1. 강점 및 분석
+
 본 연구는 Mamba가 RNN의 순차적 특성과 Attention의 장기 기억 능력을 결합함으로써, 화자 분리 시스템에서 가장 병목이 되는 '윈도우 크기 결정' 문제에 새로운 해결책을 제시하였다. 특히 BiLSTM이 감당하지 못하는 긴 시퀀스에서도 효율적으로 작동하여 더 신뢰할 수 있는 임베딩 추출을 가능하게 했다는 점이 핵심적인 강점이다.
 
 ### 2. 한계 및 비판적 해석
+
 - **손실 함수의 역설**: Oracle clustering 결과에서는 Powerset loss가 유리하게 나타났으나, 최종 파이프라인 DER에서는 Multilabel loss가 더 좋은 성능을 보였다. 분석 결과, Powerset loss가 False Alarm은 줄이지만 화자 혼동(speaker confusion)을 증가시켜 결과적으로 임베딩 품질을 떨어뜨린다는 점이 발견되었다. 이는 로컬 지표의 개선이 반드시 전체 시스템의 성능 향상으로 이어지지 않음을 보여준다.
 - **파라미터 수의 영향**: Mamba 모듈이 BiLSTM보다 파라미터 수가 많음에도 불구하고, 파라미터 수를 동일하게 맞춘 실험에서도 Mamba가 여전히 우위에 있었다. 이는 단순한 모델 크기의 차이가 아니라 아키텍처 자체의 효율성에서 기인한 결과라고 볼 수 있다.
 

@@ -21,6 +21,7 @@ Junzhe Zhang, Daniel Kumor, Elias Bareinboim (2020)
 ## 📎 Related Works
 
 기존의 모방 학습 연구들은 주로 다음과 같은 접근 방식을 취해왔다.
+
 - **Behavior Cloning**: 전문가의 행동 정책 $\pi_E(a|s)$를 직접 근사하는 방식으로, 상태 $s$가 완전히 관찰되었다는 가정을 전제로 한다.
 - **Inverse Reinforcement Learning**: 전문가의 궤적을 통해 잠재적인 보상 함수를 추론하고, 이를 최대화하는 정책을 학습한다.
 
@@ -29,10 +30,12 @@ Junzhe Zhang, Daniel Kumor, Elias Bareinboim (2020)
 ## 🛠️ Methodology
 
 ### 1. POSCM (Partially Observable Structural Causal Model)
+
 본 논문은 환경을 $\langle M, O, L \rangle$ 형태의 POSCM으로 정의한다. 여기서 $M$은 구조적 인과 모델(SCM)이며, $O$는 관찰 가능한 변수, $L$은 잠재 변수(latent variables)이다. 정책 $\pi$는 관찰 가능한 공변량 $Pa^*$를 입력으로 받아 행동 $X$를 결정하는 함수이며, 정책의 성능은 잠재 변수인 보상 $Y$의 기대값 $E[Y|do(\pi)]$로 평가된다.
 
 ### 2. Imitability 및 $\pi$-Backdoor
-전문가의 보상 분포 $P(y)$를 동일하게 구현하는 정책 $\pi$가 존재할 때, 이를 **Imitable**하다고 정의한다. 
+
+전문가의 보상 분포 $P(y)$를 동일하게 구현하는 정책 $\pi$가 존재할 때, 이를 **Imitable**하다고 정의한다.
 
 - **Theorem 1 (Direct Parents)**: 전문가와 학습자가 동일한 정책 공간을 공유하고 $X$로 들어오는 bi-directed arrow가 없다면, 단순한 Behavior Cloning($\pi(x|pa(\Pi)) = P(x|pa(X))$)으로 모방이 가능하다.
 - **Theorem 2 ($\pi$-Backdoor)**: 전문가와 학습자의 정책 공간이 다를 때, $P(y)$가 imitable하기 위한 필요충분조건은 $\pi$-backdoor admissible set $Z$가 존재하는 것이다. 이때 $Z$는 다음 두 조건을 만족해야 한다.
@@ -41,31 +44,37 @@ Junzhe Zhang, Daniel Kumor, Elias Bareinboim (2020)
     이 경우 모방 정책은 $\pi(x|z) = P(x|z)$가 된다.
 
 ### 3. Practical Imitability 및 Imitation Instrument
+
 그래프 구조만으로 판단했을 때 imitable하지 않더라도, 실제 데이터 분포 $P(o)$를 분석하면 모방이 가능할 수 있다. 이를 위해 **Imitation Surrogate $S$**와 **Imitation Instrument $\langle S, \Pi' \rangle$** 개념을 도입한다.
 
 - **Imitation Surrogate ($S$)**: $X$에 대한 개입이 $Y$에 미치는 영향이 $S$를 통해 매개되는 변수 집합이다. 즉, $(Y \perp \perp \hat{X} | S)_{G \cup \Pi}$를 만족한다.
 - **Imitation Instrument**: $S$가 surrogate이고, $\Pi'$가 $P(s|do(\pi))$를 식별 가능하게 만드는 identifiable subspace일 때, $\langle S, \Pi' \rangle$를 instrument라고 한다.
 
 이를 기반으로 한 **IMITATE 알고리즘**의 흐름은 다음과 같다.
+
 1. $Y$가 관찰되었다고 가정했을 때 식별 가능한 정책 부분 공간 $\Pi'$를 나열한다.
 2. $\Pi'$에 대해 $\hat{X}$와 $Y$를 d-separate 하는 최소 surrogate set $S$를 찾는다.
 3. $\langle S, \Pi' \rangle$가 instrument인지 확인(IDENTIFY oracle 사용)한다.
 4. 식 $P(s|do(\pi)) = P(s)$를 만족하는 정책 $\pi$를 찾아 반환한다.
 
 ### 4. GAN 기반 최적화
-고차원 데이터의 경우 수식 기반의 식별이 어려우므로, POSCM을 신경망으로 파라미터화한 $\tilde{M}$을 학습한다. 
+
+고차원 데이터의 경우 수식 기반의 식별이 어려우므로, POSCM을 신경망으로 파라미터화한 $\tilde{M}$을 학습한다.
+
 - **단계 1**: GAN을 이용해 관찰 데이터 분포 $P(o)$와 일치하는 생성 모델 $\tilde{M}$을 학습한다.
 - **단계 2**: 학습된 모델 $\tilde{M}$ 내에서 직접 개입(intervention)을 수행하며, $P(s|do(\pi))$가 관찰된 $P(s)$와 일치하도록 정책 $\pi$를 최적화한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: HighD(고속도로 주행 데이터), MNIST 숫자 이미지.
 - **비교 대상**: Causal Imitation (ci), Naive Behavior Cloning (bc), Expert's Reward (opt).
 - **평가 지표**: 유도된 보상 분포 $P(y|do(\pi))$와 실제 전문가 보상 분포 $P(y)$ 사이의 $L_1$ 거리.
 
 ### 주요 결과
-1. **Highway Driving**: 
+
+1. **Highway Driving**:
     - 앞차의 속도 $Z$는 $\pi$-backdoor admissible set이지만, 주변 차량의 상태 $W$를 포함하면 confounder가 추가되어 $\pi$-backdoor 조건이 깨진다.
     - 실험 결과, $Z$만을 사용한 **ci** 방법은 $L_1 = 0.0018$로 전문가 성능을 거의 완벽히 모방했으나, 모든 공변량($Z, W$)을 사용한 **bc** 방법은 $L_1 = 0.2937$로 매우 낮은 성능을 보였다. 이는 단순히 많은 정보를 사용하는 것이 아니라 '인과적으로 올바른' 변수를 사용하는 것이 중요함을 시사한다.
 2. **MNIST Digits**:
@@ -76,11 +85,13 @@ Junzhe Zhang, Daniel Kumor, Elias Bareinboim (2020)
 
 본 논문은 모방 학습에서 '데이터의 양'보다 '데이터의 인과적 구조'가 더 중요하다는 점을 이론적으로 규명하였다. 특히, 전문가가 사용하는 정보가 누락된 상황에서 단순히 관찰된 조건부 확률 $P(x|z)$를 학습하는 BC 방식이 왜 실패하는지를 인과 그래프를 통해 명확히 설명하였다.
 
-**강점**: 
+**강점**:
+
 - latent reward라는 매우 까다로운 설정에서도 모방 가능성을 판별할 수 있는 완전한(complete) 기준을 제시하였다.
 - 이론적 분석에 그치지 않고 GAN을 결합하여 고차원 실제 데이터에 적용 가능한 파이프라인을 구축하였다.
 
 **한계 및 논의**:
+
 - 제안된 알고리즘이 작동하려면 시스템의 인과 그래프 $G$에 대한 정성적인 지식이 선행되어야 한다. 현실 세계에서 복잡한 시스템의 인과 그래프를 정확히 그려내는 것은 여전히 어려운 과제이다.
 - GAN 기반의 구현은 학습의 불안정성(collapse 등) 문제가 발생할 수 있으며, 이는 실험에서도 일부 데이터가 폐기되는 원인이 되었다.
 

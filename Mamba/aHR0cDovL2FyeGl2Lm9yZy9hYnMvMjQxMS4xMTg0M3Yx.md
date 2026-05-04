@@ -27,9 +27,11 @@ Shengkun Tang, Liqun Ma, Haonan Li, Mingjie Sun, Zhiqiang Shen (2024)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 이진화 범위
+
 본 논문은 Mamba-2를 기본 아키텍처로 채택한다. 분석 결과, Mamba-2 모델 파라미터의 대부분은 입력 투영(Input Projection)과 출력 투영(Output Projection) 행렬에 집중되어 있다. 따라서 Bi-Mamba는 이 두 선형 모듈만을 이진화하고, Embedding, Layer Norm, Conv-1d, $\Delta$ bias 등의 모듈은 고정밀도로 유지한다.
 
 ### FBI-Linear 모듈
+
 기존의 선형 층을 FBI-Linear 모듈로 대체한다. 이 모듈은 $\{1, -1\}$ 값만 가지는 이진 행렬 $W^b \in \mathbb{R}^{m \times n}$와 학습 가능한 고정밀도 스케일 인자 $\alpha \in \mathbb{R}^n$, 시프트 인자 $\beta \in \mathbb{R}^n$로 구성된다. 추론 과정은 다음과 같이 정의된다.
 
 $$y = f_{W^b} x$$
@@ -41,6 +43,7 @@ $$f_{W^b}_{\cdot,i} = \alpha_i W^b_{\cdot,i} + \beta_i$$
 이 구조를 통해 단순히 $\pm 1$만 사용하는 것이 아니라, 각 열에 대해 적절한 스케일과 오프셋을 부여함으로써 이진 가중치의 표현력을 확장한다.
 
 ### 학습 목표 및 절차
+
 Bi-Mamba는 처음부터 학습되지만, 고정밀도 교사 모델(Teacher Model, LLaMA2-7B)의 출력을 모방하는 autoregressive distillation 손실 함수를 사용한다. 손실 함수는 학생 모델($p^S$)과 교사 모델($p^T$) 간의 교차 엔트로피(Cross-Entropy)로 정의된다.
 
 $$L_{\text{Bi-Mamba}} = -\frac{1}{n} \sum_{k=1}^{n} p^T(x_{k+1}) \cdot \log p^S(x_{k+1})$$
@@ -50,12 +53,14 @@ $$L_{\text{Bi-Mamba}} = -\frac{1}{n} \sum_{k=1}^{n} p^T(x_{k+1}) \cdot \log p^S(
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Amber 데이터셋(RefinedWeb, StarCoder, RedPajama-v1 포함, 총 1.26T 토큰)을 사용하여 학습하였다.
 - **모델 규모**: 780M, 1.3B, 2.7B의 세 가지 크기로 구현하였다.
 - **평가 지표**: zero-shot 정확도(BoolQ, PIQA, HellaSwag, Winogrande, ARC, OpenbookQA)와 Perplexity(Wiki2, PTB, C4)를 측정하였다.
 - **비교 대상**: Full-precision Mamba-2, GPTQ (3-bit, 2-bit), Bi-LLM (PTB 방식)을 기준선으로 설정하였다.
 
 ### 주요 결과
+
 1. **정량적 성능**: Bi-Mamba는 모든 모델 크기에서 GPTQ-2bit 및 Bi-LLM보다 월등히 높은 정확도와 낮은 Perplexity를 기록하였다. 특히 2.7B 모델의 경우, 평균 zero-shot 정확도 $49.3\%$를 달성하여 GPTQ-2bit($35.8\%$)와 Bi-LLM($38.5\%$)을 크게 앞질렀다.
 2. **언어 모델링 능력**: Perplexity 측정 결과, Bi-Mamba는 교사 모델 및 Full-precision 모델에 근접한 수치를 보였으며, 특히 C4 데이터셋에서는 일부 구간에서 Full-precision 모델보다 더 낮은 Perplexity를 기록하기도 하였다.
 3. **저장 효율성**: Full-binarization을 적용했을 때 저장 공간의 $80\%$ 이상을 절감하였다. 예를 들어, Mamba-2 2.7B의 저장 크기를 $5.03\text{GB}$에서 $0.55\text{GB}$로 줄여 약 $89\%$의 압축률을 달성하였다.
@@ -63,12 +68,15 @@ $$L_{\text{Bi-Mamba}} = -\frac{1}{n} \sum_{k=1}^{n} p^T(x_{k+1}) \cdot \log p^S(
 ## 🧠 Insights & Discussion
 
 ### 가중치 분포 분석
+
 본 논문은 PTB 방식과 Binarization-aware training의 차이를 가중치 분포 시각화를 통해 분석하였다. PTB 방식은 이진화 후 가중치 분포가 최적의 지점에서 크게 벗어나는 경향이 있으나, Bi-Mamba의 방식은 학습 과정을 통해 이진화된 가중치가 원래의 고정밀도 가중치 분포와 유사하게 유지되도록 강제한다. 이는 저비트 표현에서도 모델의 역량을 최대한 보존할 수 있는 핵심 이유이다.
 
 ### 생성 능력의 한계
+
 정량적 지표는 우수하지만, 실제 텍스트 생성 사례(Generation Case)에서는 일부 한계가 관찰되었다. Full-precision Mamba-2와 마찬가지로 Bi-Mamba 역시 동일한 구절을 반복해서 생성하는 경향이 나타났다. 다만, GPTQ-2bit나 Bi-LLM이 의미 없는 기호나 깨진 텍스트를 생성하는 것과 달리, Bi-Mamba는 일관성 있는 의미를 유지하며 텍스트를 생성한다는 점에서 훨씬 견고함을 입증하였다.
 
 ### 비판적 해석
+
 본 연구는 1비트 SSM의 가능성을 열었으나, 학습 과정에서 여전히 고정밀도 교사 모델에 의존하는 Distillation 방식을 사용한다. 또한, 실제 하드웨어 가속 없이 시뮬레이션된 1비트 연산을 사용했으므로, 실제 추론 속도 향상을 위해서는 전용 하드웨어 설계가 뒷받침되어야 한다는 전제가 필요하다.
 
 ## 📌 TL;DR

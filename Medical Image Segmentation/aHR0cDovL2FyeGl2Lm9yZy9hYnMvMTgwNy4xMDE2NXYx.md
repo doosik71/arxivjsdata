@@ -23,24 +23,27 @@ Zongwei Zhou, Md Mahfuzur Rahman Siddiquee, Nima Tajbakhsh, and Jianming Liang (
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 UNet++는 기본적으로 Encoder-Decoder 구조를 유지하지만, 그 사이를 연결하는 Skip pathway가 재설계되었다. 인코더에서 추출된 특징 맵은 디코더로 바로 전달되지 않고, 피라미드 레벨에 따라 결정되는 개수의 컨볼루션 레이어로 구성된 Dense convolution block을 통과한다.
 
 ### 재설계된 Skip Pathways
+
 Skip pathway의 핵심은 인코더의 특징 맵을 점진적으로 정제하는 것이다. 예를 들어, 최상단 경로에서는 여러 개의 컨볼루션 레이어가 중첩되어 있으며, 각 레이어는 이전 레이어의 출력과 하단 경로에서 업샘플링되어 올라온 특징 맵을 모두 입력으로 받아 결합한다.
 
 이를 수식으로 표현하면 다음과 같다. $x_{i,j}$를 노드 $X_{i,j}$의 출력이라고 할 때, $i$는 인코더의 다운샘플링 레벨을, $j$는 Skip pathway 내의 컨볼루션 레이어 인덱스를 나타낸다.
 
 $$
-x_{i,j} = 
-\begin{cases} 
+x_{i,j} =
+\begin{cases}
 H(x_{i-1,j}), & j= 0 \\
-H([ [x_{i,k}]_{k=0}^{j-1}, U(x_{i+1,j-1}) ]), & j > 0 
+H([ [x_{i,k}]_{k=0}^{j-1}, U(x_{i+1,j-1}) ]), & j > 0
 \end{cases}
 $$
 
 여기서 $H(\cdot)$는 컨볼루션 연산과 활성화 함수를 의미하며, $U(\cdot)$는 업샘플링 레이어, $[ \ ]$는 연결(concatenation) 연산을 의미한다. 즉, $j=0$인 노드는 인코더에서 직접 입력을 받고, $j>0$인 노드는 동일 경로의 이전 모든 노드들의 출력과 하단 레벨의 업샘플링된 출력을 모두 합쳐서 처리함으로써 특징 맵을 점진적으로 풍부하게 만든다.
 
 ### Deep Supervision 및 손실 함수
+
 UNet++는 중첩 구조 덕분에 여러 개의 해상도 특징 맵 $\{x_{0,j} \mid j \in \{1, 2, 3, 4\}\}$을 생성할 수 있다. 각 출력단에 $1 \times 1$ 컨볼루션과 시그모이드 함수를 적용하여 4개의 세그멘테이션 맵을 만들고, 이를 위해 다음과 같은 손실 함수를 사용한다.
 
 $$
@@ -50,21 +53,26 @@ $$
 이 식은 이진 교차 엔트로피(Binary Cross-Entropy)와 다이스 계수(Dice Coefficient)를 결합한 형태로, $Y_b$는 정답(ground truth), $\hat{Y}_b$는 예측 확률을 의미한다.
 
 ### 추론 모드 및 Pruning
+
 Deep supervision을 통해 학습된 모델은 두 가지 모드로 작동할 수 있다.
+
 1. **Accurate mode**: 모든 세그멘테이션 브랜치의 출력을 평균 내어 최종 결과를 생성한다.
 2. **Fast mode**: 특정 브랜치의 출력 하나만을 선택하여 결과로 사용한다. 이를 통해 네트워크의 일부를 제거(pruning)함으로써 추론 속도를 비약적으로 높일 수 있다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 세포 핵(cell nuclei), 결장 폴립(colon polyp), 간(liver), 폐 결절(lung nodule) 등 4가지 의료 영상 데이터셋을 사용하였다.
 - **비교 대상**: 기본 U-Net 및 파라미터 수를 UNet++와 유사하게 맞춘 Wide U-Net을 기준선으로 설정하였다. 이는 성능 향상이 단순히 파라미터 증가에 의한 것이 아님을 증명하기 위함이다.
 - **평가 지표**: Dice coefficient와 Intersection over Union (IoU)를 측정하였다.
 
 ### 정량적 결과
+
 실험 결과, Deep supervision을 적용한 UNet++가 U-Net 대비 평균 3.9포인트, Wide U-Net 대비 평균 3.4포인트의 IoU 이득을 얻었다. 특히 Wide U-Net가 U-Net보다 전반적으로 높은 성능을 보였음에도 불구하고, UNet++는 이를 상회하는 성능을 기록하였다. Deep supervision의 효과는 특히 간(liver)과 폐 결절(lung nodule) 데이터셋에서 뚜렷하게 나타났는데, 이는 해당 객체들이 영상 내에서 다양한 크기로 나타나므로 다중 스케일 접근 방식이 필수적이기 때문이다.
 
 ### 모델 Pruning 결과
+
 추론 속도 분석 결과, $\text{UNet}++ L_3$ 수준으로 프루닝을 진행했을 때 IoU는 단 0.6포인트만 하락하면서도 추론 시간은 평균 32.2% 단축되는 효율성을 보였다.
 
 ## 🧠 Insights & Discussion

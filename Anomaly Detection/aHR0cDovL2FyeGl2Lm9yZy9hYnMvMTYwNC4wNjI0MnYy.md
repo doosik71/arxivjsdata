@@ -15,6 +15,7 @@ Nomi Vinokurov and Daphna Weinshall (2016)
 ## 📎 Related Works
 
 논문에서는 다음과 같은 기존 Novelty Detection 접근 방식들을 소개한다:
+
 - **확률 기반 방법:** 정상 클래스의 밀도 추정(Density Estimation)을 통해 가능도를 측정한다.
 - **거리 기반 방법:** 테스트 포인트와 훈련 세트 사이의 거리나 유사성을 측정하며, $k$-NN 기반 방법이 대표적이다.
 - **재구성 기반 방법:** 정상 클래스의 모델을 구축하고 재구성 오차(Reconstruction Error)를 점수로 사용한다.
@@ -26,6 +27,7 @@ Nomi Vinokurov and Daphna Weinshall (2016)
 ## 🛠️ Methodology
 
 ### 1. Initial Representation 및 Raw Novelty Score
+
 먼저, CNN이나 다중 클래스 SVM과 같은 분류기를 통해 각 테스트 포인트 $x_j$에 대해 클래스별 확신도 벡터 $u_j \in \mathbb{R}^k$를 얻는다. 테스트 포인트들의 집합 $S$가 있을 때, 이들의 평균 확신도 벡터를 정렬한 것을 $u(S)$라고 정의한다.
 
 **Raw Novelty Score ($\theta_S$)**는 다음과 같이 정의된다:
@@ -33,6 +35,7 @@ $$\theta_S = \frac{u(S)_1}{u(S)_2}$$
 여기서 $u(S)_1$은 가장 높은 확신도 값이고, $u(S)_2$는 두 번째로 높은 확신도 값이다. 이 비율은 예측된 클래스가 두 번째 후보에 비해 얼마나 확신이 있는지를 나타내며, 새로운 클래스에 속하는 샘플일수록 이 값이 작아지는 경향이 있다. 또한, 각 기지 클래스 $i$에 대해서도 동일한 방식으로 대표값 $\theta_i$를 계산하여 저장한다.
 
 ### 2. 이진 분류기 앙상블 학습 절차
+
 단일 $\theta_S$ 값만으로는 부족하므로, 본 연구는 $L$개의 이진 분류기 $h_l$로 구성된 앙상블을 학습시킨다.
 
 - **데이터 분할:** 훈련 클래스 집합 $C$를 $C_K^l$(가정된 기지 클래스)와 $C_N^l$(가정된 새로운 클래스)로 무작위 분할한다. 이때 $|C_N^l| \ll |C_K^l|$로 설정하여 불균형을 둔다.
@@ -40,7 +43,9 @@ $$\theta_S = \frac{u(S)_1}{u(S)_2}$$
 - **이진 분류기 학습:** 각 포인트에 대해 $\{\theta_S, \theta_{o_S}\}$ 쌍을 입력으로 하여, 해당 포인트가 $C_N^l$에 속하는지(Novel) 아니면 $C_K^l$에 속하는지(Known)를 판별하는 선형 SVM을 학습시킨다. 여기서 $\theta_{o_S}$는 예측된 클래스 $o_S$의 대표값으로, $\theta_S$ 값을 보정(Calibrate)하는 역할을 한다.
 
 ### 3. 최종 Novelty Score 산출
+
 테스트 세트 $S$가 입력되면 다음과 같은 절차를 거친다:
+
 1. 전체 훈련 데이터를 사용해 학습된 분류기로 $S$의 예측 클래스 $\hat{o} = o_S$를 구한다.
 2. 앙상블 $H$ 내의 분류기 중, $\hat{o}$가 $C_K^l$에 포함되어 있는 분류기들만 선택한다. (예측 클래스를 '새로운 것'으로 학습한 분류기는 제외하여 오류를 줄이기 위함이다.)
 3. 선택된 분류기들에 대해 $\{\theta_S, \theta_{\hat{o}}\}$를 입력하여 'Novel'로 판정하는 횟수를 합산한다.
@@ -50,12 +55,14 @@ $$\text{Novelty Score} = \sum_{l=1}^{L} \mathbb{I}(P_l(S) = 1)$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** Caltech-256 (250개 클래스), Cifar-100 (100개 클래스).
 - **비교 대상:** One-Class SVM(OCSVM), $k$-NN, Max Confidence, KNFST, 그리고 학습 단계가 없는 Simple Threshold ($\theta_S$만 사용).
 - **측정 지표:** EER (Equal Error Rate) 및 AUC (Area Under Curve).
 - **검증 방식:** 10-fold cross-validation (훈련 클래스의 10%를 제외하여 Novel 클래스로 설정).
 
 ### 주요 결과
+
 - **정량적 성과:** 표 1과 표 2에 따르면, 제안 방법이 모든 비교 대상보다 우수한 성능을 보였다. 특히 집합 $S$의 크기가 커질수록($|S|=1 \rightarrow 5$) 성능 향상 폭이 두드러졌다.
 - **Caltech-256 결과:** $S=5$일 때, 제안 방법은 AUC $90\pm 1\%$를 기록하여, KNFST ($64\pm 4\%$)나 OCSVM ($44\pm 2\%$)을 압도하였다.
 - **Cifar-100 결과:** $S=1$일 때 이미 타 방법 대비 우수하였으며, $|S|$가 증가함에 따라 EER이 $0.38 \rightarrow 0.11$로 크게 낮아졌다.

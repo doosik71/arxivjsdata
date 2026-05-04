@@ -26,7 +26,8 @@ Faraz Torabi, Garrett Warnell and Peter Stone (2019)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
-제안된 알고리즘은 Generator(이하 Policy)와 Discriminator로 구성된 적대적 학습 구조를 가진다. 
+
+제안된 알고리즘은 Generator(이하 Policy)와 Discriminator로 구성된 적대적 학습 구조를 가진다.
 
 1. **Policy ($\pi_\theta$)**: MLP 구조로 설계되었으며, 에이전트의 현재 proprioceptive state $s$를 입력받아 행동 $a$의 분포를 출력한다.
 2. **Discriminator ($D_\phi$)**: CNN 구조로 설계되었으며, 전문가의 비디오 $\tau_e$와 에이전트가 생성한 비디오 $\tau_i$를 입력받아 두 데이터의 출처를 판별한다.
@@ -34,11 +35,13 @@ Faraz Torabi, Garrett Warnell and Peter Stone (2019)
 ### 상세 학습 절차 및 방정식
 
 #### 1. Discriminator 학습
+
 단일 프레임으로는 상태 관찰이 불충분하므로, $\{o_{t-2}, o_{t-1}, o_t, o_{t+1}\}$와 같이 4개의 연속된 프레임을 스택으로 묶어 입력으로 사용한다. 판별자는 전문가 데이터에 대해서는 0에 가까운 값을, 모방자 데이터에 대해서는 1에 가까운 값을 출력하도록 다음 목적 함수를 최대화하는 방향으로 학습된다.
 
 $$\max_{\phi} \left( \mathbb{E}_{\tau_i}[\log(D_\phi(o_{t-2:t+1}))] + \mathbb{E}_{\tau_e}[\log(1 - D_\phi(o_{t-2:t+1}))] \right)$$
 
 #### 2. Policy 학습 (Reward 설계)
+
 모방자의 목표는 판별자를 속이는 것이므로, 판별자가 출력한 값의 음의 로그값을 보상으로 사용한다.
 
 $$\text{Reward} = -\mathbb{E}_{\tau_i}[\log(D_\phi(o_{t-2:t+1}))]$$
@@ -53,12 +56,14 @@ $$Q(\hat{s}_t, \hat{a}_t) = -\mathbb{E}_{\tau_i}[\log(D_\phi(o_{t-2:t+1})) | s_0
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: OpenAI Gym 및 MuJoCo 시뮬레이터의 6개 도메인 (MountainCarContinuous, InvertedPendulum, InvertedDoublePendulum, Hopper, Walker2d, HalfCheetah).
 - **전문가 데이터**: PPO를 통해 학습된 전문가 에이전트의 $64 \times 64$, 30-fps 비디오 데이터.
 - **비교 대상**: TCN, BCO, GAIfO.
 - **측정 지표**: 정규화된 작업 점수(Normalized Task Score), 학습 반복 횟수(Number of Iterations).
 
 ### 주요 결과
+
 1. **최종 성능**: 거의 모든 도메인에서 제안된 방법이 다른 baseline들보다 월등히 높은 성능을 보였다. 특히 GAIfO보다 유의미하게 높은 점수를 기록하였으며, 전문가 비디오 궤적의 수가 증가할수록 성능이 향상되는 경향을 보였다.
 2. **학습 속도**: InvertedPendulum 도메인에서 GAIfO와 비교했을 때, 제안된 방법이 전문가 수준의 성능에 도달하는 속도가 훨씬 빨랐다. 이는 Proprioception의 활용이 학습 효율성을 크게 높임을 시사한다.
 3. **Baseline 분석**: BCO는 행동 복제 특유의 compounding error 문제로 인해 성능이 낮았고, TCN은 특정 데모에 과적합(overfitting)되거나 주기적 작업에 취약하여 낮은 성능을 보였다.
@@ -66,9 +71,11 @@ $$Q(\hat{s}_t, \hat{a}_t) = -\mathbb{E}_{\tau_i}[\log(D_\phi(o_{t-2:t+1})) | s_0
 ## 🧠 Insights & Discussion
 
 ### 강점 및 해석
+
 본 연구는 시각적 정보만을 이용해 정책을 학습하는 것보다, 제어에 직접적으로 연관된 proprioceptive state를 정책의 입력으로 사용하는 것이 훨씬 효율적임을 입증하였다. 시각적 정보는 보상 함수를 정의하는 '기준'으로서 작동하고, 실제 제어는 '정밀한 내부 상태'를 통해 이루어지게 함으로써 IfO의 성능을 극대화하였다.
 
 ### 한계 및 분석
+
 - **HalfCheetah 도메인의 낮은 성능**: 전문가의 움직임이 매우 빨라 프레임 간 차이가 크기 때문에, 판별자가 행동 패턴을 추출하기 어려웠던 것으로 분석된다. 이를 해결하기 위해 샘플링 프레임 레이트를 높이거나 더 많은 데모 데이터가 필요하다는 점을 언급한다.
 - **Walker2d의 높은 분산**: 에이전트의 다리가 서로 가려지는 occlusion 현상이 발생하여, 시각적 정보만으로는 정확한 상태 파악이 어려웠기 때문으로 추측된다.
 - **일반화 문제**: 본 논문은 학습자와 전문가의 신체 구조가 동일하고 시점(viewpoint)이 같다는 가정을 전제로 한다. 따라서 Embodiment mismatch(신체 구조 차이)나 Viewpoint mismatch(시점 차이)를 극복하는 것은 향후 해결해야 할 과제이다.

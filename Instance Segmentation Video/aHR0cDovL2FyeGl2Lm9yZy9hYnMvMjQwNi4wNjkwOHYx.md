@@ -15,6 +15,7 @@ Shuaiyi Huang, Saksham Suri, Kamal Gupta, Sai Saketh Rambhatla, Ser-nam Lim, Abh
 본 논문의 핵심 아이디어는 최신 비전 파운데이션 모델(Vision Foundation Models)의 능력을 결합하는 것이다. 구체적으로는 **DINO**의 조밀한 형태 사전 정보(Dense shape prior)와 **CLIP**의 오픈셋 인식 능력(Open-set recognition ability)을 활용하여 정답 라벨 없이도 객체를 분할하고 인식하고자 한다.
 
 가장 주요한 기여는 다음과 같다:
+
 - 비디오 어노테이션이나 정밀한 사전 학습 없이 작동하는 최초의 비지도 VIS 프레임워크를 제안하였다.
 - 의사 라벨(Pseudo-label)의 품질을 높이기 위한 **Prototype Memory Filtering (PMF)**과 추적의 일관성을 유지하기 위한 **Tracking Memory Bank**로 구성된 **Dual-memory 디자인**을 도입하였다.
 - YoutubeVIS-2019, YoutubeVIS-2021, Occluded VIS 등 세 가지 표준 벤치마크에서 그 가능성을 입증하였다.
@@ -31,6 +32,7 @@ Shuaiyi Huang, Saksham Suri, Kamal Gupta, Sai Saketh Rambhatla, Ser-nam Lim, Abh
 UVIS 프레임워크는 크게 세 단계의 파이프라인으로 구성된다.
 
 ### 1. 프레임 수준의 의사 라벨 생성 (Pseudo-label Generation)
+
 먼저 각 프레임에 대해 클래스 구분 없는 마스크를 생성하고, 여기에 의미론적 라벨을 부여한다.
 
 - **Class-agnostic Mask Generation:** 사전 학습된 self-supervised 모델인 **DINO**와 **CutLER**를 사용하여 각 프레임 $V_t$에서 바운딩 박스 $\{b_{it}\}$, 마스크 $\{M_{it}\}$, 그리고 객체성 점수(Objectness score) $\{o_{it}\}$를 추출한다.
@@ -39,6 +41,7 @@ UVIS 프레임워크는 크게 세 단계의 파이프라인으로 구성된다.
 - **Prototype Memory Filtering (PMF):** CLIP으로 생성된 초기 라벨은 노이즈가 많다. 이를 해결하기 위해 클래스별 prototype 메모리 뱅크를 구축한다. 각 클래스 $l$에 대해 CLIP 특징값들을 K-Means 클러스터링하여 중심점(Centroids)을 계산하고, 인스턴스의 특징값이 이 중심점들과의 최대 유사도가 임계값 $\tau$보다 낮으면 가짜 양성(False Positive)으로 간주하여 제거한다.
 
 ### 2. Transformer 기반 VIS 모델 학습
+
 생성된 의사 라벨을 사용하여 인스턴스 분할 모델을 학습시킨다. 모델은 Convolutional 이미지 인코더 $E$와 Transformer 디코더 $D$로 구성된다.
 
 - **학습 절차:** 인코더를 통해 추출된 특징 $F_t$와 학습 가능한 쿼리 $q \in Q$를 디코더에 입력하여 변환된 쿼리 $\hat{q}$를 얻는다.
@@ -48,6 +51,7 @@ UVIS 프레임워크는 크게 세 단계의 파이프라인으로 구성된다.
   $$L_{vis} = L_{cls} + L_{seg}$$
 
 ### 3. 쿼리 기반 추적 및 메모리 활용
+
 추론 단계에서는 프레임 간의 일관성을 유지하기 위해 쿼리 임베딩을 활용한다.
 
 - **Query-based Tracking:** 연속된 프레임 $V_t$와 $V_{t+1}$의 쿼리 $Q_t, Q_{t+1}$ 사이에서 코사인 유사도 기반의 헝가리안 매칭(Hungarian matching)을 수행하여 인스턴스를 연결한다.
@@ -59,17 +63,20 @@ UVIS 프레임워크는 크게 세 단계의 파이프라인으로 구성된다.
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** YouTube-VIS 2019, YouTube-VIS 2021, Occluded VIS.
 - **지표:** AP (Average Precision), AR (Average Recall).
 - **백본:** ResNet-50.
 - **비교 대상:** IDOL, MinVIS (Supervised), MaskFreeVIS, WeakVIS, DeepSort (Baseline).
 
 ### 정량적 결과
+
 - **YouTube-VIS 2019:** UVIS는 어떠한 비디오 어노테이션이나 COCO 사전 학습 없이 **21.4 AP**를 달성하였다. 이는 프레임별 카테고리 라벨을 사용한 WeakVIS(10.5 AP)보다 월등히 높은 성능이며, DeepSort 기반 베이스라인(12.5 AP)보다도 우수하다.
 - **YouTube-VIS 2021:** **17.5 AP**를 기록하며 DeepSort 베이스라인(10.3 AP)을 상회하였다.
 - **Occluded VIS:** 가려짐이 심한 환경에서는 **3.5 AP**로 낮은 수치를 보였으나, 여전히 DeepSort(1.6 AP)보다는 개선된 결과를 보였다.
 
 ### Ablation Study
+
 - **구성 요소 영향:** DeepSort(12.5) $\rightarrow$ 단순 학습(16.6) $\rightarrow$ 마스크/CLIP 점수 필터링(19.8) $\rightarrow$ PMF 적용(20.7) $\rightarrow$ Tracking Memory 적용(21.4) 순으로 성능이 향상됨을 확인하였다.
 - **PMF 임계값:** $\tau=0.7$일 때 가장 높은 성능(20.7 AP)을 보였으며, 너무 높으면 정답 데이터까지 제거되어 성능이 하락하였다.
 - **Tracking Memory:** 비지도 설정뿐 아니라 지도 학습 설정(MinVIS)에서도 성능 향상(+3.4 AP in YTVIS-2019)을 이끌어내어, 장기 메모리의 범용적 유효성을 입증하였다.
@@ -77,17 +84,21 @@ UVIS 프레임워크는 크게 세 단계의 파이프라인으로 구성된다.
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 - **데이터 효율성:** 사람이 직접 라벨링한 데이터 없이 파운데이션 모델의 사전 지식만으로 VIS라는 복잡한 과제를 수행할 수 있음을 보였다.
 - **범용성:** 특정 데이터셋에 종속되지 않고, 주어진 카테고리 이름만으로 대응 가능한 오픈셋 잠재력을 가지고 있다.
 - **구조적 보완:** 단순한 의사 라벨 생성을 넘어, PMF와 Tracking Memory라는 두 가지 메모리 장치를 통해 비지도 학습의 고질적인 문제인 '노이즈'와 '시간적 불안정성'을 효과적으로 억제하였다.
 
 ### 한계 및 실패 사례
+
 논문은 다음과 같은 실패 사례를 명시하고 있다:
+
 1. **CLIP Labeling Failure:** CLIP 모델 자체가 영역을 잘못 분류하는 경우.
 2. **Multi-Instance Failure:** 두 객체가 서로 가려질 때, 모델이 두 인스턴스를 하나의 마스크로 합쳐버리는 현상.
 3. **Temporal Inconsistency:** 예측된 마스크가 시간에 따라 부드럽게 이어지지 않고 떨리는 현상.
 
 ### 비판적 해석
+
 비지도 학습 모델임에도 불구하고 지도 학습 모델(MinVIS)과의 격차가 생각보다 크지 않다는 점(YTVIS-2019 기준 약 8.9 AP 차이)은 매우 고무적이다. 하지만 Occluded VIS에서의 낮은 성능은 비지도 방식이 복잡한 가려짐 상황에서 객체의 정체성을 유지하는 능력이 여전히 부족함을 시사한다. 향후 연구에서는 광학 흐름(Optical Flow)이나 더 강력한 비디오 전용 파운데이션 모델을 통합하는 방향이 필요할 것으로 보인다.
 
 ## 📌 TL;DR

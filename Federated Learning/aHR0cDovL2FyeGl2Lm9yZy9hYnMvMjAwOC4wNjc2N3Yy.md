@@ -10,7 +10,7 @@ Fuxun Yu, Weishan Zhang, Zhuwei Qin, Zirui Xu, Di Wang, Chenchen Liu, Zhi Tian, 
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 학습 후(post-training)에 파라미터를 매칭하는 기존 방식에서 벗어나, 학습 초기 단계부터 특정 특징이 특정 구조에 할당되도록 모델을 규제(Regulation)하는 $\Psi$-Net 구조를 제안하는 것이다. 
+본 논문의 핵심 아이디어는 학습 후(post-training)에 파라미터를 매칭하는 기존 방식에서 벗어나, 학습 초기 단계부터 특정 특징이 특정 구조에 할당되도록 모델을 규제(Regulation)하는 $\Psi$-Net 구조를 제안하는 것이다.
 
 중심적인 직관은 Group Convolution과 Grouped FC layer를 사용하여 신경망 내부에 암시적인 경계를 생성함으로써, 서로 다른 클래스의 특징 정보가 서로 섞이지 않고 독립적인 경로로 학습되게 하는 것이다. 이를 통해 각 노드의 모델들이 서로 다른 데이터를 가지고 있더라도, 동일한 클래스에 대응하는 파라미터들은 구조적으로 동일한 위치에 배치되게 하여 별도의 복잡한 매칭 과정 없이도 효율적인 모델 융합이 가능하도록 설계하였다.
 
@@ -23,6 +23,7 @@ Fuxun Yu, Weishan Zhang, Zhuwei Qin, Zirui Xu, Di Wang, Chenchen Liu, Zhi Tian, 
 ## 🛠️ Methodology
 
 ### 1. 특징 해석 및 $\Psi$-Net 구조 설계
+
 본 논문은 먼저 뉴런의 클래스 응답 선호도(Class response preference)를 통해 학습된 특징을 해석한다. 뉴런의 특징을 나타내는 클래스 선호도 벡터 $P$는 다음과 같이 정의된다.
 
 $$p_c = \sum_{b=1}^{B} A(x_{c,b}) * \frac{\partial Z_c}{\partial A(x_{c,b})}$$
@@ -30,36 +31,40 @@ $$p_c = \sum_{b=1}^{B} A(x_{c,b}) * \frac{\partial Z_c}{\partial A(x_{c,b})}$$
 여기서 $A(x_{c,b})$는 클래스 $c$에 대한 활성화 값이고, $\frac{\partial Z_c}{\partial A(x_{c,b})}$는 클래스 $c$의 예측 확신도(Confidence) $Z_c$에 대한 그래디언트이다.
 
 이러한 해석을 바탕으로, 본 논문은 모델을 **Shared Layers**와 **Grouped Layers**의 두 부분으로 나누는 $\Psi$-Net 구조를 제안한다.
+
 - **Shared Layers**: 낮은 레벨의 일반적인 특징을 학습하는 얕은 층들로, 모든 노드가 동일하게 공유하며 그룹화하지 않는다. 공유 층의 깊이는 각 층의 뉴런 특징 인코딩의 전체 분산(Total Variance, TV)을 측정하여 결정한다.
 - **Grouped Convolutional Layers**: 깊은 층에서는 Group Convolution을 사용하여 특징 채널을 분리한다. 이를 통해 그래디언트가 각 그룹 내에서만 흐르게 하여 특징 간의 간섭을 방지한다.
 - **Grouped Fully-Connected Layers**: FC 층 역시 그룹화하여, 특정 클래스의 로짓(Logit)이 대응하는 컨볼루션 그룹과만 연결되도록 강제함으로써 특징 할당을 명확히 한다.
 - **Group Normalization (GN)**: Batch Normalization의 통계적 불일치 문제를 해결하기 위해 각 그룹 내에서 정규화를 수행하는 GN을 도입하였다.
 
 ### 2. 이질적 연합 학습 협업 정책
+
 $\Psi$-Net 구조를 기반으로 한 협업 절차는 다음과 같다.
 
 - **모델 초기화**: IID 환경에서는 모든 노드가 동일한 구조를 가지나, 특정 클래스 데이터가 없는 극단적인 Non-IID 환경에서는 해당 클래스에 대응하는 구조 그룹을 제거(Trimming)한 이질적 모델을 초기화한다.
 - **로컬 학습**: 각 노드는 할당된 구조 내에서 독립적으로 학습을 진행하며, 구조-정보 정렬이 이미 설계 단계에서 보장되었으므로 추가적인 매칭 비용이 들지 않는다.
 - **정렬된 모델 평균화(Aligned Model Averaging)**:
-    - Shared Layers는 모든 노드의 파라미터를 단순히 평균낸다: $\Omega_{\text{shared}} = \text{Avg}(\omega_{i, \text{shared}})$.
-    - Grouped Layers는 해당 클래스 데이터를 보유한 노드들($I_c$)에 대해서만 그룹별로 평균을 수행한다: $\Omega_c = \text{Avg}(\omega_{I_c, c})$.
+  - Shared Layers는 모든 노드의 파라미터를 단순히 평균낸다: $\Omega_{\text{shared}} = \text{Avg}(\omega_{i, \text{shared}})$.
+  - Grouped Layers는 해당 클래스 데이터를 보유한 노드들($I_c$)에 대해서만 그룹별로 평균을 수행한다: $\Omega_c = \text{Avg}(\omega_{I_c, c})$.
 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: CIFAR10, CIFAR100
 - **모델**: VGG9, VGG16, MobileNetV1
 - **비교 대상**: FedAvg, FedProx, FedMA
 - **시나리오**: IID 및 Non-IID (노드당 클래스 수 $C$를 3~10개로 조절)
 
 ### 2. 주요 결과
+
 - **정확도 향상**: CIFAR10 Non-IID 환경에서 VGG9 모델 기준 FedAvg 대비 $1\% \sim 4\%$의 성능 향상을 보였으며, 특히 MobileNetV1에서는 $6\% \sim 19\%$라는 큰 폭의 향상을 기록하였다. 노드 수를 10개에서 100개로 확장했을 때도 일관되게 우수한 성능을 유지하였다.
 - **수렴 속도**: Non-IID 케이스에서 FedAvg가 최적 성능에 도달하기 위해 100라운드 이상이 필요한 반면, 제안 방법은 50~80라운드 만에 수렴하여 훨씬 빠른 학습 속도를 보였다.
 - **SOTA 비교**: FedMA와 비교했을 때, 동일하거나 더 적은 로컬 학습 예산(Training Budget)으로도 $0.6\% \sim 2.4\%$ 더 높은 정확도를 달성하였다. 또한 로컬 에포크 수($e$)를 늘려 통신 횟수를 줄였을 때도 FedMA보다 강건한 성능을 보였다.
 - **절제 연구(Ablation Study)**:
-    - GN의 도입이 $\Psi$-Net의 그룹 구조와 결합되었을 때 성능을 극대화함을 확인하였다.
-    - 그룹 수(10, 20, 100개)에 관계없이 FedAvg보다 높은 성능을 보였으며, 그룹 수가 많을수록(세밀한 정렬) 수렴 속도가 빨라지는 경향을 보였다.
-    - 공유 층의 깊이 설정에 대해서도 상당히 강건(Robust)한 성능을 나타냈다.
+  - GN의 도입이 $\Psi$-Net의 그룹 구조와 결합되었을 때 성능을 극대화함을 확인하였다.
+  - 그룹 수(10, 20, 100개)에 관계없이 FedAvg보다 높은 성능을 보였으며, 그룹 수가 많을수록(세밀한 정렬) 수렴 속도가 빨라지는 경향을 보였다.
+  - 공유 층의 깊이 설정에 대해서도 상당히 강건(Robust)한 성능을 나타냈다.
 
 ## 🧠 Insights & Discussion
 

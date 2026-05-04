@@ -25,7 +25,9 @@ Jahongir Yunusov, Shohruh Rakhmatov, Abdulaziz Namozov, Abdulaziz Gaybulayev, Ta
 ## 🛠️ Methodology
 
 ### 1. Task-Specific Copy-Paste
+
 데이터 증강 프로세스는 다음과 같은 단계로 진행된다.
+
 1. 모든 이미지에서 객체를 크롭(Crop)하여 해당 이미지와 마스크 어노테이션을 저장한다.
 2. 원본 이미지들을 20배로 복제하여 증강 기법의 입력값으로 사용한다.
 3. 클래스 불균형을 방지하기 위해 각 클래스에서 5개에서 15개 사이의 인스턴스를 무작위로 샘플링한다.
@@ -37,21 +39,24 @@ $$\frac{w}{2} + 256 \le y_{min} \le \frac{h}{2} + 256$$
 여기서 $w$와 $h$는 이미지의 너비와 높이이며, $(x_{min}, y_{min})$은 붙여넣을 객체의 좌측 상단 좌표를 의미한다. (참고: 수식 (2)에서 $w$와 $h$가 혼용된 것으로 보이나, 원문 텍스트에 기재된 내용을 그대로 기술한다.)
 
 ### 2. 모델 아키텍처 및 학습 설정
+
 - **모델 구조**: CBSwin-B 백본과 CBFPN을 결합한 HTC (Hybrid Task Cascade) 검출기를 사용한다.
 - **활성화 함수**: Box 및 Mask Head에 사용된 모든 ReLU 함수를 SiLU (Sigmoid Linear Unit)로 교체하였다.
-- **학습 절차**: 
-    - Multi-scale 모드에서 Random Sampler를 사용하여 학습하며, 학습 스케줄은 6x schedule을 적용하였다.
-    - 입력 이미지의 짧은 쪽 길이를 800에서 1400 사이로 랜덤하게 스케일링하였다.
+- **학습 절차**:
+  - Multi-scale 모드에서 Random Sampler를 사용하여 학습하며, 학습 스케줄은 6x schedule을 적용하였다.
+  - 입력 이미지의 짧은 쪽 길이를 800에서 1400 사이로 랜덤하게 스케일링하였다.
 - **추론 절차**: 테스트 단계에서는 TTA (Test Time Augmentation) 없이 $(1600, 1400)$ 단일 스케일 모드로 평가하였다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: VIPriors 챌린지 제공 데이터 (Train 184장, Val 62장, Test 64장)
 - **평가 지표**: $AP@0.50:0.95$
 - **베이스라인**: CBSwin-T 백본, CBFPN, 2x schedule을 사용한 HTC detector
 
 ### 정량적 결과
+
 실험 단계별 성능 향상 결과는 다음과 같다.
 
 | 방법론 (Methods) | 스케줄 | Val $AP@0.50:0.95$ | Test $AP@0.50:0.95$ |
@@ -63,6 +68,7 @@ $$\frac{w}{2} + 256 \le y_{min} \le \frac{h}{2} + 256$$
 | + Val set added in training | 6x | - | 0.477 |
 
 ### 결과 분석
+
 Task-Specific Copy-Paste를 적용했을 때 성능이 가장 비약적으로 상승($0.186 \rightarrow 0.338$)하였으며, 백본을 CBSwin-B로 교체하고 학습 스케줄을 늘렸을 때 추가적인 성능 향상이 있었다. 최종적으로 검증 세트(Validation set)를 학습 데이터에 포함시켜 학습했을 때 테스트 세트에서 최고 성능인 $0.477$ $AP$를 달성하였다.
 
 ## 🧠 Insights & Discussion

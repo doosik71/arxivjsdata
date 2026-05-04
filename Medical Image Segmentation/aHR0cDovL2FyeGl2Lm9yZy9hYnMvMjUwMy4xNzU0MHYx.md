@@ -16,9 +16,9 @@ Bin Xie, Yan Yan, and Gady Agam (2025)
 
 본 논문의 핵심 아이디어는 SSM의 취약점을 보완하기 위해 **하이브리드 모듈 설계**와 **양방향 스캔 전략**을 도입하는 것이다.
 
-1.  **MM-UNet 아키텍처 제안**: 기존의 Mamba 기반 분할 모델들을 통합적으로 표현할 수 있는 유연한 U-자형 인코더-디코더 구조를 설계하였다.
-2.  **하이브리드 모듈(Hybrid Module) 설계**: SSM이 고분산 데이터에 취약하다는 점에 착안하여, 두 개의 CNN 레이어를 배치한 후 그 뒤에 SSM을 위치시키고 이를 전체적으로 Residual Connection 내부에 배치하였다. 이는 Residual Connection 내부의 피처 맵이 더 낮은 분산을 가지므로 SSM의 학습 안정성과 성능을 높인다는 직관에 기반한다.
-3.  **양방향 스캔 순서(Bi-directional Scan Order) 전략**: 단방향 스캔 시 발생하는 불연속성 문제를 해결하기 위해, 정방향(DHW)과 역방향(flip(DHW)) 스캔을 동시에 사용하는 전략을 도입하여 공간적 일관성을 확보하였다.
+1. **MM-UNet 아키텍처 제안**: 기존의 Mamba 기반 분할 모델들을 통합적으로 표현할 수 있는 유연한 U-자형 인코더-디코더 구조를 설계하였다.
+2. **하이브리드 모듈(Hybrid Module) 설계**: SSM이 고분산 데이터에 취약하다는 점에 착안하여, 두 개의 CNN 레이어를 배치한 후 그 뒤에 SSM을 위치시키고 이를 전체적으로 Residual Connection 내부에 배치하였다. 이는 Residual Connection 내부의 피처 맵이 더 낮은 분산을 가지므로 SSM의 학습 안정성과 성능을 높인다는 직관에 기반한다.
+3. **양방향 스캔 순서(Bi-directional Scan Order) 전략**: 단방향 스캔 시 발생하는 불연속성 문제를 해결하기 위해, 정방향(DHW)과 역방향(flip(DHW)) 스캔을 동시에 사용하는 전략을 도입하여 공간적 일관성을 확보하였다.
 
 ## 📎 Related Works
 
@@ -29,6 +29,7 @@ Bin Xie, Yan Yan, and Gady Agam (2025)
 ## 🛠️ Methodology
 
 ### 1. State Space Sequence Models (SSMs) 기반
+
 SSM은 1차원 입력 신호 $x(t)$를 잠재 상태 $h(t)$를 통해 출력 신호 $y(t)$로 매핑하며, 기본 방정식은 다음과 같다.
 
 $$h'(t) = Ah(t) + Bx(t)$$
@@ -47,6 +48,7 @@ $$y_t = C h_t$$
 Mamba는 여기에 입력 의존적 선택 메커니즘(selection mechanism)을 추가하여 정보 필터링 능력을 강화하고, 하드웨어 최적화 알고리즘을 통해 선형 시간 복잡도로 계산을 수행한다.
 
 ### 2. MM-UNet 아키텍처
+
 MM-UNet은 대칭적인 U-자형 구조를 가지며, Stem 모듈, 인코더(EncMetaBlock), 보틀넥(MetaBlock), 디코더(DecMetaBlock)로 구성된다.
 
 - **Meta-Block의 유연성**: 각 블록은 CNN 기반, 순수 Mamba 기반, 또는 하이브리드 기반으로 교체 가능하도록 설계되었다.
@@ -54,6 +56,7 @@ MM-UNet은 대칭적인 U-자형 구조를 가지며, Stem 모듈, 인코더(Enc
 - **배치 전략**: Mamba 모듈을 인코더와 보틀넥에 배치하는 것이 디코더에 배치하는 것보다 성능 향상에 더 효과적임이 밝혀졌다.
 
 ### 3. 스캔 전략 (Scan Design)
+
 3차원 데이터를 1차원으로 펼칠 때 발생하는 불연속성을 줄이기 위해 **1D BiScan** 전략을 사용한다.
 
 - **DHW 스캔**: Depth $\to$ Height $\to$ Width 순으로 스캔한다.
@@ -61,6 +64,7 @@ MM-UNet은 대칭적인 U-자형 구조를 가지며, Stem 모듈, 인코더(Enc
 - **추론 시 최적화**: 추론 단계에서는 축(axial), 관상(coronal), 시상(sagittal) 방향으로 8번의 플립(flip)을 수행하여 예측값을 평균 내고, 중앙 영역의 가중치를 높이기 위해 3D 가우시안 필터를 곱하는 후처리를 적용한다.
 
 ### 4. 학습 절차 및 손실 함수
+
 - **프레임워크**: nnUNet 프레임워크를 기반으로 하며, SGD 옵티마이저와 다항식 감쇠(polynomial decay) 학습률 전략을 사용한다.
 - **손실 함수**: Cross-Entropy Loss와 Dice Loss를 결합하여 사용한다.
 - **Deep Supervision**: 디코더의 마지막 3단계에서 보조 손실(auxiliary losses)을 적용하며, 해상도가 낮아질수록 가중치를 절반씩 줄여 합산한다.
@@ -70,15 +74,18 @@ $$L = w_1 \cdot L_1 + w_2 \cdot L_2 + w_3 \cdot L_3$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: AMOS2022 (복부 CT 장기 분할, 16개 구조) 및 Synapse (복부 CT, 13개 장기) 데이터셋을 사용하였다.
 - **평가 지표**: Dice Similarity Coefficient (DSC)를 사용하였다.
 - **비교 대상**: nnUNet, 3D UX-Net (CNN 기반), UNETR, SwinUNETR, nnFormer (Transformer 기반), VMUNet, UMamba, SwinUMamba (Mamba 기반) 모델들과 비교하였다.
 
 ### 2. 정량적 결과
+
 - **AMOS2022**: MM-UNet은 **91.0%의 Dice score**를 기록하여, nnUNet 대비 3.2%, 3D UX-Net 대비 1.0% 높은 성능을 보였다. 특히 모든 Mamba 기반 모델들보다 우수한 성적을 거두었다.
 - **Synapse**: MM-UNet은 **87.1%의 Dice score**를 달성하여 SOTA 성능을 기록하였다. 특히 간(liver)과 비장(spleen)과 같은 대형 장기 분할에서 SSM의 장거리 의존성 포착 능력이 빛을 발하며 nnFormer(1.5%↑)와 nnUNet(6.9%↑)을 크게 앞섰다.
 
 ### 3. 정성적 및 분석적 결과
+
 - **Attention Map 분석**: $\text{QK}^T$ 값을 시각화한 결과, SSM이 매우 적은 파라미터만으로도 1차원으로 펼쳐진 데이터에서 이미지의 패턴을 효과적으로 포착함을 확인하였다.
 - **스캔 전략 비교**: 단순 DHW 스캔보다 양방향 스캔(BiScan)이 성능을 향상시켰으며, 3개 이상의 스캔 쌍을 추가하는 것은 중복 정보로 인해 이득이 없거나 오히려 성능을 저하시켰다.
 

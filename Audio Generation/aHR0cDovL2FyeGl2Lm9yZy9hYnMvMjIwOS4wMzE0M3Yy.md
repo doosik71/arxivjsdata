@@ -12,8 +12,8 @@ Zalán Borsos, Raphaël Marinier, Damien Vincent, Eugene Kharitonov, Olivier Pie
 
 본 논문의 핵심 아이디어는 오디오를 서로 다른 특성을 가진 두 종류의 토큰, 즉 **Semantic tokens**와 **Acoustic tokens**로 분리하여 계층적으로 모델링하는 하이브리드 토큰화(hybrid tokenization) 체계이다.
 
-1.  **Semantic tokens**: w2v-BERT와 같은 자기지도학습(self-supervised learning) 모델의 중간 레이어 표현을 $k$-means 클러스터링하여 생성한다. 이는 음성에서는 음소와 의미적 내용을, 음악에서는 멜로디와 리듬 같은 고차원적 구조를 캡처한다.
-2.  **Acoustic tokens**: SoundStream과 같은 신경망 오디오 코덱(neural audio codec)을 통해 생성한다. 이는 오디오 파형의 세부적인 음향적 특성을 캡처하여 고품질의 신호 복원을 가능하게 한다.
+1. **Semantic tokens**: w2v-BERT와 같은 자기지도학습(self-supervised learning) 모델의 중간 레이어 표현을 $k$-means 클러스터링하여 생성한다. 이는 음성에서는 음소와 의미적 내용을, 음악에서는 멜로디와 리듬 같은 고차원적 구조를 캡처한다.
+2. **Acoustic tokens**: SoundStream과 같은 신경망 오디오 코덱(neural audio codec)을 통해 생성한다. 이는 오디오 파형의 세부적인 음향적 특성을 캡처하여 고품질의 신호 복원을 가능하게 한다.
 
 AudioLM은 먼저 Semantic tokens를 생성하고, 이를 조건으로 하여 Acoustic tokens를 단계적으로 예측하는 계층적 언어 모델링 방식을 채택함으로써, 의미적 일관성과 음향적 품질을 동시에 확보하였다.
 
@@ -26,16 +26,20 @@ AudioLM은 먼저 Semantic tokens를 생성하고, 이를 조건으로 하여 Ac
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인 및 구성 요소
+
 AudioLM의 전체 시스템은 다음 세 가지 구성 요소로 이루어진다.
+
 - **Tokenizer**: 입력 오디오 $x$를 이산 토큰 시퀀스 $h$로 매핑한다.
 - **Transformer LM**: 디코더 전용(decoder-only) 트랜스포머 모델로, 이전 토큰들이 주어졌을 때 다음 토큰의 확률 $\prod_{t=1}^{T'} p(h_t | h_{<t})$를 최대화하도록 학습된다.
 - **Detokenizer**: 예측된 토큰 시퀀스를 다시 오디오 파형 $\hat{x}$로 복원한다.
 
 ### 2. 하이브리드 토큰화 (Hybrid Tokenization)
+
 - **Semantic tokens ($z$)**: w2v-BERT의 중간 레이어에서 추출한 임베딩에 $k$-means 클러스터링을 적용하여 얻는다. 샘플링 레이트는 $25\text{Hz}$이며, 저비트레이트(예: $250\text{bps}$)로 고차원적 의미를 담는다.
 - **Acoustic tokens ($y$)**: SoundStream 코덱의 Residual Vector Quantizer(RVQ)를 통해 얻는다. 샘플링 레이트는 $50\text{Hz}$이며, 여러 층의 양자화기를 통해 고비트레이트의 세부 음향 정보를 담는다.
 
 ### 3. 계층적 모델링 단계 (Three-stage Modeling)
+
 AudioLM은 세 단계의 트랜스포머 모델을 순차적으로 적용한다.
 
 **단계 1: Semantic Modeling**
@@ -54,6 +58,7 @@ $$p(y_{q,t} | y_{\le Q'}, y_{>Q', <t}, y_{<q,t}) \quad \text{for } q > Q'$$
 이 단계는 압축으로 인한 손실을 메우고 최종적인 오디오 품질을 극대화한다.
 
 ### 4. 추론 절차 (Inference)
+
 - **무조건 생성**: Semantic 토큰부터 시작하여 3단계까지 순차적으로 샘플링한다.
 - **Acoustic 생성**: 실제 오디오에서 추출한 ground-truth semantic 토큰을 입력으로 하여 acoustic 토큰들만 생성한다.
 - **연속 생성(Continuation)**: 짧은 프롬프트(예: 3초)의 semantic 및 coarse acoustic 토큰을 입력으로 주어, 그 뒤에 이어질 semantic 토큰을 먼저 생성하고, 이를 바탕으로 acoustic 토큰들을 순차적으로 생성한다.
@@ -61,11 +66,13 @@ $$p(y_{q,t} | y_{\le Q'}, y_{>Q', <t}, y_{<q,t}) \quad \text{for } q > Q'$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: 음성의 경우 Libri-Light(60k 시간)를 사용하였으며, 음악의 경우 내부 피아노 데이터셋(40k 시간)을 사용하였다.
 - **모델 구조**: 각 단계마다 12레이어, 16헤드, 임베딩 차원 1024의 디코더 전용 트랜스포머($0.3\text{B}$ 파라미터)를 사용하였다.
 - **평가 지표**: ViSQOL(재구성 품질), ABX error(음소 판별력), sWUGGY/sBLIMP(언어적 지식), WER/CER(음성 인식 오류율) 등을 사용하였다.
 
 ### 2. 주요 결과
+
 - **토큰 특성 분석**: Table I에서 semantic 토큰은 음소 판별력(ABX)이 매우 높지만 복원 품질(ViSQOL)이 낮고, acoustic 토큰은 복원 품질은 높지만 판별력이 낮음을 확인하였다. 이는 두 토큰을 모두 사용해야 함을 정당화한다.
 - **언어적 지식**: sWUGGY와 sBLIMP 벤치마크에서 AudioLM은 텍스트 감독 없이 학습된 모델 중 가장 높은 성능을 보였으며, 일부 텍스트 기반 베이스라인보다도 뛰어난 성적을 거두었다(Table IV).
 - **화자 정체성 유지**: 3초의 짧은 프롬프트만으로도 학습 데이터에 없던 새로운 화자의 목소리를 생성했을 때, 화자 분류기(Speaker Classifier)의 정확도가 $92\%$ 이상으로 나타나 화자의 정체성이 매우 잘 유지됨을 보였다.
@@ -75,9 +82,11 @@ $$p(y_{q,t} | y_{\le Q'}, y_{>Q', <t}, y_{<q,t}) \quad \text{for } q > Q'$$
 ## 🧠 Insights & Discussion
 
 ### 1. 강점
+
 AudioLM의 가장 큰 강점은 오디오의 **'의미'와 '음향'을 완전히 분리(disentanglement)**하여 모델링했다는 점이다. 이를 통해 텍스트라는 명시적인 가이드 없이도 언어 모델의 강력한 문맥 파악 능력을 오디오 생성에 그대로 이식하였다. 특히 zero-shot으로 처음 듣는 화자의 목소리와 톤을 유지하며 말을 이어가는 능력은 매우 인상적이다.
 
 ### 2. 한계 및 비판적 해석
+
 - **계산 복잡도**: 3단계의 모델을 순차적으로 실행해야 하므로 추론 시간이 길어질 수 있다.
 - **데이터 편향**: 거대 데이터셋으로 학습된 언어 모델의 특성상, 학습 데이터에 포함된 사회적 편향이나 특정 억양/방언의 누락 문제가 발생할 수 있다.
 - **남용 가능성**: 매우 사실적인 음성 합성이 가능하므로, 생체 인식 보안 시스템을 무력화하거나 타인을 사칭하는 딥페이크(Deepfake) 위험이 존재한다.

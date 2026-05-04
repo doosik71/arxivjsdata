@@ -12,24 +12,28 @@ Adrian Celaya, Beatrice Riviere, David Fuentes (2023)
 
 ## 📎 Related Works
 
-기존의 CNN 아키텍처, 특히 nnU-Net이나 U-Net은 자연 이미지나 의료 영상이 다양한 해상도의 데이터를 포함하고 있다는 직관에 따라 다운샘플링과 업샘플링을 반복하는 계층적 구조를 사용한다. 이는 GMM의 기본 개념과 일치한다. 
+기존의 CNN 아키텍처, 특히 nnU-Net이나 U-Net은 자연 이미지나 의료 영상이 다양한 해상도의 데이터를 포함하고 있다는 직관에 따라 다운샘플링과 업샘플링을 반복하는 계층적 구조를 사용한다. 이는 GMM의 기본 개념과 일치한다.
 
 관련 연구로 He와 Xu(2019)는 MgNet을 통해 multigrid 방법과 CNN의 유사성을 탐구하고 이미지 분류 작업에서 성능을 입증하였으나, 이를 분할(segmentation) 작업으로 확장하지는 않았다. 또한 Celaya 등은 V-cycle 구조와 U-Net의 유사성을 바탕으로 파라미터 수를 획기적으로 줄인 PocketNet 패러다임을 제안하였다. PocketNet은 다운샘플링 시 채널 수를 두 배로 늘려야 한다는 기존의 통념에 의문을 제기하며 효율성을 입증하였다. 본 연구는 이러한 V-cycle 기반의 접근을 넘어, 더 복잡한 계층 구조를 가진 FMG와 W-cycle을 분할 네트워크에 도입했다는 점에서 차별성을 가진다.
 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 논문은 GMM의 FMG-cycle과 W-cycle을 모사한 두 가지 아키텍처, **FMG-Net**과 **W-Net**을 제안한다. 두 네트워크 모두 3D 의료 영상 분할을 위해 설계되었으며, 기본적으로 다운샘플링(encoder)과 업샘플링(decoder) 과정을 거치지만, 그 연결 방식(skip connections)에서 U-Net과 차이를 보인다.
 
 ### 핵심 구성 요소 및 설계 규칙
+
 각 네트워크의 깊이(depth)는 사용된 서로 다른 해상도 그리드의 수로 정의된다. 각 Convolutional block은 두 번의 convolution 연산 후 Batch Normalization과 ReLU 비선형 함수가 뒤따르는 구조이다. 특히, 파라미터 효율성을 위해 다운샘플링 시 채널 수를 늘리지 않는 PocketNet 패러다임을 적용하였다.
 
 스킵 연결(Skip Connection)은 다음과 같은 엄격한 규칙을 따른다:
+
 1. **Encoder branch**: 특징을 더 거친(coarser) 그리드로 전달할 때, 해당 그리드 레벨의 모든 후속 업샘플링 연산으로 특징을 전달한다.
 2. **Peak (Up $\rightarrow$ Down)**: 업샘플링 직후 다시 다운샘플링이 일어나는 '피크' 지점에서는, 해당 피크의 특징을 동일한 그리드 레벨의 다음 특징 세트로만 전달한다.
 
 ### 학습 절차 및 손실 함수
-학습을 위해 Dice loss와 Cross-entropy를 결합한 손실 함수를 사용하였으며, Adam 옵티마이저를 통해 최적화를 진행하였다. 
+
+학습을 위해 Dice loss와 Cross-entropy를 결합한 손실 함수를 사용하였으며, Adam 옵티마이저를 통해 최적화를 진행하였다.
 
 $$ \text{Loss} = \text{Dice Loss} + \text{Cross-Entropy Loss} $$
 
@@ -38,17 +42,20 @@ $$ \text{Loss} = \text{Dice Loss} + \text{Cross-Entropy Loss} $$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: BraTS 2020 데이터셋 (369개의 다중 모달리티 스캔)
 - **분할 대상**: Whole Tumor (WT), Tumor Core (TC), Enhancing Tumor (ET)
 - **평가 지표**: Dice Coefficient (겹침 정도), 95th percentile Hausdorff Distance (HD95, 경계 거리 오차), Average Surface Distance (ASD, 표면 거리 오차)
 - **비교 대상**: 표준 3D U-Net (깊이 3, 4, 5)
 
 ### 정량적 결과
+
 실험 결과, FMG-Net과 W-Net은 모든 깊이에서 U-Net보다 전반적으로 우수한 성능을 보였다. 특히 깊이가 3일 때 FMG-Net이 가장 뛰어난 성능을 보였으며, 깊이가 4와 5로 증가함에 따라 FMG-Net과 W-Net이 서로 유사하게 높은 성능을 유지하였다.
 
 가장 주목할 점은 파라미터 수의 획기적인 감소이다. 예를 들어 깊이 5의 경우, U-Net은 약 9,050만 개의 파라미터를 가지는 반면, FMG-Net은 약 285만 개, W-Net은 약 789만 개만으로도 더 나은 성능을 기록하였다.
 
 ### 효율성 및 수렴 속도
+
 - **학습 속도 및 메모리**: FMG-Net은 U-Net 대비 학습 단계당 시간을 7%~20% 단축시켰으며, GPU 메모리 사용량을 약 20% 절감하였다. W-Net 역시 효율적이었으나 FMG-Net보다는 연산 비용이 높았다.
 - **수렴성**: 손실 함수 곡선 분석 결과, FMG-Net과 W-Net은 U-Net보다 훨씬 적은 에포크(epoch) 내에 더 낮은 손실 값에 도달하며 빠르게 수렴하는 특성을 보였다.
 

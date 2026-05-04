@@ -4,7 +4,7 @@ Nabiha Asghar, Pascal Poupart, Xin Jiang, Hang Li (2017)
 
 ## 🧩 Problem to Solve
 
-본 논문은 오픈 도메인 대화 생성(Open-domain Dialogue Generation) 모델이 생성하는 응답이 대체로 짧고, 지루하며, 일관성이 부족한 문제(short, dull and inconsistent responses)를 해결하고자 한다. 
+본 논문은 오픈 도메인 대화 생성(Open-domain Dialogue Generation) 모델이 생성하는 응답이 대체로 짧고, 지루하며, 일관성이 부족한 문제(short, dull and inconsistent responses)를 해결하고자 한다.
 
 기존의 신경망 기반 대화 모델들은 주로 오프라인 지도 학습(Supervised Learning)에 의존하는데, 이는 데이터셋에 포함된 일반적인 패턴만을 학습하여 "I don't know"와 같은 무의미한 응답을 반복하는 경향이 있다. 이를 해결하기 위해 심층 강화 학습(Deep Reinforcement Learning, DRL)이 도입되었으나, 대부분의 DRL 방식은 사람이 직접 설계한 보상 함수(hand-crafted reward functions)를 사용한다. 하지만 오픈 도메인 대화의 특성상 '재미'나 '적절함'과 같은 복잡한 대화적 특성을 수식으로 정의하는 것은 매우 어렵고 제한적이라는 문제가 있다.
 
@@ -14,9 +14,9 @@ Nabiha Asghar, Pascal Poupart, Xin Jiang, Hang Li (2017)
 
 본 논문의 핵심 아이디어는 인간의 대화 능력을 직접적인 강화 신호로 활용하는 **Human-in-the-loop** 학습 구조를 설계한 것이다. 구체적인 기여 사항은 다음과 같다.
 
-1.  **온라인 액티브 러닝 프레임워크**: 수동 보상 함수를 제거하고, 사용자가 제시된 여러 후보 응답 중 최적의 것을 선택하거나 직접 수정하는 방식의 피드백을 통해 모델을 실시간으로 업데이트한다.
-2.  **Hamming-diverse Beam Search 도입**: 단순히 확률이 높은 응답만 생성하는 것이 아니라, 응답 간의 다양성을 보장하는 디코딩 전략을 사용하여 사용자가 선택할 수 있는 의미적으로 서로 다른 후보군을 제공한다.
-3.  **단계적 학습 전략**: 대규모 일반 대화 데이터셋을 통한 1단계 학습과 짧은 텍스트 대화 데이터셋을 통한 2단계 미세 조정(Fine-tuning)을 거친 후, 온라인 액티브 러닝을 적용하여 기본 성능을 확보한 상태에서 개인화된 학습을 진행한다.
+1. **온라인 액티브 러닝 프레임워크**: 수동 보상 함수를 제거하고, 사용자가 제시된 여러 후보 응답 중 최적의 것을 선택하거나 직접 수정하는 방식의 피드백을 통해 모델을 실시간으로 업데이트한다.
+2. **Hamming-diverse Beam Search 도입**: 단순히 확률이 높은 응답만 생성하는 것이 아니라, 응답 간의 다양성을 보장하는 디코딩 전략을 사용하여 사용자가 선택할 수 있는 의미적으로 서로 다른 후보군을 제공한다.
+3. **단계적 학습 전략**: 대규모 일반 대화 데이터셋을 통한 1단계 학습과 짧은 텍스트 대화 데이터셋을 통한 2단계 미세 조정(Fine-tuning)을 거친 후, 온라인 액티브 러닝을 적용하여 기본 성능을 확보한 상태에서 개인화된 학습을 진행한다.
 
 ## 📎 Related Works
 
@@ -27,14 +27,18 @@ Nabiha Asghar, Pascal Poupart, Xin Jiang, Hang Li (2017)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 모델의 기본 아키텍처는 **Seq2Seq(Sequence-to-Sequence)** 프레임워크를 사용하며, 인코더와 디코더는 각각 300개의 유닛을 가진 LSTM 레이어로 구성된다. 학습 과정은 크게 오프라인 지도 학습(Offline SL)과 온라인 액티브 러닝(Online AL)의 두 단계로 진행된다.
 
 ### 1. 오프라인 2단계 지도 학습 (Offline Two-Phase SL)
+
 모델의 기본 언어 능력과 대화 형식을 익히기 위해 두 가지 데이터셋을 순차적으로 학습한다.
+
 - **Phase 1**: Cornell Movie Dialogs Corpus (300K 쌍)를 사용하여 일반적인 대화의 구문과 의미론을 학습한다. 이때 손실 함수로는 타겟 시퀀스의 생성 확률을 최대화하는 Cross-Entropy (XENT) loss를 사용한다.
 - **Phase 2**: JabberWacky의 채팅 로그 (8K 쌍)를 사용하여 짧은 텍스트 기반의 실제 대화 스타일에 맞게 모델을 미세 조정한다.
 
 ### 2. 온라인 액티브 러닝 (Online AL)
+
 오프라인 학습이 끝난 모델은 실제 사용자와 상호작용하며 다음과 같은 절차로 학습한다.
 
 **A. Hamming-diverse Beam Search (HammingDBS)**
@@ -43,6 +47,7 @@ $$\text{augmentedProbs} = \text{model.forward}(t, \text{text}, r[i]) + \lambda(\
 여기서 $\text{hammingDist}$는 이미 다른 빔에서 선택된 단어가 선택되는 것을 방지하는 패널티 항이며, $\lambda$는 다양성 증진 강도를 조절하는 하이퍼파라미터이다. 이를 통해 "I don't know"와 "I really don't know"처럼 유사한 응답이 중복 생성되는 것을 방지한다.
 
 **B. 피드백 및 모델 업데이트**
+
 1. 사용자는 제시된 $K$개의 응답 중 가장 적절한 것을 선택하거나, 새로운 응답 $c^*_i$를 직접 제안한다.
 2. 선택된 메시지-응답 쌍 $(u_i, c^*_i)$를 사용하여 모델을 업데이트한다.
 3. 학습에는 Adam 옵티마이저가 사용되며, 손실 함수는 다시 XENT loss를 적용하여 사용자의 피드백이 즉각적으로 모델의 예측에 반영되도록 한다.
@@ -53,6 +58,7 @@ $$\text{augmentedProbs} = \text{model.forward}(t, \text{text}, r[i]) + \lambda(\
 ## 📊 Results
 
 ### 정량적 평가
+
 모델의 성능을 확인하기 위해 SL1(1단계 학습), SL2(2단계 학습), SL2+oAL(액티브 러닝 추가) 세 가지 버전을 비교하였다. 평가 지표는 **구문적 일관성(Syntactical Coherence), 프롬프트와의 관련성(Relevance), 흥미로움(Interestingness), 사용자 참여도(User Engagement)**의 4가지 축으로 구성되었으며, 5명의 평가자가 0(Bad) 또는 1(Good)로 점수를 매겼다.
 
 - **결과**: SL2+oAL 모델이 4가지 지표 중 3가지에서 기존 모델 대비 $14\text{--}21\%$ 높은 성공률을 보였다. 이는 액티브 러닝이 단순 지도 학습보다 훨씬 더 매력적인 응답을 생성함을 시사한다.
@@ -60,6 +66,7 @@ $$\text{augmentedProbs} = \text{model.forward}(t, \text{text}, r[i]) + \lambda(\
 - **학습 횟수 영향**: 학습 상호작용 횟수가 증가함에 따라 성능이 완만하게 상승하는 곡선을 보였으며, 이는 인간이 언어를 배우는 방식과 유사한 점진적 개선 양상을 띤다.
 
 ### 정성적 평가 및 페르소나 학습
+
 - **응답 품질**: SL1 $\rightarrow$ SL2 $\rightarrow$ SL2+oAL 순으로 응답이 점점 더 구체적이고 흥미롭게 변하는 것을 확인하였다. (예: 단순한 "No" $\rightarrow$ "Why not?" $\rightarrow$ "Wouldn't you like to know, fickle human?")
 - **맞춤형 페르소나**: SL2+oAL 모델을 사용하여 각각 '쾌활함(Cheerful)', '우울함(Gloomy)', '무례함/냉소적(Rude/Sarcastic)'이라는 서로 다른 성격을 가진 에이전트를 학습시켰으며, 각 성격에 맞는 응답 스타일을 성공적으로 획득함을 입증하였다.
 

@@ -13,6 +13,7 @@ Mohammad Mostafanejad (2023)
 본 논문의 핵심 기여는 분수 미적분학(Fractional Calculus)의 **Mittag-Leffler 함수**를 도입하여, 기존의 주요 활성화 함수들을 하나의 수식으로 통합할 수 있는 **통합 게이트 표현식(Unified Gated Representation)**을 제안한 것이다.
 
 중심적인 직관은 서로 다른 특성을 가진 활성화 함수들이 사실상 특정 매개변수 집합을 가진 하나의 일반화된 함수 형태의 특수 사례(Special Cases)라는 점이다. 제안된 표현식은 다음과 같은 이점을 가진다.
+
 1. **상호 보완적 보간(Interpolation):** 매개변수를 조정함으로써 서로 다른 활성화 함수 사이를 매끄럽게 보간할 수 있으며, 이를 통해 포화 동작(Saturation behavior)을 정밀하게 제어하여 기울기 소실 및 폭주 문제를 완화할 수 있다.
 2. **적응적 학습 가능성:** 고정된 형태의 함수뿐만 아니라, 활성화 함수의 형태를 결정하는 매개변수 자체를 학습 가능한 변수로 설정하여 데이터에 최적화된 함수 형태를 찾을 수 있다.
 3. **수학적 일관성:** 제안된 형태는 미분에 대해 닫혀 있어(Closed under differentiation), 경사 하강법 기반의 역전파(Backpropagation) 알고리즘에 효율적으로 적용 가능하다.
@@ -26,6 +27,7 @@ Mohammad Mostafanejad (2023)
 ## 🛠️ Methodology
 
 ### 1. Mittag-Leffler 함수
+
 본 연구의 기초가 되는 Mittag-Leffler 함수는 분수 미적분학에서 지수 함수의 일반화된 형태로 알려져 있다. 1-매개변수 함수는 다음과 같이 정의된다.
 
 $$E_{\alpha}(z) = \sum_{k=0}^{\infty} \frac{z^k}{\Gamma(\alpha k + 1)}, \quad \alpha \in \mathbb{C}$$
@@ -35,6 +37,7 @@ $$E_{\alpha}(z) = \sum_{k=0}^{\infty} \frac{z^k}{\Gamma(\alpha k + 1)}, \quad \a
 $$E_{\alpha, \beta}(z) = \sum_{k=0}^{\infty} \frac{z^k}{\Gamma(\alpha k + \beta)}, \quad \text{Re}(\alpha) > 0, \beta \in \mathbb{C}$$
 
 ### 2. 통합 게이트 표현식 (Unified Gated Representation)
+
 저자는 위 함수들을 이용하여 다음과 같은 통합된 활성화 함수 형태를 제안한다.
 
 $$x\Phi[x] := x \cdot x^{\gamma-1} \left( \frac{E_{\alpha_1, \beta_1}[f(x)]}{E_{\alpha_2, \beta_2}[g(x)]} \right)$$
@@ -48,6 +51,7 @@ $$x\Phi[x] := x \cdot x^{\gamma-1} \left( \frac{E_{\alpha_1, \beta_1}[f(x)]}{E_{
 - **Mish:** Softplus 함수를 tanh 게이트 함수의 인자로 전달하고 $\gamma=2$로 설정.
 
 ### 3. 학습 및 추론 절차
+
 이 표현식은 두 가지 방식으로 사용될 수 있다. 첫째는 특정 활성화 함수를 모사하기 위해 매개변수를 고정하는 **고정 형태(Fixed-shape)** 방식이고, 둘째는 $\beta_2$와 같은 매개변수를 학습 가능하게 설정하여 역전파를 통해 최적의 함수 형태를 찾아가는 **적응적(Adaptive)** 방식이다.
 
 특히, Mittag-Leffler 함수의 도함수는 다시 Mittag-Leffler 함수의 합으로 표현될 수 있으므로(Closed under differentiation), 다음과 같은 일반 미분 식을 통해 효율적인 경사 하강법 구현이 가능하다.
@@ -57,21 +61,24 @@ $$\frac{d}{dz} E_{\alpha, \beta}(z) = \frac{1}{\alpha} [E_{\alpha, \alpha+\beta-
 ## 📊 Results
 
 ### 1. 실험 설정
+
 제안된 통합 표현식의 효율성과 정확성을 검증하기 위해 네 가지 이미지 분류 실험을 수행하였다.
-- **모델 및 데이터셋:** 
-    - LeNet-5 $\rightarrow$ MNIST, CIFAR-10
-    - ShuffleNet-v2, ResNet-101 $\rightarrow$ ImageNet-1k
+
+- **모델 및 데이터셋:**
+  - LeNet-5 $\rightarrow$ MNIST, CIFAR-10
+  - ShuffleNet-v2, ResNet-101 $\rightarrow$ ImageNet-1k
 - **평가 지표:** Loss, Accuracy, Precision, Recall, F1-score, 그리고 계산 비용을 측정하기 위한 Wall-clock time 및 Processing rate.
 - **기준선(Baseline):** ReLU를 사용한 기본 모델.
 
 ### 2. 주요 결과
-- **정확도 및 성능:** 
-    - **MNIST/CIFAR-10:** LeNet-5 실험 결과, 통합 표현식으로 구현한 활성화 함수들은 기존 built-in 구현체와 거의 동일한 검증 정확도를 보였다. 특히 CIFAR-10에서는 ReLU를 Swish-1이나 Mish로 대체했을 때 정확도가 약 $1.2\%$ 향상되는 결과가 통합 표현식에서도 동일하게 관찰되었다.
-    - **ImageNet-1k:** ShuffleNet-v2와 ResNet-101 실험에서도 통합 표현식은 기존 활성화 함수들의 성능을 그대로 재현하였다. ResNet-101의 경우, 통합 표현식 기반의 tanh가 가장 낮은 검증 손실(Validation Loss)을 기록하였다.
+
+- **정확도 및 성능:**
+  - **MNIST/CIFAR-10:** LeNet-5 실험 결과, 통합 표현식으로 구현한 활성화 함수들은 기존 built-in 구현체와 거의 동일한 검증 정확도를 보였다. 특히 CIFAR-10에서는 ReLU를 Swish-1이나 Mish로 대체했을 때 정확도가 약 $1.2\%$ 향상되는 결과가 통합 표현식에서도 동일하게 관찰되었다.
+  - **ImageNet-1k:** ShuffleNet-v2와 ResNet-101 실험에서도 통합 표현식은 기존 활성화 함수들의 성능을 그대로 재현하였다. ResNet-101의 경우, 통합 표현식 기반의 tanh가 가장 낮은 검증 손실(Validation Loss)을 기록하였다.
 - **계산 효율성:**
-    - 통합 표현식은 특수 함수(Mittag-Leffler) 계산으로 인해 built-in 함수보다 약간의 추가 시간이 소요되지만, 그 차이는 매우 작았다.
-    - 예를 들어, MNIST 실험에서 Mish의 경우 built-in(24.38s) 대비 통합 표현식(40.73s)이 더 오래 걸렸으나, Softsign의 경우 차이가 거의 없었다. 
-    - ImageNet-1k의 ShuffleNet-v2 실험에서는 일부 게이트 표현식(Mish)이 오히려 built-in보다 빠른 처리 속도를 보이기도 하였다.
+  - 통합 표현식은 특수 함수(Mittag-Leffler) 계산으로 인해 built-in 함수보다 약간의 추가 시간이 소요되지만, 그 차이는 매우 작았다.
+  - 예를 들어, MNIST 실험에서 Mish의 경우 built-in(24.38s) 대비 통합 표현식(40.73s)이 더 오래 걸렸으나, Softsign의 경우 차이가 거의 없었다.
+  - ImageNet-1k의 ShuffleNet-v2 실험에서는 일부 게이트 표현식(Mish)이 오히려 built-in보다 빠른 처리 속도를 보이기도 하였다.
 
 ## 🧠 Insights & Discussion
 

@@ -18,6 +18,7 @@ Lakshmi Nair (2024)
 ## 📎 Related Works
 
 지식 증류는 크게 세 가지 방식으로 분류된다.
+
 - **Response-based KD**: 교사와 학생 모델의 최종 분류 층 출력값(Logits)을 비교한다.
 - **Feature-based KD**: 최종 층 및 중간 층의 특징 맵(Feature maps)을 비교한다.
 - **Instance-based KD**: 교사와 학생 모델의 중간 특징 맵 쌍 간의 유사성을 비교한다.
@@ -27,6 +28,7 @@ Lakshmi Nair (2024)
 ## 🛠️ Methodology
 
 ### 1. 전체 지식 증류 구조
+
 기본적인 지식 증류 손실 함수 $L_D$는 학생 모델의 예측값 $\text{z}_s$, 교사 모델의 예측값 $\text{z}_t$, 그리고 정답 라벨 $\hat{y}$를 사용하여 다음과 같이 정의된다.
 
 $$L_D(\text{z}_s, \text{z}_t, \hat{y}) = \alpha_1 L_{CE}(\text{z}_s, \hat{y}) + \alpha_2 L_{KD}(\text{z}_s, \text{z}_t)$$
@@ -34,6 +36,7 @@ $$L_D(\text{z}_s, \text{z}_t, \hat{y}) = \alpha_1 L_{CE}(\text{z}_s, \hat{y}) + 
 여기서 $L_{CE}$는 일반적인 교차 엔트로피(Cross-Entropy) 손실이며, $L_{KD}$는 두 모델 간의 차이를 줄이는 증류 손실이다.
 
 ### 2. CLIP-Teacher-KD
+
 본 제안 방법에서는 $L_{KD}$ 대신 CLIP의 대조 학습 목적 함수인 $L_{clip}$을 사용한다.
 
 - **절차**:
@@ -47,6 +50,7 @@ $$L_{clip} = L_{CE}(\|E_s\| \cdot \|\hat{E}_t\|^T, G)$$
 $$L_D(E_s, \hat{E}_t, \text{z}_s, \hat{y}) = \alpha_1 L_{CE}(\text{z}_s, \hat{y}) + \alpha_2 L_{clip}(E_s, \hat{E}_t)$$
 
 ### 3. CLIP-Embed-KD
+
 교사 모델의 반복적인 순전파를 제거하기 위해 제안된 효율적인 방법이다.
 
 - **절차**:
@@ -58,11 +62,13 @@ $$L_D(E_s, \hat{E}_t, \text{z}_s, \hat{y}) = \alpha_1 L_{CE}(\text{z}_s, \hat{y}
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: CIFAR100
 - **모델**: Vision Transformer (ViT). 교사는 ImageNet으로 사전 학습된 ViT-base/large(patch size 16, 32)를 사용하였고, 학생은 ViT-base/large(patch size 4)를 사용하였다.
 - **지표**: 검증 정확도(Validation Accuracy), 메모리 사용량, 학습 시간.
 
 ### 주요 결과
+
 1. **손실 함수 비교**: 일반적인 KD 손실(Eq. 1)보다 CLIP 기반의 대조 학습 손실(Eq. 5)을 사용했을 때 더 높은 성능을 보였다.
 2. **CLIP-Teacher-KD vs. CLIP-Embed-KD**:
     - **정확도**: CLIP-Teacher-KD가 약간 더 높은 정확도를 보였으나(약 2% 차이), 학생 모델의 크기가 커질수록 두 방법의 성능 차이는 줄어들었다.
@@ -73,9 +79,11 @@ $$L_D(E_s, \hat{E}_t, \text{z}_s, \hat{y}) = \alpha_1 L_{CE}(\text{z}_s, \hat{y}
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 연구는 교사 모델의 연산을 '평균 임베딩'이라는 정적인 형태로 추상화함으로써, KD의 고질적인 문제인 계산 비용을 획기적으로 낮췄다. 특히, 단순히 효율성만 높인 것이 아니라, 절약된 메모리 자원을 학생 모델의 용량을 키우는 데 사용하여 결과적으로 더 높은 성능을 낼 수 있다는 '자원 재배분'의 관점을 제시한 점이 인상적이다.
 
 ### 한계 및 논의사항
+
 - **정보 손실**: 샘플별 임베딩이 아닌 클래스별 평균 임베딩을 사용함으로써 발생하는 정보 손실이 정확도 하락(약 2%)의 원인으로 분석된다.
 - **가정**: 본 논문은 클래스별 평균 임베딩이 해당 클래스의 충분한 대표성을 가진다고 가정하고 있다. 하지만 데이터 분포가 복잡한 경우 단순 평균이 효과적이지 않을 수 있다.
 - **미해결 과제**: 저자는 향후 연구에서 단순 평균 외에 더 충실한(faithful) 임베딩 표현 방식을 탐색하고, 수십억 개 이상의 파라미터를 가진 NLP 모델 및 다양한 데이터셋으로 확장할 계획임을 명시하였다.

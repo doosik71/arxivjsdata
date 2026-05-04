@@ -4,7 +4,7 @@ Yuechen Yu, Yilei Xiong, Weilin Huang, Matthew R. Scott (2021)
 
 ## 🧩 Problem to Solve
 
-본 논문은 시각적 객체 추적(Visual Object Tracking) 분야에서 Siamese 기반 추적기들이 가지는 근본적인 한계점을 해결하고자 한다. 기존의 Siamese 아키텍처는 타겟 템플릿(target template)을 온라인으로 업데이트하지 않으며, 템플릿과 검색 이미지(search image)의 특징을 각각 독립적으로 계산하는 구조를 가진다. 
+본 논문은 시각적 객체 추적(Visual Object Tracking) 분야에서 Siamese 기반 추적기들이 가지는 근본적인 한계점을 해결하고자 한다. 기존의 Siamese 아키텍처는 타겟 템플릿(target template)을 온라인으로 업데이트하지 않으며, 템플릿과 검색 이미지(search image)의 특징을 각각 독립적으로 계산하는 구조를 가진다.
 
 이러한 독립적 특징 추출 방식은 배경 문맥 정보(background context information)를 완전히 배제하게 만들며, 이는 결과적으로 복잡한 배경 속에서 타겟과 유사한 방해 요소(distractors)가 존재하거나, 타겟의 외형 변화, 심한 변형(deformation), 또는 가려짐(occlusion)이 발생했을 때 추적 성능이 급격히 저하되는 추적 드리프트(tracking drift) 현상을 야기한다. 따라서 본 연구의 목표는 타겟 템플릿과 검색 이미지 간의 상호 의존성을 학습하고, 객체의 기하학적 변형에 강건하게 대응할 수 있는 새로운 Siamese attention 메커니즘을 제안하는 것이다.
 
@@ -27,9 +27,11 @@ Yuechen Yu, Yilei Xiong, Weilin Huang, Matthew R. Scott (2021)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 SiamAttn의 전체 파이프라인은 ResNet-50 백본 네트워크를 기반으로 하며, 크게 세 가지 구성 요소로 이루어진다: **Deformable Siamese Attention (DSA) 모듈**, **Siamese Region Proposal Networks (SiamRPN)**, 그리고 **Region Refinement 모듈**이다.
 
 ### 1. Deformable Siamese Attention (DSA) Module
+
 DSA 모듈은 템플릿 특징 $Z \in \mathbb{R}^{C \times h \times w}$와 검색 이미지 특징 $X \in \mathbb{R}^{C \times H \times W}$를 입력으로 받아 변조된 특징을 출력한다.
 
 **A. Self-Attention**
@@ -49,17 +51,22 @@ $$\bar{X}_c = \gamma A_c \bar{X} + \bar{X} \in \mathbb{R}^{C \times N}$$
 위에서 얻은 특징들에 $3 \times 3$ Deformable Convolution을 적용한다. 이는 객체의 기하학적 변형을 모델링하여 고정된 수용 영역의 한계를 극복하고, 타겟을 더 정확하게 식별하게 한다.
 
 ### 2. Siamese Region Proposal Networks (SiamRPN)
+
 DSA 모듈을 통과한 특징들은 세 개의 SiamRPN 블록으로 전달된다. 각 블록은 Depth-wise cross correlation을 통해 응답 맵(response map)을 생성하며, 분류 헤드(classification head)와 회귀 헤드(regression head)를 통해 초기 추적 영역(proposal)을 예측한다.
 
 ### 3. Region Refinement Module
-SiamRPN이 예측한 단일 영역을 더욱 정밀하게 보정한다. 
+
+SiamRPN이 예측한 단일 영역을 더욱 정밀하게 보정한다.
+
 - 여러 단계의 특징 맵에 대해 Depth-wise cross correlation을 수행하고, 이를 Fusion Block에서 정렬 및 통합한다.
 - **Deformable ROI pooling**을 사용하여 타겟 특징을 더 정확하게 추출한다.
 - 최종적으로 바운딩 박스 회귀와 타겟 마스크(Mask) 예측을 수행하여 위치 정밀도를 극대화한다.
 
 ### 4. 학습 절차 및 손실 함수
+
 모델은 엔드-투-엔드(end-to-end) 방식으로 학습되며, 전체 손실 함수 $L$은 다음과 같이 정의된다.
 $$L = L_{rpn-cls} + \lambda_1 L_{rpn-reg} + \lambda_2 L_{refine-box} + \lambda_3 L_{refine-mask}$$
+
 - $L_{rpn-cls}$: Negative log-likelihood loss (분류)
 - $L_{rpn-reg}, L_{refine-box}$: Smooth L1 loss (박스 회귀)
 - $L_{refine-mask}$: Binary cross-entropy loss (마스크 세그멘테이션)
@@ -68,17 +75,20 @@ $$L = L_{rpn-cls} + \lambda_1 L_{rpn-reg} + \lambda_2 L_{refine-box} + \lambda_3
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: OTB-2015, UAV123, VOT2016, VOT2018, LaSOT, TrackingNet 등 6개 벤치마크에서 검증하였다.
 - **비교 대상**: SiamRPN++, SiamMask, DiMP-50, ATOM 등 최신 SOTA 추적기들과 비교하였다.
 - **구현 상세**: ResNet-50 백본을 사용하였으며, PyTorch 기반으로 NVIDIA RTX 2080Ti에서 구현되었다.
 
 ### 정량적 결과
+
 - **VOT2016/2018**: VOT2016에서 EAO 0.537을 기록하며 SiamRPN++(0.464) 대비 크게 향상되었다. VOT2018에서도 EAO 0.470으로 최상위 성능을 보였다.
 - **OTB-2015**: Precision 0.712, AUC 0.926으로 모든 방법론 중 가장 높은 수치를 달성하였다.
 - **LaSOT & TrackingNet**: 대규모 데이터셋에서도 Normalized Precision과 Success rate 면에서 DiMP-50 등 경쟁 모델을 앞섰다.
 - **추론 속도**: 마스크 헤드를 제외한 일반 추적 시 45 fps, VOT 벤치마크의 회전 박스 생성 시 33 fps의 실시간 속도를 유지하였다.
 
 ### 절제 연구(Ablation Study)
+
 - **Attention의 영향**: Self-attention과 Cross-attention을 각각 추가했을 때 EAO가 각각 +4.7%, +4.9% 증가하였으며, 둘을 모두 적용했을 때 가장 높은 +7.3%의 향상을 보였다. 특히 Cross-attention이 성능 향상에 매우 중요한 역할을 함이 밝혀졌다.
 - **Deformable Layer의 영향**: Deformable Convolution과 Pooling을 제거했을 때 성능이 소폭 하락하였으며, 이는 기하학적 변형 대응 능력이 성능 향상에 기여함을 입증한다.
 

@@ -32,11 +32,14 @@ Yu Cheng, Mo Yu, Xiaoxiao Guo, Bowen Zhou (2017/2019)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 제안된 Meta Metric Learner는 두 개의 모듈로 구성된다.
+
 1. **Base Learner ($\mathcal{M}$)**: Matching Networks를 사용하여 데이터를 임베딩하고 유사도를 측정하여 분류를 수행한다.
 2. **Meta Learner ($\mathcal{R}$)**: LSTM 구조를 통해 Base Learner의 파라미터를 어떻게 업데이트할지 결정하는 최적화 규칙을 학습한다.
 
 ### Base Learner: Matching Networks
+
 입력 데이터 $x$를 벡터 공간으로 매핑하는 두 개의 임베딩 함수 $f(\cdot)$와 $g(\cdot)$를 사용한다. 서포트 세트 $\mathcal{S} = \{(x_i, y_i)\}_{i=1}^k$가 주어졌을 때, 새로운 데이터 $\hat{x}$에 대한 예측 확률은 다음과 같이 계산된다.
 
 $$y = P(\cdot | \hat{x}, \mathcal{S}) = \sum_{i=1}^k \alpha(\hat{x}, x_i; \theta) y_i$$
@@ -48,10 +51,13 @@ $$\alpha(\hat{x}, x_i; \theta) = \frac{\exp(f(\hat{x}) \cdot g(x_i))}{\sum_{j=1}
 $\theta$는 임베딩 함수 $f, g$의 파라미터이며, 본 논문에서는 $f$로 CNN 구조를 사용하였다.
 
 ### Meta Learner: LSTM-based Optimizer
+
 전통적인 경사 하강법(Gradient Descent)의 업데이트 식 $\theta_{t+1} = \theta_t - \alpha_{t+1} \nabla L(\theta_t)$를 LSTM의 셀 상태 업데이트 과정으로 치환한다. LSTM의 셀 상태 $c_t$를 학습자의 파라미터 $\theta_t$로 간주하여, 메타 학습자가 손실 함수 $L$과 그 기울기 $\nabla L$을 입력받아 다음 파라미터 $\theta_{t+1}$을 직접 출력하도록 학습한다.
 
 ### Auxiliary Task Retrieval (보조 태스크 검색)
+
 데이터가 극도로 부족한 상황(특히 one-shot)에서 모델을 안정적으로 업데이트하기 위해, 타겟 태스크와 유사한 보조 데이터셋 $\mathcal{D}_{aux}$를 검색하는 방법을 제안한다.
+
 1. 각 가용 리소스 $T_i$에 대해 Matching Network $M_i$를 개별적으로 학습시킨다.
 2. 타겟 태스크 $T_{target}$의 데이터에 대해 각 $M_i$의 정확도 $\text{acc}_{i \to k}$를 측정한다.
 3. 정확도가 가장 높은 상위 $s$개의 태스크를 선정하여 $\mathcal{D}_{aux}$로 활용한다.
@@ -59,14 +65,16 @@ $\theta$는 임베딩 함수 $f, g$의 파라미터이며, 본 논문에서는 $
 ## 📊 Results
 
 ### 실험 설정
-- **데이터셋**: 
-    - **SCS (Sentence Classification Service)**: 12개 클라이언트의 텍스트 데이터 (클래스 수 10~28개).
-    - **Omniglot**: 50개 알파벳 기반 이미지 데이터.
-    - **Amazon Reviews**: 25개 제품 카테고리의 감성 분석 데이터.
+
+- **데이터셋**:
+  - **SCS (Sentence Classification Service)**: 12개 클라이언트의 텍스트 데이터 (클래스 수 10~28개).
+  - **Omniglot**: 50개 알파벳 기반 이미지 데이터.
+  - **Amazon Reviews**: 25개 제품 카테고리의 감성 분석 데이터.
 - **비교 대상**: Matching Network (Basic/FCE), Meta-learner LSTM.
 - **평가 지표**: 1-shot 및 5-shot 설정에서의 평균 정확도(Average Accuracy).
 
 ### 주요 결과
+
 1. **멀티 도메인 설정**: SCS, Omniglot, Amazon Reviews 모든 데이터셋에서 Meta Metric-learner가 베이스라인 모델들보다 우수한 성능을 보였다. 특히 Amazon Reviews의 5-shot 설정에서는 Matching Network 대비 5% 이상의 성능 향상을 기록하였다.
 2. **단일 태스크 설정 (SCS, Omniglot)**: 보조 데이터셋이 없는 환경에서도 우수한 성능을 보였다. 특히 메타-훈련 세트의 클래스 수가 메타-테스트 세트보다 적은 '3 vs 5' 분할(split)의 가혹한 조건에서도 Meta Metric-learner는 작동하였으나, Meta-learner LSTM은 적용이 불가능하였다.
 3. **FCE(Fully Conditional Embedding)의 영향**: SCS 데이터셋에서는 FCE를 적용했을 때 성능이 향상되는 경향을 보였으나, Omniglot에서는 그 효과가 미미하였다.
@@ -76,10 +84,12 @@ $\theta$는 임베딩 함수 $f, g$의 파라미터이며, 본 논문에서는 $
 본 논문은 Meta-learning의 '최적화 능력'과 Metric-learning의 '유연한 구조'를 결합함으로써 FSL의 고질적인 문제인 가변적 클래스 수와 도메인 이질성 문제를 동시에 해결하였다.
 
 **강점**:
+
 - 단순한 메트릭 학습을 넘어, 메타 학습자가 태스크의 특성에 맞게 메트릭을 동적으로 조정하는 파라미터를 생성한다는 점이 매우 효율적이다.
 - 텍스트와 이미지라는 서로 다른 도메인에서 일관된 성능 향상을 입증하여 제안 방법론의 범용성을 보여주었다.
 
 **한계 및 비판적 해석**:
+
 - **2단계 프로세스**: 보조 태스크를 먼저 검색한 후 학습하는 방식은 효율적이지만, 이를 하나의 end-to-end 프레임워크로 통합하지 못한 점은 아쉬움으로 남는다.
 - **계산 복잡도**: LSTM이 매 스텝 파라미터 업데이트를 수행하고, 보조 태스크 검색을 위해 여러 개의 Matching Network를 미리 학습시켜야 하므로 연산 비용이 증가할 가능성이 크다.
 

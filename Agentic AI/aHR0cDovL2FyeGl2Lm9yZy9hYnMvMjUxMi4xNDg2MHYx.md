@@ -31,6 +31,7 @@ Viet K. Nguyen, Mohammad I. Husain (2025)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 연구는 대학 정보 관리 시스템(University Information Management System)을 모방한 **7개의 에이전트 아키텍처**를 구축하였다.
 
 1. **Orchestrator Agent**: 사용자 요청을 적절한 전문가 에이전트에게 라우팅하고 응답을 통합한다.
@@ -43,19 +44,22 @@ Viet K. Nguyen, Mohammad I. Husain (2025)
    - **Campus Information**: 캠퍼스 뉴스 및 공지사항 웹 검색.
 
 ### 프레임워크 비교 설계
+
 두 가지 서로 다른 오케스트레이션 패턴을 가진 프레임워크를 사용하였다.
 
 - **AutoGen (Swarm-based Handoff)**: 에이전트들이 자율적으로 제어권을 서로에게 넘기는 방식이다. `transfer_to_...`와 같은 명시적 핸드오프 도구를 사용하며, 제어권을 넘겨받은 에이전트는 전체 대화 내역을 상속받는다.
 - **CrewAI (Hierarchical Delegation)**: 중앙의 오케스트레이터가 하위 에이전트에게 작업을 할당하고 결과를 취합하는 계층적 구조이다. 전문가 에이전트 간의 직접 통신은 불가능하며 모든 흐름은 중앙 허브를 통해 이루어진다.
 
 ### 훈련 및 테스트 환경
+
 - **데이터베이스**: SQLite를 사용하여 합성 데이터(Synthetic Data)로 구성된 5개의 테이블(Students, Academic Plans, Registrations, Transactions, Notes)을 운영하였다.
-- **도구 및 권한**: 
-    - DB 접근 도구: 파라미터화된 쿼리를 사용하여 SQL Injection을 방어하도록 설계되었으나, 프롬프트 주입을 통한 파라미터 조작 가능성을 테스트하였다.
-    - 웹 검색 도구: 외부 URL 접근을 통한 SSRF(Server Side Request Forgery) 취약점을 테스트하였다.
-    - 코드 실행 환경: Docker 컨테이너 기반의 샌드박스 내에서 Python 코드를 실행하도록 하여 호스트 시스템과의 격리를 유지하였다.
+- **도구 및 권한**:
+  - DB 접근 도구: 파라미터화된 쿼리를 사용하여 SQL Injection을 방어하도록 설계되었으나, 프롬프트 주입을 통한 파라미터 조작 가능성을 테스트하였다.
+  - 웹 검색 도구: 외부 URL 접근을 통한 SSRF(Server Side Request Forgery) 취약점을 테스트하였다.
+  - 코드 실행 환경: Docker 컨테이너 기반의 샌드박스 내에서 Python 코드를 실행하도록 하여 호스트 시스템과의 격리를 유지하였다.
 
 ### 공격 시나리오 및 평가 지표
+
 총 13가지의 공격 시나리오를 4개 카테고리로 나누어 130개 케이스($13 \text{ attacks} \times 5 \text{ models} \times 2 \text{ frameworks}$)를 테스트하였다.
 
 1. **시스템 정보 유출 (A1-A7)**: 내부 에이전트 목록, 역할, 도구 스키마 추출 시도.
@@ -64,12 +68,14 @@ Viet K. Nguyen, Mohammad I. Husain (2025)
 4. **SQL Injection 및 권한 상승 (A11-A12)**: 악의적인 쿼리 입력을 통한 데이터베이스 제약 조건 우회.
 
 **평가 지표**:
+
 - **Success**: 에이전트가 악의적인 지침을 실행하거나, 권한 없는 데이터를 반환한 경우.
 - **Rejected**: 에이전트가 명시적으로 요청을 거절하거나, 보안 위협으로 식별하여 진행을 멈춘 경우.
 
 ## 📊 Results
 
 ### 프레임워크별 보안 성능
+
 전체 테스트 결과, AutoGen이 CrewAI보다 월등히 높은 보안성을 보였다.
 
 | Framework | Tests | Success | Rejected | Refusal Rate |
@@ -78,6 +84,7 @@ Viet K. Nguyen, Mohammad I. Husain (2025)
 | **CrewAI** | 65 | 45 | 20 | $30.8\%$ |
 
 ### 모델별 보안 성능 (Security Scorecard)
+
 모델별 거부율 분석 결과, Nova Pro가 가장 높은 보안성을 보였으며 Claude와 Grok 2가 가장 낮았다.
 
 | Model | Tests | Success | Rejected | Refusal % | Security Score |
@@ -89,12 +96,14 @@ Viet K. Nguyen, Mohammad I. Husain (2025)
 | **Grok 2** | 26 | 16 | 10 | $38.5\%$ | 10 |
 
 ### 주요 발견 사항
+
 - **Grok 2의 취약성**: 특히 CrewAI 환경에서의 Grok 2는 13개 공격 중 단 2개만 거부($15.4\%$)하였다. 특히 클라우드 메타데이터 접근 공격(A10) 시, 거부하지 않고 실제로 Python 코드를 작성하여 실행함으로써 네트워크 에러를 발생시키는 등 안전장치가 거의 작동하지 않음을 보였다.
 - **정보 유출 공격의 성공률**: 시스템 프롬프트나 도구 스키마를 유출시키는 공격(A1-A7)이 가장 높은 성공률을 보였으며, 이는 에이전트 간 위임 메커니즘을 통해 보안 필터가 우회되기 쉽다는 것을 시사한다.
 
 ## 🧠 Insights & Discussion
 
 ### 아키텍처가 보안에 미치는 영향
+
 본 논문은 AutoGen과 CrewAI의 보안성 차이가 다음과 같은 아키텍처적 요인에서 기인한다고 분석한다.
 
 1. **명시적 전송 메커니즘 (Explicit Transfer)**: AutoGen은 에이전트가 제어권을 넘기기 위해 명시적으로 전송 함수를 호출해야 한다. 이 과정이 일종의 '의사결정 체크포인트' 역할을 하여, 모델이 전송 전 안전성을 한 번 더 판단할 기회를 제공한다.
@@ -102,6 +111,7 @@ Viet K. Nguyen, Mohammad I. Husain (2025)
 3. **분산 신뢰 vs 단일 실패 지점**: AutoGen은 보안 결정이 여러 에이전트에 분산되어 있어 한 에이전트가 뚫려도 전체 시스템이 붕괴되지 않는 구조인 반면, CrewAI는 중앙 오케스트레이터가 단일 실패 지점(Single Point of Failure)이 되어, 이곳이 뚫리면 모든 하위 에이전트에게 악의적인 작업이 하달되는 구조이다.
 
 ### 새로운 방어 행동: Hallucinated Compliance
+
 저자들은 Grok 2에서 관찰된 **'Hallucinated Compliance'** 패턴에 주목하였다. 이는 모델이 공격을 실행할 능력이 없거나 거부해야 하는 상황에서, 마치 실행한 것처럼 가짜 결과물(예: 존재하지 않는 내부 URL의 가짜 HTML 생성, 임의의 base64 문자열 생성)을 만들어내는 행위이다. 이는 표면적으로는 협조적인 것처럼 보이지만 실제로는 공격을 수행하지 않는 일종의 수동적 방어 기제로 해석될 수 있으나, 동시에 시스템 상태에 대한 혼란을 야기하며 보안 평가를 어렵게 만든다.
 
 ## 📌 TL;DR

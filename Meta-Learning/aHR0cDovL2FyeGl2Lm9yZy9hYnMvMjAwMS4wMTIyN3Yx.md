@@ -18,8 +18,8 @@ Osvaldo Simeone, Sangwoo Park, and Joonhyuk Kang (2020)
 
 논문에서는 기존의 접근 방식을 크게 두 가지로 구분하여 설명한다.
 
-1.  **Conventional Learning (전통적 학습):** 각 시스템 구성(태스크 $k$)마다 독립적인 모델을 학습시킨다. 이는 환경이 바뀔 때마다 처음부터 다시 학습해야 하므로 데이터와 시간 비용이 매우 높다.
-2.  **Joint Learning (결합 학습):** 모든 가능한 시스템 구성에 대해 평균적으로 잘 작동하는 단일 모델을 학습시킨다. 하지만 서로 다른 태스크의 최적 파라미터 $\phi^*_k$ 사이의 간극이 클 경우, 모든 태스크를 동시에 만족시키는 단일 솔루션을 찾기 어려우며 일반화 성능이 떨어진다는 한계가 있다.
+1. **Conventional Learning (전통적 학습):** 각 시스템 구성(태스크 $k$)마다 독립적인 모델을 학습시킨다. 이는 환경이 바뀔 때마다 처음부터 다시 학습해야 하므로 데이터와 시간 비용이 매우 높다.
+2. **Joint Learning (결합 학습):** 모든 가능한 시스템 구성에 대해 평균적으로 잘 작동하는 단일 모델을 학습시킨다. 하지만 서로 다른 태스크의 최적 파라미터 $\phi^*_k$ 사이의 간극이 클 경우, 모든 태스크를 동시에 만족시키는 단일 솔루션을 찾기 어려우며 일반화 성능이 떨어진다는 한계가 있다.
 
 본 논문이 제시하는 Meta-learning은 이러한 개별 학습의 비효율성과 결합 학습의 성능 저하 문제를 동시에 해결하며, 특히 Model Agnostic Meta-Learning (MAML)과 같은 알고리즘을 통해 모델의 구조에 상관없이 빠르게 적응할 수 있는 초기값을 찾는 방식으로 차별화된다.
 
@@ -28,20 +28,24 @@ Osvaldo Simeone, Sangwoo Park, and Joonhyuk Kang (2020)
 본 논문은 전통적 학습, 결합 학습, 그리고 Meta-learning의 수학적 구조를 비교하며 설명한다.
 
 ### 1. Conventional Learning
+
 특정 태스크 $k$에 대해 훈련 데이터 $\mathcal{D}^{tr}_k$를 사용하여 다음의 모집단 손실(Population loss)을 최소화하는 파라미터 $\phi$를 찾는다.
 $$L_k(\phi) = \mathbb{E}_{x \sim P_k} [\ell(x, \phi)]$$
 실제로는 훈련 데이터에 대한 경험적 손실(Empirical loss)을 최소화하며, SGD(Stochastic Gradient Descent)를 통해 업데이트한다.
 $$\phi \leftarrow \phi - \eta \nabla_\phi \ell(x, \phi)$$
 
 ### 2. Joint Learning
+
 태스크 분포 $Q$에 대해 평균 손실을 최소화하는 단일 파라미터 $\phi$를 찾는다.
 $$L(\phi) = \mathbb{E}_{k \sim Q} [L_k(\phi)]$$
 이는 모든 태스크의 데이터를 섞어서 학습하는 것과 같으며, 각 태스크의 최적점이 서로 멀리 떨어져 있을 때 성능이 저하된다.
 
 ### 3. Meta-Learning (MAML 중심)
+
 MAML의 목적은 어떤 태스크 $k$가 주어지더라도, 적은 횟수의 SGD 업데이트만으로 최적의 파라미터 $\phi_k$에 도달할 수 있게 하는 **공통 초기값 $\theta$**를 찾는 것이다.
 
 **학습 절차:**
+
 - **내부 루프 (Adaptation step):** 특정 태스크 $k$의 훈련 데이터 $\mathcal{D}^{tr}_k$를 사용하여 파라미터를 업데이트한다. (여기서는 $m=1$인 경우를 가정)
 $$\phi_k = \theta - \eta \nabla_\theta L_{\mathcal{D}^{tr}_k}(\theta)$$
 - **외부 루프 (Meta-update):** 업데이트된 파라미터 $\phi_k$가 해당 태스크의 테스트 데이터 $\mathcal{D}^{te}_k$에서 낮은 손실을 갖도록 $\theta$를 최적화한다.
@@ -56,22 +60,26 @@ $$\nabla_\theta L_{MAML}^D(\theta) = \sum_{k=1}^K (I - \eta \nabla^2_\theta L_{\
 논문은 MAML을 두 가지 통신 시나리오에 적용하여 그 효과를 검증한다.
 
 ### 1. Few-Pilot Supervised Learning for Demodulation
+
 - **설정:** IoT 시나리오에서 매우 적은 수의 파일럿 심볼(Pilot symbols)만을 사용하여 복조기(Demodulator)를 학습시킨다. 비선형성과 페이딩이 존재하는 환경을 가정한다.
 - **결과:** 그림 5에서 볼 수 있듯이, 파일럿 심볼의 수가 적을 때 Meta-learning은 Conventional learning 및 Joint learning보다 훨씬 낮은 심볼 오류율(Symbol Error Rate)을 기록한다. 이는 다른 장치들의 데이터를 통해 학습된 초기값이 새로운 장치의 빠른 적응을 돕기 때문이다.
 
 ### 2. Fast Unsupervised Learning for Transmission and Reception
+
 - **설정:** 가우시안 잡음이 존재하는 페이딩 채널을 위한 오토인코더(Autoencoder) 기반의 송수신기를 비지도 학습(Unsupervised learning) 방식으로 학습시킨다.
 - **결과:** 그림 6의 블록 오류율(Block Error Rate) 그래프를 통해, Meta-learning을 적용했을 때 새로운 채널 환경에서도 매우 적은 반복 횟수(Iteration)만으로 오류율이 급격히 감소함을 확인할 수 있다. 이는 훈련 시간 복잡도를 획기적으로 줄일 수 있음을 시사한다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 연구는 통신 시스템의 고질적인 문제인 '환경 변화에 따른 재학습 오버헤드'를 Meta-learning이라는 관점에서 효과적으로 해결하였다. 특히 MAML을 통해 모델 구조에 구애받지 않고 빠른 적응이 가능하다는 점을 수학적, 실험적으로 증명하였다.
 
 ### 한계 및 논의사항
-1.  **계산 복잡도:** MAML은 수식에서 나타나듯 2차 미분(Hessian)을 계산해야 하므로, 메타 학습 단계에서의 계산 비용이 매우 높다.
-2.  **메타 일반화(Meta-generalization):** 논문은 PAC Bayes 프레임워크 등을 언급하며 메타 학습 데이터의 양이 일반화 성능에 영향을 준다고 설명한다. 즉, 메타 학습 단계에서 충분히 다양한 태스크를 경험하지 못하면 새로운 태스크에 대해 과적합(Meta-overfitting)이 발생할 가능성이 있다.
-3.  **가정:** 본 분석은 주로 결정론적 모델(Deterministic models)에 집중하고 있으며, 확률적 모델이나 강화 학습으로 확장할 경우 더 복잡한 표기법과 유도가 필요함을 명시하고 있다.
+
+1. **계산 복잡도:** MAML은 수식에서 나타나듯 2차 미분(Hessian)을 계산해야 하므로, 메타 학습 단계에서의 계산 비용이 매우 높다.
+2. **메타 일반화(Meta-generalization):** 논문은 PAC Bayes 프레임워크 등을 언급하며 메타 학습 데이터의 양이 일반화 성능에 영향을 준다고 설명한다. 즉, 메타 학습 단계에서 충분히 다양한 태스크를 경험하지 못하면 새로운 태스크에 대해 과적합(Meta-overfitting)이 발생할 가능성이 있다.
+3. **가정:** 본 분석은 주로 결정론적 모델(Deterministic models)에 집중하고 있으며, 확률적 모델이나 강화 학습으로 확장할 경우 더 복잡한 표기법과 유도가 필요함을 명시하고 있다.
 
 ## 📌 TL;DR
 

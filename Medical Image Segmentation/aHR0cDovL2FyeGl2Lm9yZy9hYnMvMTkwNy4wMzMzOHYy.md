@@ -19,11 +19,13 @@ Alain Jungo and Mauricio Reyes (2019)
 ## 📎 Related Works
 
 논문에서는 불확실성을 정량화하는 세 가지 주요 접근 방식을 소개한다:
+
 1. **Bayesian Uncertainty Estimation**: 테스트 단계에서 Dropout을 적용하는 Test-time dropout 방식이다.
 2. **Aleatoric Uncertainty Estimation**: 데이터 자체의 노이즈를 캡처하기 위해 네트워크가 예측값과 함께 분산($\sigma^2$)을 함께 출력하게 하는 방식이다.
 3. **Ensembling**: 여러 개의 독립적인 네트워크를 학습시켜 그 결과값들을 결합하는 방식이다.
 
 의료 영상 분할에서 불확실성은 세 가지 수준으로 나뉜다:
+
 - **Voxel-wise**: 각 픽셀/복셀 단위의 불확실성으로, 인간과의 상호작용 및 세부 수정 작업에 유용하다.
 - **Instance-level**: 분할된 객체 단위의 불확실성으로, 위양성(False Discovery Rate)을 줄이는 데 사용된다.
 - **Subject-level**: 특정 환자에 대한 분할 작업 전체의 성공 여부를 판단하는 수준이다.
@@ -33,13 +35,16 @@ Alain Jungo and Mauricio Reyes (2019)
 ## 🛠️ Methodology
 
 ### 시스템 구조 및 데이터셋
+
 연구진은 모델 구조에 의한 영향을 최소화하기 위해 대중적이고 단순한 **U-Net** 기반 아키텍처를 사용하였다. 4단계의 Pooling/Upsampling 단계와 Dropout($p=0.05$), Batch Normalization을 포함하며, Cross-entropy 손실 함수와 Adam optimizer를 사용하여 학습하였다.
 
 실험에는 두 가지 공개 데이터셋이 사용되었다:
+
 - **BraTS 2018**: 뇌종양 분할 데이터셋(3D MRI 이미지).
 - **ISIC 2017**: 피부 병변 분할 데이터셋(2D 컬러 이미지).
 
 ### 불확실성 추정 방법론 (5가지)
+
 1. **Baseline**: Softmax 출력값의 정규화된 엔트로피($H$)를 사용한다.
    $$H = -\sum_{c \in C} p_c \log(p_c) / \log(|C|) \in [0, 1]$$
 2. **MC Dropout**: 테스트 시 $T=20$번의 샘플링을 통해 확률의 평균을 구하고 엔트로피를 계산한다. Dropout 위치에 따라 `baseline+MC`와 `center+MC` 두 전략을 사용하였다.
@@ -48,6 +53,7 @@ Alain Jungo and Mauricio Reyes (2019)
 5. **Auxiliary Network**: 분할 오류(FP, FN)를 학습하여 불확실성을 예측하는 별도의 네트워크를 구축한다. 특징 맵을 사용하는 `auxiliary feat.`와 원본 이미지 및 마스크를 입력으로 받는 `auxiliary segm.` 두 방식을 적용하였다.
 
 ### 평가 지표
+
 - **Calibration**: 예측된 확신도(Confidence)와 실제 정확도가 일치하는지를 평가한다. **Expected Calibration Error (ECE)**를 통해 측정하며, 값이 0에 가까울수록 잘 교정된 것이다.
 - **Uncertainty-Error Overlap (U-E)**: 모델이 틀린 부분(Error)에서 불확실성이 높게 나타나는지를 Dice 계수를 통해 측정한다.
 - **Corrections (BnF)**: 불확실성이 높은 영역을 제거했을 때 Dice 계수가 실제로 향상되는 환자의 비율($B_{nF}$)을 측정하여 실질적인 유용성을 평가한다.
@@ -55,13 +61,16 @@ Alain Jungo and Mauricio Reyes (2019)
 ## 📊 Results
 
 ### 정량적 결과 분석
+
 실험 결과, 특정 방법론이 압도적으로 우수하지는 않았으나 다음과 같은 특징이 관찰되었다:
+
 - **Ensemble** 방법이 전반적으로 가장 신뢰할 수 있는 순위를 기록하였다.
 - **Aleatoric** 방식은 분할 오류가 발생하는 지점에서 불확실성을 제대로 생성하지 못해 U-E 및 $B_{nF}$ 지표에서 매우 낮은 성능을 보였다.
 - **MC Dropout**은 일반 Softmax(Baseline)보다 ECE와 U-E를 개선하는 경향이 있으나, Dropout 확률이 너무 높을 경우(`center+MC`) 오히려 분할 성능과 교정 성능이 저하되었다.
 - **Auxiliary Networks**는 기존의 다른 방법들과 유사한 성능을 보이면서도, 이미 학습된 고성능 모델에 사후적으로 적용할 수 있다는 강점을 보였다.
 
 ### 데이터셋 수준 vs 환자 수준의 교정
+
 가장 중요한 발견은 **데이터셋 전체 수준의 ECE는 낮게 나타나 모델이 잘 교정된 것처럼 보이지만, 개별 환자 수준에서는 과신(Overconfident)하거나 과소신(Underconfident)하는 경향이 뚜렷하게 나타났다**는 점이다. (BraTS 데이터셋 기준 약 28%는 과소신, 32%는 과신 상태였다.)
 
 ## 🧠 Insights & Discussion

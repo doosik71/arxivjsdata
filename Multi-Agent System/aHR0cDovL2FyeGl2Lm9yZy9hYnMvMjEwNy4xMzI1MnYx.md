@@ -17,6 +17,7 @@ Bang Xiang Yong and Alexandra Brintrup (2021)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 (Multi-Agent System Architecture)
+
 본 논문은 유연성, 확장성, 이질성 및 자가 치유 능력을 확보하기 위해 다음과 같은 6가지 역할을 가진 에이전트 기반 아키텍처를 제안한다.
 
 1. **Sensor Agent**: 물리적 환경의 센서와 인터페이스하며 데이터를 수집하여 Aggregator Agent에게 전달한다.
@@ -27,7 +28,8 @@ Bang Xiang Yong and Alexandra Brintrup (2021)
 6. **User Interface Agent**: 사용자에게 시스템 상태, 센서 데이터, 예측 결과 및 불확실성을 시각화하여 제공한다.
 
 ### 머신러닝 모델 및 학습 절차
-본 연구에서는 불확실성 정량화를 위해 Bayesian Neural Network(BNN)를 사용한다. 
+
+본 연구에서는 불확실성 정량화를 위해 Bayesian Neural Network(BNN)를 사용한다.
 
 - **데이터 전처리**: 유압 시스템 데이터셋을 사용하여 시간 및 주파수 도메인에서 평균, 표준편차, 왜도(skewness), 첨도(kurtosis) 등 272개의 특징(feature)을 추출하고 정규화를 수행한다.
 - **네트워크 구조**: 3개의 은닉층을 가지며, 노드 구성은 $272 \rightarrow 544 \rightarrow 272$ 구조이다.
@@ -35,16 +37,19 @@ Bang Xiang Yong and Alexandra Brintrup (2021)
 - **추론 및 불확실성 측정**: Monte Carlo(MC) 샘플링을 통해 모델을 50회 샘플링하여 예측값의 분포를 얻는다. 이때 가장 많이 나타난 클래스를 예측 클래스(modal class)로 선택하고, 해당 클래스의 비율을 확실성(certainty) 척도로 사용한다.
 
 ### 의사결정 프로세스
+
 Decision Maker Agent는 Predictor Agent가 보낸 확실성 값을 확인한다. 본 실험에서는 확실성 임계값을 $80\%$로 설정하여, 이보다 높으면 'Certain', 낮으면 'Uncertain'으로 분류하여 사용자에게 경고를 보내거나 후속 조치를 취한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 유압 시스템의 상태 모니터링을 위한 공개 데이터셋을 사용하였다.
 - **작업**: 쿨러(Cooler), 밸브(Valve), 내부 펌프(Internal Pump), 어큐뮬레이터(Accumulator), 안정성(Stability)의 5가지 상태 분류 작업을 수행하였다.
 - **지표**: F1-Score와 더불어, 예측이 확실할 때(Certain)와 불확실할 때(Uncertain) 각각 예측이 정확할 확률인 $P(\text{Accurate}|\text{Certain})$ 및 $P(\text{Accurate}|\text{Uncertain})$을 측정하였다.
 
 ### 정량적 결과
+
 실험 결과, 모든 작업에서 예측의 확실성이 정확도와 밀접한 관련이 있음이 입증되었다.
 
 | Classification Task | F1-Score | $P(\text{Accurate}|\text{Certain})$ | $P(\text{Accurate}|\text{Uncertain})$ |

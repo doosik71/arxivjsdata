@@ -13,6 +13,7 @@ Open-vocabulary KWS, 특히 사용자가 직접 키워드를 정의하는 User-d
 본 논문의 핵심 아이디어는 Vision Transformer (ViT)의 Attention 메커니즘을 Multi-Layer Perceptrons (MLPs)로 대체한 MLPMixer 아키텍처를 오디오 도메인의 QbyE KWS 태스크에 적응시키는 것이다.
 
 주요 기여 사항은 다음과 같다.
+
 1. **MLPMixer의 오디오 적응**: MLPMixer를 QbyE KWS 문제에 맞게 단순하면서도 효과적으로 변형하여 제안하였다.
 2. **입력 표현의 최적화**: 오디오 데이터의 경우, 기존 MLPMixer의 패치 분할(patching) 방식보다 MFCC 특징을 직접 입력하는 방식이 훨씬 효과적임을 입증하였다.
 3. **효율성 및 성능 입증**: 제안 모델이 기존의 RNN 및 CNN 기반 SOTA 모델들보다 더 적은 파라미터 수와 연산량(MACs)을 가지면서도, 특히 소음이 심한 환경(10dB, 6dB)과 Far-field 환경에서 더 우수한 성능을 보임을 확인하였다.
@@ -27,12 +28,15 @@ Open-vocabulary KWS, 특히 사용자가 직접 키워드를 정의하는 User-d
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 시스템은 Encoder-Decoder 구조를 따른다. Encoder는 고차원의 오디오 데이터를 저차원의 임베딩으로 압축하며, Decoder는 학습 단계에서 동일 클래스의 임베딩은 가깝게, 다른 클래스는 멀게 배치하도록 유도하는 역할을 한다. 추론(Inference) 단계에서는 Decoder를 제거하고 Encoder가 생성한 임베딩 간의 거리를 비교하여 키워드 일치 여부를 결정한다.
 
 ### 입력 표현 (Input Representation)
+
 입력 데이터로 81차원의 MFCC (Mel-frequency Cepstral Coefficients) 특징을 사용한다. 1초 길이의 오디오에서 12.5ms 간격으로 추출되어, 최종적으로 $81 \times 81$ 크기의 행렬이 생성된다. 이후 시간축에 대해 CMVN (Cepstral Mean and Variance Normalization)을 적용한다. 특이사항으로, 기존 MLPMixer의 패치 분할 방식을 사용하지 않고 MFCC 특징과 시간축 전체를 모델에 직접 입력하여 계산 효율성을 높이고 정보 손실을 방지하였다.
 
 ### MLPMixer 아키텍처
+
 제안 모델은 Feature-mixing MLP 블록과 Time-mixing MLP 블록이 교차로 쌓인 구조이다.
 
 1. **Feature-mixing**: 특징 차원($f$)을 은닉 차원($h$)으로 투영했다가 다시 $f$로 복원한다.
@@ -47,17 +51,20 @@ Open-vocabulary KWS, 특히 사용자가 직접 키워드를 정의하는 User-d
    $$z = \frac{1}{t} \sum_{i=1}^{t} O_{:,i}$$
 
 ### 추론 절차 (Inference)
+
 1초의 이동 윈도우(stride 100ms)를 사용하여 임베딩을 생성한다. 등록된(enrollment) 임베딩과 쿼리 임베딩 간의 Cosine distance를 계산한다. 두 임베딩의 길이가 다를 경우, 짧은 쪽을 컨볼루션하거나 제로 패딩하여 길이를 맞춘 후 최소 거리를 구한다. 이 거리가 설정된 임계값(threshold)보다 작으면 키워드가 인식된 것으로 판단한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Librispeech(학습), Hey-Snips(평가), 내부 데이터셋(평가, 8개 키워드 및 400명 화자).
 - **환경**: Clean, 10dB Noise, 6dB Noise 환경을 각각 Non Far-Field와 Far-Field 상황으로 나누어 총 6가지 시나리오에서 테스트하였다.
 - **지표**: FA (False Acceptance) per hour가 0.3일 때의 FRR (False Rejection Rate)을 측정하였다.
 - **비교 대상**: GRU-ATTN, MobileNetV2, MobileNetV3, EfficientNetB0, ViT.
 
 ### 주요 결과
+
 1. **모델 효율성**: 제안 모델은 파라미터 수 0.25M, MACs 20.16M으로 모든 베이스라인 모델 중 가장 작은 크기와 연산량을 기록하였다. (표 1 참고)
 2. **인식 성능**:
    - **Hey-Snips**: 소음이 심한 6dB 및 Far-field 환경에서 베이스라인 대비 FRR을 각각 8.57%, 6.43% 감소시키며 가장 우수한 성능을 보였다.

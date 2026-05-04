@@ -16,6 +16,7 @@ Anurag Arnab and Philip H.S. Torr (2016)
 본 논문의 핵심 아이디어는 **Deep Higher-Order Conditional Random Fields (CRF)**를 이용하여 시맨틱 분할 결과와 객체 검출 결과를 통합하는 것이다.
 
 중심적인 설계 직관은 다음과 같다:
+
 1. **Bottom-up 접근 방식**: 먼저 이미지 전체에 대해 카테고리 수준의 시맨틱 분할을 수행한 후, 이를 인스턴스 수준으로 정제한다.
 2. **Higher-Order Detection Potentials**: 객체 검출기(Object Detector)의 출력을 CRF의 고차 포텐셜(Higher-order potential)로 삽입하여, 시맨틱 분할의 정확도를 높이는 동시에 검출기의 신뢰도 점수를 재보정(Recalibrate)한다.
 3. **Differentiable Pipeline**: 전체 시스템(CNN $\rightarrow$ CRF $\rightarrow$ Instance Identification $\rightarrow$ Instance CRF)을 완전히 미분 가능한 형태로 설계하여 end-to-end 학습이 가능하도록 구현하였다.
@@ -34,11 +35,13 @@ Anurag Arnab and Philip H.S. Torr (2016)
 전체 시스템은 크게 두 단계의 서브 네트워크로 구성된다: **End-to-end Object Segmentation Subnetwork**와 **End-to-end Instance Segmentation Subnetwork**이다.
 
 ### 1. Semantic Segmentation with Higher Order CRF
+
 먼저 Pixelwise CNN을 통해 초기 유니러리(Unary) 예측을 수행하고, 이를 Higher-Order CRF를 통해 정제한다. 이때 CRF의 에너지 함수 $E(x)$는 다음과 같이 정의된다:
 
 $$E(x) = \sum_{i} \psi_{U}^{i}(x_{i}) + \sum_{i<j} \psi_{P}^{i,j}(x_{i}, x_{j}) + \sum_{d} \psi_{Det}^{d}(x_{d}, y_{d}) + \sum_{d} \psi_{U}^{d}(y_{d})$$
 
 여기서 각 항의 역할은 다음과 같다:
+
 - $\psi_{U}^{i}$: CNN에서 예측된 픽셀 $i$의 클래스 확률(Unary potential).
 - $\psi_{P}^{i,j}$: 픽셀 간의 외관 및 공간적 일관성을 강제하는 Pairwise potential.
 - $\psi_{Det}^{d}$: 객체 검출 결과 기반의 고차 포텐셜. 검출된 객체 $d$의 전경(Foreground) 픽셀들이 해당 클래스 레이블 $l_d$를 갖도록 유도한다.
@@ -46,10 +49,10 @@ $$E(x) = \sum_{i} \psi_{U}^{i}(x_{i}) + \sum_{i<j} \psi_{P}^{i,j}(x_{i}, x_{j}) 
 
 특히, 각 검출 결과에 대해 잠재 이진 변수 $Y_d$를 도입한다. $Y_d=1$이면 해당 검출이 유효함을, $Y_d=0$이면 무효함을 의미한다. $\psi_{Det}^{d}$는 다음과 같이 정의된다:
 
-$$\psi_{Det}^{d}(X_{d}=x_{d}, Y_{d}=y_{d}) = 
-\begin{cases} 
+$$\psi_{Det}^{d}(X_{d}=x_{d}, Y_{d}=y_{d}) =
+\begin{cases}
 w_{l} s_{d} |F_{d}| \sum_{i=1}^{|F_{d}|} [x_{d}^{(i)} = l_{d}] & \text{if } y_{d}=0 \\
-w_{l} s_{d} |F_{d}| \sum_{i=1}^{|F_{d}|} [x_{d}^{(i)} \neq l_{d}] & \text{if } y_{d}=1 
+w_{l} s_{d} |F_{d}| \sum_{i=1}^{|F_{d}|} [x_{d}^{(i)} \neq l_{d}] & \text{if } y_{d}=1
 \end{cases}$$
 
 이 과정을 통해 시맨틱 분할 결과가 개선될 뿐만 아니라, CRF 추론 후의 $Y_d$ 확률값을 통해 **재보정된 검출 점수(Recalibrated detection score)**를 얻을 수 있다.
@@ -57,10 +60,10 @@ w_{l} s_{d} |F_{d}| \sum_{i=1}^{|F_{d}|} [x_{d}^{(i)} \neq l_{d}] & \text{if } y
 ### 2. Instance Identification and Refinement
 시맨틱 분할 결과와 재보정된 검출 점수를 이용하여 픽셀을 특정 인스턴스 $k$에 할당한다. 픽셀 $i$가 인스턴스 $k$에 속할 확률 $\Pr(v_i = k)$는 다음과 같다:
 
-$$\Pr(v_{i}=k) = 
-\begin{cases} 
+$$\Pr(v_{i}=k) =
+\begin{cases}
 \frac{1}{Z(Y,Q)} Q_{i}(l_{k}) \Pr(Y_{k}=1) & \text{if } i \in B_{k} \\
-0 & \text{otherwise} 
+0 & \text{otherwise}
 \end{cases}$$
 
 여기서 $B_k$는 $k$번째 검출기의 Bounding Box이며, $Q_i(l_k)$는 이전 단계에서 얻은 시맨틱 분할 확률이다. 이렇게 얻은 확률값은 다시 한번 **Instance CRF**의 유니러리 포텐셜로 사용되어, 최종적인 인스턴스 분할 맵을 생성한다. 이 Instance CRF는 이미지마다 검출된 객체 수 $D$에 따라 레이블 수가 변하는 **Dynamic CRF** 구조를 가진다.
@@ -73,7 +76,7 @@ $$\Pr(v_{i}=k) =
 - **구현**: VGG-16 기반의 Fully Convolutional Network (FCN)를 백본으로 사용하고 Faster R-CNN 검출기를 활용하였다.
 
 ### 주요 결과
-1. **Detection Potentials의 효과**: 
+1. **Detection Potentials의 효과**:
    - Detection potentials를 제거했을 때보다 $\text{AP}_r$ (IoU=0.5) 기준 약 3.7% 성능이 하락하였다.
    - 단순히 시맨틱 분할 성능만 높이는 것이 아니라, $Y$ 변수를 통한 점수 재보정이 인스턴스 식별 단계에서 중요한 역할을 함을 확인하였다.
 
@@ -83,13 +86,13 @@ $$\Pr(v_{i}=k) =
 
 ## 🧠 Insights & Discussion
 
-**강점**: 
+**강점**:
 본 연구는 시맨틱 분할과 객체 검출이라는 두 가지 독립적인 태스크의 강점을 CRF라는 구조 속에 효과적으로 통합하였다. 특히 Bottom-up 방식을 채택함으로써 초기 Proposal의 품질에 종속되는 문제를 해결하였고, 높은 IoU 임계값에서 우수한 성능을 보임으로써 픽셀 수준의 정밀도를 확보하였다.
 
 **한계 및 비판적 해석**:
 실험 결과에서 나타나듯, 시각적으로 매우 유사한 객체들이 서로 겹쳐 있거나(Occlusion) 강하게 중첩된 경우, 인스턴스를 개별적으로 분리하는 데 어려움을 겪는 모습이 관찰되었다. 이는 현재의 방식이 객체 간의 기하학적 관계나 깊이 정보보다는 픽셀의 외관과 바운딩 박스 정보에 주로 의존하기 때문으로 해석된다.
 
-**결론**: 
+**결론**:
 본 논문은 Dynamic CRF를 신경망의 레이어로 삽입하여 end-to-end로 학습 가능하게 함으로써, 인스턴스 분할 문제를 효율적으로 해결할 수 있는 가능성을 제시하였다.
 
 ## 📌 TL;DR

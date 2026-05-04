@@ -25,9 +25,11 @@ Yaxuan Song, Jianan Fan, Dongnan Liu, Weidong Cai (2024/2025)
 ## 🛠️ Methodology
 
 ### 1. 문제 정의 및 설정
+
 $N$개의 소스 도메인에서 학습된 모델 족(Model zoo) $\{\theta_S^j\}_{j=1}^N$과 라벨이 없는 타겟 데이터셋 $D_T = \{x_i^T\}_{i=1}^{n_T}$가 주어진 상태에서, 타겟 분류 모델 $\theta_T$를 학습시키는 것을 목표로 한다.
 
 ### 2. 신뢰도 측정 지표: Margin
+
 모델의 예측 신뢰도를 측정하기 위해 Margin $M$을 사용한다. Margin은 Softmax 결과값 중 가장 확률이 높은 클래스와 두 번째로 높은 클래스의 차이로 정의된다.
 
 $$M = \text{Top}_1(\delta(\theta(x))) - \text{Top}_2(\delta(\theta(x)))$$
@@ -35,6 +37,7 @@ $$M = \text{Top}_1(\delta(\theta(x))) - \text{Top}_2(\delta(\theta(x)))$$
 여기서 $\delta(\cdot)$는 Softmax 함수를 의미한다. Margin 값이 클수록 해당 모델이 해당 인스턴스에 대해 더 확신을 가지고 예측한 것으로 간주한다.
 
 ### 3. Model-level UAD (초기화 단계)
+
 부적절한 소스 모델로 인한 Negative transfer를 방지하기 위해, 타겟 도메인 전체 데이터에 대해 가장 높은 평균 신뢰도를 보이는 모델을 선택하여 초기 모델 $\theta_T$로 설정한다.
 
 각 소스 모델 $\theta_S^j$의 평균 신뢰도 $M_j$는 다음과 같다.
@@ -45,6 +48,7 @@ $$\epsilon = \arg \max([M_j]_{j=1}^N)$$
 $$\theta_T \leftarrow \theta_S^*$$
 
 ### 4. Instance-level UAD (학습 단계)
+
 타겟 데이터의 각 인스턴스 $x_i^T$에 대해, 모델 족 내에서 가장 높은 Margin을 가진 모델을 선택하여 pseudo-label $\hat{y}_i^T$를 생성한다.
 
 $$\epsilon^i = \arg \max([M_i]_{j=1}^N)$$
@@ -55,6 +59,7 @@ $$\hat{y}_i^T = \theta_{\epsilon^i}(x_i^T)$$
 $$\mathcal{L}_{tar} = -\mathbb{E}_{(x_T, \hat{y}_T) \in X_T \times \hat{Y}_T} \sum_{k=1}^K \mathbb{1}[k = \hat{y}_T] \log \delta_k(\theta_T(x_T))$$
 
 ### 5. Temperature Scaling (TS)
+
 모델의 예측 확률과 실제 정확도 사이의 불일치(Mismatch)를 해결하기 위해 Logit을 보정한다. 각 소스 모델에 대해 온도 파라미터 $T_j$를 도입하여 다음과 같이 보정된 Logit $z_j$를 계산한다.
 
 $$z_j = \theta_S^j(x_i^T) / T_j$$
@@ -65,22 +70,24 @@ $$\text{ECE} = \sum_{m=1}^M \frac{|B_m|}{n_T} |\text{acc}(B_m) - \text{conf}(B_m
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**:
-    - Diabetic Retinopathy (DR): APTOS 2019, DDR, IDRiD (3개 도메인)
-    - Skin Cancer (HAM10000): 신체 부위(Back, Face, Lower extremity, Upper extremity)별 4개 도메인
+  - Diabetic Retinopathy (DR): APTOS 2019, DDR, IDRiD (3개 도메인)
+  - Skin Cancer (HAM10000): 신체 부위(Back, Face, Lower extremity, Upper extremity)별 4개 도메인
 - **백본**: DenseNet-121
 - **비교 대상**: AaD (Multi-source 확장 버전), DECISION, CAiDA
 - **지표**: Adaptation Accuracy (%)
 
 ### 주요 결과
+
 실험 결과, 제안된 UAD 방법론이 모든 데이터셋에서 기존 baseline들을 유의미하게 상회하는 성능을 보였다.
 
 - **정량적 결과**: DR 데이터셋과 HAM10000 데이터셋 모두에서 평균 정확도가 가장 높게 나타났다. 특히 타겟 도메인의 특성이 까다로운 경우(예: DR의 I 도메인, HAM10000의 F 도메인)에 더 큰 성능 향상을 보였다.
 - **Ablation Study 결과**:
-    - **M-UAD만 적용**: Baseline 대비 약 5%의 평균 성능 향상이 있었으며, 이는 적절한 모델 초기화의 중요성을 보여준다.
-    - **I-UAD만 적용**: M-UAD보다 더 높은 정확도를 보였으며, 고품질 pseudo-label의 효과를 입증한다.
-    - **M-UAD + I-UAD**: 두 방법을 동시에 적용했을 때 시너지 효과가 발생하여 성능이 더욱 향상되었다.
-    - **TS 적용**: Temperature Scaling을 추가했을 때, 특히 정확도가 낮았던 도메인에서 뚜렷한 성능 개선이 확인되어 신뢰도 보정의 필요성이 입증되었다.
+  - **M-UAD만 적용**: Baseline 대비 약 5%의 평균 성능 향상이 있었으며, 이는 적절한 모델 초기화의 중요성을 보여준다.
+  - **I-UAD만 적용**: M-UAD보다 더 높은 정확도를 보였으며, 고품질 pseudo-label의 효과를 입증한다.
+  - **M-UAD + I-UAD**: 두 방법을 동시에 적용했을 때 시너지 효과가 발생하여 성능이 더욱 향상되었다.
+  - **TS 적용**: Temperature Scaling을 추가했을 때, 특히 정확도가 낮았던 도메인에서 뚜렷한 성능 개선이 확인되어 신뢰도 보정의 필요성이 입증되었다.
 
 ## 🧠 Insights & Discussion
 

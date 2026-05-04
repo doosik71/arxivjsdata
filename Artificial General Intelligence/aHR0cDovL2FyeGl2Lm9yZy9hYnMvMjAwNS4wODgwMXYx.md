@@ -23,6 +23,7 @@ Samuel Allen Alexander (2020)
 ## 🛠️ Methodology
 
 ### 1. 직관적 서수 표기법 (Intuitive Ordinal Notation System)
+
 저자는 AGI의 프로그래밍 능력을 추상화하기 위해 $\text{Intuitive Ordinal Notations (ION)}$라는 집합 $P$를 정의한다.
 
 - **정의**: $P$는 다음과 같은 컴퓨터 프로그램들의 최소 집합이다.
@@ -34,12 +35,14 @@ $$|x| = \text{the smallest ordinal } \alpha \text{ such that } \alpha > |y| \tex
 예를 들어, 아무것도 출력하지 않는 프로그램 $P_0$는 $|P_0|=0$이며, $P_0$를 출력하는 프로그램 $P_1$은 $|P_1|=1$이 된다. 무한 루프를 통해 $P_0, P_1, P_2, \dots$를 계속 출력하는 프로그램 $P_\omega$는 $|P_\omega|=\omega$라는 값을 갖게 된다.
 
 ### 2. 직관적 서수 지능 (Intuitive Ordinal Intelligence)
+
 진실한 AGI $X$의 지능 $|X|$는 다음과 같이 정의된다.
 $$|X| = \text{the smallest ordinal } |X| \text{ such that } |X| > |p| \text{ for every ION } p \text{ that } X \text{ knows to be an ION}$$
 
 즉, AGI가 인지하고 있는 서수 표기법들 중 가장 큰 값보다 더 큰 서수가 해당 AGI의 지능 지수가 된다.
 
 ### 3. 주요 정리 및 증명
+
 **Theorem 7**: 진실한 AGI $X$가 진실한 AGI $Y$를 생성하고, $X$가 $Y$의 코드와 진실성을 알고 있다면 $|X| > |Y|$이다.
 
 - **증명 핵심**: $Y$가 생성할 수 있는 가장 큰 서수 표기법들의 리스트 $L$이 있다면, $X$는 $Y$의 코드를 알고 있으므로 $L$을 생성하는 프로그램 $P$를 유도할 수 있다. $X$는 $P$가 ION임을 알게 되므로 $|X| > |P|$가 성립한다. 이때 $|P|$는 곧 $|Y|$와 같으므로, $|X| > |Y|$라는 결론이 도출된다.
@@ -59,13 +62,16 @@ $$|X| = \text{the smallest ordinal } |X| \text{ such that } |X| > |p| \text{ for
 ## 🧠 Insights & Discussion
 
 ### 지능 측정의 타당성
+
 저자는 Definition 6이 지능의 유일한 척도는 아니지만, 패턴 인식, 창의성, 일반화 능력을 요구하는 '사다리'와 같다고 설명한다. 더 높은 서수를 표기하기 위해서는 단순 반복이 아닌 새로운 수학적 사실이나 기법의 창조적 발견이 필요하기 때문이다.
 
 ### 한계 및 반론에 대한 답변
+
 1. **자기 복제 문제**: AGI가 자신의 코드를 복사하여 동일한 지능의 자식을 만들 수 있지 않은가 하는 의문에 대해, 저자는 괴델의 불완전성 정리(Gödel's Incompleteness Theorems)를 인용하여 진실한 AGI가 자신의 코드와 진실성을 동시에 완전히 알 수는 없다고 반박한다.
 2. **시뮬레이션 비용**: $X$가 $Y$를 시뮬레이션하는 데 비용이 너무 많이 든다면 정리가 깨지지 않는가 하는 지적에 대해, 본 증명은 실행(Execution)이 아니라 코드의 조작과 추론(Reasoning about code)에 기반하므로 계산 비용과 무관하다고 주장한다.
 
 ### 비판적 해석
+
 본 논문은 매우 이상적인 '진실한(truthful) AGI'와 '서수 지능'이라는 특수한 척도를 가정하고 있다. 실제 딥러닝 기반의 AI는 확률적 모델이며 명시적인 소스 코드 형태의 논리 체계로만 작동하지 않으므로, 이 이론을 현대의 LLM이나 신경망 기반 AGI에 그대로 적용하기에는 간극이 존재한다. 그러나 지능의 '계층적 구조'와 '협력의 필요성'이라는 관점은 매우 통찰력 있다.
 
 ## 📌 TL;DR

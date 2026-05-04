@@ -14,9 +14,9 @@ Chongyang Zhao, Dong Gong (2024)
 
 본 논문의 핵심 기여는 Selective State Space Model (SSM)인 Mamba를 MCL 프레임워크에 도입하여 **MambaCL**을 제안한 것이다. 주요 설계 아이디어는 다음과 같다.
 
-1.  **Mamba 기반의 MCL 구현**: Mamba의 고정된 크기 hidden state와 선형 시간 복잡도를 활용하여, KV 캐시 없이도 효율적으로 데이터를 압축하고 학습하는 Continual Learner를 설계하였다.
-2.  **Selectivity Regularization 도입**: Mamba는 Transformer와 달리 명시적인 Attention 메커니즘이 없어 메타 학습 시 수렴이 어렵고 학습 속도가 느리다. 이를 해결하기 위해 SSM, Linear Transformer, 그리고 Vanilla Transformer 사이의 수학적 관계를 이용하여, 모델의 선택적 행동(selectivity behavior)을 가이드하는 정규화 항을 도입하였다.
-3.  **다양한 일반화 시나리오 검증**: 단순한 MCL 설정을 넘어, 학습 시 보지 못한 긴 시퀀스 길이, 심한 도메인 시프트(Domain Shift), 노이즈 섞인 입력 등 실제 환경에 가까운 시나리오에서 Mamba의 강건성(Robustness)을 입증하였다.
+1. **Mamba 기반의 MCL 구현**: Mamba의 고정된 크기 hidden state와 선형 시간 복잡도를 활용하여, KV 캐시 없이도 효율적으로 데이터를 압축하고 학습하는 Continual Learner를 설계하였다.
+2. **Selectivity Regularization 도입**: Mamba는 Transformer와 달리 명시적인 Attention 메커니즘이 없어 메타 학습 시 수렴이 어렵고 학습 속도가 느리다. 이를 해결하기 위해 SSM, Linear Transformer, 그리고 Vanilla Transformer 사이의 수학적 관계를 이용하여, 모델의 선택적 행동(selectivity behavior)을 가이드하는 정규화 항을 도입하였다.
+3. **다양한 일반화 시나리오 검증**: 단순한 MCL 설정을 넘어, 학습 시 보지 못한 긴 시퀀스 길이, 심한 도메인 시프트(Domain Shift), 노이즈 섞인 입력 등 실제 환경에 가까운 시나리오에서 Mamba의 강건성(Robustness)을 입증하였다.
 
 ## 📎 Related Works
 
@@ -32,20 +32,25 @@ Transformer는 Attention 메커니즘을 통해 우수한 성능을 보이지만
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 MambaCL은 메타 학습된 Mamba 모델 $f_\theta(\cdot)$가 온라인 데이터 스트림을 처리하며 hidden state를 업데이트하고, 이를 통해 테스트 샘플에 대한 예측을 수행하는 구조이다. 전체 과정은 다음과 같은 시퀀스 예측 문제로 공식화된다:
 $$(x^{train}_1, y^{train}_1, \dots, x^{train}_T, y^{train}_T, x^{test}_k) \rightarrow y^{test}_k$$
 
 ### Mamba 및 SSM의 적용
+
 Mamba는 입력에 따라 변하는 파라미터를 가진 Selective SSM을 사용한다. 기본적으로 SSM은 다음과 같은 상태 방정식으로 표현된다:
 $$h_t = A^t h_{t-1} + B^t z_t, \quad u_t = C^t h_t + D z_t$$
 여기서 $h_t$는 고정된 크기의 hidden state이며, $A^t, B^t, C^t$는 입력 토큰 $z_t$에 따라 동적으로 생성되는 파라미터이다. MambaCL은 각 입력 차원별로 독립적인 SSM을 적용하여 정보를 압축하고 저장함으로써 Transformer의 KV 캐시 없이도 컨텍스트를 유지한다.
 
 ### 학습 목표 및 손실 함수
+
 모델의 파라미터 $\theta$는 다음과 같은 메타 학습 목적 함수를 통해 최적화된다:
 $$\min_\theta \mathbb{E}_{(D^{train}, D^{test}) \sim P(X,Y)} \sum_{(x^{test}, y^{test}) \in D^{test}} \ell(f_\theta((D^{train}, x^{test})), y^{test})$$
 
 ### Selectivity Regularization
-Mamba의 학습 안정성을 높이기 위해, 쿼리 토큰과 관련된 이전 토큰들 사이의 연관성을 강제하는 정규화 항 $\ell_{slct}$를 추가한다. 
+
+Mamba의 학습 안정성을 높이기 위해, 쿼리 토큰과 관련된 이전 토큰들 사이의 연관성을 강제하는 정규화 항 $\ell_{slct}$를 추가한다.
+
 - **연관성 지표**: 정답 레이블이 같은 샘플들 간의 관계를 나타내는 ground truth 벡터 $p$를 정의한다.
 - **Mamba의 연관성**: Mamba의 파라미터 $C^t$와 $B^t$ 사이의 관계를 통해 모델이 내부적으로 생성하는 연관성 패턴 $q^{Mamba}$를 유도한다.
 - **손실 함수**: KL Divergence를 사용하여 모델의 예측 패턴과 실제 정답 패턴 사이의 차이를 최소화한다.
@@ -55,14 +60,16 @@ $$\ell_{slct}((x,y)) = KL(p_{idx((x,y))}, q^*_{idx((x,y))})$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Cifar-100, ImageNet-1K, Celeb, Omniglot (일반 분류), CUB-200, Stanford Dogs/Cars (세밀 분류), DomainNet (도메인 시프트), Sine wave/Rotation (회귀).
 - **비교 대상**: OML, Vanilla Transformer, Linear Transformer, Performer.
 - **평가 지표**: 분류 정확도(%) 및 회귀 오차(MSE).
 
 ### 주요 결과
-1.  **분류 성능**: 일반 이미지 분류 및 세밀 분류(Fine-grained) 작업 모두에서 MambaCL은 Linear Transformer와 Performer를 압도하며, Vanilla Transformer와 대등하거나 더 높은 성능을 보였다. 특히 세밀 분류 작업(Table 3)에서 Mamba의 우위가 뚜렷하게 나타났다.
-2.  **효율성**: MambaCL은 Transformer보다 훨씬 적은 파라미터 수를 가지며(Mamba 5.4M vs TF 9.2M), 추론 속도는 약 2.6배 더 빠르다(858 ep/s vs 325 ep/s).
-3.  **일반화 능력 (Generalization)**:
+
+1. **분류 성능**: 일반 이미지 분류 및 세밀 분류(Fine-grained) 작업 모두에서 MambaCL은 Linear Transformer와 Performer를 압도하며, Vanilla Transformer와 대등하거나 더 높은 성능을 보였다. 특히 세밀 분류 작업(Table 3)에서 Mamba의 우위가 뚜렷하게 나타났다.
+2. **효율성**: MambaCL은 Transformer보다 훨씬 적은 파라미터 수를 가지며(Mamba 5.4M vs TF 9.2M), 추론 속도는 약 2.6배 더 빠르다(858 ep/s vs 325 ep/s).
+3. **일반화 능력 (Generalization)**:
     - **시퀀스 길이**: 학습 시보다 더 긴 시퀀스(더 많은 태스크나 샷 수)가 들어왔을 때, Transformer는 성능이 급격히 하락(Meta-overfitting)하는 반면, Mamba는 상대적으로 완만한 성능 저하를 보이며 강건함을 입증했다.
     - **도메인 시프트**: DomainNet 데이터셋 실험에서 Mamba는 학습 데이터와 분포가 크게 다른 도메인(예: Quickdraw)에서도 Transformer보다 높은 적응력을 보였다.
     - **노이즈 강건성**: 입력 임베딩에 가우시안 노이즈를 추가했을 때, Transformer는 성능이 급락했으나 Mamba는 높은 정확도를 유지했다.

@@ -28,9 +28,11 @@ Hongpeng Pan, Shifeng Yi, Shouwei Yang, Lei Qi, Bing Hu, Yi Xu, Yang Yang (2024)
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인
+
 VLM+의 전체 프로세스는 **[개념 정렬(Concept Alignment) $\rightarrow$ 의사 라벨 생성 $\rightarrow$ 반복적 모델 최적화]** 순으로 진행된다.
 
 ### 2. 개념 정렬 (Concept Alignment)
+
 VLM이 클래스 명칭의 모호함으로 인해 대상을 잘못 인식하는 문제를 해결하기 위해 다음 절차를 수행한다.
 
 1. **참조 표현 생성**: 학습 세트의 이미지에 정답 바운딩 박스를 표시한 후, GPT-4에 "빨간 박스 안의 객체에 대한 5가지 묘사 용어를 제공하라"고 요청하여 각 카테고리별 묘사 프롬프트를 얻는다.
@@ -41,6 +43,7 @@ VLM이 클래스 명칭의 모호함으로 인해 대상을 잘못 인식하는 
 4. **최종 선택**: 가장 높은 정확도를 기록한 참조 표현 $T^{c*}_{i}$를 해당 클래스의 대표 표현으로 선택한다.
 
 ### 3. 반복적 의사 라벨 최적화 (Iterative Pseudo-label Optimization)
+
 최적화된 참조 표현을 사용하여 모델의 성능을 점진적으로 향상시킨다.
 
 1. **초기 생성**: 최적의 참조 표현을 사용하여 레이블이 없는 데이터에 대해 초기 의사 라벨을 생성한다. 이때 신뢰도 점수가 임계값 $\eta$ (본 논문에서는 0.3)를 초과하는 경우에만 라벨로 인정한다.
@@ -49,7 +52,9 @@ VLM이 클래스 명칭의 모호함으로 인해 대상을 잘못 인식하는 
 4. **반복**: 수렴 조건에 도달하거나 정해진 반복 횟수까지 학습과 정제 과정을 반복한다.
 
 ### 4. 손실 함수 (Loss Function)
+
 학습 시에는 다음과 같은 손실 함수들의 가중치 합을 사용한다.
+
 - **Focal Loss**: 클래스 불균형 문제를 해결하기 위해 사용하며, 가중치는 1.0이다.
 - **Box L1 Loss**: 바운딩 박스의 좌표 오차를 줄이기 위해 사용하며, 가중치는 5.0이다.
 - **GIOU Loss**: 박스 간의 겹침 정도를 최적화하며, 가중치는 2.0이다.
@@ -58,11 +63,13 @@ VLM이 클래스 명칭의 모호함으로 인해 대상을 잘못 인식하는 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: CVPR2024 Foundational Few-Shot Object Detection Challenge 제공 데이터.
 - **비교 모델**: GLIP, Grounding DINO (Zero-shot 및 VLM+ 적용 버전).
 - **평가 지표**: mAP (mean Average Precision).
 
 ### 정량적 결과
+
 실험 결과, VLM+ 프레임워크를 적용했을 때 모든 모델에서 성능 향상이 나타났다. 특히 Grounding DINO에서 그 효과가 두드러졌다.
 
 | Methods | mAP |
@@ -74,6 +81,7 @@ VLM이 클래스 명칭의 모호함으로 인해 대상을 잘못 인식하는 
 | **Grounding DINO +** | **32.56** |
 
 ### 분석 및 사례 연구
+
 - **개념 정렬 효과**: Table 1에 따르면 'debris' 클래스의 경우, 단순 클래스 명칭을 사용했을 때의 정확도는 0이었으나, "indicator warning board with wooden frame"이라는 참조 표현을 사용했을 때 정확도가 0.7까지 상승하였다.
 - **시각적 확인**: Figure 4의 사례 연구에서 'personal mobility'나 'pushable pullable' 같은 모호한 용어 대신 'small kick scooter'나 'pushable pullable garbage container'와 같은 구체적인 표현을 사용했을 때 VLM이 훨씬 더 정확하게 객체를 검출함을 확인하였다.
 

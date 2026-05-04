@@ -10,13 +10,14 @@ Nicolás Gaggion, Rodrigo Echeveste, Lucas Mansilla, Diego H. Milone, and Enzo F
 
 ## ✨ Key Contributions
 
-본 연구의 핵심 아이디어는 정답지가 없는 데이터의 분할 품질을 추정하기 위해 **Reverse Classification Accuracy (RCA)** 프레임워크를 활용하는 것이다. 
+본 연구의 핵심 아이디어는 정답지가 없는 데이터의 분할 품질을 추정하기 위해 **Reverse Classification Accuracy (RCA)** 프레임워크를 활용하는 것이다.
 
 RCA는 추론된 분할 결과물을 가상의 정답으로 간주하고 이를 역으로 활용하여 품질을 측정하는 방식이다. 저자들은 이를 의료 영상 분할 영역에 적용하여, 서로 다른 인구통계학적 그룹 간의 RCA 점수 차이를 계산함으로써 정답 데이터 없이도 모델의 성능 격차, 즉 편향의 존재 여부와 방향성을 감지할 수 있음을 입증하였다.
 
 ## 📎 Related Works
 
 기존에는 정답 마스크 없이 분할 성능을 추정하기 위해 다음과 같은 방법들이 제안되었다.
+
 - **Predictive Uncertainty**: 예측의 불확실성이 높은 픽셀이 오류일 가능성이 높다는 가설에 기반한다. 그러나 이는 모델 자체의 불확실성 추정 능력에 크게 의존한다는 한계가 있다.
 - **Learning-based Approach**: 영상과 예측 마스크 쌍을 입력받아 Dice-Sørensen coefficient (DSC) 점수를 직접 예측하는 별도의 CNN을 학습시키는 방법이다. 이는 모델에 구애받지 않는 장점이 있지만, DSC 예측을 위한 추가적인 CNN 학습이 필요하다.
 
@@ -25,6 +26,7 @@ RCA는 추론된 분할 결과물을 가상의 정답으로 간주하고 이를 
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 RCA 프레임워크
+
 대상 이미지 $I$와 모델 $M$에 의해 예측된 분할 마스크 $S_I$가 있을 때, 정답 데이터가 없는 상태에서 $S_I$의 품질을 추정하는 과정은 다음과 같다.
 
 1. **참조 데이터베이스 구축**: 정답 마스크 $S_{GT}^{J_i}$가 존재하는 참조 이미지 집합 $\{J, S_{GT}^J\}_k$를 준비한다.
@@ -35,12 +37,15 @@ RCA는 추론된 분할 결과물을 가상의 정답으로 간주하고 이를 
 $$\text{DSC}_{\text{RCA}}(I, S_I, \{J, S_{GT}^J\}_k) = \frac{\sum_{k} \text{DSC}(\hat{S}_{J_k}, S_{GT}_{J_k})}{k}$$
 
 ### Deep Registration Networks를 이용한 구현
+
 계산 시간을 단축하고 정확도를 높이기 위해 저자들은 다음과 같은 딥러닝 기반 등록 네트워크를 제안한다.
+
 - **Top-k Selection**: 모든 참조 이미지와 등록을 수행하는 대신, 아틀라스와 가장 유사한 상위 $k$개의 이미지만 선택한다.
 - **Affine Registration**: Siamese 아키텍처의 CNN 인코더와 완전 연결 계층(FC layers)을 통해 2D 아핀 변환 파라미터를 빠르게 학습하여 1차 정렬을 수행한다.
 - **Dense Registration**: ACNN-RegNet(Anatomically Constrained Deformable Registration Network)을 사용하여 세밀한 비정형 변형 필드를 추정하고 최종적으로 마스크를 워핑(warp)한다.
 
 ### 비지도 편향 발견 (UBD) 절차
+
 특정 인구통계학적 속성 $A$(예: 성별)에 대한 편향을 측정하기 위해, 각 그룹의 $\text{DSC}_{\text{RCA}}$ 평균값을 비교한다. 성별을 예로 들면, 남성 그룹($A=M$)과 여성 그룹($A=F$)의 점수 차이인 $\Delta \text{DSC}_{\text{RCA}}$를 계산한다.
 $$\Delta \text{DSC}_{\text{RCA}} = \text{DSC}_{\text{RCA}}^{A=M} - \text{DSC}_{\text{RCA}}^{A=F}$$
 이 값의 부호와 크기를 통해 어떤 집단에 대해 모델이 더 편향되어 있는지(성능이 더 낮은지)를 판단한다.
@@ -48,16 +53,18 @@ $$\Delta \text{DSC}_{\text{RCA}} = \text{DSC}_{\text{RCA}}^{A=M} - \text{DSC}_{\
 ## 📊 Results
 
 ### 실험 설정
+
 - **작업**: 흉부 X-ray 영상에서의 폐(lung) 및 심장(heart) 분할.
 - **데이터셋**: JSRT, Montgomery, Shenzhen, Padchest 등 총 911장의 이미지.
 - **모델**: UNet (Soft Dice 및 Cross-entropy 손실 함수 사용).
 - **지표**: 실제 $\Delta \text{DSC}$와 추정된 $\Delta \text{DSC}_{\text{RCA}}$ 간의 상관관계.
 
 ### 정량적 결과
-1. **합성 실험 (Synthetic Experiment)**: 
+
+1. **합성 실험 (Synthetic Experiment)**:
    다양한 학습 단계의 체크포인트 모델들을 조합하여 인위적으로 성능 차이를 만들어낸 후 검증하였다. 실험 결과, $\text{DSC}_{\text{RCA}}$는 실제 편향과 매우 높은 상관관계를 보였다. 특히 편향의 크기가 0.02 이상인 경우, 폐 분할에서는 100%, 심장 분할에서는 96%의 확률로 편향의 방향(부호)을 정확히 예측하였다.
 
-2. **실제 실험 (Real Experiment)**: 
+2. **실제 실험 (Real Experiment)**:
    남성 데이터로만 학습한 모델과 여성 데이터로만 학습한 모델을 구축하여 실제 편향을 측정하였다. 흥미롭게도 학습 데이터의 구성과 상관없이 모델들이 대체로 여성 환자에게서 더 높은 성능을 보이는 경향이 발견되었다. $\Delta \text{DSC}_{\text{RCA}}$는 이러한 실제 성능 격차를 강하게 반영하며 상관관계를 보였다.
 
 ## 🧠 Insights & Discussion

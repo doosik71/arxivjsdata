@@ -23,13 +23,16 @@ Caroline Wang, Daniel Kasenberg, Kim Stachenfeld, and Pablo Samuel Castro (2026)
 ## 🛠️ Methodology
 
 ### 1. 실험 환경: Iterated Rock-Paper-Scissors (IRPS)
+
 연구팀은 가위바위보 게임을 300라운드 동안 반복하는 IRPS를 테스트베드로 설정하였다. 승리는 3점, 무승부는 0점, 패배는 -1점을 부여한다. 상대역으로는 단순한 규칙을 따르는 '비적응형(nonadaptive) 봇'과 상대의 패턴을 추적하는 '적응형(adaptive) 봇' 등 총 15종의 봇을 사용하였다.
 
 ### 2. 데이터셋 구성
+
 - **Human Dataset**: Brockbank와 Vul(2024)이 수집한 411명의 인간 참가자 데이터(총 129,087회 선택)를 사용하였다.
 - **LLM Datasets**: 인간과 동일한 조건(프롬프트, 보상 체계 등)을 부여하여 Gemini 2.5 Pro, Gemini 2.5 Flash, GPT 5.1, 그리고 오픈소스 모델인 GPT OSS 120B의 데이터를 수집하였다.
 
 ### 3. AlphaEvolve를 이용한 행동 모델 발견
+
 `AlphaEvolve`는 LLM을 사용하여 수학적 목적 함수를 최대화하는 파이썬 프로그램을 생성하고 진화시키는 도구이다.
 
 **가. 문제 정의 (Behavior Modeling)**
@@ -41,6 +44,7 @@ $$\theta^* = \arg\min_{\theta} \sum_{i=1}^{N} \sum_{t=1}^{T-1} -\log \Pr(a_{i,t+
 
 **다. 다목적 최적화 (Multi-objective Optimization)**
 단순히 예측 정확도만 높이면 오버피팅이 발생하고 모델이 복잡해져 해석력이 떨어진다. 따라서 본 연구는 다음 두 가지를 동시에 최적화하는 Pareto frontier를 탐색한다.
+
 1. **교차 검증된 가능도 (Cross-validated Likelihood)**: 예측 성능 측정.
 2. **Halstead Effort**: 프로그램의 연산자와 피연산자 수를 기반으로 한 코드 복잡도 측정.
 
@@ -51,13 +55,16 @@ $$\text{SBB}(\epsilon) \in \arg\max_{f \in PF(\hat{\Phi})} \{s(f) \mid \ell(f) >
 ## 📊 Results
 
 ### 1. 승률 분석 (Win Rates)
+
 - **정량적 결과**: Gemini 2.5 Pro/Flash와 GPT 5.1 같은 frontier 모델들은 인간보다 훨씬 높은 승률을 기록하였으며, 특히 복잡한 봇을 상대로 더 빠르게 적응하여 최적 승률에 도달하였다.
 - **특이사항**: GPT OSS 120B는 시간이 지남에 따라 오히려 승률이 감소하는 경향을 보였는데, 이는 긴 컨텍스트에서의 정보 합성 능력이 부족하기 때문으로 분석된다.
 
 ### 2. 모델 적합도 비교 (Quality-of-fit)
+
 AlphaEvolve로 발견된 프로그램들은 기존의 BGT 모델인 CS-EWA(Contextual Sophisticated EWA)보다 유의미하게 높은 예측 성능을 보였으며, 블랙박스 모델인 GRU(RNN)와 비슷하거나 더 나은 성능을 기록하였다. 이는 AlphaEvolve가 해석 가능성을 유지하면서도 높은 예측력을 가진 구조를 성공적으로 찾아냈음을 시사한다.
 
 ### 3. 구조적 차이 분석 (SBB 프로그램 분석)
+
 발견된 SBB 프로그램들을 분석한 결과, 모든 에이전트가 **가치 기반 학습(Value-based learning)**과 **상대 모델링(Opponent Modeling)**이라는 두 가지 핵심 요소를 공통적으로 사용하고 있었다. 그러나 상대 모델링의 구현 수준에서 결정적인 차이가 나타났다.
 
 - **인간 및 GPT OSS 120B**: 1차원(1D) 모델을 사용하여 단순히 상대방이 어떤 수를 얼마나 자주 냈는지(frequency)만을 추적한다.
@@ -69,6 +76,7 @@ AlphaEvolve로 발견된 프로그램들은 기존의 BGT 모델인 CS-EWA(Conte
 본 연구는 frontier LLM들이 인간보다 더 정교한 **마음 이론(Theory of Mind, ToM)** 능력을 갖추고 있음을 시사한다. 구체적으로, 인간은 상대의 단순 빈도만을 보는 반면, 최신 LLM들은 상대의 전략적 패턴(전이 확률)을 인식하고 이를 이용해 최적의 대응책을 계산하는 더 깊은 수준의 전략적 사고를 수행한다.
 
 **강점 및 한계**:
+
 - **강점**: 블랙박스 모델의 내부를 추측하는 대신, 행동 데이터를 통해 역으로 해석 가능한 심볼릭 모델을 도출함으로써 객관적인 구조적 비교를 가능하게 했다.
 - **한계**: 본 연구는 IRPS라는 특정 게임에 국한되었으며, 전문가 수준의 인간 플레이어까지는 포함하지 않았다. 따라서 모든 인간이 LLM보다 전략적 깊이가 얕다고 단정할 수는 없다.
 

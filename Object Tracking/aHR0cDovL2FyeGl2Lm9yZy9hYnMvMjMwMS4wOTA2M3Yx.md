@@ -16,9 +16,9 @@ Yucheng Huang, Eksan Firkat, Ziwang Xiao, Jihong Zhu, Askar Hamdulla (2023)
 
 본 논문의 핵심 아이디어는 Transformer의 Self-attention 및 Cross-attention 메커니즘을 도입하여 Siamese 네트워크의 인코더와 디코더를 강화하는 것이다.
 
-1.  **Spatio-Temporal (ST) Fusion Module**: 고립된 비디오 프레임 간의 관계를 연결하여 풍부한 시간적 단서(Temporal Cues)를 통합한다. 이를 통해 객체의 변형이나 가려짐과 같은 외형 변화에 대한 강건성을 높인다.
-2.  **Discriminative Augmentation (DA) Module**: 템플릿과 검색 영역(Search Region) 간의 시맨틱 유사성을 분석하여 검색 영역의 특징을 강화한다. 이를 통해 배경 clutter 속에서도 타겟을 명확히 구분하는 변별력을 향상시킨다.
-3.  **Label Assignment 수정**: 기존의 IoU 기반 앵커 레이블 할당 방식을 중심 거리(Center Distance) 기반 방식으로 변경하여 객체 위치 추정의 신뢰도를 높였다.
+1. **Spatio-Temporal (ST) Fusion Module**: 고립된 비디오 프레임 간의 관계를 연결하여 풍부한 시간적 단서(Temporal Cues)를 통합한다. 이를 통해 객체의 변형이나 가려짐과 같은 외형 변화에 대한 강건성을 높인다.
+2. **Discriminative Augmentation (DA) Module**: 템플릿과 검색 영역(Search Region) 간의 시맨틱 유사성을 분석하여 검색 영역의 특징을 강화한다. 이를 통해 배경 clutter 속에서도 타겟을 명확히 구분하는 변별력을 향상시킨다.
+3. **Label Assignment 수정**: 기존의 IoU 기반 앵커 레이블 할당 방식을 중심 거리(Center Distance) 기반 방식으로 변경하여 객체 위치 추정의 신뢰도를 높였다.
 
 ## 📎 Related Works
 
@@ -34,6 +34,7 @@ Siamese 기반 추적기는 일반적으로 템플릿 이미지와 검색 영역
 DASTSiam의 전체 구조는 기존 Siamese 네트워크에 ST fusion 모듈(인코더 수정)과 DA 모듈(디코더 수정)을 추가한 형태이다.
 
 ### 1. Spatio-Temporal (ST) Fusion Module
+
 ST 모듈은 상관관계 연산 전, 템플릿 특징 맵 $f_z$에 시간적 정보를 통합한다. 3개의 프레임 $T_i$(초기 프레임), $T_a$(이전 프레임), $T_c$(현재 프레임)에서 추출한 특징 $f_i, f_a, f_c$를 사용하며, 다음과 같이 정의된다.
 
 $$ST(f_i, f_a, f_c) = \Phi_{ST}(\text{Encoder}(f_a, f_c)) + f_i$$
@@ -45,16 +46,19 @@ $$\text{CrossAttn}(Q, K, V) = \text{Softmax}\left(\frac{Q_c K_a^T}{\sqrt{d}}\rig
 또한, 연속된 프레임 간의 상태 변화가 너무 커서 발생하는 오정보(Prior Misleading)를 수정하기 위해 컨볼루션 레이어 기반의 적응형 필터 $\Phi_{MF}$를 적용하며, 최종적으로 초기 프레임의 특징 $f_i$를 더해 실제 타겟 정보가 소실되지 않도록 보장한다.
 
 ### 2. Discriminative Augmentation (DA) Module
+
 DA 모듈은 응답 맵 생성 전, 검색 영역 특징 $f_s$의 변별력을 높이기 위해 다음과 같이 정의된다.
 
 $$DA(f^*_z, f_s) = \Phi_{DA}(\text{Decoder}(f^*_z, f_s)) + f_s$$
 
 이 과정은 다음과 같은 단계로 이루어진다.
+
 1. **Self-attention**: 검색 영역 내의 유사한 특징 지점들이 서로 더 주목하게 하여 내부 시맨틱 유사성을 강화한다.
 2. **Cross-attention**: 강화된 템플릿 특징 $f^*_z$와 검색 영역 특징 $f_s$를 통합하여 타겟과 배경을 구분하는 변별력 있는 마스크(Discriminative Mask)를 생성한다.
 3. **Feature Enhancement**: 생성된 마스크에 $\Phi_{DA}$ 필터를 적용해 간섭 정보를 억제한 후, 이를 $f_s$와 요소별 덧셈(Element-wise addition)하여 최종 특징 $f^*_s$를 얻는다.
 
 ### 3. Training and Inference
+
 - **Loss Function**: 회귀(Regression)에는 Smooth-L1 Loss를 사용하며, 분류(Classification)에는 Cross-Entropy Loss와 Binary Cross Entropy(BCE) Loss를 혼합하여 사용한다.
   $$L_{total} = \lambda_1 L_{cls} + L_{reg}$$
 - **Label Assignment**: IoU 기반 방식 대신, 앵커 중심과 ground-truth 중심 간의 거리 기반 방식을 채택한다. 앵커의 중심 좌표 $(row_i, col_i)$와 타겟 중심 좌표 간의 거리 $\text{distance}_{x_i, y_i}$가 임계값보다 작으면 양성 샘플로 지정한다.
@@ -63,11 +67,13 @@ $$DA(f^*_z, f_s) = \Phi_{DA}(\text{Decoder}(f^*_z, f_s)) + f_s$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **Base Trackers**: SiamFC, SiamRPN (ResNet50 백본으로 수정)
 - **데이터셋**: OTB100, LaSOT, GOT-10k, VOT2018
 - **지표**: Success rate, Precision, AO (Average Overlap), SR (Success Rate)
 
 ### 주요 결과
+
 1. **정량적 성능**: OTB100 데이터셋에서 SiamRPN의 Success rate가 $64.10\%$에서 $67.09\%$로 향상되었다. 또한 VOT2018의 EAO 및 GOT-10k의 SR 지표에서 SiamRPN++ 등 최신 알고리즘보다 우수한 성능을 보였다.
 2. **속성별 분석**: LaSOT 데이터셋을 통한 분석 결과, 특히 변형(Deformation), 가로세로 비율 변화(Aspect Ratio Change), 크기 변화(Scale Variation) 상황에서 ST 모듈의 효과가 뚜렷했으며, 배경 clutter 상황에서는 DA 모듈이 성능 향상에 기여했음이 확인되었다.
 3. **Ablation Study**:

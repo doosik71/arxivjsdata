@@ -18,19 +18,23 @@ Cheng-I Jeff Lai, Zhiyun Lu, Liangliang Cao, Ruoming Pang (2023)
 
 ## 📎 Related Works
 
-최근 연구들은 LLaMA나 PaLM과 같은 텍스트 LLM에 음성 인식 능력을 부여하여 음성, 오디오, 텍스트가 혼합된 데이터를 처리하는 Speech LLM 방향으로 발전하고 있다. 이러한 모델들은 일반적으로 음성 인코더, 사전 훈련된 자기회귀(autoregressive) 언어 모델 디코더, 그리고 지시어 튜닝(instruction fine-tuning) 단계로 구성된다. 
+최근 연구들은 LLaMA나 PaLM과 같은 텍스트 LLM에 음성 인식 능력을 부여하여 음성, 오디오, 텍스트가 혼합된 데이터를 처리하는 Speech LLM 방향으로 발전하고 있다. 이러한 모델들은 일반적으로 음성 인코더, 사전 훈련된 자기회귀(autoregressive) 언어 모델 디코더, 그리고 지시어 튜닝(instruction fine-tuning) 단계로 구성된다.
 
 또한 WavPrompt, SpeechPrompt, WhisperPrompt 등은 사전 훈련된 모델을 활용하여 특정 작업에 맞는 프롬프팅을 수행하는 연구들이 진행되었다. 하지만 본 논문은 이러한 기존 접근 방식과 달리, **어떠한 사전 훈련된 컴포넌트(pre-trained components)에도 의존하지 않고** 지시어 준수 능력을 학습시킨다는 점에서 차별점을 가진다.
 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 모델은 Listen-Attend-Spell (LAS) 아키텍처를 기반으로 한다.
+
 - **Encoder**: Conformer-L 아키텍처를 사용하며, 80차원의 log-Mel filterbank를 입력으로 받는다. 데이터 증강을 위해 SpecAugment가 적용되었다.
 - **Decoder**: 12레이어의 Transformer 언어 모델(LM) 디코더를 사용하며, 인코더의 컨텍스트 벡터에 접근하기 위한 cross-attention 메커니즘을 갖추고 있다.
 
 ### 정의된 스킬 및 데이터 구축
+
 모델이 학습해야 할 5가지 스킬은 다음과 같다.
+
 1. **Speech Transcription**: 표준 ASR 기능.
 2. **Ignoring Speech**: 음성을 무시하고 즉시 $[EOS]$ 토큰을 출력.
 3. **Word Replacement**: 특정 단어를 다른 단어로 교체하거나 삭제 (예: 'the' $\rightarrow$ 'quokka').
@@ -40,13 +44,14 @@ Cheng-I Jeff Lai, Zhiyun Lu, Liangliang Cao, Ruoming Pang (2023)
 데이터는 LibriSpeech 960h 세트를 기반으로 하며, GPT-4를 이용하여 각 스킬당 100~600개의 다양한 지시어 템플릿을 생성하였다. 타겟 텍스트($T$)는 규칙 기반 처리 또는 GPT-4/3.5를 통한 요약 생성으로 구축하였다.
 
 ### 훈련 절차 및 목표 함수
+
 훈련 시, 각 발화에 대해 무작위로 스킬 $S$를 샘플링한다. 샘플링 확률은 식 (1)과 같이 전사($\alpha$)와 요약($\beta$)에 가중치를 두어 결정된다.
 
 $$
 S \sim \begin{cases} \text{Transcribe}, P=\frac{\alpha}{\alpha+3+\beta} \\ \text{Ignore Speech}, P=\frac{1}{\alpha+3+\beta} \\ \text{Word Replace}, P=\frac{1}{\alpha+3+\beta} \\ \text{Manipulate}, P=\frac{1}{\alpha+3+\beta} \\ \text{Summarize}, P=\frac{\beta}{\alpha+3+\beta} \end{cases}
 $$
 
-선택된 스킬에 맞는 지시어 $I$를 선택하고, 이에 대응하는 타겟 전사 $T$를 생성한다. 최종 훈련 데이터 $Y$는 지시어 $I$, 턴 종료 토큰 $[EOT]$, 그리고 타겟 $T$를 연결하여 구성한다: $Y = I \oplus [EOT] \oplus T$. 
+선택된 스킬에 맞는 지시어 $I$를 선택하고, 이에 대응하는 타겟 전사 $T$를 생성한다. 최종 훈련 데이터 $Y$는 지시어 $I$, 턴 종료 토큰 $[EOT]$, 그리고 타겟 $T$를 연결하여 구성한다: $Y = I \oplus [EOT] \oplus T$.
 
 훈련 목표는 다음과 같이 지시어 $I$와 음성 $A$가 주어졌을 때 타겟 $T$를 예측하는 최대 우도 추정(MLE) 문제로 정의된다.
 
@@ -55,6 +60,7 @@ $$
 $$
 
 ### 추론 및 디코딩
+
 테스트 시에는 사용자 지시어와 $[EOT]$ 토큰이 디코더의 prefix로 입력된다. 성능 향상을 위해 길이 정규화(length normalization)가 포함된 빔 서치(beam-search) 디코딩을 사용하며, 점수 함수는 다음과 같다.
 
 $$
@@ -65,9 +71,11 @@ $$
 ## 📊 Results
 
 ### ASR 벤치마크 성능
+
 LibriSpeech 데이터셋에서 모델의 기본 ASR 성능을 평가한 결과, 지시어 기반 훈련을 적용한 LAS 모델이 일반 vanilla LAS 모델보다 오히려 약간 더 낮은 WER(Word Error Rate)을 기록하였다. 이는 다양한 스킬을 학습시키는 것이 기본 ASR 성능을 저하시키지 않으며, 오히려 긍정적인 영향을 줄 수 있음을 시사한다.
 
 ### 지시어 준수 능력
+
 - **Seen Instructions**: 학습 과정에서 본 지시어들에 대해서는 100%의 정확도로 타겟 스킬을 식별하고 수행하였다.
 - **Unseen Instructions**: 처음 보는 지시어들에 대해서는 약 80%의 정확도를 보였다. 이는 모델이 단순 암기가 아니라 지시어의 텍스트 의미를 어느 정도 이해하고 있음을 보여준다.
 - **Implicit Understanding**: 요약 및 키워드 추출 작업의 결과를 통해, 모델이 텍스트를 생성하기 전 음성 내용을 암시적으로 먼저 이해하는 과정을 거친다는 점을 확인하였다.
@@ -75,14 +83,17 @@ LibriSpeech 데이터셋에서 모델의 기본 ASR 성능을 평가한 결과, 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 발견
+
 본 연구는 거대한 사전 훈련 모델 없이도 적절하게 설계된 지시어-타겟 쌍의 훈련만으로 소형 모델이 복잡한 지시사항을 수행할 수 있음을 보였다. 특히, 학습 과정 관찰을 통해 '음성 전사' 능력이 다른 조작 스킬(반복, 교체 등)의 기반이 되는 기초 스킬(foundational skill)임을 발견하였다. 즉, 전사 능력이 먼저 습득된 후 이를 바탕으로 텍스트 조작 능력이 진화하는 양상을 보인다.
 
 ### 한계점
+
 1. **지시어 일반화**: 학습 데이터에 없는 생소한 어휘(예: "annihilate")가 포함된 지시어의 경우 스킬 식별에 실패하는 경향이 있다.
 2. **작업 일반화**: 정의된 5가지 스킬 외의 새로운 작업(예: 'the'를 'car'로 바꾸는 임의의 단어 교체)으로는 확장되지 않는다.
 3. **대화 상호작용**: 응답이 폐쇄적이며, 모호한 지시어에 대해 되묻거나 다회차 대화를 수행하는 능력이 없다.
 
 ### 비판적 해석 및 향후 방향
+
 모델의 크기가 매우 작음에도 불구하고 준수한 성능을 낸 것은 고무적이나, 결국 '정해진 템플릿' 내에서의 추론에 가깝다는 한계가 있다. 이를 극복하기 위해 디코더를 LLaMA와 같은 사전 훈련된 LLM으로 교체한다면 OOD 지시어에 대한 일반화 능력을 크게 향상시킬 수 있을 것이다. 또한, 이러한 선택적 전사 기능은 향후 개인정보 보호를 위해 민감 정보를 자동으로 필터링하는 ASR 시스템으로 확장될 가능성이 매우 높다.
 
 ## 📌 TL;DR

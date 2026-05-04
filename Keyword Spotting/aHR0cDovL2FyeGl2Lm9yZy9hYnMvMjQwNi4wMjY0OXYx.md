@@ -13,6 +13,7 @@ Aviv Shamsian, Aviv Navon, Neta Glazer, Gill Hetz, Joseph Keshet (2024)
 본 논문의 핵심 아이디어는 **Open Vocabulary Keyword Spotting(KWS) 모델을 사용하여 ASR 디코더를 동적으로 가이드하는 프롬프트를 생성**하는 것이다.
 
 구체적인 기여 사항은 다음과 같다.
+
 1. **KWS 기반 동적 프롬프팅**: Whisper의 인코더 표현(representation)을 활용하는 AdaKWS 모델을 통해 입력 음성에서 키워드를 식별하고, 이를 디코더의 프롬프트로 입력하여 전사(transcription) 과정을 안내한다.
 2. **두 가지 적응 방법론 제안**:
     - **KG-Whisper**: Whisper의 디코더 파라미터를 직접 미세 조정(Fine-tuning)하는 방식이다.
@@ -28,6 +29,7 @@ Aviv Shamsian, Aviv Navon, Neta Glazer, Gill Hetz, Joseph Keshet (2024)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 구조
+
 시스템은 크게 **Whisper Encoder $\rightarrow$ AdaKWS $\rightarrow$ Prompt Generation $\rightarrow$ Whisper Decoder** 순으로 구성된다.
 
 1. **Encoder**: 입력 음성 $x \in X^T$가 들어오면 Whisper 인코더 $f^e_\phi$를 통해 음향 표현 $u \in \mathbb{R}^F$를 생성한다.
@@ -35,6 +37,7 @@ Aviv Shamsian, Aviv Navon, Neta Glazer, Gill Hetz, Joseph Keshet (2024)
 3. **Prompting**: KWS가 탐지한 키워드들을 결합하여 프롬프트 $p_{KWS}$를 생성하고, 이를 Whisper 디코더의 입력으로 제공한다.
 
 ### 학습 목표 및 손실 함수
+
 ASR의 기본 목표는 다음의 Cross-Entropy(CE) 손실 함수를 최소화하는 것이다.
 $$\min_{\{\phi, \psi\}} \sum_{j} \sum_{i} L_{CE}(f^d_\psi(f^e_\phi(x_j), p_j, t_{i-1}^j), t_i^j)$$
 여기서 $f^d_\psi$는 디코더, $p$는 프롬프트, $t$는 토큰 시퀀스를 의미한다.
@@ -50,7 +53,9 @@ $$\min_{\psi} \sum_{j} \sum_{i} L_{CE}(f^d_\psi(u_j, p_{KWS}(u_j, K), t_{i-1}^j)
 $$\min_{q} \sum_{j} \sum_{i} L_{CE}(f^d_\psi(u_j, [q, p_{KWS}(u_j, K)], t_{i-1}^j), t_i^j)$$
 
 ### 훈련 전략
+
 학습 시 KWS의 예측을 모사하기 위해 다음과 같은 동적 샘플링 전략을 사용한다.
+
 - 프롬프트 내 키워드 개수는 1~5개 사이에서 무작위로 선택한다.
 - 각 키워드가 긍정(Positive)일 확률을 0.9로 설정하여, 실제 정답 텍스트에서 키워드를 샘플링하거나 다른 샘플에서 부정(Negative) 키워드를 샘플링한다.
 - 키워드는 $|$ 구분자로 연결되며, $\langle \text{start\_of\_prev} \rangle$와 $\langle \text{start\_of\_transcript} \rangle$ 토큰 사이에 배치된다.
@@ -58,11 +63,13 @@ $$\min_{q} \sum_{j} \sum_{i} L_{CE}(f^d_\psi(u_j, [q, p_{KWS}(u_j, K)], t_{i-1}^
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Voxpopuli(다국어), UWB-ATCC(항공 관제, 고소음), Medical(의료 전문 용어), Fleurs(저자원 언어).
 - **평가 지표**: Word Error Rate(WER) 및 긍정 키워드에 대한 F1 Score.
 - **기준선(Baselines)**: Pre-trained Whisper, Whisper + prompt(미세 조정 없이 프롬프트만 추가), Whisper FT(일반 디코더 미세 조정), Whisper PT(일반 프롬프트 튜닝).
 
 ### 주요 결과
+
 1. **다국어 성능 (Voxpopuli)**:
    - KG-Whisper와 KG-Whisper-PT 모두 기본 Whisper 모델보다 월등한 성능을 보였다.
    - 특히 KG-Whisper-PT는 단 **15K 개의 학습 파라미터**만으로도 WER을 2.3% 감소시켰으며, F1 스코어를 크게 향상시켰다.
@@ -76,16 +83,20 @@ $$\min_{q} \sum_{j} \sum_{i} L_{CE}(f^d_\psi(u_j, [q, p_{KWS}(u_j, K)], t_{i-1}^
    - Fleurs 데이터셋의 6개 미학습 언어에 대해 테스트한 결과, Whisper 대비 **평균 5.1%의 WER 개선**을 달성하였다.
 
 ### Ablation Study (프롬프트 길이)
+
 학습 가능한 토큰 수($N$)에 따른 성능을 분석한 결과, **12~16개 토큰**일 때 최적의 성능을 보였다.
+
 - **너무 짧은 경우**: 디코더에 제공되는 컨텍스트가 부족하여 단어 누락(Deletion error)이 증가한다.
 - **너무 긴 경우**: 모델이 불필요한 텍스트를 생성하는 환각 현상이 발생하여 삽입 오류(Insertion error)가 증가하고 연산 비용이 상승한다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 연구는 거대한 ASR 모델을 전체적으로 재학습시키지 않고도, KWS라는 외부 모듈과 효율적인 Prompt Tuning(KG-Whisper-PT)을 통해 도메인 특화 능력을 부여할 수 있음을 보여주었다. 특히 매우 적은 수의 파라미터 수정만으로도 전문 용어 인식률을 획기적으로 높인 점과, 이를 보지 못한 언어와 소음 환경으로 확장한 일반화 능력이 매우 강력하다는 점이 돋보인다.
 
 ### 한계 및 논의사항
+
 - **KWS 의존성**: 시스템의 성능이 AdaKWS의 키워드 탐지 정확도에 의존한다. KWS가 키워드를 잘못 탐지하여 프롬프트로 제공할 경우, 디코더가 잘못된 유도를 받아 오인식할 가능성이 존재한다.
 - **환각 현상**: Ablation study에서 언급되었듯, 프롬프트의 길이나 구성이 부적절할 경우 ASR 모델 특유의 환각 현상이 발생할 수 있다. 이는 Whisper와 같은 대형 생성 모델 기반 ASR의 고질적인 문제이며, 이를 완전히 제어하기 위한 추가적인 제약 메커니즘이 필요할 수 있다.
 

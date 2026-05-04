@@ -4,7 +4,7 @@ Edward Choi, Cao Xiao, Walter F. Stewart, Jimeng Sun (2018)
 
 ## 🧩 Problem to Solve
 
-전자 건강 기록(Electronic Health Records, EHR)을 활용한 딥러닝 모델들은 다양한 예측 의료 작업에서 최첨단 성능을 보여주고 있다. 그러나 이러한 모델들이 최적의 성능을 내기 위해서는 대부분의 의료 시스템이 보유한 수준을 훨씬 상회하는 방대한 양의 학습 데이터가 필요하다는 한계가 있다. 
+전자 건강 기록(Electronic Health Records, EHR)을 활용한 딥러닝 모델들은 다양한 예측 의료 작업에서 최첨단 성능을 보여주고 있다. 그러나 이러한 모델들이 최적의 성능을 내기 위해서는 대부분의 의료 시스템이 보유한 수준을 훨씬 상회하는 방대한 양의 학습 데이터가 필요하다는 한계가 있다.
 
 데이터 부족 문제를 해결하기 위해 의료 온톨로지(Medical Ontologies)와 같은 외부 자원을 활용하는 방법이 제안되었으나, 실제 의료 현장에서 사용하는 용어가 표준과 일치하지 않거나 병원마다 고유한 용어 체계를 사용하는 경우가 많아 외부 온톨로지를 직접 적용하는 데 어려움이 있다. 따라서 본 논문은 외부 레이블이나 온톨로지에 의존하지 않고, EHR 데이터가 본질적으로 가지고 있는 다층적 구조(Multilevel Structure)를 활용하여 데이터 부족 문제를 해결하고 예측 성능을 높이는 것을 목표로 한다.
 
@@ -12,8 +12,8 @@ Edward Choi, Cao Xiao, Walter F. Stewart, Jimeng Sun (2018)
 
 본 논문의 핵심 아이디어는 EHR 데이터의 계층적 구조, 특히 진단 코드(Diagnosis codes)와 처치 코드(Treatment codes, 약물 및 처치) 사이의 관계를 명시적으로 모델링하는 것이다. 이를 위해 다음과 같은 두 가지 핵심 설계를 제안한다.
 
-1.  **Multilevel Medical Embedding (MiME):** EHR의 구조를 '처치 수준 $\rightarrow$ 진단 수준 $\rightarrow$ 방문 수준 $\rightarrow$ 환자 수준'으로 이어지는 하향식(Bottom-up) 임베딩 방식으로 변환하여, 진단과 처치 사이의 상호작용을 정교하게 캡처한다.
-2.  **Auxiliary Prediction Tasks:** 외부 레이블 없이도 EHR 내부 구조를 활용해 진단 코드와 처치 코드를 예측하는 보조 작업을 함께 학습함으로써, 모델이 일반적인 의료 지식을 학습하도록 유도하고 주 작업(Main task)의 예측력을 보완한다.
+1. **Multilevel Medical Embedding (MiME):** EHR의 구조를 '처치 수준 $\rightarrow$ 진단 수준 $\rightarrow$ 방문 수준 $\rightarrow$ 환자 수준'으로 이어지는 하향식(Bottom-up) 임베딩 방식으로 변환하여, 진단과 처치 사이의 상호작용을 정교하게 캡처한다.
+2. **Auxiliary Prediction Tasks:** 외부 레이블 없이도 EHR 내부 구조를 활용해 진단 코드와 처치 코드를 예측하는 보조 작업을 함께 학습함으로써, 모델이 일반적인 의료 지식을 학습하도록 유도하고 주 작업(Main task)의 예측력을 보완한다.
 
 ## 📎 Related Works
 
@@ -56,12 +56,14 @@ $$L_{aux} = -\lambda_{aux} \sum_{t} (\sum_{i} (CE(d_i, \hat{d}_i) + \sum_{j} CE(
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋:** Sutter Health의 EHR 데이터 (시니어 환자 30,764명).
 - **예측 작업:** 심부전(Heart Failure, HF) 발생 예측 및 순차적 질병 예측(SDP).
 - **평가 지표:** 불균형 데이터 특성을 고려하여 PR-AUC(Precision-Recall AUC)를 주요 지표로 사용하였다.
 - **비교 대상:** Raw binary, Linear, Non-linear(tanh, relu), MLP, Med2Vec, GRAM.
 
 ### 2. 주요 결과
+
 - **데이터 크기에 따른 성능:** 데이터 규모를 네 단계($E_1 \sim E_4$)로 나누어 실험한 결과, 모든 설정에서 MiME가 가장 우수한 성능을 보였다. 특히 데이터 규모가 가장 작은 $E_1$에서 최선의 baseline 대비 PR-AUC 기준 약 15%의 상대적 성능 향상을 보여, 데이터 부족 문제 해결에 매우 효과적임을 입증하였다.
 - **방문 복잡도에 따른 성능:** 진단-처치 상호작용이 많은 '복잡한 방문'의 비중이 높을수록($D_1 \rightarrow D_3$) MiME의 성능 향상 폭이 컸다. 이는 MiME가 실제로 진단-처치 간의 관계를 효과적으로 활용하고 있음을 의미한다.
 - **순차적 질병 예측 (SDP):** 미래의 진단 코드를 예측하는 작업에서도 MiME가 모든 지표에서 baseline을 앞섰으며, 특히 희귀 질환 예측에서 baseline 대비 최대 11.6%의 성능 향상을 보였다.

@@ -30,6 +30,7 @@ Dezhou Shen(2022)
 본 논문은 모델의 종류에 따라 두 가지 서로 다른 정규화 접근 방식을 사용한다.
 
 ### 1. Upscale Layer Normalization (for BERT)
+
 BERT 모델의 안정적인 학습을 위해 DeepNorm의 수식을 수정하여 적용하였다. 기존 DeepNorm이 잔차 브랜치 내부의 가중치 $\theta$를 $\beta$로 스케일링한 것과 달리, Upscale Layer Normalization은 가중치 $\theta$를 그대로 유지하고 상수 $\alpha$만을 적용한다.
 
 전체적인 수식은 다음과 같다.
@@ -39,7 +40,8 @@ $$x_{i+1} = \text{LN}(\alpha x_i + G_i(x_i, \theta_i))$$
 $$\alpha = (2N)^{1/4}$$
 
 ### 2. Foundation Layer Normalization (for GPT)
-GPT 모델의 경우, 경험적인 수치를 바탕으로 한 더 단순한 형태의 정규화를 적용하였다. 
+
+GPT 모델의 경우, 경험적인 수치를 바탕으로 한 더 단순한 형태의 정규화를 적용하였다.
 
 수식은 다음과 같다.
 $$x_{i+1} = \text{LN}(0.974 x_i + G_i(x_i, \theta_i))$$
@@ -49,18 +51,21 @@ $$x_{i+1} = \text{LN}(0.974 x_i + G_i(x_i, \theta_i))$$
 ## 📊 Results
 
 ### 실험 환경 및 설정
+
 - **BERT-1k**: The Pile 데이터셋에서 9G의 데이터를 사용하였으며, Nvidia 3090 GPU로 100k step(약 4일) 동안 학습하였다. Hidden size는 64, Attention head는 2개로 설정되었다.
 - **GPT-1k**: The Pile 데이터셋에서 200G의 데이터를 사용하였으며, Nvidia 3090 GPU로 150k step(약 7일) 동안 학습하였다. Hidden size는 256, Attention head는 1개로 설정되었다.
 
 ### 정량적 결과
+
 - **BERT 평가**: Quora Question Pairs(QQP) 데이터셋에서 Precision 72%, Recall 69%, F1-score 70%, Accuracy 73%의 성능을 기록하였다.
 - **GPT 평가**: 다양한 벤치마크에서 평가를 진행하였다.
-    - PIQA Accuracy: $55.17\%$
-    - Winogrande Accuracy: $50.36\%$
-    - Hellaswag Accuracy: $25.54\%$
-    - LAMBADA Accuracy: $0.72\%$ (매우 낮음)
+  - PIQA Accuracy: $55.17\%$
+  - Winogrande Accuracy: $50.36\%$
+  - Hellaswag Accuracy: $25.54\%$
+  - LAMBADA Accuracy: $0.72\%$ (매우 낮음)
 
 ### 모델 비교 분석
+
 GPT-1k 모델(파라미터 약 815.5M)을 다른 거대 모델들과 비교했을 때, GPT-J(6B)의 약 1/75 수준의 파라미터 크기임에도 불구하고 PIQA와 Winogrande 데이터셋에서 경쟁력 있는 성능을 보여주었다. 특히 연산량(FLOPs) 측면에서 GPT-1k($3.72 \times 10^{19}$)는 GPT-J($1.5 \times 10^{22}$)보다 훨씬 효율적임을 확인하였다.
 
 ## 🧠 Insights & Discussion

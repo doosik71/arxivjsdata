@@ -24,12 +24,15 @@ GAIL의 핵심은 전문가의 상태-행동 분포와 에이전트의 분포를
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 DRAIL은 판별자(Diffusion Discriminative Classifier)와 정책(Policy)을 교대로 업데이트하는 적대적 학습 구조를 따른다.
+
 1. **판별자 업데이트:** 에이전트가 수집한 데이터와 전문가 데이터를 사용하여 Diffusion Discriminative Classifier를 학습시킨다.
 2. **보상 계산:** 학습된 판별자를 통해 현재 상태-행동 쌍에 대한 Diffusion Reward를 계산한다.
 3. **정책 업데이트:** PPO(Proximal Policy Optimization)와 같은 RL 알고리즘을 사용하여 해당 보상을 최대화하도록 정책을 업데이트한다.
 
 ### Diffusion Discriminative Classifier
+
 단순히 Diffusion Model을 통해 라벨(0 또는 1)을 생성하는 방식은 $T$번의 디노이징 단계가 필요하여 계산 비용이 너무 크다. 이를 해결하기 위해 본 논문은 단일 디노이징 단계의 loss를 이용한다.
 
 먼저, 조건 $c \in \{c^+, c^-\}$ (전문가 $c^+$, 에이전트 $c^-$)에 따른 Diffusion Loss를 다음과 같이 정의한다.
@@ -41,11 +44,13 @@ $$D_\phi(s, a) = \frac{e^{-L_{diff}(s, a, c^+)}}{e^{-L_{diff}(s, a, c^+)} + e^{-
 여기서 $\sigma$는 시그모이드 함수이다.
 
 ### 훈련 목표 및 손실 함수
+
 판별자 $D_\phi$는 Binary Cross-Entropy (BCE) 손실 함수를 통해 최적화된다.
 $$L_D = \mathbb{E}_{(s, a) \in \tau_E} [-\log(D_\phi(s, a))] + \mathbb{E}_{(s, a) \in \tau_i} [-\log(1 - D_\phi(s, a))]$$
 $\tau_E$는 전문가 궤적, $\tau_i$는 에이전트 궤적을 의미한다.
 
 ### Diffusion Reward 및 정책 학습
+
 정책 $\pi_\theta$는 다음의 Diffusion Reward를 최대화하도록 학습된다.
 $$r_\phi(s, a) = \log(D_\phi(s, a)) - \log(1 - D_\phi(s, a))$$
 이 보상 함수는 $D_\phi$의 출력이 1에 가까울수록(전문가와 유사할수록) 높은 값을 가지며, 로그-오즈(log-odds) 형태를 취함으로써 정책 학습에 더 안정적인 신호를 제공한다.
@@ -53,11 +58,13 @@ $$r_\phi(s, a) = \log(D_\phi(s, a)) - \log(1 - D_\phi(s, a))$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋 및 작업:** MAZE(내비게이션), FETCHPUSH(조작), HANDROTATE(정밀 조작), ANTREACH(내비게이션), WALKER(보행), CARRACING(이미지 기반 레이싱) 등 총 6가지의 다양한 연속 제어 환경에서 평가하였다.
 - **비교 대상:** BC, Diffusion Policy, GAIL, GAIL-GP, WAIL, DiffAIL.
 - **측정 지표:** Success Rate(성공률) 및 Return(총 보상).
 
 ### 주요 결과
+
 - **전반적 성능:** DRAIL은 거의 모든 환경에서 기존 방법론보다 우수하거나 경쟁력 있는 성능을 보였다. 특히 DiffAIL과의 비교에서 6개 작업 중 5개에서 더 높은 성능을 기록하며, 조건부 Diffusion Model의 유효성을 입증하였다.
 - **일반화 능력 (Generalizability):** FETCHPUSH 작업에서 초기 상태와 목표 위치에 노이즈를 추가한 실험 결과, DRAIL은 노이즈 수준이 $2.0\times$인 극한 환경에서도 95% 이상의 성공률을 유지하며 가장 강력한 강건성을 보였다. 반면 Diffusion Policy는 79.2%, DiffAIL은 매우 불안정한 결과를 보였다.
 - **데이터 효율성 (Data Efficiency):** 전문가 데이터의 양을 줄였을 때, DRAIL은 다른 방법론보다 훨씬 적은 데이터로도 빠르게 학습하는 모습을 보였다. 특히 WALKER 작업에서 단 1개의 궤적만으로도 높은 리턴 값을 유지하였다.
@@ -66,9 +73,11 @@ $$r_\phi(s, a) = \log(D_\phi(s, a)) - \log(1 - D_\phi(s, a))$$
 ## 🧠 Insights & Discussion
 
 ### 강점 및 해석
+
 본 논문의 가장 큰 성과는 Diffusion Model의 score-matching 특성(Loss가 분포의 밀도와 연관됨)을 판별자의 메커니즘으로 영리하게 전환한 점이다. 이를 통해 GAIL의 고질적인 문제인 '불안정한 보상 신호'를 '매끄러운 Diffusion 보상'으로 대체하여 학습 안정성을 확보하였다. 또한, 조건부 라벨($c^+, c^-$)을 도입함으로써 전문가와 에이전트의 분포 경계를 명시적으로 학습하게 하여, DiffAIL과 같은 비조건부 방식보다 훨씬 명확한 분류 신호를 생성하였다.
 
 ### 한계 및 향후 과제
+
 논문에서 명시적으로 언급된 한계는 적으나, 미래 연구 방향으로 Wasserstein 거리나 $f$-divergence와 같은 다른 거리 측정 지표를 탐색하여 학습 안정성을 더욱 높일 가능성을 제시하고 있다. 또한, 실제 로봇 환경이나 자율 주행과 같은 더 복잡한 도메인으로의 확장 가능성을 언급하였다.
 
 비판적으로 해석하자면, Diffusion Model 기반의 판별자가 연산량 측면에서 단순 MLP 판별자보다 무거울 수 있으나, 본 논문은 단일 디노이징 스텝만을 사용함으로써 이 비용 문제를 효율적으로 해결하였다고 판단된다.

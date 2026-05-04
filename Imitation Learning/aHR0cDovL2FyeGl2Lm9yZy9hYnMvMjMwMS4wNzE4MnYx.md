@@ -13,6 +13,7 @@ Boyuan Zheng, Jianlong Zhou and Fang Chen (2023)
 본 논문의 핵심 아이디어는 **Genetic Algorithm(유전 알고리즘, GA)**을 Imitation Learning에 결합하여, 데이터 효율성을 높이고 보상 함수 추론을 위한 학습 데이터를 자동으로 생성하는 것이다.
 
 주요 기여 사항은 다음과 같다.
+
 1. **자동화된 데이터 랭킹 생성**: 유전 알고리즘의 Crossover(교차)와 Mutation(변이) 연산을 통해 기존의 suboptimal trajectory들을 조합하여 다양한 수준의 품질을 가진 "Fake" trajectory들을 생성한다. 이를 통해 전문가의 수동 랭킹 없이도 학습에 필요한 랭킹 데이터를 확보한다.
 2. **데이터 효율성 극대화**: 단 두 개의 trajectory(하나의 좋은 데이터와 하나의 좋지 않은 데이터)만으로도 모델을 학습시킬 수 있는 구조를 제안한다.
 3. **안정적인 보상 외삽**: 생성된 가짜 데이터셋을 통해 보상 함수의 파라미터를 더 정밀하고 콤팩트하게 추정함으로써, 보지 못한(unseen) trajectory에 대해서도 정확한 보상을 예측하고 이를 통해 높은 성능의 정책을 도출한다.
@@ -31,6 +32,7 @@ Boyuan Zheng, Jianlong Zhou and Fang Chen (2023)
 GenIL은 크게 유전 알고리즘(GA)을 통한 데이터 생성 단계와 Inverse Reinforcement Learning(IRL)을 통한 보상 추론 단계로 구성된다.
 
 ### 1. Genetic Algorithm을 통한 랭킹 데이터 생성
+
 두 개의 서로 다른 성능을 가진 trajectory $\mathcal{D}_{original} = \{\tau_{good}, \tau_{bad}\}$를 입력으로 받는다. GA는 다음과 같은 과정을 통해 $\mathcal{D}_{fake}$를 생성한다.
 
 - **Crossover (교차)**: 두 trajectory에서 무작위 구간(크기 10 미만)을 선택하여 서로 교체한다. 이를 통해 $\tau_{good}$의 비율이 높은 데이터부터 $\tau_{bad}$의 비율이 높은 데이터까지 다양한 수준의 가짜 trajectory가 만들어진다.
@@ -40,6 +42,7 @@ GenIL은 크게 유전 알고리즘(GA)을 통한 데이터 생성 단계와 Inv
 최종적으로 학습에 사용되는 데이터셋은 $\mathcal{D}_{ranked} = \mathcal{D}_{original} + \mathcal{D}_{fake}$가 된다.
 
 ### 2. Reward Inference (보상 추론)
+
 생성된 랭킹 데이터셋을 이용하여 보상 함수 $R_\theta$를 학습한다.
 
 - **아키텍처**: Atari 도메인에서는 4층의 Convolutional Neural Network(CNN)를 통해 특징을 추출하고, 이후 Multi-Layer Perceptron(MLP)을 통해 최종 보상 값을 출력한다. MuJoCo 도메인에서는 상태 정보를 직접 MLP로 입력한다.
@@ -48,11 +51,13 @@ $$L(\theta) \approx -\sum_{\tau_i, \tau_j} \log \frac{\exp \sum_{s \in \tau_j} R
 여기서 $\sum R'(\tau_j) > \sum R'(\tau_i)$ 관계가 성립해야 한다.
 
 ### 3. 정책 도출
+
 학습된 보상 함수 $R_\theta$를 환경의 보상으로 사용하여 PPO(Proximal Policy Optimization)와 같은 강화학습 알고리즘을 통해 최종 정책 $\pi_\theta$를 학습한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **환경**: MuJoCo(Hopper, HalfCheetah), Atari(Breakout, Beamrider, SpaceInvaders)
 - **비교 대상**: BC, T-REX, D-REX
 - **평가 지표**:
@@ -60,21 +65,26 @@ $$L(\theta) \approx -\sum_{\tau_i, \tau_j} \log \frac{\exp \sum_{s \in \tau_j} R
     2. **Overall Policy Performance**: 시뮬레이션에서 얻은 실제 Return 값으로 측정.
 
 ### 정량적 결과
+
 Table 1의 결과에 따르면, GenIL은 모든 테스트 태스크에서 기존 방법론보다 우수한 성능을 보였다.
+
 - **HalfCheetah**: GenIL이 다른 모든 방법론을 큰 차이로 압도하였으며, 특히 시연 데이터의 수준을 뛰어넘는 성능을 보였다.
 - **Atari 태스크**: BC와 D-REX는 suboptimal 데이터의 영향으로 인해 낮은 성능을 보인 반면, GenIL과 T-REX는 상대적으로 높은 성능을 유지하였다.
 - **안정성**: D-REX가 표준 편차는 가장 낮아 안정적이었으나, 절대적인 성능은 GenIL이 가장 높았다.
 
 ### 정성적 분석 (Extrapolation)
+
 그림 3의 외삽 비교 그래프에서, GenIL은 동일한 실제 보상(Ground-truth reward)을 가진 unseen trajectory들에 대해 예측값의 수직 편차가 가장 작았다. 이는 GenIL이 생성한 가짜 데이터들이 보상 함수를 더 정밀하고 콤팩트하게 학습시키는 데 기여했음을 의미한다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 분석
+
 - **데이터 효율성**: 단 2개의 trajectory만으로도 GA를 통해 풍부한 랭킹 데이터를 생성함으로써, 인간 전문가의 개입 없이도 효과적인 보상 외삽이 가능함을 입증하였다.
 - **Crossover Step Size의 영향**: 교차 구간의 크기가 너무 크면 랭크 간의 차이가 모호해져 성능의 일관성이 떨어지며, 너무 작으면 동적 전이 일관성(Dynamic transition consistency)이 깨져 trajectory가 파편화된다. 이를 통해 적절한 하이퍼파라미터 설정의 중요성을 확인하였다.
 
 ### 한계점 및 향후 과제
+
 - **하이퍼파라미터 의존성**: GA의 돌연변이율, 교차율, offspring 수 등이 Trial and Error 방식으로 설정되었다. 이를 동적으로 최적화하는 메커니즘이 필요하다.
 - **단순한 랭킹 부여 방식**: 현재는 trajectory 전체에 동일한 랭크를 부여하고 있으나, 향후 상태 방문 빈도나 액션 빈도 등의 통계량을 활용하여 세그먼트별로 가중치를 두는 방식이 제안되었다.
 - **파편화 문제**: GA 연산이 과도할 경우 trajectory가 너무 무작위하게 변해 학습에 방해가 될 수 있는 균형점(Generalization vs Fragmentation)을 찾는 연구가 필요하다.

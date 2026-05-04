@@ -27,7 +27,8 @@ Jaemin Jung, Youkyum Kim, Jihwan Park, Youshin Lim, Byeong-Yeol Kim, Youngjoon J
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 학습 절차
-본 시스템은 크게 데이터 구축, 사전 학습(Pre-training), 미세 조정(Fine-tuning), 그리고 추론(Inference) 단계로 구성된다. 
+
+본 시스템은 크게 데이터 구축, 사전 학습(Pre-training), 미세 조정(Fine-tuning), 그리고 추론(Inference) 단계로 구성된다.
 
 1. **데이터 구축**: LibriSpeech 코퍼스에서 wav2vec 2.0 모델을 사용하여 개별 단어를 Forced-align하고, 이를 통해 1,000개의 클래스를 가진 LSK 데이터셋을 구축하였다. 이때 CER 점수를 측정하여 잘못 정렬된 데이터를 제거하고, 빈도가 너무 높은 관사나 전치사, 그리고 테스트셋에 포함될 키워드를 제외하는 필터링 과정을 거쳤다.
 2. **사전 학습**: 구축된 LSK 데이터셋(Out-of-domain)을 사용하여 모델이 음성 단어들을 변별력 있는 임베딩 공간에 배치하도록 학습시킨다.
@@ -35,6 +36,7 @@ Jaemin Jung, Youkyum Kim, Jihwan Park, Youshin Lim, Byeong-Yeol Kim, Youngjoon J
 4. **추론**: 등록 단계(Enrollment)에서 사용자 정의 키워드의 샘플들을 통해 프로토타입(Centroid)을 생성하고, 쿼리 입력값이 들어오면 임베딩 공간에서의 거리를 측정하여 해당 키워드인지 판별한다.
 
 ### 목적 함수 (Objective Functions)
+
 본 논문은 세 가지 손실 함수를 비교 분석하였다.
 
 **1. Softmax Loss**
@@ -54,17 +56,20 @@ $$c_k = \frac{1}{M-1} \sum_{i=1}^{M-1} e_{k,i}$$
 $$L_{AP} = -\frac{1}{B} \sum_{j=1}^{B} \log \frac{e^{S_{j,j}}}{\sum_{k=1}^{B} e^{S_{j,k}}}$$
 
 ### 배치 구성 (Batch Configuration)
+
 학습 시 각 미니배치 내에서는 동일한 키워드에서 추출된 서로 다른 오디오 데이터가 Positive pair가 되며, 서로 다른 키워드 간의 쌍은 모두 Negative pair로 처리된다. Prototypical-based 네트워크의 경우, 프로토타입 계산을 위해 클래스당 최소 2개 이상의 샘플이 배치에 포함되어야 한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Google Speech Commands (GSC)를 타겟 도메인으로 설정하고, 이를 Pre-defined(10개), Unknown(15개), User-defined(10개) 클래스로 나누어 사용하였다.
 - **평가 지표**: False Rejection Rate (FRR)와 False Alarm Rate (FAR)의 균형점인 Equal Error Rate (EER), 특정 FAR에서의 FRR, F1-score, Accuracy를 사용하였다.
 - **등록 설정**: 1-shot, 5-shot, 10-shot enrollment 환경에서 성능을 측정하였다.
 - **구현**: `res15` 아키텍처를 기반으로 하며, 40차원의 MFCC를 입력으로 사용하였다.
 
 ### 주요 결과
+
 1. **손실 함수의 영향**: 단순 Softmax나 AM-Softmax보다 AP Loss를 사용하고 2단계 학습을 적용했을 때 가장 우수한 성능을 보였다. 특히 1-shot enrollment 성능이 기존의 증분 학습 기반 베이스라인(10-shot 사용)보다 더 뛰어난 결과를 나타냈다.
 2. **사전 학습의 효과**: LSK 데이터셋으로만 학습하거나 GSC로만 학습한 경우보다, LSK 사전 학습 후 GSC 미세 조정을 거친 모델의 성능이 월등히 높았다. 이는 t-SNE 시각화 결과에서도 확인되며, 2단계 학습을 거친 모델이 unseen 키워드들을 임베딩 공간에서 훨씬 더 명확하게 군집화하는 것을 보여준다.
 3. **데이터 양의 영향**: 사전 학습 시 샘플 수보다 클래스의 수가 일반화 성능에 더 중요한 영향을 미친다는 점을 확인하였다. LSK에 한국어 데이터셋(KSK)을 추가하여 클래스 수를 2,000개로 늘렸을 때, 언어가 다름에도 불구하고 성능이 추가로 향상되었다.

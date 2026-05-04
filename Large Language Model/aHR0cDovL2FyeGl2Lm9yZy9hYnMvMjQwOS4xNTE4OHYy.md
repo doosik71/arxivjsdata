@@ -15,6 +15,7 @@ Zhiyuan Wang, Fangxu Yuan, Virginia LeBaron, Tabor Flickinger, Laura E. Barnes (
 본 논문의 핵심 아이디어는 LLM의 추론 능력과 인컨텍스트 학습(In-context Learning) 능력을 활용하여 복잡한 임상 의사소통 지표를 평가하고, 이를 위해 고성능 모델(GPT-4)을 이용해 생성한 합성 데이터로 소규모 모델(LLaMA2)을 최적화하는 것이다.
 
 주요 기여 사항은 다음과 같다.
+
 - 다양한 프롬프팅 전략(CoT, SC-CoT)을 통해 LLM이 임상 의사소통 지표를 효과적으로 식별할 수 있음을 입증하였다.
 - 실제 의료 데이터의 희소성 및 보안 문제를 해결하기 위해, 의료 전문가의 가이드라인에 기반한 합성 데이터셋을 생성하고 이를 통해 오픈소스 LLM(LLaMA2-13b)을 미세 조정하여 높은 성능을 달성하였다.
 - 의료 현장에서의 실질적인 적용을 위해 외부 서버 연결 없이 운영 가능한 내부 구축형(In-house) LLM의 실현 가능성을 제시하였다.
@@ -22,6 +23,7 @@ Zhiyuan Wang, Fangxu Yuan, Virginia LeBaron, Tabor Flickinger, Laura E. Barnes (
 ## 📎 Related Works
 
 논문은 기존의 임상 의사소통 평가 방식을 세 가지로 분류하여 설명한다.
+
 - **인적 평가자(Human Raters):** RIAS나 Calgary-Cambridge 가이드와 같은 구조화된 체계를 사용하지만, 높은 인건비와 전사(Transcription) 비용으로 인해 확장성이 떨어진다.
 - **의료진 자가 평가(Provider Self-Assessment):** 성찰을 통한 개선이 가능하지만, 자신의 능력을 과대 혹은 과소평가하는 주관적 오류가 빈번하다.
 - **환자 피드백(Patient Feedback):** CARE Measure와 같은 척도를 사용하나, 환자의 주관적 편향이나 외부 요인의 영향을 받기 쉽다.
@@ -31,7 +33,9 @@ Zhiyuan Wang, Fangxu Yuan, Virginia LeBaron, Tabor Flickinger, Laura E. Barnes (
 ## 🛠️ Methodology
 
 ### 1. 평가 지표 및 벤치마크 구성
+
 평가 대상이 되는 5가지 지표와 'Good', 'Bad'의 판단 기준은 다음과 같다.
+
 - **Understanding (이해):** 환자의 관점을 이끌어내는 개방형 질문 사용 여부.
 - **Empathy (공감):** 환자의 감정을 인정하고 지지 및 공감을 표현하는지 여부.
 - **Emotion (정서):** 환자의 감정에 정서적으로 정렬된 응답을 하는지, 혹은 어려운 소식을 전한 후 적절한 침묵(10초)을 유지하는지 여부. (Bad의 경우, 감정적 응답 대신 인지적 사실/수치만으로 대응하는 경우)
@@ -41,13 +45,17 @@ Zhiyuan Wang, Fangxu Yuan, Virginia LeBaron, Tabor Flickinger, Laura E. Barnes (
 평가를 위해 의료 전문가들이 작성한 8개의 벤치마크 스크립트를 사용하였으며, 각 세그먼트를 'Good', 'Bad', 'None'으로 라벨링하였다.
 
 ### 2. 프롬프팅 전략 (Evaluation Approach)
+
 LLM의 추론 능력을 극대화하기 위해 세 가지 프롬프트 구조를 설계하였다.
+
 - **Standard Prompt:** 평가자 역할 부여 $\rightarrow$ 운영 규칙 제공 $\rightarrow$ 출력 제약 조건 $\rightarrow$ 질문 및 분석 대상 세그먼트 순으로 구성된다.
 - **Chain-of-Thought (CoT):** 모델이 정답을 내기 전, 단계별 추론 과정을 거치도록 유도한다. 이를 위해 정답과 추론 과정이 포함된 8개의 예시(Exemplars)를 프롬프트에 포함시킨다.
 - **Self-Consistency CoT (SC-CoT):** 동일한 작업에 대해 여러 개의 CoT 추론 경로를 생성하고, 다수결 투표(Majority Voting)를 통해 가장 일관된 최종 결정을 선택함으로써 신뢰도를 높인다.
 
 ### 3. 합성 데이터 생성 및 모델 미세 조정
+
 프라이버시 보호와 내부 배포를 위해 LLaMA2-13b 모델을 미세 조정하였다.
+
 - **데이터 생성:** GPT-4를 사용하여 3,000개의 합성 대화 세그먼트를 생성하였다. 이때 의료진 역할, 환자의 질병 단계, 질환 종류(암, 심장질환 등)를 포함한 분류 체계(Taxonomy)를 설계하여 데이터의 다양성과 현실성을 확보하였다.
 - **PEFT 및 LoRA 적용:** 모델 전체를 학습시키는 대신, Low-Rank Adaptation (LoRA) 기법을 사용하여 효율적으로 학습시켰다.
   - 가중치 행렬의 저차원 성분만을 조정하는 LoRA를 적용하였으며, 설정값은 $rank=8$, $\alpha=32$이다.
@@ -56,11 +64,13 @@ LLM의 추론 능력을 극대화하기 위해 세 가지 프롬프트 구조를
 ## 📊 Results
 
 ### 1. 정량적 평가 결과
+
 - **LLM 성능:** GPT-4는 모든 지표에서 가장 뛰어난 성능을 보였으며, 특히 SC-CoT 전략을 사용할 때 'Good' 스크립트의 이해도(Understanding)와 공감(Empathy) 지표에서 $90\%$ 이상의 정확도를 기록하였다.
 - **프롬프트 효과:** Standard $\rightarrow$ CoT $\rightarrow$ SC-CoT 순으로 성능이 향상되었다. 특히 CoT는 GPT-4가 운영 규칙을 더 엄격하게 준수하게 하여 과도하게 긍정적인 판단을 내리는 경향을 줄였다.
 - **미세 조정 효과:** 기본 LLaMA2-13b 모델은 대부분의 지표에서 무작위 추측 수준($50\%$)의 낮은 성능을 보였으나, 합성 데이터 3,000개로 미세 조정한 후에는 Presence와 Clarity 지표에서 $80\%$ 이상의 정확도를 달성하며 GPT-3.5의 성능을 상회하는 결과를 보였다.
 
 ### 2. 정성적 분석
+
 - LLM은 단순히 라벨을 지정하는 것을 넘어, "의료 용어인 'hypertension'을 사용했으므로 명료성이 떨어지며, 이를 'high blood pressure'로 대체해야 한다"와 같은 구체적이고 실행 가능한 피드백을 제공할 수 있음을 확인하였다.
 - 소형 모델일수록 'Bad'보다는 'Good'으로 판단하려는 경향(긍정 편향)이 강하게 나타났으나, CoT 프롬프팅과 미세 조정을 통해 이를 완화할 수 있었다.
 

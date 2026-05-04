@@ -26,9 +26,11 @@ Hui Lv, Chunyan Xu, Zhen Cui (2020)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 본 모델은 Backbone 네트워크(TPN)를 통해 시공간 특징 맵(Spatio-temporal feature maps)을 추출하고, 이를 GIG 모듈과 SR 모듈에 순차적으로 통과시켜 최종적으로 이상 점수를 산출하는 구조를 가진다.
 
 ### Global Information Guided (GIG) Module
+
 GIG 모듈은 비디오 전체의 맥락을 파악하여 특징을 강화하는 역할을 한다.
 
 1. **전역 패턴 큐(GPC) 생성**: 입력된 세그먼트 특징 맵 $X$에 대해 3D 전역 최대 풀링(Global Max Pooling-3D) 연산을 적용하여 전역 패턴 큐 벡터 $g$를 얻는다.
@@ -41,6 +43,7 @@ GIG 모듈은 비디오 전체의 맥락을 파악하여 특징을 강화하는 
    $$\ell^*_g = -(y^* \log s^*_g + (1-y^*) \log(1-s^*_g))$$
 
 ### Spatial Reasoning (SR) Module
+
 SR 모듈은 GPC를 활용해 공간 도메인에서 가장 관련성이 높은 특징을 선택한다.
 
 1. **관계 점수 계산**: 전역 패턴 큐 $g$와 강화된 시공간 특징 $\hat{X}$의 각 벡터 간의 코사인 유사도(Cosine Similarity)를 측정하여 관계 점수 $r_{i,j}$를 산출한다.
@@ -51,6 +54,7 @@ SR 모듈은 GPC를 활용해 공간 도메인에서 가장 관련성이 높은 
    $$s = \sigma(fc_2(\hat{x}_s))$$
 
 ### 학습 목표 및 손실 함수
+
 최종 손실 함수 $\ell$은 비디오-세그먼트 손실($\ell_{vs}$)과 희소성 제약(Sparse constraint)의 합으로 정의된다.
 
 1. **Video-Segment Loss ($\ell_{vs}$)**:
@@ -66,11 +70,13 @@ SR 모듈은 GPC를 활용해 공간 도메인에서 가장 관련성이 높은 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: CityScene 챌린지 데이터셋을 사용하였다. 12가지의 실제 도시 이상 상황(사고, 싸움, 화재 등)을 포함하며, 훈련 데이터는 비디오 레벨의 라벨만 제공된다.
 - **구현 상세**: Backbone으로 Temporal Pyramid Network (TPN)의 ResNet50 버전을 사용하였으며, Kinetics-400으로 사전 학습된 가중치를 사용하였다. Adagrad 옵티마이저를 통해 100 에폭 동안 학습하였다.
 - **평가 지표**: 일반 이상 탐지(General Anomaly Detection)는 AUC를, 특정 이상 탐지(Specific Anomaly Detection)는 MF1-score를 사용하여 측정하였다.
 
 ### 실험 결과
+
 - **일반 이상 탐지 (Task 1)**: AUC 84.09%를 기록하며 ActionLab(70.92%)과 Orange-Control(31.65%)보다 우수한 성능을 보였다. 최상위 모델과는 다소 차이가 있으나 경쟁력 있는 수치이다.
 - **특정 이상 탐지 (Task 2)**: MF1 52.33%를 기록하며 챌린지 전체에서 3위를 차지하였다. 특히 4위 모델 대비 약 7%의 성능 향상을 보였다.
 - **효율성**: 2080Ti GPU 기준 초당 약 100프레임을 처리할 수 있는 빠른 추론 속도를 보였다.

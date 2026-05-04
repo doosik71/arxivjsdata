@@ -4,7 +4,7 @@ Max Hellrigel-Holderbaum and Leonard Dung (2025)
 
 ## 🧩 Problem to Solve
 
-본 논문은 인공 일반 지능(Artificial General Intelligence, AGI)의 개발 과정에서 발생하는 **'정렬-오용 트레이드오프(Alignment-Misuse Tradeoff)'** 문제를 다룬다. 
+본 논문은 인공 일반 지능(Artificial General Intelligence, AGI)의 개발 과정에서 발생하는 **'정렬-오용 트레이드오프(Alignment-Misuse Tradeoff)'** 문제를 다룬다.
 
 현재 AI 안전성 연구의 주류는 AI를 인간의 목표에 부합하도록 만드는 '정렬(Alignment)'에 집중하고 있다. 그러나 저자들은 AGI의 정렬 여부에 따라 서로 다른 두 가지의 파멸적 위험(Catastrophic Risks)이 존재한다고 주장한다. 첫째, 정렬되지 않은(Misaligned) AGI는 스스로 권력을 추구하여 인류를 무력화하는 **'AGI 탈취 재앙(AGI takeover catastrophe)'**을 초래할 수 있다. 둘째, 완벽하게 정렬된 AGI는 악의적인 인간 사용자가 이를 도구적으로 이용해 인류를 지배하거나 파괴하는 **'AGI 오용 재앙(AGI misuse catastrophe)'**의 위험을 극대화한다.
 
@@ -31,17 +31,23 @@ Max Hellrigel-Holderbaum and Leonard Dung (2025)
 본 논문은 특정 실험 데이터셋을 사용하는 대신, **개념적 분석(Conceptual Analysis)**과 **현행 기술 리뷰(Technical Review)**를 통해 논리를 전개한다.
 
 ### 1. AGI 정렬 딜레마의 구조 분석
+
 저자들은 AGI의 상태를 다음과 같은 논리 구조로 분석한다.
+
 - $\text{Misaligned AGI} \implies \text{Instrumental Convergence} \implies \text{Power-seeking} \implies \text{Takeover Catastrophe}$
 - $\text{Aligned AGI} \implies \text{High Controllability} \implies \text{Facilitated Misuse} \implies \text{Misuse Catastrophe}$
 
 ### 2. 분석 대상 정렬 기술
+
 현재 딥러닝 분야에서 사용되는 주요 정렬 기법들이 오용 위험을 어떻게 높이는지 분석한다.
+
 - **Representation Engineering (RE)**: 모델의 내부 활성화 값(Internal Activations)을 직접 조작하여 특정 행동(예: 정직함, 권력 추구 억제)을 유도하는 기법이다. 이는 모델 가중치에 접근 가능한 설계자가 AI의 목표를 매우 정밀하게 수정할 수 있게 하여 오용 위험을 높인다.
 - **Learning from Feedback (RLHF, DPO, Constitutional AI)**: 인간의 선호도 데이터를 통해 모델을 미세 조정하는 방식이다. 특히 RLHF는 모델을 사용자의 지시에 더 잘 따르게(Helpful) 만드는데, 이는 보안 가드레일이 뚫렸을 때 악의적인 지시를 수행할 확률을 높인다.
 
 ### 3. 위협 모델(Threat Models) 설정
+
 오용의 주체를 두 그룹으로 나누어 분석한다.
+
 - **악의적 사용자(Nefarious Users)**: Adversarial Prompts나 Jailbreaking을 통해 정렬된 모델의 가드레일을 우회하여 위험한 정보를 추출하거나 행동을 유도한다.
 - **악의적 설계자(Malevolent Designers)**: 모델 가중치와 내부 구조에 접근 권한을 가진 자로, RE나 추가 미세 조정을 통해 모델의 기본 정렬을 덮어쓰고 자신의 악의적 목표에 맞게 재정렬한다.
 
@@ -56,14 +62,17 @@ Max Hellrigel-Holderbaum and Leonard Dung (2025)
 ## 🧠 Insights & Discussion
 
 ### 강점 및 통찰
+
 - **관점의 확장**: AI 안전성을 단순히 'AI가 우리를 공격하는가'의 문제에서 'AI가 누구의 도구가 되는가'의 문제로 확장하여, 정렬 연구가 가질 수 있는 내재적 위험을 경고했다.
 - **사회-기술적 접근**: 기술적 정렬만으로는 문제를 해결할 수 없으며, 국제적 협력, 거버넌스, 책임 소재 명확화와 같은 사회적 제어 장치가 필수적임을 논리적으로 뒷받침했다.
 
 ### 한계 및 비판적 해석
+
 - **추측성 논의**: AGI라는 가상적 존재를 전제로 하므로, 제시된 시나리오들이 실제 현실에서 어떤 확률로 발생할지에 대한 실증적 근거는 부족하다.
 - **정렬의 정의 범위**: 논문에서 언급했듯, '모든 도덕적 대상(All moral patients)'을 정렬 대상으로 삼는 광범위한 정렬이 가능하다면 오용 위험을 줄일 수 있다는 반론이 가능하지만, 실제 구현 가능성에 대해서는 명확한 답을 내놓지 못했다.
 
 ### 논의 사항
+
 - **Worst-case AI Safety**: 저자들이 제안한 '최악의 상황을 고려한 안전성' 연구는 매우 중요하다. 즉, 모델을 정교하게 조종하는 능력을 키우기보다, 모델이 특정 임계치 이상의 위험 행동을 절대 하지 못하도록 하는 '강건성(Robustness)'과 '제어(Control)' 연구에 집중해야 한다.
 
 ## 📌 TL;DR

@@ -13,6 +13,7 @@ Eddy Hudson, Garrett Warnell, Faraz Torabi and Peter Stone (2022)
 본 논문의 핵심 기여는 **SILEM(Skeletal feature compensation for Imitation Learning with Embodiment Mismatch)**이라는 알고리즘을 제안한 것이다. SILEM의 핵심 아이디어는 전문가와 학습자의 신체적 차이로 인해 발생하는 skeletal feature(골격 특징)의 차이를 보정하기 위해 **학습 가능한 아핀 변환(Learned Affine Transform)**을 도입하는 것이다.
 
 기존의 접근 방식과 차별화되는 점은 다음과 같다:
+
 1. 전문가의 신체에 대한 시뮬레이션 환경에 접근할 필요가 없다.
 2. 단순한 신경망(MLP) 대신 제한적인 아핀 변환을 사용하여, 학습자의 서툰 동작을 전문가의 완벽한 동작으로 억지로 변환하는 '퇴행(Degeneracy)' 문제를 방지하였다.
 3. 통제된 절제 연구(Ablation Study)를 통해 신체 구조 불일치가 실제로 성능 저하에 미치는 영향을 실증적으로 증명하였다.
@@ -20,6 +21,7 @@ Eddy Hudson, Garrett Warnell, Faraz Torabi and Peter Stone (2022)
 ## 📎 Related Works
 
 기존의 모방 학습 연구들은 주로 다음과 같은 한계를 가지고 있었다:
+
 - **GAIL 및 GAIfO**: 전문가와 학습자가 동일한 신체 구조를 가져야 한다는 가정을 전제로 한다.
 - **Sfv (Peng et al.)**: 역운동학(Inverse Kinematics)을 사용하여 키포인트를 맞추려 하지만, 수동 튜닝이 많이 필요하며 복잡한 신체 불일치 상황에서는 한계가 있다.
 - **TPIL (Third Person Imitation Learning)**: Gradient Reversal을 사용하여 신체 불일치를 제거하려 하지만, 복잡한 도메인(예: 휴머노이드 보행)에서는 신체 차이와 정책 품질의 차이를 구분하지 못해 실패하는 경향이 있다.
@@ -28,22 +30,27 @@ Eddy Hudson, Garrett Warnell, Faraz Torabi and Peter Stone (2022)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 SILEM은 기본적으로 **Adversarial Imitation Learning (AIL)** 프레임워크를 따른다. 판별자(Discriminator)가 전문가의 궤적과 학습자의 궤적을 구분하고, 정책(Policy)은 판별자를 속이도록 학습되는 구조이다. 여기에 학습자의 skeletal feature를 전문가의 것과 유사하게 변환해주는 **Sequential Affine Transform** 단계가 추가되었다.
 
 ### 주요 구성 요소 및 작동 원리
 
 #### 1. Skeletal Feature Abstraction ($g$)
+
 상태 $s$에서 핵심적인 골격 특징(예: 관절 각도, 머리 높이 등)만을 추출하는 함수 $g$를 정의한다. 전문가와 학습자의 관절 수가 다를 경우, 각각 서로 다른 $g$ 함수를 사용하여 동일한 의미를 갖는 특징 공간으로 투영한다.
 
 #### 2. Sequential Affine Transform ($T$)
+
 학습자의 골격 특징 시퀀스 $o$를 전문가의 특징 공간으로 매핑하는 변환이다.
 $$T(o_t) = T(g(s_t), g(s_{t+1}), \dots, g(s_{t+n})) = (f(g(s_t)), f(g(s_{t+1})), \dots, f(g(s_{t+n})))$$
 여기서 $f$는 개별 상태의 특징에 적용되는 아핀 변환으로 다음과 같이 정의된다:
 $$f(g(s)) = Ag(s) + b$$
+
 - $A$: 대각 행렬(Diagonal Matrix)로, 각 특징의 스케일을 조절한다.
 - $b$: 편향(Bias) 벡터로, 특징의 오프셋을 조절한다.
 
 #### 3. 학습 목표 및 손실 함수
+
 - **판별자 ($D$)**: 전문가 데이터 $\tau^E$와 변환된 학습자 데이터 $\tau^c$를 구분하도록 학습한다.
 - **아핀 변환 ($T$)**: 판별자가 학습자의 데이터를 전문가의 것으로 믿게끔(즉, $D(T(o))$ 값을 높이도록) 학습한다.
   $$L = -\log(D(T(o)))$$
@@ -51,6 +58,7 @@ $$f(g(s)) = Ag(s) + b$$
 - **정책 ($\pi$)**: 판별자의 출력 $D(o)$를 보상(Reward)으로 사용하여 PPO(Proximal Policy Optimization) 알고리즘을 통해 업데이트한다.
 
 ### 학습 절차 (Algorithm 1)
+
 1. 정책 $\pi$, 판별자 $D$, 아핀 변환 $T$를 초기화한다.
 2. $\pi$를 사용하여 학습자 궤적 $\tau$를 수집한다.
 3. $\tau$의 모든 요소를 $T$를 통해 변환하여 $\tau^c$를 생성한다.
@@ -61,12 +69,14 @@ $$f(g(s)) = Ag(s) + b$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **Toy Domains**: PyBullet의 HalfCheetah 및 Ant 모델을 기반으로 몸체 길이(Torso length 등)를 변경하여 다양한 변형 모델(HC0~HC2, Ant0~Ant6)을 생성하였다.
 - **Realistic Domains**: DeepMind Control Suite의 Humanoid, HumanoidR(비대칭 팔), 그리고 Boston Dynamics의 Atlas 시뮬레이터를 사용하였다.
 - **전문가 데이터**: CMU Mocap Library의 실제 인간 보행 데이터를 사용하였다.
 - **평가 지표**: 정규화된 성능(Normalized Performance) 및 보상 값(Average Reward)을 측정하였다.
 
 ### 주요 결과
+
 - **신체 불일치 해결 능력**: 모든 토이 도메인과 휴머노이드 실험에서 SILEM은 안정적인 보행 가이드를 생성하였다. 반면, 아핀 변환이 제거된 $\text{SILEM}^-$는 신체 구조가 달라질수록 성능이 급격히 저하되었다.
 - **비교 분석**: 휴머노이드 보행 실험에서 SILEM은 Peng20, TPIL, $\text{SILEM}^-$보다 월등히 높은 보상을 기록하였다. 특히 Atlas는 인간과 신체 비율이 가장 유사하여 다른 모델들보다 상대적으로 성능이 좋았으나, 그럼에도 SILEM이 가장 우수한 성능을 보였다.
 - **보정 효과 입증**: 학습된 $A$와 $b$ 값을 분석한 결과, 비대칭 신체(HumanoidR)의 경우 팔의 길이에 맞춰 스케일링과 오프셋이 적절히 조절되었음을 확인하였다.
@@ -74,9 +84,11 @@ $$f(g(s)) = Ag(s) + b$$
 ## 🧠 Insights & Discussion
 
 ### 아핀 변환의 제약성과 이점
+
 본 논문에서 가장 흥미로운 점은 왜 MLP와 같은 강력한 네트워크 대신 단순한 아핀 변환을 사용했는가에 대한 분석이다. 실험 결과(Table I), MLP를 사용하면 판별자 보상은 높아지지만 실제 환경 보상은 매우 낮게 나타났다. 이는 MLP가 신체 구조의 차이를 보정하는 것을 넘어, 학습자의 '서툰 상태' 자체를 전문가의 '완벽한 상태'로 강제 변환하는 **퇴행(Degeneracy)** 현상이 발생하기 때문이다. 아핀 변환은 선형적인 변환만을 허용하므로 이러한 과도한 보정을 방지하고 실제 신체적 차이만을 효과적으로 보정할 수 있다.
 
 ### 한계 및 향후 연구
+
 - **신체 유사성 필요**: 아핀 변환을 사용하므로 전문가와 학습자 사이에 어느 정도의 구조적 유사성이 전제되어야 한다.
 - **환경 불일치(Environment Mismatch)**: 저자들은 경사면과 평지 같은 환경 차이 또한 아핀 변환으로 어느 정도 보정 가능할 것이라는 가설을 제시하며, 향후 이에 대한 연구가 필요함을 언급하였다.
 - **확장성**: 아핀 변환의 앙상블이나 더 정교한 구조를 도입함으로써 더 복잡한 신체 불일치 문제를 해결할 가능성이 있다.

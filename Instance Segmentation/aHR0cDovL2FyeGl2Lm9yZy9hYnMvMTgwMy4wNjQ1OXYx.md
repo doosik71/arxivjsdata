@@ -14,9 +14,9 @@ Yen-Chang Hsu, Zheng Xu, Zsolt Kira, Jiawei Huang (2018)
 
 본 논문의 핵심 아이디어는 픽셀 간의 **쌍별 관계(Pairwise Relationship)**를 직접적인 학습 감독 신호로 사용하는 새로운 손실 함수를 설계한 것이다. 구체적인 기여 사항은 다음과 같다.
 
-1.  **End-to-End Pixel Clustering**: 픽셀들이 동일한 인스턴스에 속하는지 여부를 정의하는 관계 $R$을 이용하여 FCN이 직접 픽셀 클러스터링을 수행하도록 학습시키는 새로운 목적 함수를 제안하였다.
-2.  **Graph Coloring 이론의 접목**: 네트워크가 출력할 수 있는 인덱스(ID)의 수는 제한적이지만, 이미지 내 인스턴스의 수는 가변적이고 무제한적일 수 있다. 이를 해결하기 위해 그래프 채색(Graph Coloring) 이론을 도입하여, 인접한 인스턴스는 서로 다른 ID를 갖게 하고 멀리 떨어진 인스턴스는 ID를 재사용하게 함으로써 제한된 ID로 무제한의 인스턴스를 구분할 수 있게 하였다.
-3.  **실용적 검증**: 제안한 방법론이 차선 검출(Lane Detection) 및 Cityscapes 데이터셋에서 강력한 성능을 보임을 입증하였으며, 특히 외부 데이터 없이도 높은 효율성과 실시간성(~55 FPS)을 달성하였다.
+1. **End-to-End Pixel Clustering**: 픽셀들이 동일한 인스턴스에 속하는지 여부를 정의하는 관계 $R$을 이용하여 FCN이 직접 픽셀 클러스터링을 수행하도록 학습시키는 새로운 목적 함수를 제안하였다.
+2. **Graph Coloring 이론의 접목**: 네트워크가 출력할 수 있는 인덱스(ID)의 수는 제한적이지만, 이미지 내 인스턴스의 수는 가변적이고 무제한적일 수 있다. 이를 해결하기 위해 그래프 채색(Graph Coloring) 이론을 도입하여, 인접한 인스턴스는 서로 다른 ID를 갖게 하고 멀리 떨어진 인스턴스는 ID를 재사용하게 함으로써 제한된 ID로 무제한의 인스턴스를 구분할 수 있게 하였다.
+3. **실용적 검증**: 제안한 방법론이 차선 검출(Lane Detection) 및 Cityscapes 데이터셋에서 강력한 성능을 보임을 입증하였으며, 특히 외부 데이터 없이도 높은 효율성과 실시간성(~55 FPS)을 달성하였다.
 
 ## 📎 Related Works
 
@@ -65,6 +65,7 @@ $$L_{ins} = L_{pair} + L_{bg}$$
 ### 4. Network Architecture
 
 네트워크는 **Feature Pyramid Network(FPN)** 구조를 기반으로 한다.
+
 - **Backbone**: Pre-trained ResNet을 사용하여 특징 맵을 추출한다.
 - **Neck**: 각 단계의 특징 맵을 Up-sampling하고 element-wise summation을 통해 결합하여 최종 특징 맵 $M$을 생성한다.
 - **Heads**: 특징 맵 $M$ 위에 Task-specific 레이어를 추가한다. 인스턴스 ID 할당을 위해 $3\times3$ Conv 레이어와 $1\times1$ Conv 레이어(출력 차원 $n+1$)를 배치한다. 또한 다중 클래스 대응을 위해 Semantic Segmentation 헤드와 객체 중심(Object Center) 예측 헤드를 추가하여 Multi-task learning을 수행한다.
@@ -72,11 +73,13 @@ $$L_{ins} = L_{pair} + L_{bg}$$
 ## 📊 Results
 
 ### 1. Lane Detection (TuSimple Dataset)
+
 - **설정**: 차선을 10픽셀 너비의 마스크로 변환하여 인스턴스 세그멘테이션 문제로 정의하였다.
 - **결과**: 2017 CVPR Autonomous Driving Challenge에서 **2위**를 차지하였다.
 - **분석**: 외부 데이터를 사용한 1위 모델과 성능 차이가 미미하며, 특히 외부 데이터 없이 달성한 최고 성적이라는 점에서 의의가 있다. 또한 약 55 FPS의 실시간 추론 속도를 보였다.
 
 ### 2. Cityscapes Instance Segmentation
+
 - **지표**: Average Precision (AP)을 측정하였다.
 - **결과**: Proposal-free 방식 중 상위 4위 안에 들었으며, **15.1% AP**를 기록하였다. 특히 동일하게 그래프 라벨링 개념을 사용한 JGD(9.8% AP)보다 훨씬 우수한 성능을 보였다.
 - **분석**: Semantic Segmentation의 품질이 인스턴스 AP에 큰 영향을 미침을 확인하였다. GT-Seg(정답 세그멘테이션)를 사용했을 때 AP가 38.4%까지 상승하는 것을 통해, 제안한 인스턴스 마스크 생성 능력 자체는 매우 강력함을 입증하였다.
@@ -84,11 +87,13 @@ $$L_{ins} = L_{pair} + L_{bg}$$
 ## 🧠 Insights & Discussion
 
 **강점:**
+
 - Bounding Box 제안 단계 없이 FCN의 단일 통과만으로 인스턴스를 분리하는 효율적인 end-to-end 프레임워크를 제시하였다.
 - 그래프 채색 이론을 딥러닝의 목적 함수에 녹여내어, 고정된 출력 차원으로 가변적인 수의 객체를 처리하는 창의적인 해결책을 제시하였다.
 - 차선 검출과 같은 특수 목적의 작업뿐만 아니라 Cityscapes와 같은 일반적인 도시 장면 데이터셋에서도 범용성을 입증하였다.
 
 **한계 및 비판적 해석:**
+
 - **ID 충돌 문제**: 인접한 두 객체가 우연히 동일한 ID를 할당받을 경우, Connected Component 추출 단계에서 두 객체가 하나로 병합되는 현상이 발생한다. 이는 정성적 결과에서도 확인되는 주요 실패 사례이다.
 - **과분할(Over-segmentation)**: 하나의 객체가 여러 개의 세그먼트로 쪼개지는 현상이 발생하며, 이를 해결하기 위해 Object Center 예측을 통한 병합 후처리를 도입하였으나 완벽하지는 않다.
 - **AP 지표의 한계**: 시각적으로는 매우 훌륭한 결과를 내놓음에도 불구하고, AP 수치가 낮게 나오는 경향이 있다. 이는 신뢰도 점수(Confidence score) 할당 방식의 한계일 수 있으며, 저자 또한 이 점을 지적하였다.

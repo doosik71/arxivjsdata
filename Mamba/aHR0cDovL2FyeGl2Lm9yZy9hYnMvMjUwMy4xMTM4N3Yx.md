@@ -6,7 +6,7 @@ Wenbo Yan, Shurui Wang, and Ying Tan (2025)
 
 주식 시계열 예측은 투자 결정의 핵심 요소이지만, 극심한 변동성과 복잡한 상호 의존성으로 인해 매우 어려운 과제이다. 최근 Mamba 모델이 우수한 선택 메커니즘(selection mechanism)을 바탕으로 다양한 시계열 예측 작업에서 뛰어난 성능을 보였으나, 주식 시장에 적용할 때 다음과 같은 두 가지 주요 한계가 존재한다.
 
-첫째, 기존 Mamba 기반 모델들은 개별 주식의 시계열을 독립적으로 모델링하는 경향이 있어, 동일 시장 내 다른 주식들이 개별 주식에 미치는 영향, 즉 상호 의존성(interdependence)을 충분히 캡처하지 못한다. 
+첫째, 기존 Mamba 기반 모델들은 개별 주식의 시계열을 독립적으로 모델링하는 경향이 있어, 동일 시장 내 다른 주식들이 개별 주식에 미치는 영향, 즉 상호 의존성(interdependence)을 충분히 캡처하지 못한다.
 
 둘째, Mamba의 핵심인 선택 메커니즘이 오직 과거의 시계열 데이터에만 의존한다. 이로 인해 시장 전체의 흐름을 나타내는 거시적 정보(macro information)를 통합하여 더 지능적인 선택을 내리는 능력이 부족하다.
 
@@ -33,6 +33,7 @@ Wenbo Yan, Shurui Wang, and Ying Tan (2025)
 ## 🛠️ Methodology
 
 ### 1. Index-Guided Frequency Filtering Decomposition
+
 주식 데이터에서 거시적 흐름(Commonality)과 개별 특성(Specificity)을 분리하기 위해 Fast Fourier Transform (FFT)를 사용한다. 주식 지수($I$)의 진폭(amplitude)을 이용하여 필터 파라미터를 학습하고, 이를 통해 주식 시계열 $X$를 다음과 같이 분해한다.
 
 - **Commonality ($X_c$)**: 주식 지수의 진폭 정보를 이용해 필터링하여 시장 전체의 공통적 경향성을 추출한다.
@@ -43,32 +44,41 @@ Wenbo Yan, Shurui Wang, and Ying Tan (2025)
 최종적으로 Inverse FFT (iFFT)를 통해 시간 도메인으로 복원하여 $X_c$와 $X_s$를 얻는다.
 
 ### 2. Node Independent Mamba
+
 이웃 노드의 정보가 유입되기 전, 각 주식의 내재적 특성을 먼저 학습하는 단계이다. 1D Convolution과 Linear Projection을 통해 Mamba의 파라미터 $\Delta, B, C$를 생성하고, State Space Model (SSM)을 통해 독립적인 특징을 추출한다. 이는 펀더멘털이 약한 주식은 시장 상황이 좋아도 상승하기 어렵다는 주관적 평가 과정을 모사한 것이다.
 
 ### 3. Temporal Information-Guided Spatio-temporal Mamba (TIGSTM)
+
 시간 단계별로 변하는 동적인 관계와 거시 정보를 통합한다.
+
 - **Sparse Neighbor Aggregation**: 분해된 특이성($X_s$)을 이용해 각 시간 단계마다 Attention 기반의 희소 그래프를 생성하며, 상위 30%의 이웃 노드 정보만 집계한다.
 - **Information-Guided Selection**: 공통성($X_c$)에서 추출한 시간 단계별 거시 정보($M_S$)를 Mamba의 입력 행렬 $B_S$와 출력 행렬 $C_S$에 연결(concatenate)하여 시퀀스 선택 과정을 가이드한다.
   $$B_S = \langle W^T_{B,S} X_S, \text{Broadcast}(M_S) \rangle$$
 
 ### 4. Global Information-Guided Spatio-temporal Mamba (GIGSTM)
+
 전체 기간에 걸친 정적인 관계와 글로벌 거시 정보를 학습한다.
+
 - **Global Neighbor Aggregation**: 모든 시간 단계의 특이성 정보를 통합하여 완전 연결 그래프(Fully Connected Graph)를 구축하고 전역적인 이웃 정보를 집계한다.
 - **Global Information-Guided Selection**: 시간 단계별 거시 정보($M_S$)를 다시 통합하여 글로벌 거시 정보($M_G$)를 생성하고, 이를 Mamba의 $B_G, C_G$ 행렬에 통합하여 최종 선택 과정을 가이드한다.
 
 ### 5. Prediction and Loss
+
 최종 출력 $O_G$를 선형 층에 통과시켜 평균(mean)과 편차(dev)를 예측하는 mean-deviation 접근 방식을 사용하며, 최종 예측값은 $\hat{Y} = \text{mean} + e^{\text{dev}}$로 계산한다. 손실 함수로는 순위 분포 학습을 위해 Pearson 상관계수 손실($L_{pearson}$)을 사용한다.
 $$L_{pearson} = -\frac{(Y - \bar{Y})^T (\hat{Y} - \bar{\hat{Y}})}{\sqrt{(Y - \bar{Y})^T (Y - \bar{Y})} \cdot \sqrt{(\hat{Y} - \bar{\hat{Y}})^T (\hat{Y} - \bar{\hat{Y}})}}$$
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: CSI500, CSI800, CSI1000 (중국 주식 시장 데이터)
 - **비교 모델**: ASTGCN, MTGNN, DCRNN (Spatio-Temporal), iTransformer, TimesNet (Temporal), MASTER (Stock specialized)
 - **평가 지표**: IC (상관계수), PNL (손익), MAXD (최대 낙폭), SHARPE (샤프 지수), WINR (승률), PL (손익비)
 
 ### 주요 결과
+
 HIGSTM은 모든 데이터셋에서 IC, PNL, SHARPE, WINR, PL 지표에서 SOTA(State-of-the-art) 성능을 달성하였다.
+
 - **정량적 개선**: 평균적으로 IC는 11%, SHARPE는 10%, PNL 및 PL은 6% 이상 향상되었다.
 - **리스크 분석**: CSI500 데이터셋에서 MAXD(최대 낙폭)가 Filternet보다 약간 높게 나타나 리스크가 소폭 증가했으나, SHARPE 지수가 15% 이상 크게 향상된 점으로 보아 리스크 대비 수익률이 압도적으로 높음을 알 수 있다.
 - **Ablation Study**: TIGSTM, GIGSTM, Decomposition, Index-guided filtering 중 하나라도 제거했을 때 성능이 30% 이상 급격히 하락하여, 제안한 모든 구성 요소가 필수적임을 입증하였다.

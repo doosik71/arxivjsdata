@@ -27,20 +27,25 @@ Pietro Bartoli, Tommaso la Bondini, Christian Veronesi, Andrea Giudici, Niccolò
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 구조
+
 KWS 시스템은 [Raw Audio $\rightarrow$ MFCC 특징 추출 $\rightarrow$ Neural Network 추론 $\rightarrow$ Post-processing]의 순서로 동작한다. MFCC 과정에서는 오디오 신호를 Mel-scaled spectrogram으로 변환한 뒤, Discrete Cosine Transform (DCT)를 통해 차원을 축소하여 특징 벡터를 생성한다.
 
 ### proposed 모델: TKWS
+
 TKWS는 MCU의 메모리 제약을 해결하기 위해 설계된 모델로, 두 가지 설정(TKWS-2: 잔차 블록 2개, TKWS-3: 잔차 블록 3개)으로 구현되었다.
+
 - **구조**: Pointwise expansion $\rightarrow$ Double 1D Depth-wise Convolutions $\rightarrow$ Projection layer.
 - **특징**: 2D 컨볼루션 대신 1D 컨볼루션을 사용하여 연산량을 줄였으며, MFCC의 시간적 시퀀스를 직접 처리한다.
 - **출력층**: Global Average Pooling layer와 Softmax 활성화 함수를 가진 Fully Connected layer를 통해 클래스 확률을 출력한다.
 
 ### 학습 및 벤치마킹 절차
+
 - **데이터셋**: Google Speech Commands Dataset (GSCD) v0.02의 10개 키워드 클래스를 사용하였다. 실제 환경의 강건성을 위해 $\mathcal{N}(10\text{ dB}, 5\text{ dB})$의 SNR을 가진 배경 소음을 합성하여 데이터 증강을 수행하였다.
 - **MFCC 설정**: 시간 해상도 영향을 분석하기 위해 윈도우 수(32, 63)와 Mel 필터 뱅크 수(15, 30)를 조합하여 테스트하였다.
 - **하드웨어**: STM32 N6 (Cortex-M55 + NPU), H7 (Cortex-M7), U5 (Cortex-M33) 세 가지 플랫폼을 사용하였다. 모든 모델은 8-bit 정수형으로 양자화(Quantization)되었다.
 
 ### 평가 지표
+
 모델의 성능은 Weighted F1-score로 측정하였으며, 시스템 효율성은 다음과 같은 Energy-Delay Product (EDP) 지표를 사용하였다.
 $$EDP = \text{Latency} \times \text{Energy Consumption}$$
 이 지표는 지연 시간과 에너지 소비 사이의 균형을 측정하며, 값이 낮을수록 시스템 효율성이 높음을 의미한다.
@@ -48,9 +53,11 @@ $$EDP = \text{Latency} \times \text{Energy Consumption}$$
 ## 📊 Results
 
 ### 모델 성능 분석
+
 실험 결과, TKWS-3 모델은 MFCC 크기가 $15 \times 63$일 때 14.4k라는 매우 적은 파라미터 수로 92.4%의 F1-score를 달성하였다. 이는 LicoNet-S (17.4k params, 93.6% F1)와 유사한 성능을 보이면서도 파라미터 수는 약 17% 더 적으며, DS-CNN이나 TENet6에 비해 메모리 사용량을 3배 이상 줄이면서 동등하거나 더 높은 정확도를 보였다. 특히 시간 윈도우 수를 32에서 63으로 늘렸을 때 정확도가 일관되게 상승함을 확인하여, 높은 시간 해상도가 성능 향상에 중요함을 입증하였다.
 
 ### 시스템 효율성 분석 (EDP)
+
 - **하드웨어 비교**: NPU가 통합된 STM32 N6 플랫폼이 가장 낮은 EDP를 기록하며 최적의 효율성을 보였다. N6는 DSP를 통한 빠른 MFCC 추출과 NPU를 통한 저전력 고속 추론이 가능하여, 높은 해상도의 특징($63$ timesteps)을 사용하더라도 에너지 비용 증가가 적었다.
 - **플랫폼 특성**: H7은 지연 시간은 짧으나 에너지 소비가 컸고, U5는 속도는 느리지만 에너지 효율이 높았다. 따라서 실시간 응답이 중요한 경우에는 H7이, 초저전력 시나리오에서는 U5가 적합하다는 결론을 내렸다.
 - **아키텍처 영향**: NPU가 없는 MCU(H7, U5)에서는 1D 컨볼루션 기반 모델이 2D 기반 모델(DS-CNN 등)보다 에너지 효율이 훨씬 좋았다. 반면 N6에서는 TENet 모델의 커널 크기가 NPU의 최적 실행 범위를 벗어나 CPU로 작업이 오프로드됨에 따라 오히려 EDP가 증가하는 현상이 관찰되었다.

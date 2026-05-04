@@ -23,37 +23,44 @@ Aviv Bick, Kevin Y. Li, Eric P. Xing, J. Zico Kolter, and Albert Gu (2024/2025)
 ## 🛠️ Methodology
 
 ### 1. Sequence Transformation 및 Matrix Mixer의 관점
+
 논문은 시퀀스 모델의 동작을 $Y = MX$ 형태의 행렬 곱으로 정의하며, 여기서 $M$을 **Matrix Mixer**라고 부른다. Transformer의 Self-attention은 $\text{Softmax}(QK^\top)$라는 행렬을 사용하는 Mixer이며, Mamba-2와 같은 SSM은 구조화된 상태 공간 이중성(Structured State Space Duality, SSD)을 통해 Semi-separable matrix 형태의 Mixer를 구현한다.
 
 ### 2. MOHAWK의 3단계 증류 절차
 
 #### Stage 1: Matrix Orientation (행렬 방향 정렬)
+
 가장 미세한 단계로, 학생 모델(SSM)의 Mixer 행렬이 교사 모델(Transformer)의 Attention 행렬을 최대한 가깝게 모방하도록 학습시킨다.
 $$ \min_{\theta} \| \text{TeacherMixer}(u) - \text{StudentMixer}_{\theta}(u) \|_F $$
 여기서 $\| \cdot \|_F$는 Frobenius norm을 의미한다. 이 단계에서는 다른 구성 요소들을 고정하거나 identity function으로 설정하여, 오직 행렬 간의 거리만을 최소화하는 데 집중한다.
 
 #### Stage 2: Hidden-State Alignment (은닉 상태 정렬)
+
 행렬 수준의 정렬 이후, 각 블록(Block)의 최종 출력값(Hidden state)을 일치시키는 단계이다.
 $$ \min_{\theta} \| \text{AttnBlock}(u) - \text{StudentMixerBlock}_{\theta}(u) \|_2 $$
 단순 행렬 모방을 넘어, Gating 메커니즘 등을 포함한 블록 전체의 기능적 출력을 정렬함으로써 교사 모델의 분포를 더 잘 학습하게 한다.
 
 #### Stage 3: Weight-Transfer and Knowledge Distillation (가중치 전이 및 지식 증류)
+
 마지막으로, Mixer를 제외한 나머지 가중치(MLP, Embedding, Layer Norm 등)를 교사 모델에서 학생 모델로 직접 전이한다. 이후 전체 모델을 end-to-end로 학습시키며 교사 모델의 Logits 분포를 따르도록 하는 Knowledge Distillation을 수행한다.
 $$ \min_{\theta} L_{CE}(\text{TeacherModel}(x), \text{StudentModel}_{\theta}(x)) $$
 특히, 지식이 주로 MLP 블록에 저장되어 있다는 가설에 따라 MLP 가중치를 동결(Freeze)한 채 학습을 진행해도 성능이 유지됨을 확인하였다.
 
 ### 3. Phi-Mamba 아키텍처
+
 본 연구는 Phi-1.5(1.3B)를 교사 모델로, Mamba-2 기반의 **Phi-Mamba**를 학생 모델로 설정하였다. Mamba-2의 구조를 수정하여 Transformer의 Multi-head 구조와 대응하도록 변경하였으며, 불필요한 비선형 활성화 함수나 정규화 층을 제거하여 증류 효율을 높였다. 또한, 일부 Attention 층을 유지하는 **Hybrid Phi-Mamba** 버전도 제안하였다.
 
 ## 📊 Results
 
 ### 1. 정량적 성능 평가
+
 Phi-Mamba는 단 30억(3B) 개의 토큰만을 사용하여 증류되었으며, 이는 기존에 스크래치(scratch)부터 학습된 Mamba-2(315B 토큰) 대비 1% 미만의 데이터만 사용한 결과이다. 그럼에도 불구하고 Winogrande, ARC-C 등 주요 벤치마크에서 기존의 모든 오픈소스 비-Transformer 모델들을 압도하는 성능을 보였다.
 
 - **Phi-Mamba (1.5B)**: Winogrande 71.7% (Mamba-2의 60.9% 대비 대폭 상승)
 - **Hybrid Phi-Mamba (1.5B)**: 평균 성능 66.0% 달성 (교사 모델인 Phi-1.5의 67.2%에 근접)
 
 ### 2. 분석 및 어블레이션 연구
+
 - **단계별 중요성**: Stage 3(최종 증류)만 수행했을 때보다 Stage 1 $\rightarrow$ 2 $\rightarrow$ 3의 순차적 과정을 거쳤을 때 성능이 비약적으로 향상됨을 확인하였다.
 - **행렬 표현력**: Mamba-2의 SSD 구조가 Linear Attention이나 Toeplitz 구조보다 Transformer의 Attention 행렬을 훨씬 더 정밀하게 근사(Approximation)할 수 있음을 Frobenius distance 측정을 통해 증명하였다.
 - **하이브리드 구성**: Attention 층을 균일하게 배치한 하이브리드 모델이 성능이 가장 좋았으며, Attention 층의 개수가 많을수록 성능이 향상되는 경향을 보였다.

@@ -26,8 +26,8 @@ Xuwang Yin, Soheil Kolouri, Gustavo K. Rohde (2020)
 
 제안된 방법론은 크게 두 가지 접근 방식으로 나뉜다.
 
-1.  **Integrated Detection**: 기존의 $K$-class 분류기 $f$를 사용하여 먼저 예측 레이블 $\hat{k}$를 얻고, 이후 $\hat{k}$번째 이진 분류기 $d_{\hat{k}}$를 사용하여 해당 샘플이 깨끗한 샘플인지 적대적 샘플인지 판별한다.
-2.  **Generative Detection**: $K$개의 이진 분류기 $\{d_k\}_{k=1}^K$를 One-versus-the-rest(OVR) 분류기로 사용하여 예측 레이블 $\hat{k}$를 결정하고, 동일하게 $d_{\hat{k}}$를 통해 탐지 여부를 결정한다.
+1. **Integrated Detection**: 기존의 $K$-class 분류기 $f$를 사용하여 먼저 예측 레이블 $\hat{k}$를 얻고, 이후 $\hat{k}$번째 이진 분류기 $d_{\hat{k}}$를 사용하여 해당 샘플이 깨끗한 샘플인지 적대적 샘플인지 판별한다.
+2. **Generative Detection**: $K$개의 이진 분류기 $\{d_k\}_{k=1}^K$를 One-versus-the-rest(OVR) 분류기로 사용하여 예측 레이블 $\hat{k}$를 결정하고, 동일하게 $d_{\hat{k}}$를 통해 탐지 여부를 결정한다.
 
 ### 학습 절차 및 손실 함수
 
@@ -54,25 +54,29 @@ $$H(x) = \arg \max_k p(k|x) = \arg \max_k z_{d_k}(x)$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: MNIST, CIFAR10, Restricted ImageNet
 - **비교 대상**: State-of-the-art 탐지기(Carlini & Wagner, 2017a), Softmax Robust Classifier(Madry et al., 2017)
 - **지표**: AUC (Area Under the ROC Curve), Mean $L_2$ distortion, TPR(True Positive Rate), FPR(False Positive Rate)
 
 ### 주요 결과
-1.  **탐지 성능**: MNIST 데이터셋에서 Generative Detection은 0.95 TPR 및 1.0 FPR 기준, Mean $L_2$ distortion을 기존 SOTA인 $3.68$에서 최대 $5.65$까지 향상시켰다. CIFAR10에서도 $1.1$에서 $1.5$로 향상시키며 우수한 성능을 보였다.
-2.  **Adaptive Attack에 대한 견고성**: Combined attack(분류기와 탐지기를 동시에 공격) 상황에서도 Generative Detection이 Integrated Detection보다 더 높은 견고성을 보였다.
-3.  **분류 성능**: Softmax Robust Classifier는 $\epsilon$ 값이 커질 때(예: MNIST $\epsilon=0.4$) 성능이 급격히 하락하는 반면, 제안된 Generative Classifier는 Reject 옵션을 통해 표준 정확도와 강건한 에러 사이의 균형을 맞추며 더 높은 견고성을 유지했다.
-4.  **해석 가능성**: Targeted attack 결과, Softmax Robust Classifier를 공격하여 생성된 이미지는 시각적으로 무의미한 경우가 많았으나, Generative Classifier를 공격하여 생성된 이미지는 타겟 클래스의 시각적 특징이 명확하게 나타났다. 이는 모델이 실제 클래스 분포를 학습했음을 시사한다.
+
+1. **탐지 성능**: MNIST 데이터셋에서 Generative Detection은 0.95 TPR 및 1.0 FPR 기준, Mean $L_2$ distortion을 기존 SOTA인 $3.68$에서 최대 $5.65$까지 향상시켰다. CIFAR10에서도 $1.1$에서 $1.5$로 향상시키며 우수한 성능을 보였다.
+2. **Adaptive Attack에 대한 견고성**: Combined attack(분류기와 탐지기를 동시에 공격) 상황에서도 Generative Detection이 Integrated Detection보다 더 높은 견고성을 보였다.
+3. **분류 성능**: Softmax Robust Classifier는 $\epsilon$ 값이 커질 때(예: MNIST $\epsilon=0.4$) 성능이 급격히 하락하는 반면, 제안된 Generative Classifier는 Reject 옵션을 통해 표준 정확도와 강건한 에러 사이의 균형을 맞추며 더 높은 견고성을 유지했다.
+4. **해석 가능성**: Targeted attack 결과, Softmax Robust Classifier를 공격하여 생성된 이미지는 시각적으로 무의미한 경우가 많았으나, Generative Classifier를 공격하여 생성된 이미지는 타겟 클래스의 시각적 특징이 명확하게 나타났다. 이는 모델이 실제 클래스 분포를 학습했음을 시사한다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 기여
+
 본 연구는 적대적 예제 탐지를 단순한 이진 분류 문제에서 Robust Optimization 문제로 격상시켰다. 특히 $K$개의 이진 분류기를 통해 입력 공간을 분할 관리함으로써 Adaptive attack에 대한 방어력을 높였으며, 이를 확률 밀도 추정 문제로 연결하여 모델의 해석 가능성을 확보한 점이 매우 뛰어나다.
 
 ### 한계 및 비판적 해석
-1.  **계산 비용의 증가**: 가장 큰 한계는 비용 문제이다. $K$개의 클래스가 있을 때 $K$개의 이진 분류기를 유지하고 추론해야 하므로, 메모리 요구량과 추론 시간이 Softmax 분류기에 비해 약 $K$배(CIFAR10의 경우 10배) 증가한다.
-2.  **학습 시간**: Generative Adversarial Training(GAT)은 일반적인 적대적 학습보다 약 2.7배 느린 것으로 측정되었다. 실시간성이나 자원이 제한된 환경에서의 적용에는 어려움이 있을 수 있다.
-3.  **가정의 단순함**: 모든 클래스의 정규화 상수 $Z_k$와 사전 확률 $p(k)$가 동일하다고 가정한 점은 이론적 단순화를 위한 것이나, 실제 불균형 데이터셋에서는 성능 저하의 원인이 될 수 있다.
+
+1. **계산 비용의 증가**: 가장 큰 한계는 비용 문제이다. $K$개의 클래스가 있을 때 $K$개의 이진 분류기를 유지하고 추론해야 하므로, 메모리 요구량과 추론 시간이 Softmax 분류기에 비해 약 $K$배(CIFAR10의 경우 10배) 증가한다.
+2. **학습 시간**: Generative Adversarial Training(GAT)은 일반적인 적대적 학습보다 약 2.7배 느린 것으로 측정되었다. 실시간성이나 자원이 제한된 환경에서의 적용에는 어려움이 있을 수 있다.
+3. **가정의 단순함**: 모든 클래스의 정규화 상수 $Z_k$와 사전 확률 $p(k)$가 동일하다고 가정한 점은 이론적 단순화를 위한 것이나, 실제 불균형 데이터셋에서는 성능 저하의 원인이 될 수 있다.
 
 ## 📌 TL;DR
 

@@ -27,9 +27,11 @@ Hugo Sousa, Nuno Guimarães, Alípio Jorge, Ricardo Campos (2023)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 접근 방식
-본 연구는 텍스트 내 엔티티의 정확한 위치(Offset)를 찾는 기존의 추출 방식 대신, 인간이 정보를 나열하는 방식과 유사하게 모델이 엔티티 목록을 생성하도록 유도하는 '목록 기반 추출' 방식을 채택한다. 
+
+본 연구는 텍스트 내 엔티티의 정확한 위치(Offset)를 찾는 기존의 추출 방식 대신, 인간이 정보를 나열하는 방식과 유사하게 모델이 엔티티 목록을 생성하도록 유도하는 '목록 기반 추출' 방식을 채택한다.
 
 ### 프롬프트 템플릿 설계
+
 모델의 성능을 최적화하기 위해 다음과 같은 7가지 모듈로 구성된 프롬프트 템플릿을 설계하였다.
 
 1. **Task**: 모델이 수행해야 할 작업을 명시한다.
@@ -41,22 +43,26 @@ Hugo Sousa, Nuno Guimarães, Alípio Jorge, Ricardo Campos (2023)
 7. **Output**: 모델이 답변을 생성할 빈 공간이다.
 
 ### 최적 프롬프트 선정을 위한 Ablation Study
+
 모든 모듈이 항상 성능 향상을 보장하지 않으므로, 저자들은 전체 데이터셋 중 대표성 있게 샘플링된 20개의 문서로 사전 실험(Ablation Study)을 수행하였다. 샘플링은 토큰 수 기준 $T-1$ 분위수(Quantiles)를 계산하여 데이터의 분포를 반영하도록 설계되었다. 이 과정을 통해 각 모델과 엔티티 쌍에 가장 적합한 프롬프트 조합을 선정하였다.
 
 ### 평가 지표
+
 정확한 일치만을 측정하는 전통적인 정밀도(Precision), 재현율(Recall), $F_1$ score 외에, 부분적으로 겹치는 예측값도 인정하는 완화된 $F_1$ score ($F^r_1$)를 도입하여 보다 유연하게 평가하였다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Text2Story Lusa (유럽 포르투갈어 뉴스 기사 119건)
 - **모델**: GPT-3, ChatGPT (Temperature = 0으로 설정하여 변동성 최소화)
 - **비교 대상 (Baselines)**:
-    - Timexs: HeidelTime, TEI2GO
-    - Participants: SRL
-    - Events: SRL, TEFE
+  - Timexs: HeidelTime, TEI2GO
+  - Participants: SRL
+  - Events: SRL, TEFE
 
 ### 주요 결과 분석
+
 실험 결과는 다음과 같다 (Table I 기준).
 
 1. **Timexs & Participants**: GPT 모델들이 기존 Baseline 시스템들을 크게 상회하였다. 특히 $F_1$ strict 기준, 일부 지표에서 10~20포인트 이상의 성능 향상을 보였다.
@@ -66,11 +72,13 @@ Hugo Sousa, Nuno Guimarães, Alípio Jorge, Ricardo Campos (2023)
 ## 🧠 Insights & Discussion
 
 ### GPT 모델의 강점과 한계
+
 GPT 모델이 시간 표현(Timexs)과 참여자(Participants) 추출에서 강세를 보인 이유는, 이러한 개념들이 일반적인 상식(Common Knowledge)과 밀접하게 연관되어 있어 방대한 사전 학습 데이터가 유용하게 작용했기 때문으로 분석된다.
 
 반면, 사건(Events) 추출에서 성능이 낮게 나타난 이유는 해당 데이터셋의 '사건' 정의가 매우 구체적이고 특수하기 때문이다. 전용 모델(SRL, TEFE)은 학습 과정에서 이미 이러한 특수한 개념을 내재화한 반면, 범용 모델인 GPT는 단 하나의 예시(One-shot)만으로는 해당 도메인의 세부적인 정의를 충분히 학습하지 못한 것으로 보인다.
 
 ### 비판적 해석
+
 본 연구는 프롬프트 엔지니어링을 통해 LLM의 잠재력을 끌어내려 했으나, 결과적으로 도메인 특화 작업(특히 사건 추출)에서는 여전히 전용 모델의 효율성이 높음을 보여준다. 다만, 리소스가 부족한 실무자 입장에서 별도의 학습 데이터 없이 즉시 적용 가능한 'All-in-one' 대안으로서 LLM의 가치는 충분하다고 판단된다.
 
 ## 📌 TL;DR

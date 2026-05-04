@@ -33,17 +33,20 @@ Alireza Rafiei, Ronald Moore, Sina Jahromi, Farshid Hajati, Rishikesan Kamaleswa
 본 논문은 메타 러닝의 핵심 메커니즘을 수학적 정의와 알고리즘 구조를 통해 설명한다.
 
 ### 1. 이론적 기초
+
 메타 러닝은 기본적으로 Task 분포 $p(T)$에서 샘플링된 여러 작업에 대해 기대 손실을 최소화하는 것을 목표로 한다.
 $$\min_{\omega} \mathbb{E}_{T \sim p(T)} L(D, \omega)$$
 여기서 $\omega$는 메타 파라미터이며, $D$는 데이터셋, $L$은 손실 함수이다.
 
 또한, 이는 **Bi-level optimization** 문제로 정의될 수 있다.
+
 - **Inner Loop (내부 최적화)**: 특정 작업 $i$에 대해 데이터 $D_{train(i)}^{source}$를 사용하여 작업 특화 가중치 $\theta^*$를 학습한다.
 $$\theta^*(i)(\omega) = \text{argmin}_{\theta} L_{task}(\theta, \omega, D_{train(i)}^{source})$$
 - **Outer Loop (외부 최적화)**: 여러 작업의 검증 데이터 $D_{val(i)}^{source}$를 사용하여, 내부 루프가 빠르게 최적화될 수 있도록 메타 가중치 $\omega$를 업데이트한다.
 $$\omega^* = \text{argmin}_{\omega} \sum_{i=1}^{M} L_{meta}(\theta^*(i)(\omega), \omega, D_{val(i)}^{source})$$
 
 ### 2. 핵심 알고리즘 범주
+
 - **최적화 기반(Optimization-based)**: MAML(Model-Agnostic Meta-Learning)이 대표적이다. 모델이 새로운 작업의 그라디언트에 민감하게 반응하도록 초기 파라미터를 학습한다. 작업별 업데이트 $\theta'_i = \theta - \gamma \nabla_{\theta} L_{T_i}(g_{\theta})$를 수행한 후, 이 결과들을 모아 메타 업데이트 $\theta \leftarrow \theta - \delta \nabla_{\theta} \sum L_{T_i}(g_{\theta'_i})$를 진행한다.
 - **거리 기반(Metric-based)**: 샘플 간의 거리나 유사도를 측정하여 분류한다. Siamese Neural Networks(SNN)는 공유 가중치를 통해 두 입력의 유사도를 학습하며, Prototypical Networks(ProtoNets)는 클래스별 평균 임베딩(Prototype)을 생성하여 유클리드 거리를 기반으로 분류를 수행한다.
 - **모델 기반(Model-based)**: 모델 아키텍처 자체에 빠른 적응 능력을 내장한다. MANN(Memory-Augmented Neural Networks)은 외부 메모리 모듈을 사용하여 관련 정보를 저장하고 인출하며, MetaNet은 베이스 러너와 메타 러너를 분리하여 서로 다른 빈도로 가중치를 업데이트한다.
@@ -53,11 +56,13 @@ $$\omega^* = \text{argmin}_{\omega} \sum_{i=1}^{M} L_{meta}(\theta^*(i)(\omega),
 논문은 메타 러닝이 의료 도메인의 다양한 작업에서 거둔 성과를 정성적, 정량적으로 분석한다.
 
 ### 1. Multi/Single-task Learning (비영상 데이터 중심)
+
 - **전자 건강 기록(EHR)**: MetaPred는 리소스가 풍부한 도메인에서 부족한 도메인으로 지식을 전이하여 임상 위험 예측 성능을 높였다. MetaCare++는 희귀 질환 및 소수 환자군에 대한 진단 예측을 위해 Autoencoder와 Continuous Normalizing Flow(CNF)를 결합하였다.
 - **생체 신호(EEG, ECG)**: SMeta는 EEG 데이터의 데이터셋 간 차이를 극복하여 이명(Tinnitus) 진단을 수행하였다. MetaVA는 MAML과 Curriculum Learning을 결합하여 심실성 부정맥(VA) 검출 시 개인 간 다양성 문제를 해결하였다.
 - **약물 개발**: Meta-MO는 리소스가 풍부한 타겟 단백질의 데이터를 활용해 저리소스 분자 최적화(Molecular Optimization) 작업을 수행하는 Graph-enhanced Transformer 모델을 제안하였다.
 
 ### 2. Many/Few-shot Learning (영상 및 텍스트 중심)
+
 - **암 진단 및 세그멘테이션**: Meta-USCL은 초음파 영상에서 대조 학습(Contrastive Learning)을 통해 적은 샘플로도 유방암 분류 및 종양 세그멘테이션 성능을 높였다.
 - **치매 및 인지 장애**: AMGNN은 멀티모달 데이터를 활용해 알츠하이머병(AD) 진단을 위한 유도 학습(Inductive learning)을 수행하여 소량의 데이터에서도 강건한 성능을 보였다.
 - **COVID-19**: MetaCovid는 SNN과 VGG-16을 결합하여 흉부 X-ray(CXR) 영상 기반의 n-shot 진단을 수행하여 빠른 수렴 속도와 일반화 성능을 입증하였다.

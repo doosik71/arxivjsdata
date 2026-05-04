@@ -12,9 +12,9 @@ K R Prajwal, Liliane Momeni, Triantafyllos Afouras, Andrew Zisserman (2021)
 
 본 논문의 핵심 아이디어는 비디오의 시각적 정보와 키워드의 음성적(phonetic) 정보를 통합하여 처리하는 **Transpotter** 아키텍처를 제안하는 것이다. 주요 기여 사항은 다음과 같다.
 
-1.  **Transpotter 아키텍처 제안**: 비디오 인코딩 스트림과 키워드의 음성 인코딩 스트림 사이의 전체 교차 모달 어텐션(full cross-modal attention)을 사용하는 Transformer 기반 모델을 설계하였다.
-2.  **SOTA 성능 달성**: LRW, LRS2, LRS3와 같은 챌린징한 데이터셋에서 기존의 Visual KWS 및 VSR 방법론들을 큰 차이로 능가하는 성능을 입증하였다.
-3.  **극한 환경에서의 적용 가능성 확인**: 수어(sign language) 비디오에서 입모양만으로 단어를 말하는 'mouthings'를 검출하는 매우 어려운 작업에서도 높은 성능을 보여줌으로써 모델의 범용성을 증명하였다.
+1. **Transpotter 아키텍처 제안**: 비디오 인코딩 스트림과 키워드의 음성 인코딩 스트림 사이의 전체 교차 모달 어텐션(full cross-modal attention)을 사용하는 Transformer 기반 모델을 설계하였다.
+2. **SOTA 성능 달성**: LRW, LRS2, LRS3와 같은 챌린징한 데이터셋에서 기존의 Visual KWS 및 VSR 방법론들을 큰 차이로 능가하는 성능을 입증하였다.
+3. **극한 환경에서의 적용 가능성 확인**: 수어(sign language) 비디오에서 입모양만으로 단어를 말하는 'mouthings'를 검출하는 매우 어려운 작업에서도 높은 성능을 보여줌으로써 모델의 범용성을 증명하였다.
 
 ## 📎 Related Works
 
@@ -30,55 +30,65 @@ K R Prajwal, Liliane Momeni, Triantafyllos Afouras, Andrew Zisserman (2021)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 Transpotter는 비디오 프레임 시퀀스와 텍스트 키워드를 입력으로 받아, 키워드의 존재 여부(classification)와 해당 위치(localization)를 동시에 예측한다.
 
 ### 1. 모달리티별 인코딩 (Uni-modal Encoders)
--   **Text Representation**: 키워드 $q$는 발음 사전(pronunciation dictionary)을 통해 음소(phoneme) 시퀀스로 변환된다. 학습 가능한 임베딩 벡터 $Q \in \mathbb{R}^{n_p \times d}$에 사인파 위치 인코딩(sinusoidal positional encoding, PE)을 더한 후, $N_t$ 레이어의 Transformer Encoder를 통과시켜 $Q^{enc}$를 생성한다.
+
+- **Text Representation**: 키워드 $q$는 발음 사전(pronunciation dictionary)을 통해 음소(phoneme) 시퀀스로 변환된다. 학습 가능한 임베딩 벡터 $Q \in \mathbb{R}^{n_p \times d}$에 사인파 위치 인코딩(sinusoidal positional encoding, PE)을 더한 후, $N_t$ 레이어의 Transformer Encoder를 통과시켜 $Q^{enc}$를 생성한다.
     $$Q^{enc} = \text{encoder}_q(Q + PE_{1:n_p}) \in \mathbb{R}^{n_p \times d}$$
--   **Video Representation**: 사전 학습된 visual front-end(CNN 또는 VTP)를 통해 각 프레임에서 특징 벡터 $V \in \mathbb{R}^{T \times d}$를 추출한다. 여기에 PE를 더하고 $N_v$ 레이어의 Transformer Encoder를 통과시켜 $V^{enc}$를 생성한다.
+- **Video Representation**: 사전 학습된 visual front-end(CNN 또는 VTP)를 통해 각 프레임에서 특징 벡터 $V \in \mathbb{R}^{T \times d}$를 추출한다. 여기에 PE를 더하고 $N_v$ 레이어의 Transformer Encoder를 통과시켜 $V^{enc}$를 생성한다.
     $$V^{enc} = \text{encoder}_v(V + PE_{1:T}) \in \mathbb{R}^{T \times d}$$
 
 ### 2. 통합 멀티모달 표현 (Joint Video-Text Representation)
+
 두 스트림의 결과물을 시간 축으로 연결(concatenate)하고, 맨 앞에 학습 가능한 $[CLS]$ 토큰을 추가하여 하나의 시퀀스 $J$를 구성한다.
 $$J = ([CLS]; V^{enc}; Q^{enc}) \in \mathbb{R}^{(1+T+n_p) \times d}$$
 이후 $N_m$ 레이어의 Joint Transformer Encoder를 통해 비디오와 음소 벡터 간의 관계를 학습하여 최종 표현 $Z$를 얻는다.
 $$Z = \text{encoder}_{vq}(J + PE_{1:(1+T+n_p)}) \in \mathbb{R}^{(1+T) \times d}$$
 
 ### 3. 예측 헤드 (Prediction Heads)
--   **Classification**: $[CLS]$ 토큰의 출력 벡터 $Z_1$을 MLP 헤드 $f_c$와 시그모이드 함수 $\sigma$에 통과시켜 키워드의 존재 확률 $\hat{y}_{cls}$를 예측한다.
+
+- **Classification**: $[CLS]$ 토큰의 출력 벡터 $Z_1$을 MLP 헤드 $f_c$와 시그모이드 함수 $\sigma$에 통과시켜 키워드의 존재 확률 $\hat{y}_{cls}$를 예측한다.
     $$\hat{y}_{cls} = \sigma(f_c(Z_1)) \in \mathbb{R}^1$$
--   **Localisation**: 비디오 프레임에 해당하는 출력 상태 $Z_{2:(T+1)}$를 공유 MLP 헤드 $f_l$에 통과시켜 각 프레임 $t$가 키워드 발화 부분일 확률 $\hat{y}_{loc}$를 예측한다.
+- **Localisation**: 비디오 프레임에 해당하는 출력 상태 $Z_{2:(T+1)}$를 공유 MLP 헤드 $f_l$에 통과시켜 각 프레임 $t$가 키워드 발화 부분일 확률 $\hat{y}_{loc}$를 예측한다.
     $$\hat{y}_{loc} = \sigma(f_l(Z_{2:(T+1)})) \in \mathbb{R}^T$$
 
 ### 4. 학습 절차 및 손실 함수
+
 모델은 binary cross-entropy (BCE) 손실 함수를 사용하여 학습한다.
--   **분류 손실**: $L_{cls} = -\mathbb{E} \text{BCE}(y_{cls}, \hat{y}_{cls})$
--   **위치 손실**: 키워드가 존재할 때만 계산하며, 프레임 단위로 BCE를 적용하여 평균을 낸다.
+
+- **분류 손실**: $L_{cls} = -\mathbb{E} \text{BCE}(y_{cls}, \hat{y}_{cls})$
+- **위치 손실**: 키워드가 존재할 때만 계산하며, 프레임 단위로 BCE를 적용하여 평균을 낸다.
     $$L_{loc} = -\mathbb{E} \left[ y_{cls} \left( \frac{1}{T} \sum_{t=1}^T \text{BCE}(y_{loc}^t, \hat{y}_{loc}^t) \right) \right]$$
--   **최종 손실**: 두 손실을 하이퍼파라미터 $\lambda$로 가중 합산한다.
+- **최종 손실**: 두 손실을 하이퍼파라미터 $\lambda$로 가중 합산한다.
     $$L = \lambda L_{cls} + (1-\lambda) L_{loc}$$
 
 ## 📊 Results
 
 ### 실험 설정
--   **데이터셋**: LRS2 (BBC 방송), LRS3 (TED/TEDx), LRW (단일 단어 클립), BSL Corpus (수어 비디오).
--   **지표**: 분류 성능은 $Acc_{Cls}@k$ 및 $mAP_{Cls}$로 측정하고, 위치 특정 성능은 Intersection-over-Union (IoU) 기준 $\tau=0.5$일 때의 $mAP_{Loc}$로 측정한다.
+
+- **데이터셋**: LRS2 (BBC 방송), LRS3 (TED/TEDx), LRW (단일 단어 클립), BSL Corpus (수어 비디오).
+- **지표**: 분류 성능은 $Acc_{Cls}@k$ 및 $mAP_{Cls}$로 측정하고, 위치 특정 성능은 Intersection-over-Union (IoU) 기준 $\tau=0.5$일 때의 $mAP_{Loc}$로 측정한다.
 
 ### 주요 결과
--   **SOTA 달성**: LRS2와 LRS3 데이터셋에서 기존 KWS-Net 및 VSR 베이스라인보다 월등한 성능을 보였다. 특히 VTP 아키텍처를 visual backbone으로 사용했을 때 성능이 더욱 향상되었다.
--   **강건성**: LRW 데이터셋의 경우, Transpotter는 해당 데이터로 학습하지 않았음에도 불구하고 기존 SOTA인 KWS-Net보다 훨씬 높은 정확도($Acc_{Cls}@1$: 85.8% vs 66.6%)를 기록하였다.
--   **수어 mouthings 검출**: BSL Corpus 실험에서 KWS-Net 대비 $mAP_{Cls}$가 15.6에서 29.6으로 크게 상승하여, 도메인 차이가 큰 환경에서도 효과적임을 입증하였다.
--   **분석 결과**: 키워드의 음소 길이($n_p$)가 길수록, 그리고 주변 시각적 문맥(context)이 많을수록 성능이 향상되는 경향을 보였다.
+
+- **SOTA 달성**: LRS2와 LRS3 데이터셋에서 기존 KWS-Net 및 VSR 베이스라인보다 월등한 성능을 보였다. 특히 VTP 아키텍처를 visual backbone으로 사용했을 때 성능이 더욱 향상되었다.
+- **강건성**: LRW 데이터셋의 경우, Transpotter는 해당 데이터로 학습하지 않았음에도 불구하고 기존 SOTA인 KWS-Net보다 훨씬 높은 정확도($Acc_{Cls}@1$: 85.8% vs 66.6%)를 기록하였다.
+- **수어 mouthings 검출**: BSL Corpus 실험에서 KWS-Net 대비 $mAP_{Cls}$가 15.6에서 29.6으로 크게 상승하여, 도메인 차이가 큰 환경에서도 효과적임을 입증하였다.
+- **분석 결과**: 키워드의 음소 길이($n_p$)가 길수록, 그리고 주변 시각적 문맥(context)이 많을수록 성능이 향상되는 경향을 보였다.
 
 ## 🧠 Insights & Discussion
 
 **1. 강점 및 해석**
--   **강력한 감독 학습**: 단순한 분류가 아니라 프레임 단위의 위치 정보를 함께 학습시킴으로써, 결과적으로 분류 성능($mAP_{Cls}$)까지 향상되는 시너지 효과가 확인되었다.
--   **교차 모달 어텐션의 효율성**: Late-fusion 방식과 달리, 모든 레이어에서 비디오 특징과 음소 토큰이 서로를 참조할 수 있게 하여 더 정밀한 매칭이 가능해졌다.
+
+- **강력한 감독 학습**: 단순한 분류가 아니라 프레임 단위의 위치 정보를 함께 학습시킴으로써, 결과적으로 분류 성능($mAP_{Cls}$)까지 향상되는 시너지 효과가 확인되었다.
+- **교차 모달 어텐션의 효율성**: Late-fusion 방식과 달리, 모든 레이어에서 비디오 특징과 음소 토큰이 서로를 참조할 수 있게 하여 더 정밀한 매칭이 가능해졌다.
 
 **2. 한계 및 비판적 해석**
--   **Homophemes 문제**: 'mark', 'bark', 'park'와 같이 입모양은 동일하지만 소리가 다른 단어(homophemes)들의 경우, 모델이 이를 구분하지 못하고 모두 동일한 위치에서 검출하는 한계가 있다. 이는 오직 시각 정보만을 사용하기 때문에 발생하는 근본적인 문제이며, 향후 텍스트의 의미론적(semantic) 정보나 주변 문맥 정보를 더 깊게 활용해야 해결 가능할 것으로 보인다.
--   **데이터 의존성**: 수어 비디오의 경우 일부 단어가 부분적으로만 발음(partially mouthed)되거나 손에 의해 가려지는 경우가 있어, 완벽한 검출에는 여전히 어려움이 있다.
+
+- **Homophemes 문제**: 'mark', 'bark', 'park'와 같이 입모양은 동일하지만 소리가 다른 단어(homophemes)들의 경우, 모델이 이를 구분하지 못하고 모두 동일한 위치에서 검출하는 한계가 있다. 이는 오직 시각 정보만을 사용하기 때문에 발생하는 근본적인 문제이며, 향후 텍스트의 의미론적(semantic) 정보나 주변 문맥 정보를 더 깊게 활용해야 해결 가능할 것으로 보인다.
+- **데이터 의존성**: 수어 비디오의 경우 일부 단어가 부분적으로만 발음(partially mouthed)되거나 손에 의해 가려지는 경우가 있어, 완벽한 검출에는 여전히 어려움이 있다.
 
 ## 📌 TL;DR
 

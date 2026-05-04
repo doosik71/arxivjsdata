@@ -25,9 +25,11 @@ Seunghan Yang, Byeonggeun Kim, Inseop Chung, Simyung Chang (2022)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 제안된 PK-MTL(Personalized Keyword Spotting through Multi-task Learning)은 크게 **Multi-task Learning** 단계와 **Task-adaptation** 단계의 두 가지 과정으로 구성된다.
 
 ### 2. Multi-task Learning (MTL)
+
 - **Shared Encoder**: 입력 오디오 특징(Spectrogram 등)을 처리하는 하위 계층 $f_\phi(\cdot)$를 공유하여 메모리와 연산 비용을 절감한다.
 - **Sub-networks**: 공유 엔코더 이후에 KWS를 위한 $f_k^\phi(\cdot)$와 SV를 위한 $f_s^\phi(\cdot)$를 각각 두어, 키워드 특성과 화자 특성을 분리하여 학습한다.
 - **Cosine Classifier**: 각 특성 벡터 $z$와 학습 가능한 가중치 $W$ 사이의 코사인 유사도를 기반으로 분류를 수행한다.
@@ -37,14 +39,15 @@ Seunghan Yang, Byeonggeun Kim, Inseop Chung, Simyung Chang (2022)
   여기서 $\lambda$는 화자 정보의 중요도를 조절하는 하이퍼파라미터이다.
 
 ### 3. Task-adaptation
+
 학습된 표현을 개인화 태스크에 적용하기 위해 두 가지 scoring 방식을 제안한다.
 
-- **Score Combination Module (SCM)**: 
+- **Score Combination Module (SCM)**:
   KWS 점수 $\psi_k$와 SV 점수 $\psi_s$를 단순 선형 결합하여 최종 점수를 산출하는 방식이다.
   $$\text{Score} = \alpha \cdot \psi_k + (1-\alpha) \cdot \psi_s$$
   이때 $\alpha$는 검증 셋에서 Target FAR(False Alarm Rate)을 기준으로 최적화하여 결정한다.
 
-- **Task Representation Module (TRM)**: 
+- **Task Representation Module (TRM)**:
   단순 결합의 한계를 극복하기 위해, KWS 임베딩 $z_k$와 SV 임베딩 $z_s$를 입력으로 받아 태스크 전용 임베딩을 생성하는 학습 가능한 신경망(Attention 기반)이다. TRM은 **Angular Prototypical Loss**를 사용하여 긍정 샘플은 가깝게, 부정 샘플은 멀게 배치하도록 학습된다.
   $$\psi_{tb} = \text{sim}(\text{TRM}_{tb}(z_{k,i}, z_{s,i}), \text{TRM}_{tb}(p_{k,j}, p_{s,j}))$$
   이를 통해 TB-KWS와 TO-KWS 각각의 목적에 맞는 정교한 판별 경계를 학습한다.
@@ -52,11 +55,13 @@ Seunghan Yang, Byeonggeun Kim, Inseop Chung, Simyung Chang (2022)
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: Google Speech Commands v1 (기본 학습), WSJ-SI200 및 Librispeech (실제 환경의 부정 샘플로 활용).
 - **백본 네트워크**: BC-ResNet, Res15, DS-ResNet.
 - **평가 지표**: FAR, FRR, EER 및 Top-1 Accuracy.
 
 ### 2. 주요 결과
+
 - **개인화 성능**: Table 1에 따르면, PK-MTL은 기존 Vanilla 모델 대비 TB-KWS와 TO-KWS에서 EER 및 FRR을 대폭 낮추었다. 특히 TRM을 적용했을 때 가장 우수한 성능을 보였다.
 - **실제 시나리오(Realistic Scenario)**: TV 방송이나 일반 대화 데이터(WSJ, Librispeech)를 부정 샘플로 사용했을 때, Vanilla 모델은 타겟 키워드가 포함되어 있으면 화자와 상관없이 높은 FAR를 보였다. 반면 PK-MTL(특히 TO-KWS)은 화자 정보를 활용해 이를 효과적으로 거부함으로써 FAR를 극적으로 낮추었다(Table 2 참조).
 - **효율성**: MTL 구조를 통해 파라미터 수와 연산량의 증가를 최소화하면서도 개인화 기능을 추가하는 데 성공하였다.

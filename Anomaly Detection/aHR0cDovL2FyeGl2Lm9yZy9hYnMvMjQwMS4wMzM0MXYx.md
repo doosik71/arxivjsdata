@@ -27,6 +27,7 @@ Latent Holes가 존재하면 잠재 공간의 연속성과 매끄러움(Smoothne
 ## 📎 Related Works
 
 **1. 관련 연구 설명 및 한계**
+
 - **비확률적 생성 모델(AE, GAN)**: 오토인코더(AE)나 GAN 기반 모델들은 데이터를 강건하게 재구성하는 데 집중하지만, 데이터의 확률 분포를 명시적으로 모델링하지 않아 해석력이 부족하다.
 - **확률적 생성 모델(VAE)**: VAE는 잠재 공간의 연속적인 표현을 학습하여 우도를 명시적으로 모델링할 수 있다는 장점이 있다. 최근에는 VRNN이나 메타-프라이어(Meta-priors)를 도입하여 시공간적 의존성을 캡처하려는 시도가 있었다.
 - **한계점**: 기존 VAE 기반 방법들은 모델 구조 개선에 집중했을 뿐, 데이터 부족으로 인한 잠재 공간의 불연속성(Latent Holes) 문제나 데이터 활용 효율성 문제를 충분히 다루지 않았다.
@@ -37,6 +38,7 @@ Latent Holes가 존재하면 잠재 공간의 연속성과 매끄러움(Smoothne
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 시스템 구조
+
 WAVAE는 원본 입력 $x^r$과 증강된 입력 $x^a$를 동시에 처리하는 듀얼 뷰(Dual-view) 구조를 가진다. 두 경로의 인코더($q_\phi$)와 디코더($p_\theta$)는 **파라미터를 공유**한다.
 
 1. **입력 단계**: 원본 데이터 $x^r$에 약한 증강 연산 $O$를 적용하여 $x^a = O(x^r)$를 생성한다.
@@ -45,6 +47,7 @@ WAVAE는 원본 입력 $x^r$과 증강된 입력 $x^a$를 동시에 처리하는
 4. **정렬 단계**: $z^r$과 $z^a$ 사이의 상호 정보량을 최대화하는 손실 함수를 추가하여 두 표현을 일치시킨다.
 
 ### 훈련 목표 및 손실 함수
+
 모델의 전체 최적화 목표는 다음과 같은 통합 손실 함수 $L_{AVAE}$를 최소화하는 것이다.
 
 $$L_{AVAE} = L^r_{ELBO} + L^a_{ELBO} + I(z^r, z^a)$$
@@ -54,6 +57,7 @@ $$L_{AVAE} = L^r_{ELBO} + L^a_{ELBO} + I(z^r, z^a)$$
 $$L_{ELBO} := \mathbb{E}_{q_\phi(z|x)} [\log p_\theta(x|z)] - \beta D_{KL}(q_\phi(z|x) || p(z))$$
 
 ### 상호 정보량(MI) 근사 방법
+
 $I(z^r, z^a)$를 직접 계산하는 것은 불가능하므로, 논문은 두 가지 근사 방법을 제시한다.
 
 **1. Shallow Learning (Contrastive Learning)**
@@ -65,18 +69,22 @@ $$L_{InfoNCE} = -\log \frac{\exp(z^r \cdot z^a / \tau)}{\sum \exp(z^r \cdot z^k 
 $$L_{adversarial} \approx \log \frac{\Psi(z^r)}{1-\Psi(z^r)} + \log \frac{\Psi_a(z^a)}{1-\Psi_a(z^a)}$$
 
 ### 추론 및 이상치 탐지 절차
+
 학습이 완료되면 증강 모델은 제거하고 원본 모델만을 사용한다.
+
 - **이상치 점수(Anomaly Score)**: 원본 데이터 $x^r$과 재구성된 데이터 $\hat{x}^r$ 사이의 제곱 오차 합(SSE)을 계산한다.
 - **판정**: 계산된 점수가 미리 설정된 임계값 $\eta$(예: 오차 분포의 99번째 백분위수)보다 크면 이상치로 판정한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: GD(로봇 신호), HSS(에너지 최적화 센서), ECG(심전도), TD(손 뼈대 궤적), Yahoo S5(서비스 메트릭) 총 5종의 데이터셋 사용.
 - **비교 대상**: TAE, BGAN, RAE, CAE 등 6종의 일반 생성 모델 및 GMMVAE, VRAE, VQRAE 등 10종의 확률적 생성 모델(총 16종).
 - **측정 지표**: AUROC (Area Under the ROC Curve) 및 PRAUC (Area Under the Precision-Recall Curve).
 
 ### 주요 결과
+
 - **정량적 결과**: 모든 데이터셋에서 WAVAE가 기존 SOTA 모델들을 능가하는 성능을 보였다. 특히 $\text{WAVAE-Contrast}$(Contrastive Learning 적용) 모델이 $\text{WAVAE-Adversarial}$보다 전반적으로 더 높은 성능을 기록했다.
 - **지표 수치**: 예를 들어 Yahoo S5 데이터셋에서 $\text{WAVAE-Contrast}$는 매우 높은 AUROC와 PRAUC 점수를 기록하며 압도적인 성능 향상을 보였다.
 - **정성적 분석**: Ablation Study를 통해 잠재 변수의 차원 $z$가 14~20 사이일 때 최적의 성능이 나오며, MSE 손실 함수가 가장 효과적임을 확인하였다.
@@ -87,6 +95,7 @@ $$L_{adversarial} \approx \log \frac{\Psi(z^r)}{1-\Psi(z^r)} + \log \frac{\Psi_a
 본 연구는 VAE의 고질적인 문제인 Latent Holes를 데이터 증강과 MI 최대화라는 관점에서 접근하여 해결했다. 특히 복잡한 증강 기법이 아니라 단순한 정규화(Min-Max, Standardization)만으로도 잠재 공간의 밀도를 높여 강건성을 확보할 수 있음을 보인 점이 실용적이다.
 
 **2. 한계 및 논의사항**
+
 - **하이퍼파라미터 민감도**: 잠재 공간의 차원 $z$나 판별자의 레이어 수에 따라 성능 차이가 발생하므로, 새로운 데이터셋에 적용할 때 최적의 하이퍼파라미터를 찾는 과정이 필수적이다.
 - **증강 기법의 선택**: 논문에서는 강한 증강(Strong Augmentation)이 오히려 우도 함수 생성에 방해가 된다고 언급했다. 이는 TSAD 작업에서 데이터의 원형 보존이 매우 중요하다는 것을 시사하며, 어떤 수준의 증강이 '적절한' 것인지에 대한 이론적 기준은 명확히 제시되지 않았다.
 

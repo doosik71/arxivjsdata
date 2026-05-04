@@ -12,10 +12,10 @@ Shuhan Yuan, Xintao Wu (2022)
 
 본 논문은 신뢰할 수 있는 AD를 구축하기 위해 고려해야 할 네 가지 핵심 차원을 정의하고, 각 차원별 기존 연구들을 체계적으로 분석하여 정리하였다.
 
-1.  **해석 가능성(Interpretability):** 모델이 왜 특정 샘플을 이상치로 판단했는지에 대한 설명 제공 능력.
-2.  **공정성(Fairness):** 성별, 인종, 연령 등 민감한 속성(Protected Attributes)에 관계없이 차별 없는 탐지 결과 제공.
-3.  **강건성(Robustness):** 데이터 오염(Poisoning)이나 회피 공격(Evasion attack)과 같은 적대적 공격 상황에서도 일관된 성능 유지.
-4.  **프라이버시 보존(Privacy-preservation):** 모델 학습 및 추론 과정에서 사용자의 민감한 개인 정보가 유출되지 않도록 보호.
+1. **해석 가능성(Interpretability):** 모델이 왜 특정 샘플을 이상치로 판단했는지에 대한 설명 제공 능력.
+2. **공정성(Fairness):** 성별, 인종, 연령 등 민감한 속성(Protected Attributes)에 관계없이 차별 없는 탐지 결과 제공.
+3. **강건성(Robustness):** 데이터 오염(Poisoning)이나 회피 공격(Evasion attack)과 같은 적대적 공격 상황에서도 일관된 성능 유지.
+4. **프라이버시 보존(Privacy-preservation):** 모델 학습 및 추론 과정에서 사용자의 민감한 개인 정보가 유출되지 않도록 보호.
 
 ## 📎 Related Works
 
@@ -23,38 +23,45 @@ Shuhan Yuan, Xintao Wu (2022)
 
 - **학습 설정:** AD는 이상치의 희소성으로 인해 주로 비지도 학습(Unsupervised) 또는 준지도 학습(Semi-supervised) 설정에서 수행된다. 특히 모든 학습 데이터가 정상이라고 가정하는 One-class 설정과, 소수의 정상/이상치 레이블과 다수의 무레이블 데이터를 사용하는 설정이 존재한다.
 - **모델 분류:**
-    - **얕은 모델(Shallow Models):** PCA, SVDD 등이 있으며 정형 데이터(Tabular data)에는 효과적이지만 복잡한 비선형 관계를 포착하는 데 한계가 있다.
-    - **깊은 모델(Deep Models):** DNN을 활용하여 이미지, 텍스트, 그래프 등 복잡한 데이터의 표현을 자동으로 학습한다.
+  - **얕은 모델(Shallow Models):** PCA, SVDD 등이 있으며 정형 데이터(Tabular data)에는 효과적이지만 복잡한 비선형 관계를 포착하는 데 한계가 있다.
+  - **깊은 모델(Deep Models):** DNN을 활용하여 이미지, 텍스트, 그래프 등 복잡한 데이터의 표현을 자동으로 학습한다.
 - **방법론적 분류:**
-    - **밀도 추정 및 확률 모델:** 데이터 분포를 추정하여 확률이 낮은 샘플을 이상치로 간주한다 (예: GMM, VAE, GAN).
-    - **One-class 분류 모델:** 정상 샘플을 감싸는 결정 경계를 학습한다 (예: OC-SVM, Deep SVDD).
-    - **재구성 모델:** 정상 샘플의 재구성 오차를 최소화하도록 학습하여, 오차가 큰 샘플을 이상치로 탐지한다 (예: PCA, Autoencoder).
-    - **기타 기술:** Isolation Forest, Local Outlier Factor(LOF) 등이 이에 해당한다.
+  - **밀도 추정 및 확률 모델:** 데이터 분포를 추정하여 확률이 낮은 샘플을 이상치로 간주한다 (예: GMM, VAE, GAN).
+  - **One-class 분류 모델:** 정상 샘플을 감싸는 결정 경계를 학습한다 (예: OC-SVM, Deep SVDD).
+  - **재구성 모델:** 정상 샘플의 재구성 오차를 최소화하도록 학습하여, 오차가 큰 샘플을 이상치로 탐지한다 (예: PCA, Autoencoder).
+  - **기타 기술:** Isolation Forest, Local Outlier Factor(LOF) 등이 이에 해당한다.
 
 ## 🛠️ Methodology
 
 본 논문은 서베이 논문이므로 새로운 알고리즘을 제안하기보다, 신뢰할 수 있는 AD를 구현하기 위한 네 가지 차원의 방법론적 분석을 제공한다.
 
 ### 1. 해석 가능한 AD (Interpretable AD)
+
 해석 가능성은 크게 모델 구조 자체가 설명 가능한 **내재적 해석 가능성(Intrinsic Interpretability)**과, 학습된 모델에 별도의 기법을 적용하는 **사후 해석 가능성(Post-hoc Interpretability)**으로 나뉜다.
+
 - **사후 해석 기법:** 특징을 제거/교체하며 변화를 보는 섭동 기반(Perturbation-based) 방식과, 출력값에 대한 입력 특징의 기울기를 계산하는 기울기 기반(Gradient-based) 방식이 있다.
 - **주요 적용 사례:** GEE는 VAE에 기울기 기반 해석을 결합하였고, FCDD는 이미지의 이상 영역을 하이라이트 하는 히트맵을 생성하는 내재적 방식을 사용한다.
 
 ### 2. 공정한 AD (Fair AD)
+
 소수 집단이 통계적으로 이상치와 강한 상관관계를 가질 수 있어, 모델이 소수 집단을 과도하게 이상치로 분류하는 문제가 발생한다.
+
 - **핵심 아이디어:** 탐지 결과가 민감한 속성(Protected attribute)과 독립적이 되도록 설계한다.
-- **구현 방법:** 
-    - **FairLOF:** 거리 함수에 보정 항을 추가하여 집단 간 거리 분포를 유사하게 맞춘다.
-    - **Deep Fair SVDD & DC-FOD:** 적대적 표현 학습(Adversarial representation learning)을 통해 판별기(Discriminator)가 표현값으로부터 민감 속성을 예측할 수 없도록 하여 독립성을 확보한다.
-    - **FairOD:** 재구성 오차와 민감 속성 간의 상관관계를 최소화하는 공정성 정규화 항(Fair regularizer)을 손실 함수에 추가한다.
+- **구현 방법:**
+  - **FairLOF:** 거리 함수에 보정 항을 추가하여 집단 간 거리 분포를 유사하게 맞춘다.
+  - **Deep Fair SVDD & DC-FOD:** 적대적 표현 학습(Adversarial representation learning)을 통해 판별기(Discriminator)가 표현값으로부터 민감 속성을 예측할 수 없도록 하여 독립성을 확보한다.
+  - **FairOD:** 재구성 오차와 민감 속성 간의 상관관계를 최소화하는 공정성 정규화 항(Fair regularizer)을 손실 함수에 추가한다.
 
 ### 3. 강건한 AD (Robust AD)
+
 적대적 공격(Adversarial attacks)은 학습 시 데이터를 오염시키는 **데이터 포이즈닝(Data poisoning)**과 테스트 시 정교하게 조작된 샘플로 탐지를 피하는 **회피 공격(Evasion attack)**으로 구분된다.
+
 - **방어 기법:**
-    - **APAE:** 근사 투영(Approximate projection)을 통해 잠재 임베딩을 업데이트하고, 특징 가중치(Feature weighting)를 통해 특정 특징에 의해 점수가 지배되는 것을 방지한다.
-    - **PLS:** PCA를 이용하여 오토인코더의 잠재 임베딩을 정제함으로써 강건성을 높인다.
+  - **APAE:** 근사 투영(Approximate projection)을 통해 잠재 임베딩을 업데이트하고, 특징 가중치(Feature weighting)를 통해 특정 특징에 의해 점수가 지배되는 것을 방지한다.
+  - **PLS:** PCA를 이용하여 오토인코더의 잠재 임베딩을 정제함으로써 강건성을 높인다.
 
 ### 4. 프라이버시 보존 AD (Privacy-preserving AD)
+
 - **익명화 기반(Anonymization-based):** 개인 식별 정보를 제거하거나 변환하여 데이터의 유용성은 유지하면서 프라이버시를 보호한다.
 - **암호화 기반(Cryptographic-based):** 암호화된 데이터 상에서 AD 알고리즘을 수행한다.
 - **섭동 기반(Perturbation-based):** 차분 프라이버시(Differential Privacy, DP)를 적용한다. 특히 $\text{DPSGD}$는 경사 하강법 과정에서 집계된 기울기에 가우시안 노이즈를 추가하여 개별 샘플의 정보 유출을 막는다.
@@ -64,19 +71,21 @@ Shuhan Yuan, Xintao Wu (2022)
 본 논문은 특정 실험 결과보다는 기존 연구들의 특성을 정리한 요약 표(Table 1)와 분류도(Figure 1)를 통해 현재 기술 수준을 제시한다.
 
 - **정량적 지표:** AD의 성능 측정에는 단순 정확도(Accuracy)보다는 $\text{AUROC}$ (Area Under the Receiver Operating Characteristics), $\text{PRROC}$ (Area Under the Precision-Recall Curve) 등이 사용됨을 명시한다.
-- **분석 결과:** 
-    - 대부분의 해석 가능성 연구는 개별 샘플(Point anomaly)에 집중되어 있으며, 문맥적/집단적 이상치(Contextual/Collective anomalies)에 대한 설명은 부족한 상태이다.
-    - 공정성 연구는 주로 집단 공정성(Group fairness)에 치중되어 있으며, 개별 공정성(Individual fairness)에 대한 연구는 미비하다.
-    - 강건성 연구는 주로 화이트박스 공격에 대한 모델별 방어에 집중되어 있으며, 블랙박스 공격이나 백도어 공격에 대한 분석은 부족하다.
+- **분석 결과:**
+  - 대부분의 해석 가능성 연구는 개별 샘플(Point anomaly)에 집중되어 있으며, 문맥적/집단적 이상치(Contextual/Collective anomalies)에 대한 설명은 부족한 상태이다.
+  - 공정성 연구는 주로 집단 공정성(Group fairness)에 치중되어 있으며, 개별 공정성(Individual fairness)에 대한 연구는 미비하다.
+  - 강건성 연구는 주로 화이트박스 공격에 대한 모델별 방어에 집중되어 있으며, 블랙박스 공격이나 백도어 공격에 대한 분석은 부족하다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 의의
+
 본 논문은 단순히 성능 중심의 AD 연구 패러다임을 '신뢰성'이라는 사회적, 윤리적 관점으로 확장했다는 점에서 큰 의의가 있다. 특히 서로 다른 네 가지 신뢰성 차원을 체계적으로 정의하고, 이를 달성하기 위한 최신 딥러닝 기법들을 매핑하여 연구자들에게 명확한 가이드라인을 제공한다.
 
 ### 한계 및 비판적 해석
-1.  **데이터셋의 부재:** 저자들도 언급했듯이, 신뢰성을 평가하기 위한 전용 벤치마크 데이터셋이 매우 부족하다. 특히 해석 가능성을 정량적으로 평가할 수 있는 정밀한 레이블(Fine-grained labels) 데이터가 부족하여, 많은 연구가 정성적 분석에 의존하고 있다.
-2.  **상충 관계(Trade-off)의 복잡성:** 신뢰성의 네 가지 요소는 서로 독립적이지 않다. 예를 들어, 프라이버시 보호를 위해 추가한 노이즈가 모델의 정확도를 떨어뜨리거나(Privacy vs Performance), 특정 집단에 대한 정확도를 더 크게 떨어뜨려 불공정함을 초래할 수 있다(Privacy vs Fairness). 이러한 상충 관계를 동시에 해결할 수 있는 통합 프레임워크의 부재가 현재의 한계점이다.
+
+1. **데이터셋의 부재:** 저자들도 언급했듯이, 신뢰성을 평가하기 위한 전용 벤치마크 데이터셋이 매우 부족하다. 특히 해석 가능성을 정량적으로 평가할 수 있는 정밀한 레이블(Fine-grained labels) 데이터가 부족하여, 많은 연구가 정성적 분석에 의존하고 있다.
+2. **상충 관계(Trade-off)의 복잡성:** 신뢰성의 네 가지 요소는 서로 독립적이지 않다. 예를 들어, 프라이버시 보호를 위해 추가한 노이즈가 모델의 정확도를 떨어뜨리거나(Privacy vs Performance), 특정 집단에 대한 정확도를 더 크게 떨어뜨려 불공정함을 초래할 수 있다(Privacy vs Fairness). 이러한 상충 관계를 동시에 해결할 수 있는 통합 프레임워크의 부재가 현재의 한계점이다.
 
 ## 📌 TL;DR
 

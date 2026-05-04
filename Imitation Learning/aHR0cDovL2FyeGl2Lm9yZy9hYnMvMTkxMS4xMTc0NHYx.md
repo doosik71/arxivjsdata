@@ -4,7 +4,7 @@ Simon Stepputtis, Joseph Campbell, Mariano Phielipp, Chitta Baral, Heni Ben Amor
 
 ## 🧩 Problem to Solve
 
-본 논문은 변화하는 환경에 적응할 수 있는 로봇 제어 정책(control policy)을 생성하는 문제를 다룬다. 기존의 로봇 프로그래밍은 많은 시간과 기술적 전문성을 요구하며, 이를 극복하기 위한 Imitation Learning(모방 학습) 방식 또한 몇 가지 한계를 가지고 있다. 
+본 논문은 변화하는 환경에 적응할 수 있는 로봇 제어 정책(control policy)을 생성하는 문제를 다룬다. 기존의 로봇 프로그래밍은 많은 시간과 기술적 전문성을 요구하며, 이를 극복하기 위한 Imitation Learning(모방 학습) 방식 또한 몇 가지 한계를 가지고 있다.
 
 Dynamic Motor Primitives(DMPs)나 Gaussian Mixture Regression(GMR)과 같은 기존의 모방 학습 접근 방식은 주로 관절 각도, 힘, 위치와 같은 동작(motion) 정보에만 집중한다. 이로 인해 타겟 물체의 외형이나 수행해야 할 작업의 의미(semantics)와 같은 중요한 시각적, 언어적 정보가 학습 및 재현 과정에서 배제된다. 결과적으로 기존 방식은 물체의 위치 변화와 같은 단순한 상황에만 적응할 수 있을 뿐, 광범위한 환경 변화에 대한 일반화(generalization) 능력이 부족하다는 문제가 있다.
 
@@ -27,11 +27,14 @@ Dynamic Motor Primitives(DMPs)나 Gaussian Mixture Regression(GMR)과 같은 기
 본 논문에서 제안하는 Multimodal Policy Network (MPN)는 크게 세 부분으로 구성된다.
 
 ### 1. Semantic Network
+
 입력된 작업 설명 $s$와 환경 이미지 $I$로부터 작업 임베딩(task embedding) $e$를 생성하는 단계이다.
+
 - **Language Encoder**: 자연어 문장 $s$는 사전 학습된 Glove word embeddings를 통해 문장 행렬 $W \in \mathbb{R}^{l_s \times l_w}$로 변환된다. 이후 다양한 n-gram 크기를 가진 다수의 CNN을 통해 단어 간의 관계를 추출하고, Max-pooling과 퍼셉트론을 거쳐 문장 임베딩 $e_s$를 생성한다.
 - **Vision Encoder**: 생성된 문장 임베딩 $e_s$를 입력 이미지 $I$의 네 번째 채널로 결합(concatenation)한다. 이 결합된 데이터는 3개의 컨볼루션 블록(각 블록은 2개의 일반 Convolution과 1개의 Residual Convolution으로 구성)을 통과하여 최종적인 작업 임베딩 $e$를 산출한다.
 
 ### 2. Policy Translation Network
+
 작업 임베딩 $e$를 입력받아 저수준 제어기인 DMP의 파라미터 $\Theta \in \mathbb{R}^{o \times b}$와 목표 지점 $g \in \mathbb{R}^o$를 생성한다. 여기서 $o$는 출력 차원, $b$는 DMP의 기저 함수(basis functions) 개수이다. 이 과정은 다음과 같은 수식으로 표현된다.
 
 $$\Theta, g = f_T(e) = [f_G(\text{ReLU}(W_G e + b_G)), f_H(\text{ReLU}(W_G e + b_G))]$$
@@ -39,17 +42,21 @@ $$\Theta, g = f_T(e) = [f_G(\text{ReLU}(W_G e + b_G)), f_H(\text{ReLU}(W_G e + b
 여기서 $f_G(\cdot)$와 $f_H(\cdot)$는 MLP(Multi-Layer Perceptron)이며, $W_G$와 $b_G$는 가중치와 편향이다.
 
 ### 3. Low-Level Controller (DMP)
+
 앞선 단계에서 생성된 파라미터 $\Theta$와 $g$를 사용하여 실제 로봇의 제어 신호를 생성하는 Dynamic Motor Primitives (DMP) 단계이다. DMP를 하위 제어기로 사용함으로써 시스템의 안정성을 확보하고, 기존 DMP 연구들의 확장 기능을 통합할 수 있는 구조를 갖는다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **작업**: 6자유도(DOF) 로봇이 구체(cube)를 테이블 위의 여러 그릇(bowl) 중 하나에 넣는 Binning Task를 수행한다.
 - **환경**: 그릇들은 크기(소, 대), 모양(원형, 사각형), 색상(빨강, 초록, 파랑, 노랑, 분홍)에 따라 총 20종류로 구분되며, 각 시나리오마다 3~5개의 그릇이 배치된다.
 - **데이터셋**: 20,000개의 7자유도(관절 6개, 그리퍼 1개) 궤적 데이터와 인간 대상 연구를 통해 구축한 템플릿 기반의 자연어 생성기를 통해 180,000개 이상의 고유 문장을 생성하여 학습에 사용하였다.
 
 ### 정량적 결과
+
 500개의 새로운 시나리오를 통해 테스트한 결과, 타겟 그릇을 식별하는 기준에 따라 다음과 같은 성공률을 보였다.
+
 - **색상(Color)** 기준 식별 시: $97.6\%$ 성공
 - **모양(Shape)** 기준 식별 시: $96.0\%$ 성공
 - **모양만(Shape alone)**으로 유일하게 식별해야 하는 경우: $79.0\%$ 성공
@@ -57,6 +64,7 @@ $$\Theta, g = f_T(e) = [f_G(\text{ReLU}(W_G e + b_G)), f_H(\text{ReLU}(W_G e + b
 타겟이 올바르게 식별되었을 때의 최종 위치 오차는 $5\text{cm}$ 미만으로 유지되었다.
 
 ### 정성적 결과 및 분석
+
 - **궤적 생성 능력**: 타겟의 위치(가깝거나 먼 경우)에 따라 DMP의 가중치 $\Theta$가 다르게 생성됨을 확인하여, 다양한 형태의 궤적을 합성할 수 있음을 증명하였다.
 - **불확실성 추정**: Stochastic forward passes(MC Dropout 방식)를 도입하여 모델의 확신도를 측정하였다. 유효한 타겟(예: 빨간 그릇)에 대해서는 목표 지점의 분포가 좁게 형성되었으나, 유효하지 않은 타겟(예: 존재하지 않는 초록 그릇)에 대해서는 분포가 매우 넓게 형성되어 작업의 유효성을 판별할 수 있음을 보여주었다.
 

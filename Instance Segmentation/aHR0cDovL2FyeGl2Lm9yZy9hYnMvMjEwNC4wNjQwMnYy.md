@@ -17,6 +17,7 @@ Ting-I Hsieh, Esther Robb, Hwann-Tzong Chen, Jia-Bin Huang (2021)
 ## 📎 Related Works
 
 롱테일 분포를 해결하기 위한 기존 접근 방식은 크게 세 가지로 분류된다:
+
 1. **리샘플링(Resampling):** 희귀 클래스를 오버샘플링하거나 빈번한 클래스를 언더샘플링하여 데이터 분포를 맞추는 방식이다. 하지만 인스턴스 분할에서는 이미지당 클래스 구성이 달라 적용이 어렵다.
 2. **재가중치 및 비용 민감 학습(Reweighting and Cost-sensitive Learning):** 클래스 빈도의 역수를 사용하여 손실 가중치를 조정하는 방식이다.
 3. **특징 조작(Feature Manipulation):** 정규화나 메트릭 학습을 통해 특징 공간에서 클래스 간 거리를 조정하는 방식이다.
@@ -26,6 +27,7 @@ Ting-I Hsieh, Esther Robb, Hwann-Tzong Chen, Jia-Bin Huang (2021)
 ## 🛠️ Methodology
 
 ### 1. Baseline: Equalization Loss (EQL)
+
 먼저 기본이 되는 $\text{L}_{\text{EQL}}$은 다음과 같이 정의된다:
 $$\text{L}_{\text{EQL}} = -\sum_{j=1}^{C} w_j \log(\hat{p}_j)$$
 여기서 $\hat{p}_j$는 정답 라벨 $y_j$에 따른 예측 확률이며, 가중치 $w_j$는 다음과 같다:
@@ -33,17 +35,20 @@ $$w_j = 1 - \text{E}(r) \text{T}_{\lambda}(f_j)(1 - y_j)$$
 $\text{E}(r)$은 전경 영역일 때 1, 배경일 때 0을 반환하는 지시 함수이며, $\text{T}_{\lambda}(f_j)$는 클래스 $j$의 빈도 $f_j$가 임계값 $\lambda$보다 낮으면 1을 반환하는 함수이다. 즉, 전경 영역($\text{E}(r)=1$)에서 희귀 클래스($\text{T}_{\lambda}=1$)에 대한 잘못된 예측 시 가중치가 0이 되어 패널티를 제거한다.
 
 ### 2. Background Equalization Loss ($\text{L}_{\text{BEQL}}$)
+
 저자들은 배경 영역에서의 억제 효과를 줄이기 위해 $\text{L}_{\text{BEQL}}$을 제안했다. 배경 영역($\text{E}(r)=0$)에 대해 예측 확신도(Confidence)가 낮을 때 가중치를 더 낮게 부여하는 방식이다:
 $$w_j = \begin{cases} 1 - \text{T}_{\lambda}(f_j)(1 - y_j), & \text{if } \text{E}(r) = 1 \\ 1 - \text{T}_{\lambda}(f_j) \cdot \min\{-\log_b(p_j), 1\}, & \text{otherwise} \end{cases}$$
 여기서 $\log$의 밑인 $b$는 가중치 민감도를 조절하는 하이퍼파라미터이다. 하지만 이 방식은 $b$ 값에 따라 빈번한 클래스와 희귀 클래스의 성능이 반비례하는 트레이드-오프 문제가 발생한다.
 
 ### 3. Proposed Method: DropLoss
+
 트레이드-오프 문제를 해결하기 위해, 저자들은 배경 영역의 손실 가중치를 베르누이 분포(Bernoulli distribution)에서 샘플링하는 **DropLoss**를 제안한다:
 $$\text{L}_{\text{Drop}} = -\sum_{j=1}^{C} w_j \log(\hat{p}_j)$$
 가중치 $w_j$는 다음과 같이 결정된다:
 $$w_j = \begin{cases} 1 - \text{T}_{\lambda}(f_j)(1 - y_j), & \text{if } \text{E}(r) = 1 \\ w \sim \text{Ber}(\mu_{f_j}), & \text{otherwise} \end{cases}$$
 여기서 $\mu_{f_j}$는 현재 학습 배치(Batch) 내의 클래스 발생 비율에 따라 동적으로 결정된다:
 $$\mu_{f_j} = \begin{cases} (n_{\text{rare}} + n_{\text{common}}) / n_{\text{all}}, & \text{if } \text{T}_{\lambda}(f_j) = 1 \\ n_{\text{frequent}} / n_{\text{all}}, & \text{otherwise} \end{cases}$$
+
 - $n_{\text{rare}}, n_{\text{common}}, n_{\text{frequent}}$: 현재 배치 내 전경 영역에서 각 클래스의 출현 횟수.
 - $n_{\text{all}}$: 전체 전경 영역의 출현 횟수 합.
 
@@ -52,12 +57,14 @@ $$\mu_{f_j} = \begin{cases} (n_{\text{rare}} + n_{\text{common}}) / n_{\text{all
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** LVIS v0.5 및 v1.0 (1,230개 클래스, 롱테일 분포).
 - **아키텍처:** Mask R-CNN, Cascade R-CNN.
 - **백본:** ResNet-50, ResNet-101.
 - **평가 지표:** $\text{AP}$ (Average Precision), $\text{AR}$ (Average Recall), 그리고 클래스 그룹별 $\text{AP}_r$ (Rare), $\text{AP}_c$ (Common), $\text{AP}_f$ (Frequent).
 
 ### 주요 결과
+
 - **전반적 성능 향상:** 모든 아키텍처와 백본 설정에서 DropLoss가 BCE(기본 손실 함수) 및 EQL보다 높은 $\text{AP}$와 $\text{AR}$을 기록했다.
 - **희귀 클래스 개선:** 특히 $\text{AP}_r$과 $\text{AP}_c$에서 괄목할 만한 향상을 보였다. 예를 들어, Mask R-CNN (ResNet-50) 설정에서 $\text{AP}_r$이 EQL 대비 크게 상승하여 전체 $\text{AP}$를 1.7%p 가량 끌어올렸다.
 - **리샘플링 기법과의 결합:** Repeat Factor Sampling (RFS)과 결합했을 때 추가적인 성능 향상이 확인되었으며, 이는 데이터 레벨의 리샘플링과 손실 함수 레벨의 재가중치가 상호 보완적임을 시사한다.

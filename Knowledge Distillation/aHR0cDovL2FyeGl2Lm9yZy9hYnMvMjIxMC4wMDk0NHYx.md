@@ -13,6 +13,7 @@ Kai Wang, Fei Yang, Joost van de Weijer (2022)
 본 논문의 핵심 아이디어는 Teacher 모델이 이미지의 어느 영역을 중요하게 여기는지에 대한 '이유(Why)'를 Student 모델에게 전달하는 **Attention Distillation**이다. 단순히 Teacher의 최종 출력 결과(What)만을 모방하는 기존 방식에서 벗어나, ViT의 핵심 구성 요소인 Self-Attention Map을 직접 증류함으로써 Student 모델이 Teacher와 유사한 시각적 집중 영역을 갖도록 유도한다.
 
 주요 기여 사항은 다음과 같다.
+
 1. **AttnDistill 프레임워크 제안**: Projector Alignment(PA)와 Attention Guidance(AG)라는 두 가지 모듈을 통해 SSL 기반 ViT의 지식 증류를 수행한다.
 2. **범용적 Attention 증류 메커니즘**: Teacher와 Student의 Head 수나 Patch 수가 서로 다르더라도 적용 가능한 유연한 Attention 정렬 방식을 제안하였다.
 3. **최소 규모 ViT-T의 SSL 학습 성공**: 지식 증류를 통해 SSL 기반의 ViT-T 모델을 최초로 성공적으로 학습시켰으며, 이는 지도 학습(Supervised learning) 기반의 ViT-T 성능에 근접하는 결과를 보였다.
@@ -20,23 +21,28 @@ Kai Wang, Fei Yang, Joost van de Weijer (2022)
 ## 📎 Related Works
 
 ### Self-Supervised Learning (SSL)
+
 SSL은 레이블이 없는 데이터에서 고품질의 특징 표현을 학습하는 방법으로, 크게 Contrastive Learning(예: MoCo, SimCLR)과 Masked Image Encoding(예: MAE) 두 가지 흐름으로 나뉜다. 최근에는 ConvNet에서 ViT로 백본 아키텍처가 확장되고 있으며, ViT는 ConvNet보다 Inductive Bias가 적어 대규모 데이터셋에서 더 큰 잠재력을 가진다.
 
 ### Knowledge Distillation for SSL
+
 기존의 SSKD 연구들은 주로 ConvNet을 대상으로 하였으며, Pseudo labels를 활용하거나(CC), Memory bank를 통해 인스턴스 수준의 유사도 분포를 정렬하는(SEED, CompRess) 방식이 사용되었다. 또한, SimReg와 같이 Projector를 통해 특징 공간을 정렬하는 방식이 제안되었으나, ViT와 같이 아키텍처 차이가 큰 경우에는 단순한 Projector 회귀만으로는 지식 전이가 불충분하다는 한계가 있다.
 
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 AttnDistill은 Teacher-Student 쌍의 ViT 모델을 구성하고, 두 가지 손실 함수인 Projector Alignment loss($L_c$)와 Attention Guidance loss($L_a$)를 결합하여 Student 모델을 최적화한다.
 
 ### 1. Projector Alignment (PA)
+
 Teacher($V_t$)와 Student($V_s$) 모델은 서로 다른 특징 차원(Feature dimension)을 가지는 경우가 많다. 이를 해결하기 위해 선형 매핑 함수인 Projector $P$를 도입하여 Student의 특징 공간을 Teacher의 공간으로 투영한다. 특히 ViT에서 이미지 전체의 대표성을 띄는 Class token($E^c$)에 집중하여 다음과 같은 MSE 손실 함수를 사용한다.
 
 $$L_c = ||E_t^c - P(E_s^c)||^2$$
 
 ### 2. Attention Guidance (AG)
-단순한 특징 정렬은 '무엇(What)'이 있는지에 대한 정보만 제공하므로, '왜(Why)' 그러한 결과가 나왔는지에 대한 가이드를 제공하기 위해 Self-Attention Map을 증류한다. 
+
+단순한 특징 정렬은 '무엇(What)'이 있는지에 대한 정보만 제공하므로, '왜(Why)' 그러한 결과가 나왔는지에 대한 가이드를 제공하기 위해 Self-Attention Map을 증류한다.
 
 ViT의 Attention Map $A_{l,h}$는 다음과 같이 계산된다.
 $$A_{l,h} = \text{Softmax}(Q_{l,h} \cdot (K_{l,h})^T / \sqrt{d})$$
@@ -52,6 +58,7 @@ $$A_{l,h} = \text{Softmax}(Q_{l,h} \cdot (K_{l,h})^T / \sqrt{d})$$
 - **Case (d) Head와 Patch 수가 모두 다른 경우**: Interpolation과 Aggregation을 순차적으로 적용한다.
 
 ### 훈련 목표 및 최종 손실 함수
+
 최종적으로 Student 모델은 다음의 통합 손실 함수를 통해 학습된다.
 $$L = L_c + \lambda \cdot L_a$$
 여기서 $\lambda$는 Attention Guidance의 영향력을 조절하는 하이퍼파라미터이다.
@@ -59,14 +66,16 @@ $$L = L_c + \lambda \cdot L_a$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: ImageNet-Subset (Ablation 및 SSKD 비교용), ImageNet-1K (SSL 성능 비교용)
-- **모델 쌍**: 
-    - Mugs(ViT-S/16) $\rightarrow$ ViT-T/16
-    - Mugs(ViT-B/16) $\rightarrow$ ViT-S/16
-    - DINO(ViT-S/8) $\rightarrow$ ViT-S/16
+- **모델 쌍**:
+  - Mugs(ViT-S/16) $\rightarrow$ ViT-T/16
+  - Mugs(ViT-B/16) $\rightarrow$ ViT-S/16
+  - DINO(ViT-S/8) $\rightarrow$ ViT-S/16
 - **지표**: k-NN Accuracy, Linear Probing (LP.), Fine-tuning Accuracy
 
 ### 주요 결과
+
 1. **SSKD 성능**: ImageNet-Subset 실험에서 AttnDistill은 SEED, CompRess, SimReg 등 기존 ConvNet 기반 SSKD 방법론보다 월등히 높은 성능을 보였다. 특히 Student 모델의 규모가 작아질수록(예: 8-Layer, 3-Head) Attention Guidance의 효과가 극명하게 나타났다.
 2. **SOTA 달성**: ImageNet-1K에서 ViT-T/16 모델을 증류했을 때, 기존의 SSL 기반 방법론들을 제치고 SOTA k-NN 및 LP 성능을 기록하였다. 이는 지도 학습 기반의 ViT-T 성능과 거의 대등한 수준이다.
 3. **효율성**: DINO(ViT-S/8)를 Teacher로 하여 ViT-S/16을 학습시킨 경우, Patch 수를 줄임으로써 계산 비용을 75% 감소시키면서도 매우 높은 성능을 유지하였다.
@@ -75,9 +84,11 @@ $$L = L_c + \lambda \cdot L_a$$
 ## 🧠 Insights & Discussion
 
 ### 강점 및 해석
+
 본 논문은 ViT의 지식 증류에서 단순한 특징(Feature) 정렬보다 **Attention Map의 정렬이 훨씬 강력한 가이드**가 된다는 것을 입증하였다. 특히 "Attention Drift" 현상(Student의 시선이 Teacher와 달라지는 현상)을 방지함으로써, 작은 모델이 거대 모델의 시각적 추론 과정을 효과적으로 모방하게 만들었다.
 
 ### 한계 및 비판적 해석
+
 - **아키텍처 의존성**: 제안된 방법은 Transformer의 Attention 메커니즘을 전제로 하므로, ConvNet과 ViT 간의 교차 증류(Cross-architecture distillation)에는 추가적인 계산 비용과 정의가 필요하다는 한계가 있다.
 - **단일 Teacher 가정**: 현재의 프레임워크는 하나의 Teacher-Student 쌍만을 고려한다. 다수의 Teacher 모델로부터 지식을 통합하여 전이하는 방법(Multi-teacher distillation)에 대해서는 논의되지 않았다.
 - **Finetuning 성능**: k-NN과 Linear Probing에서는 SOTA를 달성했으나, 전체 모델을 Fine-tuning 했을 때는 SOTA 모델과 약간의 성능 차이가 존재한다. 이는 특징 추출 단계의 정렬이 반드시 최종 분류 단계의 최적화로 이어지지는 않음을 시사한다.

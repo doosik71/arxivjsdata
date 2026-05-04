@@ -29,21 +29,29 @@ DeepAL은 Pool-based Active Learning 설정을 기반으로 동작한다. 전체
 시스템의 전체 아키텍처는 크게 세 가지 핵심 모듈로 구성된다.
 
 ### 1. Data 모듈
+
 데이터셋의 관리와 전처리를 담당하는 `Data` 클래스로 구성된다.
+
 - **데이터 관리**: 학습 풀($D_l \cup D_u$)과 테스트 세트($D_{test}$)를 유지하며, `labeledidxs`라는 이진 넘파이(numpy) 배열을 통해 각 샘플의 레이블 여부를 추적한다.
 - **Data Handler**: `torch.utils.data.Dataset`을 상속받아 데이터를 텐서(Tensor) 형태로 변환하고 전처리하는 역할을 수행한다.
 
 ### 2. Net 모듈
+
 분류기 $f$의 아키텍처와 학습 파라미터를 정의하는 `Net` 클래스로 구성된다.
+
 - **모델 정의**: `torch.nn.Module`을 상속받은 네트워크 구조를 가지며, 은닉 표현(hidden representation)의 크기를 반환하는 `get_embeddingdim` 함수를 포함해야 한다.
 - **주요 기능**: 모델 학습을 위한 `train(data)`, 예측 값을 생성하는 `predict(data)`, 확률값을 생성하는 `predict_prob(data)`, 그리고 특징 추출을 위한 `get_embeddings(data)` 함수를 제공한다.
 
 ### 3. Strategy 모듈
-어떤 데이터를 레이블링할지 결정하는 쿼리 전략을 정의하는 `Strategy` 클래스로 구성된다. 
+
+어떤 데이터를 레이블링할지 결정하는 쿼리 전략을 정의하는 `Strategy` 클래스로 구성된다.
+
 - **동작 흐름**: `query(n)` 함수를 통해 $D_u$에서 $n$개의 인덱스를 선택하고, `update(query_idxs)`를 통해 데이터 풀을 갱신하며, `train()`을 통해 모델을 업데이트한다.
 
 #### 구현된 쿼리 전략 (Query Strategies)
+
 DeepAL은 다음과 같은 다양한 전략들을 구현하여 제공한다.
+
 - **Random sampling**: 무작위로 샘플을 선택한다.
 - **Least confidence**: 가장 높은 확률을 가진 클래스의 확신도가 낮은 샘플을 선택한다.
   $$x^* = \arg \max_x 1 - P(\hat{y}|x)$$

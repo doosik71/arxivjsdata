@@ -4,7 +4,7 @@ Fereshteh Shakeri, Yunshi Huang, Julio Silva-Rodríguez, Houda Bahig, An Tang, J
 
 ## 🧩 Problem to Solve
 
-본 논문은 의료 영상 분석 분야에서 Vision-Language Models (VLMs)를 매우 제한된 수의 학습 데이터(Few-shot)만으로 효율적으로 적응(Adaptation)시키는 문제를 해결하고자 한다. 
+본 논문은 의료 영상 분석 분야에서 Vision-Language Models (VLMs)를 매우 제한된 수의 학습 데이터(Few-shot)만으로 효율적으로 적응(Adaptation)시키는 문제를 해결하고자 한다.
 
 의료 분야에서는 신뢰할 수 있는 모델을 학습시키기 위해 대규모의 레이블링된 데이터셋이 필요하지만, 실제로 전문의에 의해 어노테이션된 데이터는 매우 희소하다. 또한, 스캐너의 종류, 염색 방식, 인구통계학적 차이로 인한 Domain Drift가 빈번하게 발생하므로, 적은 수의 샘플만으로 모델을 빠르게 조정하는 Few-shot Adaptation 기술이 필수적이다.
 
@@ -28,9 +28,11 @@ Fereshteh Shakeri, Yunshi Huang, Julio Silva-Rodríguez, Houda Bahig, An Tang, J
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 흐름
+
 본 연구는 대규모 이미지-텍스트 쌍으로 사전 학습된 Foundation Model을 기반으로 한다. 타겟 데이터셋에서 클래스당 매우 적은 수의 샘플($S \in \{1, 2, 4, 8, 16\}$)만 사용하여 모델을 적응시킨 후, 테스트 세트의 레이블을 예측하는 구조이다.
 
 ### 주요 구성 요소 및 방정식
+
 1. **특징 추출**:
    - 시각 인코더 $\theta_v$를 통해 이미지 $x_i$로부터 시각 임베딩 $f_i = \theta_v(x_i)$를 얻는다.
    - 텍스트 인코더 $\theta_t$를 통해 클래스 설명 $z_k$로부터 텍스트 임베딩 $t_k = \theta_t(z_k)$를 얻는다.
@@ -49,12 +51,14 @@ Fereshteh Shakeri, Yunshi Huang, Julio Silva-Rodríguez, Houda Bahig, An Tang, J
    손실 함수 $L_{CE}(w, \alpha)$를 통해 시각적 프로토타입 $w$와 결합 파라미터 $\alpha$를 동시에 최적화한다.
 
 ### 학습 절차
+
 - **최적화**: Full-batch gradient descent를 사용하며, Lipschitz-gradient 특성을 이용해 step size를 암시적으로 결정하는 효율적인 최적화 알고리즘을 적용한다. 이를 통해 학습률(Learning rate)에 대한 과도한 튜닝 과정을 생략할 수 있다.
 - **Black-box 설정**: 텍스트 인코더 $\theta_t$의 내부 파라미터는 수정하지 않고, 오직 출력된 임베딩 $t_k$만을 사용한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋 및 모델**:
   - **Histology**: Quilt-1M 모델 사용 / NCT-CRC, SICAPv2, SkinCancer 데이터셋.
   - **Ophthalmology**: FLAIR 모델 사용 / MESSI-DOR, FIVES, ODIR200x3 데이터셋.
@@ -63,7 +67,8 @@ Fereshteh Shakeri, Yunshi Huang, Julio Silva-Rodríguez, Houda Bahig, An Tang, J
 - **비교 대상**: Zero-shot, Prompt Learning (CoOp, CoCoOp, KgCoOp), Adapters (CLIP-Adapter, Tip-Adapter-F), Standard LP.
 
 ### 주요 결과
-1. **정량적 성능**: 
+
+1. **정량적 성능**:
    - LP+text는 대부분의 벤치마크에서 Prompt Learning 방식보다 훨씬 높은 성능을 보였으며, Adapter 기반 방식들과 대등하거나 더 우수한 성능을 기록하였다.
    - 특히 데이터가 극도로 적은 $S=1$ 상황에서 표준 LP는 성능이 크게 하락하지만, LP+text는 텍스트 정보를 활용함으로써 이 하락을 방지하였다.
 2. **계산 효율성**:
@@ -74,13 +79,16 @@ Fereshteh Shakeri, Yunshi Huang, Julio Silva-Rodríguez, Houda Bahig, An Tang, J
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 논문은 복잡한 아키텍처의 추가 없이 단순한 선형 결합과 가중치 최적화만으로도 의료 VLM의 Few-shot 적응이 가능하다는 것을 보여주었다. 특히 의료 현장에서 매우 중요한 **Black-box 접근 가능성**과 **극심한 저사양 계산 환경**에서의 효율성을 동시에 확보했다는 점이 큰 강점이다.
 
 ### 한계 및 논의사항
+
 - **가정**: 본 연구는 프리트레인된 Foundation Model의 임베딩 공간이 이미 어느 정도 정렬되어 있다는 가정 하에 작동한다. 만약 모델의 기본 성능(Zero-shot)이 매우 낮다면, 단순히 임베딩을 결합하는 방식만으로는 한계가 있을 수 있다.
 - **하이퍼파라미터**: LP+text는 튜닝 과정을 최소화했으나, 여전히 $\alpha$와 $w$의 초기값이나 최적화 알고리즘의 수렴 속도가 성능에 영향을 줄 수 있다.
 
 ### 비판적 해석
+
 Prompt Learning이 최근 CV 분야에서 각광받고 있음에도 불구하고, 의료 분야에서는 그 계산 비용 대비 성능 이득이 적다는 결과가 흥미롭다. 이는 의료 영상의 특성이 자연 영상보다 더 fine-grained 하여, 텍스트 프롬프트를 정교하게 다듬는 것보다 시각적 특징과 전문 지식(텍스트 임베딩)을 직접적으로 결합하는 방식이 더 효과적일 수 있음을 시사한다.
 
 ## 📌 TL;DR

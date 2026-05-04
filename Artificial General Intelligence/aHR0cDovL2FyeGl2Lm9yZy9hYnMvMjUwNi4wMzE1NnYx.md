@@ -4,7 +4,7 @@ Davit Gondauri, Maia Noniashvili, Mikheil Batiashvili & Nino Enukidze (2024)
 
 ## 🧩 Problem to Solve
 
-본 논문은 인공 일반 지능(Artificial General Intelligence, AGI)이 국가 경제 지표에 미치는 정량적 영향을 분석하고자 한다. 
+본 논문은 인공 일반 지능(Artificial General Intelligence, AGI)이 국가 경제 지표에 미치는 정량적 영향을 분석하고자 한다.
 
 전통적인 경제 측정 지표인 국내총생산(Gross Domestic Product, GDP)은 국가의 경제적 건강 상태를 평가하는 초석이 되어 왔으나, AGI와 같은 급격한 기술적 진보는 단순한 생산성 향상을 넘어 노동 시장, 혁신 속도, 시장 역학 등 다면적인 변화를 야기한다. 이러한 복잡성을 기존의 전통적인 계량경제학적 지표만으로는 충분히 포착할 수 없다는 점이 문제의 핵심이다.
 
@@ -12,7 +12,7 @@ Davit Gondauri, Maia Noniashvili, Mikheil Batiashvili & Nino Enukidze (2024)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심적인 기여는 AGI의 발전 수준을 수치화하여 이를 경제 성장 모델에 통합한 수학적 프레임워크를 제시했다는 점이다. 
+본 논문의 핵심적인 기여는 AGI의 발전 수준을 수치화하여 이를 경제 성장 모델에 통합한 수학적 프레임워크를 제시했다는 점이다.
 
 연구진은 솔로우 성장 모델(Solow Growth Model)을 기반으로 하여, AGI 기술 수준($AGI_n$)이라는 변수를 도입함으로써 기술적 진보가 어떻게 총요소생산성(Total Factor Productivity, TFP)과 노동 생산성에 영향을 주어 최종적으로 실질 GDP를 증가시키는지에 대한 정량적 관계를 도출하였다. 특히, AGI 발전과 GDP 성장 사이의 회귀 분석을 통해 구체적인 상관계수를 산출하여 AGI의 경제적 가치를 가시화하였다.
 
@@ -32,6 +32,7 @@ Davit Gondauri, Maia Noniashvili, Mikheil Batiashvili & Nino Enukidze (2024)
 본 연구는 솔로우 성장 모델을 기초로 AGI 기술 수준이 경제 성장에 미치는 영향을 분석하는 파이프라인을 구축하였다.
 
 ### 1. 변수 정의
+
 - $Y_n$: $n$ 시점의 실질 GDP (Real GDP)
 - $K_n$: $n$ 시점의 자본 스톡 (Capital Stock)
 - $L_n$: $n$ 시점의 노동력 (Labor Force)
@@ -63,6 +64,7 @@ $$E_n = L_n \times \text{env}_n + (1 - \text{env}_n) \times \phi_n$$
 $$\alpha = \frac{\text{contribution of capital (%)}}{\text{contribution of labor (%)}}$$
 
 ### 3. 분석 절차
+
 1. 공식적인 인터넷 소스에서 노동 생산성, TFP, 자본 스톡, 실질 GDP 등의 데이터를 수집한다.
 2. 제안한 수학적 알고리즘을 통해 AGI 기술 수준($AGI_n$)을 계산한다.
 3. $AGI_n$과 실질 GDP에 네퍼 로그(Nepper base logarithm)를 취하여 선형 회귀 분석을 수행한다.
@@ -78,6 +80,7 @@ $$\alpha = \frac{\text{contribution of capital (%)}}{\text{contribution of labor
 - **p-value**: $0.0004123$
 
 ### 결과의 해석
+
 1. **정량적 관계**: 회귀 계수가 $12.5\%$라는 것은 독립 변수인 AGI 기술 수준이 1단위 증가할 때, 종속 변수인 실질 GDP가 $12.5\%$ 증가할 것으로 기대됨을 의미한다. 거꾸로, GDP를 $1\%$ 증가시키기 위해서는 평균적으로 $12.5\%$의 AGI 발전이 필요하다는 해석이 가능하다.
 2. **모델 적합도**: $R^2$ 값이 $73\%$로 나타나, GDP 변동성의 상당 부분이 AGI 기술 수준의 변화로 설명될 수 있음을 보여준다.
 3. **상관성 및 유의성**: 상관계수가 $85.4\%$로 매우 강한 양의 상관관계를 보이며, p-value가 $0.05$보다 훨씬 낮은 $0.0004123$으로 나타나 이 결과가 통계적으로 매우 유의미함을 입증하였다.

@@ -4,7 +4,7 @@ Wanyu Du, Yangfeng Ji (2019)
 
 ## 🧩 Problem to Solve
 
-본 논문은 주어진 문장에 대해 의미가 동일한 다른 문장을 생성하는 Paraphrase Generation 작업에서 발생하는 **Exposure Bias** 문제를 해결하고자 한다. 
+본 논문은 주어진 문장에 대해 의미가 동일한 다른 문장을 생성하는 Paraphrase Generation 작업에서 발생하는 **Exposure Bias** 문제를 해결하고자 한다.
 
 Encoder-Decoder 프레임워크를 사용하는 일반적인 Supervised Learning 방식에서는 학습 시 현재 토큰을 예측할 때 정답(Ground Truth) 데이터를 조건으로 사용하지만, 실제 추론(Decoding) 시에는 이전 단계에서 모델이 예측한 값을 조건으로 사용한다. 이러한 학습과 추론 간의 괴리는 생성 과정에서 오류가 누적되고 전파되는 Exposure Bias를 유발하며, 이는 최종 생성 품질을 저하시키는 주요 원인이 된다.
 
@@ -25,9 +25,11 @@ Paraphrase Generation은 초기에 병렬 말뭉치에서 패턴을 추출하는
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 연구는 기본 모델(Base Model)로 **Pointer-Generator Network**를 사용한다. 이 모델은 일반적인 생성 능력과 더불어 입력 문장에서 단어를 직접 복사해오는 Pointer 메커니즘을 결합하여 OOV(Out-of-Vocabulary) 문제에 강건한 특성을 가진다.
 
 ### 통합 학습 프레임워크
+
 저자들은 RL과 IL을 통합하여 최적화할 수 있는 다음과 같은 목적 함수 $L(\theta)$를 제안한다.
 
 $$L(\theta) = \left\{ \sum_{t=1}^{T} \log \pi_{\theta}(\tilde{y}_t | h_t) \right\} \cdot r(\tilde{y}, y)$$
@@ -35,12 +37,14 @@ $$L(\theta) = \left\{ \sum_{t=1}^{T} \log \pi_{\theta}(\tilde{y}_t | h_t) \right
 여기서 $\pi_{\theta}$는 현재 상태 $h_t$에서 단어를 선택하는 정책 함수(Policy Function)이며, $r(\tilde{y}, y)$는 생성된 문장 $\tilde{y}$와 정답 문장 $y$ 사이의 유사도를 측정하는 보상 함수(Reward Function)이다. 본 논문에서는 보상 함수로 **ROUGE-2** 점수를 사용한다.
 
 ### 학습 절차 및 알고리즘 변형
+
 학습은 크게 MLE를 통한 Pre-training 단계와 제안하는 알고리즘들을 통한 Fine-tuning 단계로 나뉜다. 핵심은 입력 $\tilde{y}_{t-1}$과 출력 $\tilde{y}_t$를 결정하는 $\alpha, \beta$의 제어이다.
 
 - **$\alpha$ (Input Schedule Rate):** $\alpha$의 확률로 정답($y_{t-1}$)을 사용하고, $1-\alpha$의 확률로 모델이 예측한 값($\hat{y}_{t-1}$)을 입력으로 사용한다.
 - **$\beta$ (Output Schedule Rate):** $\beta$의 확률로 정답($y_t$)을 선택하고, $1-\beta$의 확률로 모델이 예측한 값($\hat{y}_t$)을 선택하여 손실 함수에 반영한다.
 
 이 설정을 통해 다음과 같은 알고리즘들을 정의한다:
+
 1. **MLE:** $\alpha=1, \beta=1$인 경우이다. 항상 정답을 입력하고 정답에 대해 최적화한다.
 2. **REINFORCE:** $\alpha=0, \beta=0$이며 $\text{Decode}(\cdot)$가 Random Sampling인 경우이다. 전체 궤적을 샘플링한 후 보상을 곱해 업데이트한다.
 3. **DAGGER (Imitation Learning):** $0 < \alpha < 1, \beta=1$이며 $\text{Decode}(\cdot)$가 $\text{argmax}$ (Greedy)인 경우이다. 입력은 정답과 예측값 사이를 오가지만, 출력은 항상 정답(Expert Action)을 따라가도록 학습한다.
@@ -50,11 +54,13 @@ $$L(\theta) = \left\{ \sum_{t=1}^{T} \log \pi_{\theta}(\tilde{y}_t | h_t) \right
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** Quora Question Pair Dataset, Twitter URL Paraphrasing Dataset.
 - **평가 지표:** ROUGE-1, ROUGE-2, BLEU 및 이들의 평균 점수(Avg-Score).
 - **비교 대상:** Seq2Seq, RbM, Res-LSTM, Dis-LSTM.
 
 ### 주요 결과
+
 1. **IL의 우수성:** 두 데이터셋 모두에서 DAGGER(IL) 기반 모델이 REINFORCE(RL) 및 그 변형 모델들보다 일관되게 높은 성능을 보였다.
 2. **SOTA 달성:** 특히 Quora 데이터셋에서 DAGGER* (고정된 $\alpha$를 사용하는 설정) 모델은 기존 SOTA 방법론들을 큰 차이로 앞지르며 평균 점수 기준 약 13%의 성능 향상을 보였다.
 3. **데이터셋별 특성:** Twitter 데이터셋에서는 Quora에 비해 성능 향상 폭이 적었는데, 이는 Twitter 데이터셋의 경우 하나의 소스 문장에 대해 여러 개의 정답 페러프레이즈가 존재하는 'One-to-Many' 특성이 강해 학습이 더 어렵기 때문으로 분석된다.
@@ -62,7 +68,7 @@ $$L(\theta) = \left\{ \sum_{t=1}^{T} \log \pi_{\theta}(\tilde{y}_t | h_t) \right
 
 ## 🧠 Insights & Discussion
 
-본 논문은 Paraphrase Generation 작업에서 **Imitation Learning(특히 DAGGER)이 Reinforcement Learning보다 훨씬 효율적이고 안정적**임을 입증하였다. 
+본 논문은 Paraphrase Generation 작업에서 **Imitation Learning(특히 DAGGER)이 Reinforcement Learning보다 훨씬 효율적이고 안정적**임을 입증하였다.
 
 그 원인에 대한 분석은 다음과 같다. REINFORCE와 같은 RL 알고리즘은 보상 함수가 희소(sparse)하거나 분산이 클 경우 학습이 불안정해지는 경향이 있다. 반면, DAGGER는 항상 정답(Expert Action)을 출력으로 사용하므로 학습 신호가 명확하며, 입력값에 $\alpha$를 통해 점진적으로 모델의 예측값을 섞어줌으로써 Exposure Bias를 효과적으로 완화한다.
 

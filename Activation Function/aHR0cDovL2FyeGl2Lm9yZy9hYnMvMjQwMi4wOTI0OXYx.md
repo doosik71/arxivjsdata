@@ -23,6 +23,7 @@ TAAF는 이러한 개별적인 접근 방식과 달리, 수평 및 수직의 이
 ## 🛠️ Methodology
 
 ### 1. TAAF의 정의 및 구조
+
 TAAF는 임의의 내부 활성화 함수 $f$를 감싸는 형태의 함수로, 다음과 같은 방정식으로 정의된다.
 
 $$g(f, z_i) = \alpha_i \cdot f(\beta_i \cdot z_i + \gamma_i) + \delta_i$$
@@ -35,12 +36,15 @@ $$g(f, z_i) = \alpha_i \cdot f(\beta_i \cdot z_i + \gamma_i) + \delta_i$$
 - $\delta_i$: 수직 평행 이동 (Vertical Translation) - 함수를 상하로 이동시킨다.
 
 ### 2. 뉴런 내에서의 연산 절차
+
 실제 뉴런에서 TAAF가 적용될 때, 입력 $x_i$와 가중치 $w_i$에 의한 사전 활성화 값(pre-activation)이 TAAF의 입력 $z_i$가 된다. 전체 연산 과정은 다음과 같다.
 
 $$\alpha_i \cdot f\left(\beta_i \cdot \sum_{i=1}^{n} w_i x_i + \gamma_i\right) + \delta_i$$
 
 ### 3. 기존 함수의 TAAF화 (Generalization)
+
 저자는 기존의 수많은 활성화 함수들이 TAAF의 파라미터 $\alpha, \beta, \gamma, \delta$에 특정 값을 할당하고 내부 함수 $f$를 선택함으로써 구현될 수 있음을 보여준다. 예를 들어:
+
 - **Scaled Hyperbolic Tangent**: $f(z) = \tanh(z)$이며, $\alpha=a, \beta=b, \gamma=0, \delta=0$으로 설정한 경우이다.
 - **Shifted and Scaled Sigmoid (SSS)**: $f(z) = \sigma(z)$이며, $\alpha=1, \beta=a, \gamma=-ab, \delta=0$으로 설정한 경우이다.
 - **FReLU**: $f(z) = \text{ReLU}(z)$이며, $\alpha=1, \beta=1, \gamma=a_i, \delta=b_i$로 설정하여 수평/수직 이동을 학습하는 경우이다.
@@ -50,10 +54,13 @@ $$\alpha_i \cdot f\left(\beta_i \cdot \sum_{i=1}^{n} w_i x_i + \gamma_i\right) +
 본 논문은 새로운 실험 데이터를 제시하는 대신, 기존 문헌에 존재하는 활성화 함수들을 TAAF 프레임워크로 매핑한 정성적 분석 결과를 제시한다.
 
 ### 1. 특수 사례 분석 (Table 1)
+
 논문은 50개 이상의 활성화 함수가 TAAF의 특수 사례임을 입증하였다. 분석 대상에는 $\tanh, \sigma, \text{ReLU}, \text{ELU}, \text{Swish}$ 등의 기본 함수와 이를 변형한 수십 가지의 변체들이 포함되었다. 이들은 $\alpha, \beta, \gamma, \delta$ 중 일부를 상수로 고정하거나 특정 값으로 설정함으로써 TAAF의 일부분으로 편입된다.
 
 ### 2. 관련 개념 분석 (Table 2)
-TAAF의 완전한 특수 사례는 아니지만, TAAF가 추구하는 '파라미터를 통한 함수 변형'이라는 개념을 공유하는 70개 이상의 함수를 식별하였다. 
+
+TAAF의 완전한 특수 사례는 아니지만, TAAF가 추구하는 '파라미터를 통한 함수 변형'이라는 개념을 공유하는 70개 이상의 함수를 식별하였다.
+
 - **부분적 제어**: LReLU나 PReLU처럼 특정 구간(음수 영역)의 기울기만 조절하는 경우 ($\alpha$와 유사한 개념).
 - **확률적 변형**: NReLU처럼 평행 이동 파라미터 $\gamma$에 노이즈를 추가하는 경우.
 - **복합 구성**: ABU(Adaptive Blending Units)나 MoGU처럼 여러 개의 TAAF 기반 함수를 가중합(Weighted Sum) 형태로 결합하여 사용하는 경우.
@@ -61,9 +68,11 @@ TAAF의 완전한 특수 사례는 아니지만, TAAF가 추구하는 '파라미
 ## 🧠 Insights & Discussion
 
 ### 강점 및 의의
+
 본 연구는 파편화되어 있던 수백 개의 활성화 함수들을 TAAF라는 하나의 통합된 수학적 틀 안에서 해석했다는 점에서 학술적 가치가 크다. TAAF의 네 가지 파라미터($\alpha, \beta, \gamma, \delta$)가 각각 수직 스케일, 수평 스케일, 수평 이동, 수직 이동이라는 기하학적 의미를 갖는다는 점은, 왜 이 파라미터들이 신경망의 표현력을 높이는지에 대한 이론적 근거를 제공한다.
 
 ### 한계 및 논의사항
+
 논문에서는 TAAF가 많은 함수를 일반화할 수 있음을 보였으나, 모든 함수를 포함할 수는 없음을 명시하였다. 예를 들어, 함수의 특정 부분만 기울기를 조절하는 Piecewise 함수(예: Improved Logistic Sigmoid)나, 입력값에 따라 파라미터가 동적으로 결정되는 일부 복잡한 구조는 TAAF의 단순한 선형 변환 식만으로는 표현이 불가능하다.
 
 또한, 본 보고서는 관계 분석에 집중하고 있어, TAAF를 사용했을 때 실제로 어떤 작업에서 어떤 기존 함수보다 성능이 우월한지에 대한 최신 벤치마크 결과는 포함되어 있지 않다. (해당 내용은 인용된 이전 연구 $[70, 71, 72]$에서 다루어지고 있다고 언급된다.)

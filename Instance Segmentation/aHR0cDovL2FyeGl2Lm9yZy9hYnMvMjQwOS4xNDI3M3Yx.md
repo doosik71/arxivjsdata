@@ -25,18 +25,22 @@ Anirudh S Chakravarthy, Meghana Reddy Ganesina, Peiyun Hu, Laura Leal-Taixé, Sh
 본 논문에서 제안하는 방법론인 OWL (Open-World Lidar Panoptic Segmentor)은 크게 두 단계의 파이프라인으로 구성된다.
 
 ### 1. Semantic Segmentation Network
+
 첫 번째 단계에서는 포인트 클라우드 $P \in \mathbb{R}^{N \times 3}$를 입력받아 $K+1$개의 클래스로 분류하는 네트워크를 학습시킨다. 여기서 $K$는 알려진 클래스이며, $+1$은 'Other' 클래스로, 학습 데이터에서 희귀한 클래스들을 하나로 묶어 Unknown의 대표값으로 사용한다.
+
 - **구조**: KPConv 기반의 인코더-디코더 아키텍처를 사용하며, 최종 출력은 $S \in \mathbb{R}^{N \times (K+1)}$ 형태의 시맨틱 맵이다.
 - **학습**: Cross-entropy loss를 사용하여 학습하며, 이를 통해 네트워크가 알려진 클래스와 알 수 없는 클래스(Other)를 구분할 수 있게 한다.
 
 ### 2. Class-Agnostic Instance Segmentation
+
 두 번째 단계에서는 시맨틱 분류 결과 중 'Thing' 또는 'Other'로 분류된 포인트들을 대상으로 인스턴스 분할을 수행한다.
 
-**계층적 분할 트리(Hierarchical Segmentation Tree) 구축**: 
+**계층적 분할 트리(Hierarchical Segmentation Tree) 구축**:
 DBSCAN 기반의 유클리드 거리 클러스터링을 거리 임계값 $\epsilon$을 점진적으로 줄여가며 반복 적용한다. 이를 통해 포인트 세그먼트들이 부모-자식 관계를 갖는 트리 구조 $T$가 형성되며, 트리의 아래로 내려갈수록 더 세밀하게 분할된 세그먼트들이 위치하게 된다.
 
 **Objectness Scoring Function**:
 각 세그먼트 $p$가 실제 객체일 확률을 예측하는 함수 $f(p) \rightarrow [0, 1]$를 학습시킨다.
+
 - **방식**: 포인트 세그먼트의 특징을 풀링하여 PointNet 스타일의 분류기나 회귀기를 통해 점수를 매긴다.
 - **손실 함수**: 세그먼트와 실제 정답(GT) 인스턴스 간의 Intersection-over-Union (IoU) 값을 직접 회귀하거나, 이진 교차 엔트로피(Binary Cross-Entropy) 손실을 사용하여 객체 여부를 판단한다. 논문에서는 회귀 방식이 더 부드러운 점수 분포를 생성하여 최적의 컷을 찾는 데 유리하다고 언급한다.
 
@@ -46,14 +50,16 @@ DBSCAN 기반의 유클리드 거리 클러스터링을 거리 임계값 $\epsil
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: SemanticKITTI를 학습 및 검증셋으로, KITTI360을 테스트셋으로 사용하여 교차 데이터셋 평가(Cross-dataset evaluation)를 수행한다.
 - **지표**: 알려진 클래스에 대해서는 PQ (Panoptic Quality)와 mIoU를 사용하고, 알 수 없는 클래스에 대해서는 Recall과 UQ (Unknown Quality)를 측정한다. 특히 UQ는 False Positive에 대한 페널티를 제외하고 Recall 중심으로 측정한다.
 
 ### 주요 결과
+
 - **Closed-World 성능**: SemanticKITTI 검증셋에서 OWL은 최신 방법론들과 경쟁 가능한 수준의 PQ를 달성하였다. 특히 Semantic Oracle(정답 시맨틱 맵 사용) 실험에서 PQ 98.3%를 기록하여, 본 방법론의 인스턴스 그룹화 능력이 매우 뛰어남을 입증하였다.
 - **Open-World 성능**: KITTI360 테스트셋에서 OWL은 알려진 클래스뿐만 아니라 알 수 없는 클래스에 대해서도 압도적인 성능을 보였다.
-    - **Unknown Recall**: 4D-PLS가 약 6.0%의 알 수 없는 객체를 회수할 때, OWL은 45.1%를 회수하였다.
-    - **UQ**: OWL은 36.3%의 UQ를 기록하여 베이스라인들을 크게 상회하였다.
+  - **Unknown Recall**: 4D-PLS가 약 6.0%의 알 수 없는 객체를 회수할 때, OWL은 45.1%를 회수하였다.
+  - **UQ**: OWL은 36.3%의 UQ를 기록하여 베이스라인들을 크게 상회하였다.
 - **Vocabulary 분석**: 희귀 클래스들을 'Other' 클래스로 통합하여 학습시킨 Vocabulary 1이 단순히 매우 희귀한 클래스만 제외한 Vocabulary 2보다 교차 데이터셋 일반화 성능이 더 높게 나타났다.
 
 ## 🧠 Insights & Discussion

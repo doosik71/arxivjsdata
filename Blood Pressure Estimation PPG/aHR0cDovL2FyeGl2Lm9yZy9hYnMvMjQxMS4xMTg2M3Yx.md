@@ -25,10 +25,13 @@ Hui Lin, Jiyang Li, Ramy Hussein, Xin Sui, Xiaoyu Li, Guangpu Zhu, Aggelos K. Ka
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 연구의 프레임워크는 크게 PPG 전처리(Preprocessing) 단계와 ResNet 기반의 특징 학습 및 분류(Classification) 단계로 구성된다.
 
 ### PPG 전처리 과정
+
 원시 PPG 신호의 품질을 높이기 위해 다음과 같은 5단계 파이프라인을 거친다.
+
 1. **Detrending**: 호흡이나 센서 움직임으로 인해 발생하는 기선 표류(Baseline drift)를 제거하여 비트 간의 변화에 집중한다.
 2. **Low-Quality Beat Removal**: 슬라이딩 윈도우 템플릿 매칭을 통해 표준 심박동 템플릿과 비교하고, 임계값보다 낮은 점수를 가진 노이즈 비트를 제거한다.
 3. **Outlier Removal**: Z-score가 $[-2, 2]$ 범위를 벗어나는 비트를 이상치로 판단하여 제거함으로써 데이터의 일관성을 확보한다.
@@ -36,6 +39,7 @@ Hui Lin, Jiyang Li, Ramy Hussein, Xin Sui, Xiaoyu Li, Guangpu Zhu, Aggelos K. Ka
 5. **Segmentation**: 학습 시에는 각 신호에서 4초 길이의 세그먼트를 무작위로 추출하여 입력으로 사용하며, 테스트 시에는 전체 신호를 여러 개의 4초 세그먼트로 나누어 예측 확률의 평균값을 최종 예측치로 사용한다.
 
 ### 고혈압 감지 모델
+
 특징 학습을 위해 ResNet 아키텍처를 사용한다. 모델의 구조는 $15 \times 15$ 커널을 가진 초기 컨볼루션 레이어로 시작하여, $3 \times 3$ 컨볼루션 블록으로 구성된 $N$개의 잔차 유닛(Residual units)이 이어진다. 마지막으로 두 개의 완전 연결 계층(Fully Connected layers)을 통해 고혈압 확률(0~1)을 출력한다.
 
 학습을 위한 손실 함수로는 이진 교차 엔트로피(Binary Cross-Entropy, BCE)를 사용하며, 식은 다음과 같다.
@@ -47,12 +51,14 @@ $$L_{CE} = -[G \log P + (1-G) \log(1-P)]$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: HBPM(Home Blood Pressure Monitoring) 데이터셋을 사용하였으며, 448명의 피실험자가 참여하였다.
 - **레이블 기준**: 평균 수축기 혈압(SBP)이 $120 \text{ mmHg}$를 초과하거나 평균 이완기 혈압(DBP)이 $80 \text{ mmHg}$를 초과하는 경우를 '양성(Positive)'으로 정의하였다.
 - **검증 방법**: 5-fold 교차 검증을 수행하였으며, 성능 지표로 Precision, Sensitivity, Specificity, ROC AUC, PR AUC를 사용하였다.
 - **테스트 프로토콜**: 오직 백그라운드 데이터(일상생활 중 연속 측정 데이터)만을 추론에 사용하였으며, 모든 세그먼트에서 예측된 확률의 평균을 통해 피실험자의 고혈압 여부를 판단하였다.
 
 ### 성능 비교 결과
+
 제안된 ResNet-4 모델을 전통적인 머신러닝 모델인 LightGBM 및 Transformer 기반 모델과 비교한 결과는 다음과 같다.
 
 | 모델 | Precision | Sensitivity | Specificity | ROC AUC | PR AUC | 파라미터 수 (MB) |

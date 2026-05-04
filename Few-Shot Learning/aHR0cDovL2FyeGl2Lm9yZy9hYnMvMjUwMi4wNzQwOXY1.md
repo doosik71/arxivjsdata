@@ -17,21 +17,26 @@ Anh-Tien Nguyen et al. (2025)
 ## 🛠️ Methodology
 
 ### 1. Adaptor-based Vision-Text Alignment
+
 본 모델은 Prov-GigaPath의 비전 인코더 $E^I(\cdot)$와 PLIP의 텍스트 인코더 $E^T(\cdot)$를 연결하기 위해 경량 Adaptor $A^I(\cdot)$와 $A^T(\cdot)$를 도입한다. 두 인코더의 출력 차원이 서로 다르므로, Adaptor를 통해 동일한 은닉 차원 $\mathbb{R}^d$로 투영한다. 학습은 약 923K 개의 병리 이미지-텍스트 쌍을 사용하여 Noise Contrastive Loss를 통해 수행하며, 백본 인코더들은 고정(frozen)시킨 채 Adaptor만 학습시켜 파라미터 효율성을 높인다.
 
 $$L_{con} = \mathbb{E}_B \left[ -\log \frac{\exp(\cos(A^I(x_i), A^T(t_i))/\tau)}{\sum_j \exp(\cos(A^I(x_i), A^T(t_j))/\tau)} \right]$$
 
 ### 2. Multi-Magnification Descriptive Text Prompts
+
 병리 전문의의 진단 과정(저배율 $\rightarrow$ 고배율)을 모방하여 저배율($l$)과 고배율($h$) 두 가지 해상도에 대한 텍스트 프롬프트를 구성한다. GPT-4와 같은 LLM을 사용하여 각 클래스에 대한 시각적 설명(context)을 생성하고, 여기에 학습 가능한 $M$개의 프롬프트 토큰 $\omega$를 추가하여 다양한 하위 영역의 패턴을 캡처한다.
 
 ### 3. Granularity-aware Visual Prompt Learning
+
 시각적 프롬프트 $p^v$를 통해 슬라이드 레벨의 표현을 추출하는 과정은 두 가지 입도로 진행된다.
+
 - **Patch-level Attention**: 모든 개별 패치 특징 $H$를 Key-Value로, 학습 가능한 시각적 프롬프트 $p^v$를 Query로 사용하여 패치 간의 상관관계를 계산한다.
   $$p_{v,p}^{(l)} = \text{Normalize} \left( \text{SoftMax} \left( \frac{p_v K_p^{(l)T}}{\sqrt{d}} \right) V_p^{(l)} \right) + p_v$$
 - **Region-level Attention**: 패치들의 좌표를 기반으로 공간 그래프 $G$를 구축하고, Graph Attention Network (GAT)를 통해 인접 패치 간의 메시지 패싱을 수행하여 지역적 구조를 캡처한 super-node 특징을 생성한다. 이후 동일한 어텐션 메커니즘을 적용하여 $p_{v,gr}^{(l)}$를 얻는다.
 - **Fusion**: 최종 시각적 특징은 두 입도의 가중 합으로 결정된다: $p_v^{(l)} = (1-\alpha) \cdot p_{v,p}^{(l)} + \alpha \cdot p_{v,gr}^{(l)}$.
 
 ### 4. Optimal Transport (OT) for Alignment
+
 시각적 요약 임베딩과 텍스트 프롬프트 임베딩 간의 거리를 측정하기 위해 OT 거리를 사용한다. 시각적 특징 집합 $F$와 텍스트 특징 집합 $G$를 각각 이산 확률 분포 $\mu, \nu$로 정의하고, 두 분포 간의 전송 비용을 최소화하는 최적 운송 계획 $T^*$를 찾는다.
 
 $$d_{OT}(\mu, \nu) = \langle T^*, C \rangle$$
@@ -41,21 +46,23 @@ $$d_{OT}(\mu, \nu) = \langle T^*, C \rangle$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: TCGA-NSCLC(폐암), TCGA-RCC(신장암), TCGA-BRCA(유방암) 세 가지 벤치마크를 사용하였다.
 - **비교 대상**: Max/Mean pooling, ABMIL, CLAM, TransMIL 등의 MIL 기반 모델과 CoOp, ViLa-MIL, MSCPT 등의 VLM 기반 모델, 그리고 CONCH, QUILT와 같은 Foundation VLM을 비교 대상으로 설정하였다.
 - **지표**: AUC, F1-score, Accuracy를 측정하였으며, 16-shot 및 Zero-shot 설정에서 평가하였다.
 
 ### 주요 결과
+
 - **Few-shot 성능**: MGPATH(PLIP-G)는 모든 데이터셋에서 기존 MIL 및 VLM 기반 모델들을 압도하였다. 특히 TCGA-BRCA에서 MSCPT(75.82%)와 ViLa-MIL(75.01%)보다 높은 79.56%의 정확도를 달성하였다.
 - **Zero-shot 성능**: Foundation VLM인 CONCH 및 QUILT와 비교했을 때, MGPATH(PLIP-G)가 평균적으로 가장 높은 성능을 보였으며, 이는 대규모 사전 학습 데이터와 다중 입도 프롬프트의 결합이 일반화 성능을 크게 향상시켰음을 시사한다.
 - **Ablation Study**:
-    - **Multi-granular Attention**: 공간적 그룹 어텐션을 제외했을 때 성능이 하락하여, 지역적 구조 캡처의 중요성이 입증되었다.
-    - **OT vs Cosine**: 데이터 증강(augmentation) 적용 시 Cosine similarity는 성능이 급격히 하락한 반면, OT는 강건함을 유지하였다.
-    - **LLM 영향**: Mistral Medium 3가 생성한 텍스트 프롬프트를 사용했을 때 가장 높은 성능을 보여, 정밀한 시각적 묘사가 성능 향상에 핵심적임을 확인하였다.
+  - **Multi-granular Attention**: 공간적 그룹 어텐션을 제외했을 때 성능이 하락하여, 지역적 구조 캡처의 중요성이 입증되었다.
+  - **OT vs Cosine**: 데이터 증강(augmentation) 적용 시 Cosine similarity는 성능이 급격히 하락한 반면, OT는 강건함을 유지하였다.
+  - **LLM 영향**: Mistral Medium 3가 생성한 텍스트 프롬프트를 사용했을 때 가장 높은 성능을 보여, 정밀한 시각적 묘사가 성능 향상에 핵심적임을 확인하였다.
 
 ## 🧠 Insights & Discussion
 
-본 논문은 대규모 비전 모델(Prov-GigaPath)과 텍스트 모델(PLIP)을 효율적으로 결합하고, 병리 이미지의 특성인 '계층적 구조'를 어텐션 메커니즘에 명시적으로 반영함으로써 Few-shot 분류 성능을 극대화하였다. 특히 단순한 특징 추출을 넘어, GAT를 이용한 공간적 관계 모델링과 OT를 이용한 분포 기반 정렬을 도입한 점이 기술적인 강점이다. 
+본 논문은 대규모 비전 모델(Prov-GigaPath)과 텍스트 모델(PLIP)을 효율적으로 결합하고, 병리 이미지의 특성인 '계층적 구조'를 어텐션 메커니즘에 명시적으로 반영함으로써 Few-shot 분류 성능을 극대화하였다. 특히 단순한 특징 추출을 넘어, GAT를 이용한 공간적 관계 모델링과 OT를 이용한 분포 기반 정렬을 도입한 점이 기술적인 강점이다.
 
 다만, OT 계산이 Cosine similarity보다 계산 비용이 높다는 단점이 있으나, 논문에서 제시한 결과에 따르면 정확도 향상 폭이 계산 비용 증가보다 훨씬 크므로 충분한 트레이드오프가 성립한다. 한계점으로는 매우 거대한 이미지 패치를 처리하기 위한 Flash Attention 등의 최적화 기법이 아직 적용되지 않았으며, 분류 작업을 넘어 세그멘테이션(Segmentation)과 같은 더 정밀한 작업으로의 확장 가능성에 대해서는 논의가 부족하다는 점이 있다.
 

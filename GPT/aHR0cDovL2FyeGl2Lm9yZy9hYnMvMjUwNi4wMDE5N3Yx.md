@@ -25,37 +25,47 @@ Xinyue Shen, Yun Shen, Michael Backes, Yang Zhang (2025)
 본 논문은 DSPM의 데이터 중심 접근 방식을 따라 다음과 같은 4단계 워크플로우를 통해 리스크를 평가한다.
 
 ### 1. 데이터 발견 (Data Discovery)
+
 지식 파일이 유출될 수 있는 세 가지 주요 데이터 소스를 정의한다.
+
 - **Metadata**: GPT Store에서 API를 통해 제공되는 JSON 형태의 정보.
 - **Flows**: 사용자와 서버 간의 웹소켓 통신을 통해 전송되는 구조화된 메시지.
 - **Response**: 최종적으로 사용자 인터페이스에 렌더링되는 텍스트 응답.
 
 ### 2. 데이터 분류 (Data Classification)
+
 유출된 데이터의 민감도에 따라 지식 파일 정보를 7가지 차원으로 분류한다: $\text{ID}, \text{type}, \text{count}, \text{size}, \text{title}, \text{content}, \text{original files}$. 이 중 title, content, original files는 가장 민감한 정보로 간주한다.
 
 ### 3. 리스크 평가 (Risk Assessment)
+
 다섯 가지 유출 벡터(Leakage Vector)를 중심으로 취약점을 분석한다.
+
 - **Metadata & GPT Initialization**: 서버 측 필터링 부족으로 인해 API 응답이나 초기화 흐름에서 파일의 ID, 크기, 제목 등이 노출되는 Excessive Information Exposure 문제가 발생한다.
 - **Retrieval**: `myfiles_browser`라는 내장 도구가 시맨틱 검색을 수행할 때, 파일 크기가 작은 순서대로 우선적으로 검색되어 내용이 Flows에 노출되는 특성이 있다. 누적 크기가 약 $100\text{K}$ tokens를 초과하면 이후 파일은 제외되는 경향을 보인다.
 - **Sandboxed Execution Environment (SEE)**: Code Interpreter 활성화 시, 파일이 `/mnt/data` 디렉토리에 저장된다. 기본적으로는 403 에러로 접근이 제한되지만, "파일을 새 파일로 복사하여 다운로드 링크를 생성하라"는 프롬프트를 통해 권한 상승을 유도하여 원본 파일을 다운로드할 수 있다. 이는 전형적인 Broken Access Control 취약점에 해당한다.
 - **Prompt**: 프롬프트를 통해 내용을 유출시키는 기존 방식으로, 모델의 환각으로 인해 정확도가 낮게 나타난다.
 
 ### 4. 완화 (Mitigation)
+
 분석 결과를 바탕으로 빌더와 플랫폼 제공자를 위한 해결책을 제시한다.
+
 - **빌더**: Code Interpreter 비활성화, 명시적인 방어 프롬프트(Defense Prompts) 작성, 또는 실제 파일 업로드 전 무의미한 데이터를 채운 '더미 파일'을 먼저 업로드하여 `myfiles_browser`의 검색 우선순위를 조작하는 방법 등을 제안한다.
 - **플랫폼(OpenAI)**: 클라이언트 측 필터링이 아닌 서버 측에서 데이터를 엄격히 필터링하도록 API를 재설계해야 함을 강조한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 연구팀은 GPT Store의 $651,022$개 GPT 메타데이터, $1,466$개 GPT에서 추출한 $11,820$개의 Flows 및 $1,466$개의 Responses를 분석하였다.
 
 ### 주요 정량적 결과
+
 - **SEE 권한 상승 취약점**: Code Interpreter가 활성화된 GPT의 경우, 원본 파일 다운로드 성공률이 $95.95\%$에 달하였다. 반면, 비활성화된 경우 유출률은 $0.00\%$였다.
 - **저작권 침해 분석**: 유출된 원본 PDF 파일 $566$개를 수동 분석한 결과, $28.80\%$($163$개)가 명백한 저작권 침해 파일이었다. 여기에는 Springer, Elsevier, O’Reilly와 같은 주요 출판사의 도서와 시가 $4$억 달러 규모 상장사의 내부 연례 보고서 등이 포함되었다.
 - **프롬프트 기반 유출 정확도**: Code Interpreter 활성화 시 프롬프트 기반 추출의 정확도는 $0.842$였으나, 비활성화 시 $0.654$로 크게 떨어졌다. 이는 모델의 환각 현상이 유출 결과에 영향을 미침을 시사한다.
 
 ### 정성적 결과
+
 `myfiles_browser`를 통한 유출은 파일 크기에 매우 의존적이며, 작은 파일들이 우선적으로 유출되는 패턴이 확인되었다. 또한, 일부 빌더가 적용한 방어 프롬프트는 특정 조건에서만 작동하거나 완전히 무력화되는 경우가 많아, 단순한 지침보다는 시스템 레벨의 제어가 필수적임을 보여주었다.
 
 ## 🧠 Insights & Discussion

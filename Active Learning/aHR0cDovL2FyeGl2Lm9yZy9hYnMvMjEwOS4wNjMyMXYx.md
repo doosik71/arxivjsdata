@@ -13,6 +13,7 @@ Ranganath Krishnan, Alok Sinha, Nilesh Ahuja, Mahesh Subedar, Omesh Tickoo, Ravi
 본 논문의 핵심 아이디어는 신경망이 학습한 **특징 표현(Feature Representation)**을 활용하여, 정보량이 많으면서도 특징 공간 상에서 다양하게 분포된 샘플을 선택함으로써 샘플링 편향을 완화하는 것이다.
 
 이를 위해 저자들은 다음 두 가지 핵심 방법론을 제안한다:
+
 1. **Supervised Contrastive Active Learning (SCAL)**: 지도 학습 설정에서의 대조 학습(Contrastive Learning) 손실 함수를 도입하여 특징 공간 상에서 동일 클래스는 가깝게, 서로 다른 클래스는 멀게 배치함으로써 더 정교한 특징 표현을 학습하고, 이를 기반으로 편향되지 않은 샘플을 쿼리한다.
 2. **Deep Feature Modeling (DFM)**: 클래스 조건부 PCA(Principal Component Analysis)를 활용하여 특징 재구성 오차(Feature Reconstruction Error)가 큰 샘플을 선택함으로써 데이터의 다양성을 확보한다.
 
@@ -25,9 +26,11 @@ Ranganath Krishnan, Alok Sinha, Nilesh Ahuja, Mahesh Subedar, Omesh Tickoo, Ravi
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인 및 문제 정의
+
 다중 클래스 분류 문제에서 초기에는 무작위로 샘플링된 작은 크기의 레이블 데이터셋 $D_L^1$로 모델을 학습시킨다. 이후 쿼리 전략(Query Strategy) $Q$를 통해 나머지 미레이블 데이터셋 $D_U$에서 가장 정보량이 많은 $M$개의 샘플을 선택하여 레이블을 추가하고 모델을 재학습하는 사이클을 반복한다.
 
 ### 2. Supervised Contrastive Active Learning (SCAL)
+
 SCAL은 지도 대조 학습 손실 함수를 사용하여 모델이 더 유용한 특징 표현을 학습하도록 유도한다.
 
 **손실 함수:**
@@ -41,6 +44,7 @@ $$S_{score}(x) := \max_{z(x' | y' = c_k)} \frac{z(x' | y' = c_k) \cdot z(x | y =
 각 클래스 $c_k$에 대해 위 점수가 가장 낮은 샘플들을 균등하게 선택하여 클래스 간 균형을 맞추고 샘플링 편향을 줄인다.
 
 ### 3. Deep Feature Modeling (DFM)
+
 DFM은 클래스 조건부 확률 분포를 학습하여 OOD 샘플을 탐지하는 기법을 능동 학습의 샘플 선택에 응용한다.
 
 **방법론:**
@@ -51,12 +55,14 @@ $$S_{FRE}(z | y = c_k) = \|z - (T_k^\dagger \circ T_k)(z)\|^2$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: CIFAR-10, Fashion-MNIST, SVHN
 - **모델**: ResNet-18
 - **비교 대상**: CoreSet, Learning Loss, BALD, Random, Entropy
 - **지표**: 테스트 정확도, 샘플링 편향(Sampling Bias), 예상 교정 오차(ECE), 쿼리 시간, AUROC (OOD 탐지 성능)
 
 ### 주요 결과
+
 1. **정확도 및 샘플링 편향**: SCAL은 초기 학습 사이클에서 다른 방법들보다 빠르게 정확도를 높였으며, 특히 Fashion-MNIST와 SVHN에서 최적의 최종 정확도를 달성하였다. 제안 방법들(SCAL, DFM)은 기존 방식들보다 샘플링 편향(클래스 불균형)을 유의미하게 낮추었으며, 특히 불균형 데이터셋인 SVHN에서 효과가 뚜렷하였다.
 2. **쿼리 시간**: SCAL의 쿼리 계산 속도는 BALD보다 26배, CoreSet보다 11배 빨랐다. 이는 실용적인 관점에서 매우 큰 이점이다.
 3. **모델 교정(Calibration)**: BALD가 가장 낮은 ECE를 기록하며 최고의 교정 성능을 보였으나, SCAL 역시 매우 낮은 쿼리 시간으로 BALD에 근접하는 우수한 교정 성능을 보였다.

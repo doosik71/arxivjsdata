@@ -4,7 +4,7 @@ Yu Xi, Haoyu Li, Hao Li, Jiaqi Guo, Xu Li, Wen Ding, Kai Yu (2024)
 
 ## 🧩 Problem to Solve
 
-본 논문은 저리소스 컴퓨팅 플랫폼에 배포되는 소형 Connectionist Temporal Classification (CTC) 기반 키워드 검출(Keyword Spotting, KWS) 시스템의 노이즈 강건성 문제를 해결하고자 한다. 
+본 논문은 저리소스 컴퓨팅 플랫폼에 배포되는 소형 Connectionist Temporal Classification (CTC) 기반 키워드 검출(Keyword Spotting, KWS) 시스템의 노이즈 강건성 문제를 해결하고자 한다.
 
 기존의 CTC-KWS 시스템은 복잡한 음향 환경, 특히 신호 대 잡음비(Signal-to-Noise Ratio, SNR)가 매우 낮은 환경에서 성능이 급격히 저하되는 경향이 있다. 이는 강한 노이즈 에너지가 키워드 음성의 일부를 가리거나(masking), 불필요한 음성 성분을 삽입하여 모델이 노이즈를 키워드로 오인하게 만들기 때문이다. 결과적으로 이는 높은 오경보율(False Alarm Rate)과 낮은 재현율(Recall)이라는 문제로 이어진다. 따라서 본 연구의 목표는 매우 낮은 SNR 환경에서도 강건하게 동작하는 Noise-aware CTC (NTC-KWS) 프레임워크를 제안하는 것이다.
 
@@ -26,12 +26,14 @@ KWS의 노이즈 강건성을 높이기 위한 기존의 접근 방식은 크게
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 시스템 구조
+
 본 시스템은 DFSMN(Deep Feedforward Sequential Memory Network)을 인코더로 사용하며, CTC 손실 함수를 통해 학습된다. 핵심은 WFST 기반의 디코딩 그래프 구성 요소인 $T$(병합), $L$(사전), $G$(문법) 중 $G$를 수정하여 NTC-KWS 전용 검색 공간을 구축하는 것이다.
 
 ### 주요 구성 요소 및 Noise-aware 모델링
+
 NTC-KWS는 학습과 추론 과정 모두에 두 가지 와일드카드 토큰(@, *)을 도입한다.
 
-1. **와일드카드 사후 확률 계산**: 
+1. **와일드카드 사후 확률 계산**:
    와일드카드 토큰 @와 *의 사후 확률은 블랭크($\phi$)를 제외한 모든 CTC 어휘집($V_{ctc}$) 토큰들의 평균 확률로 계산한다.
    $$\text{P}(\pi_i(@)|x_i) = \text{P}(\pi_i(*)|x_i) = \frac{\sum_{j \in V_{ctc}/\{\phi\}} \text{P}(\pi_i(j)|x_i)}{\text{len}(V_{ctc}/\{\phi\})}$$
 
@@ -45,12 +47,14 @@ NTC-KWS는 학습과 추론 과정 모두에 두 가지 와일드카드 토큰(@
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: LibriSpeech(사전 학습), Hey Snips(KWS 타겟), WHAM!(노이즈 합성)을 사용한다.
 - **SNR 조건**: $0, 5, 10, 15, 20$ dB 및 극한 환경인 $-5$ dB 환경에서 평가한다.
 - **비교 대상**: SOTA End-to-End(E2E) 시스템(WeKws 등) 및 표준 CTC-KWS 베이스라인과 비교한다.
 - **측정 지표**: 특정 오경보율(FAR = 0.05, 0.5, 1.0 per hour)에서의 재현율(Recall)을 측정한다.
 
 ### 주요 결과
+
 1. **Clean 데이터 성능**: Clean Hey Snips 데이터셋에서 NTC-KWS는 기존 SOTA E2E 시스템과 대등하거나 이를 능가하는 성능을 보였다. 특히 엄격한 조건인 $\text{FAR} = 0.05/\text{hr}$에서 베이스라인 대비 9% 이상의 절대적인 재현율 향상을 보였다.
 2. **노이즈 강건성**:
    - NTC-KWS 프레임워크는 모든 SNR 수준에서 표준 CTC-KWS 대비 평균 4.9%의 재현율 향상을 달성했다.

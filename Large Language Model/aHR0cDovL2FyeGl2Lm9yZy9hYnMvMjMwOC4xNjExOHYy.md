@@ -27,17 +27,20 @@ Damian Hodel and Jevin West (2024)
 저자들은 GPT-3의 일반화 능력을 테스트하기 위해 기존의 'Letter String Analogy(문자열 유추)' 과제를 다음과 같이 수정하여 실험을 진행하였다.
 
 ### 1. 실험 설계 및 변수 도입
-- **합성 알파벳 (Synthetic Alphabet):** 표준 알파벳 순서를 무작위로 섞은 가상의 알파벳을 정의하고, 모델과 피실험자에게 이를 먼저 제시한다. 
+
+- **합성 알파벳 (Synthetic Alphabet):** 표준 알파벳 순서를 무작위로 섞은 가상의 알파벳을 정의하고, 모델과 피실험자에게 이를 먼저 제시한다.
   - 예: "Use this fictional alphabet: $[x\ y\ l\ k\ w\ b\ f\ z\ t\ n\ j\ r\ q\ a\ h\ v\ g\ m\ u\ o\ p\ d\ i\ c\ s\ e]$"
 - **간격 확대 (Increased Interval Size):** 문자의 변화가 일어나는 간격을 1에서 2로 늘려, 모델이 단순히 입력된 시퀀스를 그대로 복제하는 것을 방지한다.
 - **과제 유형:** 'Extend sequence', 'Successor', 'Predecessor', 'Remove redundant letter', 'Fix alphabetic sequence', 'Sort' 등 6가지 유형의 과제를 수행한다.
 
 ### 2. 비교 대상 및 절차
+
 - **모델:** GPT-3 (`text-davinci-003`, temperature=0).
 - **인간 피실험자:** 워싱턴 대학교(UW) 학부생 121명을 대상으로 온라인 실험을 진행하여 기준선(Baseline)을 설정하였다.
 - **검증 절차 (Counterfactual Comprehension Check):** 모델이 단순히 새로운 알파벳 체계에 당황한 것인지 확인하기 위해, 알파벳은 바꾸되 간격은 유지하거나, 알파벳은 그대로 두고 프롬프트 형식만 바꾸는 등의 대조군 실험을 병행하였다.
 
 ### 3. 평가 지표
+
 - 각 문제 유형당 50개의 인스턴스를 생성하여 정답률(Accuracy)을 측정하였다.
 
 ## 📊 Results
@@ -45,10 +48,10 @@ Damian Hodel and Jevin West (2024)
 실험 결과, GPT-3와 인간의 성능 차이는 극명하게 나타났다.
 
 - **인간의 성능:** 표준 알파벳, 간격 수정, 합성 알파벳 적용 여부와 관계없이 모든 조건에서 일관되게 높은 정답률을 유지하였다. 이는 수정된 문제들이 인간에게는 여전히 쉬운 수준임을 의미한다.
-- **GPT-3의 성능:** 
-    - 표준 알파벳 조건에서는 높은 성능을 보였으나, **합성 알파벳과 간격 수정이 동시에 적용된 조건에서는 성능이 급격히 하락**하였다.
-    - 특히 'Extend sequence', 'Successor', 'Predecessor', 'Fix alphabetic sequence' 과제에서는 정답률이 $0.1$ 미만으로 떨어졌다.
-    - 반면, 'Remove redundant letter'와 'Sort' 과제에서는 상대적으로 높은 성능을 유지했는데, 이는 해당 과제들이 전체 알파벳 순서를 알 필요 없이 주어진 문자 내에서 중복을 제거하거나 재배열만 하면 되기 때문으로 분석된다.
+- **GPT-3의 성능:**
+  - 표준 알파벳 조건에서는 높은 성능을 보였으나, **합성 알파벳과 간격 수정이 동시에 적용된 조건에서는 성능이 급격히 하락**하였다.
+  - 특히 'Extend sequence', 'Successor', 'Predecessor', 'Fix alphabetic sequence' 과제에서는 정답률이 $0.1$ 미만으로 떨어졌다.
+  - 반면, 'Remove redundant letter'와 'Sort' 과제에서는 상대적으로 높은 성능을 유지했는데, 이는 해당 과제들이 전체 알파벳 순서를 알 필요 없이 주어진 문자 내에서 중복을 제거하거나 재배열만 하면 되기 때문으로 분석된다.
 - **검증 결과:** Counterfactual comprehension check 결과, GPT-3는 합성 알파벳 지침 자체는 처리할 수 있는 능력이 있음이 확인되었다. 즉, 성능 하락은 지침 이해의 문제가 아니라 유추 추론 능력의 부재에서 기인한 것이다.
 
 ## 🧠 Insights & Discussion

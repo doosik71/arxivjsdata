@@ -6,7 +6,7 @@ Yichi Zhang, Qingcheng Liao, Le Ding, Jicong Zhang (2022)
 
 본 논문은 의료 영상 분석에서 핵심적인 volumetric medical image segmentation(체적 의료 영상 분할)의 효율성과 정확도 사이의 트레이드오프 문제를 해결하고자 한다. MRI나 CT와 같은 의료 영상은 본질적으로 3D 데이터이다. 이를 처리하기 위해 기존에는 두 가지 극단적인 접근 방식이 사용되었다.
 
-첫째, 3D 데이터를 2D 슬라이스로 나누어 처리하는 2D CNN 방식은 연산 비용이 낮고 추론 속도가 빠르지만, 인접 슬라이스 간의 공간적 정보(inter-slice information)를 무시하므로 분할 정확도가 떨어지며 3D 공간 상에서 결과가 불연속적으로 나타나는 문제가 있다. 
+첫째, 3D 데이터를 2D 슬라이스로 나누어 처리하는 2D CNN 방식은 연산 비용이 낮고 추론 속도가 빠르지만, 인접 슬라이스 간의 공간적 정보(inter-slice information)를 무시하므로 분할 정확도가 떨어지며 3D 공간 상에서 결과가 불연속적으로 나타나는 문제가 있다.
 
 둘째, 3D convolution을 사용하는 3D CNN 방식은 체적 공간 정보를 충분히 활용하여 정확도가 높지만, 연산 비용과 추론 시간이 매우 높고 파라미터 수가 많아 데이터셋이 작은 의료 영상 분야에서 overfitting(과적합) 위험이 크다는 단점이 있다. 또한, 높은 GPU 메모리 요구량은 실제 임상 적용에 큰 걸림돌이 된다.
 
@@ -33,18 +33,22 @@ Yichi Zhang, Qingcheng Liao, Le Ding, Jicong Zhang (2022)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 백본
+
 본 연구는 공정한 비교를 위해 모든 실험에서 $\text{U-Net}$을 기본 백본으로 사용하였다. 2D CNN의 경우 2D U-Net을, 3D CNN의 경우 3D U-Net을 적용하였으며, 기본 convolution 블록의 feature map 수는 8개로 설정하였다.
 
 ### 학습 절차 및 손실 함수
+
 - **최적화**: Adam optimizer를 사용하였으며, 초기 learning rate는 $0.001$로 설정하고 20 epoch 동안 loss 개선이 없을 시 $0.5$배씩 감소시켰다.
 - **손실 함수**: 영역의 일치도를 높이는 $\text{Dice loss}$와 픽셀 단위 분류를 위한 $\text{Cross-entropy loss}$를 결합하여 사용하였다.
 $$\text{Loss} = \text{Cross-Entropy Loss} + \text{Dice Loss}$$
 
 ### 평가 지표
+
 - **Dice Coefficient (DSC)**: 분할 결과와 ground truth 간의 영역 중첩도를 측정하며, 1에 가까울수록 성능이 좋다.
 - **95% Hausdorff Distance (95HD)**: 경계선 간의 최대 거리 중 상위 5%를 제외한 값으로, 경계 오류를 측정하며 0에 가까울수록 성능이 좋다.
 
 ### 실험 설계
+
 1. **Multi-view Fusion 실험**: 서로 다른 평면(S, C, A)의 결과와 이를 $\text{Majority Voting (MV)}$, $\text{Weighted Voting (WV)}$, $\text{VFN}$으로 융합한 결과를 비교한다.
 2. **Inter-slice Information 실험**: 입력 슬라이스 수(1, 3, 5, 7개)에 따른 변화를 측정하고, $\text{RNN}$, $\text{Attention (Shape/Border)}$ 방식의 효율성을 비교한다.
 3. **2D/3D Feature Fusion 실험**: 융합 단계(Encoder vs Output)와 융합 방법($\text{Add}$ vs $\text{Squeeze-and-Excitation}$)에 따른 성능을 비교한다.
@@ -52,23 +56,29 @@ $$\text{Loss} = \text{Cross-Entropy Loss} + \text{Dice Loss}$$
 ## 📊 Results
 
 ### 1. Multi-view Fusion 결과
+
 Cardiac MRI와 Spleen CT에서는 MVF가 단순 2D보다 성능이 좋았으며, 특히 VFN을 사용했을 때 가장 높은 성능을 보였다. 그러나 Prostate MRI와 같이 $\text{Anisotropic}$한 데이터에서는 일부 평면(S, C)의 2D 결과가 매우 좋지 않아 단순 MV는 오히려 성능이 떨어졌다. 이를 보완하기 위해 해상도가 높은 단축 슬라이스(short-axis)에 가중치를 주는 $\text{Weighted Voting (WV)}$이 효과적임을 확인하였다.
 
 ### 2. Inter-slice Information 결과
+
 인접 슬라이스를 추가 입력으로 사용하는 경우, 1개보다 3개를 사용할 때 성능이 향상되었으나 5개 이상부터는 오히려 성능이 정체되거나 하락하였다. 이는 너무 많은 인접 슬라이스가 오히려 노이즈로 작용하거나 불필요한 연산을 증가시키기 때문으로 분석된다. $\text{RNN}$ 및 $\text{Attention}$ 기반 방법들은 단순 multi-slice 입력보다 우수하였으며, 특히 **Prostate MRI에서는 모든 2.5D 방법론이 3D U-Net보다 높은 성능**을 기록하였다.
 
 ### 3. 2D/3D Feature Fusion 결과
+
 모든 융합 방법이 단일 2D CNN보다는 우수한 성능을 보였다. Cardiac MRI의 경우 Output 단계에서의 융합이 효과적이었으나, 다른 데이터셋에서는 결과가 가변적이었다. 전반적으로 Encoder 단계에서의 융합이 연산 비용 대비 효율적인 특성 추출을 가능하게 하였다.
 
 ### 4. 모델 복잡도 비교
+
 실험 결과, 모든 2.5D 방법론은 3D CNN에 비해 파라미터 수와 학습 시간이 현저히 적었다. 3D U-Net의 파라미터 수는 $1.403\text{M}$이며 학습 시간이 2D 대비 $4.14\text{x}$ 높았던 반면, 2.5D 방법들은 대부분 $0.5\text{M}$ 내외의 파라미터와 $1.1\text{x} \sim 2.3\text{x}$ 수준의 학습 시간만을 소모하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 핵심 발견
+
 본 논문은 3D CNN이 항상 최선의 선택이 아님을 입증하였다. 특히 **Anisotropic volumetric images**의 경우, z축 해상도가 낮아 3D convolution 과정에서 downsampling이 일어날 때 중요한 정보가 손실될 위험이 크다. 이 경우 2.5D 방법론이 3D CNN보다 더 정확한 분할 결과를 낼 수 있으며, 연산 효율성까지 챙길 수 있다는 점이 핵심적인 통찰이다.
 
 ### 한계점 및 비판적 해석
+
 - **백본의 제한**: 모든 실험이 U-Net 기반으로 진행되었기에, 최신 Transformer 기반 구조나 다른 아키텍처에서도 동일한 경향성이 나타날지는 미지수이다.
 - **재현성의 한계**: 저자들은 모든 방법론을 완벽하게 재현했다고 주장하기 어렵다고 명시하였으며, 하이퍼파라미터 튜닝의 영향이 결과에 포함되었을 가능성이 있다.
 - **데이터셋 규모**: 3개의 데이터셋만으로 모든 의료 영상의 특성을 일반화하기에는 다소 부족함이 있다.

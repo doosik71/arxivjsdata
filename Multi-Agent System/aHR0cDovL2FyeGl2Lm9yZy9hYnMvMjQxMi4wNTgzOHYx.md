@@ -13,6 +13,7 @@ Aniruddha Salve, Mahesh Deshmukh, Saba Attar, Sayali Shivpuje, Arnab Mitra Utsab
 본 연구의 중심 아이디어는 **'역할의 분리 및 전문화(Specialization)'**이다. 모든 과정을 하나의 LLM이 수행하는 대신, 각 데이터베이스 타입에 특화된 전문 에이전트들이 쿼리 생성만을 담당하게 하고, 실행과 합성은 별도의 모듈이 처리하도록 설계하였다.
 
 주요 기여 사항은 다음과 같다.
+
 - **데이터베이스별 특화 에이전트 설계**: MySQL(관계형), MongoDB(문서형), Neo4j(그래프) 등 각 DB의 문법과 구조에 최적화된 전문 에이전트를 도입하였다.
 - **중앙 집중형 쿼리 실행 환경(Centralized Query Execution Environment)**: 에이전트가 직접 데이터를 가져오는 것이 아니라, 생성된 쿼리를 중앙 실행 환경으로 전달하여 호환성 문제를 해결하고 파이프라인을 단순화하였다.
 - **모듈형 협업 워크플로우**: 쿼리 생성 $\rightarrow$ 실행 $\rightarrow$ 응답 합성의 단계를 분리하여, 각 단계에서 필요한 토큰 사용량을 최소화하고 확장성을 확보하였다.
@@ -31,6 +32,7 @@ Aniruddha Salve, Mahesh Deshmukh, Saba Attar, Sayali Shivpuje, Arnab Mitra Utsab
 본 시스템은 사용자의 자연어 쿼리를 최종 응답으로 변환하기 위해 세 가지 주요 단계로 구성된 파이프라인을 따른다.
 
 ### 1. 쿼리 생성 단계 (Query Generation Phase)
+
 사용자의 쿼리 $Q_{user}$가 입력되면, 시스템은 먼저 데이터 소스 타입을 식별하고 해당 타입에 맞는 전문 에이전트를 할당한다. 각 에이전트는 해당 DB의 스키마 $S_{schema}$와 Few-shot 프롬프트를 사용하여 최적화된 쿼리 $Q_{generated}$를 생성한다. 이때 생성 과정은 다음과 같은 함수로 표현된다.
 
 $$Q_{generated} = f_{agent}(Q_{user}, S_{schema})$$
@@ -38,11 +40,13 @@ $$Q_{generated} = f_{agent}(Q_{user}, S_{schema})$$
 각 에이전트(MySQL, MongoDB, Neo4j 등)는 자신에게 할당된 전용 스키마와 예시만을 참조하므로 토큰 소모를 줄이고 정확도를 높일 수 있다.
 
 ### 2. 쿼리 실행 단계 (Query Execution Phase)
+
 생성된 쿼리는 중앙의 쿼리 실행 환경(Query Execution Environment)으로 전달된다. 이 환경은 다양한 DB 드라이버(JDBC, MongoDB Driver, Neo4j Driver 등)를 보유하고 있어 Polyglot data environment를 지원한다. 실행 함수 $g_{db}$는 생성된 쿼리와 DB 연결 정보 $D_{connection}$을 사용하여 실제 결과 값 $R_{query}$를 반환한다.
 
 $$R_{query} = g_{db}(Q_{generated}, D_{connection})$$
 
 ### 3. 응답 생성 단계 (Response Generation Phase)
+
 마지막으로 생성 에이전트(Generative Agent)가 원래의 사용자 쿼리 $Q_{user}$와 리트리벌된 데이터 $R_{query}$를 결합하여 최종 응답 $A_{response}$를 합성한다.
 
 $$A_{response} = h_{gen}(Q_{user}, R_{query})$$
@@ -50,6 +54,7 @@ $$A_{response} = h_{gen}(Q_{user}, R_{query})$$
 이 단계에서는 원본 데이터의 단순 나열이 아니라, 사용자가 이해하기 쉬운 형태(텍스트, 표, 그래프 등)로 문맥에 맞게 재구성하는 역할을 수행한다.
 
 ### 에이전트 전문화 (Agent Specialization)
+
 시스템의 확장성을 위해 데이터 타입 $D_{data type}$과 에이전트 타입 $A_{agent type}$ 사이의 관계를 정의하는 전문화 함수 $f_{specialization}$을 도입하여, 새로운 데이터 소스가 추가될 때 새로운 에이전트만 추가하면 되도록 설계하였다.
 
 $$S_{agent} = f_{specialization}(D_{data type}, A_{agent type})$$
@@ -59,6 +64,7 @@ $$S_{agent} = f_{specialization}(D_{data type}, A_{agent type})$$
 본 논문에서는 제안하는 시스템의 구조적 이점과 이론적 배경을 상세히 설명하고 있으나, **구체적인 실험 데이터셋, 벤치마크 점수, 혹은 정량적인 성능 지표(예: 정확도 % 증가, Latency ms 감소 등)에 대한 실제 결과 값은 명시되어 있지 않다.**
 
 대신, 논문은 'Literature Gap Analysis' 표(Table 2)를 통해 단일 에이전트 RAG와 멀티 에이전트 RAG의 특성을 비교하며, 다음과 같은 정성적 이점을 주장한다.
+
 - **토큰 효율성**: 분산 처리를 통해 개별 쿼리의 토큰 사용량을 줄일 수 있다.
 - **확장성**: 새로운 DB 타입이 추가되어도 시스템 전체를 수정할 필요 없이 전용 에이전트만 추가하면 된다.
 - **정확도**: 전문 에이전트가 특정 DB 문법에만 집중함으로써 쿼리 생성 오류를 줄일 수 있다.
@@ -66,9 +72,11 @@ $$S_{agent} = f_{specialization}(D_{data type}, A_{agent type})$$
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 논문은 기업 환경에서 흔히 발생하는 '폴리글랏 데이터 저장소(Polyglot Data Stores)' 문제를 LLM의 에이전트 구조로 영리하게 해결하였다. 특히 쿼리 생성과 실행을 분리함으로써 LLM이 직접 DB에 접근하며 발생할 수 있는 보안 리스크나 연결 관리 문제를 중앙 실행 환경에서 통제할 수 있게 한 점이 돋보인다.
 
 ### 한계 및 미해결 질문
+
 1. **정량적 검증 부족**: 제안된 아키텍처가 실제로 단일 에이전트 방식보다 얼마나 더 정확한지, 혹은 토큰 비용을 얼마나 절감했는지에 대한 실험적 증거가 부족하여 이론적 제안 수준에 머물러 있다.
 2. **에이전트 간 통신**: 현재의 워크플로우는 순차적(Sequential)이다. 만약 하나의 질문에 답하기 위해 여러 DB에서 데이터를 동시에 가져와 조합해야 하는 'Cross-domain query'가 발생할 경우, 에이전트 간의 협업 및 데이터 통합 프로세스가 어떻게 작동할지에 대한 상세 설명이 부족하다.
 3. **오류 처리**: Fallback 메커니즘이 언급되었으나, 쿼리 생성 오류 발생 시 어떤 구체적인 로직으로 이를 복구하는지에 대한 상세 알고리즘이 제시되지 않았다.

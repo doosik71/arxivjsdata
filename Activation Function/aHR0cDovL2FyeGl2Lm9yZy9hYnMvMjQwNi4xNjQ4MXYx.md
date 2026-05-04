@@ -7,6 +7,7 @@ Johannes Pöppelbaum, Andreas Schwung (2024)
 본 논문은 Quaternion Neural Networks (QNN)에서 사용되는 활성화 함수(Activation Function)의 설계 문제를 다룬다. 현재 대다수의 QNN은 실수부와 세 개의 허수부에 기존의 실수 기반 활성화 함수(예: ReLU, Tanh)를 각각 적용하는 **Split Activation (Element-wise Activation)** 방식을 사용하고 있다.
 
 이러한 접근 방식은 다음과 같은 심각한 문제점을 가진다.
+
 1. **$\mathbb{H}$-공간의 무시**: 쿼터니언 공간 $\mathbb{H}$를 단순히 $\mathbb{R}^4$로 취급하여, 쿼터니언 고유의 수학적 특성을 반영하지 못한다.
 2. **기하학적 해석의 부재**: 분리 적용 방식은 쿼터니언의 기하학적 의미(회전, 크기 등)를 해석하기 어렵게 만든다.
 3. **상호관계 상실**: QNN의 핵심 강점은 쿼터니언 구성 요소 간의 상호관계를 활용하는 것인데, split activation은 이를 완전히 무시한다.
@@ -18,6 +19,7 @@ Johannes Pöppelbaum, Andreas Schwung (2024)
 본 논문의 핵심 아이디어는 쿼터니언의 **극좌표 표현(Polar Representation)**을 활용하여, 쿼터니언의 **크기(Magnitude)** 또는 **위상(Phase)**만을 수정함으로써 비선형성을 도입하는 것이다.
 
 주요 기여 사항은 다음과 같다.
+
 - **새로운 쿼터니언 활성화 함수 제안**: 쿼터니언의 모든 구성 요소를 계산에 참여시키며 $\mathbb{H}$-공간의 특성을 존중하는 활성화 함수들을 설계하였다.
 - **GHR Calculus 기반의 기울기 분석**: 제안된 함수들의 미분을 분석하여, 특히 위상을 수정하는 함수들이 입력 범위 전반에서 높은 민감도를 가지며 gradient flow를 개선함을 증명하였다.
 - **위상 정의에 따른 성능 비교**: 실수부와 허수 벡터 사이의 각도($\psi$)와 단위 쿼터니언의 회전각($\theta$) 두 가지 정의를 비교하여 최적의 설정을 탐색하였다.
@@ -26,6 +28,7 @@ Johannes Pöppelbaum, Andreas Schwung (2024)
 ## 📎 Related Works
 
 기존의 활성화 함수 연구는 크게 세 단계로 발전해 왔다.
+
 1. **실수 기반 활성화**: Step $\rightarrow$ Sigmoid/Tanh $\rightarrow$ ReLU $\rightarrow$ LeakyReLU/ELU 순으로 발전하며 vanishing gradient 문제 해결과 학습 속도 개선에 집중하였다.
 2. **복소수 기반 활성화**: 실수 기반 함수를 각 요소에 적용하는 방식과, 복소수의 극좌표 표현(크기와 위상)을 활용하여 비선형성을 주는 방식이 공존한다.
 3. **쿼터니언 기반 활성화**: 대부분 split activation을 사용하고 있으며, 일부 연구에서 쿼터니언 특성을 활용하려 했으나 특수한 학습 규칙이 필요하거나 특이점(Singularity)이 발생하는 한계가 있었다.
@@ -35,25 +38,32 @@ Johannes Pöppelbaum, Andreas Schwung (2024)
 ## 🛠️ Methodology
 
 ### 쿼터니언 기초 및 극좌표 표현
+
 쿼터니언 $q$는 $q = q_0 + q_1i + q_2j + q_3k$로 표현되며, 이를 극좌표 형태로 나타내면 다음과 같다.
 $$z = \|z\|(\cos \psi + n \sin \psi) = \|z\| e^{n\psi}$$
 여기서 $\|z\|$는 크기, $\psi$는 위상(Phase), $n$은 단위 허수 벡터(Rotation axis)이다.
 
 ### 활성화 함수 설계 기준
+
 저자들은 좋은 쿼터니언 활성화 함수가 갖추어야 할 8가지 기준을 정의하였다.
+
 - **일반 기준**: 충분한 비선형성, 미분 가능성, 최대화된 민감도를 통한 적절한 gradient flow.
 - **쿼터니언 특화 기준**: 모든 구성 요소의 활용, 구성 요소 간 비율 보존(크기 수정 시) 또는 크기 보존(위상 수정 시), 기하학적 해석 가능성, 임의의 QNN 아키텍처 적용 가능성.
 
 ### 제안하는 활성화 함수
 
 #### 1. 크기 수정 함수 (Magnitude-affecting)
+
 위상은 유지하고 크기 $\|z\|$에만 비선형성을 적용한다. 이는 구성 요소 간의 비율을 보존한다.
+
 - **Normalization**: $\phi_N(z) = \frac{z}{\|z\|}$. 출력을 단위 쿼터니언으로 매핑하여 다음 레이어의 입력 범위를 일정하게 유지한다.
 - **MagnitudeTanh**: $\phi_{MT}(z) = \tanh(\|z\|) e^{n\psi}$. 크기에 Tanh를 적용하여 bounded한 출력을 생성한다.
 - **Quaternion Cardioid**: $\phi_{Cd}(z) = \frac{1}{2}(1 + \cos \psi)z$. 위상을 이용해 크기를 조절하며, 허수부가 0일 때 일반 ReLU와 동일하게 작동하는 unbounded 함수이다.
 
 #### 2. 위상 수정 함수 (Phase-affecting)
+
 크기는 유지하고 위상 $\psi$를 수정한다. 이는 크기 감쇠(Damping) 없이 비선형성을 도입할 수 있다.
+
 - **PhaseTanh / PhaseTanhshrink**: $\psi$에 $\tanh$ 또는 $\psi - \tanh(\psi)$를 적용한다.
 - **Scaled Phase versions**: Tanh 결과값이 $[0, \pi]$ 범위에 못 미치는 문제를 해결하기 위해 $\frac{\pi}{\tanh(\pi)}$ 등의 계수를 곱해 범위를 확장한다.
 - **PhaseSin**: 계산 효율성을 위해 $\sin$을 활용하며, 다음과 같이 단순화된 Cartesian 표현이 가능하다.
@@ -61,17 +71,20 @@ $$\phi_{PS}(z) = \|z\| \left( \cos \left( \frac{\| \mathbf{z} \|}{\| z \|} \righ
 (여기서 $\mathbf{z}$는 쿼터니언의 허수 벡터 부분이다.)
 
 ### 미분 및 Gradient 분석
+
 GHR Calculus를 사용하여 각 함수의 미분을 계산하였다. 분석 결과, 위상 수정 함수들은 입력 범위 전반에서 기울기가 0으로 수렴하지 않고 일정하게 유지되는 특성을 보였다. 이는 vanishing gradient 문제에 매우 강하며, 학습 안정성을 높일 수 있음을 시사한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: CIFAR-10, SVHN.
 - **모델**: QVGG-S (소규모, 0.33M 파라미터), QVGG11, QVGG16.
 - **입력 방식**: RGB 채널을 쿼터니언의 $i, j, k$ 부분에 할당하고 실수부는 0으로 설정.
 - **지표**: Mean Accuracy 및 Max Accuracy.
 
 ### 주요 결과
+
 1. **성능 우위**: 제안된 쿼터니언 활성화 함수들이 기존의 Split-ReLU 및 Split-Tanh보다 일관되게 높은 성능을 보였다.
 2. **위상 수정 함수의 압도적 성능**: 특히 `PhaseSin`과 `ScaledPhaseTanh`가 가장 우수한 성능을 기록하였다. CIFAR-10(QVGG-S)에서 `PhaseSin`은 평균 82.649%의 정확도를 달성하여 Split-ReLU(76.097%)를 크게 상회하였다.
 3. **강건성(Robustness)**: SVHN 데이터셋의 깊은 모델(QVGG11, 16)에서 Split-ReLU/Tanh는 학습 붕괴(Collapsing) 현상이 빈번했으나, 위상 수정 함수들은 매우 안정적인 학습 곡선을 보였다.
@@ -81,11 +94,13 @@ GHR Calculus를 사용하여 각 함수의 미분을 계산하였다. 분석 결
 ## 🧠 Insights & Discussion
 
 ### 분석 및 해석
+
 - **성능 차이의 원인**: 위상 수정 함수들이 우수한 이유는 **기준 3(Gradient Flow)**과 **기준 4(모든 성분 활용)**를 동시에 충족하기 때문이다. 크기 수정 함수는 saturation-like 효과가 나타나는 반면, 위상 수정 함수는 magnitude를 보존하면서 위상 공간에서 비선형성을 생성하므로 vanishing gradient 문제에서 자유롭다.
 - **트레이드-오프 (Trade-off)**: 위상 수정 함수는 성능과 안정성이 뛰어나지만, 역전파 시 많은 삼각함수 계산이 필요하여 연산 비용이 높다. 이에 대한 대안으로 계산이 훨씬 단순한 `Quaternion Cardioid`가 효율적인 선택지가 될 수 있다.
 - **설계 기준의 유효성**: 실험 결과, 쿼터니언 구성 요소 간의 비율을 보존하는 것(기준 5)보다 전체 크기를 보존하는 것(기준 6)이 모델 성능에 더 유익함이 드러났다.
 
 ### 한계 및 향후 과제
+
 - 본 연구는 이미지 분류 작업에 집중하였으므로, 다른 도메인의 작업에서도 동일한 효과가 있는지 검증이 필요하다.
 - 위상 외에 쿼터니언의 회전축 $n$을 수정하는 활성화 함수에 대한 연구가 필요하며, 이때 축의 길이를 보존해야 하는 추가적인 제약 조건이 따른다.
 

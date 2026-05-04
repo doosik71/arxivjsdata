@@ -18,19 +18,22 @@ Roland Gruber, Johann Christopher Engster, Markus Michen, Nele Blum, Maik Stille
 
 논문에서는 XXL-CT 인스턴스 세그멘테이션의 효율성을 높이기 위한 기존 접근 방식을 언급한다.
 
-1.  **Flood Filling Networks (FFN):** 딥 컨볼루션 신경망(DCNN)을 플러드 필링(Flood-filling) 알고리즘에 내장하여 대규모 산업용 CT 볼륨의 인스턴스 세그멘테이션을 수행하는 방식이다.
-2.  **Region-growing 기반 접근법:** 자동차 차체 CT 스캔에서 금속판의 균일한 두께 특성을 이용한 리전 그로잉(Region-growing) 방식을 통해 세그멘테이션을 수행한 사례가 있다.
+1. **Flood Filling Networks (FFN):** 딥 컨볼루션 신경망(DCNN)을 플러드 필링(Flood-filling) 알고리즘에 내장하여 대규모 산업용 CT 볼륨의 인스턴스 세그멘테이션을 수행하는 방식이다.
+2. **Region-growing 기반 접근법:** 자동차 차체 CT 스캔에서 금속판의 균일한 두께 특성을 이용한 리전 그로잉(Region-growing) 방식을 통해 세그멘테이션을 수행한 사례가 있다.
 
 기존 방식들은 수동 세그멘테이션에 소요되는 시간과 자원을 줄이고 결과의 신뢰성을 높이는 데 집중하였으나, 여전히 데이터 품질 저하와 복잡한 객체 구조로 인해 완전한 자동화에는 한계가 있다.
 
 ## 🛠️ Methodology
 
 ### 1. 데이터셋 구성
+
 - **훈련 데이터:** 512$\times$512$\times$512 복셀(voxel) 크기의 서브 볼륨 7쌍(재구성 이미지 및 어노테이션 라벨)으로 구성된다.
 - **테스트 데이터:** 동일한 크기의 서브 볼륨 1개($V_{test}$)가 제공되며, 정답 라벨은 공개되지 않는다.
 
 ### 2. 평가 방법: Segment Correlation Matrix
+
 제안된 세그멘테이션 결과를 정량적으로 평가하기 위해 '세그먼트 상관 행렬'을 사용한다.
+
 - 행(Row)은 참조 세그먼트 $S_R(i)$에, 열(Column)은 검출된 세그먼트 $S_D(j)$에 할당한다.
 - 각 셀의 값은 두 세그먼트 간의 교집합 over 합집합(Intersection over Union, IoU) 점수로 계산된다.
 - IoU의 정의는 다음과 같다.
@@ -40,21 +43,26 @@ $$IoU = \frac{|S_R(i) \cap S_D(j)|}{|S_R(i) \cup S_D(j)|}$$
 ### 3. 제출된 방법론 분석
 
 #### Team One: CDETR 기반 2D-to-3D 파이프라인
+
 이 팀은 2D 인스턴스 세그멘테이션 결과를 3D로 확장하는 전략을 취했다.
-1.  **2D 세그멘테이션:** CDETR(Conditional Detection Transformer) 아키텍처를 사용하여 세 가지 축(XY, YZ, ZX) 평면 모두에서 2D 마스크를 생성한다. 가우시안 노이즈, 컬러 지터링, 픽셀 드롭아웃 등의 데이터 증강을 적용하였다.
-2.  **3D 매칭:** 선택된 시작 슬라이스에서 각 인스턴스의 공유 라인 세그먼트를 비교하여 임계값 이상의 오버랩이 발생하면 동일한 글로벌 인덱스로 할당하는 매칭 알고리즘을 사용한다.
-3.  **후처리:** 모르폴로지 연산으로 간극을 메우고, 2D 세그먼트와 3D 볼륨 간의 오버랩을 계산하여 병합함으로써 2D의 높은 정확도를 유지한다.
+
+1. **2D 세그멘테이션:** CDETR(Conditional Detection Transformer) 아키텍처를 사용하여 세 가지 축(XY, YZ, ZX) 평면 모두에서 2D 마스크를 생성한다. 가우시안 노이즈, 컬러 지터링, 픽셀 드롭아웃 등의 데이터 증강을 적용하였다.
+2. **3D 매칭:** 선택된 시작 슬라이스에서 각 인스턴스의 공유 라인 세그먼트를 비교하여 임계값 이상의 오버랩이 발생하면 동일한 글로벌 인덱스로 할당하는 매칭 알고리즘을 사용한다.
+3. **후처리:** 모르폴로지 연산으로 간극을 메우고, 2D 세그먼트와 3D 볼륨 간의 오버랩을 계산하여 병합함으로써 2D의 높은 정확도를 유지한다.
 
 #### Team Two: 3-Class 3D U-Net 및 Watershed 파이프라인
+
 이 팀은 볼륨 데이터를 직접 처리하는 3D 세그멘테이션 전략을 취했다.
-1.  **아키텍처:** U-Net 구조를 기반으로 하되, 인코더를 EfficientNet V2로 교체하고 디코더에 MBConv(Mobile Inverted Bottleneck Convolution) 블록과 Squeeze-and-Excitation(SE) 모듈을 통합하였다.
-2.  **클래스 정의:** 배경(Background), 객체(Object), 경계(Border)의 3가지 클래스로 학습시킨다. 특히 경계 클래스는 인스턴스 간의 분리를 위해 도입되었다.
-3.  **학습 설정:** AdamW 옵티마이저와 Dice Cross-Entropy 손실 함수를 사용하였으며, 경계 클래스의 중요도를 높이기 위해 클래스 가중치(Class weighting)를 적용하였다.
-4.  **후처리:** 예측된 3개 클래스 결과에 마커 기반의 워터쉐드(Watershed) 알고리즘을 적용하여, 경계 클래스를 구분자로 사용하여 개별 인스턴스를 분리한다.
+
+1. **아키텍처:** U-Net 구조를 기반으로 하되, 인코더를 EfficientNet V2로 교체하고 디코더에 MBConv(Mobile Inverted Bottleneck Convolution) 블록과 Squeeze-and-Excitation(SE) 모듈을 통합하였다.
+2. **클래스 정의:** 배경(Background), 객체(Object), 경계(Border)의 3가지 클래스로 학습시킨다. 특히 경계 클래스는 인스턴스 간의 분리를 위해 도입되었다.
+3. **학습 설정:** AdamW 옵티마이저와 Dice Cross-Entropy 손실 함수를 사용하였으며, 경계 클래스의 중요도를 높이기 위해 클래스 가중치(Class weighting)를 적용하였다.
+4. **후처리:** 예측된 3개 클래스 결과에 마커 기반의 워터쉐드(Watershed) 알고리즘을 적용하여, 경계 클래스를 구분자로 사용하여 개별 인스턴스를 분리한다.
 
 ## 📊 Results
 
 ### 1. 정량적 결과 (IoU 분석)
+
 두 팀의 결과는 전반적으로 비슷하지만, 객체의 크기에 따라 강점이 다르게 나타났다.
 
 | 평가 대상 | Team One (Post-processed) Mean IoU | Team Two (Post-processed) Mean IoU |
@@ -67,6 +75,7 @@ $$IoU = \frac{|S_R(i) \cap S_D(j)|}{|S_R(i) \cup S_D(j)|}$$
 - **Team Two**는 소형 부품(나사, 리벳 등)을 검출하는 데 더 효율적이었다.
 
 ### 2. 정성적 분석 및 에러 케이스
+
 - **Team One의 한계:** 2D 결과들을 병합하는 과정에서 '줄무늬 형태의 아티팩트(stripey artefacts)'가 발생하며, 대비가 낮은 인접 금속판 사이의 경계를 놓치는 경향이 있다. 또한 서로 연결되지 않은 세그먼트들을 하나로 묶어버리는 과집단화 오류가 관찰되었다.
 - **Team Two의 한계:** 결과물이 불규칙하거나 패치 형태(patchy appearance)로 나타나는 경우가 많다. 특히 대비가 낮은 대형 금속판들을 하나의 거대한 세그먼트로 병합해버리는 과소-세그멘테이션(under-segmentation) 문제가 두드러졌다. 또한 객체 주변에 얇은 껍질 같은 경계가 형성되는 현상이 발견되었다.
 

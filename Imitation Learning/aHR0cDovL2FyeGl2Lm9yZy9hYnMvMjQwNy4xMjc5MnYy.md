@@ -19,19 +19,23 @@ C-LAIfO(Contrastive Latent Adversarial Imitation from Observations)라고 명명
 ## 📎 Related Works
 
 ### 기존 연구 및 한계
+
 1. **Imitation from Observation (IfO):** 전문가의 액션 정보 없이 비디오만으로 학습하는 방식으로, PatchAIL이나 LAIfO 같은 최신 알고리즘들이 존재한다. 하지만 이들은 전문가와 에이전트가 동일한 환경에 있다는 가정을 가진다.
 2. **Domain-adaptive/Cross-domain IL:** 도메인 불일치를 해결하려는 시도들이 있었으나, 많은 경우 보상 함수 학습과 정책 학습을 분리하는 순차적(Sequential) 접근 방식을 취하거나, 비용이 많이 드는 생성 모델(Generative models)을 사용하여 도메인 간 이미지를 변환하는 방식을 사용한다.
 3. **End-to-end Mismatch solutions:** DisentanGAIL과 같은 연구는 도메인 불변 특징을 추출하려 했으나, 주로 보상 추론 단계에서만 이를 적용했다.
 
 ### C-LAIfO의 차별점
+
 C-LAIfO는 완전한 end-to-end 모델-프리(Model-free) 접근 방식을 취한다. 특히, 단순히 보상 함수 추론뿐만 아니라 전체 AIL 파이프라인(보상 추론 및 RL 단계 모두)을 학습된 도메인 불변 특징 공간 $Z$ 위에서 수행한다는 점에서 기존 연구들과 차별화되며, 이는 성능 향상으로 이어진다.
 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 C-LAIfO는 관측값 $x$를 잠재 공간 $z$로 매핑하는 인코더 $\phi_\delta$를 학습하고, 이 공간 위에서 판별자(Discriminator)와 정책(Policy)을 학습시키는 구조를 가진다.
 
 ### 1. 잠재 공간에서의 Adversarial Imitation Learning
+
 에이전트와 전문가의 잠재 상태 전이 $(z, z')$를 저장하는 리플레이 버퍼를 사용한다. 판별자 $D_\chi$는 다음과 같은 목적 함수를 최적화하여 에이전트와 전문가의 상태 방문 분포 차이를 구분한다.
 
 $$\max_{\chi} \mathbb{E}_{(z, z') \sim B_E} [\log(D_\chi(z, z'))] + \mathbb{E}_{(z, z') \sim B} [\log(1 - D_\chi(z, z'))]$$
@@ -39,6 +43,7 @@ $$\max_{\chi} \mathbb{E}_{(z, z') \sim B_E} [\log(D_\chi(z, z'))] + \mathbb{E}_{
 여기서 학습된 판별자를 통해 보상 함수 $r_\chi(z, z') = -\log(1 - D_\chi(z, z'))$를 유도하고, 이를 RL 단계의 보상으로 사용한다.
 
 ### 2. 인코더 및 크리틱 학습 (Critic and Encoder Training)
+
 인코더 $\phi_\delta$는 관측 시퀀스를 잠재 벡터 $z$로 변환한다. 크리틱 $Q_\psi$와 인코더 $\phi_\delta$는 다음의 손실 함수를 통해 공동 학습된다.
 
 $$\min_{\psi, \delta} \mathbb{E}_{(\tilde{z}, a, \tilde{z}') \sim B} [ (Q_\psi(\tilde{z}, a) - sg(y))^2 ] + \mathbb{E}_{\tilde{z} \sim B} [L(\tilde{z})]$$
@@ -49,6 +54,7 @@ $$y = r_\chi(z, z') + \gamma \min_{k=1,2} Q_{\bar{\psi}_k}(\tilde{z}', a')$$
 이 과정에서 $L(\tilde{z})$는 도메인 불변성을 확보하기 위한 **Contrastive Loss**이다.
 
 ### 3. Contrastive Loss 및 데이터 증강
+
 데이터 증강 함수 $\text{aug}(\cdot)$를 통해 하나의 관측 시퀀스에서 두 개의 뷰(Positive pairs) $\tilde{z}_\delta(i), \tilde{z}_\delta(j)$를 생성한다. 이후 **InfoNCE (Information Noise-Contrastive Estimation) loss**를 사용하여 동일한 작업 정보를 가진 샘플끼리는 가깝게, 다른 샘플과는 멀게 배치한다.
 
 $$L(z_\delta) = -\log \frac{\exp(\text{sim}(\tilde{z}_\delta(i), \tilde{z}_\delta(j)) / \eta)}{\sum_{k=1, 2N} \mathbb{1}_{[k \neq i]} \exp(\text{sim}(\tilde{z}_\delta(i), \tilde{z}_\delta(k)) / \eta)}$$
@@ -58,11 +64,13 @@ $$L(z_\delta) = -\log \frac{\exp(\text{sim}(\tilde{z}_\delta(i), \tilde{z}_\delt
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** 고차원 연속 로봇 제어 태스크 및 Adroit 플랫폼의 Dexterous Manipulation 태스크.
 - **비교 대상:** LAIfO, PatchAIL (데이터 증강 추가), DisentanGAIL.
 - **평가 지표:** 에피소드당 평균 리턴(Average Return).
 
 ### 주요 결과
+
 1. **Ablation Study:**
    - **Contrastive Loss:** InfoNCE loss가 BYOL보다 도메인 불일치가 심한 환경에서 더 높은 성능을 보였다.
    - **Gradient Backpropagation:** 크리틱 $Q$에서 인코더 $\phi$로의 그래디언트 전파가 없으면 모방 학습 자체가 불가능함을 확인하여, 이 단계가 작업 관련 정보를 잠재 공간에 임베딩하는 데 필수적임을 입증했다.
@@ -78,9 +86,11 @@ $$L(z_\delta) = -\log \frac{\exp(\text{sim}(\tilde{z}_\delta(i), \tilde{z}_\delt
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 C-LAIfO는 단순히 이미지 도메인을 변환하는 것이 아니라, 학습 과정에서 **"무엇이 중요한 정보($\bar{X}$)이고 무엇이 방해 요소($\hat{X}$)인가"**를 대조 학습과 크리틱의 피드백을 통해 동시에 학습한다. 특히 잠재 공간 전체를 도메인 불변적으로 구축하여 RL 루프 전체를 그 위에서 수행하게 한 설계가 성능 향상의 핵심이다.
 
 ### 한계 및 향후 과제
+
 가장 큰 한계는 **데이터 증강 함수 $\text{aug}(\cdot)$에 대한 의존성**이다. 실험 결과에서 보듯, 불일치 유형에 맞지 않는 증강을 사용하면 성능이 급격히 저하된다. 즉, 사람이 수동으로 설계한 증강 전략에 의존하고 있다는 점이 문제다.
 
 논문은 이에 대한 해결책으로 **생성 모델(Generative models)**을 이용한 자동 데이터 증강이나, 증강에 덜 의존적인 새로운 보조 손실 함수(Auxiliary loss)를 탐색하는 방향을 제시한다. 또한, 시뮬레이션 환경을 넘어 실제 하드웨어에서의 검증이 필요하다.

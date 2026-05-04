@@ -31,12 +31,14 @@ Lihi Shiloh-Perl and Raja Giryes (2020)
 본 문서는 딥러닝의 작동 원리를 다음과 같은 단계적 구조로 설명한다.
 
 ### 1. 기본 구조 (Basic Structure)
+
 신경망의 최소 단위는 선형 연산 후 비선형 함수를 적용하는 구조이다. 입력 데이터 $x \in \mathbb{R}^{d_0}$에 대해 출력은 다음과 같이 정의된다.
 $$\psi(Wx + b)$$
 여기서 $W \in \mathbb{R}^{d_1 \times d_0}$는 가중치(Weight), $b \in \mathbb{R}^{d_1}$는 편향(Bias), $\psi(\cdot)$는 비선형 활성화 함수이다. 이를 $K$개 층으로 쌓은 전체 네트워크의 임베딩 $\Phi$는 다음과 같다.
 $$\Phi(x, W^{(1)}, \dots, W^{(K)}, b^{(1)}, \dots, b^{(K)}) = \psi(W^{(K)} \dots \psi(W^{(1)}x + b^{(1)}) \dots + b^{(K)})$$
 
 ### 2. 주요 레이어 및 함수
+
 - **Linear Layers**: 모든 뉴런이 연결된 Fully Connected(FC) 레이어와 공간 정보를 유지하는 Convolutional 레이어로 구분한다.
 - **Activation Functions**: $\text{ReLU}, \text{Leaky ReLU}, \text{ELU}, \text{Sigmoid}, \text{tanh}$ 등의 수식과 특성을 정의하며, 특히 $\text{ReLU}$ 계열이 CV 분야에서 선호됨을 명시한다.
 - **Pooling**: $\text{Max}$, $\text{Mean}$, $L^p$ pooling을 통해 차원을 축소하고 지배적인 특징을 유지한다.
@@ -44,6 +46,7 @@ $$\Phi(x, W^{(1)}, \dots, W^{(K)}, b^{(1)}, \dots, b^{(K)}) = \psi(W^{(K)} \dots
 $$\text{softmax}(v_i) = \frac{e^{v_i}}{\sum_{j=1}^{N} e^{v_j}}$$
 
 ### 3. 손실 함수 (Loss Functions)
+
 - **Regression**: MSE(Mean Squared Error), $\ell_1$ loss, SSIM 등을 사용한다.
 - **Classification**: Cross-Entropy loss를 사용하며 수식은 다음과 같다.
 $$L_{CE} = -\sum_{i=1}^{N} y_i \log(p_i)$$
@@ -51,11 +54,12 @@ $$L_{CE} = -\sum_{i=1}^{N} y_i \log(p_i)$$
 $$L = \sum_{i} \max(0, \|\Phi(x_a^i) - \Phi(x_p^i)\|_2^2 - \|\Phi(x_a^i) - \Phi(x_n^i)\|_2^2 + \alpha)$$
 
 ### 4. 학습 절차 및 최적화
+
 - **Backpropagation**: 연쇄 법칙(Chain Rule)을 이용하여 손실 함수의 기울기를 계산하고 가중치를 업데이트한다.
-- **Optimizers**: 
-    - $\text{SGD}$: 단일 샘플의 기울기만 사용하여 업데이트한다.
-    - $\text{Momentum}$: 과거 기울기의 지수 이동 평균을 사용하여 진동을 줄인다.
-    - $\text{ADAM}$: 1차 모멘트(평균)와 2차 모멘트(분산)를 모두 사용하여 학습률을 적응적으로 조절한다.
+- **Optimizers**:
+  - $\text{SGD}$: 단일 샘플의 기울기만 사용하여 업데이트한다.
+  - $\text{Momentum}$: 과거 기울기의 지수 이동 평균을 사용하여 진동을 줄인다.
+  - $\text{ADAM}$: 1차 모멘트(평균)와 2차 모멘트(분산)를 모두 사용하여 학습률을 적응적으로 조절한다.
 - **Regularization**: $\text{Weight Decay}, \text{Dropout}, \text{Batch Normalization}$ 및 $\text{Data Augmentation}$을 통해 Overfitting을 방지한다.
 
 ## 📊 Results

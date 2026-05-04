@@ -4,7 +4,7 @@ Lin Zhang, Yuteng Zhang, Dusit Niyato, Lei Ren, Pengfei Gu, Zhen Chen, Yuanjun L
 
 ## 🧩 Problem to Solve
 
-본 논문은 모델 기반 시스템 엔지니어링(Model-Based Systems Engineering, MBSE) 환경에서 복잡한 제품의 물리적 특성을 나타내는 시뮬레이션 모델을 생성하는 과정의 효율성을 높이는 문제를 해결하고자 한다. 
+본 논문은 모델 기반 시스템 엔지니어링(Model-Based Systems Engineering, MBSE) 환경에서 복잡한 제품의 물리적 특성을 나타내는 시뮬레이션 모델을 생성하는 과정의 효율성을 높이는 문제를 해결하고자 한다.
 
 전통적인 MBSE에서는 시스템 아키텍처와 물리적 특성을 정의하기 위해 서로 다른 언어와 도구를 사용함으로써 모델 간의 일관성이 떨어지고 엔지니어의 학습 곡선이 높아지는 문제가 발생한다. 최근 생성형 AI(GenAI)가 코드 생성 분야에서 두각을 나타내고 있으나, 기존의 연구들은 주로 요구사항 분석이나 기능적 수준의 모델링에 집중되어 있으며, 실제 제품의 물리적 거동을 시뮬레이션하기 위한 정밀한 모델 생성에 대한 연구는 부족한 실정이다. 따라서 본 논문의 목표는 제품 설계 문서로부터 물리적 특성 시뮬레이션 모델을 지능적으로 자동 생성할 수 있는 프레임워크를 제안하는 것이다.
 
@@ -25,7 +25,9 @@ Lin Zhang, Yuteng Zhang, Dusit Niyato, Lei Ren, Pengfei Gu, Zhen Chen, Yuanjun L
 ## 🛠️ Methodology
 
 ### 1. X Language 및 확장 가능 템플릿
+
 본 연구는 DEVS(Discrete Event System Specification)를 확장한 **X language**를 기반으로 한다. X language는 크게 세 가지 클래스로 구성된다.
+
 - **Couple Class**: 시스템 아키텍처를 정의하며, 하위 시스템의 구성(`Part`)과 연결 관계(`Connection`)를 기술한다.
 - **Discrete Class**: 이산 사건 시스템을 모델링하며, 상태(`State`)와 상태 전이(`Transform`)를 정의한다.
 - **Continuous Class**: 연속 시스템을 모델링하며, 동적 거동을 나타내는 방정식(`Equation`)을 정의한다.
@@ -33,6 +35,7 @@ Lin Zhang, Yuteng Zhang, Dusit Niyato, Lei Ren, Pengfei Gu, Zhen Chen, Yuanjun L
 **확장 가능 템플릿(Scalable Template)**은 모델의 전체 구조를 유지하면서 요소의 수나 속성에 따라 길이를 동적으로 조절할 수 있는 설계 패턴이다. 이를 통해 전체 코드를 한 번에 생성하는 대신, 특정 키워드 부분만 채우는 모듈형 코드 완성 방식으로 접근하여 LLM의 입력 길이 제한 문제를 극복한다.
 
 ### 2. 시뮬레이션 모델 생성 파이프라인
+
 전체 공정은 다음의 3단계로 진행된다.
 
 - **Step 1: 관련 코퍼스 식별**: BERT를 사용하여 제품 설계 문서에서 개체명 인식(NER) 및 문장 분류를 수행한다. 이를 통해 모델 구축에 불필요한 배경 지식을 제거하고 시뮬레이션 모델 코퍼스를 구축한다.
@@ -40,13 +43,16 @@ Lin Zhang, Yuteng Zhang, Dusit Niyato, Lei Ren, Pengfei Gu, Zhen Chen, Yuanjun L
 - **Step 3: Atomic Class 모델 생성**: Couple Class에서 정의된 포트 정보를 기반으로 Atomic Class(Discrete/Continuous)의 포트를 결정한다. 행동 정의 부분(`State` 또는 `Equation`)은 LoRA로 파인튜닝된 Transformer 모델이 생성하며, 이때 Few-shot 프롬프팅을 사용하여 정확도를 높인다.
 
 ### 3. 언어 모델 학습 및 최적화
+
 학습 데이터의 부족 문제를 해결하기 위해 GPT-3.5를 이용해 합성 데이터셋을 생성하여 학습 코퍼스를 확장하였다. 파인튜닝에는 **CodeQwen1.5-7B** 모델을 사용하였으며, 메모리 효율을 위해 **LoRA(Low-Rank Adaptation)** 기법을 적용하였다. LoRA의 가중치 업데이트 식은 다음과 같다.
 $$h = W_0 x + \Delta W x = W_0 x + BAx$$
 여기서 $B \in \mathbb{R}^{d \times r}, A \in \mathbb{R}^{r \times d}$ 이며 $r \ll \min(d, k)$ 인 저차원 행렬을 학습시킨다. 학습 목표는 다음의 로그 확률을 최대화하는 것이다.
 $$\max_{\Phi} \sum_{(x,y) \in Z} \sum_{t=1}^{|y|} \log (P_{\Phi}(y_t | x, y_{<t}))$$
 
 ### 4. 평가 방법론
+
 시뮬레이션 모델의 품질을 측정하기 위해 다음 지표를 사용한다.
+
 - **시뮬레이션 정확도($A_i$)**: 모델이 완전히 정확하면 1, 그렇지 않으면 $\epsilon \cdot P_i$를 부여한다.
 - **정확도 유사도($P_i$)**: 각 구성 요소(Header, Attribute, Connection, State, Equation)의 유사도를 가중 합산하여 계산한다.
 - **오류 정도(Degree of Error)**: 구문 오류(Syntax Error)와 시뮬레이션 논리 오류(Simulation Logic Error)가 실제 모델 수정 노력에 미치는 영향을 평가한다. 논리 오류가 구문 오류보다 더 심각한 가중치를 가진다.
@@ -57,14 +63,16 @@ $$\text{Score} = A_{\text{parent}} \cdot \sum_{i=1}^{n} C_{\text{subsystem},i} \
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **대상**: 항공기 전기 시스템(Aircraft Electrical System) 시뮬레이션 모델 생성.
 - **구성**: 전원 공급 장치, 비행 시나리오 제어 모듈, 제어 버스, 레이더, 러더, 추력 모듈 등 6개 하위 시스템.
 - **비교 모델**: 오픈소스 모델(CodeGemma-7b, CodeQwen1.5-7b, DeepSeek-Coder-6.7b) 및 상용 모델(Claude-3.5-Sonnet, GPT-4o).
 - **비교 방법**: 제안 방법(Meth.a) vs 직접 생성 방법(Meth.b).
 
 ### 2. 주요 결과
+
 - **NER-BERT 성능**: 항공기 전기 시스템 문서에 대해 81.3%의 문장 정확도를 보였으며, 특히 엔티티 인식의 재현율(Recall)은 100%를 달성하여 설계 문서 내의 모든 구성 요소 정보를 누락 없이 추출함을 입증하였다.
-- **모델 생성 품질**: 표 VII의 결과에 따르면, 제안된 방법(Meth.a)을 적용했을 때 CodeQwen의 최종 점수가 0.825로, 직접 생성 방식(Meth.b, 0.156)보다 압도적으로 높았다. 
+- **모델 생성 품질**: 표 VII의 결과에 따르면, 제안된 방법(Meth.a)을 적용했을 때 CodeQwen의 최종 점수가 0.825로, 직접 생성 방식(Meth.b, 0.156)보다 압도적으로 높았다.
 - **상용 모델과의 비교**: 제안 방법으로 생성된 오픈소스 모델의 결과가 GPT-4o나 Claude-3.5가 직접 생성한 모델의 점수(약 0.24)보다 훨씬 높게 나타났다. 이는 템플릿 기반의 모듈형 생성 방식이 단순한 프롬프팅보다 시뮬레이션 모델 생성에 훨씬 효과적임을 의미한다.
 
 ## 🧠 Insights & Discussion

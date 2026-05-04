@@ -31,17 +31,21 @@ Varad Pimpalkhute, Amey Pandit, Mayank Mishra, Rekha Singhal (2021)
 본 논문이 가속화 대상으로 삼은 모델은 Hierarchical RNN 기반의 메타 학습기로, 이는 다양한 학습 작업의 손실 함수 지형(Loss landscape)을 앙상블하여 신속한 모델 파라미터 업데이트를 수행하는 Optimizer 역할을 한다. 전체 시스템은 다음과 같은 구조와 절차를 가진다.
 
 ### 1. 전체 파이프라인 구조
+
 학습 과정은 두 개의 루프로 구성된다.
+
 - **Task Loop**: Hierarchical RNN을 Optimizer로 사용하여 각 데이터 배치에 대해 작업 파라미터를 업데이트한다.
 - **Meta Loop**: RMSProp Optimizer를 사용하여 모든 배치의 학습 과정에서 누적된 손실을 바탕으로 RNN Optimizer 자체의 파라미터를 업데이트한다.
 
 ### 2. 알고리즘 최적화 (Algorithmic Optimizations)
+
 - **Task Loop 병렬화**: 데이터 배치를 순차적으로 학습하는 대신, 여러 배치를 동시에 처리한다. 각 배치의 손실과 파라미터 그래디언트를 개별적으로 계산한 후, 다음과 같이 평균 그래디언트를 산출하여 파라미터를 업데이트한다.
   $$\text{Updated Parameter} = \text{Current Parameter} - \eta \times \text{Average}(\text{Gradients of parallel batches})$$
 - **Task Clustering 및 병렬 학습**: 작업 간의 유사성을 바탕으로 작업을 클러스터로 묶는다(예: Softmax Regression 작업들끼리 그룹화). 이후 이 클러스터들을 병렬로 학습시키며, 클러스터 간의 평균 그래디언트를 사용하여 RNN Optimizer의 파라미터를 업데이트한다.
 - **Cluster Grouping**: 하드웨어 자원을 효율적으로 사용하고 병목 현상을 방지하기 위해, 클러스터들을 다시 'Cluster Group'으로 묶어 스케줄링한다. 이는 각 병렬 브랜치가 유사한 시간을 소모하도록 하여 자원 활용도를 극대화하기 위함이다.
 
 ### 3. 프로그램 최적화 (Program Optimizations)
+
 - **언어 및 라이브러리**: Python 버전 업그레이드 및 최신 라이브러리 적용.
 - **벡터화 및 융합**: Numpy 배열을 통한 루프 내 벡터 지침(Vector instructions) 사용 및 중복 코드 제거를 위한 연산 융합.
 - **Cython 적용**: Python 코드를 C 언어로 변환하여 실행 속도를 근본적으로 향상시켰다.
@@ -49,13 +53,15 @@ Varad Pimpalkhute, Amey Pandit, Mayank Mishra, Rekha Singhal (2021)
 ## 📊 Results
 
 ### 실험 설정
+
 - **하드웨어**: Intel Core i5 CPU @2.50GHz, 8GB RAM (2 물리 코어, 4 논리 코어).
 - **소프트웨어**: Windows 10, Cython, Tensorflow, Python, Numpy, Pandas, Scikit.
 - **평가 지표**: 실행 시간(Execution Time) 및 테스트 작업 세트(Softmax Regression)에 대한 정확도. 기준 정확도는 $0.65$로 설정하여, 가속화 이후에도 이 성능이 유지되는지 확인하였다.
 
 ### 정량적 결과
+
 - **병렬화의 효과**: 작업 클러스터의 수를 변화시키며 실험한 결과, 병렬 처리 도입만으로도 기존 대비 $2\text{x}$ 이상의 속도 향상을 달성하였다. 예를 들어, 5개 클러스터를 사용했을 때 베이스라인 시간 $21932.7\text{s}$가 $12473.1\text{s}$로 단축되었다.
-- **코드 최적화의 효과**: 
+- **코드 최적화의 효과**:
   - Python 업그레이드: 약 $15\%$ 속도 향상.
   - Numpy 벡터화 및 연산 융합: $1.1\text{x}$ 성능 향상.
   - Cython 변환: 평균 $1.33\text{x}$의 가장 유의미한 속도 향상을 보였다.
@@ -64,9 +70,11 @@ Varad Pimpalkhute, Amey Pandit, Mayank Mishra, Rekha Singhal (2021)
 ## 🧠 Insights & Discussion
 
 ### 강점 및 분석
+
 본 연구는 메타 학습의 고질적인 문제인 학습 시간 문제를 모델의 수학적 구조를 건드리지 않고도 시스템적 접근(병렬화, 클러스터링, 컴파일 최적화)만으로 해결할 수 있음을 보여주었다. 특히 유사한 작업들을 클러스터링하여 병렬 학습시키는 방식은 하드웨어 효율성을 높이는 동시에, 유사 작업 간의 그래디언트 업데이트 방향이 비슷하다는 점을 이용해 수렴 속도를 높일 가능성을 제시하였다.
 
 ### 한계 및 미해결 질문
+
 - **하드웨어 제약**: 실험이 i5 CPU와 8GB RAM이라는 매우 제한적인 환경에서 수행되었다. 저자들은 더 높은 사양의 하드웨어에서 더 높은 병렬성을 확보한다면 더 큰 가속 효과를 얻을 수 있을 것이라고 언급한다.
 - **클러스터링 방법론**: 논문에서는 클러스터 생성 과정을 'Black box'로 처리하여 구체적인 클러스터링 알고리즘을 명시하지 않았다. 어떤 기준으로 작업을 묶는지가 성능에 큰 영향을 미칠 수 있으므로 이에 대한 상세 분석이 필요하다.
 - **RNN 셀 비교**: GRU를 LSTM으로 교체하는 실험을 진행하였으나, 반복 횟수는 줄어들었음에도 불구하고 반복당 소요 시간이 크게 증가하여 최종적으로는 이득이 없었다는 점이 확인되었다.

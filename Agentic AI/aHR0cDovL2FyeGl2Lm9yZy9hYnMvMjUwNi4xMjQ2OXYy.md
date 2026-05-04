@@ -17,6 +17,7 @@ K. J. Kevin Feng, David W. McDonald, Amy X. Zhang (2025)
 ## 📎 Related Works
 
 논문은 먼저 **Agency**와 **Autonomy**라는 용어를 명확히 구분한다.
+
 - **Agency**: 의도적으로 행동할 수 있는 능력(Capacity to act intentionally)을 의미하며, 이는 에이전트가 접근 가능한 도구(Tools)의 범위와 관련이 깊다.
 - **Autonomy**: 사용자의 개입 없이 작동하도록 설계된 정도(Extent to which an agent is designed to operate without user involvement)를 의미한다.
 
@@ -47,6 +48,7 @@ K. J. Kevin Feng, David W. McDonald, Amy X. Zhang (2025)
 ### 자율성 인증서 (Autonomy Certificates)
 
 에이전트의 자율성 수준을 제3자 기관이 인증하는 메커니즘이다.
+
 - **구성**: 에이전트의 기술적 사양(모델, 프롬프트, 도구)과 운영 환경을 바탕으로 최대 자율성 수준을 명시한다.
 - **Autonomy Case**: 개발자는 에이전트가 특정 수준 이상의 자율성으로 동작하지 않는다는 증거 기반의 논증을 제출해야 한다.
 - **효과**: 타 개발자나 감사자가 에이전트의 행동 특성을 미리 파악하여 리스크를 평가하고, 멀티 에이전트 시스템 내에서 상호 운용성을 최적화할 수 있다.
@@ -56,6 +58,7 @@ K. J. Kevin Feng, David W. McDonald, Amy X. Zhang (2025)
 본 논문은 이론적 프레임워크를 제시하는 논문으로, 특정 데이터셋에 대한 실험 결과보다는 새로운 평가 방법론인 **Assisted Evaluation (지원형 평가)**를 제안한다.
 
 ### Assisted Evaluation 절차
+
 기존의 성능 벤치마크(OSWorld 등)는 단독 수행 성공률만 측정하므로, 자율성을 측정하기 위해 다음과 같은 단계를 제안한다.
 
 1. **초기 실행**: 사용자 개입 없이 작업을 수행시킨다. 모든 작업에서 성공 임계치 $T$를 달성하면 L5로 분류한다.
@@ -67,10 +70,12 @@ K. J. Kevin Feng, David W. McDonald, Amy X. Zhang (2025)
 ## 🧠 Insights & Discussion
 
 ### 강점 및 통찰
+
 - **설계 관점의 전환**: 자율성을 '능력의 결과'가 아닌 '설계의 선택'으로 정의함으로써, 개발자가 안전성과 효율성 사이의 트레이드오프를 명시적으로 관리할 수 있게 하였다.
 - **사용자 중심 정의**: 기술적인 지표가 아니라 사용자의 역할(Role)을 중심으로 레벨을 나누어, HCI(Human-Computer Interaction) 관점에서 실용적인 가이드라인을 제공한다.
 
 ### 한계 및 비판적 해석
+
 - **L4의 위험성**: 저자들은 L4(승인자) 단계에서 사용자가 무의식적으로 모든 요청을 승인하는 '무의미한 승인(meaningless rubber stamping)' 문제를 지적한다. 이는 자율성 수준을 높이는 것이 반드시 효율적인 것은 아니며, 오히려 인간의 감시 체계를 무력화할 수 있음을 시사한다.
 - **인증 체계의 실현 가능성**: 제3자 인증 기관의 객관적인 평가 기준과 'Autonomy Case'의 표준화된 형식이 아직 구체적으로 제시되지 않아, 실제 산업계 적용까지는 많은 논의가 필요할 것으로 보인다.
 

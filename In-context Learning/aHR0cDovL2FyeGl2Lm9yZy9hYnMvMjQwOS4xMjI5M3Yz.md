@@ -12,8 +12,8 @@ Frank Cole, Yulong Lu, Wuzhe Xu, and Tianhao Zhang (2025)
 
 본 논문의 핵심 기여는 선형 시스템 ICL의 일반화 성능을 결정짓는 요인들을 수학적으로 규명한 것이다.
 
-1.  **인-도메인 일반화 경계 도출**: 학습 및 추론 단계의 샘플 수, 그리고 사전 학습(Pre-training)에 사용된 태스크의 수에 따른 일반화 오차의 Scaling Law를 증명하였다.
-2.  **태스크 다양성(Task Diversity) 개념 도입**: OOD 일반화 성능이 학습 데이터의 '다양성'에 결정적으로 의존함을 발견하고, 이를 수학적으로 정의한 '태스크 다양성' 개념을 제안하였다. 이는 사전 학습된 트랜스포머가 태스크 분포 변화(Task Distribution Shift) 하에서도 잘 일반화되기 위한 필요충분조건이 된다.
+1. **인-도메인 일반화 경계 도출**: 학습 및 추론 단계의 샘플 수, 그리고 사전 학습(Pre-training)에 사용된 태스크의 수에 따른 일반화 오차의 Scaling Law를 증명하였다.
+2. **태스크 다양성(Task Diversity) 개념 도입**: OOD 일반화 성능이 학습 데이터의 '다양성'에 결정적으로 의존함을 발견하고, 이를 수학적으로 정의한 '태스크 다양성' 개념을 제안하였다. 이는 사전 학습된 트랜스포머가 태스크 분포 변화(Task Distribution Shift) 하에서도 잘 일반화되기 위한 필요충분조건이 된다.
  uma **PDE 연산자 학습으로의 확장**: 선형 시스템 ICL 이론을 무한 차원 공간 사이의 연산자 학습으로 확장하여, 선형 타원형 PDE의 해 연산자(Solution Operator)를 ICL로 학습할 때의 일반화 오차 경계를 도출하였다.
 
 ## 📎 Related Works
@@ -21,6 +21,7 @@ Frank Cole, Yulong Lu, Wuzhe Xu, and Tianhao Zhang (2025)
 기존 연구들은 선형 트랜스포머가 선형 회귀(Linear Regression) 문제를 해결하기 위해 경사 하강법(Gradient Descent)의 단계를 구현할 수 있음을 보여주었다. 특히 Zhang et al. [52] 등의 연구는 스칼라 값 함수의 ICL에 대해 정량적인 오차 경계를 도출하였으며, 샘플 수가 많아질 때 예측 오차가 감소함을 증명하였다.
 
 그러나 기존 연구들은 다음과 같은 한계가 있다.
+
 - **스칼라 값 함수에 국한**: 대부분의 이론적 분석이 벡터 값 함수가 아닌 스칼라 값 함수를 대상으로 하였다.
 - **특정 분포 가정**: 많은 연구가 데이터 및 태스크 분포가 가우시안(Gaussian)이라고 가정하였으나, 본 논문은 보다 일반적인 non-Gaussian 분포에서도 분석을 수행한다.
 - **PDE 이론적 근거 부족**: 최근 PDE를 위한 파운데이션 모델들이 제안되고 있으나, 이들이 ICL을 통해 어떻게 적응하는지에 대한 수학적 일반화 보장은 거의 이루어지지 않았다.
@@ -28,12 +29,15 @@ Frank Cole, Yulong Lu, Wuzhe Xu, and Tianhao Zhang (2025)
 ## 🛠️ Methodology
 
 ### 1. 문제 설정 (Problem Set-up)
+
 학습 목표는 가역 행렬(Invertible Matrices) 집합 $\mathcal{A}$에 대해 $Ay=x$를 만족하는 $y$를 예측하는 것이다.
+
 - **입력(Prompt)**: $\{(x_i, y_i)\}_{i=1}^n$ 형태의 쌍으로 구성되며, 여기서 $y_i = A^{-1}x_i$이다.
 - **예측**: 새로운 공변량(Covariate) $x_{n+1}$이 주어졌을 때, $y_{n+1} = A^{-1}x_{n+1}$을 예측한다.
 - **가정**: 모든 $A \in \mathcal{A}$에 대해 $\|A\|_{op} \le C_A$ 및 $\|A^{-1}\|_{op} \le c_A$가 성립하며, $x$는 가우시안 분포 $\mathcal{N}(0, \Sigma)$를 따른다.
 
 ### 2. 선형 트랜스포머 아키텍처
+
 본 논문은 단층 선형 트랜스포머를 사용하며, 입력 시퀀스 $Z$에 대해 다음과 같이 정의한다.
 $$TF_\theta(Z) = Z + \frac{P Z Z^T Q Z}{\rho(T)}$$
 여기서 $\rho(T) = T-1$은 정규화 인자이다. ICL을 위해 입력 행렬 $Z$를 다음과 같이 구성한다.
@@ -43,14 +47,17 @@ $$y_{n+1}^\theta = P \left( \frac{1}{n} \sum_{i=1}^n y_i x_i^T \right) Q x_{n+1}
 여기서 $P, Q \in \mathbb{R}^{d \times d}$이다.
 
 ### 3. 학습 및 일반화 목표
+
 모델은 다음의 Population Risk functional을 최소화하도록 학습된다.
 $$R_n(\theta) = \mathbb{E}_{x, A} [\|y_{n+1}^\theta - A^{-1}x_{n+1}\|^2]$$
+
 - **In-domain Generalization**: 학습 시와 동일한 분포 $P_x, P_A$에서 테스트할 때의 오차 $R_m(\hat{\theta})$.
 - **OOD Generalization**: 추론 시 새로운 분포 $P'_x, P'_A$가 주어졌을 때의 오차 $R'_m(\hat{\theta})$.
 
 ## 📊 Results
 
 ### 1. 이론적 결과
+
 **인-도메인 일반화 (Theorem 1)**:
 추론 시 프롬프트 길이 $m$이 학습 시 길이 $n$보다 작거나 같을 때, 일반화 오차는 다음과 같은 Scaling Law를 따른다.
 $$R_m(\hat{\theta}) \lesssim \frac{1}{m} + \frac{1}{n^2} + \frac{1}{\sqrt{N}}$$
@@ -58,17 +65,20 @@ $$R_m(\hat{\theta}) \lesssim \frac{1}{m} + \frac{1}{n^2} + \frac{1}{\sqrt{N}}$$
 
 **OOD 일반화와 태스크 다양성 (Theorem 2, 3)**:
 학습 분포 $P_A$가 테스트 분포 $P'_A$에 대해 **다양(Diverse)**하다면, 즉 $\mathcal{M}_\infty \subseteq \mathcal{M}'_\infty$ (학습 데이터의 최적해 집합이 테스트 데이터의 최적해 집합을 포함)라면 OOD 일반화가 가능하다.
+
 - **충분 조건**: $\text{supp}(P'_A) \subseteq \text{supp}(P_A)$이거나, $\text{supp}(P_A)$의 중심화자(Centralizer)가 오직 단위 행렬의 상수배($cI_d$)로만 구성될 때 다양성 조건이 만족된다.
 
 **공변량 변화(Covariate Shift)에 대한 안정성 (Theorem 4)**:
 입력 데이터의 공분산 행렬이 $\Sigma$에서 $\Sigma'$로 변할 때, 오차는 $\|\Sigma - \Sigma'\|_{op}$ 및 $\|U - W\|_{op}$ (고유벡터의 차이)에 비례하여 증가하며, 이는 단순히 데이터를 많이 학습한다고 해서 사라지는 오차가 아님을 보여준다.
 
 ### 2. PDE 연산자 학습 적용
+
 무한 차원 연산자 $T$를 유한 차원 $\mathbb{R}^d$로 인코딩($E$) 및 디코딩($D$)하여 학습할 때, 전체 오차는 다음과 같이 분해된다.
 $$\text{Error} \lesssim \epsilon_{E,D}^2 + C_D^2 R_m(\hat{\theta})$$
 여기서 $\epsilon_{E,D}$는 이산화 오차(Discretization error)이며, $R_m(\hat{\theta})$는 앞서 도출한 선형 시스템 ICL의 통계적 오차이다. 1차원 타원형 PDE의 경우, 최종 오차는 $1/d^2 + d^2/m + \dots$ 형태의 경계를 가짐이 증명되었다.
 
 ### 3. 수치 실험 결과
+
 - **Random Matrix 실험**: 인-도메인 일반화에서 $n^{-2}, m^{-1}, N^{-1}$의 수렴 속도를 확인하여 이론을 검증하였다.
 - **다양성 테스트**: 학습 데이터가 단순한 상수 행렬($D=cI_d$)일 때는 OOD 일반화가 실패하지만, 다양한 행렬을 학습했을 때는 태스크 분포가 변해도 성공적으로 일반화됨을 확인하였다.
 - **PDE 실험**: 선형 타원형 PDE에서 $m$이 증가함에 따라 OOD 일반화 오차가 인-도메인 오차와 유사하게 감소함을 확인하였다.

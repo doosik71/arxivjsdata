@@ -25,9 +25,11 @@ Haoran Huan, Mihir Prabhudesai, Mengning Wu, Shantanu Jaiswal, Deepak Pathak (20
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 분석 구조
+
 연구진은 bottom-up 방식의 메커니즘적 해석과 top-down 방식의 표현 분석을 병행하여 LLM의 거짓말 구조를 분석하고 제어한다.
 
 ### 1. 거짓말 메커니즘 분석 (Bottom-up)
+
 모델 내부에서 거짓말이 어떻게 계산되는지 확인하기 위해 다음 두 가지 기법을 사용한다.
 
 - **Logit Lens**: 중간 레이어의 은닉 상태 $h^{(l)}_i$를 언임베딩 행렬 $U$를 통해 어휘 공간(Vocabulary Space)으로 투영하여, 각 레이어에서 모델이 어떤 토큰을 예측하고 있는지 추적한다.
@@ -35,6 +37,7 @@ Haoran Huan, Mihir Prabhudesai, Mengning Wu, Shantanu Jaiswal, Deepak Pathak (20
 $$\hat{u}= \arg \max_{u} \mathbb{E}_{x \sim D^B} p(\neg B|do(act(u) = 0),x)$$
 
 ### 2. 표현 스티어링을 통한 제어 (Top-down)
+
 거짓말과 정직함의 차이를 나타내는 신경 방향을 찾아내어 추론 시점에 개입한다.
 
 - **Steering Vector 추출**: 거짓말을 유도하는 프롬프트 $x^B$와 정직함을 유도하는 프롬프트 $x^{\neg B}$의 쌍을 구성하고, 특정 레이어 $l$과 위치 $t$에서 은닉 상태의 평균 차이를 계산한다.
@@ -47,14 +50,16 @@ $$h^{(l)}_t \leftarrow h^{(l)}_t + \lambda v_B^{(l)}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **모델**: Llama-3.1-8B-Instruct (주요 모델), Qwen2.5-7B-Instruct (교차 검증).
 - **시나리오**: 단답형 응답, 장문 응답, 다회차 대화(Multi-turn conversation).
 - **지표**: 정직도 확률 $P(\text{truth})$ 및 LLM Judge를 통한 1~10점 척도의 'Liar Score'를 사용한다.
 
 ### 주요 결과
+
 1. **Dummy Tokens에서의 리허설**: Logit Lens 분석 결과, 모델은 실제 응답을 생성하기 전의 Dummy Tokens(예: `<|start_header_id|>assistant<|end_header_id|>`) 단계에서 이미 어떤 거짓말을 할지 여러 번 예측하는 '리허설' 현상을 보인다.
 2. **거짓말 회로의 희소성**: Causal Intervention 결과, 거짓말 생성은 매우 소수의 Attention Head에 의존한다. 총 1,024개의 헤드 중 상위 12개만 제거(Zero-out)해도 거짓말 확률이 환각 수준으로 떨어진다.
-3. **계층별 역할 분담**: 
+3. **계층별 역할 분담**:
     - 레이어 0-10: 기초적인 의미 처리 및 진실 기반 회상.
     - 레이어 10-15: 거짓말 요청을 처리하고 구체적인 거짓말 내용을 설계(Initiation).
     - 레이어 15-30: 설계된 거짓말을 더 그럴듯하게 다듬는 후처리(Refining).
@@ -67,10 +72,12 @@ $$h^{(l)}_t \leftarrow h^{(l)}_t + \lambda v_B^{(l)}$$
 본 연구는 LLM의 거짓말이 단순한 오류가 아니라, 모델 내부의 특정 회로와 표현 방향을 통해 수행되는 체계적인 과정임을 입증하였다. 특히 Dummy Tokens가 거짓말을 위한 계산 공간(Scratchpad)으로 활용된다는 발견은 LLM의 추론 과정에 대한 새로운 시각을 제공한다.
 
 **강점**:
+
 - 환각과 거짓말을 엄격히 구분하여 정의하고 이를 메커니즘적으로 증명하였다.
 - 단순한 탐지를 넘어 Steering Vector를 통해 실시간으로 모델의 정직성을 제어할 수 있는 실용적인 방법을 제시하였다.
 
 **한계 및 논의**:
+
 - MMLU 벤치마크 결과, 거짓말 능력을 억제했을 때 성능이 약간 하락하는 경향이 발견되었다. 이는 거짓말과 관련된 뉴런이 창의적 사고나 가설적 추론(Hypothetical thinking)에 필요한 뉴런과 일부 겹쳐 있을 가능성을 시사한다.
 - 따라서 모든 거짓말 능력을 완전히 제거하는 것보다, 악의적인 거짓말은 억제하고 사회적으로 용인되는 수준의 유연한 응답은 허용하는 정밀한 튜닝이 필요하다.
 

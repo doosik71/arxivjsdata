@@ -13,6 +13,7 @@ Mohana Murali Dasari, Rama Krishna Sai Subrahmanyam Gorthi (2020)
 본 논문의 핵심 아이디어는 Siamese Region Proposal 네트워크 상단에 **IOU 모듈**을 추가하여, 학습 단계에서 예측된 Bounding Box와 Ground Truth 간의 IOU를 최대화하도록 유도하는 것이다.
 
 주요 기여 사항은 다음과 같다.
+
 1. 네트워크 학습 시 IOU 모듈을 통합하여 추적 성능을 가이드하는 구조를 제안하였다.
 2. 예측된 IOU를 최대화하기 위한 새로운 손실 함수(Loss Function)를 도입함으로써 Bounding Box 예측의 정밀도를 향상시켰다.
 3. 기존 SiamRPN++에서 사용되던 Scale 및 Ratio Penalty와 같은 불필요한 후처리 연산이 오히려 오버피팅을 유발함을 분석하고 이를 제거하여 효율성을 높였다.
@@ -30,7 +31,9 @@ Mohana Murali Dasari, Rama Krishna Sai Subrahmanyam Gorthi (2020)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 제안된 **IG-Track**은 SiamRPN++를 베이스라인으로 하며, 다음과 같은 절차로 동작한다.
+
 1. **입력**: 첫 프레임의 타겟 이미지 $z$ ($127 \times 127$)와 이후 프레임의 검색 이미지 $x$ ($255 \times 255$)를 입력으로 받는다.
 2. **특징 추출**: ResNet50 네트워크를 통해 두 이미지의 특징 맵을 추출한다.
 3. **응답 맵 생성**: 추출된 특징 맵은 Classification 블록과 Regression 블록으로 전달되어 특징 도메인에서의 응답 맵을 생성한다.
@@ -38,6 +41,7 @@ Mohana Murali Dasari, Rama Krishna Sai Subrahmanyam Gorthi (2020)
 5. **예측 및 보정**: 추정된 박스와 유망한 박스들 간의 IOU를 계산하여 IOU 응답 맵을 만들고, 이 중 최대값에 해당하는 박스를 최종 '예측된 Bounding Box(Predicted Bounding Box)'로 결정한다. 이때 크기의 급격한 변화를 막기 위해 선형 보간법(Linear Interpolation)을 사용한다.
 
 ### 손실 함수 및 학습 절차
+
 네트워크는 다음과 같은 통합 손실 함수를 최소화하는 방향으로 학습된다.
 
 $$ \text{Loss} = L_{cls} + L_{reg} + L_{iou} $$
@@ -51,20 +55,24 @@ $$ L_{iou} = 1 - \text{IOU}(\text{predbb}, \text{gtbb}) $$
 ## 📊 Results
 
 ### 실험 설정
+
 - **특징 추출기**: Pre-trained ResNet50 사용.
 - **학습 데이터셋**: ImageNet VID, ImageNet DET, COCO.
 - **평가 데이터셋**: VOT2018, OTB2015, GOT-10k.
 - **학습 환경**: NVIDIA GeForce GTX Ti-1080 4장, 40 에포크(epoch) 동안 학습, 학습률은 $0.005$에서 $0.00005$까지 지수적으로 감소.
 
 ### 주요 결과
+
 공정한 비교를 위해 베이스라인인 SiamRPN++를 동일한 데이터셋(YouTube-BB 제외)으로 재학습하여 비교하였다.
 
 **1. VOT2018 데이터셋 결과**
+
 - **EAO (Expected Average Overlap)**: $0.290 \rightarrow 0.327$ (약 13% 향상)
 - **Robustness**: $0.347 \rightarrow 0.309$ (약 11% 향상, 수치가 낮을수록 좋음)
 - **Accuracy**: $0.571 \rightarrow 0.565$ (약 1% 감소하였으나 거의 유사한 수준 유지)
 
 **2. GOT-10k 데이터셋 결과**
+
 - **AO (Average Overlap)**: $0.453 \rightarrow 0.459$ (1% 향상)
 - **$SR_{0.5}$ (Success Rate at 0.5)**: $0.546 \rightarrow 0.558$ (2% 향상)
 - **$SR_{0.75}$ (Success Rate at 0.75)**: $0.195 \rightarrow 0.220$ (12% 향상)
@@ -74,9 +82,11 @@ $$ L_{iou} = 1 - \text{IOU}(\text{predbb}, \text{gtbb}) $$
 ## 🧠 Insights & Discussion
 
 ### 강점 및 해석
+
 본 논문은 기존 Siamese RPN 계열의 추적기들이 가진 '학습과 테스트 간의 괴리'라는 본질적인 문제를 정확히 짚어냈다. 단순히 네트워크를 깊게 쌓는 것이 아니라, 학습 목표 자체에 IOU라는 기하학적 지표를 직접 포함시킴으로써 후처리 과정 없이도 이미지 도메인에서 높은 정밀도를 얻을 수 있음을 보여주었다. 특히 고정밀도 측정 지표인 $SR_{0.75}$에서의 성능 향상은 매우 유의미하다.
 
 ### 한계 및 미해결 질문
+
 1. **모션 모델의 단순함**: 현재 Motion Estimation 블록이 학습 가능하다고 언급되어 있으나, 구체적인 구조에 대한 설명이 부족하며 단순히 선형 보간법에 의존하고 있다. 저자들 또한 결론에서 이를 RNN 등을 이용해 개선할 필요가 있음을 인정하고 있다.
 2. **데이터셋 의존성**: 비교 실험에서 YouTube-BB 데이터셋을 제외하고 공정성을 기했으나, 실제 최신 SOTA 모델(ATOM 등)들이 사용하는 거대 데이터셋(LaSOT, TrackingNet)과의 비교가 이루어지지 않아 절대적인 성능 수준을 판단하기 어렵다.
 3. **추론 속도**: IOU 모듈이 학습 단계에서 추가되었으나, 이것이 추론(Inference) 단계의 속도에 어떤 영향을 미치는지에 대한 정량적 분석이 제시되지 않았다.

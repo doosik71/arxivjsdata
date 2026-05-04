@@ -29,30 +29,38 @@ Vittorio Giammarino and Ioannis Ch. Paschalidis (2021)
 ## 🛠️ Methodology
 
 ### 1. Options Probabilistic Graphical Model (OPGM)
+
 본 논문은 에이전트의 의사결정 과정을 다음과 같은 세 가지 정책의 조합으로 정의한다.
+
 - **고수준 정책 ($\pi_{hi}$):** 현재 상태 $s_t$에서 어떤 옵션 $o_t$를 선택할지를 결정한다.
 - **저수준 정책 ($\pi_{lo}$):** 선택된 옵션 $o_t$ 하에서 어떤 구체적인 행동 $a_t$를 취할지를 결정한다.
 - **종료 정책 ($\pi_b$):** 현재 수행 중인 옵션을 종료하고 새로운 옵션을 선택할지($b_t=1$) 아니면 계속 유지할지($b_t=0$)를 결정한다.
 
 ### 2. Batch BW 알고리즘
+
 Batch BW는 다음의 두 단계를 반복한다.
+
 - **E-step:** 현재 파라미터 $\theta^{old}$를 이용하여 데이터 전체에 대한 평활화 분포를 계산하고, Baum의 보조 함수 $Q(\theta|\theta^{old})$를 도출한다.
 - **M-step:** $\theta = \arg \max Q(\theta|\theta^{old})$를 통해 파라미터를 업데이트한다.
 
 ### 3. Online BW 알고리즘
+
 본 논문은 전체 데이터를 스캔하는 대신, 새로운 상태-행동 쌍 $(s_T, a_T)$이 들어올 때마다 업데이트되는 충분 통계량(Sufficient Statistic) $\phi_\theta^T$를 도입한다.
 
 $\phi_\theta^T$는 다음과 같이 정의된다:
 $$\phi_\theta^T(o', b, o, s, a) = \frac{1}{T} E_{\theta} \left[ \sum_{t=1}^{T} \mathbb{1}[O_{t-1}=o', B_t=b, O_t=o, S_t=s, A_t=a] \mid (s_t, a_t)_{1:T} \right]$$
 
 이를 위해 두 가지 필터를 사용하여 온라인으로 업데이트를 수행한다:
+
 1. **필터링 분포 $\chi_\theta^T(o)$:** 시간 $T$에서 옵션 $O_T=o$일 확률을 계산한다.
 2. **조인트 기대값 $\rho_\theta^T$:** 옵션 전이 및 행동 발생에 대한 누적 기대값을 계산한다.
 
 최종적으로 온라인 BW는 새로운 샘플이 들어올 때마다 E-step(필터 업데이트)을 수행하고, 일정 수 이상의 샘플($T > T_{min}$)이 쌓이면 M-step(정책 업데이트)을 수행하는 구조를 가진다.
 
 ### 4. Regularization Penalties
+
 학습된 옵션이 해석 가능하고 전이 가능하도록 하기 위해 M-step의 목적 함수에 다음과 같은 규제항을 추가한다.
+
 - **고수준 정책 규제:** 옵션 활성화의 희소성(Sparsity)을 강제하는 $L_b$와 옵션 간의 변별력을 높이는 분산 기반 규제 $L_v$를 도입한다.
 - **저수준 정책 규제:** 서로 다른 옵션이 서로 다른 행동을 취하도록 유도하기 위해 옵션 간 $\pi_{lo}$의 KL-divergence($L_{D_{KL}}$)를 최대화한다.
 
@@ -62,24 +70,28 @@ $$\theta^{(T)} \in \arg \max_{\theta \in \Theta} Q^T( \theta | \theta^{old}) - \
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋 및 환경:** OpenAI Gym의 Cartpole, Pendulum, Lunar Lander(연속 상태 공간)와 Discrete Grid-world(이산 상태 공간 및 높은 확률성)를 사용하였다.
 - **비교 대상:** Batch BW 알고리즘 vs 제안하는 Online BW 알고리즘.
 - **측정 지표:** 전문가의 성과를 1로 정규화한 평균 보상(Average Reward)을 측정하였다.
 - **모델 구조:** 모두 1개의 은닉층을 가진 Fully Connected Neural Network를 사용하였다.
 
 ### 주요 결과
+
 - **연속 상태 공간 환경:** Lunar Lander, Pendulum, Cartpole에서는 두 알고리즘의 성능이 거의 유사하게 나타났다. 이는 해당 환경들에서 데이터의 양 $T$와 탐색된 상태-행동 공간의 크기 $|\tilde{S}| \times |\tilde{A}|$가 비슷했기 때문으로 분석된다.
 - **이산 상태 공간 환경 (Grid-world):** Online BW가 Batch BW보다 우수한 성능을 보였다. 이는 Grid-world의 경우 $T \gg |\tilde{S}| \times |\tilde{A}|$ 관계가 성립하여, 온라인 업데이트 방식이 훨씬 더 효율적으로 파라미터를 수렴시켰기 때문이다.
 
 ## 🧠 Insights & Discussion
 
 ### 계산 복잡도 분석
+
 - Batch BW의 E-step 복잡도는 $O(T \times |O|^2 \times |B|)$이며, 데이터 크기 $T$에 직접적으로 의존한다.
 - Online BW의 E-step 복잡도는 $O(|\tilde{S}| \times |\tilde{A}| \times |O|^3 \times |B|^2)$이며, 탐색된 상태-행동 공간의 크기에 의존한다.
 
 따라서 에이전트가 방문하는 상태-행동의 조합보다 전문가의 시연 데이터가 훨씬 많은 경우($T \gg |\tilde{S}| \times |\tilde{A}|$), 온라인 알고리즘이 압도적인 계산 효율성을 가진다.
 
 ### 한계 및 비판적 해석
+
 본 논문은 온라인 알고리즘의 효율성을 입증하였으나, 실험에 사용된 환경들이 비교적 단순한 제어 작업이라는 한계가 있다. 상태 공간이 매우 거대하여 $|\tilde{S}| \times |\tilde{A}|$가 $T$보다 훨씬 커지는 환경에서는 오히려 온라인 방식의 복잡도가 증가할 수 있다. 하지만 저자들은 신경망을 통한 함수 근사를 도입함으로써 이 문제를 일부 완화하였으며, 향후 더 복잡하고 현실적인 환경에서의 검증이 필요하다.
 
 ## 📌 TL;DR

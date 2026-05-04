@@ -25,9 +25,11 @@ Sidahmed Lachenani, Hamza Kheddar, Mohamed Ouldzmirli (2024)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 제안된 시스템은 오디오 전처리, 특징 추출, 그리고 분류 단계로 구성된다. 원본 오디오 파형을 Mel-spectrogram으로 변환한 후, 사전 학습된 YAMNet을 통해 고차원 특징(Embedding)을 추출하고, 이를 사용자 정의된 완전 연결 층(Fully Connected Layers)에 입력하여 최종 클래스를 분류한다.
 
 ### 데이터 전처리 및 조건화
+
 학습에는 Speech Commands v0.01 데이터셋의 일부인 32,465개 샘플(12개 클래스)이 사용되었으며, 강건성을 높이기 위해 배경 소음을 추가하는 데이터 증강(Data Augmentation)을 수행하였다.
 
 1. **리샘플링(Resampling)**: 모든 오디오 신호는 $16\text{ kHz}$로 리샘플링된다. 샘플링 주파수를 $f'_s$에서 $f_s$로 변경하는 식은 다음과 같다.
@@ -45,20 +47,23 @@ Sidahmed Lachenani, Hamza Kheddar, Mohamed Ouldzmirli (2024)
    $$f_{\text{mel}} = 2595 \log_{10}\left(1 + \frac{f}{700}\right)$$
 
 ### 모델 아키텍처 및 학습 절차
+
 - **특징 추출기**: 사전 학습된 YAMNet을 사용하여 오디오의 고수준 특징을 추출한다.
 - **분류기**: YAMNet의 기본 출력 클래스인 521개를 제거하고, 본 연구의 목표인 12개 클래스 분류를 위한 새로운 Softmax 출력층을 추가하였다.
 - **학습 설정**:
-    - **데이터 분할**: 훈련 세트 80%, 검증 세트 20%
-    - **최적화 알고리즘**: Adam Optimizer
-    - **하이퍼파라미터**: 학습률 $0.0003$, 배치 크기 $128$, 총 에폭(Epoch) 수 $15$
-    - **입력**: Mel-spectrogram (50개 주파수 밴드)
+  - **데이터 분할**: 훈련 세트 80%, 검증 세트 20%
+  - **최적화 알고리즘**: Adam Optimizer
+  - **하이퍼파라미터**: 학습률 $0.0003$, 배치 크기 $128$, 총 에폭(Epoch) 수 $15$
+  - **입력**: Mel-spectrogram (50개 주파수 밴드)
 
 ## 📊 Results
 
 ### 실험 환경 및 설정
+
 실험은 Intel Core i5-7500 CPU, 8GB RAM, NVIDIA GeForce GT 710 GPU 환경에서 MATLAB R2022b를 사용하여 수행되었다.
 
 ### 정량적 결과
+
 제안된 YAMNet 기반 전이 학습 모델은 매우 높은 성능을 보였으며, 기존의 일반 딥러닝(DL) 벤치마크 모델보다 우수한 성능을 기록하였다.
 
 | Metric | YAMNet (Proposed) | DL [20] (Baseline) |
@@ -70,11 +75,12 @@ Sidahmed Lachenani, Hamza Kheddar, Mohamed Ouldzmirli (2024)
 | **Specificity** | $0.9949$ | $0.9949$ |
 
 ### 상세 분석
+
 - **학습 곡선**: 정확도 곡선은 초기 단계에서 급격히 상승하여 수백 회의 반복 학습(iteration) 내에 약 90%에 도달했으며, 최종적으로 95% 수준에서 안정화되었다. 훈련 및 검증 곡선이 밀접하게 일치하여 오버피팅(Overfitting)이 발생하지 않았음을 확인하였다.
 - **혼동 행렬(Confusion Matrix)**:
-    - **고성능 클래스**: "background" (100%), "right" (97.27%), "yes" (96.17%)에서 매우 높은 인식률을 보였다.
-    - **저성능 클래스**: "go" (89.23%), "on" (89.11%), "no" (92.22%) 등은 상대적으로 낮은 정확도를 보였다.
-    - **분석**: 특히 "go"와 "on"이 "no" 또는 "off"와 혼동되는 경향이 있는데, 이는 해당 단어들 간의 음향적 유사성(Acoustic Similarity) 때문인 것으로 분석된다.
+  - **고성능 클래스**: "background" (100%), "right" (97.27%), "yes" (96.17%)에서 매우 높은 인식률을 보였다.
+  - **저성능 클래스**: "go" (89.23%), "on" (89.11%), "no" (92.22%) 등은 상대적으로 낮은 정확도를 보였다.
+  - **분석**: 특히 "go"와 "on"이 "no" 또는 "off"와 혼동되는 경향이 있는데, 이는 해당 단어들 간의 음향적 유사성(Acoustic Similarity) 때문인 것으로 분석된다.
 - **강건성**: "unknown" 클래스(97.16%)와 "background" 클래스(100%)의 높은 정확도는 모델이 명령어가 아닌 소음을 효과적으로 배제할 수 있음을 시사한다.
 
 ## 🧠 Insights & Discussion

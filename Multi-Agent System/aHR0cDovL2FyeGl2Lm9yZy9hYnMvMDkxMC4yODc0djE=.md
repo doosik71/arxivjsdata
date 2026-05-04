@@ -21,11 +21,12 @@ Feng Gu, Uwe Aickelin, Julie Greensmith (n.d.)
 ## 🛠️ Methodology
 
 ### 1. Dendritic Cell Algorithm (DCA) 메커니즘
+
 DCA는 자연계의 수지상 세포(Dendritic Cells, DCs)가 항원을 처리하고 성숙하는 과정을 모방한다. DCs는 Immature(미성숙), Semimature(반성숙), Mature(완전 성숙)의 세 가지 상태를 가진다.
 
 - **신호 처리**: Immature DC는 주변의 세 가지 신호를 감지한다.
-    - $\text{PAMPs}$ (Pathogen Associated Molecular Patterns) 및 $\text{Danger signals}$: DC를 Mature 상태로 유도한다.
-    - $\text{Safe signals}$: DC를 Semimature 상태로 유도한다.
+  - $\text{PAMPs}$ (Pathogen Associated Molecular Patterns) 및 $\text{Danger signals}$: DC를 Mature 상태로 유도한다.
+  - $\text{Safe signals}$: DC를 Semimature 상태로 유도한다.
 - **성숙 결정**: DC는 누적된 $\text{Csm}$ (Costimulation signal) 값이 개별적으로 할당된 $\text{migration threshold}$를 초과할 때 성숙 단계로 진입한다. 이때 누적된 $\text{Semi}$ 신호와 $\text{Mat}$ 신호를 비교하여, $\text{Semi} > \text{Mat}$이면 Semimature 상태가 되고, 그렇지 않으면 Mature 상태가 된다.
 - **최종 분류**: 성숙한 DC는 샘플링한 항원에 대해 컨텍스트(context)를 반환한다. Mature DC는 '1'(비정상)을, Semimature DC는 '0'(정상)을 반환한다. 항원별로 수집된 컨텍스트들의 비율인 $\text{MCAV}$ (Mature Context Antigen Value)를 계산하여 분류를 결정한다.
 
@@ -34,6 +35,7 @@ $$\text{MCAV} = \frac{\text{number of context '1'}}{\text{number of all contexts
 $\text{MCAV}$가 설정된 $\text{anomalous threshold}$보다 크면 해당 항원을 비정상(anomalous)으로 분류한다.
 
 ### 2. 에이전트 기반 구현 (AnyLogic)
+
 본 모델은 AnyLogic 환경에서 세 가지 유형의 에이전트를 정의하여 시스템을 구축하였다.
 
 - **Antigen Agents (항원 에이전트)**: 데이터 항목을 운반하는 역할이다. 데이터셋의 각 항목을 하나의 에이전트로 생성하며, 선택된 속성을 추출하고 기록한다. 무작위로 DC 에이전트들을 선택해 'picked' 메시지를 보내며, 최종적으로 수집된 컨텍스트를 통해 $\text{MCAV}$를 계산하고 분류 결과를 도출한다.

@@ -23,12 +23,15 @@ Abhijit Suprem, Calton Pu (2022)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 시스템 구조
+
 MiDAS의 전체 구조는 단일 인코더와 다중 디코더, 그리고 기존에 미세 조정된(fine-tuned) 소스 모델(SM)들로 구성된다. 과정은 다음과 같다.
+
 1. **Domain Invariant Encoder ($E$)**: 모든 소스 도메인의 데이터를 입력받아 도메인에 상관없는 공통의 불변 표현(invariant representation)을 생성한다.
 2. **Decoders ($D_k$)**: 불변 표현을 다시 각 소스 모델 $f_k$가 이해할 수 있는 도메인 특화 표현으로 복원한다. 이는 기존 모델들을 그대로 사용하기 위해 SentencePiece 토큰 형태로 복원하는 과정을 포함한다.
 3. **Adaptive Selection**: 불변 표현 공간에서 샘플 주변의 국소적 Lipschitz smoothness를 측정하여 가장 낮은 $L$ 값을 가진 모델을 선택한다.
 
 ### 훈련 목표 및 손실 함수
+
 인코더 $E$를 학습시키기 위해 적대적 판별자(Discriminator, $D'$)와 Gradient Reversal Layer(GRL)를 사용한다. 판별자는 불변 표현이 어느 도메인에서 왔는지 맞추려 하고, 인코더는 판별자를 속이도록 학습된다.
 
 $$ \text{Loss} = \min_{E,R(D')} -\sum_{i=1}^k \mathbb{E}_{(x,y)\sim X_k} [l(D'(R(E(x))), k)] $$
@@ -36,6 +39,7 @@ $$ \text{Loss} = \min_{E,R(D')} -\sum_{i=1}^k \mathbb{E}_{(x,y)\sim X_k} [l(D'(R
 여기서 $R$은 GRL이며, 순전파 때는 항등 함수로 동작하고 역전파 때는 그래디언트에 $\lambda = -1$을 곱해 전달한다. 또한 디코더는 BERT/AlBERT의 Masked Language Modeling(MLM) 손실 함수를 사용하여 원문 토큰을 복원하도록 학습된다.
 
 ### Randomized Lipschitz Smoothness 및 모델 선택
+
 MiDAS는 모델 $f_k$가 Lipschitz 연속적이라는 정의에서 출발한다. 즉, 두 입력의 차이에 비해 출력의 차이가 일정 상수 $L$에 의해 유계(bounded)될 때 이를 Lipschitz smooth하다고 한다.
 
 $$ |\text{Pr}(f_k(x_1) = C) - \text{Pr}(f_k(x_2) = C)| \le L_k \cdot \theta(x_1, x_2) $$
@@ -49,11 +53,13 @@ $$ \arg \min_k \max_{\theta(x', x_r) \le \epsilon} \left| \frac{1}{N} \sum_{r=1}
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 9개의 서로 다른 코로나19 가짜 뉴스 데이터셋을 사용하였다.
 - **평가 방법**: Leave-one-out 방식을 채택하여, 8개 데이터셋으로 모델과 인코더를 학습시키고 나머지 1개의 보지 못한(drifted) 데이터셋에 대해 테스트하였다.
 - **비교 대상**: Equal-weighted Ensemble, Snorkel, EEWS, KMP-model, 그리고 해당 데이터셋으로 직접 학습한 Oracle 모델을 기준으로 비교하였다.
 
 ### 주요 결과
+
 - **정량적 성과**: MiDAS는 거의 모든 데이터셋에서 다른 베이스라인 모델들을 압도하였다. 특히 단순 앙상블(Ensemble) 대비 평균 30% 이상의 정확도 향상을 보였다.
 - **일반화 능력**: Concept Drift가 심한 상황에서도 MiDAS는 각 샘플에 최적화된 모델을 선택함으로써 Oracle 모델의 성능에 근접하는 결과를 냈다.
 - **Ablation Study**: MLM 마스킹 적용, Center Loss 추가, 판별자 손실 가중치 상향 조정 등이 순차적으로 성능 향상에 기여함을 확인하였다. 특히 MLM 적용이 엔드-투-엔드 정확도 향상에 유의미한 영향을 주었다.
@@ -61,9 +67,11 @@ $$ \arg \min_k \max_{\theta(x', x_r) \le \epsilon} \left| \frac{1}{N} \sum_{r=1}
 ## 🧠 Insights & Discussion
 
 ### 강점 및 분석
+
 MiDAS의 가장 큰 강점은 기존에 이미 학습된 모델들을 수정하지 않고 그대로 사용할 수 있는 'Plug-and-play' 구조라는 점이다. 도메인 불변 인코더를 통해 서로 다른 도메인의 샘플들을 동일한 공간에 투영함으로써, 모델 간의 '부드러움'을 동일한 기준에서 비교할 수 있게 한 점이 주효했다. t-SNE 시각화 결과, MiDAS 적용 후 도메인 간 레이블 중첩(label overlap)이 줄어들고 클래스별 클러스터링이 명확해짐이 확인되었다.
 
 ### 한계 및 비판적 해석
+
 - **하이퍼파라미터 $m$의 의존성**: 최근접 이웃의 수 $m$에 따라 $\epsilon$-Ball의 반지름이 결정되며, 이는 정확도(Accuracy)와 커버리지(Coverage) 사이의 트레이드오프를 발생시킨다. $m$이 너무 작으면 정확도는 높으나 예측 가능한 샘플 수가 적고, $m$이 너무 크면 커버리지는 넓어지나 정확도가 떨어진다.
 - **구조적 제약**: 현재 구조는 기존 모델의 입력 형식을 맞추기 위해 디코더를 통해 토큰을 복원해야 한다. 저자들도 언급했듯이, 인코더와 소스 모델을 함께 학습시킨다면 복원 과정 없이 직접 임베딩을 사용함으로써 더 높은 성능과 효율성을 얻을 수 있을 것이다.
 

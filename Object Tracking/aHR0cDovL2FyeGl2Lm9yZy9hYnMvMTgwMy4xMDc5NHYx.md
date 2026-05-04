@@ -12,28 +12,32 @@ Matthias Müller, Adel Bibi, Silvio Giancola, Salman Al-Subaihi, Bernard Ghanem 
 
 본 논문의 핵심 기여는 다음과 같다.
 
-1.  **대규모 데이터셋 TrackingNet 구축**: 30,000개 이상의 비디오와 1,400만 개 이상의 조밀한(Dense) 바운딩 박스 어노테이션을 포함하는 최초의 대규모 객체 추적 데이터셋을 제안한다.
-2.  **희소 어노테이션의 조밀화 방법론**: 객체 검출 데이터셋의 희소한 어노테이션(1 fps)을 추적기(Tracker)를 이용하여 조밀한 어노테이션으로 변환하는 효율적인 보간(Interpolation) 기법을 제시한다.
-3.  **공정한 벤치마크 시스템**: 학습 데이터와 완전히 분리된 511개의 테스트 비디오 세트를 구축하고, 정답지를 공개하지 않는 온라인 평가 서버를 제공함으로써 데이터 누수(Data Leakage) 없는 공정한 성능 평가 환경을 조성한다.
-4.  **딥러닝 추적기의 성능 향상 검증**: TrackingNet의 일부 데이터만으로 fine-tuning을 진행했을 때, 기존 추적기의 성능이 OTB100 및 TrackingNet Test 세트에서 향상됨을 입증한다.
+1. **대규모 데이터셋 TrackingNet 구축**: 30,000개 이상의 비디오와 1,400만 개 이상의 조밀한(Dense) 바운딩 박스 어노테이션을 포함하는 최초의 대규모 객체 추적 데이터셋을 제안한다.
+2. **희소 어노테이션의 조밀화 방법론**: 객체 검출 데이터셋의 희소한 어노테이션(1 fps)을 추적기(Tracker)를 이용하여 조밀한 어노테이션으로 변환하는 효율적인 보간(Interpolation) 기법을 제시한다.
+3. **공정한 벤치마크 시스템**: 학습 데이터와 완전히 분리된 511개의 테스트 비디오 세트를 구축하고, 정답지를 공개하지 않는 온라인 평가 서버를 제공함으로써 데이터 누수(Data Leakage) 없는 공정한 성능 평가 환경을 조성한다.
+4. **딥러닝 추적기의 성능 향상 검증**: TrackingNet의 일부 데이터만으로 fine-tuning을 진행했을 때, 기존 추적기의 성능이 OTB100 및 TrackingNet Test 세트에서 향상됨을 입증한다.
 
 ## 📎 Related Works
 
 ### 관련 연구 및 한계
+
 - **Correlation Filter (CF) Trackers**: 푸리에 도메인(Fourier Domain)에서의 효율적인 연산을 통해 매우 빠른 속도와 높은 정확도를 보이는 추적기들이다. 하지만 대부분 수작업으로 설계된 특징(Handcrafted Features)에 의존하며, 데이터셋의 규모가 작아 딥러닝 기반의 특징 추출기로의 전환이 더뎠다.
 - **Deep Trackers**: MDNet과 같이 온라인으로 학습하는 방식이나 Siamese networks와 같이 오프라인으로 학습된 매칭 함수를 사용하는 방식이 있다. 특히 Siamese 네트워크는 학습 데이터셋이 객체의 외형 변화를 얼마나 잘 포착하느냐에 따라 성능이 결정되므로 대규모 데이터셋의 필요성이 매우 높다.
 - **기존 데이터셋**: OTB, VOT, ALOV300 등이 사용되어 왔으나, 이들은 규모가 작고 실제 환경의 다양성을 충분히 반영하지 못하며, 학습 세트와 테스트 세트의 구분이 명확하지 않아 공정한 비교가 어려운 경우가 많았다.
 
 ### 차별점
+
 TrackingNet은 기존 데이터셋보다 규모가 수십 배 크며, YouTube-BoundingBoxes(YT-BB)를 기반으로 하여 실제 환경의 다양한 객체 클래스와 배경을 포함한다. 또한, 단순한 데이터 제공을 넘어 '추적기 기반 보간법'을 통해 데이터 생성 비용을 낮추면서도 대규모 조밀한 데이터를 확보했다는 점에서 차별성을 가진다.
 
 ## 🛠️ Methodology
 
 ### 데이터셋 구성
+
 - **Training Set**: YT-BB 데이터셋에서 필터링을 거쳐 30,132개의 비디오를 선정하였다. 15초 미만의 짧은 영상, 객체가 화면의 50% 미만을 차지하는 영상, 움직임이 거의 없는 영상을 제거하였다.
 - **Testing Set**: 저작권 문제가 없는 YT-CC 비디오 중 학습 세트와 유사한 클래스 분포를 가진 511개의 영상을 선정하였다. Amazon Mechanical Turk(AMT) 작업자들을 통해 정밀하게 수동 어노테이션을 수행하였으며, 전문가의 전수 검수를 통해 품질을 보장하였다.
 
 ### 조밀한 어노테이션 생성 (Tracker-aided Annotation)
+
 YT-BB의 어노테이션은 1초 단위(1 fps)로 매우 희소하다. 이를 해결하기 위해 본 논문은 추적기가 짧은 시간 간격(1초) 내에서는 매우 정확하다는 점에 착안하여, DCF 추적기를 이용해 빈 공간을 채우는 방식을 사용한다. 구체적으로는 순방향(Forward) 패스와 역방향(Backward) 패스의 결과를 가중 평균하여 최종 바운딩 박스를 결정한다.
 
 $$x_t^{WG} = e^{-\alpha t} x_t^{FW} + (1 - e^{-\alpha t}) x_t^{BK}$$
@@ -41,34 +45,41 @@ $$x_t^{WG} = e^{-\alpha t} x_t^{FW} + (1 - e^{-\alpha t}) x_t^{BK}$$
 여기서 $x_t^{FW}$와 $x_t^{BK}$는 각각 순방향과 역방향 추적 결과이며, $\alpha$는 0.05로 설정된 상수이다. 이 방식은 프레임의 시작과 끝 지점의 정답(Ground Truth)을 모두 활용함으로써 보간 오차를 최소화한다.
 
 ### 평가 지표
+
 본 논문은 다음과 같은 세 가지 지표를 사용한다.
 
-1.  **Success ($S$)**: 추적된 바운딩 박스($BB_{tr}$)와 정답 바운딩 박스($BB_{gt}$) 간의 Intersection over Union (IoU)를 측정한다.
+1. **Success ($S$)**: 추적된 바운딩 박스($BB_{tr}$)와 정답 바운딩 박스($BB_{gt}$) 간의 Intersection over Union (IoU)를 측정한다.
     $$S = \frac{|BB_{tr} \cap BB_{gt}|}{|BB_{tr} \cup BB_{gt}|}$$
     이 값의 AUC(Area Under the Curve)를 통해 성능을 랭킹화한다.
 
-2.  **Precision ($P$)**: 정답 중심점($C_{gt}$)과 추적 중심점($C_{tr}$) 사이의 유클리드 거리를 측정한다. 보통 20 픽셀 임계값을 사용한다.
+2. **Precision ($P$)**: 정답 중심점($C_{gt}$)과 추적 중심점($C_{tr}$) 사이의 유클리드 거리를 측정한다. 보통 20 픽셀 임계값을 사용한다.
     $$P = \|C_{tr} - C_{gt}\|_2$$
 
-3.  **Normalized Precision ($P_{norm}$)**: 이미지 해상도와 객체 크기에 따른 민감도를 줄이기 위해 정답 바운딩 박스의 크기로 정규화한 거리 오차를 사용한다.
+3. **Normalized Precision ($P_{norm}$)**: 이미지 해상도와 객체 크기에 따른 민감도를 줄이기 위해 정답 바운딩 박스의 크기로 정규화한 거리 오차를 사용한다.
     $$P_{norm} = \|W(C_{tr} - C_{gt})\|_2, \quad W = \text{diag}(BB_{gt}^x, BB_{gt}^y)^{-1}$$
 
 ## 📊 Results
 
 ### 종합 벤치마크 결과
+
 20개 이상의 추적기를 평가한 결과, TrackingNet Test 세트에서의 Success Rate는 최고 약 60% 수준으로, OTB(약 90%)에 비해 현저히 낮게 나타났다. 이는 TrackingNet이 실제 환경의 복잡한 챌린지를 더 많이 포함하고 있음을 시사한다.
+
 - **최고 성능**: 온라인 학습을 통해 적응력이 높은 MDNet이 가장 높은 성능을 보였으나, 추론 속도가 매우 느리다는 단점이 있다.
 - **딥러닝 추적기**: CFNet과 SiameseFC는 대규모 데이터셋(ImageNet Videos)으로 사전 학습되었기에 높은 성능을 보였다.
 
 ### 실시간 추적 실험 (Variable Frame Rate)
+
 추적기의 속도에 따라 프레임을 건너뛰는(Skip) 시나리오를 설정하여 실험한 결과, 수작업 특징 기반 추적기들은 성능 저하가 심했으나, CFNet과 같은 딥러닝 추적기들은 프레임을 건너뛰더라도 성능이 거의 유지되는 강건함을 보였다.
 
 ### Fine-tuning 효과
+
 SiameseFC를 TrackingNet의 1/12 분량(약 2,511개 비디오)만으로 fine-tuning 했을 때, TrackingNet Test와 OTB100 모두에서 지표가 향상되었다.
+
 - **TrackingNet Test**: Precision ($0.533 \rightarrow 0.543$), Success ($0.571 \rightarrow 0.581$)
 - **OTB100**: Precision ($0.765 \rightarrow 0.781$), Success ($0.569 \rightarrow 0.576$)
 
 ### 속성별 분석 (Attribute Analysis)
+
 15가지 속성별로 분석한 결과, **In-Plane Rotation(평면 내 회전), Low Resolution(저해상도), Full Occlusion(완전 가려짐)** 상황에서 모든 추적기의 성능이 급격히 하락하여, 여전히 해결해야 할 난제임을 확인하였다. 반면, 조명 변화(Illumination Variation)나 일부 가려짐(Partial Occlusion)에는 상대적으로 강건했다.
 
 ## 🧠 Insights & Discussion

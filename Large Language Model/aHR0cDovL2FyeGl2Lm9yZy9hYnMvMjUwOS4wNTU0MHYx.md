@@ -13,6 +13,7 @@ Thiago Barradas, Aline Paes, Vânia de Oliveira Neves (2025)
 본 논문의 핵심 기여는 **Test Specification Language (TSL)**를 중간 단계로 도입하여 LLM의 추론 과정과 구현 과정을 분리한 **RestTSLLM** 방법론을 제안한 것이다.
 
 핵심 아이디어는 '분해된 프롬프팅(Decomposed Prompting)'에 있다. LLM이 한 번에 OpenAPI 명세에서 실행 가능한 코드까지 생성하게 하는 대신, 다음과 같은 단계적 구조를 취한다:
+
 1. **추론 단계**: OpenAPI 명세 $\rightarrow$ TSL (비즈니스 시나리오 및 테스트 케이스 정의)
 2. **구현 단계**: TSL $\rightarrow$ 실행 가능한 테스트 코드 (예: .NET xUnit)
 
@@ -20,7 +21,7 @@ Thiago Barradas, Aline Paes, Vânia de Oliveira Neves (2025)
 
 ## 📎 Related Works
 
-논문에서는 LLM을 소프트웨어 공학 및 테스트 자동화에 적용한 기존 연구들을 검토한다. 
+논문에서는 LLM을 소프트웨어 공학 및 테스트 자동화에 적용한 기존 연구들을 검토한다.
 
 - **기존 LLM 연구**: 많은 연구가 유닛 테스트(Unit Testing) 생성에 집중하고 있으나, 더 많은 문맥 정보가 필요한 통합 테스트에 대한 연구는 상대적으로 부족하다.
 - **REST API 전용 도구**: RESTler, RESTest와 같은 전통적인 블랙박스 도구들은 커버리지는 높일 수 있으나, 자연어로 작성된 명세서의 비즈니스 로직을 깊이 있게 이해하는 데 한계가 있다.
@@ -31,6 +32,7 @@ Thiago Barradas, Aline Paes, Vânia de Oliveira Neves (2025)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 (RestTSLLM)
+
 RestTSLLM은 **Behavior $\rightarrow$ Examples $\rightarrow$ Action**의 3단계 프롬프트 엔지니어링 구조를 가진다.
 
 1. **Behavior (행동 정의)**: LLM에게 숙련된 개발자 및 테스터의 역할을 부여한다. OpenAPI 명세 해석, TSL 변환, AAA(Arrange, Act, Assert) 패턴 적용 등의 지침을 시스템 프롬프트로 제공하여 출력 형식을 제한한다.
@@ -40,7 +42,9 @@ RestTSLLM은 **Behavior $\rightarrow$ Examples $\rightarrow$ Action**의 3단계
 3. **Action (실행)**: 학습된 로직을 실제 대상 프로젝트의 OpenAPI 명세에 적용하여 TSL을 먼저 생성하고, 이를 다시 최종 테스트 코드로 변환한다.
 
 ### 평가 지표 및 계산 방식
+
 본 연구는 생성된 테스트의 품질을 측정하기 위해 세 가지 지표를 사용한다:
+
 - **Success Rate ($\text{SR}$)**: 생성된 테스트가 실패 없이 성공적으로 실행되는 비율.
 - **Branch Coverage ($\text{C}$)**: 테스트 실행 중 제어 흐름의 분기점이 얼마나 실행되었는지 측정하는 지표.
 - **Mutation Score ($\text{MS}$)**: 코드에 인위적인 결함(Mutant)을 주입했을 때 테스트가 이를 얼마나 잘 감지하는지 측정하는 지표.
@@ -50,6 +54,7 @@ RestTSLLM은 **Behavior $\rightarrow$ Examples $\rightarrow$ Action**의 3단계
 $$S = w \cdot \text{SuccessRate} + w \cdot \text{Coverage} + w \cdot \text{MutationScore}$$
 
 ### 실험 설정
+
 - **대상 LLM**: Claude 3.5 Sonnet, Deepseek R1, Qwen 2.5 32b, Sabiá 3, LLaMA 3.2 90b, GPT 4o, Gemini 1.5 Pro, Mistral Large (총 8종).
 - **대상 프로젝트**: .NET 기반의 오픈소스 REST API 프로젝트 6개.
 - **도구**: 테스트 실행은 Visual Studio 2022, 뮤테이션 테스트는 Stryker.NET을 사용하였다.
@@ -57,6 +62,7 @@ $$S = w \cdot \text{SuccessRate} + w \cdot \text{Coverage} + w \cdot \text{Mutat
 ## 📊 Results
 
 ### 정량적 결과
+
 실험 결과, **Claude 3.5 Sonnet**이 모든 지표에서 1위를 차지하며 가장 효과적인 모델임이 입증되었다.
 
 | Model | Calculated Score ($S$) | Success Rate ($\text{SR}$) | Coverage ($\text{C}$) | Mutation Score ($\text{MS}$) |
@@ -71,7 +77,9 @@ $$S = w \cdot \text{SuccessRate} + w \cdot \text{Coverage} + w \cdot \text{Mutat
 - **비용 효율성**: 모든 모델의 실행 비용이 매우 낮았으며(프로젝트당 1달러 미만), 특히 LLaMA, Sabiá, Qwen은 0.09달러 미만의 매우 낮은 비용으로 경쟁력 있는 결과를 냈다.
 
 ### 테스트 실패 분석
+
 전체 생성된 1,635개 테스트 중 39개(2.38%)가 실패하였으며, 주요 원인은 다음과 같다:
+
 - **Property Length (15건)**: 허용 범위를 벗어난 경계값 검증 실패.
 - **Misinterpretation (7건)**: API 명세에 대한 오해 또는 잘못된 로직 적용.
 - **Authentication (5건)**: 인증 정보 누락 또는 잘못된 사용.
@@ -79,9 +87,11 @@ $$S = w \cdot \text{SuccessRate} + w \cdot \text{Coverage} + w \cdot \text{Mutat
 ## 🧠 Insights & Discussion
 
 ### 강점 및 유효성
+
 본 연구는 TSL이라는 중간 언어를 도입함으로써 LLM의 인지 부하를 줄이고, 비즈니스 추론과 코드 구현을 분리하는 전략이 실제로 효과적임을 보여주었다. 특히, 정성적 분석 결과 생성된 테스트 케이스들이 OpenAPI 명세의 비즈니스 규칙(인증 기준, 상태 코드 등)을 정확히 반영하고 있었으며, 기존에 수동으로 작성된 테스트보다 더 나은 성과를 보인 경우도 있었다.
 
 ### 한계 및 비판적 해석
+
 1. **OpenAPI 의존성**: 본 방법론은 고품질의 OpenAPI 명세서가 존재한다는 가정하에 작동한다. 명세서가 부실하거나 오래된 레거시 시스템에서는 성능이 급격히 저하될 가능성이 크다.
 2. **결정론적 결과의 부족**: LLM의 온도(Temperature) 설정을 1로 유지했기에 결과의 무작위성이 존재하며, 이는 재현성 측면에서 한계가 있다.
 3. **뮤테이션 스코어의 한계**: 블랙박스 테스트 생성 특성상 내부 구현 세부 사항을 알 수 없으므로, 뮤테이션 스코어가 상대적으로 낮게 나타나는 경향이 있다. 이는 명세서와 실제 구현체 사이의 간극에서 발생하는 문제로 해석된다.

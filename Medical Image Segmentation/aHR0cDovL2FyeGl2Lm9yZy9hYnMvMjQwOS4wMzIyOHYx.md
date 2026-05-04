@@ -9,6 +9,7 @@ Xixi Jiang, Dong Zhang, Xiang Li, Kangyi Liu, Kwang-Ting Cheng, Xin Yang (2024)
 이 문제의 중요성은 의료 영상 분야에서 모든 장기에 대해 정밀한 픽셀 단위 라벨을 확보하는 것이 매우 노동 집약적이고 시간 소모적이며, 전문 지식이 필요하기 때문에 발생한다. 따라서 완전 지도 학습(Fully-supervised learning) 데이터셋을 구축하는 것은 매우 어렵다.
 
 논문에서 지적하는 핵심 문제는 **라벨링된 픽셀과 라벨링되지 않은 픽셀 간의 분포 불일치(Distribution Mismatch)**이다. 구체적으로 두 가지 원인이 존재한다:
+
 1. **과적합(Overfitting):** 라벨링된 전경(Foreground) 픽셀의 수가 제한적이어서 모델이 편향된 분포를 학습하게 된다.
 2. **모호한 경계:** 라벨링되지 않은 전경 픽셀과 배경(Background) 픽셀을 구분할 감독 신호가 부족하여, 두 클래스의 특징 공간(Feature manifold)이 서로 얽히게 된다. 특히 췌장(Pancreas)과 같이 배경과의 대비가 낮고 경계가 불분명한 장기에서 이 문제가 심각하며, 이는 결국 부정확한 의사 라벨(Pseudo-label) 생성으로 이어진다.
 
@@ -22,27 +23,32 @@ Xixi Jiang, Dong Zhang, Xiang Li, Kangyi Liu, Kwang-Ting Cheng, Xin Yang (2024)
 ## 📎 Related Works
 
 ### 관련 연구 및 한계
+
 - **조건 기반 방법(Condition-based methods):** 각 분할 작업을 작업 인식 사전 정보(Task-aware prior)로 인코딩하여 단일 네트워크를 학습시키지만, 다기관 결과를 얻기 위해 여러 번의 추론(Inference)을 수행해야 하므로 시간이 많이 걸린다.
 - **의사 라벨링 방법(Pseudo-labeling methods):** 단일 기관 모델들을 사전 학습시켜 의사 라벨을 생성하고 이를 통해 학생 모델을 학습시킨다. 하지만 라벨링된 픽셀과 라벨링되지 않은 픽셀이 동일한 분포를 가진다는 가정을 전제로 하므로, 분포 불일치가 발생할 경우 확인 편향(Confirmation bias)으로 인해 성능이 저하된다.
 - **부분 지도 학습의 일반적 접근:** 라벨링되지 않은 클래스를 무시하거나 배경으로 처리하는 방식이 있으나, 전자는 과적합을 유발하고 후자는 거짓 음성(False negative) 오류를 유발하여 모델을 혼란스럽게 만든다.
 
 ### 차별점
+
 LTUDA는 기존의 의사 라벨링 방법들이 간과했던 **분포 불일치 문제**를 정면으로 다룬다. 단순히 의사 라벨을 생성하는 것에 그치지 않고, 데이터 증강과 프로토타입 정렬을 통해 특징 분포 자체를 교정함으로써 편향되지 않은 의사 라벨을 생성하도록 유도한다.
 
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
-본 프레임워크는 Teacher-Student 구조를 기반으로 한다. Teacher 모델은 Student 모델의 지수 이동 평균(EMA)을 통해 업데이트된다. 
+
+본 프레임워크는 Teacher-Student 구조를 기반으로 한다. Teacher 모델은 Student 모델의 지수 이동 평균(EMA)을 통해 업데이트된다.
+
 - **Teacher 모델:** 약한 증강(Weak augmentation)이 적용된 이미지 $X^w$를 입력받아 의사 라벨 $\hat{Y}$를 생성한다.
 - **Student 모델:** 강한 증강(Strong augmentation)이 적용된 이미지 $X^s$를 입력받으며, 세 가지 분류기(Linear, Labeled Prototype, Unlabeled Prototype)를 통해 예측을 수행하고 이를 의사 라벨로 감독한다.
 
 ### 주요 구성 요소 및 방법론
 
 #### 1. Linear Threshold-based Classifier
+
 모델은 각 장기 클래스에 대해 전경 맵(Foreground maps) $p=\{p_c\}_{c=1}^C$를 출력한다. 최종 클래스 $\hat{y}$는 다음과 같이 결정된다.
 $$\hat{y}=
-\begin{cases} 
-\arg \max_{c\in\{1,\dots,C\}} p_c, & \text{if } \max_{c\in\{1,\dots,C\}} p_c \geq \tau \\ 
+\begin{cases}
+\arg \max_{c\in\{1,\dots,C\}} p_c, & \text{if } \max_{c\in\{1,\dots,C\}} p_c \geq \tau \\
 0 (\text{background class}), & \text{otherwise}
 \end{cases}$$
 여기서 $\tau$는 배경과 전경을 구분하는 임계값이다.
@@ -71,7 +77,7 @@ $$L_{\text{proto}}(X^s, \hat{Y}^s) = L_{CE} + \lambda_1 L_{PPD} + \lambda_2 L_{P
 ## 📊 Results
 
 ### 실험 설정
-- **데이터셋:** 
+- **데이터셋:**
     - Toy dataset: AbdomenCT-1K에서 샘플링된 50케이스.
     - LSPL dataset: LiTS(간), MSD-Spleen(비장), KiTS(신장), NIH82(췌장)의 합집합.
     - 일반화 테스트: BTCV, AbdomenCT-1K.

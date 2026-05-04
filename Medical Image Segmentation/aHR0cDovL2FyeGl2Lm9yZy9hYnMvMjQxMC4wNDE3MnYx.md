@@ -23,7 +23,9 @@ Chao Qin, Jiale Cao, Huazhu Fu, Fahad Shahbaz Khan, Rao Muhammad Anwer (2024)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 DB-SAM은 입력 이미지를 서로 다른 해상도의 두 이미지($I_{vit} \in \mathbb{R}^{1024 \times 1024}$, $I_{conv} \in \mathbb{R}^{256 \times 256}$)로 리사이징하여 두 개의 병렬 브랜치에 입력한다. 전체 파이프라인은 다음과 같다:
+
 - **ViT Branch**: 동결된 ViT 블록과 학습 가능한 Channel Attention Block의 결합.
 - **Convolution Branch**: 경량 Convolution 블록을 통한 얕은 특징 추출.
 - **Feature Fusion**: Bilateral Cross-Attention 및 ViT-Conv Fusion Block을 통한 특징 통합.
@@ -32,6 +34,7 @@ DB-SAM은 입력 이미지를 서로 다른 해상도의 두 이미지($I_{vit} 
 ### 2. 주요 구성 요소 및 상세 설명
 
 #### (1) ViT Branch 및 Channel Attention Block
+
 ViT의 강력한 특징 표현력을 유지하기 위해 가중치는 고정하고, 각 Attention 블록 뒤에 **Channel Attention Block**을 추가하여 지역성 귀납적 편향(Locality inductive bias)을 부여한다. 이 블록의 연산 과정은 다음과 같다:
 
 $$F_{out} = F_{vit} + \text{Conv}_{1\times 1}(\text{SE}(\text{DWConv}_{3\times 3}(\text{LN}(F_{vit}))))$$
@@ -39,14 +42,17 @@ $$F_{out} = F_{vit} + \text{Conv}_{1\times 1}(\text{SE}(\text{DWConv}_{3\times 3
 여기서 $\text{LN}$은 Layer Normalization, $\text{DWConv}_{3\times 3}$은 Depth-wise Convolution, $\text{SE}$는 Squeeze-and-Excitation 블록을 의미한다. 이를 통해 ViT 인코더의 각 단계에서 도메인 특화된 고수준 특징을 추출한다.
 
 #### (2) Convolution Branch 및 Bilateral Cross-Attention (BCA)
+
 ViT의 패치 임베딩(16배 다운샘플링)으로 인한 로컬 디테일 손실을 막기 위해, $256 \times 256$ 해상도의 이미지로부터 직접 얕은 특징($F_s$)을 추출하는 경량 Convolution 브랜치를 운용한다. 이 브랜치는 2개의 $3\times 3$ Conv와 3개의 $1\times 1$ Conv 레이어로 구성된다.
 
 두 브랜치의 특징을 융합하기 위해 **Bilateral Cross-Attention**을 사용한다. Deformable Attention을 기반으로 하며, 다음과 같은 상호 교차 쿼리 방식을 취한다:
+
 - ViT 특징($F_d$)을 Query로, Conv 특징($F_s$)을 Key/Value로 사용하여 $F_{cd}$ 생성.
 - Conv 특징($F_s$)을 Query로, ViT 특징($F_d$)을 Key/Value로 사용하여 $F_{cs}$ 생성.
 이후 Layer Normalization과 Feed-forward 레이어를 거쳐 최종 업데이트된 특징 $F_1^d$와 $F_1^s$를 생성한다.
 
 #### (3) ViT-Conv Fusion Block
+
 최종적으로 두 브랜치의 출력 특징 $F_{od}$와 $F_{os}$를 자동 선택 메커니즘(Automatic Selective Mechanism)을 통해 융합한다. 각 특징은 먼저 Channel Attention 레이어를 통해 로짓($\Lambda_d, \Lambda_s$)으로 변환되며, 이를 합산하여 시그모이드 함수를 적용한 선택 마스크 $M$을 생성한다:
 
 $$M = \text{Sigmoid}(\Lambda_d + \Lambda_s)$$
@@ -58,6 +64,7 @@ $$F_{output} = F_{od} \otimes M + F_{os} \otimes (1 - M)$$
 여기서 $\otimes$는 요소별 곱셈(element-wise multiplication)을 의미하며, 이를 통해 각 토큰이 글로벌 문맥 정보와 로컬 공간 정보를 적응적으로 선택하여 수용하게 한다.
 
 ### 3. 학습 절차
+
 - **동결 및 학습**: ViT 인코더와 Prompt 인코더는 고정하며, 추가된 Adapter 모듈들과 Mask Decoder만을 학습시킨다.
 - **프롬프트 생성**: 실제 임상 환경을 모사하기 위해 Ground-truth 마스크에 0~20 픽셀의 무작위 섭동(perturbation)을 준 Bounding box 프롬프트를 사용한다.
 - **손실 함수**: Cross-Entropy Loss와 Dice Loss의 합을 사용하여 학습을 감독한다.
@@ -65,22 +72,25 @@ $$F_{output} = F_{od} \otimes M + F_{os} \otimes (1 - M)$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: MedSAM에서 수집한 30개의 공개 의료 데이터셋을 사용하였다. MR(T1, T2, ADC, FLAIR), CT, X-Ray, 내시경 이미지, 망막 이미지, 병리 이미지 등 매우 다양한 모달리티를 포함한다.
 - **평가 지표**: Dice Similarity Coefficient (DSC)와 1mm 허용 오차 기반의 Normalized Surface Distance (NSD)를 사용하였다.
 
 ### 2. 정량적 결과
+
 DB-SAM은 2D 및 3D의 모든 의료 영상 분할 작업에서 SAM 및 MedSAM을 유의미하게 앞질렀다.
 
 - **3D 의료 영상 분할 (21개 작업)**:
-    - **평균 DSC**: SAM(58.52%) $\rightarrow$ MedSAM(81.02%) $\rightarrow$ **DB-SAM(87.05%)**
-    - **평균 NSD**: SAM(37.49%) $\rightarrow$ MedSAM(76.54%) $\rightarrow$ **DB-SAM(85.31%)**
-    - 특히 복부 종양(Abdomen Tumor) 분할에서 MedSAM(65.54%) 대비 12.77%p 높은 78.31%의 DSC를 기록하였다.
+  - **평균 DSC**: SAM(58.52%) $\rightarrow$ MedSAM(81.02%) $\rightarrow$ **DB-SAM(87.05%)**
+  - **평균 NSD**: SAM(37.49%) $\rightarrow$ MedSAM(76.54%) $\rightarrow$ **DB-SAM(85.31%)**
+  - 특히 복부 종양(Abdomen Tumor) 분할에서 MedSAM(65.54%) 대비 12.77%p 높은 78.31%의 DSC를 기록하였다.
 
 - **2D 의료 영상 분할 (9개 작업)**:
-    - **평균 DSC**: SAM(59.62%) $\rightarrow$ MedSAM(77.22%) $\rightarrow$ **DB-SAM(82.00%)**
-    - **평균 NSD**: SAM(64.27%) $\rightarrow$ MedSAM(83.17%) $\rightarrow$ **DB-SAM(91.81%)**
+  - **평균 DSC**: SAM(59.62%) $\rightarrow$ MedSAM(77.22%) $\rightarrow$ **DB-SAM(82.00%)**
+  - **평균 NSD**: SAM(64.27%) $\rightarrow$ MedSAM(83.17%) $\rightarrow$ **DB-SAM(91.81%)**
 
 ### 3. 정성적 결과 및 Ablation Study
+
 시각화 결과, DB-SAM은 특히 크기가 작거나 모양이 복잡한 장기(Small organs with complicated shapes)를 분할할 때 SAM과 MedSAM보다 훨씬 정밀한 마스크를 생성하는 것으로 나타났다.
 
 Ablation Study 결과에 따르면, Channel Attention만 추가했을 때보다 Convolution 브랜치를 추가하고, 최종 융합 모듈(Final Fusion)까지 적용했을 때 단계적으로 성능이 향상됨이 확인되었다. (3D DSC 기준: Baseline 81.02% $\rightarrow$ Ch-Attn 85.25% $\rightarrow$ Conv-Branch 86.60% $\rightarrow$ Final Fusion 87.05%).

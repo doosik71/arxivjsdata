@@ -16,10 +16,10 @@ Mengqi Lei, Haochen Wu, Xinhua Lv, Xin Wang (2025)
 
 본 연구의 핵심 아이디어는 전경과 배경의 대비(Contrast)를 명시적으로 학습하고 이를 통해 특징을 강화하여 모호한 경계를 극복하고 공동 발생의 영향을 최소화하는 것이다. 이를 위해 다음과 같은 설계를 도입하였다.
 
-1.  **Consistency Reinforcement (CR)**: 인코더가 다양한 조명 및 대비 환경에서도 고품질의 특징을 추출할 수 있도록, 원본 이미지와 강하게 증강된 이미지 간의 예측 일관성을 극대화하는 사전 학습 전략을 제안한다.
-2.  **Semantic Information Decoupling (SID)**: 특징 맵을 전경, 배경, 그리고 불확실성(Uncertainty) 영역으로 분리하여, 학습 과정에서 불확실성 영역을 점진적으로 줄여나가는 메커니즘을 구현한다.
-3.  **Contrast-Driven Feature Aggregation (CDFA)**: SID에서 분리된 전경과 배경 특징을 활용하여 다중 레벨 특징 융합을 가이드하고 주요 특징을 강화함으로써, 대상 객체와 복잡한 배경 간의 구별 능력을 높인다.
-4.  **Size-Aware Decoder (SA-Decoder)**: 디코더의 스케일 특이성(Scale singularity) 문제를 해결하기 위해 크기별로 특화된 세 개의 디코더를 구성하여, 다양한 크기의 객체를 개별적으로 위치시키고 공동 발생 특징에 의한 간섭을 방지한다.
+1. **Consistency Reinforcement (CR)**: 인코더가 다양한 조명 및 대비 환경에서도 고품질의 특징을 추출할 수 있도록, 원본 이미지와 강하게 증강된 이미지 간의 예측 일관성을 극대화하는 사전 학습 전략을 제안한다.
+2. **Semantic Information Decoupling (SID)**: 특징 맵을 전경, 배경, 그리고 불확실성(Uncertainty) 영역으로 분리하여, 학습 과정에서 불확실성 영역을 점진적으로 줄여나가는 메커니즘을 구현한다.
+3. **Contrast-Driven Feature Aggregation (CDFA)**: SID에서 분리된 전경과 배경 특징을 활용하여 다중 레벨 특징 융합을 가이드하고 주요 특징을 강화함으로써, 대상 객체와 복잡한 배경 간의 구별 능력을 높인다.
+4. **Size-Aware Decoder (SA-Decoder)**: 디코더의 스케일 특이성(Scale singularity) 문제를 해결하기 위해 크기별로 특화된 세 개의 디코더를 구성하여, 다양한 크기의 객체를 개별적으로 위치시키고 공동 발생 특징에 의한 간섭을 방지한다.
 
 ## 📎 Related Works
 
@@ -34,6 +34,7 @@ Mengqi Lei, Haochen Wu, Xinhua Lv, Xin Wang (2025)
 ConDSeg는 크게 두 단계(Two-stage)의 학습 과정을 거치는 아키텍처이다.
 
 ### 1. Consistency Reinforcement (CR)
+
 첫 번째 단계에서는 인코더의 강건성을 확보하기 위해 $Net_0$(인코더와 단순 예측 헤드)를 학습시킨다. 입력 이미지 $X$와 강하게 증강된 이미지 $Aug(X)$를 각각 입력하여 두 개의 마스크 $M_1, M_2$를 생성한다.
 
 $$M_1 = Net_0(X), \quad M_2 = Net_0(Aug(X))$$
@@ -47,6 +48,7 @@ $$L_{cons}(M_1, M_2) = \frac{1}{2} \left( L_{BCE}(B(M_2, t), M_1) + L_{BCE}(B(M_
 $$L_{stage1} = L_{mask1} + L_{mask2} + L_{cons}$$
 
 ### 2. Semantic Information Decoupling (SID)
+
 인코더의 최상위 특징 맵 $f_4$를 입력받아 전경($f_{fg}$), 배경($f_{bg}$), 불확실성($f_{uc}$)의 세 가지 특징 맵으로 분리한다. 각 맵은 보조 헤드를 통해 마스크 $M_{fg}, M_{bg}, M_{uc}$로 예측된다.
 
 세 마스크는 상호 배타적이고 합이 1이 되는 보완적 관계여야 한다. 이를 위해 다음과 같은 **Complementarity Loss** ($L_{compl}$)를 설계하였다.
@@ -56,6 +58,7 @@ $$L_{compl} = \frac{1}{N} \sum_{i=1}^N (M_{fg,i} \cdot M_{bg,i} + M_{fg,i} \cdot
 또한, 작은 객체의 예측 정확도를 높이기 위해 면적 비율에 기반한 동적 페널티 항 $\beta_1, \beta_2$를 BCE Dice Loss에 곱하여 학습의 안정성을 높였다.
 
 ### 3. Contrast-Driven Feature Aggregation (CDFA)
+
 SID에서 추출된 $f_{fg}$와 $f_{bg}$를 가이드로 사용하여 다중 레벨 특징을 융합한다. $K \times K$ 윈도우 내에서 주변 특징을 집계하며, 전경과 배경의 대비 정보를 통해 어텐션 가중치를 생성한다.
 
 입력 특징 맵 $F$에 대해, 전경 및 배경 어텐션 가중치 $A_{fg}, A_{bg}$를 생성하고 다음과 같이 가중치를 적용한 값 $\tilde{V}$를 계산한다.
@@ -65,9 +68,11 @@ $$\tilde{V}_{i,j}^\Delta = \text{Softmax}(\hat{A}_{fg,i,j}) \otimes (\text{Softm
 여기서 $\otimes$는 행렬 곱셈을 의미하며, 이를 통해 전경과 배경의 대비 정보가 반영된 강화된 특징을 얻게 된다.
 
 ### 4. Size-Aware Decoder (SA-Decoder)
+
 디코더를 소형($Decoder_s$), 중형($Decoder_m$), 대형($Decoder_l$) 세 가지로 분리하여 설계하였다. 각 디코더는 CDFA의 서로 다른 레벨에서 출력된 특징 맵을 입력받아 해당 크기의 객체를 독립적으로 예측한다. 최종 마스크는 이 세 디코더의 출력을 융합하여 생성한다. 이를 통해 특정 크기의 객체가 다른 객체와 함께 나타나는 공동 발생 패턴에 의존하지 않고, 크기별 특성에 맞게 객체를 위치시킬 수 있다.
 
 ### 5. 전체 학습 절차 및 손실 함수
+
 2단계 학습에서는 인코더의 학습률을 낮게 설정하여 미세 조정(Fine-tuning)하며, 전체 네트워크를 다음과 같은 손실 함수로 최적화한다.
 
 $$L_{stage2} = L_{mask} + \beta_1 L_{fg} + \beta_2 L_{bg} + L_{compl}$$
@@ -75,14 +80,16 @@ $$L_{stage2} = L_{mask} + \beta_1 L_{fg} + \beta_2 L_{bg} + L_{compl}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Kvasir-SEG, Kvasir-Sessile, GlaS, ISIC-2016, ISIC-2017 (총 5개, 3가지 모달리티 포함)
 - **평가 지표**: mIoU, mDSC, Recall, Precision
 - **구현 세부사항**: ResNet-50 인코더, Adam 옵티마이저, 이미지 크기 $256 \times 256$
 
 ### 주요 결과
-1.  **정량적 성능**: 모든 데이터셋에서 기존 SOTA 모델(TGANet, XBoundFormer 등)보다 우수한 성능을 기록하였다. 특히 Kvasir-SEG 데이터셋에서 mIoU 84.6, mDSC 90.5를 달성하였다.
-2.  **수렴 속도**: CR 전략을 통한 2단계 학습을 진행했을 때, 단일 단계 학습보다 훨씬 빠른 수렴 속도와 더 높은 최종 성능을 보였다.
-3.  **소거 연구(Ablation Study)**:
+
+1. **정량적 성능**: 모든 데이터셋에서 기존 SOTA 모델(TGANet, XBoundFormer 등)보다 우수한 성능을 기록하였다. 특히 Kvasir-SEG 데이터셋에서 mIoU 84.6, mDSC 90.5를 달성하였다.
+2. **수렴 속도**: CR 전략을 통한 2단계 학습을 진행했을 때, 단일 단계 학습보다 훨씬 빠른 수렴 속도와 더 높은 최종 성능을 보였다.
+3. **소거 연구(Ablation Study)**:
     - CR 전략은 인코더의 강건성을 유의미하게 향상시켰다.
     - SID와 CDFA 모듈을 추가했을 때 mIoU와 mDSC가 크게 상승하였으며, SA-Decoder까지 포함된 전체 구조에서 최적의 성능이 나타났다.
     - CDFA의 윈도우 크기 $K=3$일 때 가장 좋은 성능을 보였다.

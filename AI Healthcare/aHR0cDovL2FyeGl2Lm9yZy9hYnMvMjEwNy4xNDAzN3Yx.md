@@ -26,15 +26,20 @@ Jignesh Chowdary G, Suganya G, Premalatha M, Asnath Victy Phamila Y, Karunamurth
 본 논문은 새로운 알고리즘을 제안하는 연구가 아니라, 기존 문헌을 분석하는 Survey Paper이다. 따라서 방법론은 문헌 선정 과정과 분석 체계로 구성된다.
 
 ### 1. 서베이 방법론 (Survey Methodology)
+
 연구진은 IEEE, Elsevier, ACM, Springer와 같은 고품질 학술지 및 컨퍼런스에서 발행된 논문을 대상으로 하였다. 검색 키워드는 'machine learning', 'deep learning'과 더불어 16개 의료 전문 분야 명칭 및 'drug discovery'를 조합하여 사용하였으며, 경험적 연구(empirical articles)와 리뷰 논문을 모두 포함하였다.
 
 ### 2. 분석 대상 모델의 분류
+
 논문은 적용된 기술을 크게 두 가지 범주로 나누어 분석한다.
+
 - **Machine Learning**: 지도 학습(Supervised Learning)의 Random Forest, Decision Tree, Logistic Regression, KNN, SVM과 비지도 학습(Unsupervised Learning)의 PCA, Latent Dirichlet Analysis 등을 다룬다.
 - **Deep Learning**: CNN, RNN, GAN 및 이들의 변형 구조를 다루며, 특히 사전 학습된 모델을 활용하는 Transfer Learning의 효율성을 강조한다.
 
 ### 3. 주요 분석 항목
+
 각 의료 분야별로 다음 요소들을 중점적으로 살펴본다.
+
 - **입력 데이터**: X-ray, CT, MRI, ECG, 혈액 샘플, 사회관계망서비스(SNS) 데이터 등.
 - **사용된 모델**: 특정 질환 진단에 사용된 구체적인 아키텍처.
 - **평가 지표**: Accuracy, Sensitivity, Specificity, F1-score, Dice coefficient, AUC-ROC 등.
@@ -46,26 +51,32 @@ Jignesh Chowdary G, Suganya G, Premalatha M, Asnath Victy Phamila Y, Karunamurth
 분석 결과, 의료 분야 전반에서 ML과 DL 모델이 인간 전문가 수준 혹은 그 이상의 성능을 보이는 사례가 다수 발견되었다.
 
 ### 1. 이미지 기반 진단 (Radiology, Oncology, Ophthalmology 등)
+
 - **CNN의 우세**: 대부분의 영상 진단에서 CNN 기반 모델이 SVM이나 Random Forest보다 뛰어난 성능을 보였다. 특히 COVID-19 진단에서 ResNet50, VGG19 등의 전이 학습 모델이 90% 이상의 높은 정확도를 기록하였다.
 - **세분화(Segmentation)**: U-Net 아키텍처가 폐 영역 분할 및 종양 검출에서 효과적으로 사용됨을 확인하였다.
 
 ### 2. 수치 및 신호 기반 진단 (Cardiology, Endocrinology, Psychiatry 등)
+
 - **ML 모델의 효율성**: 정형 데이터(tabular data) 기반의 진단(예: 당뇨병, 갑상선 질환)에서는 SVM, Random Forest, Naive Bayes 등이 여전히 강력한 성능을 발휘한다.
 - **신호 분석**: ECG 신호를 이용한 심근경색 진단에 CNN이 사용되어 노이즈가 있는 데이터에서도 높은 민감도(Sensitivity)를 보였다.
 
 ### 3. 기타 특수 분야
+
 - **약물 발견**: SVM이 약물 설계 및 독성 예측에서 높은 성능을 보였으며, Bayesian Classifier가 약물 유사성(drug likeliness) 예측에 효과적임이 나타났다.
 - **정신 의학**: SNS 데이터나 뇌파(brain waves)를 이용한 우울증 및 스트레스 진단에 MLP와 RNN 계열 모델이 적용되고 있다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. AI와 의료 전문가의 관계
+
 논문은 AI가 의사를 완전히 대체할 수 없다는 점을 분명히 한다. 그 이유는 다음과 같다.
+
 - **신뢰와 상호작용**: 환자와의 정서적 교감 및 신뢰 구축은 기계가 수행할 수 없는 영역이다.
 - **희귀 사례(Novel Cases)의 한계**: AI는 학습 데이터에 의존하므로, 전례 없는 신종 질병이나 복합적인 약물 부작용 사례에서는 성능이 급격히 저하된다.
 - **보조적 역할**: 따라서 AI는 의사의 판단을 돕는 'Decision Support System'으로서, 특히 방사선과 전문의의 판독 효율을 높이고 위양성 결과를 줄이는 데 기여할 수 있다.
 
 ### 2. 한계 및 비판적 해석
+
 본 논문은 매우 방대한 양의 연구를 요약하고 있으나, 각 연구마다 사용한 데이터셋의 규모와 전처리 방법이 상이함에도 불구하고 단순 수치(Accuracy 등)로 비교했다는 점이 한계로 보인다. 또한, 실제 임상 환경에서의 적용 가능성(Clinical Validation)보다는 모델의 실험적 성능에 치중하여 서술되어 있다.
 
 ## 📌 TL;DR

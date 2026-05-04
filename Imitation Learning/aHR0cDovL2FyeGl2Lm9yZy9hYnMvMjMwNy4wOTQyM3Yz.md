@@ -30,6 +30,7 @@ Jens Tuyls, Dhruv Madeka, Kari Torkkola, Dean P. Foster, Karthik Narasimhan, Sha
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 학습 목표
+
 본 연구에서는 전문가의 궤적 데이터 $\mathcal{D}$를 이용하여 전문가 정책 $\pi$를 복제하는 Behavioral Cloning (BC)을 사용한다. 학습자는 다음과 같은 Cross-entropy loss를 최소화하도록 최적화된다.
 
 $$L(\theta) = -\mathbb{E}_{(h_t, a_t) \sim \mathcal{D}} [\log \pi_\theta(a_t | h_t)]$$
@@ -37,6 +38,7 @@ $$L(\theta) = -\mathbb{E}_{(h_t, a_t) \sim \mathcal{D}} [\log \pi_\theta(a_t | h
 여기서 $h_t$는 과거의 상태와 행동의 이력(history)을 포함한다.
 
 ### Scaling 분석 방법론
+
 Compute budget ($C$, FLOPs)에 따른 최적의 모델 크기($N$)와 데이터 크기($D$)를 찾기 위해 두 가지 접근 방식을 사용한다.
 
 **1. isoFLOP profiles**
@@ -52,16 +54,19 @@ $$\log \hat{L}(N, D) = \beta_0 + \beta_N \log N + \beta_D \log D + \beta_{N^2} (
 이후 Lagrange multipliers를 사용하여 $C \approx 6ND$ (Transformer 기준) 제약 조건 하에서 $L$을 최소화하는 $N_{opt}$와 $D_{opt}$를 수학적으로 유도한다.
 
 ### 아키텍처 및 계산량 정의
+
 - **Atari**: CNN 기반 에이전트를 사용하며, CNN 채널 수와 최종 linear layer의 너비를 확장하여 모델 크기를 조절하였다.
 - **NetHack**: Transformer 기반 에이전트를 사용하며, hidden size와 layer 수를 확장하였다. Compute budget 계산을 위해 $\text{FLOPs} \approx 6ND$ 공식을 적용하였다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Atari 8종 게임 및 NetHack (NLD-AA-L 데이터셋, 약 55B 샘플).
 - **지표**: Validation Loss 및 Mean Return.
 
 ### 주요 결과
+
 1. **Scaling Law 성립**: Atari와 NetHack 모든 게임에서 FLOPs가 증가함에 따라 $L_{opt}$가 매끄럽게 감소하는 Power Law 경향이 관찰되었다.
 2. **Loss-Return 상관관계**: 최적 loss $L$과 평균 return $R$ 사이의 관계가 다음과 같은 역거듭제곱 법칙(inverse power law)으로 설명됨을 확인하였다.
    $$R = (a_{RL} (1/L)^{\delta} + b_{RL})^{-1}$$
@@ -72,11 +77,14 @@ $$\log \hat{L}(N, D) = \beta_0 + \beta_N \log N + \beta_D \log D + \beta_{N^2} (
 ## 🧠 Insights & Discussion
 
 ### 부분 관측성(Partial Observability)의 중요성
+
 연구진은 NetHack에서 성능 정체 구간이 발생하는 이유를 분석하며 두 가지 핵심 요소를 발견하였다.
+
 - **Context Length**: Context length를 128에서 4096까지 확장했을 때 loss가 유의미하게 감소하였다. 이는 전문가 정책(AutoAscend)이 매우 긴 이력을 참조하므로, 학습자 또한 긴 context를 가져야 함을 시사한다.
 - **Information Parity**: 기존 연구에서 제외되었던 '인벤토리' 정보를 추가했을 때 성능이 향상되었다. 학습자가 전문가가 사용하는 정보와 동일한 정보에 접근할 수 있어야(Information Parity) 온전한 복제가 가능하다는 것을 보여준다.
 
 ### 비판적 해석 및 한계
+
 - **Reward Density**: 본 연구는 보상이 비교적 조밀한(dense) 환경에서 수행되었다. 보상이 매우 희소한(sparse) 환경(예: Montezuma's Revenge)에서도 동일한 Scaling Law가 성립할지는 미지수이며, 이 경우 다른 대리 지표(proxy metrics)가 필요할 수 있다.
 - **데이터 가용성**: 본 연구에서는 시뮬레이터를 통해 대량의 전문가 데이터를 생성할 수 있었으나, 실제 인간 데이터에 의존해야 하는 경우 데이터 확보가 병목 지점이 될 수 있다.
 - **전문가 품질**: 전문가의 수준이 높을수록 Scaling Law가 수렴하는 상한선(ceiling)이 높아지지만, Scaling Law라는 경향성 자체는 전문가의 수준과 관계없이 일정하게 나타나는 특징을 보였다.

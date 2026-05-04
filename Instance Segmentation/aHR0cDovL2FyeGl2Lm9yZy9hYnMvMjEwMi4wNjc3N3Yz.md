@@ -17,6 +17,7 @@ Eslam Mohamed, Abdelrahman Shaker, Ahmad El-Sallab, Mayada Hadhoud (2020)
 본 논문의 핵심 아이디어는 Instance Segmentation을 픽셀 단위의 분류 문제로 보지 않고, **객체의 윤곽선(Contour)을 2D 카테시안 좌표계(Cartesian space) 상의 점들로 예측하는 회귀 문제로 정의**한 것이다.
 
 주요 기여 사항은 다음과 같다:
+
 - **새로운 CNN 아키텍처**: YOLOv3를 기반으로 하여 픽셀 단위 예측 및 업샘플링 없이 실시간으로 동작하는 Instance Segmentation 모델을 구축하였다.
 - **적응형 폴리곤 표현(Adaptive Polygon Representation)**: 객체의 곡률에 따라 점의 밀도를 조절하여 효율적으로 형태를 표현하는 데이터 생성 방식을 도입하였다.
 - **새로운 손실 함수**: 객체의 위치 추정 정밀도를 높이기 위해 Log Cosh loss와 새로운 Cartesian IoU loss를 제안하였다.
@@ -37,30 +38,37 @@ Insta-YOLO는 이러한 기존 방식들과 달리 업샘플링을 완전히 제
 ## 🛠️ Methodology
 
 ### 1. 데이터 생성 (Data Generation)
+
 픽셀 단위의 세그멘테이션 마스크를 폴리곤 형태로 변환해야 한다. 본 논문은 고정된 간격의 샘플링 대신 **적응형 단계(Adaptive Step)** 방식을 제안한다.
+
 - **Douglas-Peucker 알고리즘**을 사용하여 곡선에서는 더 많은 점을 배치하고, 직선 구간에서는 최소한의 점만 사용하여 객체의 형태를 가장 잘 나타내는 최적의 점 집합을 찾는다.
 - 이를 통해 네트워크가 곡선 부분에 더 집중하게 하여 효율성과 정확도를 동시에 높인다.
 
 ### 2. 네트워크 아키텍처 (Network Architecture)
+
 백본 네트워크는 **YOLOv3**를 기반으로 하며, 출력 레이어를 다음과 같이 수정하였다.
+
 - 기존 YOLOv3가 바운딩 박스의 좌표 $(x, y, w, h)$를 예측했다면, Insta-YOLO는 **객체 마스크를 구성하는 $N$개의 정점(Vertices) 좌표와 마스크 신뢰도(Confidence)**를 예측한다.
 - 출력 레이어의 구조는 다음과 같다:
 $$\text{output layer} = n_{\text{anchors}} [n_{\text{vertices}} \times 2 + 1 + n_{\text{classes}}]$$
 (여기서 $n_{\text{vertices}} \times 2$는 $x, y$ 좌표 쌍을 의미한다.)
 
 ### 3. 손실 함수 (Loss Functions)
+
 전체 손실 함수는 다음과 같이 정의된다:
 $$\text{Insta-YOLO loss} = \text{Classification loss} + \text{Confidence loss} + \text{Localization loss}$$
 
 #### 3.1 Classification 및 Confidence Loss
+
 이 부분은 YOLOv3의 설계를 그대로 계승하며, 각각 클래스 확률의 제곱 오차와 객체 존재 여부에 대한 신뢰도를 측정한다.
 
 #### 3.2 Localization Loss
+
 본 논문의 핵심 기여 부분으로, 단순 MSE 대신 다음과 같은 조합을 사용한다:
 $$\text{Localization loss} = \lambda \cdot \text{Regression Loss} + (1 - \lambda) \cdot \text{IoU Loss}$$
 
 - **Regression Loss**: 이상치(Outlier)에 덜 민감하도록 **Log Cosh loss**를 사용한다. 이는 작은 오차에 대해서는 MSE처럼 동작하고, 큰 오차에 대해서는 L1 loss처럼 동작하여 미분 가능하면서도 강건한 학습을 가능하게 한다.
-- **IoU Loss**: 점들의 좌표가 약간만 달라져도 큰 페널티를 주는 Regression loss의 단점을 보완하기 위해 IoU loss를 추가하였다. 
+- **IoU Loss**: 점들의 좌표가 약간만 달라져도 큰 페널티를 주는 Regression loss의 단점을 보완하기 위해 IoU loss를 추가하였다.
   - **Cartesian IoU Loss**: 예측된 폴리곤과 정답(GT) 폴리곤의 교집합과 합집합 면적을 직접 계산하여 손실을 구한다. 폴리곤의 면적은 다음과 같은 신발 끈 공식(Shoelace formula)을 사용하여 계산한다:
     $$\text{Area} = \frac{1}{2} |(x_1y_2 - y_1x_2) + (x_2y_3 - y_2x_3) + \cdots + (x_ny_1 - y_nx_1)|$$
 - **학습 전략 (Warm-up)**: 학습 초기에는 $\lambda$ 값을 높게 설정하여 모델이 먼저 대략적인 정점 위치를 잡게 하고(Regression 중심), 점차 $\lambda$를 낮추어 IoU loss가 곡률 정보를 세밀하게 학습하도록 유도한다.
@@ -68,11 +76,13 @@ $$\text{Localization loss} = \lambda \cdot \text{Regression Loss} + (1 - \lambda
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: Carvana, Cityscapes, Airbus Ship 데이터셋 사용.
 - **구현**: ResNet-50 인코더 기반의 YOLOv3 구조, Adam 옵티마이저 ($\text{lr}=1\text{e}^{-4}$), 80 에포크 학습.
 - **평가 지표**: $\text{AP}_{50}$, $\text{AP}_{75}$ 및 FPS (GTX-1080 GPU 기준).
 
 ### 2. 주요 결과
+
 - **정확도 및 속도**: Cityscapes 데이터셋에서 Cartesian IoU loss를 적용했을 때 $\text{AP}_{50}$ 89%를 달성하였으며, 속도는 **56 FPS**로 YOLACT(32 FPS)나 PolarMask(28 FPS)보다 훨씬 빠르다.
 - **Carvana 데이터셋**: $\text{AP}_{50}$ 99%를 기록하며 YOLACT 및 Mask R-CNN과 대등한 성능을 보이면서도 속도는 압도적으로 빠르다.
 - **방향성 바운딩 박스 (Oriented Bounding Boxes)**: Airbus Ship 데이터셋 실험 결과, 기존의 Oriented YOLO (YOLO3D)보다 정확도가 5% 높고 속도는 2.7배 빠르다. 이는 폴리곤 기반 예측이 각도 인코딩 문제(Angle encoding problem)를 자연스럽게 해결하기 때문이다.
@@ -80,11 +90,13 @@ $$\text{Localization loss} = \lambda \cdot \text{Regression Loss} + (1 - \lambda
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 - **극단적인 속도 향상**: 업샘플링과 2단계 구조를 완전히 제거함으로써 실시간 성능을 확보하였다.
 - **기하학적 유연성**: 픽셀 기반이 아닌 정점 기반 예측을 통해 방향성 객체 검출과 같은 작업에 추가적인 수정 없이 바로 적용 가능하다는 점이 매우 강력하다.
 - **손실 함수의 최적화**: Log Cosh와 Cartesian IoU loss의 조합, 그리고 $\lambda$ 스케줄링을 통한 Warm-up 전략이 모델의 수렴과 정밀도를 효과적으로 높였다.
 
 ### 한계 및 논의사항
+
 - **정점 수의 고정**: 하이퍼파라미터인 $N$(정점의 수)이 고정되어 있어, 매우 복잡한 형태의 객체는 표현력이 떨어질 수 있다.
 - **자기 교차 문제**: IoU loss는 폴리곤 선이 꼬이는 'Self-intersecting' 문제에 취약하다. 저자들은 이를 위해 초기 학습 단계에서 Regression loss를 우선시하는 전략을 사용했지만, 완전히 해결되었는지에 대한 정량적 분석은 부족하다.
 - **클래스 제한**: Cityscapes 결과가 "vehicles" 클래스에 대해서만 보고되었으므로, 다양한 클래스가 섞인 복잡한 씬에서의 일반화 성능에 대한 추가 검증이 필요하다.

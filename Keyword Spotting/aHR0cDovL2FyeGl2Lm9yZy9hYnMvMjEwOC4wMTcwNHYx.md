@@ -29,7 +29,9 @@ Jonathan Macoskey, Grant P. Strimel, Ariya Rastrow (2021)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 모델은 RNN-T(Recurrent Neural Network Transducer) 구조를 기반으로 한다. RNN-T는 크게 세 가지 구성 요소로 이루어진다.
+
 1. **Encoder (Transcription Network, $F$)**: 입력 오디오 특징 벡터 $x_{1:T}$를 처리하여 벡터 $h^{enc}_t$를 출력한다.
 2. **Decoder (Prediction Network, $G$)**: 출력된 라벨 시퀀스 $y_{1:M}$을 처리하여 벡터 $h^{dec}_m$을 출력한다.
 3. **Joint Network ($J$)**: 인코더와 디코더의 출력을 결합하여 다음 출력 라벨의 확률 분포를 생성한다.
@@ -37,10 +39,13 @@ Jonathan Macoskey, Grant P. Strimel, Ariya Rastrow (2021)
 Bifocal RNN-T는 여기서 인코더 $F$를 두 개의 경로($F_s, F_\ell$)로 분리하고, Keyword Spotter로부터 전달받은 프레임 인덱스(호출어 종료 시점)를 기준으로 어느 경로를 실행할지 결정한다.
 
 ### Bifocal LSTM (BF-LSTM)
+
 BF-LSTM은 런타임에 추론 경로를 동적으로 변경할 수 있게 하는 학습 가능한 RNN 셀이다. 이 셀 내부에는 소형(small) 셀과 대형(large) 셀이 공존하며, 스위칭 변수 $z_t \in \{0, 1\}$에 의해 실행 경로가 결정된다. ($z_t=0$이면 소형, $z_t=1$이면 대형)
 
 #### 1. 표준 LSTM 연산
+
 소형 셀과 대형 셀은 각각 표준 LSTM 방정식을 따른다. (편의상 바이어스 생략)
+
 - **소형 셀**:
 $$f^s_t = \sigma(W^s_f x^s_t + U^s_f h^s_{t-1})$$
 $$i^s_t = \sigma(W^s_i x^s_t + U^s_i h^s_{t-1})$$
@@ -52,11 +57,13 @@ $$h^s_t = o^s_t \circ \sigma(c^s_t)$$
 - **대형 셀**: 위와 동일한 구조를 가지며, 가중치 행렬과 상태 벡터가 $s$ 대신 $\ell$로 표기된다.
 
 #### 2. 상태 투영 (State Projections)
+
 두 셀의 은닉 상태 차원이 서로 다르기 때문에, 경로 전환 시 상태를 변환해줄 학습 가능한 투영 행렬 $P$를 사용한다.
 $$\hat{c}^\ell_t = P^s_c c^s_t, \quad \hat{c}^s_t = P^\ell_c c^\ell_t$$
 $$\hat{h}^\ell_t = P^s_h h^s_t, \quad \hat{h}^s_t = P^\ell_h h^\ell_t$$
 
 #### 3. 상태 업데이트 및 스위칭
+
 스위칭 변수 $z_t$를 이용하여 최종 상태를 결정한다.
 $$c^s_t := c^s_t(1-z_t) + \hat{c}^s_t z_t$$
 $$c^\ell_t := \hat{c}^\ell_t z_t + c^\ell_t(1-z_t)$$
@@ -64,11 +71,13 @@ $$h^s_t := h^s_t(1-z_t) + \hat{h}^s_t z_t$$
 $$h^\ell_t := \hat{h}^\ell_t z_t + h^\ell_t(1-z_t)$$
 
 ### Interleaving (Trifocal)
+
 논문은 이 개념을 확장하여 3개 이상의 인코더를 사용하는 'Interleaving' 전략을 실험하였다. 예를 들어, 호출어 이후 구간에서도 대형 인코더($F^\ell_l$)와 소형 인코더($F^\ell_s$)를 정해진 스케줄(예: 2프레임 사용 후 교체)에 따라 번갈아 가며 사용하는 Trifocal 구조를 제안하였다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 42,000시간의 영어 가상 비서 작업 오디오 데이터. (호출어 포함 데이터만 사용)
 - **특징 추출**: 64차원 Log-Filterbank Energies (LBFE), 3배 다운샘플링 및 스트라이드 2 적용 (최종 프레임 크기 30ms).
 - **베이스라인 모델**: 5개 층의 LSTM 인코더(층당 1024 유닛), 2개 층의 LSTM 디코더(층당 1024 유닛). 총 파라미터 63.5M.
@@ -76,6 +85,7 @@ $$h^\ell_t := \hat{h}^\ell_t z_t + h^\ell_t(1-z_t)$$
 - **평가 지표**: Word Error Rate (WER) 및 인코더의 부동 소수점 연산량 (FLOPs).
 
 ### 정량적 결과
+
 | 모델 | WER (상대값) | 파라미터 (Encoder) | FLOPs | 비용 감소율 |
 | :--- | :---: | :---: | :---: | :---: |
 | Baseline | - | 42.7M | 11.1B | - |
@@ -87,6 +97,7 @@ $$h^\ell_t := \hat{h}^\ell_t z_t + h^\ell_t(1-z_t)$$
 | Trifocal C | +28.1% | 55.1M | 3.47B | 68.7% |
 
 ### 결과 분석
+
 1. **효율성 및 성능**: Bifocal 모델은 베이스라인보다 모델 크기는 약 10% 커졌지만, 연산량(FLOPs)은 29.1% 감소하였다. 특히, 동일한 연산량을 가진 `Baseline Small` 모델보다 WER이 5% 이상 우수하여, 성능 저하 없이 추론 비용을 낮출 수 있음을 증명하였다.
 2. **상태 투영의 중요성**: 상태 투영을 제거한 `Bifocal (No Proj.)` 모델의 WER이 급격히 상승한 것을 통해, 서로 다른 인코더 간의 상태 전이가 예측 성능에 결정적인 역할을 함을 알 수 있다.
 3. **Trifocal의 한계**: Trifocal 모델들은 연산량을 더욱 낮췄으나 WER이 매우 크게 상승하였다. 이는 임의의 시점에서 인코더를 스위칭하는 것이 모델의 예측 성능을 심각하게 저하시킴을 의미한다.

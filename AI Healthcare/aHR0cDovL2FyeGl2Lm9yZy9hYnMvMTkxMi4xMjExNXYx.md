@@ -16,28 +16,32 @@ Maarten G. Poirot, Praneeth Vepakomma, Ken Chang, Jayashree Kalpathy-Cramer, Raj
 
 기존의 분산 학습 방법으로는 Model Averaging, Large Scale Synchronous Gradient Descent (LS-SGD), Federated Learning, Cyclical Weight Transfer 등이 있다. 그러나 이들은 다음과 같은 한계를 가진다.
 
-1.  **동기화 문제**: Model Averaging과 LS-SGD는 모든 클라이언트가 업데이트를 완료할 때까지 기다려야 하는 synchronous training 방식이다. 이는 각 기관의 네트워크 속도나 하드웨어 성능이 다를 경우 심각한 병목 현상을 야기한다.
-2.  **성능 저하**: Cyclical Weight Transfer와 같은 일부 방식은 설계 특성상 중앙 집중식 학습 대비 최적의 성능을 달성하지 못하는 경우가 있다.
-3.  **프라이버시 및 부하**: 각 방법론마다 유출되는 정보의 양이 다르며, Federated Learning의 경우 클라이언트가 모델 전체를 학습시켜야 하므로 로컬 컴퓨팅 자원 소모가 크다.
+1. **동기화 문제**: Model Averaging과 LS-SGD는 모든 클라이언트가 업데이트를 완료할 때까지 기다려야 하는 synchronous training 방식이다. 이는 각 기관의 네트워크 속도나 하드웨어 성능이 다를 경우 심각한 병목 현상을 야기한다.
+2. **성능 저하**: Cyclical Weight Transfer와 같은 일부 방식은 설계 특성상 중앙 집중식 학습 대비 최적의 성능을 달성하지 못하는 경우가 있다.
+3. **프라이버시 및 부하**: 각 방법론마다 유출되는 정보의 양이 다르며, Federated Learning의 경우 클라이언트가 모델 전체를 학습시켜야 하므로 로컬 컴퓨팅 자원 소모가 크다.
 
 반면, Split Learning은 비동기적 학습이 가능하며, 모델의 대부분을 서버에 배치함으로써 클라이언트의 계산 부담을 크게 줄일 수 있다는 차별점을 가진다.
 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조: U-shaped Split Learning
+
 본 논문에서 구현한 U-shaped 구성은 전체 신경망을 세 가지 링크로 분할한다.
 
-1.  **Front (Local)**: 로컬 클라이언트가 보유한다. raw data를 입력받아 처리한 후, 의미를 알 수 없게 암호화된 중간 표현(intermediate representation)을 생성하여 중앙 서버로 전송한다.
-2.  **Center (Central)**: 중앙 서버가 보유한다. Front로부터 받은 중간 표현을 입력받아 신경망의 대부분의 계산을 수행하고, 다시 또 다른 중간 표현을 생성하여 Back 링크로 전송한다.
-3.  **Back (Local)**: 다시 로컬 클라이언트가 보유한다. Center로부터 받은 표현을 디코딩하여 최종 출력값을 생성한다. 이 단계에서 로컬에 저장된 실제 라벨과 비교하여 손실(loss)을 계산하고 기울기(gradient)를 산출한다.
+1. **Front (Local)**: 로컬 클라이언트가 보유한다. raw data를 입력받아 처리한 후, 의미를 알 수 없게 암호화된 중간 표현(intermediate representation)을 생성하여 중앙 서버로 전송한다.
+2. **Center (Central)**: 중앙 서버가 보유한다. Front로부터 받은 중간 표현을 입력받아 신경망의 대부분의 계산을 수행하고, 다시 또 다른 중간 표현을 생성하여 Back 링크로 전송한다.
+3. **Back (Local)**: 다시 로컬 클라이언트가 보유한다. Center로부터 받은 표현을 디코딩하여 최종 출력값을 생성한다. 이 단계에서 로컬에 저장된 실제 라벨과 비교하여 손실(loss)을 계산하고 기울기(gradient)를 산출한다.
 
 ### 학습 절차 및 흐름
+
 학습은 순차적으로 진행된다. 하나의 클라이언트가 한 에포크(epoch) 동안 네트워크를 학습시키면, 해당 클라이언트의 로컬 상태(Front와 Back의 가중치)가 다음 클라이언트로 복사되어 업데이트된다. 이러한 방식은 모든 클라이언트의 응답을 기다릴 필요가 없으므로 동기화 문제를 해결한다.
 
 ### 실험 설정
+
 본 연구에서는 두 가지 의료 데이터셋을 사용하였다.
-*   **Diabetic Retinopathy (DR)**: 9,000장의 안저 사진을 이용한 이진 분류 문제이다. $\text{ResNet-34}$ 아키텍처를 사용하였으며, $\text{Binary Cross Entropy Loss}$를 통해 학습하였다.
-*   **CheXpert**: 156,535장의 흉부 X-ray 영상을 이용한 14개 항목의 다중 라벨 분류 문제이다. $\text{DenseNet-121}$ 아키텍처를 사용하였으며, $\text{Sigmoid Binary Cross Entropy Loss}$를 적용하였다.
+
+* **Diabetic Retinopathy (DR)**: 9,000장의 안저 사진을 이용한 이진 분류 문제이다. $\text{ResNet-34}$ 아키텍처를 사용하였으며, $\text{Binary Cross Entropy Loss}$를 통해 학습하였다.
+* **CheXpert**: 156,535장의 흉부 X-ray 영상을 이용한 14개 항목의 다중 라벨 분류 문제이다. $\text{DenseNet-121}$ 아키텍처를 사용하였으며, $\text{Sigmoid Binary Cross Entropy Loss}$를 적용하였다.
 
 두 실험 모두 $\text{Adam Optimizer}$ ($\beta_1=0.9, \beta_2=0.999, \text{learning rate}=10^{-4}$)를 사용하였다.
 
@@ -45,13 +49,13 @@ Maarten G. Poirot, Praneeth Vepakomma, Ken Chang, Jayashree Kalpathy-Cramer, Raj
 
 실험은 Split Learning 구성과 non-collaborative(협력하지 않는 단일 기관 학습) 구성을 비교 분석하였다. 참여 클라이언트의 수를 1명에서 50명까지 변화시키며 성능을 측정하였다.
 
-1.  **Diabetic Retinopathy (DR) 결과**:
-    *   Split Learning의 경우 클라이언트 수에 관계없이 높은 정확도를 일정하게 유지하였다.
-    *   반면, non-collaborative 구성에서는 데이터가 여러 클라이언트로 분산될수록(즉, 개별 클라이언트의 샘플 사이즈가 작아질수록) 정확도가 급격히 하락하였다. (예: 1명일 때 $0.869 \rightarrow 50명일 때 $0.588)
+1. **Diabetic Retinopathy (DR) 결과**:
+    * Split Learning의 경우 클라이언트 수에 관계없이 높은 정확도를 일정하게 유지하였다.
+    * 반면, non-collaborative 구성에서는 데이터가 여러 클라이언트로 분산될수록(즉, 개별 클라이언트의 샘플 사이즈가 작아질수록) 정확도가 급격히 하락하였다. (예: 1명일 때 $0.869 \rightarrow 50명일 때 $0.588)
 
-2.  **CheXpert 결과**:
-    *   성능 지표로 AUROC를 사용하였으며, Split Learning이 non-collaborative 설정보다 월등히 높은 성능을 보였다.
-    *   특히 클라이언트 수가 2명을 넘어가는 시점부터 두 그룹 간의 성능 차이가 통계적으로 유의미하게 나타났다 ($p < 0.001$).
+2. **CheXpert 결과**:
+    * 성능 지표로 AUROC를 사용하였으며, Split Learning이 non-collaborative 설정보다 월등히 높은 성능을 보였다.
+    * 특히 클라이언트 수가 2명을 넘어가는 시점부터 두 그룹 간의 성능 차이가 통계적으로 유의미하게 나타났다 ($p < 0.001$).
 
 결론적으로, Split Learning은 데이터를 중앙으로 모으지 않고도 중앙 집중식 학습과 유사한 성능을 낼 수 있음을 입증하였다.
 

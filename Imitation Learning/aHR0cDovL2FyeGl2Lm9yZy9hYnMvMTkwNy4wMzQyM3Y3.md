@@ -12,7 +12,7 @@ Ashwin Balakrishna, Brijen Thananjeyan, Jonathan Lee, Felix Li, Arsh Zahed, Jose
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 기여는 'Converging Supervisor Framework(CSF)'라는 새로운 온-폴리시 모방 학습 프레임워크를 제안한 것이다. 
+본 논문의 핵심 기여는 'Converging Supervisor Framework(CSF)'라는 새로운 온-폴리시 모방 학습 프레임워크를 제안한 것이다.
 
 중심적인 직관은 학습 과정 중에는 중간 단계의 supervisor들로부터 레이블을 제공받더라도, 최종적으로 수렴한 supervisor($\psi_N$)를 기준으로 했을 때의 Static 및 Dynamic regret이 sublinear하게 유지될 수 있음을 이론적으로 증명한 것이다. 이를 통해 supervisor의 구조에 제약 없이 어떠한 오프-폴리시(off-policy) 방법론(RL 알고리즘 또는 인간)도 supervisor로 사용할 수 있는 유연성을 확보하였다.
 
@@ -27,12 +27,15 @@ Ashwin Balakrishna, Brijen Thananjeyan, Jonathan Lee, Felix Li, Arsh Zahed, Jose
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 구조
+
 본 프레임워크는 $\text{MDP}(S, A, P, T, R)$ 환경에서 동작하며, 다음과 같은 반복적인 절차를 따른다.
+
 1. 현재의 learner policy $\pi_{\theta_i}$를 환경에 배포하여 궤적(trajectory)을 생성한다.
 2. 생성된 궤적의 각 상태 $s$에 대해, 현재 단계의 supervisor $\psi_i$로부터 최적 행동(label)을 제공받는다.
 3. 제공받은 레이블을 사용하여 supervised learning loss를 최소화하도록 $\pi_{\theta_i}$를 업데이트하여 $\pi_{\theta_{i+1}}$을 생성한다.
 
 ### 손실 함수 및 학습 목표
+
 Learner는 supervisor $\psi_i$와의 차이를 줄이기 위해 다음과 같은 surrogate loss 함수를 최소화하는 것을 목표로 한다.
 
 $$l_i(\pi_\theta, \psi_i) = \mathbb{E}_{\tau \sim p(\tau|\theta_i)} \left[ \frac{1}{T} \sum_{t=1}^T \|\pi_\theta(s_t^i) - \psi_i(s_t^i)\|^2 \right]$$
@@ -40,17 +43,21 @@ $$l_i(\pi_\theta, \psi_i) = \mathbb{E}_{\tau \sim p(\tau|\theta_i)} \left[ \frac
 여기서 $p(\tau|\theta_i)$는 정책 $\pi_{\theta_i}$에 의해 생성된 궤적의 분포이며, $\pi_\theta(s)$와 $\psi_i(s)$는 각각 learner와 supervisor가 상태 $s$에서 선택한 행동이다.
 
 ### 이론적 분석: Regret Analysis
+
 논문은 고정된 supervisor가 아닌, 최종 수렴한 supervisor $\psi_N$에 대한 regret을 분석한다.
 
 - **Static Regret**: 전체 학습 기간 동안 $\pi_{\theta_i}$와 $\psi_N$을 기준으로 한 최적 정책 $\pi_{\theta^*}$ 사이의 누적 손실 차이를 측정한다.
 - **Dynamic Regret**: 각 라운드 $i$마다 현재 정책 $\pi_{\theta_i}$와 해당 라운드에서 $\psi_N$을 기준으로 한 최적 정책 $\pi_{\theta^*_i}$ 사이의 손실 차이를 측정한다.
 
 본 논문은 다음과 같은 핵심 정리를 통해 converging supervisor 설정에서도 sublinear regret이 가능함을 보인다.
+
 - **Theorem 4.1**: $\psi_N$에 대한 static regret은 일반적인 static regret과 supervisor의 변화율(convergence rate)에 비례하는 항의 합으로 상한선을 정의할 수 있다.
 - **Theorem 4.2**: 궤적 분포의 Lipschitz 연속성 가정이 충족되고 supervisor가 수렴한다면, $\psi_N$에 대한 dynamic regret 또한 sublinear하게 달성 가능하다.
 
 ### 실용적 구현: PETS as Supervisor
+
 이론적 프레임워크를 구현하기 위해 PETS(Probabilistic Ensembles with Trajectory Sampling)를 supervisor로 사용한다. PETS는 앙상블 역학 모델을 통해 데이터 효율적인 제어를 수행하지만 계산량이 많다. 이를 해결하기 위해 다음과 같은 절차를 수행한다.
+
 1. Model-free learner policy를 통해 롤아웃을 수행한다.
 2. 롤아웃이 종료된 후, 수집된 데이터를 기반으로 PETS가 각 상태에서의 최적 행동을 오프라인으로 계산하여 레이블을 생성한다.
 3. DAgger 방식을 통해 learner policy를 PETS의 레이블로 업데이트한다.
@@ -58,13 +65,15 @@ $$l_i(\pi_\theta, \psi_i) = \mathbb{E}_{\tau \sim p(\tau|\theta_i)} \left[ \frac
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋 및 작업**: MuJoCo 시뮬레이션(PR2 Reacher, Pusher) 및 실제 로봇 실험(da Vinci Surgical Robot, dVRK).
 - **비교 대상(Baseline)**: SAC, TD3 (Model-free RL), ME-TRPO (Hybrid RL), PETS (Model-based RL).
 - **측정 지표**: 누적 보상(Return), 정책 평가 시간(Policy evaluation time), 쿼리 시간(Query time).
 
 ### 주요 결과
+
 1. **성능 및 데이터 효율성**: 시뮬레이션 실험에서 CSF learner는 PETS와 유사한 수준의 보상을 달성하였으며, SAC, TD3, ME-TRPO 등 다른 deep RL 베이스라인보다 뛰어난 성능을 보였다. 이는 PETS의 데이터 효율성을 유지하면서 reactive policy로의 증류가 성공적이었음을 의미한다.
-2. **실행 속도 향상**: 
+2. **실행 속도 향상**:
    - 시뮬레이션 환경에서 CSF learner의 정책 평가 속도는 PETS 대비 최대 **80배** 빨랐다.
    - 실제 dVRK 로봇 실험에서도 쿼리 시간이 최대 **20배** 감소하였다.
 3. **물리 로봇 적용**: dVRK의 Single-arm 및 Double-arm Reacher 작업에서 CSF learner가 PETS supervisor를 효과적으로 추적하며 성공적으로 학습됨을 확인하였다.

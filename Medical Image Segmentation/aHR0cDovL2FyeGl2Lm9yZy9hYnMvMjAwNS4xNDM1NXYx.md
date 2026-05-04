@@ -10,7 +10,7 @@ Dong Yang, Holger Roth, Xiaosong Wang, Ziyue Xu, Andriy Myronenko, Daguang Xu (2
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 학습 과정에서 경계 영역에 명시적으로 집중하도록 강제하는 **Boundary Enhancement (BE) Loss**를 도입하는 것이다. 
+본 논문의 핵심 아이디어는 학습 과정에서 경계 영역에 명시적으로 집중하도록 강제하는 **Boundary Enhancement (BE) Loss**를 도입하는 것이다.
 
 이 방법의 중심적인 직관은 라플라시안 필터(Laplacian filter)를 적용하여 경계 영역에서는 강한 응답을 생성하고 그 외의 영역에서는 응답을 제거함으로써, 예측된 마스크와 실제 정답(Ground Truth) 마스크 간의 경계 차이를 직접적으로 최적화하는 것이다. 제안된 BE Loss는 별도의 전처리나 후처리가 필요 없으며, 특수한 네트워크 구조를 요구하지 않는 경량화된 설계라는 점이 주요 특징이다. 이를 통해 기존의 어떤 3D 백본 네트워크(Backbone networks)에도 쉽게 통합하여 사용할 수 있다.
 
@@ -26,9 +26,11 @@ Dong Yang, Holger Roth, Xiaosong Wang, Ziyue Xu, Andriy Myronenko, Daguang Xu (2
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 원리
+
 본 방법론은 3D 이진 분할 마스크 $S$에 라플라시안 필터 $L(\cdot)$를 적용하여 경계 영역을 강조하는 방식을 취한다. 라플라시안 필터는 경계 부분에서 강한 반응을 보이고 평탄한 영역에서는 0에 가까운 값을 출력한다.
 
 ### 주요 방정식 및 손실 함수
+
 라플라시안 필터의 정의는 다음과 같다.
 
 $$L(x,y,z) = \frac{\partial^2 S}{\partial x^2} + \frac{\partial^2 S}{\partial y^2} + \frac{\partial^2 S}{\partial z^2}$$
@@ -40,7 +42,9 @@ $$l_{BE} = \|L(F(X)) - L(Y)\|^2_2 = \left\| \frac{\partial^2 (F(X) - Y)}{\partia
 이 손실 함수는 경계 지역에서 벗어난 거짓 양성(False positives)이나 원거리 이상치(Remote outliers)를 효과적으로 억제하는 특성을 가진다.
 
 ### 구현 상세 및 학습 절차
+
 실제 구현에서 BE Loss는 다음과 같은 비학습성(Non-trainable) 컨볼루션 연산의 연속으로 구성된다.
+
 1. **Smoothing**: 동일한 상수 값 $1/27$을 가진 3개의 $3 \times 3 \times 3$ 컨볼루션 레이어를 연속적으로 적용하여 스무딩을 수행한다.
 2. **Edge Detection**: 마지막 레이어에 표준 3D 이산 라플라시안 커널을 적용한다. 이는 결과적으로 $\text{Laplacian of Gaussian (LoG)}$ 필터링과 유사한 동작을 수행한다.
 
@@ -53,12 +57,14 @@ $$l_{overall} = \lambda_1 \cdot l_{dice} + \lambda_2 \cdot l_{BE}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Medical Decathlon Challenge (MSD)의 Task 01(뇌종양 MRI 분할)과 Task 09(비장 CT 분할)를 사용하였다.
 - **백본 네트워크**: 3D residual blocks를 사용하는 $\text{SegResNet}$ (Myronenko, 2018)을 베이스라인으로 사용하였다.
 - **하이퍼파라미터**: 가중치는 $\lambda_1 = 1, \lambda_2 = 1000$으로 설정하였으며, $\text{Adam}$ 옵티마이저를 사용하였다.
 - **평가 지표**: $\text{Dice score}$를 통해 검증 정확도를 측정하였다.
 
 ### 정량적 결과
+
 실험 결과, 제안된 BE Loss를 적용했을 때 다음과 같은 성능 향상이 관찰되었다 (Table 1 기준).
 
 | Method | Task 01 (Brain Tumor) | Task 09 (Spleen) |
@@ -71,6 +77,7 @@ $$l_{overall} = \lambda_1 \cdot l_{dice} + \lambda_2 \cdot l_{BE}$$
 | **SegResNet + Proposed BE Loss** | **0.85** | **0.96** |
 
 ### 결과 해석
+
 제안된 방식은 뇌종양(비정형 객체)과 비장(정형 객체) 모두에서 우수한 성능을 보였으며, MRI와 CT라는 서로 다른 모달리티에서도 효과적임이 입증되었다. 특히 비장 분할(Task 09)에서는 기존의 모든 베이스라인 및 다른 손실 함수 적용 모델보다 높은 Dice score를 기록하였다.
 
 ## 🧠 Insights & Discussion

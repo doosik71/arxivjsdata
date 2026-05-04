@@ -12,9 +12,9 @@ Duo Wu, Jinghe Wang, Yuan Meng, Yanning Zhang, Le Sun, Zhi Wang (2024)
 
 본 논문의 핵심 아이디어는 LLM이 도구의 실행 비용을 인지하고, 병렬 실행이 가능한 비순차적 계획(Non-sequential Plan)을 수립할 수 있도록 하는 프레임워크를 설계하는 것이다.
 
-1.  **Tool Planning Language (TPL)**: 도구와 그들 간의 의존성을 학습 가능한 토큰(Token)으로 정의하여, LLM이 복잡한 비순차적 구조의 계획을 단순한 토큰 시퀀스 예측 문제로 처리할 수 있도록 설계하였다.
-2.  **Cost-Aware Offline Reinforcement Learning (CAORL)**: 입력 데이터의 특성이 도구 비용에 미치는 영향을 반영하는 Context Augmentation과, 성능-비용 최적화를 위한 오프라인 강화학습 알고리즘을 통해 LLM을 미세 조정하였다.
-3.  **OpenCATP 데이터셋**: 비순차적 계획과 실행 비용을 측정할 수 있는 최초의 데이터셋을 구축하였으며, 성능과 비용을 통합적으로 평가하는 $Quality\ of\ Plan\ (QoP)$ 지표를 제안하였다.
+1. **Tool Planning Language (TPL)**: 도구와 그들 간의 의존성을 학습 가능한 토큰(Token)으로 정의하여, LLM이 복잡한 비순차적 구조의 계획을 단순한 토큰 시퀀스 예측 문제로 처리할 수 있도록 설계하였다.
+2. **Cost-Aware Offline Reinforcement Learning (CAORL)**: 입력 데이터의 특성이 도구 비용에 미치는 영향을 반영하는 Context Augmentation과, 성능-비용 최적화를 위한 오프라인 강화학습 알고리즘을 통해 LLM을 미세 조정하였다.
+3. **OpenCATP 데이터셋**: 비순차적 계획과 실행 비용을 측정할 수 있는 최초의 데이터셋을 구축하였으며, 성능과 비용을 통합적으로 평가하는 $Quality\ of\ Plan\ (QoP)$ 지표를 제안하였다.
 
 ## 📎 Related Works
 
@@ -25,6 +25,7 @@ Duo Wu, Jinghe Wang, Yuan Meng, Yanning Zhang, Le Sun, Zhi Wang (2024)
 ## 🛠️ Methodology
 
 ### 1. Tool Planning Language (TPL)
+
 LLM이 복잡한 방향성 비순차 그래프(DAG) 구조를 직접 생성하는 것은 어렵기 때문에, 본 논문은 이를 시퀀스 형태로 변환하는 TPL을 제안한다.
 
 - **토큰 정의**: 각 도구($[t_i]$)와 의존성($\langle d_i \rangle$)을 학습 가능한 임베딩 벡터로 변환한다.
@@ -34,10 +35,12 @@ $$p = \{[SoP], \dots, [t_i], \langle SoD \rangle, \langle d_{i1} \rangle, \dots,
 이를 통해 LLM은 단순한 토큰 예측만으로 병렬 실행이 가능한 복잡한 계획을 생성할 수 있다.
 
 ### 2. Cost-Aware Offline RL (CAORL)
+
 TPL을 기반으로 성능과 비용의 균형을 맞추기 위해 다음의 구성 요소를 포함한 CAORL 알고리즘을 사용한다.
 
 **A. Context Augmentation (문맥 증강)**
 입력 데이터의 크기(예: 이미지 해상도)에 따라 도구 비용이 달라지므로, 이를 반영하기 위해 다음과 같은 설계를 도입한다.
+
 - 입력 크기를 $k$개 레벨로 분류하고, 각 도구에 대해 레벨별 비용 속성 벡터 $c(t_i)$를 할당한다.
 - 현재 입력 레벨 $l$과의 거리에 따라 중요도를 부여하는 importance vector $v_{i-1}$를 계산한다.
 $$v_{i-1} = \cos \frac{\pi(i-l)}{2k}, \quad i \in \{1, \dots, k\}$$
@@ -45,6 +48,7 @@ $$v_{i-1} = \cos \frac{\pi(i-l)}{2k}, \quad i \in \{1, \dots, k\}$$
 
 **B. Offline RL 기반 미세 조정**
 도구 선택의 연쇄적 효과를 고려하여 Planning을 순차적 의사결정 문제로 정의하고 Decision Transformer(DT)를 사용하여 학습한다.
+
 - **상태(State)**: 현재까지 생성된 도구 계획의 토큰 시퀀스 $s_i = \{t_{k1}, \dots, t_{ki}\}$.
 - **액션(Action)**: 다음으로 생성할 도구 토큰 또는 의존성 토큰. (Tool Head와 Dependency Head로 분리하여 예측)
 - **보상 함수(Reward)**: 계획의 성능($P$)과 비용($C$)을 가중치 $\alpha$로 조절하여 정의한다.
@@ -54,12 +58,14 @@ $$r_i = \begin{cases} -(1-\alpha)C(p_i), & \text{if } a_i \neq [EoP] \\ \alpha P
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: OpenCATP (순차적 작업 87종, 비순차적 작업 24종, 총 11,100개 샘플).
 - **평가 지표**: $Quality\ of\ Plan\ (QoP)$를 핵심 지표로 사용하며, 다음과 같이 정의한다.
 $$\text{QoP} = \alpha P_{task}(p) - (1-\alpha)C_{price}(p)$$
 - **비교 대상**: GPT-3.5, GPT-4 기반의 Zero-shot, Few-shot, HuggingGPT, HYDRA 및 Llama2-7B 기반의 IFT, RLTF.
 
 ### 2. 주요 결과
+
 - **순차적 계획(Sequential Planning)**: CATP-LLM(Llama2-7B)은 GPT-4 기반 모델보다 낮은 비용으로 유사한 성능을 내며, 평균적으로 QoP가 1.5%~40.6% 향상되었다.
 - **비순차적 계획(Non-sequential Planning)**: CATP-LLM의 우위가 더욱 극명하게 나타났다. QoP 기준 타 모델 대비 92.0%~375.4% 높은 성능을 보였으며, 특히 GPT-3.5는 비순차 작업에서 많은 무효 계획(Invalid plans)을 생성한 반면, CATP-LLM은 100%의 유효성을 보장했다.
 - **효율성**: 비순차적 계획을 통해 도구들을 병렬로 실행함으로써, 순차적 계획만 생성하는 기존 모델들보다 실행 시간(Runtime)을 획기적으로 단축시켰다.
@@ -67,11 +73,13 @@ $$\text{QoP} = \alpha P_{task}(p) - (1-\alpha)C_{price}(p)$$
 ## 🧠 Insights & Discussion
 
 ### 강점 및 분석
+
 - **비용 인식의 실효성**: Context Augmentation을 통해 입력 데이터의 크기와 도구 비용의 상관관계를 학습시킴으로써, 불필요하게 고비용 도구(예: 이미지 크기가 충분할 때의 Super Resolution)를 배제하는 합리적인 판단이 가능해졌다.
 - **구조적 유연성**: TPL은 LLM이 자연어 지시만으로는 생성하기 어려워하는 비선형적 DAG 구조를 효과적으로 생성하게 함으로써, 병렬 처리의 이점을 극대화하였다.
 - **강화학습의 효율성**: 중간 피드백(Intermediate feedback)을 제공하는 방식이 최종 결과만 보는 방식(RLTF)보다 비용 최적화에 훨씬 효과적임이 입증되었다.
 
 ### 한계 및 논의사항
+
 - **LLM 크기의 영향**: 실험 결과, 단순한 순차 작업은 작은 모델(Qwen-3B 등)로도 가능하지만, 복잡한 비순차 작업에서는 Llama2-7B 이상의 모델이 필요하다는 점이 확인되었다. 이는 비용 인식 계획 능력이 모델의 기본 추론 능력에 의존함을 시사한다.
 - **하드웨어 의존성**: 비용 측정치(런타임, 메모리)가 하드웨어 사양에 따라 달라질 수 있으나, RTX 3090/4090 등 다양한 환경에서도 CATP-LLM이 일관되게 높은 QoP를 유지함을 확인하여 범용성을 입증하였다.
 

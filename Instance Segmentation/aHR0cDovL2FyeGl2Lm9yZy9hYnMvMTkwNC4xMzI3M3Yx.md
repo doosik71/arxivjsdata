@@ -10,7 +10,7 @@ David Owen, Ping-Lin Chang (2019)
 
 ## ✨ Key Contributions
 
-본 연구의 핵심 아이디어는 **두 단계(Two-stage) 검출기가 겪는 컨텍스트 손실(Loss of broader contextual features) 문제를 Semantic Segmentation의 전역적 컨텍스트 유지 능력을 통해 해결**하는 것이다. 
+본 연구의 핵심 아이디어는 **두 단계(Two-stage) 검출기가 겪는 컨텍스트 손실(Loss of broader contextual features) 문제를 Semantic Segmentation의 전역적 컨텍스트 유지 능력을 통해 해결**하는 것이다.
 
 Mask R-CNN과 같은 Two-stage 검출기는 Region Proposal Network(RPN) 단계 이후 제안된 영역(Proposal) 내부의 정보에만 집중하게 되어, 거울의 프레임과 같은 주변 맥락 정보를 잃어버린다. 반면, 단일 단계(Single-stage) 구조인 Semantic Segmentation은 이미지 전체의 컨텍스트를 유지하므로, 해당 영역이 거울 내부인지 외부인지를 더 잘 구분할 수 있다는 직관에 기반한다.
 
@@ -27,6 +27,7 @@ Mask R-CNN과 같은 Two-stage 검출기는 Region Proposal Network(RPN) 단계 
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 본 논문은 Instance Segmentation 모델(Mask R-CNN)과 Semantic Segmentation 모델(UPerNet)을 병렬적으로 사용하고, 그 결과를 융합하는 파이프라인을 제안한다.
 
 1. **Instance Branch**: Mask R-CNN을 사용하여 객체 후보와 마스크를 생성한다.
@@ -34,6 +35,7 @@ Mask R-CNN과 같은 Two-stage 검출기는 Region Proposal Network(RPN) 단계 
 3. **Fusion Stage**: 두 결과를 결합하여 최종적으로 반사된 객체를 제거한다.
 
 ### 융합 방법 및 판별식
+
 본 연구는 Panoptic Segmentation의 개념에서 영감을 얻었으나, 단순한 휴리스틱 융합 방식을 채택하였다. 각 제안된 인스턴스 마스크 영역 내에서 Semantic Segmentation의 평균 점수를 계산하여, 이 값이 특정 임계값 $c$보다 높을 때만 해당 인스턴스를 수용한다.
 
 판별식은 다음과 같다:
@@ -42,17 +44,20 @@ $$\text{Accept instance if: } \frac{\sum_{I} \text{score}}{\text{area}(I)} > c$$
 여기서 $\sum_{I} \text{score}$는 제안된 인스턴스 마스크 $I$ 내부의 세만틱 점수 합계이며, $c$는 튜닝 가능한 파라미터이다. 기존의 Panoptic Segmentation 융합 방식이 인스턴스 결과에 우선순위를 두는 것과 달리, 본 방법은 세만틱 결과가 강력할 경우(즉, 반사 영역이라고 판단될 경우) 이를 우선하여 인스턴스를 제거한다.
 
 ### 학습 및 튜닝 절차
+
 - **학습**: Mask R-CNN은 COCO 데이터셋으로 사전 학습되었으며, UPerNet은 ADE20K 데이터셋으로 사전 학습되었다. 이후 체육관 감시 카메라 데이터셋을 사용하여 파인튜닝을 진행했다.
 - **파라미터 튜닝**: 임계값 $c$는 검증 세트에서 Precision과 Recall의 트레이드-오프를 분석하여 결정되었으며, 실험 결과 $c=0.04$일 때 최적의 성능을 보였다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 체육관에서 수집된 약 22,000장의 감시 이미지 ($1920 \times 1080$ 해상도). 이 중 527장이 반사가 심한 이미지로 분류되었다.
 - **비교 대상**: (1) 사전 학습된 Mask R-CNN, (2) 반사 데이터로 파인튜닝된 Mask R-CNN, (3) 제안하는 Joint Segmentation 방식.
 - **지표**: Precision, Recall, Average Precision(AP), Average Recall(AR), 그리고 이미지당 False Positive 수.
 
 ### 주요 결과
+
 1. **반사 제거 성능**: Joint Segmentation은 False Positive의 수를 획기적으로 줄였다.
     - 사전 학습 모델 기준: False Positive가 502개에서 251개로 감소, Precision이 $71\% \rightarrow 83\%$로 향상되었으며 Recall은 거의 영향을 받지 않았다.
     - 파인튜닝 모델 기준: Precision이 $80\% \rightarrow 84\%$로 향상되었다.

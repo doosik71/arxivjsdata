@@ -14,9 +14,9 @@ Yao Chen, Jiabao Wang, Peichao Wang, Rui Zhang, and Yang Li (2024)
 
 본 논문의 핵심 아이디어는 최근 시퀀스 모델링에서 효율성이 입증된 Vision Mamba 구조를 저해상도 세밀 분류에 도입하고, 이를 지식 증류 프레임워크와 결합하는 것이다. 주요 기여 사항은 다음과 같다.
 
-1.  **ViMD (Vision Mamba Distillation) 제안**: 하이브리드 경량 Mamba 구조를 활용하여 저해상도 세밀 분류의 정확도와 효율성을 동시에 확보한 새로운 프레임워크를 제안한다.
-2.  **SRVM-Net 설계**: Mamba 모델링을 통해 시각적 특징 추출 능력을 강화한 경량 초해상도 Vision Mamba 분류 네트워크(Super-resolution Vision Mamba Network)를 설계하였다.
-3.  **다층 Mamba 지식 증류 손실(Multi-level Mamba Knowledge Distillation Loss) 설계**: 교사 네트워크인 HRVM-Net으로부터 Logits뿐만 아니라 Hidden states의 지식을 함께 전이함으로써 학생 네트워크의 성능을 극대화하는 새로운 손실 함수를 제안한다.
+1. **ViMD (Vision Mamba Distillation) 제안**: 하이브리드 경량 Mamba 구조를 활용하여 저해상도 세밀 분류의 정확도와 효율성을 동시에 확보한 새로운 프레임워크를 제안한다.
+2. **SRVM-Net 설계**: Mamba 모델링을 통해 시각적 특징 추출 능력을 강화한 경량 초해상도 Vision Mamba 분류 네트워크(Super-resolution Vision Mamba Network)를 설계하였다.
+3. **다층 Mamba 지식 증류 손실(Multi-level Mamba Knowledge Distillation Loss) 설계**: 교사 네트워크인 HRVM-Net으로부터 Logits뿐만 아니라 Hidden states의 지식을 함께 전이함으로써 학생 네트워크의 성능을 극대화하는 새로운 손실 함수를 제안한다.
 
 ## 📎 Related Works
 
@@ -27,27 +27,30 @@ Yao Chen, Jiabao Wang, Peichao Wang, Rui Zhang, and Yang Li (2024)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 ViMD는 크게 **SRVM-Net (Student)**, **HRVM-Net (Teacher)**, 그리고 이 둘을 연결하는 **다층 Mamba 지식 증류 손실**로 구성된다. 학습 단계에서는 먼저 HRVM-Net을 고해상도 이미지로 학습시키고, 이후 이를 고정(Frozen)한 상태에서 SRVM-Net이 저해상도 이미지를 입력받아 교사의 지식을 학습하도록 한다. 테스트 단계에서는 SRVM-Net만 단독으로 사용된다.
 
 ### SRVM-Net 구조
+
 SRVM-Net은 SR 서브 네트워크와 ViM 분류 서브 네트워크가 순차적으로 연결된 구조이다.
 
-1.  **SR 서브 네트워크**: 저해상도 이미지 $x_l \in \mathbb{R}^{C_l \times H_l \times W_l}$을 입력받아 세부 정보를 복원하여 초해상도 이미지 $x_s \in \mathbb{R}^{C_s \times H_s \times W_s}$를 생성한다. 본 논문에서는 사전 학습된 SRGAN의 Generator를 그대로 사용하여 이미지 복원 성능을 확보하였다.
-2.  **ViM 분류 서브 네트워크**: 생성된 $x_s$를 입력으로 하며, 다음과 같은 구성 요소를 가진다.
-    *   **Patches Embedding Module**: 2D 이미지를 1D 시퀀스로 변환한다. 합성곱 연산을 통해 패치 $x_a$를 생성한 후, 평탄화(Flatten) 및 전치(Transpose) 연산을 통해 $x_b \in \mathbb{R}^{Z \times D}$를 얻는다. 이후 클래스 토큰($x_{cls}$)과 위치 임베딩($x_{pos}$)을 추가하여 최종 시퀀스 $H_0^s \in \mathbb{R}^{(Z+1) \times D}$를 구성한다.
-    *   **N-layers Vision Mamba Encoder**: 각 층 $E_i$는 양방향 시퀀스 Mamba 구조를 기반으로 한다. 입력 $H_i^s$는 정규화 및 선형 투영을 통해 순방향 시퀀스 $P_{fw}^i$와 역방향 시퀀스 $P_{bw}^i$로 나뉜다. 이후 $\text{SiLU}$ 활성화 함수와 Mamba 연산($M_{fw}, M_{bw}$)을 거치며, 최종 출력 $H_i^s$는 다음과 같은 잔차 구조(Residual structure)로 계산된다:
+1. **SR 서브 네트워크**: 저해상도 이미지 $x_l \in \mathbb{R}^{C_l \times H_l \times W_l}$을 입력받아 세부 정보를 복원하여 초해상도 이미지 $x_s \in \mathbb{R}^{C_s \times H_s \times W_s}$를 생성한다. 본 논문에서는 사전 학습된 SRGAN의 Generator를 그대로 사용하여 이미지 복원 성능을 확보하였다.
+2. **ViM 분류 서브 네트워크**: 생성된 $x_s$를 입력으로 하며, 다음과 같은 구성 요소를 가진다.
+    * **Patches Embedding Module**: 2D 이미지를 1D 시퀀스로 변환한다. 합성곱 연산을 통해 패치 $x_a$를 생성한 후, 평탄화(Flatten) 및 전치(Transpose) 연산을 통해 $x_b \in \mathbb{R}^{Z \times D}$를 얻는다. 이후 클래스 토큰($x_{cls}$)과 위치 임베딩($x_{pos}$)을 추가하여 최종 시퀀스 $H_0^s \in \mathbb{R}^{(Z+1) \times D}$를 구성한다.
+    * **N-layers Vision Mamba Encoder**: 각 층 $E_i$는 양방향 시퀀스 Mamba 구조를 기반으로 한다. 입력 $H_i^s$는 정규화 및 선형 투영을 통해 순방향 시퀀스 $P_{fw}^i$와 역방향 시퀀스 $P_{bw}^i$로 나뉜다. 이후 $\text{SiLU}$ 활성화 함수와 Mamba 연산($M_{fw}, M_{bw}$)을 거치며, 최종 출력 $H_i^s$는 다음과 같은 잔차 구조(Residual structure)로 계산된다:
         $$H_i^s = \text{Linear}(U_{fw}^{i-1} + U_{bw}^{i-1}) + H_{i-1}^s$$
         여기서 $U_{fw}^{i-1} = \sigma(H_{i-1}^s) \odot Q_{fw}^{i-1}$이며, $\odot$는 요소별 곱셈(element-wise product)을 의미한다.
-    *   **Classification Head**: 최종 층의 클래스 토큰 $h_{cls}$를 선형 투영하여 예측 확률인 $\text{Logit}_s$를 산출한다.
+    * **Classification Head**: 최종 층의 클래스 토큰 $h_{cls}$를 선형 투영하여 예측 확률인 $\text{Logit}_s$를 산출한다.
 
 ### 다층 Mamba 지식 증류 손실
+
 SRVM-Net의 일반화 능력을 높이기 위해 Logits와 Hidden states를 모두 활용하는 $\mathcal{L}_{MKD}$를 설계하였다.
 $$\mathcal{L}_{MKD} = \mathcal{L}_{LD} + \beta \mathcal{L}_{HSD}$$
 
-1.  **Logits Distillation Loss ($\mathcal{L}_{LD}$)**: 교사와 학생의 예측 확률 분포 간의 차이를 KL Divergence로 측정한다.
+1. **Logits Distillation Loss ($\mathcal{L}_{LD}$)**: 교사와 학생의 예측 확률 분포 간의 차이를 KL Divergence로 측정한다.
     $$\mathcal{L}_{LD} = \text{KL}(\text{softmax}(\text{Logit}_s / \Delta) || \text{softmax}(\text{Logit}_t / \Delta))$$
     여기서 $\Delta$는 온도를 조절하는 하이퍼파라미터이다.
-2.  **Hidden States Distillation Loss ($\mathcal{L}_{HSD}$)**: $N$개 층의 각 인코더 출력값 사이의 $L_2$ 거리를 최소화한다.
+2. **Hidden States Distillation Loss ($\mathcal{L}_{HSD}$)**: $N$개 층의 각 인코더 출력값 사이의 $L_2$ 거리를 최소화한다.
     $$\mathcal{L}_{HSD} = \sum_{i=1}^N ||H_i^t - H_i^s||_2^2$$
 
 최종 손실 함수는 분류를 위한 교차 엔트로피 손실($\mathcal{L}_{CE}$)과 증류 손실의 합으로 정의된다:
@@ -56,16 +59,19 @@ $$\mathcal{L}_{total} = \mathcal{L}_{CE} + \alpha \mathcal{L}_{MKD}$$
 ## 📊 Results
 
 ### 실험 설정
-*   **데이터셋**: CUB, CAR, DOG, PET, Flower, MIT67, Action 등 7개의 공공 세밀 분류 데이터셋을 사용하였다. HR 이미지는 $224 \times 224$ 크기이며, LR 이미지는 bicubic 보간법을 통해 $56 \times 56$ 크기로 다운샘플링하여 생성하였다.
-*   **비교 대상**: SR 기반 방식(DRE-Net, DME-Net)과 KD 기반 방식(SRKD, JSC)을 비교군으로 설정하였다.
-*   **평가 지표**: Top-1 분류 정확도, 파라미터 수, FLOPs를 측정하였다.
+
+* **데이터셋**: CUB, CAR, DOG, PET, Flower, MIT67, Action 등 7개의 공공 세밀 분류 데이터셋을 사용하였다. HR 이미지는 $224 \times 224$ 크기이며, LR 이미지는 bicubic 보간법을 통해 $56 \times 56$ 크기로 다운샘플링하여 생성하였다.
+* **비교 대상**: SR 기반 방식(DRE-Net, DME-Net)과 KD 기반 방식(SRKD, JSC)을 비교군으로 설정하였다.
+* **평가 지표**: Top-1 분류 정확도, 파라미터 수, FLOPs를 측정하였다.
 
 ### 주요 결과
+
 ViMD는 7개 데이터셋 모두에서 기존 SOTA 방법들보다 높은 정확도를 달성하였다. 구체적으로 CUB 데이터셋에서 DRE-Net 대비 6.42%p, JSC(SwinIR) 대비 2.35%p 향상된 성능을 보였다. 특히 효율성 측면에서 매우 강력한 이점을 가진다. ViMD의 분류 서브 네트워크인 Vim-Tiny는 파라미터 수가 6.99M, FLOPs가 0.50G에 불과하며, 이는 VGG16의 약 0.05%, ResNet50의 28.3%, ResNet18의 60.5% 수준이다.
 
 ### 소거 연구 (Ablation Study)
-1.  **구성 요소 분석**: ResNet18을 사용했을 때보다 Vim-Tiny를 사용할 때 정확도가 크게 향상되었으며(CUB 기준 6.53%p 증가), 지식 증류($\mathcal{L}_{LD}, \mathcal{L}_{HSD}$)를 적용했을 때 성능이 추가로 향상됨을 확인하였다.
-2.  **하이퍼파라미터 분석**: $\beta \in \{1, 10, 20, 30\}$ 범위 내에서 성능 변화를 관찰한 결과, 모델이 $\beta$ 값에 대해 비교적 강건(robust)하며 $\beta=20$일 때 전반적으로 우수한 성능을 보였다.
+
+1. **구성 요소 분석**: ResNet18을 사용했을 때보다 Vim-Tiny를 사용할 때 정확도가 크게 향상되었으며(CUB 기준 6.53%p 증가), 지식 증류($\mathcal{L}_{LD}, \mathcal{L}_{HSD}$)를 적용했을 때 성능이 추가로 향상됨을 확인하였다.
+2. **하이퍼파라미터 분석**: $\beta \in \{1, 10, 20, 30\}$ 범위 내에서 성능 변화를 관찰한 결과, 모델이 $\beta$ 값에 대해 비교적 강건(robust)하며 $\beta=20$일 때 전반적으로 우수한 성능을 보였다.
 
 ## 🧠 Insights & Discussion
 

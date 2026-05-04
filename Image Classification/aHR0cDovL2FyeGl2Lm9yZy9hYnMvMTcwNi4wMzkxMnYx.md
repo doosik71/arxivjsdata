@@ -12,8 +12,8 @@ Zhe Li, Xiaoyu Wang, Xutao Lv, Tianbao Yang (2017)
 
 본 논문의 핵심 아이디어는 CNN 내에서 $1 \times 1$ 합성곱과 $k \times k$ ($k > 1$) 합성곱이 수행하는 역할이 서로 다르다는 직관에서 출발한다. $1 \times 1$ 합성곱은 데이터의 투영(projection) 및 변환(transformation)을 담당하는 반면, $k \times k$ 합성곱은 공간적인 패턴 추출(pattern extraction)을 담당한다. 이러한 기능적 차이를 바탕으로 다음과 같은 두 가지 핵심 기여를 제시한다.
 
-1.  **Pattern Binarization**: 모든 가중치를 이진화하는 기존 방식과 달리, 패턴 추출을 담당하는 $k \times k$ 합성곱 필터만을 이진화하고 $1 \times 1$ 필터는 부동 소수점(floating point) 형태를 유지함으로써 성능 저하를 최소화하며 모델 크기를 압축한다.
-2.  **Pattern Residual Block (PRB)**: 이진화된 $k \times k$ 합성곱으로 인한 정보 손실을 보완하기 위해, $1 \times 1$ 합성곱을 통한 변환된 특징 맵을 $k \times k$ 합성곱의 결과에 더해주는 새로운 잔차 블록 구조를 제안한다. 이를 통해 소형 네트워크에서도 모델 용량을 높이고 이진화의 부정적 영향을 상쇄한다.
+1. **Pattern Binarization**: 모든 가중치를 이진화하는 기존 방식과 달리, 패턴 추출을 담당하는 $k \times k$ 합성곱 필터만을 이진화하고 $1 \times 1$ 필터는 부동 소수점(floating point) 형태를 유지함으로써 성능 저하를 최소화하며 모델 크기를 압축한다.
+2. **Pattern Residual Block (PRB)**: 이진화된 $k \times k$ 합성곱으로 인한 정보 손실을 보완하기 위해, $1 \times 1$ 합성곱을 통한 변환된 특징 맵을 $k \times k$ 합성곱의 결과에 더해주는 새로운 잔차 블록 구조를 제안한다. 이를 통해 소형 네트워크에서도 모델 용량을 높이고 이진화의 부정적 영향을 상쇄한다.
 
 ## 📎 Related Works
 
@@ -47,6 +47,7 @@ $$O(x) = C_{k \times k}(x) + C_{1 \times 1}(x)$$
 이 구조에서 $C_{1 \times 1}(x)$는 일종의 선형 매핑으로 작동하며, 특히 $C_{k \times k}$가 이진화되었을 때 발생하는 오차를 보완하는 잔차(residual) 역할을 수행하여 모델의 표현력을 유지한다.
 
 **SEP-Net Module**은 다음과 같은 순서로 구성된다.
+
 - 차원 축소 층 ($1 \times 1$ 합성곱) $\rightarrow$ 두 개의 PRB 블록 (서로 다른 출력 채널) $\rightarrow$ 차원 복원 층 ($1 \times 1$ 합성곱).
 - 마지막 복원 층은 ResNet과 유사한 스킵 연결(skip connection)을 가능하게 하여 더 깊은 층을 쌓을 수 있게 한다.
 
@@ -55,18 +56,21 @@ $$O(x) = C_{k \times k}(x) + C_{1 \times 1}(x)$$
 ## 📊 Results
 
 ### 1. CIFAR-10 실험
+
 ResNet-20, 32, 44, 56 모델에 Pattern Binarization을 적용한 결과, 파인튜닝된 모델(Refined model)의 정확도가 원본 모델(Full model)과 매우 유사하게 유지됨을 확인하였다. 특히 ResNet-56의 경우, 파라미터 수를 약 86% 감소시켰음에도 성능 저하가 매우 적었다.
 
 ### 2. ImageNet 실험
+
 GoogLeNet을 대상으로 필터 크기별 이진화 영향을 분석한 결과, $1 \times 1$ 필터를 이진화했을 때의 성능 저하가 $3 \times 3$ 또는 $5 \times 5$ 필터를 이진화했을 때보다 훨씬 컸다. 이는 $1 \times 1$ 필터가 데이터 투영이라는 중요한 역할을 수행하므로 부동 소수점 형태를 유지해야 한다는 본 논문의 가설을 뒷받침한다.
 
 ### 3. SOTA 모델과의 비교 (SEP-Net vs MobileNet vs SqueezeNet)
+
 제안된 SEP-Net을 다양한 설정(SEP-Net-R: 원본 가중치, SEP-Net-B: 패턴 이진화, SEP-Net-BQ: 이진화 + 8비트 양자화)으로 실험하여 비교하였다.
 
 - **정확도**: 1.3M 파라미터를 가진 SEP-Net-R은 ImageNet에서 65.8%의 Top-1 정확도를 기록하여, 동일한 크기의 MobileNet(63.7%)과 SqueezeNet(60.4%)보다 높은 성능을 보였다.
 - **모델 크기**:
-    - **SEP-Net-B (Small)**: 패턴 이진화를 통해 모델 크기를 4.2MB로 줄였을 때 63.7%의 정확도를 유지하였다.
-    - **SEP-Net-BQ (Small)**: 추가로 $1 \times 1$ 필터를 8비트로 양자화하여 모델 크기를 **1.3MB**까지 줄였으며, 이때의 정확도는 63.5%로 MobileNet(5.2MB, 63.7%)과 대등한 성능을 달성하였다.
+  - **SEP-Net-B (Small)**: 패턴 이진화를 통해 모델 크기를 4.2MB로 줄였을 때 63.7%의 정확도를 유지하였다.
+  - **SEP-Net-BQ (Small)**: 추가로 $1 \times 1$ 필터를 8비트로 양자화하여 모델 크기를 **1.3MB**까지 줄였으며, 이때의 정확도는 63.5%로 MobileNet(5.2MB, 63.7%)과 대등한 성능을 달성하였다.
 
 ## 🧠 Insights & Discussion
 

@@ -10,7 +10,7 @@ Zhentao Xia, Likai Wang, Weiguang Qu, Junsheng Zhou, Yanhui Gu (2019)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 기존의 Stack-Pointer Network(STACKPTR) 구조에 **Self-attention 메커니즘**과 **신경망 기반의 딥 전이 학습(Deep Transfer Learning)**을 결합하는 것이다. 
+본 논문의 핵심 아이디어는 기존의 Stack-Pointer Network(STACKPTR) 구조에 **Self-attention 메커니즘**과 **신경망 기반의 딥 전이 학습(Deep Transfer Learning)**을 결합하는 것이다.
 
 1. **Contextual Representation 강화**: Self-attention을 통해 단어의 의미를 문맥적으로 더 잘 포착하여 표현 벡터의 질을 높였다.
 2. **도메인 적응을 위한 전이 학습**: 타겟 도메인의 학습 데이터가 부족한 문제를 해결하기 위해, 소스 도메인에서 사전 학습된 네트워크의 일부 구조와 파라미터를 타겟 도메인 모델의 일부로 재사용하고 미세 조정(Fine-tuning)하는 전략을 사용하였다.
@@ -24,18 +24,23 @@ Zhentao Xia, Likai Wang, Weiguang Qu, Junsheng Zhou, Yanhui Gu (2019)
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인 및 시스템 구조
+
 시스템은 크게 네 가지 구성 요소로 이루어져 있다: **Token Representation Layer $\rightarrow$ Self-attention Layer $\rightarrow$ Stack-Pointer Network $\rightarrow$ Domain Adaptation**.
 
 ### 2. 주요 구성 요소 및 역할
 
 #### (1) Token Representation
+
 입력 문장 $S=\{w_1, w_2, \dots, w_n\}$에 대해 다음과 같은 세 가지 임베딩을 결합(Concatenate)하여 입력 벡터 $X=\{x_1, x_2, \dots, x_n\}$를 생성한다.
+
 - **Word-level Embedding**: 사전 학습된 Glove 모델을 사용하여 단어를 벡터로 변환한다.
 - **Character-level Embedding**: CNN을 사용하여 단어의 문자 시퀀스를 인코딩하여 형태적 정보를 포착한다.
 - **POS Embedding**: 품사(Part-of-Speech) 정보를 추가하여 문맥 정보를 보강한다.
 
 #### (2) Stack-Pointer Networks (STACKPTR)
-포인터 네트워크를 백본으로 하며, 내부 스택을 통해 트리의 상단-하단(Top-down) 구조를 유지한다. 
+
+포인터 네트워크를 백본으로 하며, 내부 스택을 통해 트리의 상단-하단(Top-down) 구조를 유지한다.
+
 - **인코딩**: BiLSTM을 사용하여 각 단어를 은닉 상태 $e_i$로 인코딩한다.
 - **디코딩**: Top-down, Depth-first 전이 시스템을 구현한다. 시간 단계 $t$에서 스택 최상단 단어의 인코딩 상태 $e_i$를 받아 디코더 은닉 상태 $d_t$를 생성하고, Biaffine Attention 메커니즘을 통해 어텐션 벡터 $a_t$를 계산한다.
 - **수식**:
@@ -44,14 +49,18 @@ Zhentao Xia, Likai Wang, Weiguang Qu, Junsheng Zhou, Yanhui Gu (2019)
 - **동작**: $a_t$에서 가장 높은 점수를 가진 위치 $p$를 반환하여 의존 아크 $w_i \to w_p$를 생성하고, $w_p$를 스택에 푸시한다. 자신을 가리키면 모든 자식 노드를 찾은 것으로 간주하여 팝(pop)한다.
 
 #### (3) Self-Attention Layer
+
 단어 벡터가 문맥적 의미를 포착할 수 있도록 Multi-head Attention을 적용한다.
+
 - **연산 과정**: Query($Q$), Key($K$), Value($V$) 행렬을 사용하여 다음과 같이 계산한다.
   $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_w}}\right)V$$
   $$\text{MultiHead}(Q, K, V) = W_O [h_{\text{head}1}; \dots; h_{\text{head}r}]$$
   여기서 $r$은 헤드의 수이며, $W_O$ 등은 학습 가능한 선형 변환 파라미터이다.
 
 #### (4) Domain Adaptation (Deep Transfer Learning)
+
 타겟 도메인의 데이터 부족 문제를 해결하기 위해 다음과 같은 전이 학습 전략을 취한다.
+
 - **파라미터 재사용**: 소스 도메인에서 학습된 Encoder와 Decoder의 파라미터, 그리고 Self-attention 파라미터를 유지(Retain)한다.
 - **부분적 재학습**: 소스 도메인에서 학습된 Biaffine Attention 메커니즘의 파라미터는 버리고, 타겟 도메인에 맞게 새로운 Biaffine Attention Score를 학습시킨다.
 - **미세 조정**: 이후 전체 네트워크의 파라미터를 타겟 도메인 데이터로 Fine-tune 한다.
@@ -59,6 +68,7 @@ Zhentao Xia, Likai Wang, Weiguang Qu, Junsheng Zhou, Yanhui Gu (2019)
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: 소스 도메인은 Balanced Corpus(BC)를 사용하였고, 타겟 도메인은 상품 리뷰(PC), 상품 블로그(PB), 웹 소설(ZX) 세 가지를 사용하였다.
 - **평가 지표**: Labeled Attachment Score (LAS, 헤드와 레이블이 모두 정확하게 예측된 단어의 비율)를 사용하며, 세 타겟 도메인의 평균 LAS로 최종 성능을 측정한다.
 - **하이퍼파라미터**: Word Embedding 차원 300, RNN 은닉 유닛 256, Attention Head 수 4, Adam Optimizer 사용.

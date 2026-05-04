@@ -13,6 +13,7 @@ Ivona Najdenkoska, Xiantong Zhen, Marcel Worring (2023)
 본 논문의 핵심 아이디어는 대규모의 사전 학습된 시각 모델과 언어 모델을 그대로 유지(frozen)하면서, 그 사이를 연결하는 가벼운 **Meta-mapper** 네트워크를 통해 메타 지식을 학습시키는 것이다.
 
 중심적인 설계 직관은 다음과 같다.
+
 1. **학습 가능한 브릿지 설계**: 시각적 표현을 언어 모델의 잠재 공간(latent space)으로 매핑하는 Meta-mapper를 도입하여, 두 모달리티 간의 간극을 메운다.
 2. **메타 학습의 도입**: 다양한 multimodal few-shot task를 순차적으로 관찰하며 공유된 메타 지식을 축적함으로써, 새로운 작업이 주어졌을 때 단 몇 번의 그래디언트 업데이트만으로도 빠르게 적응(fast adaptation)할 수 있도록 한다.
 3. **데이터 기반 작업 유도**: 수동으로 작성된 텍스트 지시문 없이, support set의 데이터를 통해 모델이 스스로 작업을 파악하게 함으로써 유연성을 높인다.
@@ -28,14 +29,17 @@ Ivona Najdenkoska, Xiantong Zhen, Marcel Worring (2023)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 모델은 **Frozen Vision Encoder**, **Trainable Meta-mapper**, **Frozen Language Model**의 세 가지 모듈로 구성된다. 전체 파이프라인은 시각 특징을 추출하여 언어 모델이 이해할 수 있는 Visual prefix로 변환하고, 이를 기반으로 텍스트를 생성하는 autoregressive 방식으로 동작한다.
 
 ### 주요 구성 요소 및 역할
+
 1. **Vision Encoder ($v_\phi$):** CLIP (ViT/B-32)를 사용하며, 입력 이미지 $x$로부터 시각적 특징 $v_\phi(x) = x_1, \dots, x_n$을 추출한다. 이 모델의 파라미터 $\phi$는 고정된다.
 2. **Meta-mapper ($f_\theta$):** 시각적 특징을 언어 모델의 임베딩 공간으로 매핑하는 핵심 모듈이다. Set multi-head attention block을 사용하여 시각적 특징과 학습 가능한 파라미터 $p$를 결합해 최적의 **Visual prefix** ($p^*_1 \dots p^*_l$)를 생성한다.
 3. **Language Model ($g_\omega$):** GPT-2를 사용하며, Meta-mapper가 생성한 Visual prefix와 텍스트 토큰 임베딩을 입력받아 다음 토큰을 예측하는 autoregressive 생성을 수행한다. 이 모델의 파라미터 $\omega$ 역시 고정된다.
 
 ### 주요 방정식 및 학습 절차
+
 **1. Meta-mapper의 동작:**
 Meta-mapper는 self-attention 메커니즘을 통해 특징 간의 유사도를 측정하고 가중치를 부여한다.
 $$\text{MetaMap}_\theta(Q, K, V) = \sigma(QK^T) * V$$
@@ -61,11 +65,13 @@ $$p^*_1 \dots p^*_l = \text{MetaMap}_\theta([p_1 \dots p_l, x_1, \dots, x_n])$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 학습에는 COCO2017을 사용해 태스크 구조로 재구성하였고, 테스트에는 Real-Name miniImageNet, Real-Fast VQA, Open-Ended miniImageNet, Fast-VQA의 4가지 벤치마크를 사용하였다.
 - **비교 대상**: Frozen (Tsimpoukelli et al., 2021) 모델을 주요 베이스라인으로 설정하였으며, 상한선(upper-bound) 확인을 위해 판별 모델인 ANIL을 참고하였다.
 - **지표**: Accuracy (%)를 측정하였다.
 
 ### 주요 결과
+
 1. **성능 향상**: 제안된 모델은 수동적인 task induction 없이도 Frozen 베이스라인을 크게 상회하는 성능을 보였다. 특히 Real-Name miniImageNet 2-way 5-shot 설정에서 높은 정확도를 기록하였다.
 2. **에피소딕 학습의 효과**: 단순한 미니배치 학습(non-episodic)보다 태스크 단위로 학습하는 에피소딕 학습(episodic training)이 성능을 유의미하게 향상시켰다.
 3. **데이터 효율성**: Support set에서 동일한 샘플을 반복해서 보여주는 것(repeats)보다, 서로 다른 샘플(shots)의 수를 늘리는 것이 성능 향상에 훨씬 효과적임을 확인하였다.
@@ -74,9 +80,11 @@ $$p^*_1 \dots p^*_l = \text{MetaMap}_\theta([p_1 \dots p_l, x_1, \dots, x_n])$$
 ## 🧠 Insights & Discussion
 
 ### 강점 및 분석
+
 본 연구의 가장 큰 성과는 **가벼운 Meta-mapper**만으로 대규모 frozen 모델들의 능력을 효과적으로 결합했다는 점이다. 학습 파라미터가 약 200만 개에 불과하여 계산 효율성이 매우 높으며(GTX 1080Ti에서 2시간 이내 학습), 사람이 일일이 지시문을 작성할 필요가 없는 데이터 주도적(data-driven) 방식이라는 점에서 실용성이 높다.
 
 ### 한계 및 논의사항
+
 1. **평가 지표의 한계**: 본 논문은 정답 단어와 정확히 일치하는지만을 측정하는 accuracy를 사용하였다. 하지만 생성 모델의 특성상 정답과 의미는 같으나 단어가 다른 '패러프레이징'된 답변이 나올 수 있으며, 이는 정량적으로는 오답 처리되지만 정성적으로는 더 훌륭한 답변일 수 있다.
 2. **가설 공간의 크기**: 생성 방식(Open-ended)은 분류 방식(Closed-set)보다 훨씬 넓은 가설 공간(전체 어휘집)을 가지므로, ANIL과 같은 분류기 모델과 직접적인 공정한 비교가 어렵다.
 3. **도메인 전이 문제**: COCO2017으로 학습하고 miniImageNet으로 테스트하는 cross-domain 설정에서 정량적 수치는 낮아졌으나, 생성된 문장의 질은 더 상세해지는 경향을 보였다.

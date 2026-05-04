@@ -25,21 +25,27 @@ Daswin De Silva and Damminda Alahakoon (2021)
 CDAC AI Life Cycle은 크게 세 가지 단계와 그에 따른 전문 인력의 역할로 구분된다.
 
 ### 1. Design Phase (담당: AI/Data Scientist)
+
 문제의 맥락을 정의하고 데이터를 준비하는 단계로, 다음의 세부 단계로 구성된다.
+
 - **문제 정의 및 공식화**: 환경, 엔티티, 데이터를 정의하고 현재의 해결 방식과 대안을 분석한다.
 - **문헌 검토**: 최신 알고리즘, 사전 학습된 모델(Pre-trained models)뿐만 아니라 윤리 가이드라인을 검토한다.
 - **데이터 준비 및 탐색**: Single Version of Truth (SVOT) 개념을 적용하여 데이터 웨어하우스나 데이터 레이크를 구축하고, 데이터의 품질과 상호 관계를 검증한다.
 - **데이터 획득 및 전처리**: 외부 데이터 획득 시 윤리 및 규정을 준수하며, Data Wrangling(정제)과 Data Augmentation(증강, 클래스 불균형 해결 등)을 통해 학습 가능한 상태로 만든다.
 
 ### 2. Develop Phase (담당: AI/ML Scientist)
+
 데이터와 알고리즘을 실제 모델로 변환하고 평가하는 기술 중심 단계이다.
+
 - **초기 모델 구축**: 문제 도메인에 맞는 알고리즘을 매핑하고, 사전 학습된 모델이 있다면 Transfer Learning이나 Zero/One-shot Learning을 적용한다.
 - **벤치마크 수립 및 모델 확장**: 전문가의 직관이나 휴리스틱을 이용해 벤치마크를 설정하고, 초기 모델이 포착하지 못한 부분을 보완하는 여러 모델을 구축한다. 이때 모델 복잡도를 점진적으로 높여 설명 가능성을 확보한다.
 - **평가 및 설명 가능성(XAI)**: Accuracy, Precision, Recall 등의 Primary Metrics를 평가하고, LIME, SHAP, PDP와 같은 외재적 방법(Extrinsic methods)을 통해 모델의 판단 근거를 설명한다.
 - **효율성 평가**: CPU/Memory 사용량, 수렴 속도 등 Secondary Metrics를 측정하여 배포 가능 여부를 판단한다.
 
 ### 3. Deploy Phase (담당: AI/ML Engineer)
+
 모델을 실제 환경에 적용하고 운영하는 단계이다.
+
 - **모델 배포**: 실시간(Real-time) 또는 배치(Batch) 실행 방식을 결정하고 출력 포맷과 응답 시간을 설정한다.
 - **AI 파이프라인 운영(MLOps/AIOps)**: 컨테이너(Container)와 마이크로서비스(Microservice) 아키텍처를 도입하여 CI/CD 파이프라인을 구축하고, 모델의 버전 관리 및 재학습 체계를 마련한다.
 - **하이퍼자동화(Hyperautomation)**: AI 기능을 기존의 자동화 컴포넌트와 통합하여 프로세스 전체를 지능형으로 자동화하고, 이를 통해 효율성 개선이나 혁신을 꾀한다.

@@ -30,6 +30,7 @@ $\text{MambaStock}$은 이러한 기존 모델들이 가진 비선형성 처리 
 ## 🛠️ Methodology
 
 ### 1. Structured State Space Sequence Model ($\text{S4}$)
+
 $\text{S4}$는 상미분 방정식(ODE)의 풀이 방식에서 영감을 얻었으며, 시퀀스의 역학을 상태 공간 표현으로 나타낸다. 기본 방정식은 다음과 같다.
 
 $$h_t = Ah_{t-1} + Bx_t$$
@@ -44,6 +45,7 @@ $$\bar{B} = (\Delta A)^{-1}(\exp(\Delta A) - I) \cdot \Delta B$$
 $$h_t = \bar{A}h_{t-1} + \bar{B}x_t$$
 
 ### 2. Mamba ($\text{S6}$)
+
 $\text{Mamba}$는 $\text{S4}$의 파라미터 $A, B, C, \Delta$가 시간에 따라 불변(time-invariant)이라는 점을 개선하여, 입력 $X$에 따라 동적으로 변하는 **선택 메커니즘**을 도입했다.
 
 - **동적 파라미터**: $B, C, \Delta$가 입력 $X$로부터 완전 연결 층(fully-connected layers)을 통해 학습된다.
@@ -52,12 +54,13 @@ $$h_t = \bar{A}_t h_{t-1} + \bar{B}_t x_t$$
 $$y_t = C_t h_t$$
 
 ### 3. MambaStock 아키텍처 및 학습 절차
+
 $\text{MambaStock}$은 $\text{Mamba}$ 프레임워크를 사용하여 미래의 주가 변동률(movement rate)을 예측한다.
 
 - **입력 데이터**: 시가, 고가, 저가, 거래량, 거래액, 회전율, 거래비율, $\text{PE}$, $\text{PB}$, $\text{PS}$, 총 주식 수, 유통 주식 수, 자유 유통 주식 수, 총 시가총액, 유통 시가총액 등 총 15가지의 금융 지표를 입력으로 사용한다.
-- **모델 구조**: 
-    - 입력 데이터 $\rightarrow \text{Mamba}$ 모델 ($N=16$) $\rightarrow$ 1차원 표현으로 축소 $\rightarrow \tanh$ 활성화 함수 $\rightarrow$ 예측 변동률 출력.
-    - $\tanh$ 함수를 사용하는 이유는 주가 변동률의 범위를 $(-1, 1)$ 사이로 제한하기 위함이다.
+- **모델 구조**:
+  - 입력 데이터 $\rightarrow \text{Mamba}$ 모델 ($N=16$) $\rightarrow$ 1차원 표현으로 축소 $\rightarrow \tanh$ 활성화 함수 $\rightarrow$ 예측 변동률 출력.
+  - $\tanh$ 함수를 사용하는 이유는 주가 변동률의 범위를 $(-1, 1)$ 사이로 제한하기 위함이다.
 - **손실 함수**: 예측값과 실제값 사이의 평균 제곱 오차인 $\text{MSE}$($\text{Mean Squared Error}$)를 사용한다.
 $$\text{MSE} = \frac{1}{n} \sum_{t=1}^{n} (\hat{X}_t - X_t)^2$$
 - **학습 설정**: $\text{Adam}$ 옵티마이저를 사용하며, 학습 횟수는 100 $\text{epoch}$, 학습률(learning rate)은 0.01로 설정하였다. 하드웨어는 $\text{NVIDIA GTX 3060 (12GB)}$를 사용하였다.
@@ -65,27 +68,31 @@ $$\text{MSE} = \frac{1}{n} \sum_{t=1}^{n} (\hat{X}_t - X_t)^2$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **대상 데이터**: 중국 주식 시장의 4개 은행 주식(중국 상업은행 600036.SH, 중국 농업은행 601288.SH, 교통은행 601328.SH, 중국은행 601988.SH)을 대상으로 하였다.
 - **데이터셋**: $\text{Tushare}$ 오픈 데이터셋을 사용하였으며, 테스트 세트의 크기는 300으로 고정하였다.
 - **비교 모델 (Baselines)**: $\text{KF}$, $\text{ARIMA}$, $\text{ARIMA-NN}$, $\text{XGBoost}$, $\text{LSTM}$, $\text{BiLSTM}$, $\text{Transformer}$, $\text{TL-KF}$, $\text{AttCLX}$.
 - **평가 지표**: $\text{MSE}$, $\text{RMSE}$, $\text{MAE}$, $R^2$.
 
 ### 2. 정량적 결과 분석
+
 실험 결과, $\text{MambaStock}$은 대부분의 지표에서 기존 모델들보다 우수한 성능을 보였다.
 
 - **$R^2$ 지표**: 특히 $R^2$ 값에서 $\text{MambaStock}$이 가장 높은 수치를 기록하며, 실제 주가 움직임을 가장 잘 설명하고 있음을 보여준다. (예: 601988.SH에서 $\text{MambaStock}$의 $R^2$는 0.9590으로 최상위 수준임)
 - **오차 지표**: $\text{MSE}$, $\text{RMSE}$, $\text{MAE}$ 모두에서 $\text{MambaStock}$이 경쟁 모델들 대비 낮거나 매우 경쟁력 있는 수치를 기록하였다.
 - **비교 분석**:
-    - **전통적 모델 대비**: $\text{ARIMA}$나 $\text{KF}$보다 비선형 패턴 캡처 능력이 뛰어나 월등한 성능을 보였다.
-    - **딥러닝 모델 대비**: $\text{LSTM}$, $\text{Transformer}$보다 시계열의 복잡한 의존성을 더 잘 추출하여 더 높은 정확도를 달성했다.
-    - **하이브리드 모델 대비**: $\text{TL-KF}$나 $\text{AttCLX}$보다 시간적 의존성과 복잡한 패턴을 동시에 더 효과적으로 포착하였다.
+  - **전통적 모델 대비**: $\text{ARIMA}$나 $\text{KF}$보다 비선형 패턴 캡처 능력이 뛰어나 월등한 성능을 보였다.
+  - **딥러닝 모델 대비**: $\text{LSTM}$, $\text{Transformer}$보다 시계열의 복잡한 의존성을 더 잘 추출하여 더 높은 정확도를 달성했다.
+  - **하이브리드 모델 대비**: $\text{TL-KF}$나 $\text{AttCLX}$보다 시간적 의존성과 복잡한 패턴을 동시에 더 효과적으로 포착하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. 강점
+
 $\text{MambaStock}$의 가장 큰 강점은 $\text{Mamba}$의 **선택적 상태 공간 모델(S6)** 구조를 통해 주가 데이터의 극심한 비선형성과 변동성을 효과적으로 다루었다는 점이다. 별도의 복잡한 특징 공학(feature engineering) 없이도 원시 금융 지표만으로 높은 예측력을 보인 것은 모델의 표현 학습 능력이 매우 뛰어남을 시사한다. 또한, $\text{Transformer}$의 연산 효율성 문제를 해결하면서도 유사하거나 더 나은 성능을 냈다는 점이 고무적이다.
 
 ### 2. 한계 및 비판적 해석
+
 - **데이터셋의 규모**: 실험이 중국의 4개 은행 주식이라는 매우 제한적인 데이터셋에서 이루어졌다. 주식 시장의 다양한 섹터(IT, 바이오 등)나 다른 국가의 시장에서도 동일한 일반화 성능이 나타날지는 명시되지 않았다.
 - **하이퍼파라미터 분석 부재**: $N=16$이라는 설정이나 학습률 $0.01$ 등이 어떤 근거로 선택되었는지에 대한 Ablation Study가 부족하다.
 - **예측 대상의 단순함**: 주가 '변동률'을 예측하는 과제에 집중되어 있는데, 실제 투자에서는 변동률뿐만 아니라 절대 가격이나 추세의 전환점을 맞추는 것이 중요하므로 이에 대한 분석이 추가될 필요가 있다.

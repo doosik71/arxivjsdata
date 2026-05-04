@@ -28,10 +28,12 @@ Adina Zell, Gencer Sumbul, Begüm Demir (2022)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 DML-S2R은 Siamese Neural Network(SNN)를 기반으로 하며, 크게 '쌍별 유사도 모델링' 단계와 '트리플렛 기반 메트릭 학습' 단계로 구성된다.
 
 ### 2. Pairwise Similarity Modeling (1단계)
-이 단계에서는 소량의 레이블링된 데이터 $S$를 사용하여 두 샘플 간의 타겟 값 차이를 예측하는 함수 $f_d$를 학습한다. 
+
+이 단계에서는 소량의 레이블링된 데이터 $S$를 사용하여 두 샘플 간의 타겟 값 차이를 예측하는 함수 $f_d$를 학습한다.
 
 - **목표**: 두 샘플 $x^l_i, x^l_j$가 입력되었을 때, 그들의 타겟 값 차이 $y^l_i - y^l_j$를 예측한다.
 $$f_d(x^l_i, x^l_j) = y^l_i - y^l_j$$
@@ -41,6 +43,7 @@ $$L_{PSM} = \frac{1}{N(N-1)} \sum_{i=1}^{N} \sum_{j=1, i \neq j}^{N} (z_{ij} - f
 여기서 $z_{ij}$는 실제 타겟 값의 차이이다.
 
 ### 3. Triplet-Based Metric Learning (2단계)
+
 1단계에서 학습된 $f_d$를 이용하여, 레이블링되지 않은 데이터 $U$를 포함한 메트릭 공간을 학습한다.
 
 - **트리플렛 구성**: 앵커(Anchor) 샘플 $x^l_a$는 레이블링된 집합 $S$에서 선택하고, 긍정(Positive) 샘플 집합 $P_{x^l_a}$와 부정(Negative) 샘플 집합 $N_{x^l_a}$는 레이블링되지 않은 집합 $U$에서 선택한다.
@@ -50,6 +53,7 @@ $$L_{RLL} = \frac{1}{2N} \sum_{i=1}^{N} (L_P(x^l_a, P_{x^l_a}) + L_N(x^l_a, N_{x
 여기서 $L_P, L_N$은 마진 손실(Margin loss)을 포함한 가중치 기반의 손실 함수이다.
 
 ### 4. Alternate Learning 및 추론 절차
+
 - **교차 학습**: $L_{PSM}$을 최소화하는 학습을 1에포크 수행한 후, 바로 $L_{RLL}$을 최소화하는 학습을 1에포크 수행하는 방식을 반복한다. 이를 통해 두 단계의 정보가 서로를 가이드하며 상호 보완적으로 학습된다.
 - **최종 추정 (Inference)**: 새로운 샘플 $x^*$의 타겟 값 $y^*$는 다음과 같이 모든 레이블링된 샘플과의 예측 차이 값을 평균 내어 계산한다.
 $$y^* = \frac{1}{N} \sum_{i=1}^{N} \left( \frac{f_d(x^*, x^l_i) - f_d(x^l_i, x^*)}{2} + y^l_i \right)$$
@@ -57,18 +61,20 @@ $$y^* = \frac{1}{N} \sum_{i=1}^{N} \left( \frac{f_d(x^*, x^l_i) - f_d(x^l_i, x^*
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: Boston Housing (주택 가격), Superconductivity (초전도 임계 온도), Air Quality (벤젠 농도) 3종의 데이터셋을 사용하였다.
 - **데이터 구성**: 레이블링된 샘플 수 $|S|$를 10, 20, 50개로 설정하여 데이터 희소성 상황을 시뮬레이션하였다.
 - **비교 대상**: COREG(Co-training-style SSR), MSSR(Metric-based SSR) 및 제안 방법의 1단계만 사용한 경우와 비교하였다.
 - **평가 지표**: 평균 절대 오차(MAE, Mean Absolute Error)를 사용하였다.
 
 ### 2. 정량적 결과
+
 - **제안 방법의 효용성**: 모든 데이터셋에서 DML-S2R이 가장 낮은 MAE를 기록하며 가장 우수한 성능을 보였다. 예를 들어, Superconductivity 데이터셋에서 $|S|=50$일 때, DML-S2R은 MAE 3.3을 기록한 반면 COREG는 9.5, MSSR은 12.7을 기록하였다.
 - **단계별 기여도(Ablation Study)**: 1단계(Pairwise Similarity Modeling)만 사용했을 때보다 2단계(Triplet-based Metric Learning)를 함께 적용했을 때 성능이 비약적으로 향상됨을 확인하였다. 이는 레이블링되지 않은 데이터를 통한 메트릭 공간 학습이 타겟 값 추정의 정확도를 크게 높인다는 것을 의미한다.
 
 ## 🧠 Insights & Discussion
 
-본 논문은 회귀 문제에서 레이블 데이터의 부족이라는 고질적인 문제를 '상대적 차이 학습'과 '준지도 메트릭 학습'의 결합으로 효과적으로 해결하였다. 
+본 논문은 회귀 문제에서 레이블 데이터의 부족이라는 고질적인 문제를 '상대적 차이 학습'과 '준지도 메트릭 학습'의 결합으로 효과적으로 해결하였다.
 
 특히 주목할 점은 **Alternate Learning** 전략이다. 단순히 순차적으로 학습시키는 것이 아니라, 두 손실 함수를 교차하여 최적화함으로써, 1단계의 차이 예측 능력이 2단계의 샘플 선택(Positive/Negative set selection)을 돕고, 2단계의 정교해진 메트릭 공간이 다시 1단계의 특징 추출 능력을 향상시키는 선순환 구조를 구축하였다.
 

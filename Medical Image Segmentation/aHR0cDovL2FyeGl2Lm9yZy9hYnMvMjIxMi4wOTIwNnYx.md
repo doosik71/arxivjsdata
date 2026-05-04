@@ -26,6 +26,7 @@ Sheng He, Yanfang Feng, P. Ellen Grant, Yangming Ou (2022)
 ## 🛠️ Methodology
 
 ### 1. Prototype Segmentation (ProtoSeg)
+
 ProtoSeg는 추가적인 파라미터가 필요 없는(Parameter-free) 플러그 앤 플레이 모듈로, 특정 심층 특징 $\mathbf{f}$가 주어졌을 때 다음과 같은 절차로 분할 맵을 생성한다.
 
 **가. 프로토타입 계산**
@@ -37,11 +38,13 @@ $$c_t = \frac{\sum (B_i \cdot f_i)}{\sum B_i}, \quad c_b = \frac{\sum ((1 - B_i)
 각 픽셀 $f_i$와 두 프로토타입 간의 거리(Euclidean distance)를 기반으로 확률을 계산한다. $p(f_i, c_t) > p(f_i, c_b)$인 경우 해당 픽셀을 대상으로 분류하며, 이를 통해 최종적으로 이진 분할 맵인 $S_f$ (SAM)를 얻는다.
 
 ### 2. Segmentation Ability (SA) Score
+
 생성된 SAM $S_f$가 실제 정답(Ground-truth, $G$)과 얼마나 유사한지를 측정하기 위해 Dice score를 사용하며, 이를 **SA score**라고 정의한다.
 $$\text{SA Score}(S_f, G) = \frac{2|S_f \cap G|}{|S_f| + |G|}$$
 SA score가 높을수록 해당 심층 특징이 대상과 배경을 잘 구분하는 강력한 분별력을 가졌음을 의미한다.
 
 ### 3. Offline 및 Online ProtoSeg
+
 - **Offline ProtoSeg**: 이미 학습된 네트워크의 은닉층 특징들을 추출하여 사후적으로 분할 능력을 해석하는 방식이다.
 - **Online ProtoSeg**: ProtoSeg 과정이 미분 가능함을 이용하여, SA score를 학습 손실 함수(Loss function)에 추가하는 방식이다.
 $$\mathcal{L} = \mathcal{L}_g + \sum \frac{\text{SA Score}}{N}$$
@@ -50,11 +53,13 @@ $$\mathcal{L} = \mathcal{L}_g + \sum \frac{\text{SA Score}}{N}$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: BraTS(뇌종양), ISIC(피부 병변), COVID-19(CT), Prostate(전립선), Pancreas(췌장) 등 5개 데이터셋 사용.
 - **모델**: 표준 U-Net 구조를 사용하였으며, 18개의 컨볼루션 레이어로 구성됨.
 - **평가 지표**: Dice score.
 
 ### 2. 주요 결과
+
 - **레이어별 분할 능력 전이**: SA score를 분석한 결과, 초기 레이어(Early layers) $\rightarrow$ 심층 추상 레이어(Deep abstract layers) $\rightarrow$ 후기 레이어(Late layers) 순으로 분할 능력이 전이됨을 확인하였다. 특히 심층 추상 레이어에서는 해상도가 낮아 SA score가 일시적으로 낮게 나타나지만, 대상 영역의 대략적인 위치(Semantic context)를 파악하는 역할을 수행한다.
 - **Online ProtoSeg의 효과**: SA score를 손실 함수에 포함하여 학습시킨 결과, 최종 출력의 정확도를 떨어뜨리지 않으면서도 중간 특징들의 SA score를 유의미하게 높여 모델의 해석 가능성을 증대시켰다.
 - **마지막 레이어의 유닛 분석**: 마지막 레이어의 64개 유닛 중 실제 높은 SA score를 가진 '활성 유닛(Active units)'은 약 20%~50%에 불과했다. 이는 U-Net의 마지막 레이어가 과도하게 설계(Oversized)되었음을 시사하며, 네트워크 프루닝(Pruning)의 가능성을 보여준다.
@@ -63,12 +68,15 @@ $$\mathcal{L} = \mathcal{L}_g + \sum \frac{\text{SA Score}}{N}$$
 ## 🧠 Insights & Discussion
 
 ### 1. U-Net의 동작 원리 재해석
+
 본 연구는 U-Net이 일종의 **'디노이징 모델(Denoise model)'**로 동작한다는 통찰을 제공한다. 인코더 경로(Down-sampling)에서는 입력 이미지의 노이즈를 제거하고 전역적 문맥(Global context)을 통해 대상을 대략적으로 위치시키며, 디코더 경로(Up-sampling)에서는 초기 레이어의 세부 특징과 결합하여 정교한 형태를 복원한다.
 
 ### 2. 데이터셋 특성 파악
+
 입력 이미지의 강도/색상 값만으로 직접 ProtoSeg를 수행하여 계산한 SA score($S_x$)와 모델 출력($B$)을 비교함으로써 데이터셋의 난이도를 평가하였다. 예를 들어 BraTS와 ISIC는 입력 값만으로도 어느 정도 분리가 가능한 '쉬운' 데이터셋인 반면, COVID-19 데이터셋은 모델을 통한 성능 향상 폭이 적은 '어려운' 데이터셋임을 정량적으로 확인하였다.
 
 ### 3. 한계점 및 논의
+
 - **지표의 다양성**: 현재는 Dice score만을 사용했으나, 향후 Jaccard index나 Sensitivity 등 다양한 지표로 확장할 필요가 있다.
 - **차원 확장**: 2D 네트워크 위주로 실험이 진행되었으며, 3D 의료 영상 네트워크로의 확장이 필요하다.
 - **가중치와의 관계**: ProtoSeg는 특징의 '분리 능력'에 집중하므로, 높은 SA score를 가진 유닛이 반드시 큰 학습 가중치를 가진다는 보장은 없다.

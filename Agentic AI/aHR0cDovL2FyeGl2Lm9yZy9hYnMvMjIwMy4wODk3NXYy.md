@@ -29,16 +29,19 @@ Changxi Zhu, Mehdi Dastani, Shihan Wang (2024)
 ## 📎 Related Works
 
 ### MARL의 기본 정식화
+
 본 논문은 MARL 환경을 부분 관측 가능 확률 게임(Partially Observable Stochastic Game, POSG)으로 정의한다. POSG는 다음과 같은 튜플로 표현된다.
 $$\langle I, S, \rho_0, \{A_i\}, P, \{O_i\}, O, \{R_i\} \rangle$$
 여기서 $I$는 에이전트 집합, $S$는 상태 공간, $A_i$는 액션 집합, $O_i$는 관찰 집합, $P$는 상태 전이 확률, $R_i$는 보상 함수를 의미한다. 특히 보상 함수가 모든 에이전트에게 동일한 경우 이는 Dec-POMDP로 축소된다.
 
 ### 기존 학습 방식의 한계
+
 - **Value-based methods**: 개별 Q-함수를 학습하는 분산 Q-러닝은 비정상성 문제에 취약하다. 이를 해결하기 위해 공동 Q-함수를 분해하는 Value Decomposition 방식이 제안되었으며, 식은 다음과 같다.
 $$Q_{\text{joint}}(\vec{\tau}, \vec{a}) = \sum_{i} w_i Q_i(\tau_i, a_i)$$
 - **Policy-based methods**: 정책 경사(Policy Gradient) 정리를 통해 정책을 직접 최적화한다. MADDPG와 같은 Actor-Critic 구조는 중앙 집중식 Critic을 통해 전역 정보를 활용하고 분산된 Actor를 통해 실행하는 방식을 취한다.
 
 ### Emergent Language vs. Comm-MADRL
+
 본 논문은 '발현 언어(Emergent Language)' 연구와 '통신을 활용한 학습 작업(Learning tasks with communication)'을 구분한다. 전자는 기호적 언어(symbolic language) 자체를 학습하는 것이 주 목적이며, 후자는 통신을 도구로 사용하여 도메인 특정 작업(예: 내비게이션, 게임)의 성능을 높이는 것이 목적이다.
 
 ## 🛠️ Methodology
@@ -46,51 +49,58 @@ $$Q_{\text{joint}}(\vec{\tau}, \vec{a}) = \sum_{i} w_i Q_i(\tau_i, a_i)$$
 본 논문은 새로운 알고리즘을 제안하는 대신, Comm-MADRL 시스템을 설계하는 가이드라인(Procedure 1)과 9가지 분석 차원을 상세히 설명한다.
 
 ### 1. 시스템 설계 프로세스 (Guideline)
+
 에이전트가 환경과 상호작용하며 통신하는 과정은 다음과 같은 순서로 진행된다.
+
 1. **목표 설정**: 협력/경쟁/혼합 보상 체계 설계 (Dim 1).
 2. **제약 조건 설정**: 통신 비용 및 노이즈 고려 (Dim 2).
 3. **대상 지정**: 누구와 통신할 것인지 결정 (Dim 3).
-4. **통신 실행**: 
+4. **통신 실행**:
    - 통신 여부 및 대상 결정 (Dim 4) $\rightarrow$ 메시지 생성 및 공유 (Dim 5) $\rightarrow$ 수신 메시지 결합 (Dim 6) $\rightarrow$ 내부 모델 통합 (Dim 7).
 5. **행동 결정**: 통신 결과를 반영하여 액션 선택 및 수행.
 6. **학습 및 업데이트**: 경험을 바탕으로 정책, 가치 함수 및 통신 프로토콜 업데이트 (Dim 8, 9).
 
 ### 2. 주요 분석 차원의 상세 설명
+
 - **Communication Policy (Dim 4)**: 통신 링크 형성 방식을 네 가지로 분류한다.
-    - Full Communication: 모든 에이전트가 브로드캐스트 방식으로 연결.
-    - Partial Structure: 미리 정의된 부분 그래프 구조를 사용.
-    - Individual Control: 각 에이전트가 게이트(Gate) 메커니즘 등을 통해 스스로 통신 여부를 결정.
-    - Global Control: 전역 스케줄러가 통신 링크를 제어.
+  - Full Communication: 모든 에이전트가 브로드캐스트 방식으로 연결.
+  - Partial Structure: 미리 정의된 부분 그래프 구조를 사용.
+  - Individual Control: 각 에이전트가 게이트(Gate) 메커니즘 등을 통해 스스로 통신 여부를 결정.
+  - Global Control: 전역 스케줄러가 통신 링크를 제어.
 - **Communicated Messages (Dim 5)**:
-    - Existing Knowledge: 과거 관찰, 행동 이력 등을 인코딩하여 전달.
-    - Imagined Future Knowledge: 의도(Intention)나 미래 계획(Future plans)을 예측하여 전달.
+  - Existing Knowledge: 과거 관찰, 행동 이력 등을 인코딩하여 전달.
+  - Imagined Future Knowledge: 의도(Intention)나 미래 계획(Future plans)을 예측하여 전달.
 - **Learning Methods (Dim 8)**: 통신 프로토콜을 어떻게 학습하는가에 따라 분류한다.
-    - Differentiable: 메시지 생성 함수를 미분 가능하게 설계하여 역전파(Backpropagation) 수행.
-    - Supervised: 통신 여부나 내용에 대한 정답(Label)을 정의하여 지도 학습.
-    - Reinforced: 통신 행위 자체에 보상을 부여하여 강화 학습.
-    - Regularized: 상호 정보량(Mutual Information) 최소화 등 정규화 항을 추가.
-- **Training Schemes (Dim 9)**: 
-    - CTDE (Centralized Training and Decentralized Execution): 중앙에서 모든 에이전트의 경험을 모아 학습시키되, 실행 시에는 개별 정책만 사용하는 방식. 파라미터 공유(Parameter Sharing) 여부에 따라 further 구분된다.
+  - Differentiable: 메시지 생성 함수를 미분 가능하게 설계하여 역전파(Backpropagation) 수행.
+  - Supervised: 통신 여부나 내용에 대한 정답(Label)을 정의하여 지도 학습.
+  - Reinforced: 통신 행위 자체에 보상을 부여하여 강화 학습.
+  - Regularized: 상호 정보량(Mutual Information) 최소화 등 정규화 항을 추가.
+- **Training Schemes (Dim 9)**:
+  - CTDE (Centralized Training and Decentralized Execution): 중앙에서 모든 에이전트의 경험을 모아 학습시키되, 실행 시에는 개별 정책만 사용하는 방식. 파라미터 공유(Parameter Sharing) 여부에 따라 further 구분된다.
 
 ## 📊 Results
 
 본 논문은 실험적 결과 대신, 제안한 9차원 프레임워크를 사용하여 기존의 41개 Comm-MADRL 모델을 분류한 종합 표(Table 13)를 제시한다.
 
 ### 분석 결과 및 트렌드
+
 - **목표(Goal)**: 대부분의 연구가 협력(Cooperative) 설정에 집중되어 있으며, 경쟁(Competitive)이나 혼합(Mixed) 설정에 대한 연구는 매우 부족하다.
 - **제약(Constraints)**: 많은 연구가 통신 제약이 없는 이상적인 환경을 가정하고 있어, 실제 물리적 환경(대역폭 제한, 지연 시간 등)에 적용하기에는 한계가 있다.
 - **통신 대상(Communicatee)**: 프록시(Proxy)를 이용한 중앙 집중식 조정 방식이 효율적으로 사용되고 있다.
 - **학습 방법(Learning Methods)**: 미분 가능한(Differentiable) 방식이 가장 지배적이며, 특히 CTDE 구조와 파라미터 공유 방식이 널리 채택되고 있다.
 
 ### 평가 지표 분석
+
 Comm-MADRL 연구에서 사용되는 주요 지표를 분석한 결과, 보상 기반(Reward-based) 지표가 가장 많이 사용되었으며, 통신 효율성(Communication Efficiency)이나 언어 발현 정도(Emergence Degree)를 측정하는 지표는 상대적으로 적게 사용되었음을 확인하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 기여
+
 본 논문은 파편화되어 있던 Comm-MADRL 연구들을 9가지 차원이라는 통합된 관점에서 정리함으로써, 연구자들이 새로운 시스템을 설계할 때 고려해야 할 체크리스트를 제공하였다. 특히 통신을 단순한 정보 교환이 아닌, 설계 가능한 여러 구성 요소의 조합(Combinatorial Problem)으로 바라본 점이 매우 통찰력 있다.
 
 ### 한계 및 향후 방향
+
 1. **비협력적 설정의 부족**: 에이전트 간의 신뢰(Trust) 문제나 기만적 통신(Deceptive communication)에 대한 연구가 필요하다.
 2. **현실적 제약 반영**: 비동기 통신, 메시지 손실, 동적 네트워크 구조 등 실제 통신 환경의 불확실성을 모델링해야 한다.
 3. **멀티모달 통신 (Multimodal Communication)**: 단순 벡터 형태의 메시지를 넘어 음성, 텍스트, 이미지 등 다양한 모달리티를 통합하는 통신 체계가 필요하다.

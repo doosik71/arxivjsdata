@@ -25,7 +25,9 @@ Amber Xie, Rahul Chand, Dorsa Sadigh, Joey Hejna (2025)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 IWR의 전체 파이프라인은 다음과 같은 단계로 구성된다.
+
 1. **Representation Learning**: VAE 등을 통해 state-action 쌍을 저차원 잠재 벡터 $z$로 인코딩하는 함수 $f_\phi$를 학습한다.
 2. **Importance Weight Estimation**: Gaussian KDE를 사용하여 target 데이터의 분포 $p_t$와 prior 데이터의 분포 $p_{prior}$를 추정한다.
 3. **Data Retrieval**: 계산된 중요도 가중치 $p_t / p_{prior}$가 높은 상위 데이터를 $D_{prior}$에서 선택하여 $D_{ret}$을 구성한다.
@@ -51,12 +53,14 @@ $$\text{Weight}(z) = \frac{p_t^{KDE}(z)}{p_{prior}^{KDE}(z)}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **시뮬레이션 환경**: Robomimic Square (10개 target demos), LIBERO-10 (각 작업당 5개 target demos).
 - **실제 환경**: Bridge V2 Dataset (Corn, Carrot, Eggplant 작업).
 - **비교 대상**: BC (Baseline), Behavior Retrieval (BR), Flow Retrieval (FR), SAILOR (SR).
 - **평가 지표**: 성공률(Success Rate, %), long-horizon 작업의 경우 부분 성공률(Partial Success, PS).
 
 ### 주요 결과
+
 1. **성능 향상**: IWR은 모든 환경에서 기존 retrieval 방법들보다 일관되게 높은 성능을 보였다. 특히 LIBERO 벤치마크에서 SAILOR 대비 5.8%, Flow Retrieval 대비 4.4%, Behavior Retrieval 대비 5.8%의 평균 성공률 향상을 기록했다.
 2. **실제 환경에서의 효과**: Bridge V2 데이터셋을 이용한 실제 로봇 실험에서 IWR의 효과가 더욱 두드러졌으며, 특히 Behavior Retrieval 대비 평균 성공률이 **30% 상승**하였다. Long-horizon 작업인 Eggplant의 경우, IWR은 모든 시도(100%)에서 부분 성공을 거두었으나 다른 방법들은 50%에 그쳤다.
 3. **데이터 분포의 최적화**: 분석 결과(Fig 4), 기존 BR 방식은 target과 일부만 겹치는 'Mixed' 작업이나 초기 단계(Reach/Pick up)의 샘플에 편향되어 추출하는 경향이 있었으나, IWR은 Target 작업에 직접적으로 관련된 'Relevant' 데이터를 더 많이 추출하고 전체 타임스텝에 걸쳐 균형 잡힌 데이터를 선택함을 확인하였다.
@@ -64,9 +68,11 @@ $$\text{Weight}(z) = \frac{p_t^{KDE}(z)}{p_{prior}^{KDE}(z)}$$
 ## 🧠 Insights & Discussion
 
 ### 강점 및 분석
+
 IWR은 기존의 단순 L2 거리 기반 추출 방식이 사실상 Gaussian KDE의 대역폭(bandwidth) $h \to 0$인 특수한 경우(Limit case)임을 수학적으로 증명하였다. 이는 기존 방식이 지나치게 제한적인 가정을 사용했음을 시사한다. IWR은 $p_{prior}$를 분모에 배치함으로써 Prior 데이터셋에 흔하게 존재하는 샘플보다 Target 작업에 상대적으로 더 중요한 샘플을 우선적으로 선택하게 하여, 데이터의 다양성과 관련성을 동시에 확보하였다.
 
 ### 한계점 및 비판적 해석
+
 1. **잠재 공간의 특성 의존성**: IWR은 VAE와 같이 L2 smoothness 제약이 있는 잠재 공간에서는 효과적이지만, BYOL과 같이 이러한 제약이 없는 공간에서는 성능 향상이 미미하거나 오히려 저하되는 모습을 보였다. 이는 IWR이 잠재 공간의 기하학적 구조에 의존적임을 의미한다.
 2. **차원의 저주**: Gaussian KDE는 잠재 공간의 차원이 높아질 경우 계산 복잡도가 증가하고 수치적으로 불안정해지는 문제가 있다. 따라서 매우 고차원의 표현력을 사용해야 하는 복잡한 작업에서는 적용에 한계가 있을 수 있다.
 3. **작업 범위의 제한**: 실험이 주로 Pick-and-place와 같은 단순 조작 작업에 한정되어 있어, 더 정교하고 복잡한 dexterity가 필요한 작업에서의 일반화 성능은 추가 검증이 필요하다.

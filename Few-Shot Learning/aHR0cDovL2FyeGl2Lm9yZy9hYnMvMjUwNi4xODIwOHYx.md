@@ -30,6 +30,7 @@ DINO와 CLIP 같은 모델은 강력한 시맨틱 표현력을 가지고 있어 
 본 논문은 DINO 특징의 통합 수준에 따라 네 가지 변형 모델을 설계하여 성능을 비교 분석한다.
 
 ### 1. Baseline NeRF
+
 가장 기본적인 형태로, 외부 특징 없이 좌표 기반 학습을 수행한다. 장면은 다음과 같은 함수로 모델링된다.
 $$F_\theta: (\mathbf{x}, \mathbf{d}) \to (\mathbf{c}, \sigma)$$
 여기서 $\mathbf{x} \in \mathbb{R}^3$는 3D 지점, $\mathbf{d} \in S^2$는 시야 방향, $\mathbf{c} \in \mathbb{R}^3$는 RGB 색상, $\sigma \in \mathbb{R}^+$는 볼륨 밀도이다. 입력값에는 고주파 성분을 캡처하기 위해 다음과 같은 Positional Encoding $\gamma(\cdot)$이 적용된다.
@@ -39,6 +40,7 @@ $$\hat{C}(r) = \sum_{i=1}^{N} T_i \alpha_i c_i$$
 단, $\alpha_i = 1 - e^{-\sigma_i \delta_i}$이며, $T_i = \prod_{j=1}^{i-1} (1 - \alpha_j)$이다.
 
 ### 2. DINO Feature Integration
+
 사전 학습된 DINOv2-base 모델에서 추출한 특징 맵 $F_i \in \mathbb{R}^{H \times W \times D}$ ($D=768$)를 활용한다. 3D 지점 $\mathbf{x}$를 카메라 파라미터를 통해 2D 이미지 좌표 $(u_i, v_i)$로 투영한 후, Bilinear sampling을 통해 특징 $\mathbf{f}_i(\mathbf{x})$를 얻는다.
 
 이 특징들은 학습 가능한 선형 변환을 통해 차원을 조정하며, 다음과 같이 NeRF MLP의 입력으로 결합된다.
@@ -46,23 +48,27 @@ $$f'(\mathbf{x}) = W_f \cdot \mathbf{f}(\mathbf{x}) + b_f$$
 $$F_\theta([\gamma(\mathbf{x}), \gamma(\mathbf{d}), f'(\mathbf{x})]) \to (\mathbf{c}, \sigma)$$
 
 ### 3. LoRA Fine-Tuning of DINO
+
 Frozen feature의 한계를 극복하기 위해 LoRA를 사용하여 DINO의 Attention 레이어를 효율적으로 미세 조정한다. 가중치 행렬 $W$는 다음과 같이 분해되어 업데이트된다.
 $$W = W_0 + BA, \quad A \in \mathbb{R}^{r \times d}, B \in \mathbb{R}^{d \times r}$$
 여기서 사전 학습된 가중치 $W_0$는 고정하고, 저차원 행렬 $A, B$ ($r=16$)만을 학습시켜 3D 재구성 작업에 최적화한다.
 
 ### 4. Multi-Scale Feature Fusion
+
 다양한 해상도($224^2, 448^2, 896^2$)에서 특징을 추출하여 세부 디테일과 시맨틱 문맥을 동시에 캡처한다. 융합된 특징은 학습 가능한 가중치 $w_s$를 이용한 가중 합으로 계산된다.
 $$\mathbf{f}_{\text{fused}}(\mathbf{x}) = \sum_{s=1}^{S} w_s \cdot \mathbf{f}^{(s)}(\mathbf{x}), \quad \sum w_s = 1$$
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** NeRF Synthetic Dataset의 Lego 장면.
 - **설정:** 학습 뷰 5장, 테스트 뷰 200장 (Extreme few-shot).
 - **지표:** PSNR, SSIM, LPIPS.
 - **학습 환경:** Adam optimizer ($\text{lr}=2 \times 10^{-4}$), 200 epoch, Apple M4 Pro (MPS backend) 사용.
 
 ### 정량적 결과
+
 실험 결과, 모든 DINO 변형 모델이 Baseline NeRF보다 낮은 성능을 보였다.
 
 | Method | PSNR $\uparrow$ | SSIM $\uparrow$ | LPIPS $\downarrow$ |
@@ -73,6 +79,7 @@ $$\mathbf{f}_{\text{fused}}(\mathbf{x}) = \sum_{s=1}^{S} w_s \cdot \mathbf{f}^{(
 | Multi-Scale LoRA-NeRF | 12.94 | 0.44 | 0.54 |
 
 ### 분석 결과
+
 - **정성적 분석:** Baseline NeRF는 상대적으로 더 선명하고 세부적인 재구성 결과를 생성한 반면, DINO 변형 모델들은 블러링(Blurring) 현상과 아티팩트가 더 많이 관찰되었다.
 - **학습 동역학:** Training PSNR 곡선 분석 결과, Baseline NeRF가 학습 전 과정에서 일관되게 더 높은 성능을 유지하였다. 이는 성능 차이가 단순히 최적화 실패로 인한 것이 아님을 시사한다.
 

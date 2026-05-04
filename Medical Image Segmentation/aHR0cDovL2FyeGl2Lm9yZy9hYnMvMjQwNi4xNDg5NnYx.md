@@ -29,9 +29,11 @@ Wenhui Zhu, Xiwen Chen, Peijie Qiu, Mohammad Farazi, Aristeidis Sotiras, Abolfaz
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 SelfReg-UNet은 기존 UNet 구조를 유지하면서 학습 단계에서 두 가지 정규화 손실 함수($L_{SCR}, L_{IFD}$)를 추가하여 모델을 최적화한다.
 
 ### 1. Semantic Consistency Regularization (SCR)
+
 디코더의 마지막 블록($D_1$)의 특징 맵 $F_{final}$을 기준으로 다른 블록 $F^m_i$들의 세만틱 일관성을 강제한다.
 
 - **절차**: $F_{final}$에는 평균 풀링(Average-pooling)을 적용하고, 대상 블록 $F^m_i$에는 랜덤 채널 선택(Random Channel Selection, RSC)을 적용하여 채널 및 공간 차원을 맞춘다.
@@ -40,6 +42,7 @@ $$L_{SCR} = \frac{1}{|M-1||I|} \sum_{m=1}^{M-1} \sum_{I \sim I} \|RCS(F^m_i) - A
 여기서 $M$은 전체 블록 수이며, $F^m_i$는 $D_1$을 제외한 모든 블록의 특징 맵이다.
 
 ### 2. Internal Feature Distillation (IFD)
+
 특징 맵 내의 채널 중복성을 줄이기 위해, 채널을 상위 절반(shallow)과 하위 절반(deep)으로 분할하여 정보를 증류한다.
 
 - **절차**: 특징 맵의 채널을 이분하여 상위 절반의 특징($F_{shallow}$)이 하위 절반의 특징($F_{deep}$)을 가이드하도록 설정한다.
@@ -48,6 +51,7 @@ $$L_{IFD} = \frac{1}{|M||I|} \sum_{m=1}^{M} \sum_{I \sim I} \|F_{deep} - F_{shal
 이를 통해 깊은 층의 채널들이 무의미한 중복 정보를 학습하는 대신, 얕은 층의 유용한 컨텍스트를 학습하도록 유도한다.
 
 ### 3. 최종 목적 함수 (Objective Function)
+
 전체 학습은 표준 분할 손실인 Cross-Entropy 및 Dice Loss($L_{cd}$)와 제안된 두 정규화 손실의 가중 합으로 수행된다.
 $$L = L_{cd} + \lambda_1 L_{SCR} + \lambda_2 L_{IFD}$$
 여기서 $\lambda_1, \lambda_2$는 각 손실의 비중을 조절하는 하이퍼파라미터이다.
@@ -55,16 +59,19 @@ $$L = L_{cd} + \lambda_1 L_{SCR} + \lambda_2 L_{IFD}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Synapse (복부 CT), ACDC (심장 MRI), GlaS (선 조직), MoNuSeg (핵 분할)의 4개 데이터셋을 사용하였다.
 - **비교 대상**: Standard UNet, SwinUnet, TransUnet, Att-Unet, HiFormer, UCTransNet 등 최신 SOTA 모델들과 비교하였다.
 - **평가 지표**: Dice Similarity Coefficient (DSC) 및 Intersection over Union (IoU)를 사용하였다.
 
 ### 주요 결과
+
 - **정량적 성과**: 제안된 손실 함수를 적용했을 때 모든 데이터셋에서 성능 향상이 관찰되었다. 특히 Standard UNet에 적용했을 때 Synapse(3.49% $\uparrow$), ACDC(1.75% $\uparrow$), GlaS(5.48% $\uparrow$), MoNuSeg(3.73% $\uparrow$)의 평균 DSC 상승을 보였다.
 - **어려운 타겟에 대한 강점**: Synapse 데이터셋에서 특히 담낭(Gallbladder), 왼쪽/오른쪽 신장(Kidney), 췌장(Pancreas)과 같이 분할이 어려운 장기들에서 뚜렷한 성능 향상이 나타났다.
 - **정성적 분석**: GlaS 데이터셋 결과에서 기존 SOTA인 UCTransNet이 배경과 유사한 영역을 잘못 분할하거나 형태가 불완전한 반면, SelfReg-UNet(특히 SwinUnet 결합 시)은 정답(GT)에 매우 근접한 완전한 형태의 분할 결과를 생성하였다.
 
 ### 절제 연구 (Ablation Study)
+
 - **하이퍼파라미터**: $\lambda_1 = 0.015, \lambda_2 = 0.015$일 때 최적의 성능을 보였으며, 특히 $\lambda_1$($L_{SCR}$)의 비중이 낮아질 때 성능이 빠르게 저하되는 것을 확인하여 세만틱 감독의 중요성을 입증하였다.
 - **손실 함수의 유효성**: $L_{SCR}$과 $L_{IFD}$를 동시에 사용했을 때 단독으로 사용했을 때보다 더 높은 성능을 기록하여, 비대칭 감독과 특징 중복 문제가 서로 독립적으로 작용하며 둘 다 해결해야 함을 보여주었다.
 
@@ -73,11 +80,13 @@ $$L = L_{cd} + \lambda_1 L_{SCR} + \lambda_2 L_{IFD}$$
 본 논문은 복잡한 아키텍처 수정 없이 **손실 함수 최적화만으로 모델의 내부 학습 패턴을 교정**할 수 있음을 보여주었다는 점에서 매우 효율적이다. 특히 인코더-디코더 구조의 고질적인 문제인 '감독의 불균형'을 데이터 기반의 분석(Grad-CAM 및 유사도 분석)을 통해 밝혀내고 이를 수식으로 해결한 점이 돋보인다.
 
 **강점**:
+
 - 추가적인 연산 비용이나 파라미터 증가가 거의 없는 'Plug-and-play' 방식이다.
 - CNN과 Transformer 기반 모델 모두에 적용 가능하여 범용성이 높다.
 - 모델의 해석 가능성(Interpretability) 분석을 통해 방법론의 근거를 명확히 제시하였다.
 
 **한계 및 논의사항**:
+
 - 하이퍼파라미터 $\lambda_1, \lambda_2$에 대한 민감도가 존재하며, 이를 최적으로 설정하기 위한 탐색 과정이 필요하다.
 - 본 연구에서는 $L_2$ norm과 MSE를 사용하였으나, 논문에서 언급했듯이 KL-divergence 등 다른 지식 증류(Knowledge Distillation) 기법을 적용했을 때의 성능 차이에 대한 추가 분석이 있다면 더 견고한 결론을 낼 수 있었을 것이다.
 

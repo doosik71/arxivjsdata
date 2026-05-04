@@ -15,6 +15,7 @@ Shehzeen Hussain, Van Nguyen, Shuhua Zhang, Erik Visser (2022)
 본 논문의 핵심 아이디어는 사전 학습된 wav2vec 2.0 모델을 공통의 특징 추출기(Backbone)로 사용하고, 그 위에 각 작업에 특화된 가벼운 다운스트림 네트워크(Downstream Network)를 결합하여 단일 및 다중 작업 학습을 수행하는 것이다.
 
 주요 기여 사항은 다음과 같다:
+
 - **SOTA 성능 달성**: 표준 최적화 목적 함수를 사용하여 KWS 및 SV 벤치마크에서 기존의 최첨단(State-of-the-art, SOTA) 성능을 뛰어넘는 결과를 보여주었다.
 - **다중 작업 학습(Multi-task Learning) 전략**: 서로 다른 데이터셋(Disjoint datasets)을 사용하는 작업들을 공동으로 최적화하는 전략을 제안하였다. 이를 통해 모델의 메모리 점유율을 줄이면서도, 단일 작업 학습보다 더 높은 성능을 달성하였다.
 - **아키텍처 효율성 분석**: 다양한 다운스트림 네트워크 구조를 비교 분석하여, 복잡한 시계열 모델(Bi-LSTM, 1D-CNN)보다 계산 비용이 매우 낮은 단순 선형 레이어(Linear Layer)만으로도 경쟁력 있는 성능을 낼 수 있음을 입증하였다.
@@ -28,42 +29,52 @@ Shehzeen Hussain, Van Nguyen, Shuhua Zhang, Erik Visser (2022)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 제안된 프레임워크는 크게 두 가지 구성 요소로 나뉜다:
+
 - **Speech Representation Extractor (SRE)**: 원시 오디오 파형에서 문맥화된 음성 표현을 추출하는 wav2vec 2.0 기반의 백본 네트워크이다.
 - **Downstream Neural Network**: SRE에서 추출된 표현을 입력받아 최종 클래스 점수나 임베딩 벡터로 매핑하는 작업별 특화 네트워크이다.
 
 ### 2. Speech Representation Extractor (SRE)
+
 SRE는 wav2vec 2.0 구조를 따르며 다음과 같이 동작한다:
+
 - **Convolutional Encoder**: 20ms 윈도우 단위로 파형을 처리하여 인코딩된 표현 $Z$를 생성한다.
 - **Transformer Module**: $Z$를 입력받아 미래와 과거의 오디오 프레임을 참조(Attention)하여 문맥화된 표현 $C$를 생성한다.
 - **자기지도학습 목적 함수**: 마스킹된 $Z$의 양자화 버전 $Q$를 예측하는 대조 손실(Contrastive Loss)을 사용하여 학습한다. 본 연구에서는 LibriSpeech 데이터셋(약 1,000시간)으로 사전 학습된 wav2vec 2.0 Base 모델을 사용하였다.
 
 ### 3. Downstream Networks
+
 SRE의 출력은 시계열 데이터이므로, 이를 단일 클래스나 벡터로 변환하기 위해 세 가지 구조를 실험하였다:
+
 - **Linear Layer**: 가장 가벼운 구조로, SRE 출력의 첫 번째 타임스텝(first-timestep) 값만을 사용하여 선형 매핑을 수행한다. Transformer의 어텐션 메커니즘이 이미 전체 시간축의 의존성을 학습했기 때문에 가능한 구조이다.
 - **Bidirectional LSTM (Bi-LSTM)**: SRE의 모든 타임스텝 출력을 Bi-LSTM(은닉 유닛 256개)에 통과시킨 후, 첫 번째와 마지막 타임스텝의 출력을 결합하여 선형 레이어로 매핑한다.
 - **1D-CNN**: 스트라이드(Stride)가 적용된 컨볼루션 블록(필터 크기 25, 128개 필터)을 사용한다. 오디오 길이에 따라(1초 또는 2초) 블록 수를 조절하여 타임스텝을 축소한 뒤, 이를 평탄화(Flatten)하여 선형 레이어에 입력한다.
 
 ### 4. Multi-task Training 절차
+
 서로 다른 데이터셋을 사용하는 작업들을 동시에 학습시키기 위해 다음과 같은 전략을 사용한다:
+
 - **학습 알고리즘**: 각 작업의 데이터 로더와 손실 함수를 정의하고, 라운드 로빈(Round-robin) 방식으로 미니 배치를 순차적으로 처리하며 SRE 백본을 공유하여 업데이트한다.
 - **손실 함수**: KWS 작업에는 교차 엔트로피(Cross-Entropy) 손실을, SV 작업에는 코사인 유사도 기반의 Angular Softmax 손실을 사용한다.
 - **학습 전략**:
-    - 초기 1,000회 반복 학습 동안은 SRE 백본을 동결(Frozen)하고 다운스트림 네트워크만 학습시킨다.
-    - 이후 SRE 백본의 동결을 해제하여 전체 모델을 공동 최적화한다.
-    - **학습률(Learning Rate)**: 다운스트림 네트워크는 $10^{-4}$, SRE 백본은 과적합 방지를 위해 더 낮은 $10^{-5}$를 적용한다.
+  - 초기 1,000회 반복 학습 동안은 SRE 백본을 동결(Frozen)하고 다운스트림 네트워크만 학습시킨다.
+  - 이후 SRE 백본의 동결을 해제하여 전체 모델을 공동 최적화한다.
+  - **학습률(Learning Rate)**: 다운스트림 네트워크는 $10^{-4}$, SRE 백본은 과적합 방지를 위해 더 낮은 $10^{-5}$를 적용한다.
 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **KWS 데이터셋**: Google Speech Commands (GSC) V1, V2를 사용하였으며, 10개의 핵심 단어와 'Unknown', 'Silence'를 포함한 총 12개 클래스를 분류한다. 평가지표는 Top-1 Accuracy를 사용한다.
 - **SV 데이터셋**: VoxCeleb-1 및 VoxCeleb-2를 사용하였다. 2초 길이의 슬라이스를 학습에 사용하며, 256차원 화자 임베딩을 생성하여 VoxCeleb-1 테스트셋에서 등가 에러율(Equal Error Rate, EER)을 측정한다.
 
 ### 2. 주요 결과
+
 - **단일 작업 vs 다중 작업**: 모든 지표에서 다중 작업 학습(Multi-task)이 단일 작업 학습(Single-task)보다 우수한 성능을 보였다.
 - **정량적 성과**:
-    - **SV (Speaker Verification)**: VoxCeleb-2 데이터셋으로 학습 시 **1.98% EER**라는 매우 낮은 에러율을 기록하였다.
-    - **KWS (Keyword Spotting)**: GSC 데이터셋에서 **98.23% Accuracy**를 달성하였다.
+  - **SV (Speaker Verification)**: VoxCeleb-2 데이터셋으로 학습 시 **1.98% EER**라는 매우 낮은 에러율을 기록하였다.
+  - **KWS (Keyword Spotting)**: GSC 데이터셋에서 **98.23% Accuracy**를 달성하였다.
 - **아키텍처 비교**: 선형 레이어(Linear Layer) 기반의 다운스트림 모델이 Bi-LSTM이나 1D-CNN과 비교했을 때 성능 차이가 거의 없거나 오히려 우수하여, 계산 효율성 면에서 가장 유리함을 확인하였다.
 - **SRE 상태에 따른 영향**: 사전 학습되지 않은 랜덤 초기화 모델이나, 미세 조정 없이 동결된 모델은 성능이 급격히 저하되어, **사전 학습과 미세 조정 모두가 필수적**임을 입증하였다.
 

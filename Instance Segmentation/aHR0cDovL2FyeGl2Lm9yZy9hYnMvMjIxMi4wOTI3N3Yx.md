@@ -23,15 +23,18 @@ Furkan Burak Bağcı, Ahmet Alp Kindiroğlu, Metehan Yalçın, Ufuk Uyan, Mahiye
 ## 🛠️ Methodology
 
 ### 1. 데이터 전처리 (Preprocessing)
+
 원천 데이터셋의 노이즈를 제거하기 위해 다음과 같은 전처리 과정을 수행하였다.
 
 - **중첩 어노테이션 해결 (Overlapping Annotations):** 고층 건물의 경우 높이 값이 다른 여러 어노테이션이 중첩되는 문제가 발생한다. 이를 해결하기 위해 단순한 $\text{IoU}(\text{Intersection Over Union})$ 대신, 교집합 영역을 각 어노테이션의 면적으로 나눈 값 중 최댓값을 기준으로 중첩 여부를 판단하고, 가장 높은 높이 값을 가진 어노테이션으로 통합하였다.
 - **잘못된 어노테이션 필터링 (Misaligned and Partial Annotations):** 수만 장의 이미지를 수동으로 검수하는 것은 불가능하므로, 사전 학습된 $\text{Unet++}$ 모델을 통해 예측된 마스크와 실제 어노테이션 사이의 $\text{IoU}$를 계산하였다. 예측값과 실제값의 차이가 $50\%$ 이상인 샘플은 제거하였다.
 
 ### 2. 평가 지표 개선 (Over-Under Detections)
+
 단순한 1:1 매칭 방식의 평가로는 실제 비즈니스 케이스에서 허용 가능한 예측을 놓칠 수 있다. 따라서 Over-detection(하나의 객체를 여러 개로 예측)과 Under-detection(여러 객체를 하나로 예측) 사례를 고려한 혼동 행렬(Confusion Matrix) 계산 방식을 도입하여 평가의 정확도를 높였다.
 
 ### 3. 학습 파이프라인 및 아키텍처
+
 본 연구는 $\text{Mask R-CNN}$ 프레임워크를 기반으로 하며, $\text{ResNext-101}$을 Backbone 네트워크로 사용하였다. 학습은 다음의 2단계 과정을 거친다.
 
 1. **Pre-training:** 다양한 국가의 건물이 포함된 Miyazaki의 오픈소스 데이터셋을 사용하여 단일 클래스(건물 여부) Instance Segmentation 모델을 학습시킨다. 이때 $\text{MS-COCO}$ 가중치를 시작점으로 하며, $\text{ResNext}$ 인코더의 첫 번째 레이어만 동결(Freeze)하고 나머지를 학습시킨다.
@@ -42,18 +45,21 @@ Furkan Burak Bağcı, Ahmet Alp Kindiroğlu, Metehan Yalçın, Ufuk Uyan, Mahiye
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** 사전 학습을 위한 Miyazaki 공개 데이터셋(일본, 태국, 케냐, 모잠비크 4개국 이미지)과 5개 도시의 높이 정보가 포함된 프라이빗 데이터셋을 사용하였다.
 - **높이 클래스:** 히스토그램 분석을 통해 클래스 균형을 맞춘 3개 클래스(up to $15\text{m}$, $15\text{m}\text{-}40\text{m}$, over $40\text{m}$)로 정의하였다.
 - **평가 데이터:** 무작위로 선택된 1200장의 테스트 이미지를 사용하였다.
 
 ### 주요 결과
+
 정량적 결과는 다음과 같다.
+
 - **Bounding Box $\text{mAP}(\text{IoU}=0.5)$:** $59$
 - **Segmentation Mask $\text{mAP}(\text{IoU}=0.5)$:** $52.6$
 - **클래스별 정확도:**
-    - $15\text{m}$ 미만: $73\%$
-    - $15\text{m}\sim40\text{m}$: $71\%$
-    - $40\text{m}$ 초과: $65\%$
+  - $15\text{m}$ 미만: $73\%$
+  - $15\text{m}\sim40\text{m}$: $71\%$
+  - $40\text{m}$ 초과: $65\%$
 - **종합 정확도:** 약 $70\%$
 
 혼동 행렬 분석 결과, 대부분의 오류는 인접한 클래스 간의 오분류에서 발생하였다. 예를 들어, $15\text{m}$ 미만 건물 중 $8\%$가 $15\text{m}\sim40\text{m}$로 예측되었으나, $40\text{m}$ 초과로 예측된 경우는 없었다.

@@ -12,9 +12,9 @@ Shisha Liao, Yongqing Sun, Chenqiang Gao, Pranav Shenoy K P, Song Mu, Jun Shimam
 
 본 논문의 핵심 아이디어는 객체의 크기와 마스크의 유효성에 따라 처리 경로를 분리하는 **Hybrid Networks** 구조를 설계하는 것이다.
 
-1.  **이원화된 네트워크 구조:** 유효한 마스크(주로 큰 객체)를 처리하는 주 네트워크(Principle segmentation network)와, 유효하지 않은 마스크(주로 작고 어두운 객체)를 처리하는 보완 분기(Complementary branch)를 동시에 운용한다.
-2.  **Enhanced-FPN 제안:** 저수준 특징(low-level feature)의 전달 거리를 단축하고 각 특징 맵의 강화 기능을 균형 있게 조정하여 로컬라이제이션(localization) 정보를 개선한 Enhanced-FPN 구조를 도입하였다.
-3.  **순차적 처리 방식의 도입:** 작은 객체의 누락을 방지하기 위해, 탐지와 분할을 동시에 수행하는 일반적인 방식 대신 '탐지 후 분할'이라는 순차적 프로세스를 보완 분기에 적용하였다.
+1. **이원화된 네트워크 구조:** 유효한 마스크(주로 큰 객체)를 처리하는 주 네트워크(Principle segmentation network)와, 유효하지 않은 마스크(주로 작고 어두운 객체)를 처리하는 보완 분기(Complementary branch)를 동시에 운용한다.
+2. **Enhanced-FPN 제안:** 저수준 특징(low-level feature)의 전달 거리를 단축하고 각 특징 맵의 강화 기능을 균형 있게 조정하여 로컬라이제이션(localization) 정보를 개선한 Enhanced-FPN 구조를 도입하였다.
+3. **순차적 처리 방식의 도입:** 작은 객체의 누락을 방지하기 위해, 탐지와 분할을 동시에 수행하는 일반적인 방식 대신 '탐지 후 분할'이라는 순차적 프로세스를 보완 분기에 적용하였다.
 
 ## 📎 Related Works
 
@@ -25,33 +25,43 @@ Shisha Liao, Yongqing Sun, Chenqiang Gao, Pranav Shenoy K P, Song Mu, Jun Shimam
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 제안된 프레임워크는 **Large object instance branch**와 **Small object instance branch**의 두 가지 경로로 구성된다. 학습 단계에서는 GrabCut을 통해 생성된 초기 마스크를 $\text{IoU} \ge 0.5$인 유효 마스크와 $\text{IoU} < 0.5$인 유효하지 않은 마스크로 나누어 각각의 분기에 할당한다. 추론 단계에서는 두 분기에 이미지를 동시에 입력하고, 결과물의 크기가 $64 \times 64$ 픽셀을 기준으로 어느 분기의 결과를 사용할지 결정하여 최종 결과를 융합한다.
 
 ### 1. Large object instance branch
+
 이 분기는 Mask R-CNN을 기반으로 하며, 유효한 마스크를 가진 샘플(주로 큰 객체)을 학습한다.
+
 - **구성 요소:** Enhanced-FPN(특징 추출) $\rightarrow$ RPN(제안 영역 생성) $\rightarrow$ Detection module(경계 상자 인식) 및 Segmentation module(마스크 예측).
 - **특징:** 탐지와 분할이 동시에 수행되며, Enhanced-FPN을 통해 개선된 특징 맵을 사용한다.
 
 ### 2. Small object instance branch
+
 유효하지 않은 마스크를 가진 샘플(주로 작은 객체)을 처리하기 위한 보완 모듈이다.
+
 - **처리 절차:** $\text{Detection} \rightarrow \text{Segmentation}$ 순으로 순차적으로 진행된다.
 - **상세 과정:** 먼저 Faster R-CNN을 통해 객체 탐지를 수행하여 Bounding Box를 얻고, 이 정보를 GrabCut에 입력하여 분할 결과를 얻는다. 만약 생성된 분할 결과의 품질이 여전히 낮을 경우, 이를 타원(ellipse) 형태로 대체하여 최소한의 형태 정보를 유지한다.
 
 ### 3. Enhanced-FPN
+
 기존 FPN의 Top-down 방식이 고수준 세만틱 정보는 잘 전달하지만 저수준의 정밀한 로컬라이제이션 정보를 상위 계층으로 전달하는 데 한계가 있다는 점을 개선하였다.
+
 - **개선 사항:** Bottom feature map이 상위 맵으로 전달되는 경로를 단축하고, 각 특징 맵의 강화 기능을 균형 있게 설계하여 특징 전이 거리를 줄였다. (상세 연결 구조는 논문의 Figure 3, 4에 명시됨)
 
 ### 학습 및 추론 절차
+
 - **학습:** ResNet-50을 백본으로 사용하며, Large branch는 30k iteration 동안 학습하고, Small branch는 학습률 $0.0075$를 적용하여 학습한다.
 - **추론:** 입력 이미지에 대해 두 브랜치를 모두 통과시킨 후, 결과 인스턴스의 크기가 $64 \times 64$ 픽셀보다 작으면 Small branch의 결과를, 크면 Large branch의 결과를 채택한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** PASCAL VOC 2012 및 SBD 데이터셋을 사용하여 총 10,582장의 이미지로 학습하고 1,449장의 검증 셋에서 평가하였다.
 - **평가 지표:** $\text{mAP}^{r}_{0.5}$, $\text{mAP}^{r}_{0.75}$, 그리고 Average Best Overlap (ABO)를 사용하였다.
 
 ### 정량적 결과
+
 제안 방법은 이미지 수준(image-level) 및 박스 수준(box-level)의 기존 최신 방법들과 비교하여 모든 지표에서 우수한 성능을 보였다.
 
 | Supervision | Method | $\text{mAP}^{r}_{0.5}$ | $\text{mAP}^{r}_{0.75}$ | ABO |
@@ -65,6 +75,7 @@ Shisha Liao, Yongqing Sun, Chenqiang Gao, Pranav Shenoy K P, Song Mu, Jun Shimam
 특히 $\text{mAP}^{r}_{0.5}$와 $\text{mAP}^{r}_{0.75}$에서 큰 폭의 향상이 관찰되었는데, 이는 큰 객체뿐만 아니라 기존 방식들이 취약했던 작은 객체의 분할 성능을 효과적으로 끌어올렸기 때문이다.
 
 ### 정성적 결과
+
 시각적 분석 결과, 단일 브랜치(모든 마스크를 사용하여 학습한 일반적인 방식)를 사용했을 때보다 보완 분기를 추가한 제안 방법이 작은 객체들을 훨씬 더 정확하게 포착하고 분할하는 것을 확인하였다.
 
 ## 🧠 Insights & Discussion

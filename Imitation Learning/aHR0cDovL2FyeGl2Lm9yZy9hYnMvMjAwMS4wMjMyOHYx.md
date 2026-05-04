@@ -12,14 +12,14 @@ Nishanth Kumar (2020)
 
 본 보고서의 중심적인 기여는 모방 학습의 방법론적 진화를 다음과 같은 논리적 흐름으로 연결하여 분석한 점이다.
 
-1.  **Supervised Learning(지도 학습) 관점**: 상태에서 행동으로의 직접적인 매핑을 통한 단순 모방.
-2.  **Inverse Reinforcement Learning(역강화 학습) 관점**: 전문가의 보상 함수(reward function)를 추론하여 정책을 도출하는 방식.
-3.  **Generative Adversarial Networks(생성적 적대 신경망) 관점**: 보상 함수 추론의 비효율성을 해결하기 위해 전문가의 상태-행동 분포를 직접 모방하는 방식.
-4.  **Divergence Minimization(발산 최소화) 관점**: 위의 모든 방법론을 수학적 발산 최소화 문제로 통합하여 이론적 근거를 제시하는 방식.
+1. **Supervised Learning(지도 학습) 관점**: 상태에서 행동으로의 직접적인 매핑을 통한 단순 모방.
+2. **Inverse Reinforcement Learning(역강화 학습) 관점**: 전문가의 보상 함수(reward function)를 추론하여 정책을 도출하는 방식.
+3. **Generative Adversarial Networks(생성적 적대 신경망) 관점**: 보상 함수 추론의 비효율성을 해결하기 위해 전문가의 상태-행동 분포를 직접 모방하는 방식.
+4. **Divergence Minimization(발산 최소화) 관점**: 위의 모든 방법론을 수학적 발산 최소화 문제로 통합하여 이론적 근거를 제시하는 방식.
 
 ## 📎 Related Works
 
-논문은 모방 학습의 뿌리가 소프트웨어 개발의 'programming by example'에서 시작되었으며, 이후 로보틱스와 AI 분야로 확장되어 'Learning from Demonstration' 또는 'Imitation Learning'이라는 용어로 정착되었음을 설명한다. 
+논문은 모방 학습의 뿌리가 소프트웨어 개발의 'programming by example'에서 시작되었으며, 이후 로보틱스와 AI 분야로 확장되어 'Learning from Demonstration' 또는 'Imitation Learning'이라는 용어로 정착되었음을 설명한다.
 
 기존의 접근 방식들은 크게 두 갈래로 나뉜다. 하나는 전문가의 결정(decision)을 그대로 따라 하는 지도 학습 방식이고, 다른 하나는 전문가가 최적화하려고 했던 내재적 목표(보상 함수)를 찾아내려는 역강화 학습 방식이다. 저자는 이 두 방식이 가진 각각의 한계(지도 학습의 오차 누적 문제, 역강화 학습의 데이터 효율성 및 연산 비용 문제)를 지적하며, 이를 해결하기 위해 등장한 최신 방법론들의 차별점을 논의한다.
 
@@ -28,26 +28,34 @@ Nishanth Kumar (2020)
 본 논문은 4개의 핵심 연구를 통해 모방 학습의 방법론적 발전을 설명한다.
 
 ### 1. ALVINN (Pomerleau, 1989)
+
 모방 학습을 가장 단순한 형태의 Supervised Learning 문제로 정의한다. 전문가의 궤적 $\mathcal{T} = [(S_t, a^E_t)]$ 가 주어졌을 때, 상태 $S_t$를 행동 $a_t$로 매핑하는 함수를 학습한다.
+
 - **구조**: Deep Neural Network(DNN)를 사용하여 비디오 데이터와 레이저 거리 측정기 데이터를 입력받고, 차량이 주행해야 할 곡률(curvature) 벡터를 출력한다.
 - **특징**: 실제 데이터 수집의 어려움을 해결하기 위해 '도로 시뮬레이터'를 구축하여 학습 데이터를 생성하였다.
 
 ### 2. Apprenticeship Learning via IRL (Abbeel and Ng, 2004)
+
 지도 학습 대신 Reinforcement Learning(RL)을 활용한다. 전문가의 행동 뒤에 숨겨진 보상 함수 $R^E(s, a)$를 먼저 찾아내고, 이를 최대화하는 정책 $\pi$를 학습하는 Inverse Reinforcement Learning(IRL) 방식을 제안한다.
+
 - **절차**: 전문가 궤적 $\rightarrow$ IRL $\rightarrow$ 보상 함수 $R^E$ 추출 $\rightarrow$ RL $\rightarrow$ 최적 정책 $\pi$ 도출.
 - **한계**: 보상 함수를 학습하기 위해 상태에 대한 특징 집합(features $\phi^s$)이라는 인간의 추가적인 정의가 필요하다.
 
 ### 3. Generative Adversarial Imitation Learning (GAIL, Ho and Ermon, 2016)
+
 IRL-RL의 반복적인 최적화 과정이 매우 느리다는 점을 해결하기 위해 GAN 구조를 도입한다.
+
 - **핵심 아이디어**: IRL과 RL을 거쳐 정책을 만드는 과정은 결과적으로 학습된 정책 $\pi$의 상태-행동 분포 $\rho^\pi$를 전문가의 분포 $\rho^{\pi_E}$와 일치시키는 과정과 같다.
 - **방법**: GAN의 판별자(Discriminator)가 전문가의 분포와 학습자의 분포를 구분하게 하고, 생성자(Generator/Policy)는 판별자를 속이도록 학습함으로써 직접적으로 분포를 일치시킨다. 이는 매 반복마다 RL을 수렴시킬 필요가 없어 데이터 효율성이 매우 높다.
 
 ### 4. Divergence Minimization Perspective (Ghasemipour et al., 2019)
+
 모든 모방 학습 방법을 수학적인 분포 간의 발산(divergence) 최소화 문제로 통합한다.
-- **수학적 정의**: 
-    - **Supervised Learning**: 조건부 분포 간의 발산을 최소화한다.
+
+- **수학적 정의**:
+  - **Supervised Learning**: 조건부 분포 간의 발산을 최소화한다.
     $$\min \text{div}(\rho^{\pi_E}(a_t|s_t), \rho^\pi(a_t|s_t))$$
-    - **GAIL 및 IRL 기반 방법**: 결합 분포(joint distribution) 간의 발산을 최소화한다.
+  - **GAIL 및 IRL 기반 방법**: 결합 분포(joint distribution) 간의 발산을 최소화한다.
     $$\min \text{div}(\rho^{\pi_E}(s_t, a_t), \rho^\pi(s_t, a_t))$$
 - **FAIRL**: 전문가 시연 없이도 사용자가 직접 정의한 상태-행동 분포 $\rho$를 학습자가 따르도록 하는 방식을 제안한다.
 

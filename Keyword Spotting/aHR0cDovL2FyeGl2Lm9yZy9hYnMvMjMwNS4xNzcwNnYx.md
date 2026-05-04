@@ -18,8 +18,8 @@ Ying Shi, Dong Wang, Lantian Li, Jiqing Han, Shi Yin (2023)
 
 기존의 강건한 KWS를 위한 접근 방식으로는 다음과 같은 방법들이 사용되었다.
 
-1.  **Data Augmentation (DA):** 입력 음성에 인위적인 소음을 섞어 모델의 내성을 키우는 방식이다. 이는 일반적인 소음(예: TV 소음)에는 효과적이지만, 레이블을 변경하지 않고 소음만 추가하기 때문에 두 개 이상의 키워드가 섞이는 Keyword Mixing 상황은 근본적으로 해결할 수 없다.
-2.  **Mixup:** 두 데이터를 선형 보간(Linear Interpolation)하여 새로운 샘플을 만들고 레이블 또한 보간하는 방식이다. 
+1. **Data Augmentation (DA):** 입력 음성에 인위적인 소음을 섞어 모델의 내성을 키우는 방식이다. 이는 일반적인 소음(예: TV 소음)에는 효과적이지만, 레이블을 변경하지 않고 소음만 추가하기 때문에 두 개 이상의 키워드가 섞이는 Keyword Mixing 상황은 근본적으로 해결할 수 없다.
+2. **Mixup:** 두 데이터를 선형 보간(Linear Interpolation)하여 새로운 샘플을 만들고 레이블 또한 보간하는 방식이다.
     $$x' = \lambda x_i + (1 - \lambda)x_j$$
     $$y' = \lambda y_i + (1 - \lambda)y_j$$
     KWS에서 Mixup은 모델의 일반화 성능을 높여 SOTA 성능을 기록하기도 했으나, 레이블 보간 방식($y'$)이 음성 신호의 실제 특성과 맞지 않는다는 문제가 있다. 인간은 섞인 음성에서 두 키워드를 모두 명확히 들을 수 있지만, Mixup의 레이블은 두 키워드 사이의 절충안을 제시하여 어느 하나가 확실히 존재한다고 판단하지 않기 때문이다.
@@ -29,32 +29,37 @@ Ying Shi, Dong Wang, Lantian Li, Jiqing Han, Shi Yin (2023)
 Mix Training (MT)은 모델이 혼합된 음성 내의 모든 키워드를 인식하도록 강제하며, 이를 위해 **Label Union**, **Uniform Sampling**, **BCE Loss** 세 가지 핵심 요소를 도입한다.
 
 ### 1. Label Union
+
 음성 신호는 기계적 파동으로서 자연스럽게 섞일 수 있다는 점에 착안하여, Mixup의 보간법 대신 논리적 합집합(Logical Addition)을 사용한다.
 $$x' = \omega_1 x_i + \omega_2 x_j$$
 $$y' = y_i \oplus y_j$$
 여기서 $\omega_1, \omega_2$는 독립적인 스케일 인자이며, $\oplus$는 논리적 합(OR 연산)을 의미한다. 즉, 두 키워드가 섞인 신호의 레이블은 두 키워드 모두 '존재함'을 나타내는 $k$-hot 레이블이 된다.
 
 ### 2. Uniform Sampling
+
 음성 콘텐츠는 에너지에 불변(Energy-invariant)해야 하므로, 스케일 인자 $\omega$를 균등 분포 $\text{Uniform}(0.1, 0.9)$에서 샘플링한다. 0.1 미만의 너무 낮은 값은 인간의 청각 임계값 이하가 되어 레이블을 부여하는 것이 불합리하기 때문에 하한선을 0.1로 설정하였다. 또한, 신호의 Clipping을 방지하기 위해 $\omega_1 + \omega_2 = 1$이 되도록 정규화를 수행한다.
 
 ### 3. Binary Cross Entropy (BCE) Loss
+
 기존의 Softmax-Cross Entropy (CE) 구조는 출력값들의 합이 1이 되어야 하므로, 여러 키워드가 동시에 존재하는 상황을 표현하기에 부적합하다(상호 경쟁 관계). 이를 해결하기 위해 각 출력 유닛에 Sigmoid 함수를 적용하고 **Binary Cross Entropy (BCE)** 손실 함수를 사용하여 각 키워드의 존재 여부를 독립적인 베르누이 분포로 학습하게 한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** Google Speech Command (GSC) v2 (12개 카테고리 테스트), 간섭 음성으로는 Librispeech 데이터셋 사용.
 - **모델:** Vanilla CNN, EfficientNet-B0, EfficientNet-B2 세 가지 아키텍처 사용.
 - **평가 지표:** Equal Error Rate (EER), Top-k Accuracy.
 
 ### 주요 결과
-1.  **혼합 키워드 탐지 (Mixed Keyword Detection):**
+
+1. **혼합 키워드 탐지 (Mixed Keyword Detection):**
     두 키워드가 섞인 상황에서 MT는 Mixup과 DA보다 월등한 성능을 보였다. 특히 키워드 간 진폭 비가 1:10인 극한의 상황에서 Clean 모델은 거의 무작위 수준(EER 40% 이상)의 성능을 보였으나, MT는 EfficientNet-B2 기준 EER 8.24%, Top-1 Acc 69.33%로 매우 강력한 탐지 능력을 입증하였다.
 
-2.  **강한 소음 환경 탐지 (Noisy Keyword Detection):**
+2. **강한 소음 환경 탐지 (Noisy Keyword Detection):**
     간섭 신호가 키워드보다 10배 강한 환경에서 DA가 가장 좋은 성능을 보였으나, 이는 추가 데이터를 많이 사용했기 때문이다. MT를 DA와 결합한 **MT(N)** 모델은 DA 단독 모델보다 훨씬 높은 성능(EfficientNet-B2 기준 Top-1 Acc 50.06%)을 기록하며, MT가 DA의 소음 내성을 보완하는 정규화 효과가 있음을 보여주었다.
 
-3.  **깨끗한 음성 테스트 (Clean Speech Test):**
+3. **깨끗한 음성 테스트 (Clean Speech Test):**
     MT는 깨끗한 음성에 대한 성능을 저하시키지 않았으며, 오히려 Mixup과 유사하게 성능을 약간 향상시키는 경향을 보였다.
 
 ## 🧠 Insights & Discussion

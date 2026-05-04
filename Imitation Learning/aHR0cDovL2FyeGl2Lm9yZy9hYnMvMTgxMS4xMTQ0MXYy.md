@@ -28,6 +28,7 @@ Sujoy Paul, Jeroen van Baar (2018)
 ## 🛠️ Methodology
 
 ### 1. 궤적 생성 (Trajectory Generation)
+
 시뮬레이터의 물리 엔진을 활용하여 누적 보상을 최대화하는 궤적을 생성한다. 시간 단계 $t$에서 다음과 같은 최적화 문제를 해결한다.
 
 $$ a^*_{t:t+H} = \arg \max_{a_{t:t+H}} \sum_{t'=t}^{t+H-1} r(s_{t'}, a_{t'}, s_{t'+1}), \quad \text{s.t., } s_{t'+1} = S(s'_t, a'_t) $$
@@ -39,6 +40,7 @@ $$ r(s_t, a_t, s_{t+1}) = d(s_{t+1}) - d(s_t) $$
 이를 통해 상태-행동-보상 트리플렛의 집합인 데이터셋 $\mathcal{D} = \{ (s_{ti}, a^*_{ti}, r_{ti}) \}$를 구축한다.
 
 ### 2. 지도 사전 학습 (Supervised Pre-training)
+
 데이터셋 $\mathcal{D}$를 사용하여 DNN 정책을 사전 학습시킨다. 네트워크 구조는 A3C를 따르며, 정책 $\pi_\theta(a_t|s_t)$와 가치 추정 $\text{V}_\phi(s_t)$라는 두 개의 헤드를 가진다. 손실 함수 $\mathcal{L}$은 다음과 같이 정의된다.
 
 $$ \mathcal{L} = \sum_{i=1}^n \sum_{t=1}^{n_i} \left[ \sum_{c=1}^C a^*_{tc} \log \pi_\theta(a_{tc} | s_{ti}) + \frac{1}{2} \left( \text{V}_\phi(s_{ti}) - \sum_{t'=t}^{n_i} \gamma r_{ti} \right)^2 \right] + \|\theta \cup \phi\|_2^2 $$
@@ -46,9 +48,11 @@ $$ \mathcal{L} = \sum_{i=1}^n \sum_{t=1}^{n_i} \left[ \sum_{c=1}^C a^*_{tc} \log
 여기서 첫 번째 항은 정책 네트워크를 위한 Cross-entropy loss이며, 두 번째 항은 가치 함수 추정치를 위한 Mean Squared Error(MSE) loss이다. 마지막 항은 $L2$ 규제항이다. 이렇게 학습된 정책을 $\pi_s$라고 한다.
 
 ### 3. RL 미세 조정 (RL Fine-tuning)
+
 사전 학습된 $\pi_s$를 초기값으로 하여 A3C 프레임워크에서 Policy Gradient 기반의 RL을 수행한다. 이는 무작위 초기화 대신 $\pi_s$에서 시작함으로써 탐색 공간을 좁히고 수렴 속도를 높이는 효과를 준다.
 
 ### 4. 가치 함수 기반 보상 설계 (Value Function as a Reward)
+
 데이터셋 $\mathcal{D}$를 통해 가치 함수 $\hat{\text{V}}_\phi(s_t)$만을 별도로 학습시킨 후, 이를 이용해 보상을 변형(Reward Shaping)한다.
 
 $$ \bar{r}(s_t, a_t, s_{t+1}) = r(s_t, a_t, s_{t+1}) + \gamma \hat{\text{V}}_\phi(s_{t+1}) - \hat{\text{V}}_\phi(s_t) $$
@@ -58,13 +62,15 @@ $$ \bar{r}(s_t, a_t, s_{t+1}) = r(s_t, a_t, s_{t+1}) + \gamma \hat{\text{V}}_\ph
 ## 📊 Results
 
 ### 실험 설정
+
 - **작업(Tasks):**
-    - **FULL:** 게이트를 통과할 때마다 $\pm 1$의 보상을 받는 밀집 보상(dense reward) 환경.
-    - **STG1 & STG2 (Steps-to-Go):** 최종 목표 지점에 도달했을 때만 $+1$ 보상을 받는 희소 보상(sparse reward) 환경.
+  - **FULL:** 게이트를 통과할 때마다 $\pm 1$의 보상을 받는 밀집 보상(dense reward) 환경.
+  - **STG1 & STG2 (Steps-to-Go):** 최종 목표 지점에 도달했을 때만 $+1$ 보상을 받는 희소 보상(sparse reward) 환경.
 - **네트워크 구조:** $\text{Conv-Conv-FC-LSTM}$ 구조를 사용하며, LSTM의 입력으로 이전 층의 특징, 이전 단계의 행동 및 보상을 입력한다.
 - **비교 알고리즘:** A3C, Supervised Pre-training + A3C, Value-based Reward + A3C, Supervised + Value-based Reward + A3C, DAgger.
 
 ### 주요 결과
+
 - **학습 속도 향상:** 사전 학습을 적용했을 때, 무작위 초기화 기반의 A3C보다 학습 속도가 약 2~3배 빨라지는 결과가 나타났다.
 - **DAgger의 한계:** DAgger는 STG1과 같은 쉬운 작업에서는 작동하지만, STG2나 FULL과 같은 어려운 작업에서는 본 논문에서 제안한 프레임워크보다 훨씬 낮은 성능을 보였다.
 - **사전 학습의 정확도:** 사전 학습 단계에서의 최대 분류 정확도는 27.5%로 매우 낮았다. 이는 단순한 지도 학습만으로는 BiMGame을 해결하기 어렵다는 것을 의미하지만, 그럼에도 불구하고 RL의 시작점으로 활용했을 때 가속 효과가 있음을 보여준다.

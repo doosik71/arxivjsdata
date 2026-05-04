@@ -23,12 +23,15 @@ Chaodong Xiao, Minghan Li, Zhengqiang Zhang, Deyu Meng, Lei Zhang (2025)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 시스템 구조
-Spatial-Mamba의 처리 과정은 크게 세 단계로 구성된다. 
+
+Spatial-Mamba의 처리 과정은 크게 세 단계로 구성된다.
+
 1. **초기 상태 계산**: 입력 이미지를 단방향 스위핑 스캔을 통해 1차원 시퀀스로 변환하고, 오리지널 SSM의 상태 전이 방정식을 통해 상태 변수를 계산한 후 다시 2D 형식으로 재구성한다.
 2. **공간 문맥 획득 (SASF)**: 재구성된 상태 변수들에 대해 Structure-Aware State Fusion (SASF)을 적용하여 이웃 상태 변수들을 병합한다.
 3. **최종 출력 계산**: 융합된 상태 변수를 관측 방정식(Observation Equation)에 입력하여 최종 출력을 생성한다.
 
 ### 주요 방정식 및 상세 설명
+
 Spatial-Mamba의 수식 체계는 다음과 같이 정의된다.
 
 먼저, 상태 전이 방정식(State Transition Equation)을 통해 기본 상태 변수 $x_t$를 계산한다.
@@ -46,14 +49,17 @@ $$h_t = \sum_{d=1,3,5} \sum_{i,j \in \Omega^d} k^d_{ij} \cdot x_{t+iw+j}$$
 여기서 $w$는 이미지의 너비를 나타낸다.
 
 ### 네트워크 아키텍처
+
 전체 구조는 Swin-Transformer와 유사한 4단계 계층적 구조를 가진다. Overlapped Stem layer를 통해 초기 특징 맵을 생성하고, 이후 4개의 Stage를 거치며 해상도를 줄이고 채널을 늘린다. 각 Stage는 여러 개의 **Spatial-Mamba Block**으로 구성되며, 이 블록은 Structure-aware SSM과 Feed-Forward Network (FFN) 및 skip connection으로 이루어져 있다. 특히 Structure-aware SSM 내부에서는 기존 Mamba의 1D causal convolution을 $3 \times 3$ depth-wise convolution으로 대체하고, S6 모듈을 SASF 모듈로 대체하였다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 본 논문은 ImageNet-1K(분류), COCO(검출 및 분할), ADE20K(시맨틱 분할) 데이터셋을 사용하여 성능을 검증하였다. 비교 대상으로는 ConvNeXt, Swin-T, NAT, VMamba, LocalVMamba 등 CNN, Transformer, SSM 기반의 최신 모델들이 포함되었다.
 
 ### 주요 결과
+
 1. **이미지 분류 (ImageNet-1K)**:
    - Spatial-Mamba-T는 Top-1 정확도 83.5%를 기록하며, 유사한 파라미터 및 FLOPs를 가진 ConvNeXt-T(82.1%)와 Swin-T(81.3%)를 상회하였다.
    - 특히 SSM 기반 모델 중에서는 VMamba-T(82.6%)보다 1.0% 높은 성능을 보였으며, Base 모델(Spatial-Mamba-B)은 85.3%의 높은 정확도를 달성하였다.
@@ -71,14 +77,18 @@ $$h_t = \sum_{d=1,3,5} \sum_{i,j \in \Omega^d} k^d_{ij} \cdot x_{t+iw+j}$$
 ## 🧠 Insights & Discussion
 
 ### 이론적 통합 및 해석
-논문은 Linear Attention, Mamba, Spatial-Mamba를 $y = Mu$라는 단일 행렬 곱셈 프레임워크로 통합하여 분석하였다. 
+
+논문은 Linear Attention, Mamba, Spatial-Mamba를 $y = Mu$라는 단일 행렬 곱셈 프레임워크로 통합하여 분석하였다.
+
 - **Linear Attention과 Mamba**는 행렬 $M$이 하삼각 행렬(Lower Triangular Matrix) 형태를 띠며, 이는 인과적(Causal) 순서에 따른 정보 흐름을 의미한다.
 - **Spatial-Mamba**는 행렬 $M$이 인접 행렬(Adjacency Matrix) 형태를 띠며, 이는 특정 순서가 아닌 공간적 이웃 간의 가중치 합으로 정보를 통합함을 의미한다.
 
 ### 시각적 분석 및 ERF
+
 Effective Receptive Field (ERF) 분석 결과, 기존의 VMamba 등은 다방향 스캔으로 인해 수평/수직 방향으로 정보가 축적되는 방향성 편향(Directional Bias)이 관찰되었다. 반면, Spatial-Mamba는 단방향 스캔을 사용함에도 불구하고 SASF를 통해 이러한 편향을 효과적으로 제거하고 글로벌한 수용 영역을 확보함을 확인하였다. 또한, SASF 적용 전후의 상태 변수를 시각화했을 때, 융합 후의 상태 변수 $h_t$가 배경과 전경을 훨씬 더 명확하게 구분하는 능력을 보였다.
 
 ### 한계 및 확장 가능성
+
 SASF 모듈을 Vim이나 VMamba 같은 다른 백본에 통합했을 때도 성능 향상이 관찰되었다는 점은 SASF가 일반적인 공간 모델링 도구로 활용될 수 있음을 시사한다. 다만, Depth-wise Convolution 대신 Dynamic Convolution을 사용하면 성능은 약간 상승하지만 연산 속도(Throughput)가 크게 저하되는 트레이드-오프 관계가 존재한다.
 
 ## 📌 TL;DR

@@ -27,9 +27,11 @@ Xinyi Yu, Ling Yan, Pengtao Jiang, Hao Chen, Bo Li, Lin Yuanbo Wu, Linlin Ou (20
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인
+
 시스템은 크게 두 단계로 구성된다. 첫 번째 단계에서는 Bounding Box 주석과 Pseudo Depth Map을 사용하여 Student 네트워크를 초기 학습시킨다. 두 번째 단계에서는 EMA(Exponential Moving Average) 방식으로 업데이트되는 Teacher 네트워크를 통해 Pseudo Mask를 생성하고, 이를 다시 Student 네트워크가 학습하는 Self-distillation 과정을 거친다.
 
 ### 2. Depth-guided Mask Prediction (DG-MaskHead)
+
 본 연구는 CondInst를 베이스라인으로 하며, Mask 예측 헤드를 수정하여 **DG-MaskHead**를 제안한다. 이 헤드는 Mask와 Depth를 동시에 예측하는 Multi-task 구조를 가진다.
 
 상세 과정은 다음과 같다. 먼저 FPN에서 추출된 특징 맵 $F_0$에 상대 좌표 맵을 결합한 후, 두 개의 레이어를 거쳐 강화된 특징 $F_1$을 생성한다. 이후 깊이 예측 레이어 $M_d$와 Mask 예측 레이어 $M_m$이 다음과 같이 작동한다.
@@ -41,9 +43,10 @@ $$P_{mask} = \sigma(M_m(F_1) \cdot P_{depth})$$
 여기서 $\sigma(\cdot)$는 Sigmoid 함수이다. 특히 최종 Mask 예측 시 예측된 깊이 맵 $P_{depth}$를 곱해줌으로써 깊이 정보가 Mask 생성에 직접적인 가이드 역할을 하게 한다.
 
 ### 3. 손실 함수 (Loss Functions)
+
 학습을 위해 세 가지 손실 함수를 결합하여 사용한다.
 
-**가. Instance Depth Estimation Loss ($L_{depth}$):** 
+**가. Instance Depth Estimation Loss ($L_{depth}$):**
 전체 이미지 대신 각 인스턴스 박스 영역($B$) 내에서만 Pseudo Depth($P_{true\_depth}$)와의 차이를 계산한다.
 $$L_{depth} = B \cdot \|P_{depth} - P_{true\_depth}\|^2$$
 
@@ -58,6 +61,7 @@ $$L_{cons} = -\sum \mathbb{1}\{S_d > \tau_d\} \log P(y=1)$$
 $$L_{mask} = L_{boxinst} + L_{cons} + L_{depth}$$
 
 ### 4. Pseudo Mask Matching using Depth
+
 Self-distillation 단계에서 Teacher 네트워크가 생성한 수많은 Mask 중 가장 적절한 것을 선택하기 위해 **Depth-aware Hungarian algorithm**을 사용한다. 기존의 IoU 기반 매칭에 깊이 일관성 점수 $S_{dcons}$를 추가하여 매칭 비용을 계산한다.
 
 깊이 일관성 점수 $S_{dcons}$는 예측된 Mask 영역 내에서 깊이 일관성이 임계값을 넘는 비율로 정의된다. 최종 매칭 점수 $S_{match}$는 다음과 같다.
@@ -68,20 +72,25 @@ $$S_{match} = \alpha \text{IoU} + \beta S_{dmatch} + (1-\alpha-\beta)S^T_{pred}$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋:** COCO (80개 카테고리), Cityscapes (8개 도로 장면 카테고리)
 - **백본:** ResNet-50, ResNet-101, Swin-Base
 - **지표:** Mask AP (Average Precision)
 
 ### 2. 정량적 결과
-**COCO 데이터셋:** 
-- ResNet-101 백본 기준, $3\times$ 학습 일정에서 36.0% Mask AP를 달성하여 BoxInst(33.2%) 및 BoxLevelSet(33.4%)보다 높은 성능을 보였다. 
+
+**COCO 데이터셋:**
+
+- ResNet-101 백본 기준, $3\times$ 학습 일정에서 36.0% Mask AP를 달성하여 BoxInst(33.2%) 및 BoxLevelSet(33.4%)보다 높은 성능을 보였다.
 - 특히 Swin-Base 백본과 Box Regression branch의 품질 지표를 'centerness'에서 'IoU' score로 변경했을 때, 최고 **41.0% Mask AP**를 기록하며 Box-supervised 방식 중 매우 강력한 성능을 입증했다.
 
 **Cityscapes 데이터셋:**
+
 - ResNet-50 사용 시 24.4% Mask AP를 달성하여 기존 SOTA(BoxTeacher, 21.7%) 대비 2.7%p 향상되었다.
 - Swin-Tiny 백본 및 COCO 사전 학습 가중치를 사용했을 때는 최고 28.9% Mask AP를 기록했다.
 
 ### 3. 정성적 결과
+
 시각화 결과, 제안 방법은 복잡한 폐쇄(Occlusion) 상황에서 더 강건한 성능을 보였으며, 전경 객체와 유사한 색상을 가진 배경 노이즈를 효과적으로 억제하는 모습을 보였다.
 
 ## 🧠 Insights & Discussion
@@ -89,6 +98,7 @@ $$S_{match} = \alpha \text{IoU} + \beta S_{dmatch} + (1-\alpha-\beta)S^T_{pred}$
 본 논문은 Pseudo Depth라는 보조 정보를 통해 Bounding Box의 정보 부족 문제를 효과적으로 해결했다. 특히 깊이 정보가 단순히 입력 데이터로 들어가는 것이 아니라, **예측 헤드의 구조적 결합(DG-MaskHead)**과 **일관성 손실 함수($L_{cons}$)**를 통해 네트워크가 능동적으로 깊이 특징을 학습하게 만든 점이 주효했다.
 
 **주요 분석 및 통찰:**
+
 - **Depth Consistency의 중요성:** Ablation study를 통해 $\tau_d$ 값이 너무 낮으면 노이즈가 유입되어 성능이 떨어짐을 확인했으며, 적절한 임계값(0.5) 설정이 필수적임을 보였다.
 - **Self-distillation의 최적화:** Teacher 네트워크의 입력 이미지 크기를 800px로 키웠을 때 더 정교한 Pseudo Mask가 생성되어 Student의 성능이 유의미하게 향상되었다.
 - **Dice Loss 가중치:** Dice Loss 계수 $\gamma$를 높여 Projection Loss보다 크게 설정했을 때, 네트워크가 배경 노이즈에 덜 민감해지고 Pseudo Mask의 가이드에 더 집중하게 됨을 발견했다.

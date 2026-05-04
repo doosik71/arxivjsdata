@@ -4,7 +4,7 @@ Weihao Yuan, Michael Yu Wang, and Qifeng Chen (2020)
 
 ## 🧩 Problem to Solve
 
-본 논문은 비디오 내의 객체 추적(Visual Object Tracking)과 비디오 객체 분할 전파(Video Object Segmentation Propagation)를 위한 자기지도 학습(Self-supervised Learning) 방법을 제안한다. 
+본 논문은 비디오 내의 객체 추적(Visual Object Tracking)과 비디오 객체 분할 전파(Video Object Segmentation Propagation)를 위한 자기지도 학습(Self-supervised Learning) 방법을 제안한다.
 
 기존의 딥러닝 기반 추적기들은 높은 성능을 보이지만, 학습을 위해 매 프레임마다 정교하게 작성된 정답 라벨(Ground-truth trajectories)이 필요하다는 치명적인 단점이 있다. 이러한 수동 어노테이션 작업은 매우 많은 비용과 시간이 소요되며, 이는 학습 데이터의 크기를 제한하고 새로운 환경(unseen scenarios)에 대한 적용력을 떨어뜨린다. 따라서 본 연구의 목표는 인간의 개입 없이 데이터 자체의 일관성을 이용하여 학습할 수 있는 end-to-end Siamese 네트워크 기반의 자기지도 학습 프레임워크를 구축하는 것이다.
 
@@ -23,24 +23,29 @@ Weihao Yuan, Michael Yu Wang, and Qifeng Chen (2020)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 제안된 프레임워크는 크게 **Cycle Object Tracking**과 **Siamese Tracking Network**로 구성된다. 전체 파이프라인은 다음과 같다.
+
 1. **Forward Tracking**: $t_1$ 시점의 프레임 $I_1$에서 타겟 패치 $p_1$을 $t_2$ 시점의 프레임 $I_2$로 추적하여 $\tilde{p}_2$를 얻는다.
 2. **Backward Tracking**: 예측된 $\tilde{p}_2$를 다시 $I_1$ 프레임으로 역추적하여 $\tilde{p}_1$을 얻는다.
 3. **Self-supervision**: 초기 위치 $p_1$과 최종 복귀 위치 $\tilde{p}_1$ 사이의 불일치를 계산하여 네트워크를 학습시킨다.
 
 ### 2. Siamese Tracking Network
+
 네트워크는 템플릿 이미지 패치 $z$와 검색 이미지 $x$를 입력으로 받는 Siamese 구조를 가진다.
+
 - **Feature-Net**: 두 입력을 동일한 가중치를 공유하는 Fully Convolutional Subnetwork에 통과시켜 특징을 추출한다.
 - **Cross-correlation**: 추출된 특징들 간의 depth-wise cross-correlation을 수행하여 dense response map을 생성한다.
-- **Box-Net & Score-Net**: 
-    - **Box-Net**: 각 위치에서 $k$개의 Bounding Box 후보군을 회귀(Regression)한다.
-    - **Score-Net**: 각 후보 박스가 객체인지 배경인지에 대한 점수를 분류한다.
+- **Box-Net & Score-Net**:
+  - **Box-Net**: 각 위치에서 $k$개의 Bounding Box 후보군을 회귀(Regression)한다.
+  - **Score-Net**: 각 후보 박스가 객체인지 배경인지에 대한 점수를 분류한다.
 
 박스 좌표는 R-CNN 방식을 따라 다음과 같이 정규화된 좌표 $t$로 인코딩된다.
 $$t_x = \frac{x-x_a}{w_a}, \quad t_y = \frac{y-y_a}{h_a}, \quad t_w = \log \frac{w}{w_a}, \quad t_h = \log \frac{h}{h_a}$$
 여기서 $(x, y, w, h)$는 예측 박스의 좌표이며, $(x_a, y_a, w_a, h_a)$는 앵커 박스의 좌표이다.
 
 ### 3. 손실 함수 및 학습 절차
+
 학습은 사이클이 완전히 종료된 후, 초기 타겟과 최종 예측값 사이의 오차를 계산하는 방식으로 이루어진다.
 
 - **Box Localization Loss**: Smooth $L_1$ 손실을 사용하여 좌표 오차를 계산한다.
@@ -51,7 +56,9 @@ $$\mathcal{L}_{sco} = -[y_o \log(p_{obj}) + (1-y_o) \log(1-p_{obj}) + y_b \log(p
 $$\mathcal{L} = \mathcal{L}_{sco} + \lambda_1 \mathcal{L}_{box}$$
 
 ### 4. Self-supervised Segmentation Propagation
-추적 기능을 확장하여 픽셀 수준의 마스크를 예측하는 **Mask-Net** 브랜치를 추가하였다. 
+
+추적 기능을 확장하여 픽셀 수준의 마스크를 예측하는 **Mask-Net** 브랜치를 추가하였다.
+
 - **구조**: Cross-correlation 이후 Mask-Net이 각 위치에 대해 평탄화된(flattened) 벡터 형태의 마스크를 예측한다.
 - **마스크 손실 함수**: 예측된 마스크 $m_{ij}^n$과 실제 라벨 $c_{ij}^n$ 사이의 일관성을 계산한다.
 $$\mathcal{L}_{mask} = \sum_n \left( 1 + y_n \frac{2}{w_m h_m} \sum_{i,j} \log(1 + e^{-c_{ij}^n m_{ij}^n}) \right)$$
@@ -60,23 +67,28 @@ $$\mathcal{L}_{mask} = \sum_n \left( 1 + y_n \frac{2}{w_m h_m} \sum_{i,j} \log(1
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: 시각적 객체 추적은 VOT-2016, VOT-2018에서 평가하였고, 분할 전파는 DAVIS-2016, DAVIS-2017에서 평가하였다. 학습은 ILSVRC-2015 및 YouTube-VOS 데이터셋을 사용하였다.
 - **지표**: 추적 작업에서는 Accuracy, Robustness, EAO(Expected Average Overlap) 및 속도(fps)를 측정하였고, 분할 전파에서는 Jaccard index($J$)와 Contour F-measure($F$)를 사용하였다.
 
 ### 2. 정량적 결과
+
 - **객체 추적 (VOT-2016)**: 제안된 CycleSiam은 EAO 0.371을 달성하여, 기존 최신 자기지도 학습 방법인 UDT(0.226~0.301)를 큰 차이로 앞질렀다.
 - **분할 전파 (DAVIS-2017)**: CycleSiam+는 $J=50.9, F=56.8$을 기록하며 기존 자기지도 학습 방법들(Wang et al., Lai et al.)보다 우수한 성능을 보였다. 특히, 이전 프레임 여러 개를 사용하는 기존 방식과 달리 단일 프레임만으로 실시간 추론이 가능하다는 점이 강조되었다.
 
 ### 3. 분석 결과
+
 - **Ablation Study**: 타겟을 무작위로 초기화하여 학습시켰을 때도 어느 정도 작동함을 확인하였으나, 정확한 객체 초기화 시보다 성능이 하락하였다. 이는 배경이나 불필요한 객체가 포함될 경우 네트워크가 혼란을 겪기 때문으로 분석된다.
 - **정성적 결과**: Basketball, Motocross와 같이 객체가 뭉치거나 영상이 흐릿한 상황에서도 안정적인 추적 성능을 보였으며, 일부 사례에서는 정답 라벨보다 더 합리적인 예측 결과를 나타내기도 하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 연구는 정답 라벨 없이도 사이클 일관성이라는 기하학적 제약 조건을 통해 딥러닝 네트워크를 효과적으로 학습시킬 수 있음을 증명하였다. 특히, 단순한 필터 기반의 자기지도 학습에서 벗어나 Siamese RPN이라는 강력한 아키텍처를 end-to-end로 학습시킨 점이 성능 향상의 핵심 요인이다. 또한, 추적과 분할 전파라는 두 가지 다른 태스크를 하나의 프레임워크 내에서 통합적으로 해결하였으며, 실시간 동작이 가능하다는 실용적인 이점을 가진다.
 
 ### 한계 및 비판적 해석
+
 - **초기화 의존성**: Ablation study에서 나타나듯, 학습 시 초기 타겟 박스가 매우 부정확할 경우 성능이 급격히 저하된다. 이는 자기지도 학습의 고질적인 문제인 '잘못된 신호(noisy signal)'에 대한 취약성을 보여준다.
 - **마스크 정확도**: 분할 전파 결과에서 마스크 예측이 완전히 정교하지 못한 부분이 발견되었는데, 이는 지도 학습 데이터 없이 사이클 일관성만으로는 픽셀 단위의 세밀한 경계선을 학습하는 데 한계가 있음을 시사한다.
 - **가정 사항**: 본 모델은 전방-후방 추적의 일관성이 곧 정답이라는 가정을 전제로 한다. 하지만 객체가 완전히 사라졌다가 다시 나타나거나, 매우 유사한 다른 객체로 전이된 경우(ID switch), 사이클 일관성이 오히려 잘못된 학습 방향을 제시할 위험이 있다.

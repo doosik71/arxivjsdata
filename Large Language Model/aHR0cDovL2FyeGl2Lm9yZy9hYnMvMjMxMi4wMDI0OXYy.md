@@ -13,6 +13,7 @@ Jinhua Liang, Xubo Liu, Wenwu Wang, Mark D. Plumbley, Huy Phan, Emmanouil Beneto
 본 연구의 핵심 아이디어는 오디오 데이터를 LLM이 이해할 수 있는 **soft prompts(가변적인 임베딩 벡터)** 형태로 변환하여, 텍스트 토큰과 오디오 토큰이 교차로 배치되는 **interleaved audio-text embeddings** 구조를 구축하는 것이다.
 
 주요 기여 사항은 다음과 같다:
+
 - **Acoustic Adapter 제안**: LLM/VLM을 오디오 도메인으로 확장하기 위한 soft prompting 기반의 어댑터를 도입하였다.
 - **Interleaved 입력 포맷**: 오디오와 텍스트를 순서 제약 없이 교차 배치함으로써, 단일 피드포워드 단계에서 여러 개의 오디오 클립을 입력받고 이들 간의 상관관계를 분석할 수 있게 하였다.
 - **다단계 커리큘럼 학습(Curriculum Learning)**: 오디오 데이터의 희소성 문제를 해결하기 위해 '오디오-텍스트 정렬 $\rightarrow$ 단일 클립 학습 $\rightarrow$ 다중 클립 학습'으로 이어지는 단계적 학습 전략을 제안하였다.
@@ -28,14 +29,17 @@ Jinhua Liang, Xubo Liu, Wenwu Wang, Mark D. Plumbley, Huy Phan, Emmanouil Beneto
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 APT-LLM은 크게 **Audio Encoder**, **Audio Aligner**, 그리고 **Large Language Model (LLM)**의 세 가지 구성 요소로 이루어져 있다. 전체 파이프라인은 입력 오디오 스펙트로그램을 특징 맵으로 추출하고, 이를 텍스트 지시어와 함께 정렬하여 LLM의 입력 토큰으로 변환하는 과정을 거친다.
 
 ### 주요 구성 요소 및 역할
+
 1. **Audio Encoder**: Audio-MAE를 사용하며, 10초 단위로 세그먼트화된 오디오 입력을 처리한다. 분류를 위한 마지막 레이어 대신, 세밀한 오디오 패턴을 보존하기 위해 **penultimate block(끝에서 두 번째 블록)**의 출력 특징 맵(shape: $(1024, 512)$)을 추출한다.
 2. **Audio Aligner**: Audio-MAE의 가변적인 특징 맵을 고정된 수의 음향 임베딩(32개)으로 리샘플링하는 역할을 한다. Q-former 아키텍처(4개 트랜스포머 레이어)를 기반으로 하며, BERT 토크나이저를 통해 입력된 텍스트 프롬프트와 학습 가능한 쿼리 토큰(learnable query tokens)을 사용하여 오디오 특징에서 필요한 정보를 추출한다.
 3. **Large Language Model**: Vicuna 7B v1.1과 같은 LLM을 사용하며, 학습 과정에서 모든 파라미터는 **frozen(동결)** 상태로 유지된다. 오디오 모달리티를 식별하기 위해 학습 가능한 특수 토큰인 `[AUDIO]`를 각 오디오 클립 앞에 추가한다.
 
 ### 학습 목표 및 방정식
+
 기존 모델들이 오디오와 텍스트를 단순히 연결($C$)하여 사용했다면, APT-LLM은 교차 배치 함수 $I$를 사용하여 입력 시퀀스를 구성한다.
 
 기존의 방식:
@@ -46,7 +50,9 @@ $$X_{audio;text} = [ (S(a_1, t_1)), T_\psi(t_1), \dots, (S(a_N, t_N)), W_\psi(t_
 여기서 $S(\cdot, \cdot) = M_\theta(A_\phi(\cdot), \cdot)$는 오디오 정렬기를 통해 생성된 음향 임베딩이며, $T_\psi$와 $W_\psi$는 텍스트 임베딩을 나타낸다. 최종적으로 LLM은 이전 토큰들을 조건으로 다음 토큰의 확률 분포를 최대화하는 방향으로 학습된다.
 
 ### 커리큘럼 학습 절차
+
 데이터 부족 문제를 해결하기 위해 3단계 학습 전략을 수행한다:
+
 - **Stage 0 (Audio-Text Alignment)**: LLM 결합 전, Audio-MAE는 고정하고 Aligner만 학습시킨다. Audio-Text Matching(ATM), Audio-Grounded Text Generation(AGTG), Audio-Text Contrasting(ATC)의 세 가지 목적 함수를 사용하여 모달리티 간의 기초적인 정렬을 수행한다.
 - **Stage 1 (Single Audio Clip Learning)**: 단일 오디오 기반의 Audio Tagging, Captioning, QA 및 새롭게 정의한 Query-based SED, Temporal Event Retrieval, Sound Event Counting 작업을 통해 세밀한 오디오 특징을 학습한다.
 - **Stage 2 (Multiple Audio Clips Learning)**: Few-shot audio classification과 NLAR 작업을 추가하여, 모델이 여러 오디오 클립 간의 상관관계를 분석하고 추론할 수 있도록 한다.
@@ -54,11 +60,13 @@ $$X_{audio;text} = [ (S(a_1, t_1)), T_\psi(t_1), \dots, (S(a_N, t_N)), W_\psi(t_
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: AudioSet, ESC-50 (분류), Clotho, AudioCaps (캡셔닝), NLAR, AVQA.
 - **지표**: Accuracy, mAP, SPICE, SPIDEr.
 - **비교 대상**: AudioCLIP, CLAP, Qwen-Audio, LTU, Pengi 등.
 
 ### 주요 결과
+
 1. **오디오 태깅 및 캡셔닝**: APT-LLM은 AudioSet에서 경쟁력 있는 mAP를 기록하였으며, 특히 자동 오디오 캡셔닝 작업(AudioCaps, Clotho)에서 가중 평균 SPICE 점수 $0.172$를 달성하며 전문가 모델(task-specific systems)에 필적하는 성능을 보였다.
 2. **Few-shot 오디오 분류**: 5-way 5-shot 설정에서 기존의 전문 분류 모델들을 능가하였으며, CLAP 어댑터와 경쟁 가능한 수준의 성능을 보였다. 다만 12-way 설정에서는 성능 저하가 관찰되었는데, 이는 입력 시퀀스가 길어짐에 따라 LLM의 어텐션 메커니즘에 부하가 걸리기 때문으로 분석된다.
 3. **Natural Language Audio Reasoning (NLAR)**: AAC 모델과 ChatGPT-4o를 결합한 베이스라인(27.9%) 대비, APT-LLM은 **63.8%**라는 압도적인 정확도를 기록하며 다중 오디오 추론 능력을 입증하였다.
@@ -67,9 +75,11 @@ $$X_{audio;text} = [ (S(a_1, t_1)), T_\psi(t_1), \dots, (S(a_N, t_N)), W_\psi(t_
 ## 🧠 Insights & Discussion
 
 ### 강점 및 분석
+
 본 논문은 오디오 데이터를 단순한 입력값이 아닌, LLM의 문맥을 제어하는 '프롬프트'로 취급함으로써 LLM의 In-context learning 능력을 오디오 도메인으로 성공적으로 전이시켰다. 특히 인터리브 구조를 통해 단일 모델이 여러 오디오 클립을 동시에 처리하게 함으로써, 기존 오디오-언어 모델들이 해결하지 못했던 '비교'와 '요약'이라는 고차원 추론 능력을 구현했다는 점이 매우 고무적이다.
 
 ### 한계 및 비판적 해석
+
 - **모델 종속성**: APT Aligner는 LLM의 워드 임베딩 공간에 맞춰 학습되므로, LLM 아키텍처가 동일하더라도 다른 가중치를 가진 모델을 사용할 경우 Aligner를 다시 학습시켜야 하는 제약이 있다.
 - **지시어 튜닝의 부재**: Instruction-based 데이터셋으로 학습되지 않았기 때문에, 학습 데이터 범위 밖의 질문(out-of-domain)에 대해서는 대응 능력이 제한적일 수 있다.
 - **도메인 확장성**: 현재는 일반적인 환경음(General Audio)에 집중되어 있으며, 언어적 특성이 강한 Speech나 예술적 구조를 가진 Music 도메인으로의 확장 검증은 이루어지지 않았다.

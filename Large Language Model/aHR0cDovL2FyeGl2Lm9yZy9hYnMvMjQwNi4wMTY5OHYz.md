@@ -17,6 +17,7 @@ Abhimanyu Rajeshkumar Bambhaniya, Ritik Raj, Geonhwa Jeong, Souvik Kundu, Sudars
 ## 📎 Related Works
 
 기존의 LLM 추론 분석 도구들은 다음과 같은 한계를 가진다.
+
 - **ASTRA-sim, MadMax, vTrain**: 주로 분산 학습(Distributed Training)의 통신 최적화에 집중하며, 다양한 LLM 아키텍처나 추론 전용 최적화 기법을 모델링하지 않는다.
 - **LLM-Viewer**: Roofline 모델 기반의 이상적인 성능 추정치를 제공하지만, 상세한 시스템 최적화나 분산 플랫폼의 복잡성을 반영하기 어렵다.
 - **Vidur, LLMServingSim**: 추론 시스템의 스케줄링 기법에 집중하며, 주로 기존 하드웨어 사양 내에서의 분석에 머문다.
@@ -29,17 +30,21 @@ Abhimanyu Rajeshkumar Bambhaniya, Ritik Raj, Geonhwa Jeong, Souvik Kundu, Sudars
 GenZ는 크게 세 가지 주요 구성 요소로 이루어져 있다.
 
 ### 1. Model Profiler
+
 모델의 구조적 특성을 분석하는 단계이다. HuggingFace의 `AutoModels`를 사용하여 각 연산자의 형태(Shape)를 결정하고, 이를 통해 전체 연산량, 메모리 점유율, KV Cache 크기, 통신량(Collective sizes)을 계산한다. 특히 Dense 모델뿐만 아니라 MoE, Mamba, GQA(Grouped-Query Attention) 등 다양한 아키텍처를 지원하며, Quantization 및 Chunked Prefill과 같은 최적화 기법을 적용한 상태의 연산 그래프를 생성한다.
 
 ### 2. NPU Characterizer
-개별 가속기(NPU)의 성능을 모델링한다. 각 NPU는 연산 능력($FLOPS$), 고속 메모리 대역폭($BW_{mem}$), 저속 메모리(Offload용) 대역폭($BW_{omem}$) 및 용량을 가진다. 
+
+개별 가속기(NPU)의 성능을 모델링한다. 각 NPU는 연산 능력($FLOPS$), 고속 메모리 대역폭($BW_{mem}$), 저속 메모리(Offload용) 대역폭($BW_{omem}$) 및 용량을 가진다.
 
 연산자의 실행 시간 $T_{op}$는 Roofline 모델을 기반으로 다음과 같이 계산한다:
 $$T_{op} = \max\left(\frac{C_{op}}{FLOPS \times Eff_C}, \frac{M_{op}}{BW_{mem} \times Eff_{mem}}\right)$$
 여기서 $C_{op}$는 연산 횟수, $M_{op}$는 메모리 접근량이며, $Eff_C$와 $Eff_{mem}$은 소프트웨어 오버헤드와 동기화 문제를 반영한 효율성 계수(Efficiency Factor)이다.
 
 ### 3. Platform Characterizer
+
 여러 NPU가 연결된 분산 플랫폼을 모델링한다.
+
 - **네트워크 토폴로지**: 다차원 상호연결망(ICN)의 링크 지연 시간($T_{link}$), 대역폭($BW_{link}$), 효율성($Eff_{link}$)을 정의한다.
 - **병렬화 전략**: Tensor Parallelism(TP), Pipeline Parallelism(PP), Expert Parallelism(EP), Sequence Parallelism(SP)을 지원하며, 이를 물리적 토폴로지에 매핑한다.
 - **집단 통신(Collectives)**: AllReduce, All-to-All, Send-Recv 등의 통신 패턴을 생성하며, 상세한 통신 시간 예측을 위해 ASTRA-sim의 시스템 레이어를 활용한다.
@@ -47,9 +52,11 @@ $$T_{op} = \max\left(\frac{C_{op}}{FLOPS \times Eff_C}, \frac{M_{op}}{BW_{mem} \
 ## 📊 Results
 
 ### 검증 (Validation)
+
 GenZ는 NVIDIA H100, A100, Intel Gaudi2, AMD MI300x, SambaNova SN40L 등 5가지 실제 하드웨어 플랫폼에서 검증되었다. 다양한 모델과 워크로드에 대해 실제 측정값과 GenZ 예측값 사이의 기하평균 오차(Geomean Error)는 **5.82%**로 나타나, 매우 높은 예측 정확도를 보였다.
 
 ### 주요 사례 연구 결과
+
 1. **하드웨어 특성 스케일링**:
    - **TFLOPS 증가**: 긴 컨텍스트의 Prefill 단계에서 성능 향상이 뚜렷하나, 메모리 집약적인 Decode 단계에서는 효과가 거의 없다.
    - **Memory BW 증가**: Decode 단계의 지연 시간이 대역폭 증가에 비례하여 감소한다.
@@ -66,6 +73,7 @@ GenZ는 NVIDIA H100, A100, Intel Gaudi2, AMD MI300x, SambaNova SN40L 등 5가지
 ## 🧠 Insights & Discussion
 
 본 논문은 LLM 추론의 병목 지점이 모델 아키텍처와 최적화 기법에 따라 동적으로 변화한다는 점을 시사한다.
+
 - **GQA의 영향**: Dense 모델은 Chunked Prefill 시 KV Cache로 인한 메모리 대역폭 병목이 심하지만, GQA 모델은 이 영향이 적어 오히려 연산 능력(Compute)이 주 병목이 된다.
 - **Speculative Decoding의 트레이드오프**: 토큰 생성 속도를 높일 수 있으나, Draft 모델을 위한 추가 메모리 용량이 필요하며, 타겟 모델에 더 많은 토큰을 한 번에 입력하게 되어 연산 집약적인 특성이 강해진다.
 - **MoE 병렬화**: Prefill 단계에서는 전문가(Expert)들이 균등하게 활성화된다는 가정하에 Expert Parallelism(EP)이 유리하지만, Decode 단계에서는 적은 수의 토큰만 라우팅되므로 TP 또는 TP+EP 조합이 더 효율적이다.

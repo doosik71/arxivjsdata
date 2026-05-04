@@ -28,6 +28,7 @@ Georgios Papagiannis and Yunpeng Li (2022)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 SIL은 전문가의 Occupancy Measure $\rho^E$와 학습자의 Occupancy Measure $\rho^\pi$ 사이의 Sinkhorn Distance를 최소화하는 것을 목표로 한다. 전체 파이프라인은 적대적으로 학습되는 Critic 네트워크와 이를 통해 유도된 보상 프록시(Reward Proxy)를 사용하여 정책을 업데이트하는 반복적인 과정으로 구성된다.
 
 ### 주요 구성 요소 및 상세 설명
@@ -49,6 +50,7 @@ SIL은 다음과 같은 Minimax 최적화 문제를 해결한다.
 $$\arg \min_\pi \max_w W_s^\beta(\rho^\pi, \rho^E)_{c^w}$$
 
 학습 과정은 다음과 같은 순서로 진행된다.
+
 1. 학습자 정책 $\pi_{\theta_k}$를 통해 궤적 $\tau^{\pi_{\theta_k}}$를 샘플링한다.
 2. 학습자의 궤적과 전문가의 궤적을 무작위로 짝지어 Sinkhorn 알고리즘을 통해 Sinkhorn Distance를 계산한다.
 3. **Critic 업데이트:** Sinkhorn Distance $W_s^\beta$를 최대화하도록 파라미터 $w$를 경사 상승법(Gradient Ascent)으로 업데이트한다.
@@ -57,14 +59,16 @@ $$\arg \min_\pi \max_w W_s^\beta(\rho^\pi, \rho^E)_{c^w}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **환경:** MuJoCo 시뮬레이터의 5가지 환경 (Hopper-v2, HalfCheetah-v2, Walker2d-v2, Ant-v2, Humanoid-v2).
 - **비교 대상 (Baselines):** Behavioral Cloning (BC), GAIL, AIRL.
 - **측정 지표:**
-    - **True Reward:** 환경에서 제공하는 실제 보상 값.
-    - **Sinkhorn Distance:** 평가 시에는 고정된 Cosine Distance 비용 함수를 사용하여 전문가 분포와의 유사도를 측정한다 (값이 작을수록 우수).
+  - **True Reward:** 환경에서 제공하는 실제 보상 값.
+  - **Sinkhorn Distance:** 평가 시에는 고정된 Cosine Distance 비용 함수를 사용하여 전문가 분포와의 유사도를 측정한다 (값이 작을수록 우수).
 - **데이터셋:** 전문가 궤적의 수를 $\{2, 4, 8, 16, 32\}$개로 다양하게 설정하여 샘플 효율성을 테스트하였다.
 
 ### 주요 결과
+
 - **Sinkhorn Metric 관점:** SIL은 대부분의 환경에서 GAIL, AIRL과 대등하거나 더 우수한 성능을 보였다. 특히 HalfCheetah-v2와 Ant-v2에서 강점을 보였으며, Humanoid-v2 환경에서는 적은 수의 전문가 궤적(8, 16개)만으로도 타 방법론보다 월등히 높은 샘플 효율성을 입증하였다.
 - **Reward Metric 관점:** 모든 적대적 IL 알고리즘이 전문가 성능에 근접한 결과를 냈으나, 일부 환경(Ant-v2)에서는 AIRL이 SIL보다 높은 보상을 기록하기도 했다. 그러나 저자들은 보상 값보다 Sinkhorn Distance가 분포 일치라는 IL의 본질적 목표를 더 정확히 반영하는 지표라고 주장한다.
 - **Ablation Study:** 적대적 Critic 없이 고정된 Cosine Distance 비용 함수만을 사용하여 학습했을 때, 훈련 과정은 더 안정적이었으나 최종 성능(보상 및 Sinkhorn Distance 모두)은 크게 저하되었다. 이는 Adversarial training을 통한 변별력 있는 비용 함수 학습이 SIL의 핵심 요소임을 시사한다.

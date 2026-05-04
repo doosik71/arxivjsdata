@@ -24,20 +24,24 @@ Chengpeng Hu, Yunlong Zhao, Ziqi Wang, Haocheng Du, Jialin Liu (2024)
 본 연구는 2016년부터 2024년까지 NeurIPS, IJCAI, AAAI, ICML 등 주요 AI 및 게임 AI 학회(IEEE CIG, CoG, ACM FDG 등)에서 진행된 대회와 Google Scholar, Web of Science의 문헌 조사를 통해 데이터를 수집하였다. 분석 방법론은 크게 두 가지 축으로 나뉜다.
 
 ### 1. AI by Playing Games (게임 플레이 AI)
+
 게임 환경을 물리적 공간의 표현 방식에 따라 다음과 같이 분류하여 분석한다.
+
 - **Tabletop Games**: 보드 게임, 카드 게임, 퍼즐 등이 포함되며, 상태(State)가 구조화된 데이터로 표현된다. 부분 관측성(Partial Observability)과 다중 에이전트 협력/경쟁이 주요 쟁점이다.
 - **Video Games**:
-    - **Grid-based 2D**: 이산적인 타일 기반 맵을 사용하며, 상태 표현이 단순하여 학습 속도가 빠르다 (예: Snake AI, Pommerman).
-    - **Pixel-based 2D**: 고차원 이미지 입력과 연속적인 상태 공간을 가지며, 특징 추출(Feature Extraction) 능력이 중요하다 (예: Mario AI, Dota 2).
-    - **3D Games**: 높이 차원이 추가되어 시각적 복잡도가 증가하며, 현실 세계와 유사한 시뮬레이션 환경을 제공한다 (예: MineRL, ViZDoom).
+  - **Grid-based 2D**: 이산적인 타일 기반 맵을 사용하며, 상태 표현이 단순하여 학습 속도가 빠르다 (예: Snake AI, Pommerman).
+  - **Pixel-based 2D**: 고차원 이미지 입력과 연속적인 상태 공간을 가지며, 특징 추출(Feature Extraction) 능력이 중요하다 (예: Mario AI, Dota 2).
+  - **3D Games**: 높이 차원이 추가되어 시각적 복잡도가 증가하며, 현실 세계와 유사한 시뮬레이션 환경을 제공한다 (예: MineRL, ViZDoom).
 
 ### 2. AI for Designing Games (게임 디자인 AI)
+
 AI가 게임 콘텐츠를 생성하거나 최적화하는 관점에서 분석한다.
+
 - **Game Tuning**: 게임의 밸런스를 맞추기 위해 파라미터를 조정하는 작업이다. Search-based 방법론 등을 통해 난이도를 조절하거나 메타 게임 밸런스를 최적화한다.
 - **Content Generation (PCG)**:
-    - **2D/3D Level**: 맵, 레벨, 건축물 등을 자동 생성한다. 최근에는 GAN, Diffusion 모델, LLM이 활용된다.
-    - **Narrative**: 텍스트 기반의 상호작용 소설이나 세계관 스토리를 생성하며, 시간적 논리와 문맥 기억 능력이 요구된다.
-    - **Rhythm Chart & Cards**: 음악의 리듬에 맞춘 차트 생성이나 CCG(Collectable Card Game)의 카드 능력치 및 덱 설계 등을 포함한다.
+  - **2D/3D Level**: 맵, 레벨, 건축물 등을 자동 생성한다. 최근에는 GAN, Diffusion 모델, LLM이 활용된다.
+  - **Narrative**: 텍스트 기반의 상호작용 소설이나 세계관 스토리를 생성하며, 시간적 논리와 문맥 기억 능력이 요구된다.
+  - **Rhythm Chart & Cards**: 음악의 리듬에 맞춘 차트 생성이나 CCG(Collectable Card Game)의 카드 능력치 및 덱 설계 등을 포함한다.
 
 ## 📊 Results
 
@@ -45,19 +49,21 @@ AI가 게임 콘텐츠를 생성하거나 최적화하는 관점에서 분석한
 
 - **데이터 규모**: AI 플레이를 위한 40개의 게임과 20개의 플랫폼, AI 디자인을 위한 26개의 환경을 분석하였다.
 - **기술적 경향**: 분석 대상 플랫폼 중 Python이 가장 많이 사용되는 언어로 나타났으며, 이는 PyTorch 및 TensorFlow와 같은 딥러닝 라이브러리의 생태계와 일치한다.
-- **플랫폼 특성**: 
-    - **Gym**과 **PettingZoo**가 RL 연구에서 가장 널리 쓰이는 표준 API를 제공하고 있음을 확인하였다.
-    - **GVGAI**와 **Procgen**은 에이전트의 일반화(Generalization) 능력을 측정하는 데 특화되어 있다.
-    - **MineRL**과 **MineDojo**는 개방형 세계(Open-world)에서의 자율 탐색과 복합 작업 수행 능력을 평가하는 데 적합하다.
+- **플랫폼 특성**:
+  - **Gym**과 **PettingZoo**가 RL 연구에서 가장 널리 쓰이는 표준 API를 제공하고 있음을 확인하였다.
+  - **GVGAI**와 **Procgen**은 에이전트의 일반화(Generalization) 능력을 측정하는 데 특화되어 있다.
+  - **MineRL**과 **MineDojo**는 개방형 세계(Open-world)에서의 자율 탐색과 복합 작업 수행 능력을 평가하는 데 적합하다.
 
 ## 🧠 Insights & Discussion
 
 ### 게임이 AI에 주는 핵심 도전 과제
+
 - **고차원의 저주 (Curse of High Dimensions)**: 현대 게임의 고해상도 그래픽은 AI가 유의미한 특징을 추출하는 것을 방해하며, 조합 폭발(Combinatorial Explosion)로 인해 액션 공간이 지나치게 넓어지는 문제가 발생한다.
 - **탐색의 어려움 (Poor Exploration)**: Sparse Reward(희소 보상) 환경에서 최적의 정책을 찾기 위해 Intrinsic Curiosity나 Population-based Exploration과 같은 정교한 탐색 전략이 필수적이다.
 - **일반화 능력 (Generalisation)**: 단일 레벨에서 학습한 AI가 처음 보는 맵에서도 작동하는지는 여전히 해결해야 할 과제이며, 이를 위해 Procgen과 같은 절차적 생성 환경이 중요하게 작용한다.
 
 ### 비판적 해석 및 논의
+
 - **상용 게임 API의 한계**: StarCraft II나 Dota 2와 같은 일부 상용 게임은 API를 제공하지만, 연구자가 게임 엔진 자체를 수정할 수 없으므로 빠른 Forward Model을 구축하는 데 한계가 있다.
 - **LLM의 패러다임 변화**: 기존의 RL 기반 에이전트가 수많은 시행착오를 통해 학습했다면, LLM은 텍스트 기반의 상태 표현과 상식(Common Sense)을 통해 학습 없이도 수준 높은 플레이를 보여주거나, 자연어 프롬프트만으로 레벨을 생성하는 능력을 보여준다. 이는 AI 연구의 중심이 '최적화'에서 '상호작용 및 생성'으로 이동하고 있음을 시사한다.
 - **AGI를 향한 샌드박스**: Open-world 게임은 단순한 게임 플레이를 넘어, 현실 세계의 복잡성을 모사한 AGI(인공 일반 지능)의 테스트베드로 진화하고 있다.

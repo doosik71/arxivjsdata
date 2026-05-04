@@ -23,6 +23,7 @@ Martijn M.A. Bosma, Arkadiy Dushatskiy, Monika Grewal, Tanja Alderliesten, and P
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 탐색 공간
+
 MB-NAS의 탐색 공간은 위상 수준(Topology-level)과 셀 수준(Cell-level)의 두 단계로 구성되며, 이를 동시에 탐색한다.
 
 1. **위상 수준 탐색 (Topology-level Search):**
@@ -41,9 +42,10 @@ MB-NAS의 탐색 공간은 위상 수준(Topology-level)과 셀 수준(Cell-leve
    - **Inception blocks**: 다양한 크기의 커널을 병렬로 사용하는 구조
 
 ### 학습 및 탐색 절차
+
 - **탐색 알고리즘:** Local Search (LS) 알고리즘을 사용하며, 구체적으로는 모든 변수를 무작위 순서로 조사하여 성능이 향상되는 즉시 채택하는 First-improvement 접근 방식을 취한다.
 - **성능 평가 지표:** 검증 데이터셋의 Dice Score를 기준으로 하며, 노이즈를 줄이기 위해 5-fold 교차 검증(cross-validation)과 3번의 서로 다른 초기화를 수행한 평균값을 사용한다.
-- **학습 설정:** 
+- **학습 설정:**
   - 최적화 도구: ADAM Optimizer (학습률 $10^{-3}$, 지수 0.9의 다항식 감쇠 적용)
   - 손실 함수: Foreground soft Dice loss를 사용하여 클래스 불균형 문제를 해결한다.
   - 데이터 증강: Scaling, shifting, rotating, flipping, brightness adjustment 등을 적용하여 과적합을 방지한다.
@@ -51,10 +53,12 @@ MB-NAS의 탐색 공간은 위상 수준(Topology-level)과 셀 수준(Cell-leve
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** Medical Decathlon의 전립선(Prostate) MRI 스캔(32개 사례, 602개 2D 슬라이스)과 비장(Spleen) CT 스캔(41개 사례, 3650개 2D 슬라이스)을 사용하였다.
 - **비교 대상:** 표준 U-Net, ResU-Net(ResNet-50 인코더 사용), Macro-NAS(위상만 탐색), Micro-NAS(셀만 탐색), Bilevel-NAS(순차적 탐색)와 비교하였다.
 
 ### 주요 결과
+
 1. **비장(Spleen) 데이터셋:** MB-NAS가 모든 지표(DSC, HD, SD)에서 가장 우수한 성능을 보였다. 발견된 최적 네트워크는 표준 U-Net보다 얕은 구조를 가졌으며, 네 가지 블록 타입과 다양한 커널 크기가 혼합되어 사용되었다. 이는 비장의 크기가 상대적으로 작아 더 세밀하고 복잡한 특징 추출이 중요함을 시사한다.
 2. **전립선(Prostate) 데이터셋:** Micro-NAS가 소폭 높은 성능을 보였으나, MB-NAS 역시 매우 유사한 성능을 나타냈다. 이 데이터셋에서 발견된 최적 구조는 표준 U-Net과 매우 유사했는데, 이는 전립선 분할 작업에는 U-Net의 위상이 매우 적합함을 의미한다.
 3. **SotA(nnU-Net)와의 비교:** nnU-Net의 학습 및 평가 환경(고해상도 이미지, 전처리, 후처리 등)에서 MB-NAS로 발견한 구조를 평가한 결과, 전립선 데이터셋에서는 MB-NAS($0.7325$)가 nnU-Net($0.7315$)보다 약간 우수했으며, 비장 데이터셋에서는 두 방식이 거의 동일한 성능을 보였다.

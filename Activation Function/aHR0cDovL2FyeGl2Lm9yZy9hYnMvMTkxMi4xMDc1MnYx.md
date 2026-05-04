@@ -29,13 +29,14 @@ S. Balaji, T. Kavya, and Natasha Sebastian (2019)
 ## 🛠️ Methodology
 
 ### 1. DP ReLU (Dual Parametric ReLU)
+
 DP ReLU는 양수와 음수 두 축 모두에 학습 가능한 기울기 파라미터를 둔다. 수식은 다음과 같다.
 
 $$
-X = 
-\begin{cases} 
-\alpha \cdot x, & \text{if } x < 0 \\ 
-\beta \cdot x, & \text{if } x > 0 
+X =
+\begin{cases}
+\alpha \cdot x, & \text{if } x < 0 \\
+\beta \cdot x, & \text{if } x > 0
 \end{cases}
 $$
 
@@ -43,13 +44,14 @@ $$
 - $\beta$: 양수 영역 기울기 파라미터 (초기값 1)
 
 ### 2. Dual Line
+
 Dual Line은 DP ReLU에 학습 가능한 평균 이동 파라미터 $m$을 추가하여 직선의 방정식 형태로 구성한 함수이다.
 
 $$
-X = 
-\begin{cases} 
-\alpha \cdot x + m, & \text{if } x < 0 \\ 
-\beta \cdot x + m, & \text{if } x > 0 
+X =
+\begin{cases}
+\alpha \cdot x + m, & \text{if } x < 0 \\
+\beta \cdot x + m, & \text{if } x > 0
 \end{cases}
 $$
 
@@ -57,13 +59,14 @@ $$
 - 이 파라미터는 활성화 함수의 평균을 0으로 밀어내어 오버피팅 위험을 줄이고 학습 속도를 높이는 역할을 한다.
 
 ### 3. 타 활성화 함수로의 확장
+
 기존의 임의의 활성화 함수 $G(x)$가 있을 때, 이를 다음과 같이 변형하여 제안된 개념을 적용할 수 있다.
 
 $$
-X = 
-\begin{cases} 
-G(x) + m, & \text{if } x < 0 \\ 
-\beta \cdot x + m, & \text{if } x > 0 
+X =
+\begin{cases}
+G(x) + m, & \text{if } x < 0 \\
+\beta \cdot x + m, & \text{if } x > 0
 \end{cases}
 $$
 
@@ -72,28 +75,33 @@ $$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: MNIST, CIFAR10
 - **모델 아키텍처**: LeNet-4, LeNet-5, WideResNet
 - **비교 대상**: 총 43종의 활성화 함수
 - **평가 지표**: 정확도(Accuracy), 평균 정확도(Mean Accuracy), Train/Validation Loss, 학습 시간
 
 ### 주요 결과
+
 - **MNIST (LeNet-5)**: Dual Line이 평균 정확도 기준 1위를 기록하였으며, 전체 정확도에서는 2위를 차지하였다. 반면 DP ReLU는 18~19위권에 머물러, 평균 이동 파라미터 $m$의 영향력이 매우 큼을 시사한다.
 - **MNIST (LeNet-4)**: PELU가 가장 좋은 성능을 보였으나, Dual Line과 DP ReLU 역시 각각 정확도 및 평균 정확도 기준 4~5위권의 상위 성능을 기록하였다.
-- **CIFAR10 (WideResNet)**: 
-    - 평균 정확도 기준 Dual Line이 2위를 기록하였다 (1위는 Aria2).
-    - Train 및 Validation Loss 측면에서는 DP ReLU와 Dual Line이 각각 1, 2위를 차지하며 매우 우수한 수렴 성능을 보였다.
-    - 특히 Dual Line은 43개의 함수 중 평균 정확도 기준 Top-5 내에 진입하였다.
+- **CIFAR10 (WideResNet)**:
+  - 평균 정확도 기준 Dual Line이 2위를 기록하였다 (1위는 Aria2).
+  - Train 및 Validation Loss 측면에서는 DP ReLU와 Dual Line이 각각 1, 2위를 차지하며 매우 우수한 수렴 성능을 보였다.
+  - 특히 Dual Line은 43개의 함수 중 평균 정확도 기준 Top-5 내에 진입하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. 파라미터의 적응성 분석
+
 WideResNet 모델의 블록 내에서 파라미터 분포를 분석한 결과, 동일 블록 내에서도 첫 번째 활성화 함수와 두 번째 활성화 함수의 $\beta$ 값에 유의미한 차이가 발견되었다. 이는 활성화 함수가 주변 레이어의 특성에 따라 스스로 적응하고 있음을 입증하는 증거이다.
 
 ### 2. 학습률(Learning Rate)과의 관계
+
 사용하는 활성화 함수에 따라 최적의 학습률 범위가 달라짐을 확인하였다. Dual Line과 DP ReLU는 각각 특정 범위의 학습률을 선호하며, 이는 활성화 함수의 형태가 최적화 경로에 영향을 주기 때문이다.
 
 ### 3. 강점 및 한계
+
 - **강점**: 복잡한 지수 함수나 나눗셈 연산 없이 단순한 선형 연산과 학습 가능 파라미터만으로 성능을 크게 향상시켰다. 또한 fast.ai 리더보드 4개 중 3개에서 성능 향상을 입증하며 실용성을 증명하였다.
 - **한계**: 학습 가능한 파라미터가 추가됨에 따라 학습 단계에서의 계산 시간이 일부 증가하는 병목 현상이 발생한다. 저자들은 향후 연구에서 이 계산 시간을 줄이는 것을 목표로 하고 있다.
 

@@ -25,13 +25,16 @@ StyleGAN과 StyleGAN2는 각 레이어에 독립적인 노이즈를 주입하여
 ## 🛠️ Methodology
 
 ### 1. Adversarial Dimension Trap의 정의
+
 생성기 $G: Z \to X$에서 생성된 매니폴드 $G^d_g$의 내재적 차원 $d_g$는 Jacobian 행렬 $J_z^G$의 Rank와 같다. 본 논문은 다음과 같은 정리를 제시한다.
 
 **Theorem 1**: 만약 $\text{rank}(J_z^G) < d_x$라면, 다음 두 경우 중 적어도 하나가 발생한다.
+
 1. $\sup_{z \in Z} \|J_z^G\| = \infty$ (그래디언트 폭주로 인한 불안정성)
 2. 생성기가 데이터 분포를 캡처하지 못하며, 임의의 점 $x \in X$에 대해 $G^{-1}(x) = \emptyset$일 확률이 1이다. 또한 Jensen-Shannon Divergence $D_{JS}(P_g, P_r) \ge \frac{\log 2}{2}$가 성립한다.
 
 ### 2. Riemannian Noise Injection (RNI) 프레임워크
+
 저자들은 생성기가 직접 고차원 매니폴드를 학습하는 대신, 저차원의 뼈대 $\mu(x)$를 학습하고 노이즈 $\epsilon$을 통해 주변 영역을 채우는 2단계 절차를 제안한다.
 
 $$g_k(x) = \mu_k(x) + \sigma_k(x)\epsilon, \quad \epsilon \sim \mathcal{N}(0, 1)$$
@@ -39,6 +42,7 @@ $$g_k(x) = \mu_k(x) + \sigma_k(x)\epsilon, \quad \epsilon \sim \mathcal{N}(0, 1)
 여기서 $\mu_k(x)$는 특징 공간의 중심점(Representative point)이고, $\sigma_k(x)$는 해당 지점의 국소적 기하 구조를 결정하는 가중치 행렬이다. 이는 리만 매니폴드에서 Exponential Map을 통해 접공간(Tangent Space)의 유클리드 볼을 매니폴드 위의 지오데식 볼(Geodesic Ball)로 사영하는 과정을 근사한 것이다.
 
 ### 3. $\sigma(x)$의 기하학적 구현 (Geometric Realization)
+
 $\sigma(x)$를 단순히 상수로 두지 않고, 특징 맵 $\mu$의 공간적/의미적 정보에서 유도한다.
 
 1. **의미적 식별자 추출**: 특징 맵 $\mu$의 채널 방향 합을 구하여 $\tilde{\mu}$를 생성한다.
@@ -54,11 +58,13 @@ $\sigma(x)$를 단순히 상수로 두지 않고, 특징 맵 $\mu$의 공간적/
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: FFHQ (얼굴), LSUN-Church (건물), CIFAR-10 (일반 객체)
 - **비교 대상**: Plain StyleGAN2, StyleGAN2 + ENI, DCGAN $\pm$ ENI/RNI
 - **지표**: PPL (Path Perceptual Length), FID (Fréchet Inception Distance), Condition Number (MC, TTMC)
 
 ### 2. 정량적 결과
+
 - **이미지 품질**: Table 1에 따르면, RNI는 FFHQ와 LSUN-Church 데이터셋 모두에서 ENI보다 우수한 PPL 및 FID 점수를 기록하였다. 특히 LSUN-Church와 같은 복잡한 씬 이미지에서 RNI의 성능 향상이 두드러졌는데, 이는 RNI가 생성기에 더 많은 자유도를 제공하여 실제 분포를 더 잘 맞추기 때문으로 분석된다.
 - **수치적 안정성**: Condition Number를 통해 네트워크의 민감도를 측정한 결과, RNI가 가장 낮은 MC(Mean Condition)와 TTMC(Top Thousand Mean Condition) 값을 보였다. 이는 RNI가 생성기의 수치적 안정성을 높여 학습 시 그래디언트 폭주 위험을 줄였음을 의미한다.
 - **GAN Inversion**: 이미지-잠재 공간 투영 능력을 평가한 결과, 정면 얼굴과 같은 쉬운 케이스에서는 차이가 적었으나, 큰 포즈 변화나 가려짐(Occlusion)이 있는 **Hard Cases**에서 RNI가 가장 낮은 MSE와 Perceptual Loss를 기록하며 압도적인 성능을 보였다.
@@ -68,10 +74,12 @@ $\sigma(x)$를 단순히 상수로 두지 않고, 특징 맵 $\mu$의 공간적/
 본 논문은 Noise Injection이 단순히 '무작위성'을 더하는 것이 아니라, 생성기가 도달하기 어려운 고차원 매니폴드의 빈 공간을 기하학적으로 메우는 역할을 한다는 점을 이론적으로 밝혀냈다.
 
 **강점 및 해석**:
+
 - **차원 함정 탈출**: $\text{rank}(J_z^G) < d_x$인 상황에서도 노이즈 주입을 통해 유효한 매니폴드를 근사함으로써 Adversarial Dimension Trap을 회피할 수 있음을 증명하였다.
 - **적응적 노이즈**: 모든 영역에 동일한 노이즈를 주는 대신, 이미지의 의미적 특성($\sigma(x)$)에 따라 노이즈의 강도와 방향을 조절함으로써 세부 디테일(머리카락, 배경 등)을 훨씬 정교하게 생성할 수 있게 되었다.
 
 **한계 및 논의**:
+
 - $\sigma(x)$를 유도하는 과정에서 사용된 채널 합 기반의 휴리스틱이 모든 도메인의 GAN 아키텍처에 보편적으로 적용 가능한지에 대해서는 추가 연구가 필요하다.
 - 본 논문은 리만 기하학적 근사를 통해 문제를 해결했으나, 실제 구현에서는 유클리드 공간에서의 연산으로 근사하여 처리하므로 이론과 실제 구현 사이의 오차(approximation error $o(r)$)가 존재한다.
 

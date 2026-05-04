@@ -4,7 +4,7 @@ Yuyang Jiang, Chacha Chen, Dang Nguyen, Benjamin M. Mervak, Chenhao Tan (2024)
 
 ## 🧩 Problem to Solve
 
-본 논문은 최신 대규모 멀티모달 모델(Large Multimodal Models, LMMs)인 GPT-4V 시리즈가 의료 분야, 특히 흉부 엑스레이(Chest X-ray, CXR) 판독 보고서 작성을 자동화할 수 있는지에 대해 체계적으로 평가하고자 한다. 
+본 논문은 최신 대규모 멀티모달 모델(Large Multimodal Models, LMMs)인 GPT-4V 시리즈가 의료 분야, 특히 흉부 엑스레이(Chest X-ray, CXR) 판독 보고서 작성을 자동화할 수 있는지에 대해 체계적으로 평가하고자 한다.
 
 의료 영상 판독 보고서 생성은 높은 전문성을 요구하는 고위험(high-stakes) 작업이며, 이를 자동화하는 것은 의료진의 업무 부하를 줄이고 진단의 일관성을 높이는 데 매우 중요하다. 기존의 일부 연구들은 GPT-4V가 일정 수준의 성능을 보인다고 주장했으나, 이는 소규모 샘플에 대한 정성적 분석이나 제한적인 지표에 의존한 경우가 많았다. 따라서 본 연구의 목표는 정량적 지표와 임상적 유효성(clinical efficacy)을 모두 포함한 엄격한 벤치마크를 통해 GPT-4V의 실제 능력을 검증하고, 만약 성능이 낮다면 그 근본적인 원인이 무엇인지 분석하는 것이다.
 
@@ -26,6 +26,7 @@ Yuyang Jiang, Chacha Chen, Dang Nguyen, Benjamin M. Mervak, Chenhao Tan (2024)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 실험 설계
+
 연구진은 GPT-4V의 능력을 다각도로 평가하기 위해 세 가지 실험을 설계하였다.
 
 1. **Experiment 1: 직접 보고서 생성 (Direct Report Generation)**
@@ -40,10 +41,12 @@ Yuyang Jiang, Chacha Chen, Dang Nguyen, Benjamin M. Mervak, Chenhao Tan (2024)
    - 영상 추론 단계를 건너뛰고, 정답 레이블(Groundtruth conditions)을 직접 입력으로 주었을 때 얼마나 수준 높은 보고서를 작성하는지 평가한다. 이를 통해 텍스트 생성 능력 자체의 한계를 측정한다.
 
 ### 평가 지표
+
 - **Lexical metrics**: BLEU-1, BLEU-4, ROUGE-L, METEOR 등을 사용하여 참조 보고서와의 텍스트 유사도를 측정한다.
 - **Clinical efficacy metrics**: CheXbert 자동 레이블러를 사용하여 14가지 조건에 대한 Positive F1 및 Negative F1을 측정하며, RadGraph F1을 통해 임상적 엔티티와 관계의 일치도를 평가한다. 또한, 추론 불가능한 정보를 생성하는 비율인 Hallucination metric을 측정한다.
 
 ### 주요 방정식 및 통계 분석
+
 모델이 영상을 의미 있게 해석하는지 확인하기 위해, 서로 다른 정답 조건 그룹 간의 레이블 분포가 동일하다는 귀무가설($H_0$)을 설정하고 $\chi^2$-test를 수행하였다. $\chi^2$ 통계량은 다음과 같이 계산된다.
 
 $$\chi^2 = \sum_{i} \sum_{j} \frac{(Y^{(j)}_i - E^{(j)}_i)^2}{E^{(j)}_i}$$
@@ -53,12 +56,15 @@ $$\chi^2 = \sum_{i} \sum_{j} \frac{(Y^{(j)}_i - E^{(j)}_i)^2}{E^{(j)}_i}$$
 ## 📊 Results
 
 ### 직접 보고서 생성 결과 (Exp 1)
+
 GPT-4V는 모든 프롬프팅 전략에서 SOTA(State-of-the-Art) 모델들에 비해 현저히 낮은 성능을 보였다. CoT 프롬프팅이 Positive F1-5 지표를 일부 향상시켰으나, SOTA와의 간극은 여전히 매우 컸다. Few-shot 프롬프팅은 텍스트의 형식을 흉내 내는 데는 도움이 되어 Lexical metrics는 소폭 상승했으나, 임상적 정확성은 개선되지 않았다.
 
 ### 의료 영상 추론 결과 (Exp 2)
+
 GPT-4V의 영상 추론 능력은 매우 낮게 나타났다. 통계 분석 결과, 정답 보고서의 레이블 분포는 그룹 간에 뚜렷한 차이를 보였으나($p < 1e-4$), GPT-4V가 생성한 레이블 분포는 정답 그룹이 무엇인지와 관계없이 거의 일정했다($p \approx 1.00$). 이는 GPT-4V가 흉부 엑스레이 이미지를 유의미하게 해석하는 것이 아니라, 사실상 무작위로 레이블을 할당하고 있음을 시사한다.
 
 ### 보고서 합성 및 인간 평가 결과 (Exp 3)
+
 정답 레이블을 직접 제공했을 때 Clinical accuracy는 크게 향상되었으나, Lexical metrics와 RadGraph F1은 여전히 낮았다. 특히 fine-tuned Llama-2 모델과 비교했을 때, GPT-4V는 보고서의 작성 스타일이 인간 전문의의 방식과 거리가 멀었다.
 
 방사선과 전문의 2명이 참여한 블라인드 테스트 결과, Llama-2는 50건 중 46건이 임상적으로 사용 가능하다고 평가된 반면, GPT-4V는 36건에 그쳤다. 특히 진단 정확도(Diagnostic Accuracy), 완전성(Completeness), 명료성(Clarity/Readability) 등의 Likert 척도 점수에서 GPT-4V는 Llama-2보다 낮은 점수를 기록하였다.

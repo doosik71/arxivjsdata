@@ -31,9 +31,11 @@ ThetaEvolve의 핵심 아이디어는 프로그램 진화 파이프라인을 하
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 ThetaEvolve는 프로그램 데이터베이스에서 부모 프로그램을 샘플링하고, LLM이 이를 수정하여 자식 프로그램을 생성하며, 검증기(Verifier)를 통해 점수를 측정하고 다시 데이터베이스에 저장하는 루프를 가진다.
 
 ### 2. 주요 구성 요소 및 최적화
+
 - **Single LLM & Large Database:** 앙상블 대신 단일 모델을 사용하며, 데이터베이스 크기를 10,000개로 대폭 확장하여 테스트 시간 연산이 증가함에 따라 더 다양한 후보군을 유지하도록 했다.
 - **Batch Sampling:** 매 단계에서 $B$개의 부모 프로그램을 샘플링하고, 각 프롬프트당 $n$개의 응답을 생성하여 총 $B \times n$개의 자식 프로그램을 한 번에 생성한다. 이는 vLLM이나 SGLang 같은 배치 추론 엔진을 활용하여 처리량을 극대화한다.
 - **Early Check & Lazy Penalty:** 불필요한 평가 비용을 줄이고 모델의 정체(Stagnation)를 막기 위해 다음과 같은 페널티 함수 $s(pp, r)$를 정의한다.
@@ -41,6 +43,7 @@ $$s(pp,r) = \begin{cases} -0.4, & \text{if no diff blocks found} \\ -0.3, & \tex
 특히, 데이터베이스에 이미 존재하는 프로그램과 동일한 출력을 내놓는 경우 'Lazy Penalty'를 부여하여 모델이 단순 반복이 아닌 실질적인 개선을 시도하도록 유도한다.
 
 ### 3. RL Reward Shaping (선택 사항)
+
 목적 함수의 값 범위가 너무 좁아 학습 신호가 약한 경우, 보상 함수 $R(s)$를 다음과 같이 정규화한다.
 $$R(s) = \begin{cases} s, & \text{if } s < 0 \text{ or disabled} \\ k \cdot F(s), & \text{otherwise} \end{cases}$$
 여기서 $F(s)$는 선형 매핑 $H(s)$를 기반으로 하며, $\alpha$ 계수를 통해 상위 점수에 더 공격적인 보상을 주는 구조이다.
@@ -49,16 +52,19 @@ $$H(s) = \begin{cases} (s - L)/(U - L), & \text{if maximizing} \\ (U - s)/(U - L
 ($L, U$는 목적 함수의 하한 및 상한값)
 
 ### 4. 학습 절차
+
 RL 알고리즘으로는 GRPO(Group Relative Policy Optimization)를 사용하며, 비대칭 클리핑(Asymmetric clipping)과 절단된 중요도 샘플링(Truncated importance sampling)을 적용하여 학습 안정성을 높였다.
 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **모델:** ProRL-1.5B-v2, DeepSeek-R1-0528-Qwen3-8B (Distill-Qwen3-8B).
 - **과제:** Circle Packing(CP), First/Second/Third Auto-correlation Inequality, Hadamard Matrix.
 - **지표:** 각 수학적 문제의 목적 함수 값(경계값).
 
 ### 2. 주요 결과
+
 - **SOTA 경신:** Distill-Qwen3-8B 모델은 Circle Packing과 First Auto-correlation Inequality에서 AlphaEvolve(Gemini-2.0-Flash/Pro 앙상블 사용)의 결과를 능가하는 새로운 최적값을 발견하였다. 특히 Circle Packing의 경우, ShinkaEvolve(Claude-sonnet-4 등 6개 모델 앙상블)가 75초 걸려 찾은 해를 단 3초 만에 동일하게 찾아냈다.
 - **RL의 효과:** 모든 과제에서 RL을 적용한 경우가 순수 추론(w/o RL)보다 일관되게 높은 성능을 보였다.
 - **능력의 내재화 및 전이:** Circle Packing 과제로 RL 학습을 시킨 체크포인트를 다른 과제(Hadamard Matrix 등)에 적용했을 때, 베이스 모델보다 훨씬 빠른 속도로 성능이 향상되었다. 이는 모델이 '최적화 프로그램을 진화시키는 일반적인 능력'을 학습했음을 시사한다.

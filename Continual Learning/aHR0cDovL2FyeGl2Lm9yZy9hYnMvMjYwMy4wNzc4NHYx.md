@@ -31,6 +31,7 @@ Jinzhou Tan, Gabriel Adineera, Jinoh Kim (2026)
 ## 🛠️ Methodology
 
 ### 1. Progress-Aware Reward as a Learned Potential Function
+
 ProgAgent는 전문가 비디오 $D_{expert}$를 사용하여 현재 상태가 목표 상태에 얼마나 근접했는지를 나타내는 진행도 비율 $\delta = |s_{curr} - s_{init}| / |s_{goal} - s_{init}|$를 예측하는 모델 $V_\phi$를 학습한다. 학습 손실 함수는 다음과 같이 KL divergence를 사용하여 정의된다.
 
 $$L_{expert}(\phi) = \mathbb{E}_{(s_i, s_j, s_k) \sim D_{expert}} [ D_{KL} ( \mathcal{N}(\delta, \sigma^2) || V_\phi(s_i, s_j, s_k) ) ]$$
@@ -42,6 +43,7 @@ $$r_t(s_t, s_{t-1}; \phi) = \gamma \Phi_\phi(s_t) - \Phi_\phi(s_{t-1})$$
 이 방식은 Ng 등이 제시한 보상 형성 이론에 따라 최적 정책의 불변성(Policy Invariance)을 보장하면서도, 희소한 보상 문제를 해결하고 전문가의 궤적을 따라가도록 가이드한다.
 
 ### 2. Adversarial Push-back Refinement
+
 온라인 탐색 중 에이전트가 전문가 데이터에 없는 생소한 상태에 도달했을 때, 보상 모델이 잘못된 높은 보상을 주는 것을 방지하기 위해 적대적 정제(Adversarial Push-back)를 수행한다. 비전문가 궤적 $D_{\pi_\theta}$에 대해서는 예측값을 낮은 신뢰도의 사전 분포 $\mathcal{N}(0, \sigma^2_{prior})$로 밀어낸다.
 
 $$L_{push}(\phi) = \mathbb{E}_{(s_i, s_j, s_k) \sim D_{\pi_\theta}} [ D_{KL} ( V_\phi(s_i, s_j, s_k) || \mathcal{N}(0, \sigma^2_{prior}) ) ]$$
@@ -50,6 +52,7 @@ $$L_{push}(\phi) = \mathbb{E}_{(s_i, s_j, s_k) \sim D_{\pi_\theta}} [ D_{KL} ( V
 $$L_{reward}(\phi) = L_{expert} + \beta L_{push}$$
 
 ### 3. JAX-Native Architecture & Unified Objective
+
 시스템적으로는 모든 시뮬레이션과 최적화 루프를 JAX의 JIT 컴파일러와 $vmap$을 통해 구현하여 수천 개의 환경에서 병렬 롤아웃을 수행한다.
 
 정책 $\pi_\theta$는 PPO를 기반으로 하며, 망각을 방지하기 위해 Coreset Replay와 Synaptic Intelligence(SI)를 통합한 단일 목적 함수를 최적화한다.
@@ -63,17 +66,19 @@ $$L_{SI} = \sum_k \Omega_k (\theta - \theta^*_k)^2$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: ContinualBench (button-press, door-open, window-close) 및 Meta-World.
 - **비교 대상**: OA (Online Agent), Perfect Memory (이상적 상한선), Coreset, SI, Fine-tuning, Rank2Reward, GAIL, TCN.
 - **지표**: 성공률(Success Rate), 평가 보상(Eval Reward), 평균 성능(Average Performance, AP), 후회도(Regret).
 
 ### 주요 결과
+
 - **정량적 성능**: ProgAgent는 ContinualBench의 모든 작업에서 모든 베이스라인을 압도하였다. 특히 놀라운 점은 모든 과거 데이터를 재학습하는 **Perfect Memory 에이전트보다 높은 성능**을 보였다는 것이다. 이는 단순한 메모리 용량보다 시스템적 효율성과 정교한 보상 설계가 더 중요함을 시사한다.
 - **학습 속도**: 학습 곡선 분석 결과, ProgAgent는 다른 방법론보다 훨씬 빠르게 높은 보상 값에 도달하는 높은 샘플 효율성(Sample Efficiency)을 보였다.
 - **정성적 분석**: 학습된 포텐셜 함수 $\Phi_\phi(s_t)$를 시각화했을 때, 전문가 및 성공 궤적에서는 단조 증가하는 매끄러운 곡선을 보인 반면, 실패 궤적에서는 값이 낮게 유지됨을 확인하였다. 이는 보상 모델이 단순한 시각적 특징 암기가 아닌 실제 작업 진행도를 정확히 파악하고 있음을 증명한다.
-- **Ablation Study**: 
-    - Push-back 제거 시: 분포 변화로 인해 보상 해킹이 발생하며 성능이 급격히 하락한다.
-    - CL Regularizers($L_{replay}, L_{SI}$) 제거 시: 새로운 작업은 빠르게 배우지만(가소성 $\uparrow$), 과거 작업 성능이 급락하는 치명적 망각(안정성 $\downarrow$)이 관찰되었다.
+- **Ablation Study**:
+  - Push-back 제거 시: 분포 변화로 인해 보상 해킹이 발생하며 성능이 급격히 하락한다.
+  - CL Regularizers($L_{replay}, L_{SI}$) 제거 시: 새로운 작업은 빠르게 배우지만(가소성 $\uparrow$), 과거 작업 성능이 급락하는 치명적 망각(안정성 $\downarrow$)이 관찰되었다.
 
 ## 🧠 Insights & Discussion
 
@@ -82,6 +87,7 @@ $$L_{SI} = \sum_k \Omega_k (\theta - \theta^*_k)^2$$
 단순히 망각 방지 알고리즘만 도입하거나 보상 모델만 개선해서는 한계가 있으며, JAX 기반의 고처리량 아키텍처를 통해 방대한 데이터를 병렬로 처리하고 복잡한 통합 손실 함수를 안정적으로 최적화함으로써 비로소 최적의 해를 찾을 수 있었다.
 
 **한계점 및 향후 과제**:
+
 - **전문가 데이터 의존성**: 제공된 전문가 비디오의 품질과 다양성이 낮을 경우, 포텐셜 함수가 잘못된 국소 최적점(local optima)으로 유도할 위험이 있다.
 - **Sim-to-Real Gap**: 시뮬레이션에서의 성공이 실제 로봇의 시각적 도메인 갭을 극복하고 그대로 전이될지는 여전히 과제로 남아 있다.
 - **하이퍼파라미터 튜닝**: $\beta, \lambda_1, \lambda_2$ 등 여러 계수를 수동으로 튜닝해야 하는 번거로움이 있으며, 향후 메타 학습을 통한 자동 튜닝이 필요하다.

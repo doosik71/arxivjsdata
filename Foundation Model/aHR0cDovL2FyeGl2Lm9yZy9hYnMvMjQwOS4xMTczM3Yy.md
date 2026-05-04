@@ -10,7 +10,7 @@ Kanishk Gandhi, Zoe Lynch, Jan-Philipp Fränken, Kayla Patterson, Sharon Wambu, 
 
 ## ✨ Key Contributions
 
-본 논문의 가장 중심적인 기여는 심리학의 Appraisal Theory(평가 이론)를 기반으로 정서적 인지를 체계적으로 측정할 수 있는 합성 데이터 생성 파이프라인을 제안한 점이다. 연구진은 상황(Outcome), 평가(Appraisal), 감정(Emotion), 표정(Expression) 사이의 인과 관계를 정의한 Causal Template을 설계하여, 모델이 각 변수 사이의 관계를 양방향으로 추론할 수 있는지 테스트하였다. 
+본 논문의 가장 중심적인 기여는 심리학의 Appraisal Theory(평가 이론)를 기반으로 정서적 인지를 체계적으로 측정할 수 있는 합성 데이터 생성 파이프라인을 제안한 점이다. 연구진은 상황(Outcome), 평가(Appraisal), 감정(Emotion), 표정(Expression) 사이의 인과 관계를 정의한 Causal Template을 설계하여, 모델이 각 변수 사이의 관계를 양방향으로 추론할 수 있는지 테스트하였다.
 
 특히, 단순한 텍스트 기반 평가를 넘어 FACS(Facial Action Coding System)를 활용해 생성한 시각적 표정 데이터를 결합한 멀티모달 평가를 수행함으로써, 모델이 시각적 정보와 상황적 맥락을 통합하여 정서적 추론을 수행할 수 있는지 검증하였다.
 
@@ -23,6 +23,7 @@ Kanishk Gandhi, Zoe Lynch, Jan-Philipp Fränken, Kayla Patterson, Sharon Wambu, 
 ## 🛠️ Methodology
 
 ### 1. 정서적 인지 생성 파이프라인 (Procedural Generation Pipeline)
+
 연구진은 정서적 추론을 테스트하기 위해 다음과 같은 3단계의 절차적 생성 방식을 사용한다.
 
 - **Stage 1: 추상적 인과 템플릿(Abstract Causal Template) 정의**: 심리학 이론에 근거하여 $\text{Outcome} \rightarrow \text{Appraisal} \rightarrow \text{Emotion} \rightarrow \text{Expression}$으로 이어지는 인과 그래프를 설계한다. 이때 Appraisal(평가)은 상황을 어떻게 해석하느냐에 따라 감정이 달라지는 핵심 변수로 작용한다.
@@ -30,28 +31,35 @@ Kanishk Gandhi, Zoe Lynch, Jan-Philipp Fränken, Kayla Patterson, Sharon Wambu, 
 - **Stage 3: 자극물(Stimuli) 구성**: 생성된 변수들의 조합을 통해 총 1,280개의 질문을 생성한다. 각 시나리오당 8가지 조합이 가능하며, 여기서 감정을 묻거나, 평가를 묻거나, 결과를 묻는 4가지 작업(Task)을 정의하여 질문을 구성한다.
 
 ### 2. 평가 차원 및 감정 매핑
+
 연구에서는 두 가지 주요 Appraisal 차원을 정의하였다.
+
 - **목표 일치성(Goal-congruence) $\times$ 통제력(Control)**: 이 조합에 따라 $\text{Joyful}, \text{Frustrated}, \text{Grateful}, \text{Disappointed}$ 등의 감정이 결정된다.
 - **안전성(Safety) $\times$ 예상 가능성(Expectedness)**: 이 조합에 따라 $\text{Relieved}, \text{Resigned}, \text{Surprised}, \text{Devastated}$ 등의 감정이 결정된다.
 
 ### 3. 멀티모달 데이터 통합
+
 텍스트 외에도 Unity 및 Unreal Engine을 사용하여 FACS 기반의 얼굴 표정 이미지를 생성하였다. 모델은 텍스트 시나리오와 함께 이 이미지를 제공받아, 표정 정보가 정서적 추론에 어떤 영향을 주는지 평가받는다.
 
 ### 4. 실험 설정
+
 - **대상 모델**: GPT-4-turbo, Claude-3-opus, Gemini-1.5-pro.
 - **프롬프팅 전략**: Zero-shot 및 Zero-shot Chain-of-Thought (CoT)를 적용하여 추론 과정의 유무에 따른 성능 차이를 분석하였다.
 
 ## 📊 Results
 
 ### 1. 데이터셋 검증 및 인간의 일치도
+
 567명의 인간 참가자를 통해 수집한 결과, 인간 간의 일치도(Interparticipant agreement)가 무작위 선택 확률보다 유의미하게 높게 나타나 데이터셋의 타당성이 검증되었다. 특히 결과 추론(Outcome inference)의 일치도는 최대 $91.67\%$에 달했다. 다만, 이론적 기반으로 생성된 초기 라벨보다 실제 인간들의 판단 일치도가 더 높게 나타나, 정서적 영역에서는 정규 이론보다 실제 인간의 판단을 Ground Truth로 사용해야 함을 확인하였다.
 
 ### 2. 모델의 성능 분석
+
 - **감정 추론**: 모델-인간 일치도는 전반적으로 인간 간의 일치도와 비슷하거나 이를 상회하였다. 특히 Claude-3-opus 모델에 CoT를 적용했을 때, 평균적인 인간의 판단보다 더 정확하게 모달 응답(modal human judgement)을 예측하는 '초인적(superhuman)' 성능을 보였다.
 - **결과 및 평가 추론**: 결과 추론 작업에서도 GPT-4-turbo와 Claude-3-opus는 높은 일치도를 보였으며, 일부 조건에서는 인간의 일치도를 넘어섰다. 그러나 '안전성(Safety)'과 같은 특정 Appraisal 차원을 추론하는 작업에서는 모델의 성능이 인간보다 낮게 나타났다.
 - **멀티모달 통합**: 표정 정보가 추가되었을 때 전반적으로 성능이 향상되었으나, 모델마다 차이가 있었다. GPT-4-turbo는 표정 정보를 잘 통합하여 결과를 추론했지만, Claude-3-opus는 특정 조건에서 표정 정보가 추가되었을 때 오히려 성능이 하락하는 모습을 보였다.
 
 ### 3. Chain-of-Thought (CoT)의 영향
+
 모든 모델에서 "단계별로 생각하라(think step-by-step)"는 CoT 프롬프팅을 적용했을 때 정서적 판단의 정확도가 유의미하게 상승하였다. 이는 모델의 일반적인 추론 능력이 향상됨에 따라 정서적 인지 능력 또한 함께 향상될 수 있음을 시사한다.
 
 ## 🧠 Insights & Discussion
@@ -59,6 +67,7 @@ Kanishk Gandhi, Zoe Lynch, Jan-Philipp Fränken, Kayla Patterson, Sharon Wambu, 
 본 연구는 파운데이션 모델이 단순한 패턴 매칭을 넘어, 인간의 정서적 인지 체계와 유사한 인과적 추론 능력을 획득했음을 보여준다. 특히 CoT를 통해 성능이 비약적으로 향상된다는 점은, 정서적 이해가 고도의 논리적 추론 과정과 밀접하게 연결되어 있음을 의미한다.
 
 **강점 및 한계**:
+
 - **강점**: 심리학 이론에 기반한 체계적인 벤치마크를 구축하여, 정서적 인지의 다양한 측면을 정량적으로 평가할 수 있는 프레임워크를 제시하였다.
 - **한계**: 사용된 시나리오의 수가 20개로 제한적이며, 다루어진 Appraisal 차원이 전체 정서 이론에 비해 일부에 불과하다는 점이 한계로 지적된다.
 

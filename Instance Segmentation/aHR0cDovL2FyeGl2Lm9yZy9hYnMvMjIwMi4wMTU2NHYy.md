@@ -26,8 +26,8 @@ Weizhen Liu, Qian He, Xuming He (2022)
 
 제안된 모델은 두 개의 메인 모듈인 **Semantic Proposal Network (SPN)**와 **Instance Encoding Network (IEN)**로 구성된다. 두 네트워크 모두 UNet과 유사한 아키텍처를 사용하며, 입력 이미지 $I \in \mathbb{R}^{H \times W \times 3}$를 공유하여 서로 다른 목적의 출력을 생성한다.
 
-1.  **SPN**: 입력 이미지로부터 전경(핵)과 배경을 구분하는 의미론적 확률 맵 $P \in [0, 1]^{H \times W}$를 생성한다.
-2.  **IEN**: 입력 이미지로부터 각 픽셀의 인스턴스 특성을 나타내는 임베딩 벡터 $F \in \mathbb{R}^{H \times W \times D}$를 생성한다. 이때 픽셀의 색상 정보뿐만 아니라 위치 정보가 중요하므로 CoordConv 레이어를 추가하여 좌표 정보를 함께 학습한다.
+1. **SPN**: 입력 이미지로부터 전경(핵)과 배경을 구분하는 의미론적 확률 맵 $P \in [0, 1]^{H \times W}$를 생성한다.
+2. **IEN**: 입력 이미지로부터 각 픽셀의 인스턴스 특성을 나타내는 임베딩 벡터 $F \in \mathbb{R}^{H \times W \times D}$를 생성한다. 이때 픽셀의 색상 정보뿐만 아니라 위치 정보가 중요하므로 CoordConv 레이어를 추가하여 좌표 정보를 함께 학습한다.
 
 **추론 절차**는 다음과 같다. 먼저 SPN의 출력 $P$에 낮은 임계값 $T_0$를 적용하여 전경 후보 마스크 $S$를 생성한다. 이후 $S$ 범위 내의 픽셀들에 대해 IEN이 생성한 임베딩 벡터 $F$를 추출하고, 이를 Mean-shift Clustering으로 그룹화하여 최종 인스턴스를 분리한다. 마지막으로 가장 연결 성분이 많은 배경 클러스터를 제거하여 결과를 도출한다.
 
@@ -36,14 +36,17 @@ Weizhen Liu, Qian He, Xuming He (2022)
 본 모델은 의미론적 표현과 인스턴스 표현을 순차적으로 학습하는 2단계 전략을 취한다.
 
 #### 1단계: SPN 학습
+
 포인트 어노테이션으로부터 의미론적 가짜 라벨을 생성하기 위해 **Adaptive k-means Clustering**과 **Voronoi Partition** 전략을 사용한다. 이미지마다 다른 색상 분포를 반영하기 위해 이미지별 표준편차 $\sigma_k$를 계산하여 RGB 값을 스케일링한 특성 벡터 $f_i = (d_i, \hat{r}_i, \hat{g}_i, \hat{b}_i)$를 사용한다. 여기서 $d_i$는 가장 가까운 포인트 라벨과의 거리이다. 이렇게 생성된 가짜 라벨을 바탕으로 Cross-entropy 손실 함수를 통해 SPN을 학습시킨다.
 
 #### 2단계: IEN 학습
+
 학습된 SPN의 출력과 Voronoi Partition을 결합하여 인스턴스 단위의 가짜 라벨을 생성한다. IEN은 이 라벨을 바탕으로 **Discriminative Loss** $\mathcal{L}_{dis}$를 통해 학습된다. 손실 함수는 다음과 같이 세 가지 항으로 구성된다.
 
 $$ \mathcal{L}_{dis} = \frac{1}{C} \mathcal{L}_{intra} + \frac{1}{C(C-1)} \mathcal{L}_{inter} + \frac{\gamma}{C} \sum_{c=1}^{C} ||\mu_c|| $$
 
 각 항의 상세 내용은 다음과 같다.
+
 - **$\mathcal{L}_{intra}$ (Intra-class term)**: 동일한 인스턴스 내의 모든 픽셀 임베딩 $x_i$를 해당 인스턴스의 평균 임베딩 $\mu_c$로 끌어당겨 응집력을 높인다.
 - $\mathcal{L}_{inter}$ **(Inter-class term)**: 서로 다른 인스턴스의 평균 임베딩들 사이의 거리를 멀게 밀어내어 구분 가능성을 높인다.
 - **Regularization term**: 모든 임베딩 벡터가 원점으로 과하게 쏠리거나 퍼지지 않도록 제어한다.
@@ -53,17 +56,21 @@ $$ \mathcal{L}_{dis} = \frac{1}{C} \mathcal{L}_{intra} + \frac{1}{C(C-1)} \mathc
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: MultiOrgan (30장, 다양한 장기, 약 21k 핵) 및 TNBC (50장, 삼중음성유방암, 약 4k 핵)
 - **평가 지표**: 픽셀 수준 지표인 $\text{IoU}$, $\text{F1-score}$와 객체 수준 지표인 $\text{Dice coefficient}$, $\text{AJI (Aggregated Jaccard Index)}$를 사용한다.
 - **비교 대상**: 기존의 약지도 학습 기반 SOTA 방법론들과 비교 분석하였다.
 
 ### 주요 결과
+
 10-fold 교차 검증 결과, 제안 방법은 두 데이터셋 모두에서 기존 방법들을 상회하는 성능을 보였다. 특히 MultiOrgan 데이터셋에서 $\text{IoU}$는 기존 베이스라인 대비 7.05%, $\text{AJI}$는 4.84% 향상되었다. TNBC 데이터셋에서도 $\text{AJI}$ 지표에서 3.45%의 성능 향상을 기록하였다.
 
 정성적 결과 분석(Fig. 2)을 통해, 제안 방법이 서로 붙어 있는 핵들을 효과적으로 분리해내며, 더 정확한 의미론적 전경 마스크를 생성함을 확인하였다.
 
 ### Ablation Study
+
 MultiOrgan의 공식 split 데이터를 통한 분석 결과는 다음과 같다.
+
 - **Adaptive k-means $\rightarrow$ SPN**: 기존 k-means 대비 $\text{IoU}$가 1.93% 향상되어, 더 정교한 의미론적 제안(Proposal)이 가능해졌음을 입증하였다.
 - **SPN $\rightarrow$ SPN+IEN**: $\text{Dice}$가 2.64%, $\text{AJI}$가 6.03% 향상되었다. 이는 인스턴스 표현 학습이 개별 객체 분리에 결정적인 역할을 함을 보여준다.
 - **Full Supervision 비교**: 정답 마스크로 학습시킨 완전 지도 학습 모델(Fully)과 비교했을 때 모든 지표에서 오차가 약 1% 내외로 매우 근소하였다. 이는 제안 방법이 매우 적은 양의 약지도 라벨만으로도 지도 학습에 근접한 성능을 낼 수 있음을 시사한다.

@@ -19,6 +19,7 @@ Zhenhuan Zhou (2025)
 ## 📎 Related Works
 
 기존의 의료 영상 분할 연구는 다음과 같은 흐름으로 진행되었다.
+
 - **CNN 기반:** U-Net과 그 변형 모델들이 국소 특징 추출 능력으로 정밀한 세부 묘사에 강점을 보였으나, 전역 문맥(Global Context) 모델링 능력이 부족하였다.
 - **Transformer 기반:** Self-attention 메커니즘을 통해 전역 의존성을 학습할 수 있게 되었으나, 고해상도 이미지 처리 시 연산 비용이 기하급수적으로 증가하는 문제가 발생하였다.
 - **Mamba 기반:** 선형 복잡도를 통해 Transformer의 비용 문제를 해결하려 했으나, 때때로 정확도 면에서 손실이 발생하는 경향이 있다.
@@ -27,7 +28,9 @@ Zhenhuan Zhou (2025)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 Med-URWKV는 U-Net의 대칭 구조를 따르는 순수 RWKV 기반 아키텍처이다. 전체 파이프라인은 크게 세 부분으로 구성된다.
+
 1. **Pre-trained VRWKV Encoder:** ImageNet-based 사전 학습된 VRWKV-Tiny 모델을 사용하여 계층적 특징 $\text{X}_i \in \mathbb{R}^{\frac{H}{2^{i+1}} \times \frac{W}{2^{i+1}} \times \text{Dims}}$를 추출한다.
 2. **RWKV Bottleneck Block:** 인코더의 최하단 출력 특징 $\text{X}_4$를 입력받아 추가적인 특징 추출 및 차원 축소를 수행하며, 인코더와 디코더를 연결하는 브릿지 역할을 한다.
 3. **VRWKV Decoder:** 보틀넥 층의 출력을 입력받아 점진적인 패치 확장(Patch Expanding) 및 특징 디코딩을 수행한다. 이때 인코더에서 추출된 계층적 특징들이 Skip Connection을 통해 통합된다.
@@ -35,6 +38,7 @@ Med-URWKV는 U-Net의 대칭 구조를 따르는 순수 RWKV 기반 아키텍처
 마지막으로 $1 \times 1$ Convolution 레이어로 구성된 Segmentation Head를 통해 최종 예측 맵 $\text{Y} \in \mathbb{N}^{H \times W \times n}$을 생성한다.
 
 ### VRWKV 블록 상세 및 방정식
+
 VRWKV 블록은 Spatial Mix 블록과 Channel Mix 블록(FFN 역할)으로 구성된다.
 
 **1. Spatial Mix 과정:**
@@ -54,6 +58,7 @@ $$ \text{O}_s = (\sigma(\text{R}_s) \odot \text{wkv})\text{W}_O $$
 여기서 $\sigma$는 sigmoid 함수이며, $\odot$은 원소별 곱셈(element-wise product)이다.
 
 ### 학습 절차
+
 - **사전 학습 모델:** ImageNet으로 학습되고 ADE20K로 미세 조정된 `supernet_vrwkv_adapter_tiny_512_160k_ade20k` 모델의 인코더 부분만 사용한다.
 - **학습 전략:** 초기 5 에포크 동안은 사전 학습된 인코더의 파라미터를 동결(Frozen)하여 디코더와 보틀넥 층이 빠르게 정렬되도록 한 뒤, 이후 모든 파라미터를 해제하여 전체 모델을 학습시킨다.
 - **손실 함수:** Cross-Entropy Loss와 Dice Loss를 결합하여 사용한다.
@@ -61,16 +66,20 @@ $$ \text{O}_s = (\sigma(\text{R}_s) \odot \text{wkv})\text{W}_O $$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** ISIC2017, ISIC2018(피부암), GLAS(병리), TDD(치과 X-ray), BUSI(유방 초음파), Kvasir-SEG(폴립), NKUT(사랑니) 등 총 7개의 공개 데이터셋을 사용하였다.
 - **평가 지표:** Dice Similarity Coefficient (DSC)와 Intersection over Union (IoU)를 사용하였다.
 - **하드웨어:** GeForce RTX 3090 24GB GPU에서 PyTorch로 구현하였다.
 
 ### 정량적 결과
+
 Table I에 따르면, Med-URWKV는 다수의 데이터셋에서 기존 CNN 기반(UNet, ACC-Unet) 및 ViT 기반(Swin-Unet, TransUNet) 모델보다 우수하거나 경쟁력 있는 성능을 보였다.
+
 - 특히, 처음부터 학습시킨 하이브리드 RWKV 모델인 Zig-RiR와 비교했을 때, 대부분의 지표에서 더 높은 성능을 기록하였다.
 - **파라미터 효율성:** Med-URWKV의 파라미터 수는 약 $14.33\text{M}$으로, TransUNet($92.23\text{M}$)이나 UCTransNet($66.40\text{M}$)보다 훨씬 적으면서도 동등 이상의 성능을 낸다.
 
 ### 사전 학습의 효과 (Ablation Study)
+
 BUSI 데이터셋을 대상으로 사전 학습 유무에 따른 성능을 비교한 결과, 사전 학습을 적용한 경우(w/ pre-training)가 적용하지 않은 경우(w/o pre-training)보다 DSC 기준 최종 성능이 월등히 높았다 ($\text{best: } 77.98$ vs $51.17$). 또한, 학습 초기 단계에서 수렴 속도가 훨씬 빠르고 안정적인 양상을 보였다.
 
 ## 🧠 Insights & Discussion

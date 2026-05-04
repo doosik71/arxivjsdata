@@ -24,18 +24,19 @@ Aitik Gupta, Joydip Dhar (2023)
 
 논문은 의료 영상 분할의 발전 과정을 세 단계로 나누어 설명한다.
 
-- **전통적 방법**: 
-    - **임계값 처리(Thresholding)**: 픽셀 강도를 기준으로 이진화하는 방법으로, 간단하지만 노이즈에 취약하다. Global, Adaptive, Otsu 방법 등이 있다.
-    - **군집화(Clustering)**: K-Means와 같이 픽셀 유사성을 바탕으로 영역을 나누는 방법이다. 초기 중심점 설정에 민감하며 최적의 분할을 보장하지 못한다.
-- **CNN 및 U-Net**: 
-    - **U-Net**: 인코더(수축 경로)와 디코더(확장 경로) 구조 및 Skip Connection을 도입하여 의료 영상 분할의 표준이 되었다.
-    - **Attention U-Net**: Attention Gate를 통해 중요 특징에 가중치를 부여하여 정확도를 높였으나 파라미터 수가 증가하는 단점이 있다.
-    - **MultiResUNet**: 다중 해상도 스케일을 사용하여 미세하고 거친 정보를 모두 포착하도록 설계되었으며 성능은 우수하지만 매우 무겁다.
+- **전통적 방법**:
+  - **임계값 처리(Thresholding)**: 픽셀 강도를 기준으로 이진화하는 방법으로, 간단하지만 노이즈에 취약하다. Global, Adaptive, Otsu 방법 등이 있다.
+  - **군집화(Clustering)**: K-Means와 같이 픽셀 유사성을 바탕으로 영역을 나누는 방법이다. 초기 중심점 설정에 민감하며 최적의 분할을 보장하지 못한다.
+- **CNN 및 U-Net**:
+  - **U-Net**: 인코더(수축 경로)와 디코더(확장 경로) 구조 및 Skip Connection을 도입하여 의료 영상 분할의 표준이 되었다.
+  - **Attention U-Net**: Attention Gate를 통해 중요 특징에 가중치를 부여하여 정확도를 높였으나 파라미터 수가 증가하는 단점이 있다.
+  - **MultiResUNet**: 다중 해상도 스케일을 사용하여 미세하고 거친 정보를 모두 포착하도록 설계되었으며 성능은 우수하지만 매우 무겁다.
 - **Residual Learning**: ResNet에서 제안된 잔차 연결(Residual Connection)은 입력값을 출력값에 더해줌으로써 매우 깊은 네트워크에서도 학습이 가능하게 하여 그라디언트 소실 문제를 해결하였다.
 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 제안된 아키텍처는 기본적으로 U-Net의 인코더-디코더 구조를 따르며, 각 구성 요소에 경량화 및 성능 향상 모듈을 결합하였다.
 
 1. **Encoder**: 여러 개의 밀집 연결 블록(Densely Connected Blocks)으로 구성된다. 각 블록은 Depthwise Separable Convolution, Batch Normalization, ReLU 활성화 함수를 포함하며, Residual Connection을 통해 다음 블록으로 연결된다.
@@ -46,14 +47,18 @@ Aitik Gupta, Joydip Dhar (2023)
 ### 주요 구성 요소 상세 설명
 
 #### 1. Depthwise Separable Convolutions
+
 표준 합성곱을 다음 두 단계로 나누어 수행함으로써 파라미터를 줄인다.
+
 - **Depthwise Convolution**: 각 입력 채널에 대해 개별적인 필터를 적용하여 공간적 특징을 추출한다.
 - **Pointwise Convolution**: $1 \times 1$ 필터를 사용하여 Depthwise 단계에서 생성된 채널들을 결합하고 출력 채널 수를 조정한다.
 
 #### 2. Soft Attention in Skip Connections
+
 단순히 특징을 복사하는 Skip Connection 대신, 가중치 함수를 통해 중요도를 조절하는 Soft Attention을 적용한다. 이는 이진 마스크를 사용하는 Hard Attention보다 더 세밀한 제어가 가능하며, 네트워크가 자동으로 어떤 특징을 결합할지 학습하게 한다.
 
 #### 3. 기본 CNN 블록 및 방정식
+
 각 블록은 Depthwise Separable Convolution $\rightarrow$ Group Normalization (GN) $\rightarrow$ LeakyReLU 순으로 구성된다. 특징 맵의 융합은 다음과 같은 수식으로 설명된다.
 
 $$x_0 = F_{conv 1\times 1}(x_{input})$$
@@ -66,17 +71,19 @@ $$x_i = F_{conv 3\times 3}(\text{SUM}(x_0; x_1; x_2; \dots; x_{i-1}))$$
 ## 📊 Results
 
 ### 실험 설정
-- **데이터셋**: 
-    - **HAM10000**: 피부 병변 이미지 데이터셋 (7개 클래스, 총 10,015장). 256x256 크기로 전처리 후 훈련(80%), 테스트(10%), 검증(10%)으로 분할하였다.
-    - **Thyroid Gland Dataset**: 갑상선 분할 데이터셋.
-- **평가 지표**: 
-    - **Dice Coefficient**: 예측과 정답의 겹침 정도를 측정. $\text{Dice} = \frac{2 \times TP}{2TP + FN + FP}$
-    - **IoU (Intersection over Union)**: 합집합 대비 교집합의 영역을 측정. $\text{IoU} = \frac{TP}{TP + FN + FP}$
-    - **ASSD (Average Symmetric Surface Distance)**: 예측 경계와 실제 경계 사이의 평균 거리를 측정하며, 값이 작을수록 정확하다.
+
+- **데이터셋**:
+  - **HAM10000**: 피부 병변 이미지 데이터셋 (7개 클래스, 총 10,015장). 256x256 크기로 전처리 후 훈련(80%), 테스트(10%), 검증(10%)으로 분할하였다.
+  - **Thyroid Gland Dataset**: 갑상선 분할 데이터셋.
+- **평가 지표**:
+  - **Dice Coefficient**: 예측과 정답의 겹침 정도를 측정. $\text{Dice} = \frac{2 \times TP}{2TP + FN + FP}$
+  - **IoU (Intersection over Union)**: 합집합 대비 교집합의 영역을 측정. $\text{IoU} = \frac{TP}{TP + FN + FP}$
+  - **ASSD (Average Symmetric Surface Distance)**: 예측 경계와 실제 경계 사이의 평균 거리를 측정하며, 값이 작을수록 정확하다.
 
 ### 정량적 결과 분석
 
 #### 1. 피부 병변 분할 (Skin Lesion Segmentation)
+
 | 접근 방식 | Accuracy | Dice Coefficient | 파라미터 수 |
 | :--- | :---: | :---: | :---: |
 | U-Net | 0.8777 | 0.8739 | 7.76M |
@@ -88,6 +95,7 @@ $$x_i = F_{conv 3\times 3}(\text{SUM}(x_0; x_1; x_2; \dots; x_{i-1}))$$
 - MultiResUNet보다는 수치적으로 낮지만, 파라미터 수를 약 **97%** 수준으로 획기적으로 줄이면서도 경쟁력 있는 성능을 유지하였다.
 
 #### 2. 갑상선 분할 (Thyroid Gland Segmentation)
+
 | 접근 방식 | Accuracy | Dice Coefficient | 파라미터 수 |
 | :--- | :---: | :---: | :---: |
 | U-Net | 0.9347 | 0.9332 | 7.76M |
@@ -98,6 +106,7 @@ $$x_i = F_{conv 3\times 3}(\text{SUM}(x_0; x_1; x_2; \dots; x_{i-1}))$$
 - 갑상선 분할에서는 MultiResUNet을 포함한 모든 비교 대상보다 높은 정확도($0.9766$)를 달성하였으며, 파라미터 효율성 또한 극도로 높다.
 
 #### 3. 소거 연구 (Ablation Study - 피부 병변 기준)
+
 - **U-Net + DC**: IoU 0.7164 / Dice 0.8232 / ASSD 1.6189
 - **U-Net + DC + RC**: IoU 0.7672 / Dice 0.8612 / ASSD 1.0833
 - **U-Net + DC + RC + Attention Pooling**: IoU 0.8157 / Dice 0.8872 / ASSD 0.8364
@@ -110,6 +119,7 @@ $$x_i = F_{conv 3\times 3}(\text{SUM}(x_0; x_1; x_2; \dots; x_{i-1}))$$
 특히 갑상선 분할 데이터셋에서 MultiResUNet보다 높은 정확도를 기록한 점은, 단순히 모델이 크다고 해서 항상 최적의 성능을 내는 것이 아니며, 적절한 Attention 메커니즘과 구조적 최적화가 더 중요하다는 것을 시사한다.
 
 다만, 몇 가지 한계점과 논의 사항이 존재한다.
+
 - **데이터셋 편향**: 피부 병변 데이터셋(HAM10000)의 경우 특정 클래스(NV)에 데이터가 매우 쏠려 있는 class imbalance 문제가 명시되어 있으나, 이를 해결하기 위한 손실 함수(예: Weighted Cross Entropy)나 샘플링 전략에 대한 설명이 부족하다.
 - **계산 복잡도 분석**: 파라미터 수는 줄었으나, 실제 추론 속도(Inference latency)나 FLOPs에 대한 정량적 비교 데이터가 제시되지 않아 실질적인 속도 향상 폭을 정확히 알 수 없다.
 

@@ -27,11 +27,13 @@ Gabriele Martino, Davide Moroni, Massimo Martinelli (2023)
 ## 🛠️ Methodology
 
 ### 1. 기본 Undercomplete Autoencoder
+
 표준 AE는 인코더 $g(x, \theta)$와 디코더 $f(z, \phi)$를 통해 입력 $x$를 복원하며, 평균 제곱 오차(MSE)를 최소화한다.
 $$\text{MSE}_{AE} = E[(x - f(g(x, \theta), \phi))^2]$$
 이 최적화의 결과는 모델이 항등 함수(identity function)를 학습하여 $f(g(x)) = x$가 되는 것이다.
 
 ### 2. In-Class distribution Random Sampling Training (ICRST)
+
 저자들은 입력 $x$와 복원 대상 $y$가 모두 동일한 클래스 $j$의 확률 분포 $p_j(x)$에서 독립적으로 샘플링되었다고 가정한다. 손실 함수는 다음과 같이 정의된다.
 $$L(x, \theta, \phi) = \arg \min_{\theta, \phi} E_{j \in [1, \dots, M]} \left[ E_{y \sim p_j(x), x \sim p_j(x)} [(y - f(g(x, \theta), \phi))^2] \right]$$
 
@@ -40,36 +42,42 @@ $$E_{x \sim p_j(x)} [f(g(x, \theta), \phi)] = \mu_j \quad \text{as } L \to 0$$
 결과적으로 이는 Latent Space 상에서 동일 클래스 샘플들을 하나의 중심점으로 수축시키는 효과를 가져온다.
 
 ### 3. Total Random Sampling Training (TRST)
+
 클래스 정보가 없을 때 사용하는 방법으로, 전체 데이터 분포 $p(x)$에서 무작위로 $x, y$를 추출하여 복원한다.
 $$L(x, \theta, \phi) = \arg \min_{\theta, \phi} E_{y \sim p(x), x \sim p(x)} [(y - f(g(x, \theta), \phi))^2]$$
 이는 모델이 데이터 간의 유사성을 스스로 파악하여 Latent Space를 자연스럽게 재배치하도록 유도하는 방식이다.
 
 ### 4. Manifold 관점의 해석
+
 저자들은 ICRST를 DAE의 극단적인 케이스로 해석한다. DAE가 가우시안 노이즈를 제거하여 매니폴드로 되돌리는 것이라면, ICRST는 '다른 샘플'이라는 거대한 노이즈를 제거하여 매니폴드를 클래스 평균값으로 수축시킨다. 이를 통해 데이터들 사이의 Diffeomorphism(미분동형사상)이 생성되어 더 분리 가능한 특징 벡터를 추출할 수 있게 된다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: MNIST, Fashion-MNIST, CIFAR-10, Caltech101, BreastCancer.
 - **비교 방법**: Standard AE $\leftrightarrow$ ICRST (하이퍼파라미터 $p$를 통해 표준 방식과 ICRST 방식을 확률적으로 혼합하여 실험).
 - **평가 지표**: Latent Space에서 추출한 특징을 이용하여 SVM, Random Forest, MLP, Gaussian Naive Bayes 분류기로 Accuracy 및 F1-Score 측정.
 
 ### 주요 결과
+
 1. **분류 성능 향상**: ICRST 방식은 모든 데이터셋에서 표준 AE보다 월등한 성능을 보였다. 특히 MLP 분류기 기준 MNIST의 경우 $0.85 \to 0.97$로, CIFAR-10은 $0.19 \to 0.41$로 정확도가 크게 상승하였다.
 2. **Latent Space 시각화**: t-SNE 투영 결과, $p=1.0$(완전한 ICRST)일 때 명시적인 정규화 항 없이도 클래스별 군집화가 매우 뚜렷하게 나타났다.
-3. **TRST 분석**: 
+3. **TRST 분석**:
    - MNIST, Fashion-MNIST와 같이 클래스 내 유사성이 높은 데이터에서는 TRST가 Standard AE보다 높은 Mutual Information(MI)을 보이며 성능이 향상되었다.
    - 하지만 CIFAR-10, Caltech101과 같이 복잡한 데이터셋에서는 TRST의 효과가 미미하거나 오히려 성능이 하락하였다. 이는 복잡한 데이터의 경우 단순한 랜덤 샘플링만으로는 유의미한 매니폴드 재배치가 어렵기 때문으로 분석된다.
 
 ## 🧠 Insights & Discussion
 
-본 논문은 Autoencoder를 학습시킬 때 '무엇을 복원하느냐'가 Latent Space의 기하학적 구조를 결정짓는 핵심 요소임을 보여준다. 
+본 논문은 Autoencoder를 학습시킬 때 '무엇을 복원하느냐'가 Latent Space의 기하학적 구조를 결정짓는 핵심 요소임을 보여준다.
 
 **강점**:
+
 - 매우 단순한 샘플링 방식의 변경만으로 복잡한 정규화 항(VAE의 KL-divergence 등) 없이도 Latent Space의 정규화 및 분리 가능성을 높였다.
 - 특징 추출기로서의 AE 성능을 비약적으로 향상시켜 후속 분류 작업의 효율성을 증명하였다.
 
 **한계 및 논의**:
+
 - TRST의 경우 데이터의 복잡도에 따라 결과가 극명하게 갈린다. 이는 데이터의 내재적 특성(inductive bias)이 부족할 때 단순 랜덤 샘플링이 오히려 혼란을 줄 수 있음을 시사한다.
 - 저자들은 복잡한 데이터셋에서 TRST의 성능을 높이기 위해 더 강력한 Bottleneck 구조가 필요할 것이라고 언급하였다.
 

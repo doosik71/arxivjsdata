@@ -4,7 +4,7 @@ Joe Watson, Sandy H. Huang, and Nicolas Heess (2023)
 
 ## 🧩 Problem to Solve
 
-본 논문은 모방 학습(Imitation Learning, IL)의 두 가지 주류 접근 방식인 행동 복제(Behavioral Cloning, BC)와 역강화학습(Inverse Reinforcement Learning, IRL) 사이의 간극을 메우고자 한다. 
+본 논문은 모방 학습(Imitation Learning, IL)의 두 가지 주류 접근 방식인 행동 복제(Behavioral Cloning, BC)와 역강화학습(Inverse Reinforcement Learning, IRL) 사이의 간극을 메우고자 한다.
 
 BC는 구현이 간단하지만, 평가 단계에서 훈련 데이터와 다른 상태에 진입했을 때 오류가 누적되는 **Covariate Shift** 문제에 취약하다. 반면, IRL은 보상 함수를 추론하여 이 문제를 해결하지만, 보상과 정책을 동시에 학습하는 과정이 복잡하며 특히 고차원 제어 문제에서 saddle-point 최적화의 불안정성과 하이퍼파라미터 민감도 문제가 발생한다.
 
@@ -68,11 +68,13 @@ CSIL의 전체 파이프라인은 다음과 같이 진행된다.
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋 및 작업**: MuJoCo Gym (Locomotion), Adroit (Dexterous Manipulation), Robomimic (Robot Manipulation)
 - **비교 대상**: BC, SQIL, DAC, IQ-Learn, PPIL, PWIL 등
 - **측정 지표**: 정규화된 Return (Expert=1, Random=0), 성공률(Success Rate)
 
 ### 2. 주요 결과
+
 - **Online Imitation (Gym & Adroit)**: CSIL은 거의 모든 환경에서 최신 SOTA 방법론들과 대등하거나 더 높은 성능을 보였다. 특히 고차원 제어 작업인 Adroit에서 saddle-point 최적화 기반 방법론들이 불안정하게 무너지는 반면, CSIL은 매우 안정적으로 수렴하며 BC 성능을 상회하였다.
 - **Offline Imitation (Gym)**: 오프라인 설정은 온라인보다 훨씬 어려웠으나, 전문가 데이터의 양이 증가함에 따라 CSIL의 성능이 꾸준히 향상되는 양상을 보였다.
 - **Image-based Tasks (Robomimic)**: 이미지 관측값을 사용하는 환경에서도 확장 가능함을 보였으며, 특히 `NutAssemblySquare` 작업에서 기존 BC 모델보다 높은 성공률을 기록하였다.
@@ -81,11 +83,13 @@ CSIL의 전체 파이프라인은 다음과 같이 진행된다.
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 - **안정성**: Adversarial 방식의 불안정성과 하이퍼파라미터 민감도 문제를 해결하였다. BC로 시작하여 RL로 끝내는 구조 덕분에 학습 초기 단계부터 높은 성능을 보장한다.
 - **일관성(Coherence)**: 정책 인버전을 통해 유도된 보상을 사용함으로써, RL 미세 조정 단계에서 BC의 성과를 'unlearning' 하지 않고 오히려 개선하는 구조를 구축하였다.
 - **확장성**: `HetStat` 구조와 Coherent Reward의 결합은 고차원 상태-행동 공간과 이미지 입력 환경에서도 효과적으로 작동함을 입증하였다.
 
 ### 한계 및 논의사항
+
 - **BC 의존성**: CSIL의 성능은 초기 BC 정책의 품질에 크게 의존한다. 실험 결과, 데이터가 매우 부족하거나 모델이 너무 복잡하여 BC 자체가 전혀 작동하지 않는 경우, CSIL 역시 해당 작업을 해결하지 못하는 경향이 있었다.
 - **보상 함수의 성격**: 본 방법론은 '진정한 보상(True Reward)'을 찾는 것이 아니라, 전문가 정책이 최적이 되도록 'shaping된 보상'을 찾는 것이다. 실무적으로는 충분하지만, 이론적인 보상 추론 관점에서는 한계가 있을 수 있다.
 - **향후 연구**: MLP를 넘어 RNN과 같은 순환 신경망이나 멀티모달 행동 분포를 가진 정책 클래스에 CSIL을 적용하여 하위 최적(sub-optimal) 인간 데이터에 대한 처리 능력을 높일 필요가 있다.

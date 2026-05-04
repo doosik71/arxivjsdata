@@ -26,6 +26,7 @@ Yiwen Qiu, Jialong Wu, Zhangjie Cao, Mingsheng Long (2022)
 본 논문은 전체 파이프라인을 두 단계(클러스터링 $\rightarrow$ 전이성 측정)로 구성하며, 최종적으로 가중치가 적용된 데이터를 사용하여 정책을 학습한다.
 
 ### 1. Sequence-based Contrastive Clustering
+
 시연 데이터 $\Xi$의 다봉 분포를 제거하기 위해, RNN 기반의 특징 추출기 $F$와 거리 측정법을 학습한다. 동일한 궤적에서 무작위로 추출된 두 개의 부분 궤적(Sub-trajectories)을 양성 쌍(Positive pair)으로, 서로 다른 궤적의 부분 궤적들을 음성 쌍(Negative pair)으로 설정하여 대조 학습을 수행한다.
 
 대조 학습 손실 함수 $L_{contrast}$는 다음과 같다.
@@ -35,6 +36,7 @@ $$L_{cluster} = L_{contrast} + \frac{\lambda}{2} \| F(\xi_{sub_n}) - Cy_n \|^2_2
 이를 통해 궤적들을 $K$개의 클러스터 $\Xi_k$로 분리하여 각 클러스터가 단봉 분포를 갖도록 유도한다.
 
 ### 2. Adversarial Transferability Measurement
+
 분리된 각 클러스터 $\Xi_k$에 대해 GAIL 기반의 적대적 학습을 수행한다. GAIL의 판별자 $D_k$는 입력된 상태 전이가 시연 데이터에서 왔는지, 아니면 모방자의 정책 $\pi_k$에서 왔는지를 구분한다.
 
 판별자의 손실 함수 $L_{tran}$은 다음과 같다.
@@ -43,6 +45,7 @@ $$L_{tran} = -\sum_{k=1}^{K} \left( \mathbb{E}_{(s^d_t, s^d_{t+1}) \sim \Xi_k} \
 $$w(s^d_t, s^d_{t+1}) = \sum_{k=1}^{K} I[(s^d_t, s^d_{t+1}) \in \Xi_k] D_k(s^d_t, s^d_{t+1})$$
 
 ### 3. Transferability-sampling Imitation Learning
+
 계산된 가중치 $w$를 정규화하여 샘플링 분포 $p_w$를 생성한다.
 $$p_w(s^d_t, s^d_{t+1}) = \frac{w(s^d_t, s^d_{t+1})}{\sum_{(s^{d'}_t, s^{d'}_{t+1}) \in \Xi} w(s^{d'}_t, s^{d'}_{t+1})}$$
 최종적으로 이 샘플링 분포 $p_w$를 사용하여 가중치가 적용된 GAIL 학습을 수행함으로써, 전이 가능한 데이터에 더 집중하여 정책 $\pi$를 학습한다.
@@ -51,12 +54,14 @@ $$L_{GAIL} = -\mathbb{E}_{(s^d_t, s^d_{t+1}) \sim p_w} \log(1 - D(s^d_t, s^d_{t+
 ## 📊 Results
 
 ### 실험 환경 및 설정
+
 - **MuJoCo**: HalfCheetah(다리 힘 조절), Hopper(중력 가속도 변경), Walker2d(발 마찰력 변경) 환경에서 각기 다른 다이내믹스를 가진 4명의 시연자를 설정하였다.
 - **Driving**: 차량의 속도와 장애물 너비를 다르게 설정하여 현실적인 다봉 분포를 모사하였다.
 - **Simulated Franka Panda Arm**: 로봇 팔의 특정 조인트(Joint)를 비활성화하여 서로 다른 물리적 능력을 가진 시연자와 모방자를 설정하였다.
 - **비교 대상**: Naive GAIL, ID-Random, ID-GAIL, f-MDP.
 
 ### 주요 결과
+
 - **정량적 성과**: 모든 환경에서 제안 방법이 가장 높은 기대 수익(Expected Return)을 달성하였다. 특히 다봉 분포가 심한 Driving과 Franka Panda 환경에서 타 베이스라인 대비 압도적인 성능 향상을 보였다.
 - **베이스라인 분석**: f-MDP는 다봉 분포 데이터에서 단봉 정책을 학습하려다 실패하였으며, ID(Inverse Dynamics) 기반 방식은 랜덤 궤적을 사용한 경우(ID-Random) 전이성 측정의 정확도가 매우 낮았다.
 - **Ablation Study**: 클러스터링을 제거한 경우($Ours\ w/o\ Cluster$)와 전이성 측정까지 제거한 경우($Ours\ w/o\ Cluster, Tran$) 모두 성능이 하락하였다. 이는 다봉 분포를 분해하는 클러스터링과 비전이성 데이터를 걸러내는 전이성 측정 모두가 필수적임을 입증한다.
@@ -66,6 +71,7 @@ $$L_{GAIL} = -\mathbb{E}_{(s^d_t, s^d_{t+1}) \sim p_w} \log(1 - D(s^d_t, s^d_{t+
 본 논문은 OOD-IL 문제에서 가장 큰 걸림돌인 **'데이터의 다봉성'**과 **'물리적 불가능성'**을 체계적으로 해결하였다. 특히 단순한 필터링이 아니라, 대조 학습을 통한 잠재 공간(Latent space) 구성 $\rightarrow$ 클러스터링 $\rightarrow$ 적대적 전이성 측정으로 이어지는 파이프라인을 통해 데이터의 질을 높인 점이 강점이다.
 
 **한계 및 논의사항:**
+
 1. **계산 비용**: 클러스터 수 $K$가 매우 많아질 경우, 각 클러스터마다 GAIL 모델을 학습시켜야 하므로 계산 비용이 증가한다. 저자는 이를 위해 메타 학습(Meta-learning)이나 사전 학습(Pre-training)의 가능성을 제시하였다.
 2. **안전성 문제**: 전이성을 측정하는 과정에서 모방자가 환경과 상호작용하며 탐색(Exploration)을 수행해야 하므로, 실제 물리 시스템에 적용할 때 안전 제약 조건을 준수하지 못할 위험이 있다.
 3. **최적성 가정**: 본 연구는 수집된 시연 데이터가 타겟 환경에서 최적(Optimal)이라는 가정을 하고 있으나, 실제로는 서브-옵티멀(Sub-optimal)한 데이터가 섞여 있을 가능성이 크다. 이는 향후 연구 과제로 남겨져 있다.

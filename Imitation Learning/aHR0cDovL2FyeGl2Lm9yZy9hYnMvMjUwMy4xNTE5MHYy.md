@@ -15,6 +15,7 @@ Mohamed Hassouna, Clara Holzhüter, Malte Lehna, Matthijs de Jong, Jan Viebahn, 
 본 논문의 핵심 아이디어는 전문가의 행동을 단일 정답으로 처리하는 대신, 시뮬레이션된 결과의 효과성을 바탕으로 확률 분포 형태의 Soft Label을 생성하여 학습시키는 것이다. 이를 통해 에이전트는 특정 상태에서 어떤 행동들이 유효한지에 대한 풍부한 감독 신호(Supervisory Signal)를 제공받게 된다.
 
 주요 기여 사항은 다음과 같다:
+
 1. **Soft-Label Imitation Learning 도입**: 다수의 유효한 위상 변경 행동을 학습 신호에 포함함으로써, 전문가의 하위 최적 결정에 대한 오버피팅을 방지하고 모델의 일반화 능력을 향상시켰다.
 2. **GNN 기반의 구조적 인코딩**: 전력망의 물리적 연결 구조를 반영하기 위해 GNN을 통합하여, 각 그리드 구성 요소의 문맥적으로 풍부한 표현(Representation)을 학습하고 의사결정 성능을 높였다.
 3. **성능 입증**: 제안 방법이 기존의 Hard-Label IL 모델뿐만 아니라 최신 심층 강화학습(DRL) 베이스라인, 그리고 학습의 대상이 된 Greedy Expert 에이전트보다도 뛰어난 성능을 보임을 입증하였다.
@@ -28,9 +29,11 @@ Mohamed Hassouna, Clara Holzhüter, Malte Lehna, Matthijs de Jong, Jan Viebahn, 
 ## 🛠️ Methodology
 
 ### 1. Greedy Expert ($\text{Greedy}_{90\%}$)
+
 학습 데이터 생성을 위한 전문가 에이전트로, 현재 상태에서 가능한 모든 위상 변경 행동을 시뮬레이션하고, 결과적으로 최대 선로 부하(Maximum Line Loading, $\rho^{\max}$)를 가장 낮게 만드는 행동을 선택하는 반응형 에이전트이다. $\rho^{\max}$가 90%를 초과할 때만 활성화된다.
 
 ### 2. Soft Labels 생성
+
 단일 최적 행동만을 저장하는 대신, 모든 가능한 행동 $a \in A$에 대해 효과성 점수(Effectiveness Score) $e_a$를 계산한다.
 $$e_a = 1 - \rho^{\max}(s, a)$$
 이 점수를 Temperature Softmax 함수에 적용하여 Soft Label $\Psi(a \mid s)$를 생성한다.
@@ -38,15 +41,18 @@ $$\Psi(a \mid s) = \frac{\exp(e_a / \tau)}{\sum_{a' \in A} \exp(e_{a'} / \tau)}$
 여기서 $\tau = 0.01$은 소프트맥스 분포를 날카롭게 만들어 효과적인 행동에 더 많은 확률 질량을 배분하기 위해 설정된 온도 파라미터이다. 이를 통해 모델은 행동 간의 상대적인 효과성을 학습하게 된다.
 
 ### 3. Graph-Based Encoding 및 GNN 아키텍처
+
 전력망을 그래프로 표현하여 각 구성 요소(부하, 발전기, 선로 끝단, 저장 장치)를 노드로, 물리적 연결을 에지로 정의한다.
+
 - **Graph Construction**: 노드 특성으로는 전압, 전력 주입량, 냉각 시간, 유지보수 정보 등이 포함된다. 선로의 특성(전력 흐름, 부하 등)은 해당 선로와 연결된 노드들에 직접 인코딩된다.
 - **Architecture**: Graph Attention Network (GAT)를 사용하여 인접 노드 간의 관계를 모델링한다.
-    - 4개의 GAT 레이어를 통해 노드 표현을 정제한다.
-    - Global Max Pooling을 통해 그래프 전체의 표현을 추출한다.
-    - 3개의 Linear 레이어를 거쳐 행동 공간 크기의 출력층으로 연결된다.
+  - 4개의 GAT 레이어를 통해 노드 표현을 정제한다.
+  - Global Max Pooling을 통해 그래프 전체의 표현을 추출한다.
+  - 3개의 Linear 레이어를 거쳐 행동 공간 크기의 출력층으로 연결된다.
 - **Loss Function**: 예측된 분포와 Soft Label 간의 차이를 최소화하기 위해 Kullback-Leibler Divergence ($\text{KLDivLoss}$)를 사용한다.
 
 ### 4. Agent 작동 메커니즘 및 최적화
+
 - **활성화 조건**: $\rho^{\max} > 90\%$인 응급 상황에서만 모델이 예측한 행동 순위대로 실행한다. $\rho^{\max} < 90\%$인 경우, 기본 위상으로 복구하는 Topology Reversion을 시도한다.
 - **Topology Reversion**: 모든 버스바 커플러를 닫아 기본 위상으로 되돌리는 작업으로, $\rho^{\max}$가 80%를 넘지 않는 안전한 범위 내에서 수행한다.
 - **Feasibility 개선**: 연결이 끊긴 선로에 대해 불필요한 버스 할당 시도를 제거하는 전처리 단계를 도입하여 행동의 실행 가능성(Feasibility)을 높였다.
@@ -55,11 +61,13 @@ $$\Psi(a \mid s) = \frac{\exp(e_a / \tau)}{\sum_{a' \in A} \exp(e_{a'} / \tau)}$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: IEEE 118-bus 송전 시스템 (WCCI 2022 환경, Grid2Op 플랫폼).
 - **비교 대상**: $\text{DoNothing}$, $\text{Greedy}_{90\%}$, $\text{HardFNN}_{90\%}$, $\text{HardGNN}_{90\%}$, $\text{SoftFNN}_{90\%}$, $\text{SoftGNN}_{90\%}$, 그리고 SOTA RL 에이전트인 $\text{Senior}_{95\%}$, $\text{TopoAgent}_{85-95\%}$.
 - **지표**: L2RPN Score (운영 비용 및 안정성 종합 점수), Median Survival Time, MSTCM (Median Survival Time across Chronic Medians).
 
 ### 주요 결과
+
 - **Soft Label의 효과**: $\text{SoftGNN}_{90\%}$는 동일한 구조의 $\text{HardGNN}_{90\%}$보다 L2RPN 점수가 약 15% 향상되었다. 이는 Hard Label이 전문가의 편향을 그대로 학습하는 반면, Soft Label은 더 일반적인 효과성을 학습하기 때문이다.
 - **GNN의 효과**: $\text{SoftGNN}_{90\%}$는 $\text{SoftFNN}_{90\%}$보다 우수한 성능을 보였으며, 이는 GNN이 전력망의 공간적 의존성과 물리적 구조를 효과적으로 캡처했음을 의미한다.
 - **SOTA 대비 성능**: $\text{SoftGNN}_{90\%} N-1$ 에이전트는 평균 L2RPN 점수 $44.43$과 MSTCM $1566$을 기록하며, 최신 RL 기반 에이전트들보다 더 높은 성능을 달성하였다. 특히 학습 대상이었던 $\text{Greedy}_{90\%}$ 전문가보다 17% 더 나은 성능을 보였다.

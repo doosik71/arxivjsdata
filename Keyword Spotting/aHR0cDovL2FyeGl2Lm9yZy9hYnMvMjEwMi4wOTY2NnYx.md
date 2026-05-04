@@ -23,15 +23,17 @@ Takuya Higuchi, Shreyas Saxena, Mehrez Souden, Tien Dung Tran, Masood Delfarah a
 ## 🛠️ Methodology
 
 ### 전체 구조 및 데이터 파라미터 정의
+
 본 논문은 DNN 기반의 음향 모델을 사용하며, 입력 데이터 $x^i_t$에 대해 모델 $f_\theta$가 Logits $z^i_t$를 출력한다. 여기서 $i$는 발화 인덱스, $t$는 시간 프레임, $\theta$는 모델 파라미터이다. 제안된 방법은 다음과 같은 두 가지 파라미터를 도입한다.
 
-1.  **Class Parameters ($\sigma^{class}$):** 타겟 클래스(예: 음소 상태)별로 정의되며, 클래스 수준의 난이도를 제어한다.
-2.  **Instance Parameters ($\sigma^{inst}$):** 개별 발화(Utterance)별로 정의되며, 샘플 수준의 난이도(예: 깨끗한 음성 vs 소음 음성)를 제어한다.
+1. **Class Parameters ($\sigma^{class}$):** 타겟 클래스(예: 음소 상태)별로 정의되며, 클래스 수준의 난이도를 제어한다.
+2. **Instance Parameters ($\sigma^{inst}$):** 개별 발화(Utterance)별로 정의되며, 샘플 수준의 난이도(예: 깨끗한 음성 vs 소음 음성)를 제어한다.
 
 최종적으로 사용되는 데이터 파라미터 $\sigma^*_{t,i}$는 위 두 파라미터의 합으로 정의된다.
 $$\sigma^*_{t,i} = \sigma^{class}_{y^i_t} + \sigma^{inst}_i$$
 
 ### 확률 계산 및 손실 함수
+
 데이터 파라미터는 Softmax 함수에 들어가기 전 Logits을 스케일링하는 데 사용된다. 타겟 클래스 $y^i_t$에 대한 확률 $p^i_{t,y^i_t}$는 다음과 같이 계산된다.
 $$p^i_{t,y^i_t} = \frac{\exp(z^i_{t,y^i_t} / \sigma^*_{t,i})}{\sum_{j} \exp(z^i_{t,j} / \sigma^*_{t,i})}$$
 
@@ -40,7 +42,9 @@ $$L = -\frac{1}{T^*} \sum_{t,i} \log(p^i_{t,y^i_t})$$
 이때 $\theta$뿐만 아니라 $\sigma^{class}$와 $\sigma^{inst}$ 또한 함께 최적화한다.
 
 ### 학습 절차 및 메커니즘
+
 데이터 파라미터의 최적화 메커니즘은 다음과 같다.
+
 - **Gradient Scaling:** Logits에 대한 손실 함수의 기울기는 $\sigma^*_{t,i}$에 의해 반비례하게 스케일링된다. 즉, $\sigma^*$ 값이 커질수록 해당 데이터 포인트가 모델 파라미터 $\theta$ 업데이트에 미치는 영향력이 줄어든다.
 - **Automatic Curriculum:** 모델이 특정 데이터를 잘못 분류하면 $\sigma^*$ 값이 점진적으로 증가하여 해당 샘플의 Gradient를 감쇠시킨다. 반대로 모델이 잘 분류하면 $\sigma^*$가 감소하여 최적화를 가속화한다. 결과적으로 모델은 초기에 쉬운 데이터를 먼저 학습하고, 어려운 데이터는 나중에 학습하게 된다.
 
@@ -49,19 +53,21 @@ $$L = -\frac{1}{T^*} \sum_{t,i} \log(p^i_{t,y^i_t})$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** 약 50만 개의 깨끗한 영어 발화와 100만 개의 소음 섞인 발화(household noise, BBC sound effect 등 사용, SNR -10dB ~ 10dB)를 사용하였다.
 - **모델 구조:** 64개 유닛을 가진 5층 Fully-connected Network를 사용하였으며, 입력으로는 13차원 MFCC(전후 9프레임 컨텍스트 포함, 총 247차원)를 사용하였다. 추론 단계에서는 DNN-HMM 구조를 통해 KWS 스코어를 산출한다.
 - **평가 지표:** 시간당 10회의 오경보(10 FA per hour)가 발생하는 동작 지점에서 False Reject Ratio(FRR, 오거부율)를 측정하였다.
 
 ### 주요 결과
-1.  **소음 데이터 학습 결과 (Table 3):**
+
+1. **소음 데이터 학습 결과 (Table 3):**
     - 단순히 소음 데이터만으로 학습한 Baseline 대비, Class와 Instance 파라미터를 모두 사용한 **Joint 설정에서 FRR이 상대적으로 7.7% 감소**하는 가장 높은 성능 향상을 보였다.
     - Class 파라미터만 사용했을 때(7.2% 향상)와 Instance 파라미터만 사용했을 때(4.1% 향상)보다 Joint 설정이 더 우수하였다.
 
-2.  **깨끗한 데이터 학습 결과 (Table 2):**
+2. **깨끗한 데이터 학습 결과 (Table 2):**
     - 깨끗한 데이터만 사용했을 때는 Class 파라미터(3.8% 향상)는 도움이 되었으나, Instance 파라미터를 적용하면 오히려 성능이 저하되는 경향을 보였다. 이는 깨끗한 데이터셋은 샘플 간 난이도 편차가 적어 Instance 파라미터가 불필요한 자유도를 제공함으로써 오버피팅을 유발했기 때문으로 분석된다.
 
-3.  **파라미터 분포 분석:**
+3. **파라미터 분포 분석:**
     - 학습 초기, 소음 섞인 발화의 $\sigma^{inst}$ 평균값이 깨끗한 발화보다 더 높게 형성되었다가 시간이 흐르며 점차 비슷해지는 양상을 보였다. 이는 모델이 초기에 깨끗한 샘플에 집중하고 이후 소음 샘플을 학습하는 Curriculum Learning이 실제로 수행되었음을 시사한다.
 
 ## 🧠 Insights & Discussion

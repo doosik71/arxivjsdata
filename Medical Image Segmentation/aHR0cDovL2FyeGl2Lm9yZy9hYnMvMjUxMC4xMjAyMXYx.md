@@ -15,6 +15,7 @@ Leili Barekatain and Ben Glocker (2025)
 ## 📎 Related Works
 
 논문은 기존의 ViT 설명 가능성 연구들이 가진 한계를 다음과 같이 지적한다.
+
 - **평가 지표의 부재:** 일부 연구(예: xViTCOS)는 설명 가능성을 정성적인 시각적 정렬(Visual alignment)에만 의존하여 평가했으며, 객관적인 정량적 지표를 제공하지 않았다.
 - **아키텍처 탐색의 부족:** 기존의 벤치마크 연구(예: Komorowski et al.)는 기본 ViT 모델의 미세 조정(Fine-tuning)에 국한되었으며, 다양한 ViT 아키텍처나 사전 학습 전략이 설명 가능성에 미치는 영향에 대해서는 충분히 탐구하지 않았다.
 
@@ -23,13 +24,16 @@ Leili Barekatain and Ben Glocker (2025)
 ## 🛠️ Methodology
 
 ### 1. 평가 대상 모델 (Architectures)
+
 본 연구에서는 다음 네 가지 모델을 사용하였다.
+
 - **ViT (Vision Transformer):** 이미지를 고정 크기의 패치로 나누어 선형 임베딩 후 Transformer Encoder를 통해 전역적 문맥을 캡처한다.
 - **DeiT (Data-efficient Image Transformer):** 증류 토큰(Distillation token)을 사용하여 CNN 교사 모델로부터 지식을 학습함으로써, 적은 데이터셋으로도 효율적인 학습이 가능하게 한다.
 - **DINO (Self-Distillation with No Labels):** 레이블 없이 교사-학생(Teacher-Student) 구조를 통한 자기 지도 학습(Self-supervised learning)을 수행하여 의미 있는 시각적 표현을 학습한다.
 - **Swin Transformer:** 계층적 특징 표현과 Shifted Window Attention을 도입하여 계산 복잡도를 줄이면서도 전역적 문맥을 모델링한다.
 
 ### 2. 설명 가능성 기법 (Explainability Techniques)
+
 모델의 결정 근거를 시각화하기 위해 두 가지 접근 방식을 사용하였다.
 
 **A. Attention-Based Method: Gradient Attention Rollout**
@@ -41,25 +45,31 @@ $$\text{rollout} = \hat{A}^{(1)} \cdot \hat{A}^{(2)} \cdot \dots \cdot \hat{A}^{
 Grad-CAM은 특정 레이어의 활성화 맵(Activation map)에 대해 타겟 클래스 점수의 그라디언트를 계산한다. 이 그라디언트를 평균 내어 중요도 가중치를 구하고, 이를 활성화 맵과 결합한 후 ReLU 함수를 적용하여 긍정적인 기여를 하는 영역만을 추출한다. 최종적으로 이를 입력 이미지 크기로 업샘플링하여 히트맵을 생성한다.
 
 ### 3. 실험 설정
+
 - **데이터셋:** 말초 혈액 세포(PBC) 분류(8개 클래스) 및 유방 초음파 이미지 분류(3개 클래스).
 - **학습:** 모든 이미지는 $224 \times 224$로 리사이징되었으며, PyTorch Transformers 라이브러리의 사전 학습된 모델을 미세 조정하였다.
 
 ## 📊 Results
 
 ### 1. 분류 성능 (Classification Performance)
+
 분류 정확도 면에서는 ViT와 Swin Transformer가 가장 우수한 성능을 보였다.
+
 - **PBC 데이터셋:** ViT (Accuracy: 98.68%, F1: 98.73%)가 가장 높았다.
 - **유방 초음파 데이터셋:** Swin (Accuracy: 89.74%, F1: 88.44%)가 가장 높았다.
 - DINO는 상대적으로 정확도가 낮게 나타났다 (PBC: 96.97%, 유방 초음파: 80.77%).
 
 ### 2. 정량적 설명 가능성 평가
+
 설명 맵의 충실도(Faithfulness)를 측정하기 위해 **Insertion**과 **Deletion** 지표를 사용하였다.
+
 - **Insertion AUC ($\uparrow$):** 중요도가 높은 픽셀부터 추가했을 때 예측 확률이 얼마나 빠르게 상승하는지를 측정한다.
 - **Deletion AUC ($\downarrow$):** 중요도가 높은 픽셀부터 제거했을 때 예측 확률이 얼마나 빠르게 하락하는지를 측정한다.
 
 **결과:** 모든 모델에서 **Grad-CAM**이 Gradient Attention Rollout보다 뛰어난 성능을 보였으며, 특히 **DINO** 모델이 Grad-CAM과 결합했을 때 두 데이터셋 모두에서 가장 좋은 AUC 점수를 기록하였다.
 
 ### 3. 정성적 분석 및 오류 분석
+
 - **시각적 정밀도:** Grad-CAM은 매우 집중적이고 해석 가능한 히트맵을 생성한 반면, Rollout은 배경 영역까지 포함하여 산만한 결과를 보였다.
 - **DINO의 우수성:** DINO + Grad-CAM 조합은 혈액 세포의 핵이나 유방 병변의 경계선 등 임상적으로 유의미한 형태학적 특징을 가장 정확하게 포착하였다.
 - **오류 분석:** 모델이 오분류한 사례에서도 Grad-CAM은 모델이 왜 착각했는지를 보여주었다. 예를 들어, Monocyte를 Immature Granulocyte로 오분류한 경우, 모델이 핵의 형태와 과립성을 오해하여 해당 영역에 강하게 반응했음을 확인하였다.

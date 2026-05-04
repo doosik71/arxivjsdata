@@ -21,14 +21,17 @@ KWS를 위한 기존 접근 방식은 크게 네 가지로 분류된다. 첫째,
 ## 🛠️ Methodology
 
 ### Search Space Design
+
 본 연구는 우수한 성능과 적은 메모리 점유율을 가진 TC-ResNet을 기반으로 탐색 공간을 설계하였다. 여기에 채널 간의 상호작용을 모델링하는 Squeeze-and-Excitation (SE) 모듈을 도입하여 성능을 높였다. 탐색 가능한 TC-ResNet-SE 블록의 구성 요소는 다음과 같다.
+
 - **커널 크기**: $\{3, 5, 7, 9\}$ 중 선택
 - **SE 모듈**: 활성화 여부 선택
 - **Skip connection**: 추가 여부 선택
 이러한 조합을 통해 전체 탐색 공간에는 약 $10^7$개의 모델이 존재하게 된다.
 
 ### Searching Algorithm
-효율적인 탐색을 위해 DARTS, FairDARTS, NoisyDARTS 세 가지 알고리즘을 사용한다. 
+
+효율적인 탐색을 위해 DARTS, FairDARTS, NoisyDARTS 세 가지 알고리즘을 사용한다.
 
 **1. DARTS (Differentiable Architecture Search)**
 각 레이어의 후보 연산 $o \in O$에 대해 구조적 가중치 $\alpha_o$를 할당하고, 이산적인 선택을 연속적인 형태로 완화한다. $i$번째 레이어의 출력 $x_j$는 다음과 같이 가중 합산으로 계산된다.
@@ -50,17 +53,20 @@ $$f_{skip}(x) = x + N(\mu, \beta)$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Google Speech Commands v1 및 v2를 사용하였으며, 10개의 키워드와 silence, unknown 클래스를 포함한 총 12개 클래스로 구성된다.
 - **입력 데이터**: 인간의 청각 특성과 유사한 40차원 MFCC를 사용하였다.
 - **지표**: Top-1 정확도, 파라미터 수, 연산량(multiply-adds)을 측정하였다.
 
 ### 정량적 결과
+
 실험 결과, NoisyDARTS-TC14 모델이 가장 우수한 성능을 보였다.
 
 - **V1 데이터셋**: NoisyDARTS-TC14는 약 $109\text{K}$개의 파라미터로 $97.2\%$의 최고 정확도를 달성하였다. 이는 기존의 NAS2 모델($886\text{K}$ 파라미터)보다 파라미터 수가 약 8배 적으면서도 대등하거나 더 높은 정확도를 보인 것이다.
 - **V2 데이터셋**: 데이터 양이 더 많은 V2에서는 NoisyDARTS-TC14가 $97.44\%$의 최고 정확도를 기록하며 인간이 설계한 baseline 모델들보다 안정적으로 우수한 성능을 보였다.
 
 ### 정성적 분석 및 ROC 곡선
+
 ROC 곡선 분석 결과, NoisyDARTS-TC14는 MHAtt-RNN과 유사한 수준의 성능을 보였으며, 파라미터 수를 늘린 TC-ResNet-365K보다 더 뛰어난 탐지 성능을 나타냈다. 이는 단순히 모델의 크기를 키우는 것보다 NAS를 통한 최적 구조 설계가 더 효율적임을 입증한다.
 
 ## 🧠 Insights & Discussion

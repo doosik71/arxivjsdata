@@ -29,6 +29,7 @@ Dominik Müller and Frank Kramer (Year not explicitly stated, references up to 2
 MIScnn은 데이터 I/O $\rightarrow$ 전처리 $\rightarrow$ 데이터 증강 $\rightarrow$ 배치 생성 $\rightarrow$ 모델 학습 및 예측 $\rightarrow$ 평가로 이어지는 파이프라인을 가진다.
 
 ### 1. 데이터 입력 및 전처리
+
 - **Data I/O**: 기본적으로 NIfTI 포맷을 지원하며, 다른 포맷을 위해 커스텀 I/O 인터페이스를 추가할 수 있다.
 - **Pixel Intensity Normalization**: 신호 강도의 일관성을 위해 $[0, 1]$ 또는 $[-1, 1]$ 범위로 스케일링하거나, Z-Score 정규화를 통해 표준 정규 분포 형태로 변환한다.
 - **Clipping**: 특정 장기나 조직에 특화된 픽셀 강도 범위를 설정하여 그 외의 값들을 최소/최대값으로 제한한다.
@@ -36,19 +37,23 @@ MIScnn은 데이터 I/O $\rightarrow$ 전처리 $\rightarrow$ 데이터 증강 $
 - **One Hot Encoding**: 다중 클래스 분할 문제의 경우, 각 클래스를 수학적으로 표현하기 위해 자동으로 One Hot 인코딩을 수행한다.
 
 ### 2. 분석 방식 및 데이터 증강
+
 - **Patch-wise Analysis**: 고해상도 3D 영상은 GPU 메모리 한계로 인해 전체를 올릴 수 없으므로, 영상을 작은 큐보이드(cuboid) 패치(예: $128 \times 128 \times 128$)로 나누어 분석한다.
 - **Data Augmentation**: `batchgenerators` 패키지를 통합하여 공간적 이동, 회전, 스케일링, 탄성 변형(elastic deformations), 밝기, 대비, 가우시안 노이즈 등의 증강 기법을 제공함으로써 적은 데이터셋에서의 과적합을 방지한다.
 
 ### 3. 배치 생성 및 관리
+
 - **Skipping Blank Patches**: 의료 영상의 특성상 배경(background)이 대부분을 차지한다. 학습 효율을 높이기 위해 배경으로만 구성된 패치는 학습 과정에서 제외한다.
 - **Batch Management**: 전처리가 완료된 배치를 디스크에 저장하여 반복적인 전처리 시간을 단축하며, 메모리 부족 시 "on-the-fly" 생성 방식을 지원한다.
 
 ### 4. 모델 아키텍처 및 학습
+
 - **Model Architecture**: Keras와 TensorFlow를 기반으로 하며, U-Net, Optimized High Resolution Dense-U-Net 등 최신 모델을 제공하고 커스텀 모델 추가가 가능하다.
 - **Loss Function**: 클래스 불균형 문제를 해결하기 위해 Tversky loss를 기본 학습 손실 함수로 사용한다. Tversky loss는 Precision과 Recall 사이의 트레이드-오프를 조절하여 불균형한 데이터에서도 강건한 성능을 낸다.
 - **Metrics**: Dice similarity index, Jaccard Index 등을 제공하며, 특히 클래스별 Dice 계수를 계산하여 불균형한 클래스에 대한 성능을 개별적으로 평가한다.
 
 ### 5. 추론 및 평가
+
 - **Prediction**: 모델은 각 픽셀에 대해 클래스별 Sigmoid 값(확률)을 예측하며, 다중 클래스의 경우 $\text{argmax}$를 통해 최종 클래스를 결정한다.
 - **Overlapping Patches**: 패치 경계에서의 예측력 저하를 막기 위해 중첩(overlap) 패치를 생성하며, 중첩된 영역의 픽셀값은 각 예측값의 평균(mean)을 계산하여 병합한다.
 - **Evaluation**: k-fold 교차 검증, Leave-one-out 교차 검증, 비율 기반 분할 검증 등 다양한 자동 평가 기법을 지원한다.
@@ -56,12 +61,14 @@ MIScnn은 데이터 I/O $\rightarrow$ 전처리 $\rightarrow$ 데이터 증강 $
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Kidney Tumor Segmentation Challenge 2019 (KiTS19) 데이터셋의 하위 집합(120개 CT 스캔)을 사용하였다.
 - **작업**: 배경, 신장(Kidney), 종양(Tumor)의 3개 클래스를 구분하는 다중 클래스 세그멘테이션이다.
 - **모델 및 설정**: 표준 3D U-Net 모델을 사용하였으며, 패치 크기는 $80 \times 160 \times 160$, 배치 크기는 2로 설정하였다. Z-Score 정규화와 $[-79, 304]$ 범위의 Clipping을 적용하였으며, Tversky loss를 사용하여 1000 에포크(epoch) 동안 학습하였다.
 - **하드웨어**: 2개의 Nvidia Quadro P6000 (총 48GB VRAM)을 사용하였으며, 3-fold 교차 검증에 총 58시간이 소요되었다.
 
 ### 정량적 결과
+
 3-fold 교차 검증 결과, 평균 지표는 다음과 같다.
 
 | Metric | Training | Validation |
@@ -74,6 +81,7 @@ MIScnn은 데이터 I/O $\rightarrow$ 전처리 $\rightarrow$ 데이터 증강 $
 | Dice (Tumor) | - | 0.6750 |
 
 ### 분석 결과
+
 - **신장(Kidney)** 분할의 경우 Median Dice 계수가 약 0.9544로 매우 강력한 성능을 보였다.
 - **종양(Tumor)** 분할의 경우 Median Dice 계수가 약 0.7912로 신장보다는 낮았으나, 기본 하이퍼파라미터와 표준 U-Net만 사용했음을 고려할 때 매우 인상적인 결과이다. 종양의 성능이 낮은 이유는 종양의 형태(morphology)가 매우 다양하기 때문인 것으로 분석된다.
 - 정성적 결과(시각화)에서도 예측된 세그멘테이션이 Ground Truth와 매우 유사함을 확인하였다.
@@ -81,12 +89,15 @@ MIScnn은 데이터 I/O $\rightarrow$ 전처리 $\rightarrow$ 데이터 증강 $
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 MIScnn은 복잡한 의료 영상 분할 파이프라인을 단순화하여, 도메인 전문가가 아닌 초보자도 몇 줄의 코드로 기능적인 파이프라인을 구축할 수 있게 한다. 특히 모델 간의 빠른 전환과 자동화된 평가 기능은 특정 모델의 우월성을 객관적으로 비교 분석하는 데 매우 유용하다.
 
 ### 한계 및 논의사항
+
 실험에서 사용된 데이터는 전체 KiTS19 데이터셋의 약 38%에 불과하며, 표준 U-Net만을 사용하였다. 저자들은 Dense U-Net과 같은 고해상도 특화 아키텍처를 사용했다면 더 높은 성능을 얻었을 것이라 추측하지만, 이는 GPU 메모리와 학습 시간 증가라는 비용이 따른다. 또한, 현재는 패치가 완전히 비어있는 경우만 제외하고 있는데, 이를 더 효율적인 패치 스킵 기법(예: denoising patch skipping)으로 발전시킬 필요가 있다.
 
 ### 비판적 해석
+
 본 논문은 새로운 딥러닝 알고리즘을 제안하는 것이 아니라, 기존의 검증된 도구들을 의료 영상 워크플로우에 맞게 통합한 '프레임워크'를 제안하는 것에 초점이 맞춰져 있다. 따라서 성능 수치 자체보다는 **"얼마나 쉽고 빠르게 표준화된 파이프라인을 구축할 수 있는가"**라는 사용성 측면에서의 기여가 더 크다고 볼 수 있다.
 
 ## 📌 TL;DR

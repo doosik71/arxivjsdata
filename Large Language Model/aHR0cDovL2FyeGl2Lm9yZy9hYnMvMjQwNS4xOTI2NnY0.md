@@ -27,12 +27,15 @@ Dingkang Yang, Jinjie Wei, Dongling Xiao, et al. (2024)
 ## 🛠️ Methodology
 
 ### 1. PedCorpus 데이터셋 구축
+
 PedCorpus는 세 가지 주요 의료 작업인 지식 질의응답(MedKQ&A), 근거 기반 진단(EviDiag), 치료 추천(TreRecom)을 수행할 수 있도록 설계되었다.
+
 - **소아과 전문 데이터**: 교과서, 가이드라인, 지식 그래프에서 데이터를 추출하고, GPT-4를 활용하여 '질문자'와 '전문 소아과 의사' 역할을 부여한 롤플레잉 기반의 지침을 생성하였다.
 - **실제 의사-환자 대화**: 실제 상담 데이터를 수집하고, GPT-4의 In-context learning을 통해 정제하여 의사답고 환자 친화적인 응답 스타일을 학습시켰다.
 - **증류된 의료 데이터셋**: 기존의 공개 벤치마크에서 고품질의 데이터를 샘플링하고, 점진적 지침 재구성 규칙(Progressive Instruction Reconstruction Rule)을 통해 논리적이고 정보량이 많은 응답으로 정제하였다.
 
 ### 2. 학습 파이프라인
+
 PediatricsGPT는 다음의 네 단계 과정을 통해 학습된다.
 
 **가. Continuous Pre-training (CPT)**
@@ -50,6 +53,7 @@ $$L_{DFPO}(\theta, D_{dfpo}) = - \mathbb{E}_{(x, y^w, y^l) \sim D_{dfpo}} \left[
 
 **라. Parameter-efficient SFT 및 Mixture of Universal-specific Experts (MUE)**
 마지막으로 LoRA를 활용하여 파라미터 효율적인 SFT를 수행한다. 이때 일반 지식과 소아과 전문 지식 간의 충돌을 막기 위해 **MUE** 전략을 사용한다.
+
 - **구조**: 여러 개의 특정 전문가(Specific Experts, $E_{s_j}$)와 하나의 보편적 전문가(Universal Expert, $E_u$)를 배치한다.
 - **라우팅 게이팅**: 입력 $x$에 대해 어떤 전문가를 활성화할지 결정하는 $G(x)$ 함수를 사용한다.
 $$G(x) = \text{Softmax}(xW_g + S(\phi(xW_n)))$$
@@ -59,26 +63,30 @@ $$z = \alpha_r \left( \sum_{j=1}^T G(x)_j E_{s_j}(x) + E_u(x) \right)$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **모델**: Baichuan2-Base (7B, 13B)를 기반으로 개발하였다.
 - **평가 벤치마크**: 소아과 작업(MedKQ&A, EviDiag, TreRecom)과 일반 의료 작업(CMD, webMedQA)을 모두 사용하였다.
 - **측정 지표**: ROUGE, BLEU, GLEU, Distinct 등의 정량적 지표와 함께 GPT-4 및 전문 의사의 정성적 평가(Win-rate)를 수행하였다.
 
 ### 2. 주요 결과
+
 - **정량적 성능**: PediatricsGPT-13B는 거의 모든 지표에서 기존 중국어 의료 LLM 및 베이스라인 모델들을 압도하였다. 특히 소아과 특화 작업에서 매우 높은 성능을 보였으며, GPT-3.5-turbo와 경쟁 가능한 수준에 도달하였다.
 - **GPT-4 및 의사 평가**:
-    - **MedKQ&A**: 지식 집약적인 CPT의 효과로 인해 타 모델 대비 매우 높은 승률을 기록하였다.
-    - **EviDiag & TreRecom**: 다회차 상담과 치료 추천 작업에서도 Zhongjing과 같은 SOTA 모델들을 상회하는 승률을 보였다.
-    - **전문가 평가**: 실제 의사들은 PediatricsGPT의 응답이 전문성, 사실성, 안전성 면에서 더 우수하다고 판단하였다.
+  - **MedKQ&A**: 지식 집약적인 CPT의 효과로 인해 타 모델 대비 매우 높은 승률을 기록하였다.
+  - **EviDiag & TreRecom**: 다회차 상담과 치료 추천 작업에서도 Zhongjing과 같은 SOTA 모델들을 상회하는 승률을 보였다.
+  - **전문가 평가**: 실제 의사들은 PediatricsGPT의 응답이 전문성, 사실성, 안전성 면에서 더 우수하다고 판단하였다.
 - **일반화 능력**: CMD와 webMedQA 벤치마크 결과, 소아과뿐만 아니라 산부인과, 내과 등 다양한 진료과에서도 우수한 성능을 보여 '의료 제너럴리스트'로서의 역량과 '소아과 전문가'로서의 역량을 동시에 확보했음을 입증하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. 강점 및 분석
+
 - **데이터 품질의 중요성**: 방대한 양의 데이터보다 정교하게 설계된 고품질의 지침 데이터(Instruction Data)가 모델 성능 향상에 더 결정적인 영향을 미친다는 것을 확인하였다.
 - **MUE 전략의 유효성**: 분석 결과, 특정 전문가(Specific Experts)들이 각각 다른 작업(예: Expert 1은 진단, Expert 2는 치료 추천)에 특화되어 활성화됨을 확인하였다. 또한 보편적 전문가(Universal Expert)가 일반 의료 지식을 유지함으로써 전문 지식 학습 시 발생하는 일반 능력 저하 문제를 해결하였다.
 - **DFPO의 효과**: 단순한 RLHF보다 가벼우면서도 안정적인 DFPO를 통해 의사다운 정중하고 인간 중심적인 응답 스타일을 효과적으로 학습시켰다.
 
 ### 2. 한계 및 향후 과제
+
 - **보안 리스크**: 온라인 배포 시 모델의 출력을 조작하려는 적대적 공격에 취약할 수 있으며, 이를 위한 다층 보안 체계 구축이 필요하다.
 - **언어 확장성**: 현재는 중국어 기반으로 구축되어 있어, 글로벌 적용을 위해서는 다국어 지원 학습이 필요하다.
 

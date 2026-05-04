@@ -12,10 +12,10 @@ Sucheng Ren, Xianhang Li, Haoqin Tu, Feng Wang, Fangxun Shu, Lei Zhang, Jieru Me
 
 본 논문의 핵심 아이디어는 Mamba의 단방향 재귀 구조(unidirectional recurrent structure)가 자기회귀 모델링의 특성과 완벽하게 일치한다는 점을 활용하는 것이다. 주요 기여 사항은 다음과 같다.
 
-1.  **ARM (Autoregressive Mamba) 제안**: Mamba 아키텍처에 최적화된 자기회귀 사전학습 프레임워크를 제안하여, 지도 학습 대비 높은 정확도와 강력한 확장성을 확보하였다.
-2.  **클러스터 기반 예측 단위(Cluster-based Prediction Unit)**: 단순히 픽셀이나 패치 단위로 예측하는 대신, 공간적으로 인접한 패치들을 그룹화한 '클러스터' 단위를 도입하여 학습 효율과 성능을 극대화하였다.
-3.  **MambaMLP 아키텍처 설계**: Mamba를 Token Mixer로, MLP를 Channel Mixer로 사용하는 새로운 블록 구조를 제안하였으며, 사전학습(단방향 스캔)과 미세조정(다방향 스캔) 단계에 따라 스캔 전략을 다르게 적용하여 효율성을 높였다.
-4.  **최대 규모의 Vision Mamba 구현**: ARM을 통해 지금까지 가장 큰 규모의 Vision Mamba 모델인 ARM-H를 성공적으로 훈련시켰으며, ImageNet에서 85.5%(384x384 입력 시)라는 최고 성능을 달성하였다.
+1. **ARM (Autoregressive Mamba) 제안**: Mamba 아키텍처에 최적화된 자기회귀 사전학습 프레임워크를 제안하여, 지도 학습 대비 높은 정확도와 강력한 확장성을 확보하였다.
+2. **클러스터 기반 예측 단위(Cluster-based Prediction Unit)**: 단순히 픽셀이나 패치 단위로 예측하는 대신, 공간적으로 인접한 패치들을 그룹화한 '클러스터' 단위를 도입하여 학습 효율과 성능을 극대화하였다.
+3. **MambaMLP 아키텍처 설계**: Mamba를 Token Mixer로, MLP를 Channel Mixer로 사용하는 새로운 블록 구조를 제안하였으며, 사전학습(단방향 스캔)과 미세조정(다방향 스캔) 단계에 따라 스캔 전략을 다르게 적용하여 효율성을 높였다.
+4. **최대 규모의 Vision Mamba 구현**: ARM을 통해 지금까지 가장 큰 규모의 Vision Mamba 모델인 ARM-H를 성공적으로 훈련시켰으며, ImageNet에서 85.5%(384x384 입력 시)라는 최고 성능을 달성하였다.
 
 ## 📎 Related Works
 
@@ -31,6 +31,7 @@ MAE와 같은 마스크 이미지 모델링(MIM)이나 대조 학습(Contrastive
 ## 🛠️ Methodology
 
 ### 1. Mamba 기초 이론
+
 Mamba는 연속적인 상태 공간 방정식에서 시작하며, 다음과 같은 선형 상미분 방정식(ODE)으로 정의된다.
 $$h'(t) = Ah(t) + Bx(t)$$
 $$y(t) = Ch(t)$$
@@ -40,8 +41,10 @@ $$y_t = \bar{C}h_t$$
 이 구조는 입력을 순차적으로 처리하므로, 다음 토큰을 예측하는 자기회귀 모델링의 단방향 특성과 정확히 일치한다.
 
 ### 2. 자기회귀 사전학습 (ARM)
+
 **예측 단위 (Prediction Unit)**
 이미지를 1D 시퀀스로 변환할 때, 저자들은 다음 세 가지 단위를 비교 분석하였다.
+
 - **Pixel-based**: 개별 픽셀을 예측. 연산량이 너무 많아 저해상도 이미지에서만 가능하다.
 - **Patch-based**: $16 \times 16$ 패치 단위로 예측.
 - **Cluster-based (제안)**: 인접한 패치들을 묶어 더 큰 클러스터($64 \times 64$ 크기가 최적)를 형성하여 예측 단위로 사용한다.
@@ -55,28 +58,36 @@ $$L^{ARM} = \sum_{i=1}^{n-1} \| f([c_1, \dots, c_i]) - c_{i+1} \|^2$$
 여기서 $f(\cdot)$는 Mamba 모델이며, 타겟은 정규화된 픽셀 값이다.
 
 ### 3. MambaMLP 아키텍처
+
 본 논문은 Transformer의 구조를 참고하여 **MambaMLP** 블록을 설계하였다.
+
 - **Token Mixer**: Mamba 레이어가 담당한다.
 - **Channel Mixer**: SwiGLU 기반의 MLP 레이어가 담당한다.
 
 특히 학습 단계에 따라 Mamba의 스캔 방식을 다르게 적용한다.
+
 - **사전학습 단계**: 자기회귀 특성에 맞춰 **1-scan (단방향)** 구조를 사용하여 훈련 속도를 극대화한다.
 - **미세조정(Finetuning) 단계**: 전역 정보를 더 잘 파악하기 위해 **4-scan (다방향)** 구조로 변경하여 성능을 높인다.
 
 ## 📊 Results
 
 ### 1. ImageNet-1K 성능 비교
+
 ARM은 다양한 모델 사이즈에서 지도 학습 기반 모델보다 우수한 성능을 보였다.
+
 - **Base-size**: ARM-B는 83.2%의 정확도를 달성하여, 지도 학습 기반의 MambaMLP-B(81.2%)보다 2.0% 높다.
 - **Huge-size**: ARM-H는 85.0% (입력 크기 $384 \times 384$ 시 85.5%)를 기록하며, 기존의 모든 Vision Mamba 변체들을 능가하였다. 특히 지도 학습 기반의 Vim-H는 이 규모에서 훈련 붕괴(collapsed)가 발생했으나, ARM은 성공적으로 학습되었다.
 
 ### 2. 강건성(Robustness) 및 일반화 능력
+
 Out-of-domain 데이터셋(ImageNet-A, R, S 등)에 대한 실험 결과, ARM은 지도 학습 모델보다 월등한 강건성을 보였다. 예를 들어 ARM-B는 Vim-B 대비 ImageNet-A에서 4.4%의 성능 향상을 보였다.
 
 ### 3. 효율성 분석
+
 사전학습 전략별 훈련 비용을 비교한 결과, ARM은 MAE나 대조 학습보다 훨씬 빠른 훈련 속도를 보였다. Base 모델 기준, ARM의 훈련 시간은 약 34시간으로, 다른 전략 대비 2배에서 10배까지 빠르다. 이는 Mamba의 단방향 재귀 구조를 그대로 활용했기 때문이다.
 
 ### 4. 어블레이션 연구 (Ablation Study)
+
 - **클러스터 크기**: $64 \times 64$ 크기의 클러스터를 사용할 때 성능이 가장 높았다.
 - **예측 순서**: 정해진 순서(Row/Column first) 간의 차이는 적었으나, 랜덤 순서(Random permutation)를 사용할 경우 성능이 크게 하락하였다.
 - **예측 타겟**: 정규화된 픽셀(Normed Pixel)을 MSE 손실로 학습하는 것이 dVAE의 이산 토큰을 사용하는 것보다 성능이 좋았다.

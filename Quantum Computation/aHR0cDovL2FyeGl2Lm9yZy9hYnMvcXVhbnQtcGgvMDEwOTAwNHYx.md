@@ -23,11 +23,14 @@ I.V. Volovich (2001)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 소인수분해를 위한 전체 프로세스는 다음과 같은 단계로 구성된다.
+
 1. 무작위 정수 $m$을 선택하고, 양자 알고리즘을 통해 $m$의 차수 $r$을 찾는다.
 2. $r$이 짝수이고 $m^{r/2} \not\equiv -1 \pmod N$인 경우, 유클리드 알고리즘을 통해 $\text{g.c.d.}(m^{r/2}-1, N)$과 $\text{g.c.d.}(m^{r/2}+1, N)$을 계산하여 $N$의 인수를 찾는다.
 
 ### 차수 찾기(Order Finding)의 양자 절차
+
 차수를 찾기 위한 양자 알고리즘은 다음의 5단계로 수행된다.
 
 1. **양자 상태 준비(Preparation of quantum state):** 첫 번째 레지스터를 모든 가능한 상태의 균일 중첩 상태로 만든다.
@@ -40,6 +43,7 @@ I.V. Volovich (2001)
 5. **고전적 계산(Classical computation):** 측정된 $c/q$ 값을 연분수 전개(Continued fraction expansion)를 통해 근사하여 차수 $r$을 도출한다.
 
 ### 주요 방정식 및 복잡도
+
 - **차수 찾기의 확률:** 정수 $d$가 $-\frac{r}{2} \leq rc - dq \leq \frac{r}{2}$를 만족할 때, 해당 상태가 측정될 확률 $P(c, m^k \pmod N)$은 최소 $\frac{1}{3r^2}$ 이상이다.
 - **계산 복잡도:** 전체 알고리즘의 양자 게이트 연산 횟수는 다음과 같이 다항 시간으로 수렴한다.
   $$O((\log N)^2 (\log \log N)(\log \log \log N))$$

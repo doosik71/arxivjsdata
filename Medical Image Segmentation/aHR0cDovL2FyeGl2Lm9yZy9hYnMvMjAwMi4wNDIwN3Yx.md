@@ -4,7 +4,7 @@ Ali Hatamizadeh, Demetri Terzopoulos, Andriy Myronenko (2020)
 
 ## 🧩 Problem to Solve
 
-본 논문은 의료 영상의 volumetric semantic segmentation에서 발생하는 부정확한 경계 획정(boundary delineation) 문제를 해결하고자 한다. 
+본 논문은 의료 영상의 volumetric semantic segmentation에서 발생하는 부정확한 경계 획정(boundary delineation) 문제를 해결하고자 한다.
 
 일반적인 Convolutional Neural Networks(CNNs)는 이미지 인식 과정에서 형태(shape) 정보보다는 질감(texture) 추상화에 편향되어 학습하는 경향이 있다. 의료 영상 분석에서 장기나 병변의 경계는 진단 및 치료 계획 수립에 매우 중요한 정보이며, 실제로 전문의들은 수동 분할 시 경계를 먼저 식별한 후 내부 영역을 채우는 방식을 사용한다. 그러나 기존의 CNN 아키텍처는 이러한 경계 정보를 충분히 활용하지 못하며, 이로 인해 예측 결과의 경계가 모호해지는 문제가 발생한다.
 
@@ -27,12 +27,15 @@ Ali Hatamizadeh, Demetri Terzopoulos, Andriy Myronenko (2020)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
-EG-CNN은 기존의 generic encoder-decoder 네트워크(Main stream)와 병렬로 동작하는 edge stream으로 구성된다. 
+
+EG-CNN은 기존의 generic encoder-decoder 네트워크(Main stream)와 병렬로 동작하는 edge stream으로 구성된다.
+
 1. **Main Stream**: 표준적인 encoder-decoder 구조를 통해 semantic segmentation을 수행한다.
 2. **Edge Stream (EG-CNN)**: Main stream의 각 해상도별 feature map을 입력받아 residual block과 edge-gated layer를 거치며 경계 정보를 추출한다.
 3. **Fusion**: 최종적으로 EG-CNN의 출력과 Main stream의 출력을 결합(concatenate)하여 최종 분할 맵을 생성한다.
 
 ### Edge-Gated Layer
+
 Edge-gated layer는 메인 스트림의 특징 맵과 에지 스트림의 특징 맵을 연결하여 경계 특징을 강조한다. 해상도 $r$에서 에지 스트림의 입력 $e_{r,in}$과 메인 스트림의 입력 $m_r$이 주어졌을 때, 먼저 $1 \times 1 \times 1$ convolution과 ReLU를 통해 attention map $\alpha_r$을 생성한다.
 
 $$\alpha_r = \sigma(\text{Re}(C_{1\times1\times1}(e_{r,in}) + C_{1\times1\times1}(m_r)))$$
@@ -42,6 +45,7 @@ $$\alpha_r = \sigma(\text{Re}(C_{1\times1\times1}(e_{r,in}) + C_{1\times1\times1
 $$e_{r,out} = e_{r,in} \odot \alpha_r + e_{r,in}$$
 
 ### 손실 함수 (Loss Functions)
+
 전체 학습 목표는 다음과 같은 세 가지 손실 함수의 합으로 정의된다.
 
 $$L_{Tot} = L_{Semantic} + L_{Consistency} + L_{Edge}$$
@@ -59,16 +63,19 @@ $$L_{Tot} = L_{Semantic} + L_{Consistency} + L_{Edge}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: BraTS 2019 (뇌종양 MRI, 335례), KiTS 2019 (신장 종양 CT, 300례)
 - **백본 네트워크**: U-Net, V-Net, Seg-Net
 - **평가 지표**: Dice score (BraTS는 WT, TC, ET 각 부위별 측정 / KiTS는 Kidneys, Tumor, Composite Dice 측정)
 - **구현**: Pytorch 기반, 8x NVIDIA Tesla V100 GPU 사용, Adam optimizer 적용
 
 ### 정량적 결과
+
 - **BraTS 2019**: 모든 백본 네트워크에서 EG-CNN을 추가했을 때 Dice score가 일관되게 상승하였다. 특히 Seg-Net에 EG-CNN을 적용했을 때 Average Dice가 $0.8300$에서 $0.8570$으로 크게 향상되었다.
 - **KiTS 2019**: 신장(Kidneys)과 종양(Tumor) 모두에서 성능 향상이 관찰되었으며, Seg-Net+EG-CNN 조합이 가장 높은 Composite Dice($0.9000$)를 기록하였다.
 
 ### 정성적 결과
+
 시각화 결과, EG-CNN을 적용한 모델이 단독 모델에 비해 훨씬 더 정교하고 선명한(crisp) 경계를 생성함을 확인하였다. 특히 일반적인 BCE loss 사용 시 발생하는 경계 두꺼워짐 현상이 억제되었으며, 복잡하고 불규칙한 뇌종양의 경계 표현 능력이 크게 개선되었다.
 
 ## 🧠 Insights & Discussion

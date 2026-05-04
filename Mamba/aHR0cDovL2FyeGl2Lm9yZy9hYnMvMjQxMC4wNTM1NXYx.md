@@ -21,16 +21,20 @@ Jingwei Zuo, Maksim Velikanov, Dhia Eddine Rhaiem, Ilyas Chahed, Younes Belkada,
 ## 🛠️ Methodology
 
 ### 전체 아키텍처
+
 Falcon Mamba 7B는 Mamba (Gu & Dao, 2023) 아키텍처를 기반으로 하며, Attention 레이어가 전혀 없는 순수 SSM 구조이다. 모델의 주요 파라미터는 다음과 같다.
+
 - **레이어 수**: 64개
 - **모델 차원 ($d_{model}$)**: 4096
 - **어휘 사전 크기 ($vocab\_size$)**: 65,024
 - **특이 사항**: 모델의 유연성을 높이기 위해 입력 임베딩과 출력 가중치를 분리(Untied)하여 학습하였다.
 
 ### 모델 안정화 기법
+
 학습 중 무작위로 발생하는 Loss Spike 현상을 해결하기 위해, B, C, $\Delta$ 파라미터 이후에 RMSNorm 레이어를 추가하였다. 이는 Mamba 아키텍처가 Transformer보다 학습률(Learning Rate)에 더 민감하다는 관찰 결과에 따른 조치이며, 이를 통해 학습 안정성을 확보하였다.
 
 ### 학습 절차 및 전략
+
 1. **최적화 및 스케줄링**:
    - Optimizer: AdamW ($\beta_1=0.9, \beta_2=0.95, \epsilon=10^{-8}, \text{weight decay}=0.1$)
    - LR Schedule: Warmup-Stable-Decay (WSD) 스케줄을 적용하였다.
@@ -50,13 +54,16 @@ Falcon Mamba 7B는 Mamba (Gu & Dao, 2023) 아키텍처를 기반으로 하며, A
 ## 📊 Results
 
 ### 벤치마크 성능
+
 Falcon Mamba 7B는 HF Leaderboard v1 및 v2의 다양한 지표에서 Transformer 기반 모델들과 대등하거나 상회하는 결과를 보였다.
+
 - **비교 대상**: Llama 3.1 8B, Mistral 7B, Falcon2 11B, RecurrentGemma 9B, RWKV-v6 Finch 7B/14B 등.
 - **정량적 결과**:
-    - **HF Leaderboard v1**: Llama 3.1 8B 및 Mistral 7B보다 높은 평균 성능을 기록하며, 특히 순수 SSM 모델 중에서는 최상위 성능을 보였다.
-    - **HF Leaderboard v2**: IFEval, MMLU-PRO 등에서 경쟁력 있는 수치를 기록하였으며, 특히 긴 문맥 추론 능력을 측정하는 MuSR 벤치마크에서 강점을 보였다.
+  - **HF Leaderboard v1**: Llama 3.1 8B 및 Mistral 7B보다 높은 평균 성능을 기록하며, 특히 순수 SSM 모델 중에서는 최상위 성능을 보였다.
+  - **HF Leaderboard v2**: IFEval, MMLU-PRO 등에서 경쟁력 있는 수치를 기록하였으며, 특히 긴 문맥 추론 능력을 측정하는 MuSR 벤치마크에서 강점을 보였다.
 
 ### 추론 효율성 및 메모리 분석
+
 - **메모리 사용량**: Transformer 모델은 문맥 길이가 길어질수록 KV 캐시로 인해 메모리 사용량이 선형적으로 증가하지만, Falcon Mamba 7B는 상태(State)만 저장하므로 생성 단계에서 메모리 사용량이 일정하게 유지된다.
 - **처리량 (Throughput)**: 생성 토큰 수가 130k까지 증가하더라도 처리 속도가 저하되지 않고 일정하게 유지됨을 확인하였다.
 - **Prefill 전략**: Parallel Prefill 방식에서는 메모리 제약이 존재하지만, Sequential Prefill 방식을 사용할 경우 이론적으로 무제한의 프롬프트 길이를 처리할 수 있음을 보였다.
@@ -66,6 +73,7 @@ Falcon Mamba 7B는 HF Leaderboard v1 및 v2의 다양한 지표에서 Transforme
 본 연구는 순수 Mamba 설계가 적절한 데이터 믹스처와 학습 전략(특히 WSD 스케줄과 Batch Scaling)이 뒷받침된다면, Attention 메커니즘 없이도 최신 Transformer 모델과 경쟁할 수 있음을 증명하였다. 이는 "Attention is all you need"라는 기존의 지배적인 패러다임에 도전하는 결과이다.
 
 **강점 및 한계**:
+
 - **강점**: 추론 시 메모리 비용이 일정하며, 극도로 긴 시퀀스 생성에서 압도적인 효율성을 가진다.
 - **한계**: Transformer에 비해 In-context Learning 능력이 다소 부족할 가능성이 제기되었으나, 고품질 CoT(Chain-of-Thought) 데이터와 정밀한 튜닝을 통해 이를 어느 정도 완화할 수 있음을 확인하였다.
 - **향후 과제**: 본 모델은 8k 문맥 길이로 학습되었으나, SSM의 잠재력을 완전히 활용하기 위해 초거대 문맥(Extra-large context)에 특화된 학습 전략과 검증이 필요하다.

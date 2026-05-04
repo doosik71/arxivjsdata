@@ -26,13 +26,15 @@ Fengwei Zhou, Bin Wu, Zhenguo Li (2018)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 Deep Meta-Learning (DEML) 프레임워크는 세 가지 주요 모듈로 구성된다.
 
-1.  **Concept Generator ($G$):** 입력 인스턴스에서 고차원 개념 표현을 추출하는 딥 뉴럴 네트워크이다. 본 논문에서는 ResNet-50을 사용하였다.
-2.  **Meta-learner ($M$):** $G$가 추출한 개념 공간 상에서 Few-shot learning을 수행하여 각 작업에 맞는 학습기 $f^T$를 생성한다.
-3.  **Concept Discriminator ($D$):** $G$가 생성한 표현을 입력받아 해당 개념의 레이블을 예측하는 모듈로, 외부 대규모 데이터셋을 통해 $G$의 표현 능력을 강화한다.
+1. **Concept Generator ($G$):** 입력 인스턴스에서 고차원 개념 표현을 추출하는 딥 뉴럴 네트워크이다. 본 논문에서는 ResNet-50을 사용하였다.
+2. **Meta-learner ($M$):** $G$가 추출한 개념 공간 상에서 Few-shot learning을 수행하여 각 작업에 맞는 학습기 $f^T$를 생성한다.
+3. **Concept Discriminator ($D$):** $G$가 생성한 표현을 입력받아 해당 개념의 레이블을 예측하는 모듈로, 외부 대규모 데이터셋을 통해 $G$의 표현 능력을 강화한다.
 
 ### 학습 목표 및 손실 함수
+
 전체 시스템은 Meta-learning 손실과 개념 판별 손실의 합을 최소화하는 방향으로 공동 학습된다. 최적화 문제는 다음과 같이 정의된다.
 
 $$\min_{\theta_G, \theta_M, \theta_D} \mathbb{E}_{T \sim p(T), (x,y) \sim \mathcal{D}} [J(L^T(\theta_M, \theta_G), L^{(x,y)}(\theta_D, \theta_G))]$$
@@ -48,24 +50,29 @@ $$\min_{\theta_G, \theta_M, \theta_D} \mathbb{E}_{T \sim p(T), (x,y) \sim \mathc
 $$\text{Total Loss} = L_{test(T)} + \lambda L_{discrimination}$$
 
 ### 학습 절차 (Meta-SGD 기준)
+
 본 논문은 Meta-SGD를 Meta-learner로 채택하여 구체적인 알고리즘을 제시한다.
-1.  **Task-specific adaptation:** 각 작업 $T_i$의 학습 셋 $\text{train}(T_i)$를 사용하여 학습기의 초기값 $\phi$를 업데이트한다.
+
+1. **Task-specific adaptation:** 각 작업 $T_i$의 학습 셋 $\text{train}(T_i)$를 사용하여 학습기의 초기값 $\phi$를 업데이트한다.
     $$\phi'_i = \phi - \alpha \circ \nabla_\phi L_{\text{train}(T_i)}(\phi, \theta_G)$$
-2.  **Meta-update:** 업데이트된 $\phi'_i$를 사용하여 테스트 셋에서의 손실 $L_{test(T_i)}$를 계산하고, 이를 개념 판별 손실과 합산하여 $\theta_G, \theta_D, \phi, \alpha$를 동시에 업데이트한다.
+2. **Meta-update:** 업데이트된 $\phi'_i$를 사용하여 테스트 셋에서의 손실 $L_{test(T_i)}$를 계산하고, 이를 개념 판별 손실과 합산하여 $\theta_G, \theta_D, \phi, \alpha$를 동시에 업데이트한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** 개념 판별을 위해 ImageNet-200(subset)을 사용하였고, Meta-learning 평가는 Mini-Imagenet, Caltech-256, CIFAR-100, CUB-200에서 수행하였다.
 - **비교 대상:** Matching Nets, MAML, Meta-SGD의 Vanilla 버전 및 이들의 구조를 DEML과 동일하게 깊게 만든 Deep 버전과 비교하였다. 또한, 사전 학습된 표현만 사용하는 Transfer Learning(Decaf+kNN, Decaf+Meta-SGD)과도 비교하였다.
 - **지표:** 5-way-1-shot 및 5-way-5-shot 정확도를 측정하였다.
 
 ### 주요 결과
+
 - **Vanilla vs DEML:** 모든 데이터셋과 Meta-learner 조합에서 DEML이 Vanilla 버전을 압도하였다. 예를 들어, CIFAR-100 5-way-1-shot에서 Meta-SGD는 $53.83\%$였으나, DEML+Meta-SGD는 $61.62\%$로 크게 향상되었다.
 - **Deep Vanilla vs DEML:** 단순히 네트워크를 깊게 만들고 데이터를 늘린 'Deep version'보다 DEML의 성능이 훨씬 높았다. 이는 성능 향상이 단순한 모델 용량 증가가 아니라, 개념 공간에서의 학습이라는 방법론적 차이에서 기인함을 입증한다.
 - **Transfer Learning vs DEML:** 사전 학습된 $G$를 고정하고 사용한 경우(Decaf+Meta-SGD)보다 $G, M, D$를 공동 학습시킨 DEML의 성능이 특히 CIFAR-100과 CUB-200 같은 도메인 차이가 큰 데이터셋에서 월등히 높았다.
 
 ### 하이퍼파라미터 $\lambda$ 분석
+
 $\lambda$ 값이 증가할수록 개념 판별 정확도는 계속 상승하지만, Few-shot 학습 정확도는 일정 수준까지 상승하다가 다시 하락하는 경향을 보였다. 이는 외부 지식(External knowledge)과 Meta-level 지식 사이의 적절한 균형이 필수적임을 시사한다.
 
 ## 🧠 Insights & Discussion

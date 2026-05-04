@@ -4,7 +4,7 @@ S. K. M Shadekul Islam, MD Abdullah Al Nasim, Ismail Hossain, Dr. Md Azim Ullah,
 
 ## 🧩 Problem to Solve
 
-본 논문은 현대 의료 진단 및 치료의 핵심 도구인 의료 영상 기법(Medical Imaging Modalities)에 대한 포괄적인 이해를 제공하는 것을 목표로 한다. 의료 영상은 인체 내부 구조의 시각적 표현을 통해 질병을 진단하고 치료 전략을 수립하며 치료 효능을 모니터링하는 데 필수적이다. 
+본 논문은 현대 의료 진단 및 치료의 핵심 도구인 의료 영상 기법(Medical Imaging Modalities)에 대한 포괄적인 이해를 제공하는 것을 목표로 한다. 의료 영상은 인체 내부 구조의 시각적 표현을 통해 질병을 진단하고 치료 전략을 수립하며 치료 효능을 모니터링하는 데 필수적이다.
 
 그러나 실제 임상 현장에서 방사선 전문의가 영상을 판독하고 해석하는 과정은 질병의 매우 높은 이질성(Heterogeneity)과 영상 품질 및 해상도의 제한으로 인해 매우 까다롭고 지루한 작업이 될 수 있다. 따라서 본 연구는 다양한 영상 기법의 기본 원리, 임상 적용, 장단점을 체계적으로 분석하여 의료진의 이해를 돕고, 최신 기술 및 데이터 마이닝 기법의 역할을 제시함으로써 환자 케어의 질과 의료 시스템의 효율성을 높이고자 한다.
 
@@ -32,7 +32,9 @@ S. K. M Shadekul Islam, MD Abdullah Al Nasim, Ismail Hossain, Dr. Md Azim Ullah,
 본 논문은 특정 알고리즘을 제안하는 연구가 아닌 **체계적 문헌 고찰(Systematic Review)** 논문이다. 따라서 방법론 섹션에서는 정보를 수집하고 분석한 절차를 기술하고 있다.
 
 ### 1. 분석 파이프라인
+
 연구진은 다음과 같은 5단계 절차를 통해 보고서를 작성하였다.
+
 - **대상 식별**: 분석할 주요 모달리티(X-ray, CT, MRI, Ultrasound, Nuclear medicine, EIT, Cardiovascular Imaging)를 선정한다.
 - **문헌 검색**: Google Scholar, PubMed, Scopus, Web of Science 등의 데이터베이스에서 핵심 키워드를 통해 관련 연구를 수집한다.
 - **품질 평가 및 추출**: 수집된 문헌 중 품질이 높고 관련성이 깊은 연구를 선정하여 작동 원리, 응용 분야, 한계점 등의 정보를 추출한다.
@@ -40,6 +42,7 @@ S. K. M Shadekul Islam, MD Abdullah Al Nasim, Ismail Hossain, Dr. Md Azim Ullah,
 - **참고문헌 정리**: Springer 인용 스타일을 따라 문헌을 정리한다.
 
 ### 2. 주요 모달리티별 작동 원리
+
 논문에서 설명하는 각 기법의 핵심 원리는 다음과 같다.
 
 - **X-ray**: 전자기 방사선이 신체를 통과할 때 밀도가 높은 조직(뼈)은 더 많이 흡수하여 영상에서 하얗게 나타나고, 연조직은 더 많이 통과하여 어둡게 나타나는 원리를 이용한다.
@@ -50,11 +53,12 @@ S. K. M Shadekul Islam, MD Abdullah Al Nasim, Ismail Hossain, Dr. Md Azim Ullah,
 - **EIT (Electrical Impedance Tomography)**: 피부 표면에 전극을 배치하고 미세 전류를 흘려 조직의 전기적 임피던스 변화를 측정함으로써 내부 구조(폐, 심장 등)를 영상화한다.
 
 ### 3. 특수 기법 및 데이터 마이닝
+
 - **Contrast-Enhanced MRI**: 가돌리늄 기반 조영제를 주입하여 타겟 조직의 $T1$ 이완 시간(relaxation time)을 단축시킴으로써 대조도를 높인다.
-- **Medical Imaging Data Mining**: 
-    - **CBIR (Content-based Image Retrieval)**: 색상, 질감, 모양 등의 특징을 이용하여 유사 영상을 검색한다.
-    - **Radiomics**: 수학적 알고리즘을 통해 인간의 눈으로 보이지 않는 정량적 특징을 추출한다.
-    - **NLP (Natural Language Processing)**: 방사선 판독 보고서와 같은 비정형 텍스트에서 정보를 추출한다.
+- **Medical Imaging Data Mining**:
+  - **CBIR (Content-based Image Retrieval)**: 색상, 질감, 모양 등의 특징을 이용하여 유사 영상을 검색한다.
+  - **Radiomics**: 수학적 알고리즘을 통해 인간의 눈으로 보이지 않는 정량적 특징을 추출한다.
+  - **NLP (Natural Language Processing)**: 방사선 판독 보고서와 같은 비정형 텍스트에서 정보를 추출한다.
 
 ## 📊 Results
 

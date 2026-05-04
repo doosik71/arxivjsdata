@@ -10,9 +10,9 @@ Rakesh Dhakshinamurthy (2021)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 기여는 IoT 환경에 최적화된 KWS를 위한 CNN 아키텍처 설계 아이디어에 있다. 
+본 논문의 핵심 기여는 IoT 환경에 최적화된 KWS를 위한 CNN 아키텍처 설계 아이디어에 있다.
 
-첫째, 연산량을 줄이기 위해 기존의 다층 convolutional 구조 대신 단일 convolutional layer를 사용하고, 시간 필터(time filter)가 전체 시간 영역을 포괄하도록 설계하여 곱셈 연산 횟수를 획기적으로 줄였다. 
+첫째, 연산량을 줄이기 위해 기존의 다층 convolutional 구조 대신 단일 convolutional layer를 사용하고, 시간 필터(time filter)가 전체 시간 영역을 포괄하도록 설계하여 곱셈 연산 횟수를 획기적으로 줄였다.
 
 둘째, 모델 크기를 줄이기 위해 파라미터 수를 $250\text{K}$ 이하로 제한하였다. 또한, 'Alexa'와 같이 일정 시간(50-100ms)에 걸쳐 발생하는 키워드의 특성을 고려하여, 단순한 pooling 대신 striding이나 pooling을 통한 시간축 서브샘플링(sub-sampling)을 적용하여 모델의 효율성과 정확도를 동시에 확보하고자 하였다.
 
@@ -25,22 +25,27 @@ Rakesh Dhakshinamurthy (2021)
 ## 🛠️ Methodology
 
 ### 전체 시스템 파이프라인
+
 KWS 시스템은 크게 세 단계의 파이프라인으로 구성된다.
+
 1. **Feature Extraction**: 10ms 프레임 시프트(frame shift)를 사용하여 25ms마다 40차원의 log-mel filterbank 특징을 추출한다. 이후 DNN 입력으로 사용하기 위해 현재 프레임을 중심으로 왼쪽 25프레임, 오른쪽 10프레임을 스택(stack)하여 입력 데이터를 구성한다.
 2. **Neural Network**: 추출된 특징을 입력으로 받아 키워드 존재 여부를 판별한다. (기존에는 3개의 은닉층을 가진 DNN을 사용했으나, 본 논문에서는 이를 최적화된 CNN으로 대체한다.)
 3. **Posterior Handling**: DNN에서 출력된 각 프레임의 사후 확률(posterior scores)을 결합하여 최종 점수를 산출한다.
 
 ### 제안하는 최적화 CNN 설계
+
 본 논문은 기존 CNN의 높은 연산 비용을 해결하기 위해 두 가지 전략을 제안한다.
 
 **1. 연산량(Multiplies) 제한 전략**
 전형적인 CNN은 여러 층의 convolutional layer와 max-pooling layer를 반복하여 연산량이 증가한다. 이를 해결하기 위해 다음과 같은 구조를 제안한다.
+
 - 단일 Convolutional Layer를 사용하며, 시간 필터가 전체 시간 범위를 포괄하도록 설정한다.
 - 이후 Linear low-rank layer와 두 개의 DNN layer를 순차적으로 배치한다.
 - 이러한 구조 변경을 통해 기존 CNN 대비 곱셈 연산 횟수를 약 10배 감소시킬 수 있다.
 
 **2. 모델 파라미터 제한 전략**
 모델의 크기를 $250\text{K}$ 파라미터로 제한하면서 성능을 유지하기 위해 입력 신호의 샘플링 방식을 최적화한다.
+
 - 키워드 인식 시 pooling을 과도하게 사용하면 정확도가 떨어질 수 있으나, 'Alexa'와 같이 비교적 긴 시간(50-100ms) 동안 발생하는 키워드의 경우 시간축에서의 striding이나 pooling을 통한 서브샘플링이 효과적이다.
 - 이를 통해 파라미터 수를 고정하면서도 입력 특징을 효율적으로 처리하여 모델의 자원 효율성을 높인다.
 

@@ -31,15 +31,19 @@ Qinghua Lu, Liming Zhu, Xiwei Xu, Zhenchang Xing, Jon Whittle (2024)
 ## 🛠️ Methodology
 
 ### 1. AI 시스템의 아키텍처 진화 (Architecture Evolution)
+
 논문은 FM 기반 시스템이 다음과 같은 세 단계를 거쳐 진화한다고 분석한다.
+
 - **현재 (Architecture now)**: 많은 수의 Narrow AI 모델과 Non-AI 컴포넌트가 상호작용하는 구조이다.
 - **5년 후 (FM-as-a-connector)**: 하나의 FM이 중심이 되어 다른 Narrow 모델이나 Non-AI 컴포넌트를 연결하는 커넥터 역할을 수행한다. (통신, 조정, 변환, 촉진 커넥터 기능 수행)
-- **10년 후 (Alternative 1 & 2)**: 
-    - **Alternative 1**: 소수의 FM들이 체인 형태로 연결된 모듈형 구조이며, Prompt Engineering이 핵심이 된다.
-    - **Alternative 2**: 모든 기능이 통합된 하나의 Ultra-large FM이 지배하는 단일 구조(Monolithic Architecture)로 진화한다.
+- **10년 후 (Alternative 1 & 2)**:
+  - **Alternative 1**: 소수의 FM들이 체인 형태로 연결된 모듈형 구조이며, Prompt Engineering이 핵심이 된다.
+  - **Alternative 2**: 모든 기능이 통합된 하나의 Ultra-large FM이 지배하는 단일 구조(Monolithic Architecture)로 진화한다.
 
 ### 2. 주요 설계 결정 사항 (Architectural Design Decisions)
+
 개발자가 FM 기반 시스템을 설계할 때 고려해야 할 7가지 결정 지점을 정의한다.
+
 - **FM 소싱**: 자체 개발(Sovereign), 외부 도입(External), 또는 외부 모델의 맞춤형 튜닝(Customized) 중 선택한다.
 - **구조 선택**: 모델 체인(Chain of FMs)을 통한 유지보수성 확보와 단일 거대 모델(Ultra-large FM)을 통한 성능 확보 사이의 트레이드오프를 결정한다.
 - **책임 분리**: 컴포넌트의 책임을 작게 쪼개어 FM에 흡수되더라도 영향도를 최소화하는 전략을 취한다.
@@ -49,10 +53,13 @@ Qinghua Lu, Liming Zhu, Xiwei Xu, Zhenchang Xing, Jon Whittle (2024)
 - **투명성 수준**: 사고 과정을 공개하는 'Think aloud'와 내부적으로 처리하는 'Think silently' 방식을 선택한다.
 
 ### 3. 패턴 지향적 참조 아키텍처 (Reference Architecture)
+
 제안하는 아키텍처는 세 개의 레이어로 구성된다.
 
 #### (1) 시스템 층 (System Layer)
+
 실제 배포된 시스템의 구성 요소이다.
+
 - **Interaction components**: 멀티모달 컨텍스트 엔지니어링과 Prompt Optimiser를 통해 사용자 의도를 파악하고 최적의 프롬프트를 생성한다.
 - **FMs**: 다양한 형태의 FM(Sovereign, External, Fine-tuned 등)이 배치된다.
 - **Adaptability Patterns**: FM에 의한 기능 흡수 문제(Moving boundary)를 해결하기 위해 **Microkernel 패턴**과 **Adapter 패턴**을 적용하여 구성 요소 간의 결합도를 낮춘다.
@@ -60,13 +67,17 @@ Qinghua Lu, Liming Zhu, Xiwei Xu, Zhenchang Xing, Jon Whittle (2024)
 - **Data**: RAG(Retrieval Augmented Generation)를 위한 벡터 데이터베이스와 기밀 유지를 위한 Federated RAG를 포함한다.
 
 #### (2) 운영 층 (Operation Layer)
+
 책임감 있는 AI를 위한 모니터링 및 관리 도구이다.
+
 - **Verifier & Guardrails**: 전처리, 중간 처리, 후처리 단계에서 입력과 출력의 신뢰성을 검증하고 유해한 콘텐츠를 필터링한다.
 - **Continuous Risk Assessor**: 실시간으로 AI 리스크 메트릭을 모니터링하여 위험을 평가하고 프롬프트를 수정하거나 거절한다.
 - **AgentOps**: 모든 입력, 출력 및 중간 단계 데이터를 기록하는 로그 저장소로, 추적 가능성(Traceability)을 보장한다.
 
 #### (3) 공급망 층 (Supply Chain Layer)
+
 AI 컴포넌트의 개발 및 조달 과정이다.
+
 - **Training/Tuning**: RLHF(Reinforcement Learning from Human Feedback)와 LoRA와 같은 매개변수 효율적 미세 조정(PEFT) 기술을 통해 모델의 성능과 책임감을 높인다.
 - **Registry**: 도구/모델 레지스트리와 AIBOM(AI Bill of Materials) 레지스트리를 통해 공급망의 투명성을 확보하고, 검증된 컴포넌트만 사용하도록 제어한다.
 - **Co-versioning**: 모델, 데이터셋, 아티팩트 간의 버전을 함께 관리하여 감사 가능성(Auditability)을 높인다.
@@ -77,9 +88,9 @@ AI 컴포넌트의 개발 및 조달 과정이다.
 
 - **대상 시스템**: 과학자들이 AI 프로젝트의 잠재적 리스크를 평가할 수 있도록 돕는 챗봇.
 - **매핑 결과**:
-    - **System Layer**: GPT-4(External FM) 사용, LlamaIndex를 통한 RAG 구현, Think-aloud 패턴 적용, 다중 에이전트 구성.
-    - **Operation Layer**: 인간 전문가에 의한 Verifier 패턴 구현, 블랙박스 기록 장치를 통한 데이터 캡처.
-    - **Supply Chain Layer**: AIBOM 레지스트리 구축 및 FM 미세 조정 논의 단계.
+  - **System Layer**: GPT-4(External FM) 사용, LlamaIndex를 통한 RAG 구현, Think-aloud 패턴 적용, 다중 에이전트 구성.
+  - **Operation Layer**: 인간 전문가에 의한 Verifier 패턴 구현, 블랙박스 기록 장치를 통한 데이터 캡처.
+  - **Supply Chain Layer**: AIBOM 레지스트리 구축 및 FM 미세 조정 논의 단계.
 
 실험 결과, RAI 챗봇의 모든 구성 요소가 제안된 참조 아키텍처의 레이어 및 패턴과 성공적으로 매핑되었으며, 이를 통해 본 아키텍처가 FM 기반 시스템의 설계 지침으로서 완전하고 사용 가능하다는 것을 입증하였다.
 

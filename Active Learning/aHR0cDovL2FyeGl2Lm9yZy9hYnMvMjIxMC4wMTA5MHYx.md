@@ -10,7 +10,7 @@ Kleanthis Malialis, Christos G. Panayiotou, Marios M. Polycarpou (2022)
 
 ## ✨ Key Contributions
 
-본 논문은 위의 문제들을 해결하기 위해 **Online Active Learning**, **Siamese Neural Networks**, 그리고 **Multi-queue Memory**를 유기적으로 결합한 **ActiSiamese** 알고리즘을 제안한다. 
+본 논문은 위의 문제들을 해결하기 위해 **Online Active Learning**, **Siamese Neural Networks**, 그리고 **Multi-queue Memory**를 유기적으로 결합한 **ActiSiamese** 알고리즘을 제안한다.
 
 핵심적인 설계 아이디어는 기존의 Active Learning이 주로 불확실성(Uncertainty)에 기반하여 라벨을 요청했던 것과 달리, **Latent Space(잠재 공간)에서의 유사도(Similarity) 기반 밀도 샘플링 전략**을 도입한 것이다. Siamese Network를 통해 입력 데이터를 저차원의 인코딩 공간으로 매핑하고, 이 공간에서의 유사도를 측정함으로써 더 정보 가치가 높은 샘플을 효율적으로 선택하여 라벨을 요청한다. 또한, 클래스별로 독립된 큐(Queue)를 유지하는 메모리 구조를 통해 데이터 불균형과 개념 변화에 동시에 대응한다.
 
@@ -23,6 +23,7 @@ Active Learning 분야에서는 결정 경계 근처의 샘플을 선택하는 U
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 ActiSiamese의 전체 파이프라인은 **Multi-queue Memory $\rightarrow$ Classifier (or Ensemble) $\rightarrow$ Online Active Learning Strategy** 순으로 구성된다. 새로운 인스턴스 $x_t$가 유입되면 메모리의 데이터를 참조하여 클래스를 예측하고, Active Learning 전략에 따라 라벨 요청 여부를 결정하며, 라벨이 제공될 경우에만 모델을 점진적으로 학습시킨다.
 
 ### 주요 구성 요소 및 상세 설명
@@ -36,6 +37,7 @@ $$d(x_i, x_j) = |e(x_i) - e(x_j)|$$
 이 거리 값은 Sigmoid 함수를 통해 두 샘플이 동일 클래스일 확률 $\hat{p}(x_i, x_j) \in [0, 1]$로 변환된다.
 
 **3. 클래스 예측 및 Active Learning 전략**
+
 - **예측(Prediction):** 유입된 $x_t$와 각 클래스 큐에 저장된 샘플들 간의 평균 유사도를 계산하여 가장 높은 값을 가진 클래스를 선택한다.
 $$\hat{y}_t = \text{argmax}_{c \in \{1, \dots, K\}} \frac{1}{L} \sum_{i=1}^L \hat{p}(x_t, x_{c,i})$$
 - **RVSS (Randomised Variable Similarity Sampling):** 예측된 클래스 $c$ 내에서 가장 유사한 샘플과의 유사도 $v = \max_{i} \hat{p}(x_t, x_{c,i})$를 계산한다. 이 $v$ 값을 가변 임계값 $\theta$와 비교하여 라벨을 요청하며, $\theta$는 정규분포 $\eta \sim \mathcal{N}(1, \delta)$를 이용하여 동적으로 조정됨으로써 탐색 효율을 높인다.
@@ -51,11 +53,13 @@ $$J_t = \frac{1}{|Q_{train}|} \sum_{(x_i, x_j) \in Q_{train}} l(y_{i,j}, \hat{p}
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** 합성 데이터(Sea, Circles, Blobs 등)와 실제 데이터(Gestures, MNIST, Forest, Insects 등)를 모두 사용하였다. 특히 Extreme Imbalance (0.1%)와 Abrupt/Recurrent Drift 상황을 포함하여 가혹한 환경을 구축하였다.
 - **비교 대상:** RVUS (One-pass, Uncertainty-based), ActiQ (Memory-based, Uncertainty-based), RVSS (Memory-based, Input-space Similarity-based) 및 각각의 Ensemble 버전.
 - **지표:** 클래스 불균형에 강건한 **G-mean**을 주요 성능 지표로 사용하였으며, Prequential evaluation 방식을 적용하였다.
 
 ### 주요 결과
+
 1. **학습 속도 및 효율성:** ActiSiamese는 다른 메모리 기반 방법(ActiQ, RVSS)보다 초기 학습 속도가 현저히 빨랐다. 이는 Siamese Network의 Few-shot learning 능력이 효과적으로 작용했음을 시사한다.
 2. **클래스 불균형 대응:** 극심한 불균형(0.1%) 상황에서 ActiSiamese는 다른 모든 베이스라인을 압도하는 성능을 보였다. 이는 클래스별 큐 유지와 Balanced Pair 생성 전략의 효과이다.
 3. **Concept Drift 강건성:** Multi-queue Memory를 사용한 방법들은 One-pass 학습자인 RVUS보다 Drift 상황에서 훨씬 빠르게 회복하였다.
@@ -65,9 +69,11 @@ $$J_t = \frac{1}{|Q_{train}|} \sum_{(x_i, x_j) \in Q_{train}} l(y_{i,j}, \hat{p}
 ## 🧠 Insights & Discussion
 
 ### 강점 및 해석
+
 ActiSiamese의 성공 요인은 세 가지 메커니즘의 시너지에 있다. 첫째, Siamese Network를 통해 고차원 입력을 변별력 있는 저차원 공간으로 매핑하여 데이터 효율성을 극대화했다. 둘째, 클래스별 독립 큐를 통해 소수 클래스 샘플을 강제로 유지함으로써 데이터 불균형 문제를 구조적으로 해결했다. 셋째, Latent Space 기반의 Active Learning 전략을 통해 라벨링 예산을 매우 효율적으로 사용하였다.
 
 ### 한계 및 비판적 논의
+
 본 모델의 가장 큰 한계는 **One-pass learner가 아니라는 점**이다. 즉, 데이터를 한 번 보고 바로 버리는 것이 아니라 고정된 크기의 메모리에 저장하여 재사용해야 한다. 비록 메모리 크기가 작고 고정되어 있어 실용적이지만, 진정한 의미의 Single-pass 학습을 원하는 환경에서는 제약이 될 수 있다. 또한, 현재의 Drift 대응 방식은 점진적 학습을 통한 '암시적' 대응에 의존하고 있어, 급격한 변화가 일어날 때 명시적인 Drift Detection 메커니즘이 결합된다면 더 빠른 반응성을 가질 수 있을 것으로 판단된다.
 
 ## 📌 TL;DR

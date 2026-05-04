@@ -4,7 +4,7 @@ Arnab Sen Sharma, David Atkinson, and David Bau (2024)
 
 ## 🧩 Problem to Solve
 
-본 연구는 State Space Model(SSM) 기반의 언어 모델인 Mamba에서 사실적 지식의 회상(factual recall)이 어떻게 이루어지는지 그 내부 메커니즘을 분석하는 것을 목표로 한다. 기존의 autoregressive transformer 언어 모델(LM) 연구들에 따르면, 사실적 지식의 회상이 모델 내의 특정 모듈과 특정 토큰 위치에 국한되어 나타나는 '국소성(locality)' 현상이 발견되었다. 
+본 연구는 State Space Model(SSM) 기반의 언어 모델인 Mamba에서 사실적 지식의 회상(factual recall)이 어떻게 이루어지는지 그 내부 메커니즘을 분석하는 것을 목표로 한다. 기존의 autoregressive transformer 언어 모델(LM) 연구들에 따르면, 사실적 지식의 회상이 모델 내의 특정 모듈과 특정 토큰 위치에 국한되어 나타나는 '국소성(locality)' 현상이 발견되었다.
 
 Mamba는 Transformer와는 완전히 다른 아키텍처(Attention과 MLP 대신 Convolution과 SSM 사용)를 가지고 있음에도 불구하고, Transformer에서 발견된 이러한 국소적 특성이 Mamba에서도 유사하게 나타나는지 확인하고자 한다. 이는 최신 신경망 아키텍처가 진화함에 따라, 기존 Transformer를 위해 개발된 해석 가능성(interpretability) 분석 도구들이 다른 아키텍처에도 일반화되어 적용될 수 있는지를 검증하는 방법론적 도전 과제를 포함하고 있다.
 
@@ -28,6 +28,7 @@ Mamba는 Transformer와는 완전히 다른 아키텍처(Attention과 MLP 대신
 ## 🛠️ Methodology
 
 ### Mamba 아키텍처 및 수식
+
 Mamba는 `MambaBlock`을 층층이 쌓은 구조이며, 각 블록은 다음과 같이 계산된다.
 잔차 연결(residual connection)을 포함한 최종 상태 $h^{(\ell)}_i$는 다음과 같다.
 $$h^{(\ell)}_i = h^{(\ell-1)}_i + o^{(\ell)}_i$$
@@ -37,6 +38,7 @@ $\otimes$는 요소별 곱셈(Hadamard product)을 의미한다. 여기서 $s^{(
 $$g^{(\ell)}_i = \text{SiLU}(W^{(\ell)}_g h^{(\ell-1)}_i)$$
 
 ### 분석 방법론
+
 1. **Activation Patching (Causal Tracing)**:
    - **Clean Run ($G$)**: 정답을 맞히는 프롬프트(예: "Michael Jordan professionally played")를 입력하여 모든 내부 상태를 캐싱한다.
    - **Corrupted Run ($G^*$)**: 주어를 다른 주어(예: "Pelé")로 바꾸어 오답이 나오게 한다.
@@ -58,29 +60,35 @@ $$g^{(\ell)}_i = \text{SiLU}(W^{(\ell)}_g h^{(\ell-1)}_i)$$
 ## 📊 Results
 
 ### 1. 사실 회상의 국소성 (Localization)
+
 - **결과**: Mamba에서도 Transformer와 유사하게 **'early site'**(주어의 마지막 토큰 위치의 초기-중간 레이어)와 **'late site'**(프롬프트 마지막 토큰 위치의 후기 레이어)에서 높은 IE가 관찰되었다.
 - **구성 요소별 역할**: $W_o$ 행렬이 두 위치 모두에서 가장 강력한 인과적 효과를 보였으며, $s^{(\ell)}_i$ (SSM 출력)는 주로 late site에서만 높은 IE를 보였다. 이는 Transformer의 attention 모듈 동작과 유사하다.
 
 ### 2. 모델 편집 (ROME)
+
 - **결과**: $W_a, W_g, W_o$ 모두에서 사실 편집이 가능했다.
 - **최적의 위치**: 실험적으로 $W_o$를 수정했을 때 가장 높은 점수($S$)와 일반화 성능($PS$)을 보였다. 특히 $W_o$는 early-mid 레이어에서 사실 회상을 매개하는 핵심 역할을 수행함이 확인되었다.
 
 ### 3. 관계 임베딩의 선형성 (LRE)
+
 - **결과**: 26개의 사실 관계 중 약 10개 정도만이 50% 이상의 faithfulness(충실도)를 보였다.
 - **특징**: 정답의 범위(range)가 넓은 관계일수록 선형 근사가 어려웠으며, 이는 Pythia(Transformer) 모델에서도 동일하게 나타난 현상이다.
 
 ### 4. 정보 흐름 분석 (Knock-out)
+
 - **관계 정보**: 초기-중간 레이어에서 관계(relation)를 정의하는 토큰들의 정보 흐름을 차단하면 정답 확률이 최대 50%까지 하락했다.
 - **주어 정보**: 레이어 43-48 구간에서 주어 정보의 흐름을 차단했을 때 확률이 크게 떨어졌으며, 이는 해당 구간의 $s_i$ 상태들이 사실 회상에 결정적임을 시사한다.
 
 ## 🧠 Insights & Discussion
 
-본 연구는 Mamba와 Transformer라는 서로 다른 두 아키텍처가 사실적 지식을 처리하는 방식에서 놀라운 유사성을 공유하고 있음을 보여준다. 
+본 연구는 Mamba와 Transformer라는 서로 다른 두 아키텍처가 사실적 지식을 처리하는 방식에서 놀라운 유사성을 공유하고 있음을 보여준다.
 
 **강점 및 해석**:
+
 - **태스크 유도적 국소성**: 저자들은 이러한 유사성이 특정 아키텍처의 특성이 아니라, **'autoregressive language modeling'이라는 작업 자체에서 기인**한 것이라고 추론한다. 텍스트를 순차적으로 처리해야 하는 제약 조건 하에서, 주어의 끝부분은 주어를 완전히 인식하고 관련 지식을 인출하기 위한 자연스러운 '정보 병목(bottleneck)' 지점이 되며, 이에 따라 모델들이 공통적으로 국소적 계산 패턴을 형성하게 된다는 것이다.
 
 **한계 및 비판적 해석**:
+
 - **정밀도 문제**: Mamba의 Conv1D와 non-linearity(SiLU) 때문에 Transformer의 attention edge를 끊는 것만큼 정밀하게 특정 토큰 간의 정보 흐름을 차단하는 것이 어려웠다. 이로 인해 mean-ablation이라는 다소 거친 방법을 사용해야 했으며, 이는 분석의 정밀도를 일부 떨어뜨릴 수 있다.
 - **모델 규모**: Mamba-2.8b라는 단일 모델에 대해 실험이 진행되었으므로, 모델 크기에 따른 일반화 가능성에 대해서는 추가 연구가 필요하다.
 

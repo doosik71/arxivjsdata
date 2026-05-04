@@ -4,7 +4,7 @@ Jiongnan Liu, Jiajie Jin, Zihan Wang, Jiehan Cheng, Zhicheng Dou, and Ji-Rong We
 
 ## 🧩 Problem to Solve
 
-거대 언어 모델(Large Language Models, LLMs)은 방대한 지식을 보유하고 있어 다양한 도메인에서 뛰어난 성능을 보이지만, 사실과 다른 내용을 생성하는 환각(Hallucination) 현상이 빈번하게 발생한다. 또한, 모델의 파라미터에 저장된 일반적인 세계 지식만으로는 특정 도메인(In-domain)의 전문적인 질문이나 비공개 데이터에 기반한 질의에 정확히 답변하는 것이 불가능하다. 
+거대 언어 모델(Large Language Models, LLMs)은 방대한 지식을 보유하고 있어 다양한 도메인에서 뛰어난 성능을 보이지만, 사실과 다른 내용을 생성하는 환각(Hallucination) 현상이 빈번하게 발생한다. 또한, 모델의 파라미터에 저장된 일반적인 세계 지식만으로는 특정 도메인(In-domain)의 전문적인 질문이나 비공개 데이터에 기반한 질의에 정확히 답변하는 것이 불가능하다.
 
 본 논문의 목표는 이러한 환각 문제를 완화하고 도메인 특화 지식을 효과적으로 활용할 수 있도록, 정보 검색(Information Retrieval, IR) 시스템과 LLM을 결합한 Retrieval-Augmented LLM(RAG) 시스템을 구축하기 위한 툴킷인 RETA-LLM을 개발하고 제공하는 것이다.
 
@@ -21,22 +21,29 @@ Jiongnan Liu, Jiajie Jin, Zihan Wang, Jiehan Cheng, Zhicheng Dou, and Ji-Rong We
 RETA-LLM의 전체 아키텍처는 사용자의 요청부터 최종 응답까지 총 5가지 단계의 모듈로 구성된다.
 
 ### 1. Request Rewriting Module (질의 재작성 모듈)
+
 사용자가 연속적인 질문을 던지는 대화형 환경에서는 현재의 요청만으로는 의미가 불완전한 경우가 많다. 예를 들어, "정보대학의 전공을 알려줘"라는 질문 뒤에 "경제대학은 어때?"라고 묻는다면, 후자의 정확한 의미는 "경제대학의 전공을 알려줘"가 된다. 이를 해결하기 위해 LLM이 이전 대화 기록과 현재 요청을 입력받아 완전하고 명확한 질의로 재작성한다.
 
 ### 2. Document Retrieval Module (문서 검색 모듈)
+
 재작성된 질의를 바탕으로 외부 지식 저장소(External Corpus)에서 관련 문서를 검색한다. 기본 설정에서는 상위 $K=3$개의 문서를 반환하며, 밀집 검색(Dense Retrieval) 모델을 기본으로 제공한다. 사용자는 필요에 따라 자체적인 검색 엔진으로 교체할 수 있다.
 
 ### 3. Passage Extraction Module (구절 추출 모듈)
+
 검색된 문서 전체를 LLM에 입력할 경우, LLM의 입력 토큰 제한(보통 2048 또는 4096 토큰)을 초과할 수 있으며, 불필요한 정보가 포함되어 성능이 저하될 수 있다. 이를 방지하기 위해 LLM을 활용하여 문서 내에서 질의와 직접적으로 관련된 핵심 구절(Fragments)만을 추출한다. 문서의 길이가 매우 길 경우, 윈도우 크기 512, 스텝 256의 슬라이딩 윈도우(Sliding Window) 전략을 적용하여 단계적으로 추출한 뒤 이를 결합하여 참조 문헌(References)으로 사용한다.
 
 ### 4. Answer Generation Module (답변 생성 모듈)
+
 추출된 참조 문헌들을 LLM에 입력으로 제공하여, 외부 지식에 근거한 사실적인 답변을 생성하게 한다. 이는 모델 내부 파라미터에만 의존할 때보다 환각 현상을 현저히 줄이는 역할을 한다.
 
 ### 5. Fact Checking Module (사실 확인 모듈)
+
 참조 문헌이 제공되더라도 LLM은 여전히 환각을 일으킬 수 있다. 따라서 최종 응답을 내보내기 전, LLM이 참조 문헌과 생성된 답변을 비교 분석하여 사실 관계에 오류가 없는지 검증한다. 검증 결과 오류가 발견되면 "이 질문에 답할 수 없습니다"와 같은 메시지를 출력하도록 제어한다.
 
 ### 시스템 구축 파이프라인 (Usage Pipeline)
+
 사용자가 실제 도메인 시스템을 구축할 수 있도록 다음과 같은 절차를 제공한다.
+
 1. **HTML Converter**: BeautifulSoup 패키지를 사용하여 raw HTML 파일을 JSON 데이터로 변환한다.
 2. **Index Builder**: `disentangled-retriever` 및 `faiss`를 사용하여 밀집/희소 인덱스를 생성하고 도메인 적응(Domain Adaptation)을 수행한다. 특히, 텍스트를 단순 절단하지 않고 전체적인 의미 정보를 유지하며 학습하는 밀집 검색 모델을 지원한다.
 3. **LLM Integration**: Alpaca, YuLan-Chat, ChatGLM, GPT-3.5 API 등 다양한 LLM 템플릿을 제공한다.

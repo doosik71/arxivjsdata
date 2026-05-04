@@ -7,6 +7,7 @@ Rodney LaLonde, Ziyue Xu, Ismail Irmakci, Sanjay Jain, Ulas Bagci (2022)
 본 논문은 의료 영상 분할(Medical Image Segmentation) 작업에 캡슐 네트워크(Capsule Network)를 처음으로 적용하여 해결하고자 한다. 특히, 병변이 있는 폐(pathological lungs)의 CT 스캔 영상과 인체 허벅지의 근육 및 지방 조직 MRI 영상 분할을 주요 대상으로 한다.
 
 의료 영상 분할에서 해결해야 할 핵심 문제는 다음과 같다.
+
 1. **CNN의 구조적 한계**: 기존의 Convolutional Neural Networks(CNN)는 뉴런의 출력이 스칼라(scalar) 값이며 가산적(additive)인 특성을 가진다. 이로 인해 커널 내 뉴런 간의 공간적 관계를 무시하게 되며, 특징 맵(feature map)은 단순히 특징의 존재 여부만을 나타낼 뿐, 특징의 정확한 위치, 포즈(pose), 변형 등의 상세 정보를 보존하지 못한다.
 2. **의료 데이터의 복잡성**: 병리적 폐 영상의 경우, 고도의 클래스 내 변동성(intra-class variation), 노이즈, 아티팩트 및 비정상적 구조가 많아 경계선을 정확히 획정하는 것이 매우 어렵다.
 3. **캡슐 네트워크의 계산 비용**: 기존의 Capsule Network(CapsNet)는 벡터 표현을 저장하고 Dynamic Routing을 수행하는 과정에서 메모리와 계산 비용이 기하급수적으로 증가하여, 고해상도 의료 영상(예: $512 \times 512$)에 적용하는 것이 사실상 불가능했다.
@@ -33,9 +34,11 @@ Rodney LaLonde, Ziyue Xu, Ismail Irmakci, Sanjay Jain, Ulas Bagci (2022)
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인
+
 SegCaps는 딥 인코더-디코더 구조를 가진다. 입력 영상은 먼저 2D Convolutional layer를 거쳐 16개의 특징 맵으로 변환되며, 이후 Convolutional Capsule layer와 Deconvolutional Capsule layer가 교대로 배치되어 특징 추출과 해상도 복원을 수행한다.
 
 ### 2. Convolutional Capsules 및 Routing
+
 레이어 $\ell$의 자식 캡슐 $C$가 레이어 $\ell+1$의 부모 캡슐 $P$로 전달되는 과정은 다음과 같다.
 
 **예측 벡터(Prediction Vector) 생성**:
@@ -52,9 +55,11 @@ $$r_{t^\ell_i|x,y} = \frac{\exp(b_{t^\ell_i|x,y})}{\sum_{t^{\ell+1}_j} \exp(b_{t
 $$v_{x,y} = \frac{\|p_{x,y}\|^2}{1+\|p_{x,y}\|^2} \frac{p_{x,y}}{\|p_{x,y}\|}$$
 
 ### 3. Deconvolutional Capsules
+
 디코더 단계에서 해상도를 높이기 위해 Transposed Convolution과 유사한 방식을 사용한다. Fractional striding을 통해 캡슐 그리드의 높이와 너비를 업샘플링한 후, 위와 동일한 국소 라우팅 과정을 거쳐 부모 캡슐을 생성한다.
 
 ### 4. Reconstruction Regularization
+
 네트워크가 가장 지배적인 특징에만 매몰되는 '모드 붕괴(mode collapse)'를 방지하기 위해 재구성 손실을 추가한다. 긍정 클래스에 해당하는 픽셀만을 마스킹하여 입력 영상을 재구성하며, 다음과 같은 MSE 손실 함수를 사용한다.
 $$L_R = \gamma \sum_{x,y} \|R_{x,y} - O^r_{x,y}\|$$
 여기서 $R_{x,y}$는 마스킹된 타겟 픽셀, $O^r_{x,y}$는 재구성 네트워크의 출력이다. 전체 손실 함수는 이 재구성 손실($L_R$)과 가중치 기반의 이진 교차 엔트로피(Weighted BCE) 손실의 합으로 구성된다.
@@ -62,29 +67,34 @@ $$L_R = \gamma \sum_{x,y} \|R_{x,y} - O^r_{x,y}\|$$
 ## 📊 Results
 
 ### 1. 실험 설정
-- **데이터셋**: 
-    - 폐 CT: LIDC-IDRI, LTRC, UHG (임상), JHU-TBS, JHU-TB (전임상/마우스) 총 1,960개 스캔.
-    - 허벅지 MRI: BLSA 데이터셋 150개 스캔 (3가지 대비 영상).
+
+- **데이터셋**:
+  - 폐 CT: LIDC-IDRI, LTRC, UHG (임상), JHU-TBS, JHU-TB (전임상/마우스) 총 1,960개 스캔.
+  - 허벅지 MRI: BLSA 데이터셋 150개 스캔 (3가지 대비 영상).
 - **비교 대상**: U-Net, Tiramisu, P-HNN.
 - **평가 지표**: Dice Similarity Coefficient (Dice), Hausdorff Distance (HD).
 
 ### 2. 정량적 결과
+
 - **폐 분할**: 모든 데이터셋에서 SegCaps가 Dice score와 HD 면에서 SOTA(State-of-the-art) 모델들을 능가하였다. 특히 전임상(마우스) 데이터셋인 JHU-TBS에서 U-Net(90.38%)보다 높은 93.35%의 Dice score를 기록하였다.
 - **MRI 분할**: 허벅지 근육 및 지방 조직 분할에서도 U-Net과 대등하거나 더 우수한 성능을 보였으며, 이전 SOTA 방법론(Irmakci et al., 2018)을 크게 앞질렀다.
 - **파라미터 효율성**: SegCaps는 매우 적은 수의 파라미터만으로 높은 성능을 냈다. 구체적으로 U-Net 파라미터의 4.6%, P-HNN의 9.5%, Tiramisu의 14.9% 수준만 사용하였다.
 
 ### 3. 정성적 결과 및 일반화 능력
+
 - **분할 품질**: CNN 기반 모델들이 자주 겪는 과분할(over-segmentation) 및 분할 누수(segmentation-leakage) 현상이 SegCaps에서는 현저히 적게 나타났다.
 - **어핀 불변성(Affine Equivariance)**: 자연 이미지(PASCAL VOC)를 이용해 단 한 장의 이미지로 과적합시킨 후, 회전 및 반전된 이미지에 대해 테스트한 결과, U-Net은 실패한 반면 SegCaps는 강건하게 대응하여 캡슐 네트워크의 포즈 일반화 능력을 입증하였다.
 
 ## 🧠 Insights & Discussion
 
 **강점 및 분석**:
+
 - **파라미터 효율성**: 동일한 파라미터 수로 CNN 모델을 축소하여 비교했을 때, SegCaps가 더 높은 성능을 보였다. 이는 캡슐의 벡터 표현 방식이 CNN의 스칼라 방식보다 파라미터당 정보 밀도가 훨씬 높음을 시사한다.
 - **구조적 필요성**: 단순 3층 캡슐 구조(Base-Caps)보다 디컨볼루션 캡슐을 이용한 인코더-디코더 구조가 성능을 비약적으로 향상시켰다. 이는 의료 영상 분할과 같이 전역적 문맥 정보가 필수적인 작업에서 딥 구조의 중요성을 보여준다.
 - **정규화 효과**: 재구성 손실($L_R$)을 추가했을 때 성능이 향상되었으며, 이는 모델이 단순한 판별적 특징뿐만 아니라 데이터의 전반적인 분포를 학습하게 함으로써 일반화 성능을 높였기 때문으로 분석된다.
 
 **한계 및 논의**:
+
 - **라우팅 반복 횟수**: 실험 결과 3회의 반복(iteration)이 가장 최적이었으나, 이는 여전히 계산 비용을 증가시키는 요인이다. 논문에서도 언급되었듯이, 더 효율적인 라우팅 메커니즘에 대한 연구가 필요하다.
 - **데이터 의존성**: 전임상 데이터의 경우 해부학적 변동성이 매우 커서 자동 분할이 극도로 어려우나, 본 연구를 통해 딥러닝 기반의 전임상 분할 가능성을 처음으로 제시하였다.
 

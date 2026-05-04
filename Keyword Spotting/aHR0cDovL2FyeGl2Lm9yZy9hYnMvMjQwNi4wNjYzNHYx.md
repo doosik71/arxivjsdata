@@ -23,16 +23,20 @@ Jonathan Svirsky, Uri Shaham, Ofir Lindenbaum (2024)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 SparkNet은 입력 데이터인 MFCC(Mel-frequency cepstral coefficients) 특징 행렬 $x_i \in \mathbb{R}^{F \times T}$를 받아, 이를 이진 표현 $z_i$로 변환한 뒤, 시간 축으로 평균 풀링(Average Pooling)을 거쳐 단일 선형 층을 통해 최종 클래스를 예측한다.
 
 ### 2. SparkNet 아키텍처
+
 모델의 기본 빌딩 블록은 **1D Time-Channel Separable Convolution (TCS)**이다. 이는 Depth-wise Separable Convolution의 구현체로, 다음과 같이 두 단계로 분리된다:
+
 - **Depth-wise Convolution:** 각 채널별로 커널 길이 $K$만큼 시간 축으로 연산한다.
 - **Point-wise Convolution:** 각 시간 프레임에서 모든 채널에 대해 독립적으로 연산한다.
 
 전체 구조는 4개의 블록으로 구성되며, 각 블록은 `TCS Convolution $\rightarrow$ Batch Normalization $\rightarrow$ ReLU` 순으로 배치된다. 뒤의 3개 블록에는 잔차 연결(Residual Connections)이 포함되며, 커널 크기는 $K \in \{11, 15, 19, 29\}$로 점진적으로 증가하여 수용 영역(Receptive Field)을 넓힌다. 마지막으로 $1 \times 1$ Convolution, BN, $\tanh$ 활성화 함수를 거쳐 최종 표현을 생성한다.
 
 ### 3. 희소 이진 표현 학습 (Sparse Binarized Representation Learning)
+
 CNN 백본은 먼저 $\mu_i \in [-1, 1]^{F \times T}$를 학습하며, 이를 가우시안 기반의 이완(Gaussian-based relaxation) 기법을 통해 근사적 베르누이 변수 $z_i$로 변환한다. 재매개변수화 트릭(Reparameterization trick)을 사용하여 학습 중 다음과 같이 계산한다:
 
 $$z_i = \max(0, \min(1, 0.5 + \mu_i + \varepsilon_i))$$
@@ -44,6 +48,7 @@ $$z_i = \max(0, \min(1, 0.5 + \mu_i + \varepsilon_i))$$
 $$L_{sparse}(\mu_i) = \frac{1}{F \times T} \sum_{f=1}^{F} \sum_{t=1}^{T} \left( \frac{1}{2} - \frac{1}{2} \text{erf} \left( \frac{-\mu_{f,t} + 0.5}{\sqrt{2}\sigma} \right) \right)$$
 
 ### 4. 학습 목표 및 손실 함수
+
 최종 손실 함수는 희소성 손실과 교차 엔트로피 손실(Cross-Entropy Loss)의 가중 합으로 정의된다:
 
 $$L = L_{sparse}(z) + \lambda L_{ce}(\hat{y}, y)$$
@@ -53,11 +58,13 @@ $$L = L_{sparse}(z) + \lambda L_{ce}(\hat{y}, y)$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋:** Google Speech Commands v1 및 v2. 10개의 타겟 단어, 'Unknown', 'Silence'를 포함한 총 12개 클래스로 구성된다.
 - **특징 추출:** $F=32$ 빈(bins)의 MFCC를 사용한다.
 - **평가 지표:** Top-1 Accuracy 및 MACs(Multiply-Accumulate operations)를 통해 효율성을 측정한다.
 
 ### 2. 정량적 결과
+
 SparkNet은 기존 SOTA 소형 모델들과 비교하여 압도적인 연산 효율성을 보였다.
 
 - **연산 효율성:** $C=16$ (파라미터 $\sim 4.6\text{K}$) 모델의 경우, 유사한 규모의 BC-ResNet-0.625보다 **약 4배 빠르며(MACs 기준)**, 정확도는 소폭 향상되었다. $C=32$ 모델 역시 BC-ResNet-1보다 3배, DS-ResNet10보다 5배 빠른 속도를 기록하였다.
@@ -65,15 +72,18 @@ SparkNet은 기존 SOTA 소형 모델들과 비교하여 압도적인 연산 효
 - **초소형 모델 가능성:** 채널 수를 $C=4$까지 줄인 초소형 모델(파라미터 $\sim 1.4\text{K}$, MACs $105\text{K}$)에서도 약 83%의 정확도를 달성하였다.
 
 ### 3. 절제 연구 (Ablation Study)
+
 - **보조 분류기/디코더:** 보조 분류기(Auxiliary Classifier)나 재구성 디코더(Reconstruction Decoder)를 추가하여 학습시켜 보았으나, 정확도 향상은 거의 없었다. 이는 KWS 태스크에서 이진 마스크 자체가 이미 충분한 정보를 담고 있음을 시사한다.
 - **이진화의 효과:** $L_{sparse}$와 베르누이 근사 과정을 제거했을 때 성능이 하락함을 확인하여, 제안한 희소 이진 표현 학습이 성능 향상의 핵심임을 입증하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 해석
+
 SparkNet의 가장 큰 성과는 **'계산 비용의 획기적 감소'**와 **'강건성 확보'**를 동시에 달성한 점이다. 일반적으로 모델의 크기를 줄이면 정확도가 낮아지지만, 본 논문은 입력 데이터를 적응적으로 필터링하는 '이진 게이트' 개념을 도입함으로써, 복잡한 연산 없이도 유의미한 특징만을 추출하여 선형 분류기에 전달하는 구조를 설계하였다. 특히 MFCC의 시공간적 영역에서 중요한 부분만을 활성화하는 패턴을 학습함으로써 노이즈에 강한 특성을 갖게 되었다.
 
 ### 한계 및 논의사항
+
 논문에서는 정성적 분석을 통해 모델이 유의미한 특징을 잘 포착함을 보였으나, 어떤 구체적인 음향적 특징이 이진화 과정에서 보존되는지에 대한 심층적인 음성학적 분석은 부족하다. 또한, 지도 학습(Supervised Learning) 기반으로 제안되었으므로, 데이터 라벨이 부족한 환경에서의 성능은 미지수이다.
 
 ## 📌 TL;DR

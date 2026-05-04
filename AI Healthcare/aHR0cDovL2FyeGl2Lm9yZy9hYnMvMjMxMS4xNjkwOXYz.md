@@ -4,7 +4,7 @@ H. C. Donker, D. Neijzen, J. de Jong, G. A. Lunter (2024)
 
 ## 🧩 Problem to Solve
 
-본 논문은 의료 데이터(healthcare data)가 갖는 고유한 특성인 희소성(sparsity), 높은 결측률(high missingness), 그리고 상대적으로 작은 샘플 크기로 인해 발생하는 분석적 어려움을 해결하고자 한다. 
+본 논문은 의료 데이터(healthcare data)가 갖는 고유한 특성인 희소성(sparsity), 높은 결측률(high missingness), 그리고 상대적으로 작은 샘플 크기로 인해 발생하는 분석적 어려움을 해결하고자 한다.
 
 일반적인 최대 가능도 추정(Maximum Likelihood Estimation, MLE) 기반의 머신러닝 방법론은 이러한 데이터 특성으로 인해 편향된 결과를 낳거나, 분포 외(Out-of-Distribution) 데이터에 대해 과도하게 확신하는(overconfident) 경향이 있으며, 불확실성(uncertainty)을 적절히 처리하지 못하는 한계가 있다. 특히 의료 분야에서는 진단 및 치료 결정에 있어 불확실성의 정량화가 매우 중요하므로, 이를 해결하기 위한 강건한 확률론적 모델이 필요하다.
 
@@ -31,36 +31,43 @@ MBN은 PGBN의 심층 구조와 LDA의 다항 분포 출력을 결합하여, 심
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 생성 모델
+
 MBN은 여러 층의 Dirichlet-분포 hidden unit들이 쌓여 있는 구조이다. 각 층의 활성화 값은 하위 층의 가중치 합으로 결정되며, 최종 층에서 다항 분포를 통해 관측값이 생성된다.
 
 **생성 과정의 주요 방정식:**
+
 1. **최상위 활성화**: $\{r_v\} \sim \text{Dir}(\{\gamma_0/K_T\})$
 2. **은닉 유닛 (Hidden Units)**: $\text{t}=T, \dots, 1$에 대해,
    $$\{\theta_{vj}^{(t)}\}_v \sim \text{Dir}(\{c^{(t+1)} a_{vj}^{(t+1)}\}_v)$$
-3. **층간 활성화 (Activation)**: 
+3. **층간 활성화 (Activation)**:
    $$a_{vj}^{(t)} = \sum_{k=1}^{K_t} \phi_{vk}^{(t)} \theta_{kj}^{(t)}$$
    여기서 $\phi_{vk}^{(t)}$는 층 간 연결 가중치이며, $\phi_{vk}^{(t)} \sim \text{Dir}(\{\eta_v^{(t)}\}_v)$를 따른다.
 4. **최종 관측값**: $\{x_{vj}\}_v \sim \text{Mult}(n_j, \{a_{vj}^{(1)}\}_v)$
 
 ### 심층 다항 표현 및 추론 (Inference)
+
 모델의 복잡성으로 인해 직접적인 추론이 어렵기 때문에, $\theta^{(t)}$를 적분하여 제거한(integrating out) 대안적 표현을 사용한다. 이때 본 논문의 핵심 기여인 **Theorem 1**이 사용된다.
 
 **Theorem 1 (핵심 수학적 관계):**
 Dirichlet-Multinomial 분포에서 추출된 샘플은 CRT 분포와 Polya urn scheme의 조합과 동일한 결합 분포를 가진다. 이를 통해 다음과 같은 변환이 가능해진다.
+
 - $\text{DirMult} \to \text{CRT} \to \text{Mult} \to \text{Polya}$
 
 이 관계를 이용하여 **Collapsed Gibbs Sampling**을 수행한다. 추론 절차는 다음과 같은 상향식(Upward pass)과 하향식(Downward pass) 과정으로 구성된다.
+
 - **Upward Pass**: 관측값 $x^{(1)}$부터 시작하여 $y^{(t)} \to m^{(t)} \to x^{(t+1)}$ 순으로 잠재 변수들을 샘플링하여 상위 층으로 정보를 전달한다.
 - **Downward Pass**: 상위 층에서 결정된 파라미터를 바탕으로 $\phi^{(t)}, \theta^{(t)}, c^{(t)}$ 및 최상위 $r$을 업데이트한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: UCI 손글씨 숫자 데이터셋(8x8 이미지), 암 환자의 DNA point mutation 데이터셋(8,500만 개 변이, 4,645명 환자).
 - **비교 대상**: NMF (Non-negative Matrix Factorization), SigProfilerExtractor, PGBN.
 - **평가 지표**: Held-out Perplexity (낮을수록 우수).
 
 ### 주요 결과
+
 1. **손글씨 숫자 데이터**:
    - MBN은 층이 깊어질수록 Perplexity가 소폭 감소하며 NMF($34.2$)보다 우수한 성능($\approx 30.7$)을 보였다.
    - **정성적 결과**: 하위 층에서는 작은 패치(patch)를 학습하고, 상위 층으로 갈수록 이를 조합해 일반적인 숫자 형태를 학습하는 계층적 추상화 능력을 확인하였다.
@@ -76,14 +83,17 @@ Dirichlet-Multinomial 분포에서 추출된 샘플은 CRT 분포와 Polya urn s
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 - **강건한 추론**: fully Bayesian 접근 방식을 통해 데이터가 희소한 의료 환경에서도 과적합에 강하며, 모든 추론 결과에 불확실성 추정치를 함께 제공한다.
 - **계층적 해석력**: 단순한 차원 축소를 넘어, 데이터의 저수준 특징에서 고수준 개념으로 이어지는 계층적 구조를 학습함으로써 생물학적으로 의미 있는 '메타-시그니처'를 발견할 수 있었다.
 
 ### 한계 및 논의
+
 - **계산 복잡도**: Gibbs sampling 기반의 추론은 GPU를 사용하더라도 대규모 데이터셋에서 연산 시간이 매우 오래 걸린다(실험에서 GPU 수십 일이 소요됨).
 - **확장 가능성**: 논문에서는 이를 해결하기 위해 Approximate MCMC나 하이브리드 추론 방식의 도입이 필요함을 언급하며, 이를 향후 연구 과제로 남겨두었다.
 
 ### 비판적 해석
+
 본 논문은 수학적으로 매우 우아한 추론 프레임워크를 제시하였으며, 특히 Theorem 1을 통해 복잡한 베이지안 네트워크의 샘플링을 가능하게 한 점이 돋보인다. 다만, 실용적인 관점에서는 학습 시간이 매우 길어 실제 임상 현장에서 실시간으로 적용하기에는 한계가 있을 것으로 보인다. 그럼에도 불구하고, 데이터 기반으로 생물학적 기전을 역으로 추적해낸 점은 큰 학술적 가치가 있다.
 
 ## 📌 TL;DR

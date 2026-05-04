@@ -29,12 +29,16 @@ Maria G. Baldeon Calisto, Susana K. Lai-Yuen (2019)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 제안된 시스템은 크게 두 단계(Phase)로 구성된다.
+
 1. **Phase I (Architecture Adaptation):** 데이터셋을 5-fold로 나누고, 그중 무작위로 선택된 한 개의 폴드를 사용하여 2D FCN과 3D FCN의 최적 아키텍처를 탐색한다. 이때 MEA 알고리즘이 사용된다.
 2. **Phase II (Ensemble Training):** Phase I에서 결정된 최적 아키텍처를 사용하여 5-fold 전체 데이터에 대해 각각 모델을 학습시킨다. 각 폴드당 2D FCN과 3D FCN의 예측 결과(softmax probability maps)를 평균 내고, 최종적으로 5개의 앙상블 모델 결과에 대해 다수결 투표(majority voting)를 실시하여 최종 세그멘테이션 맵을 생성한다.
 
 ### 네트워크 아키텍처
+
 2D 및 3D FCN 모두 대칭적인 Encoder-Decoder 구조를 가지며, 기본 단위는 Residual Block이다.
+
 - **Residual Block:** 세 개의 컨볼루션 단계(Conv $\rightarrow$ Batch Norm $\rightarrow$ Activation)로 구성되며, 첫 번째와 마지막 단계가 residual connection으로 연결되어 그래디언트 흐름을 개선한다.
 - **Encoder:** 각 Residual Block 이후 stride 2의 Max-pooling을 적용하여 특성 맵의 크기를 절반으로 줄인다.
 - **Decoder:** Transpose Convolution을 사용하여 특성 맵의 크기를 두 배로 늘린다.
@@ -42,16 +46,19 @@ Maria G. Baldeon Calisto, Susana K. Lai-Yuen (2019)
 - **기타:** 과적합 방지를 위해 Residual Block 이전에 Spatial Dropout을 적용하며, 최종 층은 $1 \times 1$ 커널과 Softmax 함수를 사용한다.
 
 ### 하이퍼파라미터 탐색 공간
+
 MEA 알고리즘은 총 9개의 결정 변수를 최적화한다:
+
 1. 총 Residual Block 수
 2. 첫 번째 블록의 필터 수 (이후 pooling/transpose conv에 따라 2배 증가/절반 감소 규칙 적용)
 3. $\sim$ 5. 각 컨볼루션 층의 커널 크기
-6. 활성화 함수 (ReLU, ELU)
-7. Merge 연산 방식 (Summation, Concatenation)
-8. Spatial Dropout 확률
-9. 학습률 (Learning Rate)
+4. 활성화 함수 (ReLU, ELU)
+5. Merge 연산 방식 (Summation, Concatenation)
+6. Spatial Dropout 확률
+7. 학습률 (Learning Rate)
 
 ### 최적화 목표 및 방정식
+
 MEA 알고리즘은 다음 두 가지 목적 함수를 동시에 최소화하는 Pareto Frontier를 찾는다.
 
 첫 번째 목적 함수 $f_1$은 기대 세그멘테이션 에러를 최소화하는 것이며, Dice Similarity Coefficient (DSC)를 기반으로 정의된다. DSC의 정의는 다음과 같다.
@@ -69,11 +76,13 @@ $$Minimize \quad f_2(x) = |\theta|$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** PROMISE12 전립선 MRI 이미지 세그멘테이션 챌린지 데이터 (학습 50개, 테스트 30개).
 - **전처리:** $1 \times 1 \times 1.5\text{mm}$ 해상도로 리샘플링, $128 \times 128 \times 64$ 크기로 고정, 픽셀 강도는 표준편차 3배수 내로 clipping 후 0-1 범위로 스케일링.
 - **입력 크기:** 2D FCN은 $128 \times 128$ 슬라이스, 3D FCN은 $96 \times 96 \times 16$ 패치 사용.
 
 ### 정량적 결과 및 비교
+
 PROMISE12 챌린지의 온라인 리더보드에 제출한 결과, 제안된 2D-3D FCN 모델은 **전체 297개 제출물 중 9위**를 기록하였다.
 
 - **성능 비교:** 수동으로 설계된 최상위 모델들(HD_Net, Bowda-Net 등)과 비교했을 때 DSC, 95% Hausdorff Distance (95 HD), Average Boundary Distance (ABD) 등 주요 지표에서 매우 근접한 성능을 보였다.
@@ -81,6 +90,7 @@ PROMISE12 챌린지의 온라인 리더보드에 제출한 결과, 제안된 2D-
 - **모델 크기:** 특히 모델 크기 면에서 압도적인 효율성을 보였다. nnU-Net의 경우 2D/3D 모델의 파라미터가 각각 $29.4 \times 10^6$ 및 $43.7 \times 10^6$개인 반면, 제안된 모델의 최적 아키텍처는 2D FCN이 $1.6 \times 10^6$개, 3D FCN이 $3.9 \times 10^6$개에 불과하였다.
 
 ### 정성적 결과
+
 검증 세트에 대한 결과 확인 시, 별도의 Shape Prior나 특정 도메인 지식을 적용하지 않았음에도 불구하고 공간적으로 일관된 형태와 매끄러운 경계를 가진 세그멘테이션 결과를 생성하였다.
 
 ## 🧠 Insights & Discussion

@@ -29,6 +29,7 @@ Tomoharu Iwata, Machiko Toyoda, Shotaro Tora, Naonori Ueda (2019)
 ## 🛠️ Methodology
 
 ### 1. Inexact AUC의 정의
+
 불완전한 이상치 세트를 $B$라고 할 때, **Inexact True Positive Rate (iTPR)**를 다음과 같이 정의한다.
 
 $$iTPR(h) = E_{B \sim p_S} [I(\max_{x \in B} a(x) > h)]$$
@@ -42,6 +43,7 @@ $$iAUC = E_{B \sim p_S, x_N \sim p_N} [I(\max_{x \in B} a(x) > a(x_N))]$$
 $$\hat{iAUC} = \frac{1}{|S||N|} \sum_{B_k \in S} \sum_{x_{Nj} \in N} I[\max_{x \in B_k} a(x) > a(x_{Nj})]$$
 
 ### 2. 이상치 점수 함수 (Anomaly Score Function)
+
 본 논문에서는 Deep Autoencoder의 **재구성 오차(Reconstruction Error)**를 이상치 점수로 사용한다.
 
 $$a(x; \theta) = \|x - g(f(x; \theta_f); \theta_g)\|^2$$
@@ -49,6 +51,7 @@ $$a(x; \theta) = \|x - g(f(x; \theta_f); \theta_g)\|^2$$
 여기서 $f$는 Encoder, $g$는 Decoder이며, $\theta = \{\theta_f, \theta_g\}$는 모델의 파라미터이다. 정상 데이터와 유사한 데이터는 재구성 오차가 낮고, 본 적 없는 이상치 데이터는 오차가 높다는 특성을 이용한다.
 
 ### 3. 목적 함수 (Objective Function)
+
 모델은 정상 데이터의 점수는 낮추고(비지도 학습), $\hat{iAUC}$는 높이는(지도 학습) 방향으로 학습된다. 지시 함수 $I(\cdot)$는 미분 불가능하므로 시그모이드 함수 $\sigma(z) = \frac{1}{1+\exp(-z)}$로 근사하여 다음과 같은 손실 함수 $E$를 최소화한다.
 
 $$E = \frac{1}{|N|} \sum_{x_{Nj} \in N} a(x_{Nj}) - \lambda \frac{1}{|S||N|} \sum_{B_k \in S} \sum_{x_{Nj} \in N} \sigma(\max_{x \in B_k} a(x) - a(x_{Nj}))$$
@@ -60,11 +63,13 @@ $$E = \frac{1}{|N|} \sum_{x_{Nj} \in N} a(x_{Nj}) - \lambda \frac{1}{|S||N|} \su
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: 합성 데이터셋(Synthetic 2D Gaussian) 및 9개의 공개 이상치 탐지 데이터셋(Annthyroid, KDDCup99 등)을 사용하였다.
 - **비교 대상**: 비지도 학습(LOF, OSVM, IF, AE)과 지도 학습(KNN, SVM, RF, NN, MIL, SIF, SAE) 등 총 11가지 방법론과 비교하였다.
 - **평가 지표**: 테스트 데이터셋에 대해 정확한 레이블을 사용하여 AUC를 측정하였다.
 
 ### 2. 주요 결과
+
 - **합성 데이터셋 결과**: 제안 방법은 $\text{AUC} = 0.982$를 기록하여 AE(0.919), SAE(0.790), MIL(0.905)보다 월등한 성능을 보였다. 특히, 비지도 학습(AE)이 놓치는 이상치와, 불완전 레이블을 정확한 레이블로 오인하는 지도 학습(SAE)의 문제를 동시에 해결하였다.
 - **실제 데이터셋 결과**: 9개 데이터셋의 평균 AUC에서 제안 방법이 가장 높은 성능($0.844$)을 기록하였다.
 - **레이블 수에 따른 영향**: 훈련에 사용된 불완전 이상치 세트의 수가 증가할수록 성능이 향상되었으며, 세트 내 인스턴스 수가 많아질수록(즉, 레이블이 더 불완전해질수록) AUC가 낮아지는 경향을 보였다.
@@ -72,7 +77,7 @@ $$E = \frac{1}{|N|} \sum_{x_{Nj} \in N} a(x_{Nj}) - \lambda \frac{1}{|S||N|} \su
 
 ## 🧠 Insights & Discussion
 
-본 연구의 가장 큰 강점은 **비지도 학습의 일반화 능력과 지도 학습의 정밀함을 결합**했다는 점이다. 
+본 연구의 가장 큰 강점은 **비지도 학습의 일반화 능력과 지도 학습의 정밀함을 결합**했다는 점이다.
 
 - **강점**: 단순히 레이블을 최대화하는 MIL 방식은 학습 데이터에 없는 새로운 유형의 이상치를 탐지하는 능력이 떨어지지만, 제안 방법은 Autoencoder의 기본 구조를 유지함으로써 "정상 데이터의 분포"를 학습한다. 따라서 레이블로 주어진 이상치뿐만 아니라, 분포상에서 멀리 떨어진 미지의 이상치까지 효과적으로 잡아낼 수 있다.
 - **한계 및 가정**: 본 모델은 이상치 점수 함수로 Autoencoder를 가정하였으나, 논문에서는 다른 미분 가능한 함수(VAE, Energy-based models 등)로 대체 가능하다고 언급한다. 다만, 실제 성능은 선택한 기본 비지도 모델의 성능에 의존적일 가능성이 크다.

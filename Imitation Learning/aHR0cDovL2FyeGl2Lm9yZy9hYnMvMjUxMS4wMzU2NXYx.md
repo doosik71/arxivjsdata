@@ -29,27 +29,32 @@ KD는 주로 교사 모델의 Soft Label(확률 분포)을 모방하는 반면, 
 본 논문은 제안하는 Taxonomy에 따라 IL의 방법론을 다음과 같이 구조화하여 설명한다.
 
 ### 1. Explicit Imitation
+
 전문가가 상태($s$)와 행동($a$) 정보를 모두 제공하는 설정이다.
-*   **Behavioral Cloning (BC):** 전문가의 데이터를 지도 학습(Supervised Learning) 방식으로 직접 매핑하는 가장 기초적인 방법이다. 주요 문제는 에이전트가 훈련 데이터에 없는 상태에 진입했을 때 오류가 누적되는 Covariate Shift이다.
-*   **Adversarial Methods:** GAIL(Generative Adversarial Imitation Learning)이 대표적이다. Generator(에이전트 정책)와 Discriminator(전문가와 에이전트 구분기)가 서로 경쟁하며 학습한다. Discriminator의 출력값 $\mathcal{D}(s, a)$를 이용해 다음과 같은 보상 함수를 정의한다.
+
+* **Behavioral Cloning (BC):** 전문가의 데이터를 지도 학습(Supervised Learning) 방식으로 직접 매핑하는 가장 기초적인 방법이다. 주요 문제는 에이전트가 훈련 데이터에 없는 상태에 진입했을 때 오류가 누적되는 Covariate Shift이다.
+* **Adversarial Methods:** GAIL(Generative Adversarial Imitation Learning)이 대표적이다. Generator(에이전트 정책)와 Discriminator(전문가와 에이전트 구분기)가 서로 경쟁하며 학습한다. Discriminator의 출력값 $\mathcal{D}(s, a)$를 이용해 다음과 같은 보상 함수를 정의한다.
 $$r(s, a) = -\log(1 - \mathcal{D}(s, a))$$
 이 보상은 에이전트가 전문가의 행동 분포에 가까워지도록 유도한다.
 
 ### 2. Implicit Imitation
+
 전문가의 행동($a$) 정보 없이 상태 전이($s, s'$)만을 관찰하는 설정이다.
-*   **Model-Based:** Inverse Dynamics Model을 먼저 학습하여 상태 전이를 일으킨 행동을 추론한 뒤, 이를 바탕으로 BC를 수행한다. (예: BCO)
-*   **Model-Free:** 행동 추론 과정 없이 직접 정책을 학습한다. 최근에는 Diffusion Model을 Discriminator로 사용하여 더 밀도 높은 보상 신호를 생성하는 DiffAIL과 같은 방법이 등장했다. 또한 DIIQN과 같이 DRL과 IL을 결합하여 전문가의 가이드라인을 따르되 환경의 보상을 통해 전문가를 능가하도록 설계된 구조가 있다.
+
+* **Model-Based:** Inverse Dynamics Model을 먼저 학습하여 상태 전이를 일으킨 행동을 추론한 뒤, 이를 바탕으로 BC를 수행한다. (예: BCO)
+* **Model-Free:** 행동 추론 과정 없이 직접 정책을 학습한다. 최근에는 Diffusion Model을 Discriminator로 사용하여 더 밀도 높은 보상 신호를 생성하는 DiffAIL과 같은 방법이 등장했다. 또한 DIIQN과 같이 DRL과 IL을 결합하여 전문가의 가이드라인을 따르되 환경의 보상을 통해 전문가를 능가하도록 설계된 구조가 있다.
 
 ### 3. Inverse Reinforcement Learning (IRL)
+
 행동의 복제가 아닌, 전문가가 최적화하고자 하는 잠재적인 보상 함수 $\mathcal{R}$을 추론하는 것이 목표이다. 보상 함수가 복원되면 표준 RL 알고리즘을 통해 정책을 도출할 수 있다. 최근에는 데이터의 정렬(Data Alignment)보다는 작업의 의도(Task Alignment)를 파악하기 위해 궤적 간의 랭킹(Ranking) 정보를 사용하는 방식이 제안되었다.
 
 ## 📊 Results
 
 본 논문은 특정 실험 결과보다는 다수의 논문을 분석한 종합적인 리뷰 결과를 제시한다.
 
-*   **정량적 성과:** DIIQN과 같은 최신 implicit 방법론들이 표준 DRL보다 학습 속도가 훨씬 빠르며, 일부 설정에서는 전문가의 성능을 능가함을 확인하였다.
-*   **정성적 분석:** Adversarial 방법론은 Covariate Shift 해결에 효과적이지만 학습 불안정성(Gradient Explosion)이 크며, 이를 해결하기 위해 보상 값을 클리핑하는 CREDO 등의 기법이 유효함을 분석하였다.
-*   **적용 도메인:** 자율주행, 로보틱스, 헬스케어, 텍스트 생성 등 다양한 도메인에서 IL이 적용되고 있으며, 특히 고차원 시각 데이터나 텍스트 시퀀스 데이터로의 확장성이 입증되었다.
+* **정량적 성과:** DIIQN과 같은 최신 implicit 방법론들이 표준 DRL보다 학습 속도가 훨씬 빠르며, 일부 설정에서는 전문가의 성능을 능가함을 확인하였다.
+* **정성적 분석:** Adversarial 방법론은 Covariate Shift 해결에 효과적이지만 학습 불안정성(Gradient Explosion)이 크며, 이를 해결하기 위해 보상 값을 클리핑하는 CREDO 등의 기법이 유효함을 분석하였다.
+* **적용 도메인:** 자율주행, 로보틱스, 헬스케어, 텍스트 생성 등 다양한 도메인에서 IL이 적용되고 있으며, 특히 고차원 시각 데이터나 텍스트 시퀀스 데이터로의 확장성이 입증되었다.
 
 ## 🧠 Insights & Discussion
 
@@ -59,10 +64,11 @@ $$r(s, a) = -\log(1 - \mathcal{D}(s, a))$$
 최신 IL 연구들은 단순한 모방을 넘어 전문가의 Suboptimality(불완전함)를 처리하는 방향으로 진화하고 있다. 중요도 샘플링(Importance Weighting)이나 Negative Learning을 통해 노이즈가 섞인 데이터에서도 최적의 정책을 추출하려는 시도가 돋보인다.
 
 **한계 및 미해결 질문:**
-1.  **안전성(Safety):** 특히 자율주행이나 의료 분야에서 학습 과정 중의 안전성을 보장하는 메커니즘이 여전히 부족하다.
-2.  **데이터 효율성:** 고품질의 전문가 데이터를 수집하는 비용이 매우 높음에도 불구하고, 적은 데이터로 일반화 성능을 높이는 방법론에 대한 연구가 더 필요하다.
-3.  **다중 에이전트(Multi-agent):** 단일 에이전트 모방에 비해 다중 에이전트 환경에서의 상호작용을 모방하는 연구는 상대적으로 미진한 상태이다.
-4.  **평가 표준화:** 각 논문이 서로 다른 벤치마크와 환경을 사용하고 있어, 객관적인 성능 비교가 어렵다는 점이 지적된다.
+
+1. **안전성(Safety):** 특히 자율주행이나 의료 분야에서 학습 과정 중의 안전성을 보장하는 메커니즘이 여전히 부족하다.
+2. **데이터 효율성:** 고품질의 전문가 데이터를 수집하는 비용이 매우 높음에도 불구하고, 적은 데이터로 일반화 성능을 높이는 방법론에 대한 연구가 더 필요하다.
+3. **다중 에이전트(Multi-agent):** 단일 에이전트 모방에 비해 다중 에이전트 환경에서의 상호작용을 모방하는 연구는 상대적으로 미진한 상태이다.
+4. **평가 표준화:** 각 논문이 서로 다른 벤치마크와 환경을 사용하고 있어, 객관적인 성능 비교가 어렵다는 점이 지적된다.
 
 ## 📌 TL;DR
 

@@ -12,28 +12,33 @@ Fei Chen, Fuhan Zhang, and Xiaodong Wang (연도 미표기)
 
 본 논문의 핵심 아이디어는 Siamese 네트워크를 이용한 '거친 위치 추정(coarse state estimation)'과 세그멘테이션 모듈을 이용한 '정밀한 영역 정제(fine refinement)'를 순차적으로 수행하는 2단계 파이프라인을 구축하는 것이다.
 
-1.  **Detection-to-Segmentation 구조**: 먼저 Siamese 네트워크를 통해 대상의 대략적인 위치와 크기를 파악하고, 이후 이 정보를 바탕으로 세그멘테이션 마스크를 생성하여 최종적으로 정밀한 회전 바운딩 박스(rotated bounding box)를 도출한다.
-2.  **Anchor-free Detector 도입**: 계산 복잡도를 줄이고 다양한 형태 변화에 적응하기 위해 Anchor-free 방식의 검출기를 사용하여 타겟의 중심점과 경계까지의 거리를 예측한다.
-3.  **특징 맵 정제**: 세그멘테이션 단계에서 ResNet-50의 서로 다른 계층에서 추출된 특징 맵들을 결합하여 마스크의 정확도를 높였다.
+1. **Detection-to-Segmentation 구조**: 먼저 Siamese 네트워크를 통해 대상의 대략적인 위치와 크기를 파악하고, 이후 이 정보를 바탕으로 세그멘테이션 마스크를 생성하여 최종적으로 정밀한 회전 바운딩 박스(rotated bounding box)를 도출한다.
+2. **Anchor-free Detector 도입**: 계산 복잡도를 줄이고 다양한 형태 변화에 적응하기 위해 Anchor-free 방식의 검출기를 사용하여 타겟의 중심점과 경계까지의 거리를 예측한다.
+3. **특징 맵 정제**: 세그멘테이션 단계에서 ResNet-50의 서로 다른 계층에서 추출된 특징 맵들을 결합하여 마스크의 정확도를 높였다.
 
 ## 📎 Related Works
 
 ### 1. Correlation Filter (CF) 기반 추적기
+
 CF 기반 방법론은 연산 속도가 빠르며, 공간적 정규화(spatial regularization) 등을 통해 성능을 향상시켜 왔다. 최근에는 딥러닝 특징(deep features)을 결합하여 성능을 높이려는 시도가 있었으나, 여전히 딥러닝 기반의 end-to-end 프레임워크에 비해 유연성이 떨어진다는 한계가 있다.
 
 ### 2. Siamese 기반 추적기
+
 SiamRPN, SiamRPN++ 등은 템플릿과 검색 영역 간의 상호 상관(cross-correlation)을 이용해 빠르게 대상을 추적한다. 특히 SiamRPN++는 깊은 네트워크(ResNet-50)와 depth-wise cross-correlation을 도입해 성능을 끌어올렸으나, 여전히 정밀한 바운딩 박스 생성에는 한계가 존재한다.
 
 ### 3. Segmentation 기반 추적기
+
 SiamMask와 같이 바운딩 박스와 세그멘테이션 마스크를 동시에 예측하는 방식이 제안되었다. 하지만 앞서 언급했듯이 여러 브랜치를 동시에 학습시키는 과정에서 최적화의 어려움이 발생한다. 또한 D3S와 같은 방식은 세그멘테이션 성능이 초기 위치 추정 모듈(GEM)의 성능에 크게 의존한다는 문제점이 있다.
 
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인
+
 전체 시스템은 **Backbone Network $\rightarrow$ Detection Module $\rightarrow$ Segmentation Module** 순으로 구성된다. ResNet-50을 백본으로 사용하여 특징을 추출하며, 1단계에서 검출된 결과를 2단계의 세그멘테이션 입력으로 사용하여 최종 결과를 도출한다.
 
 ### 2. Stage 1: Detection Module (Anchor-free)
-본 모델은 Anchor-free detector를 사용하여 타겟의 중심 위치와 경계 거리를 예측한다. 
+
+본 모델은 Anchor-free detector를 사용하여 타겟의 중심 위치와 경계 거리를 예측한다.
 특징 맵 $\mathbf{f} \in \mathbb{R}^{H \times W \times i}$의 각 위치 $(x, y)$에 대해, 해당 위치가 ground-truth 바운딩 박스 $\mathcal{B} = \{x_0, y_0, x_1, y_1\}$ 내에 포함되면 양성 샘플(positive sample)로 간주한다.
 
 **학습 목표(Training Objective)**:
@@ -46,7 +51,8 @@ $$x_{p0} = x_c - p_l, \quad x_{p1} = x_c + p_r, \quad y_{p0} = y_c - p_t, \quad 
 여기서 $(x_c, y_c)$는 신뢰도 점수가 가장 높은 위치이다.
 
 ### 3. Stage 2: Segmentation Module
-1단계에서 얻은 바운딩 박스와 특징 맵을 입력으로 받아 이진 세그멘테이션 마스크를 생성한다. 
+
+1단계에서 얻은 바운딩 박스와 특징 맵을 입력으로 받아 이진 세그멘테이션 마스크를 생성한다.
 
 - **구조**: D3S의 프레임워크를 기반으로 하며, `ConvTransposed2D` 모듈을 사용하여 고차원 특징 맵을 저차원 해상도로 업샘플링한다.
 - **특징 결합**: 업샘플링 과정에서 ResNet-50의 `conv1`, `layer1`, `layer2`에서 추출된 특징 맵들을 각각 추가하여 정보량을 풍부하게 한다.
@@ -55,13 +61,15 @@ $$x_{p0} = x_c - p_l, \quad x_{p1} = x_c + p_r, \quad y_{p0} = y_c - p_t, \quad 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: VOT-2016, VOT-2018, VOT-2019, GOT-10k.
-- **평가 지표**: 
-    - VOT: EAO (Expected Average Overlap), Accuracy(A), Robustness(Ro).
-    - GOT-10k: AO (Average Overlap), Success Rate (SR).
+- **평가 지표**:
+  - VOT: EAO (Expected Average Overlap), Accuracy(A), Robustness(Ro).
+  - GOT-10k: AO (Average Overlap), Success Rate (SR).
 - **구현**: ResNet-50 백본 사용, 세그멘테이션 네트워크는 Youtube-VOS 데이터셋으로 사전 학습됨.
 
 ### 2. 정량적 결과
+
 - **VOT-2016**: EAO 52.6%를 기록하며 비교 대상 중 가장 높은 성능을 보였다. 특히 D3S 대비 EAO가 3.3% 상승하였다.
 - **VOT-2018**: EAO 51.3%, Accuracy 66.2%를 달성하여 D3S 및 OceanOn보다 2.4% 높은 EAO를 기록했다.
 - **VOT-2019**: EAO 39.0%를 기록하며 D3S(34.8%)와 OceanOn(35.0%)을 크게 상회하였다. 실패율(Failure rate) 또한 27.6%로 감소하여 강건함이 입증되었다.

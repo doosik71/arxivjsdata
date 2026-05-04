@@ -12,9 +12,9 @@ Duc Phu CHAU, Francois BREMOND, Monique THONNAT (2013)
 
 본 논문의 핵심 기여는 객체 추적 알고리즘을 '추적 대상(Tracked Targets)'을 기준으로 하여 다음과 같은 세 가지 범주로 체계화한 Taxonomy를 제안한 점이다.
 
-1.  **Point Tracking**: 객체를 점(Point)으로 표현하며, 이전 상태(위치, 움직임)를 기반으로 추적한다.
-2.  **Appearance Tracking**: 객체의 외형(템플릿, 색상 히스토그램 등)을 정의하고, 프레임 간 외형의 일관성을 유지하며 추적한다.
-3.  **Silhouette Tracking**: 객체의 영역(Region) 및 실루엣(Silhouette) 정보를 활용하며, 형태 매칭(Shape Matching)이나 윤곽선 진화(Contour Evolution)를 통해 추적한다.
+1. **Point Tracking**: 객체를 점(Point)으로 표현하며, 이전 상태(위치, 움직임)를 기반으로 추적한다.
+2. **Appearance Tracking**: 객체의 외형(템플릿, 색상 히스토그램 등)을 정의하고, 프레임 간 외형의 일관성을 유지하며 추적한다.
+3. **Silhouette Tracking**: 객체의 영역(Region) 및 실루엣(Silhouette) 정보를 활용하며, 형태 매칭(Shape Matching)이나 윤곽선 진화(Contour Evolution)를 통해 추적한다.
 
 이러한 분류 체계를 통해 각 방법론의 설계 직관과 한계점을 명확히 분석하여, 상황에 맞는 적절한 추적기를 선택할 수 있는 가이드를 제공한다.
 
@@ -22,9 +22,9 @@ Duc Phu CHAU, Francois BREMOND, Monique THONNAT (2013)
 
 논문은 기존의 추적 알고리즘 분류 방식들을 소개하며 본 논문의 차별점을 제시한다. 기존 연구들은 주로 다음과 같은 기준으로 분류되었다.
 
--   **기술적 접근 방식**: 모델 기반(Model-based) 접근법과 특징 기반(Feature-based) 접근법으로 구분한다. 전자는 색상이나 윤곽선 모델이 필요하며, 후자는 HOG(Histogram of Oriented Gradients)나 Haar 특징과 같은 시각적 특징을 사용한다.
--   **모델의 성격**: 외형 모델 기반, 기하학적 모델 기반, 그리고 확률 기반 접근법으로 분류하기도 한다.
--   **대상 특성**: 특히 사람 추적의 경우, 신체 부위(Body parts) 사용 여부에 따라 분류한다.
+- **기술적 접근 방식**: 모델 기반(Model-based) 접근법과 특징 기반(Feature-based) 접근법으로 구분한다. 전자는 색상이나 윤곽선 모델이 필요하며, 후자는 HOG(Histogram of Oriented Gradients)나 Haar 특징과 같은 시각적 특징을 사용한다.
+- **모델의 성격**: 외형 모델 기반, 기하학적 모델 기반, 그리고 확률 기반 접근법으로 분류하기도 한다.
+- **대상 특성**: 특히 사람 추적의 경우, 신체 부위(Body parts) 사용 여부에 따라 분류한다.
 
 본 논문은 이러한 기존 분류보다 '추적 대상' 자체에 집중한 분류 방식이 현재의 기술 수준(State-of-the-art)을 가장 명확하고 완전하게 표현한다고 주장하며, 이를 중심으로 상세 분석을 진행한다.
 
@@ -37,6 +37,7 @@ Duc Phu CHAU, Francois BREMOND, Monique THONNAT (2013)
 객체를 점으로 표현하며, 크게 결정론적 접근법과 확률론적 접근법으로 나뉜다.
 
 #### 결정론적 접근법 (Deterministic Approaches)
+
 객체의 움직임이 특정 궤적 프로토타입을 따른다고 가정한다. 예를 들어 보행자 추적 시 다음과 같은 에너지 함수 $E(x_t)$를 정의하여 다음 위치를 예측한다.
 
 $$E(x_t) = \sum_{i=1}^{4} \theta_i E_i(x_t)$$
@@ -46,12 +47,13 @@ $$E(x_t) = \sum_{i=1}^{4} \theta_i E_i(x_t)$$
 $$L(x^*, g) = \sum_{i=1}^{N_s} \sqrt{||x_t - g_t||^2 + \epsilon}$$
 
 #### 확률론적 접근법 (Probabilistic Approaches)
+
 칼만 필터(Kalman Filter)가 대표적이며, 선형 동적 시스템의 상태를 예측하고 보정하는 재귀적 방정식을 사용한다.
 
--   **예측 단계 (Prediction)**:
+- **예측 단계 (Prediction)**:
     $$\hat{X}_t^- = DX_{t-1}^+ + W$$
     $$P_t^- = DP_{t-1}^+ D^T + Q_t$$
--   **보정 단계 (Correction)**:
+- **보정 단계 (Correction)**:
     $$K_t = P_t^- M^T [MP_t^- M^T + R_t]^{-1}$$
     $$X_t^+ = \hat{X}_t^- + K_t [Z_t - M\hat{X}_t^-]$$
     $$P_t = P_t^- - K_t MP_t^-$$
@@ -62,15 +64,15 @@ $$L(x^*, g) = \sum_{i=1}^{N_s} \sqrt{||x_t - g_t||^2 + \epsilon}$$
 
 객체의 외형을 템플릿이나 히스토그램으로 정의하며, 단일 뷰와 다중 뷰 방식으로 나뉜다.
 
--   **단일 뷰 (Single View)**: Haar 특징과 LBP(Local Binary Pattern)를 결합하고 Online Boosting을 통해 조명 변화나 폐색(Occlusion)에 적응한다. 또는 베이지안 결정 이론을 사용하여 객체를 부분으로 나누어 폐색 여부를 판단하고 템플릿 업데이트를 제어한다.
--   **다중 뷰 (Multi-view)**: 여러 카메라 간의 색상 차이를 극복하기 위해 색상 정규화(Color Normalization)를 수행한다. 특히 CIEL$x$u$v$ 색 공간에서 색상 세그먼트를 추출하고, 이를 신체 부위(머리, 상체, 하체)에 매핑하여 불변 표현(Invariant Representation)을 생성한다. 두 외형 세트 간의 유사도는 EMD(Earth Mover’s Distance)를 통해 계산한다.
+- **단일 뷰 (Single View)**: Haar 특징과 LBP(Local Binary Pattern)를 결합하고 Online Boosting을 통해 조명 변화나 폐색(Occlusion)에 적응한다. 또는 베이지안 결정 이론을 사용하여 객체를 부분으로 나누어 폐색 여부를 판단하고 템플릿 업데이트를 제어한다.
+- **다중 뷰 (Multi-view)**: 여러 카메라 간의 색상 차이를 극복하기 위해 색상 정규화(Color Normalization)를 수행한다. 특히 CIEL$x$u$v$ 색 공간에서 색상 세그먼트를 추출하고, 이를 신체 부위(머리, 상체, 하체)에 매핑하여 불변 표현(Invariant Representation)을 생성한다. 두 외형 세트 간의 유사도는 EMD(Earth Mover’s Distance)를 통해 계산한다.
 
 ### 3. Silhouette Tracking (실루엣 추적)
 
 객체의 정확한 윤곽선을 추적하며, 윤곽선 추적과 형태 매칭으로 구분된다.
 
--   **윤곽선 추적 (Contour Tracking)**: GCBAC(Graph Cuts based Active Contours)를 사용하여 이전 프레임의 윤곽선을 초기값으로 설정하고 최적의 경계선을 반복적으로 찾아낸다. 또는 Greedy Snake 기법과 칼만 필터를 결합하여 centroid의 위치를 예측하고 Snake Energy(내부 및 외부 에너지)를 최소화하는 방향으로 윤곽선을 업데이트한다.
--   **형태 매칭 (Shape Matching)**: 객체를 포함하는 최소 원(Reference Circle)을 설정하고 이를 샘플링하여 가우시안 색상 모델과 엣지 분포를 계산한다. 엣지 분포 $E(j)$는 다음과 같이 정규화하여 계산한다.
+- **윤곽선 추적 (Contour Tracking)**: GCBAC(Graph Cuts based Active Contours)를 사용하여 이전 프레임의 윤곽선을 초기값으로 설정하고 최적의 경계선을 반복적으로 찾아낸다. 또는 Greedy Snake 기법과 칼만 필터를 결합하여 centroid의 위치를 예측하고 Snake Energy(내부 및 외부 에너지)를 최소화하는 방향으로 윤곽선을 업데이트한다.
+- **형태 매칭 (Shape Matching)**: 객체를 포함하는 최소 원(Reference Circle)을 설정하고 이를 샘플링하여 가우시안 색상 모델과 엣지 분포를 계산한다. 엣지 분포 $E(j)$는 다음과 같이 정규화하여 계산한다.
 
 $$E(j) = \frac{\sum_i E_j(P_i)}{\max_j(\sum_i E_j(P_i))}$$
 
@@ -80,9 +82,9 @@ $$E(j) = \frac{\sum_i E_j(P_i)}{\max_j(\sum_i E_j(P_i))}$$
 
 본 논문은 새로운 알고리즘을 제안하여 실험하는 논문이 아니라, 기존의 다양한 연구들을 분석하는 **리뷰/서베이 논문**이다. 따라서 단일한 실험 결과표 대신 각 방법론의 정성적 분석 결과를 제시한다.
 
--   **Point Tracking**: 결정론적 모델은 검출 품질에 의존하지 않으나 복잡한 움직임에 취약하며, 칼만 필터는 계산 효율이 좋지만 선형 움직임 가정으로 인해 급격한 방향 전환 시 성능이 떨어진다.
--   **Appearance Tracking**: LBP와 Haar의 결합은 판별력이 높지만 온라인 학습 시간이 오래 걸린다. 다중 뷰 추적에서는 단순한 평균 색상(Mean color) 기반의 정규화가 복잡한 공분산 행렬 모델보다 더 나은 결과를 보였다는 연구 결과가 언급된다.
--   **Silhouette Tracking**: GCBAC 기반 추적은 배경 제거에 효과적이지만 객체가 너무 빨리 움직이거나 폐색이 발생하면 실패한다. 형태 매칭 기반 방식은 회전과 스케일 변화에 강건하지만, 단순한 비디오 시퀀스에서만 검증되었다는 한계가 있다.
+- **Point Tracking**: 결정론적 모델은 검출 품질에 의존하지 않으나 복잡한 움직임에 취약하며, 칼만 필터는 계산 효율이 좋지만 선형 움직임 가정으로 인해 급격한 방향 전환 시 성능이 떨어진다.
+- **Appearance Tracking**: LBP와 Haar의 결합은 판별력이 높지만 온라인 학습 시간이 오래 걸린다. 다중 뷰 추적에서는 단순한 평균 색상(Mean color) 기반의 정규화가 복잡한 공분산 행렬 모델보다 더 나은 결과를 보였다는 연구 결과가 언급된다.
+- **Silhouette Tracking**: GCBAC 기반 추적은 배경 제거에 효과적이지만 객체가 너무 빨리 움직이거나 폐색이 발생하면 실패한다. 형태 매칭 기반 방식은 회전과 스케일 변화에 강건하지만, 단순한 비디오 시퀀스에서만 검증되었다는 한계가 있다.
 
 ## 🧠 Insights & Discussion
 

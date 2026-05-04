@@ -15,6 +15,7 @@ Sam Musker, Alex Duchnowski, Raphaël Millière, Ellie Pavlick (2025)
 본 연구의 중심적인 아이디어는 LLM이 단순한 패턴 매칭을 넘어 **'유연한 표상 재구성(Flexible Re-representation)'** 능력을 갖추었는지 테스트하기 위해, 의미론적 내용(Semantic Content)과 구조(Semantic Structure)를 추상적 기호와 연결하는 고난도 과제를 설계한 것이다.
 
 핵심 기여 사항은 다음과 같다.
+
 - **새로운 벤치마크 설계**: 단순한 단어 유추를 넘어, 의미론적 속성(예: 다리 개수, 포유류 여부)을 추상적 기호의 종류나 길이에 매핑해야 하는 과제를 도입하여, 모델이 입력값을 동적으로 재표상해야만 풀 수 있도록 설계하였다.
 - **인간-LLM 비교 분석**: 최신 LLM(Claude 3, GPT-4, Llama-3 405B 등)과 인간 피험자를 동일한 조건에서 테스트하여, 모델의 성능뿐만 아니라 오류 패턴과 제어 조건(Control conditions)에 대한 반응을 상세히 비교하였다.
 - **인지적 해석 제공**: LLM의 성능이 인간과 유사하더라도, 정보 제시 순서나 무작위 방해 요소(Distractors)에 반응하는 방식이 다르다는 점을 밝혀, LLM이 인간과 유사한 결과를 낼 수 있지만('how-possibly' 설명), 실제 인간과 동일한 메커니즘으로 작동하는 것은 아닐 수 있음('how-actually' 설명의 부재)을 시사하였다.
@@ -35,27 +36,32 @@ Sam Musker, Alex Duchnowski, Raphaël Millière, Ellie Pavlick (2025)
 연구는 크게 두 가지 실험(Study 1, Study 2)으로 구성된다.
 
 ### Study 1: 의미론적 구조로부터의 유추 추론 (Analogical inference from Semantic Structure)
+
 이 실험은 개념 간의 **관계(Relationship)**를 추상적 기호 패턴으로 매핑하는 능력을 측정한다.
+
 - **절차**: `단어 $\rightarrow$ 기호 시퀀스` 형태의 예시 쌍을 여러 개 보여준 뒤, 마지막 단어에 해당하는 기호를 맞추게 한다.
 - **예시**: `개 $\rightarrow$ X`, `강아지 $\rightarrow$ x`, `고양이 $\rightarrow$ Y`가 주어졌을 때, `새끼 고양이`의 답을 찾는 문제이다. 여기서 피험자는 '성체 $\leftrightarrow$ 유체'라는 관계를 파악하고, 이를 '대문자 $\leftrightarrow$ 소문자'라는 기호 규칙에 매핑해야 한다.
 - **제어 조건**:
-    - **Permuted Pairs**: 제시 순서를 섞어 순서 의존성을 테스트한다.
-    - **Distracted**: 무관한 매핑 쌍을 추가하여 방해 요소 제거 능력을 테스트한다.
-    - **Only RHS**: 왼쪽의 단어를 모두 제거하고 오른쪽 기호 패턴만으로 풀 수 있는지 확인한다.
-    - **Randoms/Random Finals**: 왼쪽 단어들의 의미적 연관성을 없애거나 마지막에만 없게 하여, 모델이 의미 구조에 과도하게 의존하는지 분석한다.
-    - **$2 \times n$ 조건**: 단순한 오른쪽 패턴 완성(RHS-only heuristic)으로는 풀 수 없게 설계하여, 반드시 왼쪽의 의미 구조를 분석해야만 답을 낼 수 있게 만든 고난도 조건이다.
+  - **Permuted Pairs**: 제시 순서를 섞어 순서 의존성을 테스트한다.
+  - **Distracted**: 무관한 매핑 쌍을 추가하여 방해 요소 제거 능력을 테스트한다.
+  - **Only RHS**: 왼쪽의 단어를 모두 제거하고 오른쪽 기호 패턴만으로 풀 수 있는지 확인한다.
+  - **Randoms/Random Finals**: 왼쪽 단어들의 의미적 연관성을 없애거나 마지막에만 없게 하여, 모델이 의미 구조에 과도하게 의존하는지 분석한다.
+  - **$2 \times n$ 조건**: 단순한 오른쪽 패턴 완성(RHS-only heuristic)으로는 풀 수 없게 설계하여, 반드시 왼쪽의 의미 구조를 분석해야만 답을 낼 수 있게 만든 고난도 조건이다.
 
 ### Study 2: 의미론적 내용으로부터의 유추 추론 (Analogical inference from Semantic Content)
+
 이 실험은 개별 개념의 **특성(Feature/Property)**을 기호와 매핑하는 능력을 측정한다.
+
 - **절차**: 단어의 특정 속성을 기호의 종류나 개수와 연결한다.
 - **조건**:
-    - **Categorial**: 단일 범주 속성(예: 포유류 여부 $\rightarrow$ $*$ 또는 $!$) 매핑.
-    - **Dual-attribute**: 두 가지 범주 속성(예: 성별 $\rightarrow$ 기호 종류, 세대 $\rightarrow$ 기호 길이)을 동시에 매핑.
-    - **Numeric**: 수치적 속성(예: 다리 개수 $\rightarrow$ 기호의 반복 횟수) 매핑.
-    - **Numeric Dual-attribute**: 수치적 속성과 범주적 속성을 동시에 매핑.
+  - **Categorial**: 단일 범주 속성(예: 포유류 여부 $\rightarrow$ $*$ 또는 $!$) 매핑.
+  - **Dual-attribute**: 두 가지 범주 속성(예: 성별 $\rightarrow$ 기호 종류, 세대 $\rightarrow$ 기호 길이)을 동시에 매핑.
+  - **Numeric**: 수치적 속성(예: 다리 개수 $\rightarrow$ 기호의 반복 횟수) 매핑.
+  - **Numeric Dual-attribute**: 수치적 속성과 범주적 속성을 동시에 매핑.
 - **핵심 요구 능력**: '동물'이라는 개념을 생각할 때 평소에는 '서식지'나 '먹이'를 떠올리지만, 이 과제에서는 '다리 개수'라는 특정 속성으로 개념을 재표상(Re-represent)해야 한다.
 
 ### 실험 설정
+
 - **대상 LLM**: GPT-3, GPT-4, Pythia-12B, Claude 2, Claude 3 Opus, Falcon-40B, Llama-3 405B.
 - **인간 피험자**: 브라운 대학교 학생 194명.
 - **프롬프팅**: 인간이 퀴즈를 풀 때 이전 답안을 기억하는 것과 유사하게, LLM에게도 이전 질문과 정답을 누적해서 제공하는 In-context learning 방식을 사용하였다.
@@ -63,31 +69,37 @@ Sam Musker, Alex Duchnowski, Raphaël Millière, Ellie Pavlick (2025)
 ## 📊 Results
 
 ### 1. 의미론적 구조 추론 (Study 1)
+
 - **전반적 성능**: 최신 모델(GPT-4, Claude 3, Llama-405B)은 기본 조건(Defaults)에서 인간과 유사한 수준의 정답률을 보였다. 모델 크기와 MMLU 점수가 높을수록 성능이 향상되는 경향이 뚜렷했다.
 - **제시 순서 민감도**: 인간은 제시 순서가 바뀌어도(Permuted Pairs) 성능 변화가 거의 없었으나, LLM은 성능이 유의미하게 하락하였다.
-- **의미 구조의 영향**: 
-    - **Only RHS** 조건에서 LLM과 인간 모두 높은 성능을 보여, 기호 패턴만으로도 풀 수 있음을 확인했다.
-    - 하지만 **Randoms** 조건(의미 없는 단어 배치)에서 LLM은 성능이 급격히 떨어진 반면, 인간은 의미가 없음을 빠르게 간파하고 RHS-only 전략으로 전환하여 성능을 유지했다. 이는 LLM이 무의미한 텍스트에 더 쉽게 방해받음을 의미한다.
+- **의미 구조의 영향**:
+  - **Only RHS** 조건에서 LLM과 인간 모두 높은 성능을 보여, 기호 패턴만으로도 풀 수 있음을 확인했다.
+  - 하지만 **Randoms** 조건(의미 없는 단어 배치)에서 LLM은 성능이 급격히 떨어진 반면, 인간은 의미가 없음을 빠르게 간파하고 RHS-only 전략으로 전환하여 성능을 유지했다. 이는 LLM이 무의미한 텍스트에 더 쉽게 방해받음을 의미한다.
 - **$2 \times n$ 조건**: RHS-only 전략이 불가능한 이 조건에서 **Claude 3는 인간 수준의 성능**을 유지했으나, GPT-4와 Llama-405B는 성능이 크게 하락하였다.
 
 ### 2. 의미론적 내용 추론 (Study 2)
+
 - **모델별 차이**:
-    - **Claude 3**: 모든 조건에서 인간과 대등한 수준의 안정적인 성능을 보였다.
-    - **GPT-4**: 범주적 조건(Categorial, Dual-attribute)에서는 인간보다 뛰어난 성능을 보였으나, 수치적 조건(Numeric, Numeric Dual-attribute)에서는 매우 저조한 성능을 보였다. 이는 유추 능력의 부재보다는 LLM의 고질적인 '숫자 세기' 능력 부족으로 해석된다.
-    - **Llama-405B**: 전반적으로 인간과 유사했으나, 수치적 속성과 범주적 속성을 동시에 결합해야 하는 Numeric Dual-attribute 조건에서 성능이 낮았다.
+  - **Claude 3**: 모든 조건에서 인간과 대등한 수준의 안정적인 성능을 보였다.
+  - **GPT-4**: 범주적 조건(Categorial, Dual-attribute)에서는 인간보다 뛰어난 성능을 보였으나, 수치적 조건(Numeric, Numeric Dual-attribute)에서는 매우 저조한 성능을 보였다. 이는 유추 능력의 부재보다는 LLM의 고질적인 '숫자 세기' 능력 부족으로 해석된다.
+  - **Llama-405B**: 전반적으로 인간과 유사했으나, 수치적 속성과 범주적 속성을 동시에 결합해야 하는 Numeric Dual-attribute 조건에서 성능이 낮았다.
 - **구성성(Compositionality) 효과**: 인간은 단일 속성보다 두 가지 속성을 결합해야 하는 조건(Dual-attribute)에서 성능이 하락했으나, 모델들은 성능 하락이 없거나 오히려 약간 상승하는 경향을 보였다.
 
 ## 🧠 Insights & Discussion
 
 ### LLM의 유추 능력에 대한 평가
+
 본 연구는 최신 LLM이 학습 데이터에 없을 가능성이 높은 새로운 자극에 대해서도 인간 수준의 유추 성능을 낼 수 있음을 보여주었다. 특히 Claude 3의 결과는 연결주의 모델(Connectionist models)이 심볼릭 구성 요소 없이도 복잡한 유추를 수행할 수 있다는 증거가 된다.
 
 ### "How-possibly" vs "How-actually"
+
 저자들은 LLM이 인간의 유추 능력을 설명하는 방식에 대해 중요한 구분을 제시한다.
+
 - **How-possibly explanation**: LLM이 인간과 같은 결과를 낼 수 있다는 점은, 유추 능력이 특수한 내장 구조 없이도 일반적인 신경망 아키텍처와 대규모 데이터 학습을 통해 창발할 수 있음을 보여주는 '가능성'의 증거이다.
 - **How-actually explanation**: 그러나 제시 순서에 대한 민감도, 무작위 텍스트에 의한 방해, 구성성 조건에서의 서로 다른 반응 등은 LLM이 실제로 내부적으로 작동하는 방식이 인간의 인지 메커니즘과는 다름을 시사한다.
 
 ### 인지 과학적 시사점
+
 본 연구의 과제들은 기존의 SMT나 Copycat 모델이 해결하지 못한 '실제 세계 개념의 유연한 재구성' 문제를 다루고 있다. LLM이 이 과제들을 성공적으로 수행했다는 것은, LLM의 내부 메커니즘을 역공학(Reverse-engineering)함으로써 인간의 유연한 표상 재구성 과정을 설명할 수 있는 새로운 가설을 세울 수 있음을 의미한다.
 
 ## 📌 TL;DR

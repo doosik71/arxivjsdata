@@ -10,9 +10,10 @@ Sanjit Kakarla, Conrad Borchers, Danielle Thomas, Shambhavi Bhushan, Kenneth R. 
 
 ## ✨ Key Contributions
 
-본 논문의 중심적인 직관은 '방대한 일반 지식을 가진 거대 모델의 제로샷/퓨샷 능력이, 특정 도메인의 정답 레이블로 학습된 소규모 모델의 최적화 성능을 능가할 수 있는가'를 검증하는 데 있다. 
+본 논문의 중심적인 직관은 '방대한 일반 지식을 가진 거대 모델의 제로샷/퓨샷 능력이, 특정 도메인의 정답 레이블로 학습된 소규모 모델의 최적화 성능을 능가할 수 있는가'를 검증하는 데 있다.
 
 주요 기여는 다음과 같다.
+
 1. 형평성 교육이라는 특수한 도메인에서 GPT-4o, GPT-4 Turbo와 같은 최신 LLM과 legacy 모델인 BERT의 성능을 직접 비교하였다.
 2. 적은 양의 인간 주석(human-annotated) 데이터만으로도 Fine-tuning된 BERT가 Few-shot Prompting 기반의 LLM보다 우수한 성능을 보임을 입증하였다.
 3. 교육적 평가 도구로서의 자원 효율성과 모델 안정성 측면에서 Fine-tuning 접근법의 이점을 제시하였다.
@@ -30,11 +31,14 @@ Sanjit Kakarla, Conrad Borchers, Danielle Thomas, Shambhavi Bhushan, Kenneth R. 
 ## 🛠️ Methodology
 
 ### 1. 데이터셋 및 작업 정의
+
 연구팀은 북동부 미국 지역의 대학생 튜터들로부터 수집한 291개의 레슨 완료 데이터를 사용하였다. 데이터는 다음 두 가지 레슨으로 구성된다.
+
 - **Avoiding Unconscious Assumptions**: 79개의 인간 레이블 응답.
 - **Helping Students Manage Inequity**: 164개의 인간 레이블 응답.
 
 평가 작업은 두 가지 유형으로 나뉜다.
+
 - **Predict Task**: 특정 시나리오에서 튜터가 학생에게 할 적절한 대화문을 생성하는 작업이다.
 - **Explain Task**: 왜 그러한 응답을 선택했는지에 대한 논리적 근거를 설명하는 작업이다.
 
@@ -43,20 +47,23 @@ Sanjit Kakarla, Conrad Borchers, Danielle Thomas, Shambhavi Bhushan, Kenneth R. 
 ### 2. 모델 학습 및 추론 절차
 
 #### BERT 모델 (Fine-tuning)
+
 - **아키텍처**: `bert-base-uncased` 사전 학습 가중치를 기반으로 분류기를 추가하여 사용하였다.
 - **토큰화**: BERT Wordpiece tokenizer를 사용하였으며, 최대 토큰 길이는 256으로 제한하고 padding 및 truncation을 적용하였다.
-- **학습 설정**: 
-    - 최적화 함수: AdamW
-    - 학습률(Learning Rate): $0.00002$
-    - 배치 크기: 16
-    - 학습 횟수: 5 epochs
+- **학습 설정**:
+  - 최적화 함수: AdamW
+  - 학습률(Learning Rate): $0.00002$
+  - 배치 크기: 16
+  - 학습 횟수: 5 epochs
 - **검증 방법**: 데이터셋 규모가 작기 때문에 별도의 hold-out set 대신 층화 5-겹 교차 검증(Stratified 5-fold Cross-Validation)을 수행하여 평균 성능을 측정하였다.
 
 #### GPT 모델 (Few-shot Prompting)
+
 - **대상 모델**: GPT-4o, GPT-4 Turbo.
 - **절차**: 각 카테고리별로 2~3개의 Few-shot 예시를 포함한 프롬프트를 설계하였다. 모델은 주어진 루브릭과 예시를 바탕으로 학습자의 응답이 적절한지 판단하여 $0$ 또는 $1$의 이진 값을 출력하도록 지시받았다.
 
 ### 3. 평가 지표
+
 모델의 성능을 측정하기 위해 Accuracy, F1-score를 사용하였으며, 확률값을 제공하는 BERT 모델에 한해서만 AUC(Area Under the ROC-curve)를 계산하였다. GPT 모델은 확률값이 아닌 최종 결정값($0$ 또는 $1$)만 출력하므로 AUC 계산에서 제외되었다.
 
 ## 📊 Results
@@ -64,24 +71,27 @@ Sanjit Kakarla, Conrad Borchers, Danielle Thomas, Shambhavi Bhushan, Kenneth R. 
 실험 결과, 소량의 데이터로 Fine-tuning된 BERT 모델이 모든 예측 작업에서 Few-shot 기반의 GPT 모델들을 일관되게 압도하였다.
 
 - **정량적 결과 (평균 성능)**:
-    - **BERT**: Accuracy $0.837$, F1-score $0.886$, AUC $0.8704$
-    - **GPT-4o**: Accuracy $0.726$, F1-score $0.720$
-    - **GPT-4 Turbo**: Accuracy $0.549$, F1-score $0.550$
+  - **BERT**: Accuracy $0.837$, F1-score $0.886$, AUC $0.8704$
+  - **GPT-4o**: Accuracy $0.726$, F1-score $0.720$
+  - **GPT-4 Turbo**: Accuracy $0.549$, F1-score $0.550$
 
 - **상세 분석**:
-    - BERT는 모든 작업에서 AUC $0.8 \sim 0.9$ 수준의 우수한 성능을 보였다.
-    - GPT-4o는 4가지 작업 중 3가지에서 GPT-4 Turbo보다 높은 정확도를 보였으나, BERT에는 미치지 못했다.
-    - 특히 '무의식적 가정 피하기'에 대한 설명(Explain) 작업에서 GPT-4o의 F1-score($0.523$)는 매우 낮게 나타나, 복잡한 설명 작업에서 LLM의 한계가 드러났다.
+  - BERT는 모든 작업에서 AUC $0.8 \sim 0.9$ 수준의 우수한 성능을 보였다.
+  - GPT-4o는 4가지 작업 중 3가지에서 GPT-4 Turbo보다 높은 정확도를 보였으나, BERT에는 미치지 못했다.
+  - 특히 '무의식적 가정 피하기'에 대한 설명(Explain) 작업에서 GPT-4o의 F1-score($0.523$)는 매우 낮게 나타나, 복잡한 설명 작업에서 LLM의 한계가 드러났다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. 도메인 특화 학습의 중요성
+
 본 결과는 형평성 교육과 같이 정답의 경계가 모호하고 미묘한 뉘앙스가 중요한 '불분명한 영역'에서는, 거대 모델의 일반적인 추론 능력보다 적은 양의 고품질 데이터로 학습된 특화 모델이 더 강력함을 시사한다. GPT 모델들이 Few-shot 프롬프팅에 의존함에 따라 루브릭의 세부 사항을 완전히 포착하지 못하고 변동성이 큰 응답을 내놓았을 가능성이 크다.
 
 ### 2. 자원 효율성 및 안정성
+
 BERT는 오프라인으로 학습 및 배포가 가능하므로 API 비용이 발생하지 않으며, 컴퓨팅 자원 소모가 적다. 또한, 폐쇄형 소스 모델인 GPT와 달리 버전 업데이트에 따른 성능 변화 걱정 없이 일관된 평가 기준을 유지할 수 있다는 운영상의 이점이 있다.
 
 ### 3. 한계점 및 비판적 해석
+
 - **데이터 규모**: 샘플 사이즈가 작아 교차 검증에 의존했으며, 독립적인 테스트 셋을 통한 일반화 성능 검증이 부족하다.
 - **평가 지표의 불균형**: GPT 모델이 확률값을 제공하지 않아 AUC를 비교할 수 없었다는 점은 분석의 완전성을 떨어뜨린다. 향후 LLM의 Embedding 기반 예측 모델을 사용한다면 더 정밀한 비교가 가능할 것이다.
 - **프롬프트 최적화**: 본 연구는 단순 Few-shot 방식을 사용했으나, Chain-of-Thought(CoT)나 더 정교한 프롬프트 엔지니어링을 적용했을 때 LLM의 성능이 향상될 가능성이 남아 있다.

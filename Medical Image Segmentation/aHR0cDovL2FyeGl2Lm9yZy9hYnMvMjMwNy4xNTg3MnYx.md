@@ -12,8 +12,8 @@ Hicham Messaoudi, Ahror Belaid, Douraied Ben Salem, Pierre-Henri Conze (2023)
 
 본 논문의 핵심 아이디어는 2D 사전 학습 모델의 가중치를 고차원 네트워크에 적용하는 두 가지 전이 학습 원칙을 설계한 것이다.
 
-1.  **Weight Transfer Learning (WTL, 가중치 전이 학습):** 사전 학습된 2D 인코더를 그대로 유지하면서 이를 더 높은 차원의 네트워크(예: 3D U-Net 구조) 내부에 임베딩하는 방식이다.
-2.  **Dimensional Transfer Learning (DTL, 차원 전이 학습):** 2D 인코더의 가중치를 3D 가중치로 확장(Extrapolation)하여 3D 네트워크의 인코더를 초기화하는 방식이다. 구체적으로는 2D 가중치를 3D 깊이 방향으로 반복적으로 연결(Concatenating)하여 3D 파라미터를 생성한다.
+1. **Weight Transfer Learning (WTL, 가중치 전이 학습):** 사전 학습된 2D 인코더를 그대로 유지하면서 이를 더 높은 차원의 네트워크(예: 3D U-Net 구조) 내부에 임베딩하는 방식이다.
+2. **Dimensional Transfer Learning (DTL, 차원 전이 학습):** 2D 인코더의 가중치를 3D 가중치로 확장(Extrapolation)하여 3D 네트워크의 인코더를 초기화하는 방식이다. 구체적으로는 2D 가중치를 3D 깊이 방향으로 반복적으로 연결(Concatenating)하여 3D 파라미터를 생성한다.
 
 이러한 원칙을 바탕으로 각각 **Omnia-Net** (2D 및 3D 복부 장기 분할용), **DS-Net** (3D 뇌종양 분할용 - WTL 기반), **DX-Net** (3D 뇌종양 분할 분할용 - DTL 기반)이라는 세 가지 아키텍처를 제안하였다.
 
@@ -22,6 +22,7 @@ Hicham Messaoudi, Ahror Belaid, Douraied Ben Salem, Pierre-Henri Conze (2023)
 의료 영상 분할에서는 **U-Net**과 그 변형 구조(Attention U-Net, U-Net++, U-Net3+)가 지배적으로 사용되고 있다. 최근에는 EfficientNet과 같이 신경망 구조 탐색(NAS)을 통해 최적화된 백본을 사용하는 연구들이 등장하였다.
 
 기존 연구들은 주로 다음과 같은 한계를 보였다:
+
 - **Random Initialization:** 많은 3D 네트워크가 무작위 초기화 상태에서 학습되어 계산 시간이 오래 걸리고, 데이터가 부족한 상황에서 일반화 성능이 떨어진다.
 - **Limited Transfer Learning:** TernausNet이나 v16U-Net처럼 ImageNet으로 사전 학습된 2D 가중치를 사용하는 시도가 있었으나, 이는 주로 2D 영역에 국한되었다.
 - **Dimensionality Gap:** 2D 가중치를 3D로 확장하여 초기화하는 방식이 분류(Classification) 작업에서는 일부 시도되었으나, 분할(Segmentation) 작업에 적용하여 성능을 검증한 사례는 거의 없다.
@@ -34,9 +35,9 @@ Hicham Messaoudi, Ahror Belaid, Douraied Ben Salem, Pierre-Henri Conze (2023)
 
 본 연구는 **EfficientNet**을 기본 인코더로 사용하며, 세 가지 네트워크를 제안한다.
 
-*   **Omnia-Net:** 2D U-Net 형태의 구조이다. 사전 학습된 2D EfficientNet 인코더를 사용하며, 입력 이미지의 전체 스케일 특성을 활용하기 위해 인코더 앞단에 추가적인 합성곱 블록을 배치하였다.
-*   **DS-Net (Dimensionally-Stacked Network):** 3D 데이터를 2D 데이터로 인코딩하여 압축한 후, 사전 학습된 2D EfficientNet 인코더를 통과시키고, 다시 3D 디코더를 통해 복원하는 구조이다. 즉, 3D $\rightarrow$ 2D $\rightarrow$ 3D 흐름을 가진다.
-*   **DX-Net (Dimensionally-eXpanded Network):** 완전한 3D U-Net 구조이다. 하지만 인코더의 가중치를 무작위로 설정하지 않고, 사전 학습된 2D EfficientNet의 가중치를 깊이 방향으로 확장하여 초기화한 3D EfficientNet 인코더를 사용한다.
+- **Omnia-Net:** 2D U-Net 형태의 구조이다. 사전 학습된 2D EfficientNet 인코더를 사용하며, 입력 이미지의 전체 스케일 특성을 활용하기 위해 인코더 앞단에 추가적인 합성곱 블록을 배치하였다.
+- **DS-Net (Dimensionally-Stacked Network):** 3D 데이터를 2D 데이터로 인코딩하여 압축한 후, 사전 학습된 2D EfficientNet 인코더를 통과시키고, 다시 3D 디코더를 통해 복원하는 구조이다. 즉, 3D $\rightarrow$ 2D $\rightarrow$ 3D 흐름을 가진다.
+- **DX-Net (Dimensionally-eXpanded Network):** 완전한 3D U-Net 구조이다. 하지만 인코더의 가중치를 무작위로 설정하지 않고, 사전 학습된 2D EfficientNet의 가중치를 깊이 방향으로 확장하여 초기화한 3D EfficientNet 인코더를 사용한다.
 
 ### 2. 가중치 전이 및 확장 절차 (DTL)
 
@@ -55,20 +56,23 @@ $$L_{loss} = 1 - \frac{2}{N} \sum_{n=0}^{N} \frac{\sum_{i=0}^{I} y_{i,n} g_{i,n}
 ## 📊 Results
 
 ### 1. 실험 설정
-- **데이터셋:** 
-    - **CAMUS:** 2D 심초음파 영상 (좌심실 분할)
-    - **CHAOS:** 3D 복부 CT 및 MR 영상 (간, 신장, 비장 분할)
-    - **BraTS 2022:** 3D 다중 모달리티 뇌종양 MR 영상 (WT, TC, ET 분할)
+
+- **데이터셋:**
+  - **CAMUS:** 2D 심초음파 영상 (좌심실 분할)
+  - **CHAOS:** 3D 복부 CT 및 MR 영상 (간, 신장, 비장 분할)
+  - **BraTS 2022:** 3D 다중 모달리티 뇌종양 MR 영상 (WT, TC, ET 분할)
 - **평가 지표:** Dice Score, Mean Absolute Distance (MAD), Hausdorff Distance (HD), Relative Absolute Volume Difference (RAVD), Average Symmetric Surface Distance (ASSD), Maximum Symmetric Surface Distance (MSSD).
 
 ### 2. 정량적 결과
+
 - **CAMUS Challenge:** Omnia-Net이 **1위**를 기록하며 기존 state-of-the-art를 능가하였다. 특히 End-diastole 단계의 내막(Endocardium) Dice 점수에서 기존 대비 +0.6% 향상된 결과를 보였다.
 - **CHAOS Challenge:** 2D 기반 네트워크들 중 가장 우수한 성적을 거두었으며, 온라인 평가 플랫폼에서 **전체 3위**를 기록하였다. 특히 다중 모달리티 작업인 Task 1에서 타 2D 네트워크 대비 Dice 점수 기준 11% 이상의 큰 격차로 우위를 점하였다.
-- **BraTS 2022:** 
-    - **DS-Net (WTL):** Whole Tumor (WT) 영역에서 91.69%의 Dice Score를 달성하여 부종(Edema) 영역 묘사에 강점을 보였다.
-    - **DX-Net (DTL):** Tumor Core (TC) 84.77%, Enhancing Tumor (ET) 83.88%의 점수를 기록하여, DS-Net보다 핵심 종양 영역의 정밀한 분할 성능이 더 우수함을 확인하였다.
+- **BraTS 2022:**
+  - **DS-Net (WTL):** Whole Tumor (WT) 영역에서 91.69%의 Dice Score를 달성하여 부종(Edema) 영역 묘사에 강점을 보였다.
+  - **DX-Net (DTL):** Tumor Core (TC) 84.77%, Enhancing Tumor (ET) 83.88%의 점수를 기록하여, DS-Net보다 핵심 종양 영역의 정밀한 분할 성능이 더 우수함을 확인하였다.
 
 ### 3. 분석 결과 요약
+
 | Network | Domain | Dataset | Ranking/Result |
 | :--- | :--- | :--- | :--- |
 | **Omnia-Net** | 2D Echo / 3D Abd | CAMUS / CHAOS | 1st (CAMUS) / 3rd (CHAOS) |
@@ -80,11 +84,13 @@ $$L_{loss} = 1 - \frac{2}{N} \sum_{n=0}^{N} \frac{\sum_{i=0}^{I} y_{i,n} g_{i,n}
 본 연구는 사전 학습된 2D 가중치를 고차원 의료 영상 분할에 어떻게 활용할 수 있는지에 대한 구체적인 방법론을 제시하였다.
 
 **강점 및 분석:**
+
 - **차원 전이의 유효성:** DX-Net의 결과는 2D 가중치를 3D로 확장하여 초기화하는 것이 무작위 초기화보다 훨씬 효율적이며, 특히 복잡한 3D 볼륨 특징을 포착하는 데 유리함을 보여준다.
 - **구조적 trade-off:** DS-Net은 3D $\rightarrow$ 2D $\rightarrow$ 3D 과정을 거치므로 부종 같은 넓은 영역의 특징 추출에 유리한 반면, DX-Net은 완전한 3D 컨볼루션을 수행하므로 Tumor Core와 같은 세밀한 볼륨 특징을 포착하는 데 더 적합하다.
 - **계산 효율성:** DX-Net은 DS-Net보다 이미지당 학습 시간이 짧아(1.5s vs 2.0s) 계산 효율성 면에서도 이점이 있다.
 
 **한계 및 논의:**
+
 - **학습 에폭의 제한:** 대부분의 실험이 100 에폭 미만으로 진행되었으며, 더 공격적인 데이터 증강(Data Augmentation)이나 장기적인 학습을 통해 성능을 더 끌어올릴 여지가 있다.
 - **후처리 부재:** 본 연구는 정교한 후처리 과정 없이 모델의 순수 성능을 측정하였으므로, 최신 챌린지 우승팀들이 사용하는 후처리 기법을 적용한다면 결과가 더 개선될 가능성이 크다.
 

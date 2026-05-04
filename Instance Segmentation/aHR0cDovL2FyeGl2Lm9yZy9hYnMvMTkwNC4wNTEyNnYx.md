@@ -25,9 +25,11 @@ Nikita Araslanov, Constantin A. Rothkopf, Stefan Roth (2019)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 시스템 구조
+
 시스템은 크게 cVAE 기반의 Actor 네트워크와 Q-value를 예측하는 Critic 네트워크로 구성된다. Actor는 현재 상태 $s_t$를 입력받아 잠재 변수 $a_t$를 샘플링하고, 이를 디코더를 통해 고해상도 마스크 $m_t$로 변환한다. Critic은 상태 $s_t$와 액션 $a_t$를 입력받아 기대 보상인 Q-value를 계산하여 Actor의 학습을 가이드한다.
 
 ### MDP 정의
+
 - **State ($s_t$)**: 입력 이미지 $I$와 이전 타임스텝까지 예측된 마스크들의 합집합인 aggregated mask $M_t$의 튜플 $(I, M_t)$로 정의된다.
 - **Action ($a_t$)**: cVAE의 잠재 공간(latent space) 내의 연속적인 벡터 $a_t \in \mathbb{R}^l$이다. 디코더 $D$를 통해 $D(a_t)$라는 바이너리 마스크로 확장된다.
 - **State Transition**: 새로운 상태는 이전 상태의 마스크와 현재 예측된 마스크의 픽셀 단위 최대값으로 업데이트된다.
@@ -37,7 +39,9 @@ Nikita Araslanov, Constantin A. Rothkopf, Stefan Roth (2019)
   $$r_t := \phi(s_{t+1}) - \phi(s_t)$$
 
 ### 학습 절차 및 손실 함수
+
 학습은 두 단계로 진행된다.
+
 1. **Pre-training**: Actor의 cVAE 부분을 먼저 학습시켜, 임의의 GT 마스크를 입력받아 이를 잠재 변수로 인코딩하고 다시 복원하는 능력을 갖추게 한다. 이때 Binary Cross-Entropy(BCE)와 KL-divergence 손실을 사용한다.
 2. **Joint Training (Actor-Critic)**:
    - **Critic Update**: 실제 보상의 할인 합(discounted sum of rewards)과 Critic이 예측한 $Q_\phi$ 값 사이의 L2 거리를 최소화한다.
@@ -47,11 +51,13 @@ Nikita Araslanov, Constantin A. Rothkopf, Stefan Roth (2019)
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: CVPPP(식물 잎 분할) 및 KITTI(차량 분할) 벤치마크를 사용했다.
 - **지표**: Symmetric Best Dice (SBD), absolute Difference in Counting (|DiC|), MWCov, MUCov 등을 사용했다.
 - **비교 대상**: truncated BPTT를 사용하는 Baseline(BL-Trunc) 및 기존 SOTA 모델들(E2E, Mask R-CNN 계열 등)과 비교했다.
 
 ### 주요 결과
+
 1. **Ablation Study**: Actor-Critic 모델(AC-Dice)이 단순 recurrent baseline(BL)보다 Dice score와 Counting 정확도 모두에서 우수한 성능을 보였다. 특히 KL-divergence를 통한 액션 공간 탐색과 State Pyramid의 존재가 성능 향상에 핵심적임을 확인했다.
 2. **타임스텝별 분석**: 그림 3에서 확인되듯, AC 모델은 예측 후반부(later timesteps)로 갈수록 Baseline 대비 Dice score가 크게 향상되는 경향을 보였다. 이는 Critic이 미래의 보상을 고려하여 초기 단계부터 최적의 순서를 학습했기 때문으로 분석된다.
 3. **벤치마크 성능**:

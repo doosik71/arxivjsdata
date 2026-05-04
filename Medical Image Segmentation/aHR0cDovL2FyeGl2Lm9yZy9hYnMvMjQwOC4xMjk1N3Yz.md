@@ -4,7 +4,7 @@ Tianfei Zhou, Wang Xia, Fei Zhang, Boyu Chang, Wenguan Wang, Ye Yuan, Ender Konu
 
 ## 🧩 Problem to Solve
 
-본 논문은 컴퓨터 비전의 핵심 과제인 이미지 세그멘테이션(Image Segmentation)이 파운데이션 모델(Foundation Models, FMs)의 등장으로 인해 어떻게 변화하고 있는지 분석하는 것을 목표로 한다. 
+본 논문은 컴퓨터 비전의 핵심 과제인 이미지 세그멘테이션(Image Segmentation)이 파운데이션 모델(Foundation Models, FMs)의 등장으로 인해 어떻게 변화하고 있는지 분석하는 것을 목표로 한다.
 
 기존의 세그멘테이션 연구는 FCN, MaskFormer와 같은 특정 작업 중심의 아키텍처를 통해 발전해 왔으며, 대부분 닫힌 어휘집(Closed-vocabulary) 설정에서 작동하는 한계가 있었다. 그러나 최근 CLIP, Stable Diffusion, DINO, SAM과 같은 대규모 파운데이션 모델들이 등장하면서, 세그멘테이션은 단순한 픽셀 분류를 넘어 제로샷(Zero-shot) 학습, 프롬프트 기반 제어, 그리고 학습이 필요 없는(Training-free) 지식 추출이 가능한 새로운 시대로 진입하였다.
 
@@ -23,6 +23,7 @@ Tianfei Zhou, Wang Xia, Fei Zhang, Boyu Chang, Wenguan Wang, Ye Yuan, Ender Konu
 ## 📎 Related Works
 
 기존의 세그멘테이션 관련 서베이들은 주로 다음과 같은 한계를 가지고 있다.
+
 - **범위의 제한:** 2021년 이전의 서베이들은 주로 시맨틱(Semantic) 및 인스턴스(Instance) 세그멘테이션에만 집중하였으며, 최신 파운데이션 모델의 영향을 반영하지 못했다.
 - **특정 모델 중심:** 최근 일부 연구는 SAM(Segment Anything Model)과 같은 특정 모델만을 집중적으로 다루었으나, 이는 파운데이션 모델 전체의 생태계를 포괄하기에는 부족하다.
 - **단일 작업 중심:** 오픈 보캐블러리(Open-vocabulary)나 트랜스포머 기반 모델만을 다룬 연구들이 있었으나, 제너릭 세그멘테이션(GIS)과 프롬프트 기반 세그멘테이션(PIS)을 통합적으로 분석한 사례는 드물다.
@@ -32,17 +33,21 @@ Tianfei Zhou, Wang Xia, Fei Zhang, Boyu Chang, Wenguan Wang, Ye Yuan, Ender Konu
 ## 🛠️ Methodology
 
 ### 1. 통합 수식화 (Unified Formulation)
+
 논문은 다양한 세그멘테이션 작업을 다음과 같은 통합 수식으로 정의한다.
 $$f: X \to Y, \text{ where } X = I \times P, Y = M \times C$$
+
 - $f$: 신경망으로 구현된 매핑 함수이다.
 - $X$: 입력 공간으로, 이미지 $I$와 프롬프트 집합 $P$의 곱으로 구성된다.
 - $Y$: 출력 공간으로, 세그멘테이션 마스크 $M$과 시맨틱 카테고리 어휘집 $C$의 곱으로 구성된다.
 
 이 수식을 바탕으로 프롬프트 $P$의 존재 여부에 따라 작업을 두 가지로 분류한다.
+
 - **Generic Image Segmentation (GIS):** $P = \emptyset$인 경우로, 이미지 자체만으로 영역을 분할한다. (Semantic, Instance, Panoptic Segmentation 포함)
 - **Promptable Image Segmentation (PIS):** $P \neq \emptyset$인 경우로, 사용자 입력(클릭, 텍스트, 이미지 등)에 따라 영역을 분할한다. (Interactive, Referring, Few-shot Segmentation 포함)
 
 ### 2. 파운데이션 모델에서의 세그멘테이션 지식 추출 (Emergence of Knowledge)
+
 본 논문은 세그멘테이션 목적이 아닌 모델에서 어떻게 마스크가 추출되는지 상세히 설명한다.
 
 **A. CLIP 기반 추출**
@@ -59,6 +64,7 @@ $$\alpha_{CLS} = q_{CLS} \cdot k_I^\top$$
 이 어피니티 벡터(Affinity Vector) $\alpha_{CLS}$를 이진화함으로써 별도의 학습 없이도 객체 마스크를 얻을 수 있다.
 
 ### 3. 모델별 적용 전략
+
 - **CLIP:** 제로샷 분류기로 사용하거나, 픽셀-텍스트 정렬을 위한 파인튜닝(Fine-tuning) 및 지식 증류(Knowledge Distillation)를 통해 적용한다.
 - **Diffusion Models:** 어텐션 맵을 이용한 학습 없는 세그멘테이션, 잠재 표현(Latent Representation) 추출, 또는 세그멘테이션 자체를 노이즈 제거 과정(Denoising process)으로 재정의하여 해결한다.
 - **SAM:** 강력한 제로샷 마스크 생성 능력을 활용하여 약지도 학습(Weakly Supervised)의 포스트 프로세싱이나 데이터 엔진으로 활용한다.
@@ -76,9 +82,11 @@ $$\alpha_{CLS} = q_{CLS} \cdot k_I^\top$$
 ## 🧠 Insights & Discussion
 
 ### 강점 및 성과
+
 파운데이션 모델의 도입은 세그멘테이션 연구를 '특정 데이터셋에 최적화된 모델 개발'에서 '범용적인 시각 이해 시스템 구축'으로 전환시켰다. 특히, 서로 다른 강점을 가진 모델들(시맨틱 이해의 CLIP, 공간 이해의 SAM/DINO)을 결합하여 상호 보완적인 시스템을 구축하는 경향이 뚜렷하다.
 
 ### 한계 및 미해결 과제
+
 1. **지식 발현의 원인 불명:** 왜 서로 다른 목적(생성, 대조 학습 등)으로 학습된 모델들에서 공통적으로 세그멘테이션 지식이 나타나는지에 대한 이론적 설명이 부족하다.
 2. **객체 환각(Object Hallucination):** MLLM 기반 모델들은 텍스트 생성 모델과 마찬가지로 이미지에 없는 객체를 있다고 판단하고 마스크를 생성하는 환각 현상이 발생한다.
 3. **계산 효율성 문제:** 파운데이션 모델의 거대한 크기로 인해 실시간 추론이 어렵다. 지식 증류(Distillation)나 모델 압축 기술의 적용이 시급하다.

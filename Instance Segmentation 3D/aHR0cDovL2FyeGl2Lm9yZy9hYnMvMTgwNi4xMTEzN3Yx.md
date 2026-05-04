@@ -14,9 +14,10 @@ Zhuo Zhao, Lin Yang, Hao Zheng, Ian H. Guldner, Siyuan Zhang, and Danny Z. Chen 
 
 ## 📎 Related Works
 
-논문에서는 2D 영역의 인스턴스 분할 및 검출 방법론인 Faster-RCNN과 Mask R-CNN을 언급한다. 특히 Mask R-CNN은 RPN(Region Proposal Network)을 통해 관심 영역(RoI)을 제안하고, RoIAlign을 통해 정교한 마스크를 생성하는 구조를 가지고 있다. 
+논문에서는 2D 영역의 인스턴스 분할 및 검출 방법론인 Faster-RCNN과 Mask R-CNN을 언급한다. 특히 Mask R-CNN은 RPN(Region Proposal Network)을 통해 관심 영역(RoI)을 제안하고, RoIAlign을 통해 정교한 마스크를 생성하는 구조를 가지고 있다.
 
 기존의 3D 접근 방식 중 하나는 2D 픽셀 분할 결과를 3D 복셀 분할 결과로 쌓아 올린 뒤, 고복잡도 알고리즘을 적용하여 인스턴스를 분리하는 방식이다. 하지만 이 방식은 다음과 같은 한계가 있다:
+
 1. 3D 문맥 정보를 충분히 활용하지 못해 분할 정확도가 떨어진다.
 2. 알고리즘의 복잡도가 높아 밀집된 3D 데이터를 처리하는 데 수 시간이 소요된다.
 3. GPU 메모리 제한으로 인해 2D 모델을 단순히 3D로 확장하는 것에 어려움이 있다.
@@ -26,10 +27,13 @@ Zhuo Zhao, Lin Yang, Hao Zheng, Ian H. Guldner, Siyuan Zhang, and Danny Z. Chen 
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 구조
+
 제안된 모델은 크게 **3D Object Detector**와 **3D Voxel Segmentation Model**의 두 단계로 구성된다. 전체적인 백본(Backbone) 네트워크는 정보가 순방향 및 역방향으로 직접 전파될 수 있도록 설계된 VoxRes block을 채택하였다.
 
 ### 1. 3D Object Detector (Bounding Box 기반)
+
 첫 번째 단계에서는 모든 인스턴스의 3D Bounding Box 어노테이션을 사용하여 객체의 위치와 클래스를 예측한다.
+
 - **Anchor Boxes**: 특징 맵(Feature Map)의 각 위치에서 다양한 크기의 앵커 박스를 평가한다. 앵커 박스와 Ground-truth 박스 간의 IoU(Intersection over Union)가 0.4 이상인 경우를 Positive로 간주한다.
 - **예측 항목**: 각 앵커 박스에 대해 인스턴스 클래스 점수(Score)와 박스 회귀 오프셋(Box Regression Offset)을 예측한다.
 - **회귀 방정식**: 예측된 박스의 중심 좌표 $(z, x, y)$와 크기 $(d, h, w)$를 앵커 박스 $(z_a, x_a, y_a, d_a, h_a, w_a)$ 및 Ground-truth 박스 $(z^*, x^*, y^*, d^*, h^*, w^*)$와 비교하여 다음과 같이 정의한다.
@@ -39,7 +43,9 @@ Zhuo Zhao, Lin Yang, Hao Zheng, Ian H. Guldner, Siyuan Zhang, and Danny Z. Chen 
   $$L_{box} = L_{cls} + L_{reg}$$
 
 ### 2. 3D Voxel Segmentation (약한 마스크 기반)
+
 두 번째 단계에서는 검출된 인스턴스 내부의 정확한 복셀 영역을 분할한다.
+
 - **3D RoIAlign**: 2D RoIAlign을 3D로 확장하여, 다양한 크기의 검출 영역을 고정된 크기 $s \times s \times s \times p$로 정렬한다. 이때 각 샘플링 포인트의 값은 주변 8개 이웃 포인트에 대해 **Trilinear Interpolation(삼선형 보간법)**을 적용하여 계산함으로써 더욱 매끄럽고 정확한 마스크를 생성한다.
 - **Mask-Weight Layer**: 본 모델의 핵심으로, 모든 인스턴스를 분할하지만 **학습 시에는 Full Voxel Annotation이 존재하는 소수의 인스턴스에 대해서만 역전파(Back-propagation)를 수행**한다. 마스크 가중치 레이어를 통해 어노테이션이 없는 인스턴스의 손실 값은 0으로 설정하여 모델 학습에 영향을 주지 않도록 한다.
 - **최종 손실 함수**:
@@ -49,13 +55,15 @@ Zhuo Zhao, Lin Yang, Hao Zheng, Ian H. Guldner, Siyuan Zhang, and Danny Z. Chen 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: HL60 세포 핵, Microglia 세포, C.elegans 배아 이미지.
 - **비교 대상**: VoxResNet (Full Annotation 사용 버전 및 일부 데이터 사용 버전).
 - **측정 지표**: Detection F1-score 및 Segmentation F1-score.
 - **어노테이션 비율**: HL60 세포의 경우 전체의 20%, Microglia 세포의 경우 30%에 대해서만 Full Voxel Mask를 사용하였다.
 
 ### 주요 결과
-1. **HL60 세포 및 Microglia 세포**: 
+
+1. **HL60 세포 및 Microglia 세포**:
    - **검출 성능**: 제안 방법이 Full Annotation을 사용한 VoxResNet보다 더 높은 Detection F1-score를 기록하였다. 이는 Bounding Box 어노테이션이 인스턴스 수준의 정보를 더 강하게 제공하며, 모델이 $L_{box}$를 통해 명시적으로 검출 학습을 수행하기 때문이다.
    - **분할 성능**: 정밀한 분할 성능 자체는 Full Annotation 모델이 약간 더 우세했으나, **비슷한 어노테이션 시간(AT)을 소모했을 때**는 제안 방법이 VoxResNet(일부 데이터 학습)보다 훨씬 뛰어난 성능을 보였다.
    - **효율성**: HL60 세포의 경우, 제안 방법의 어노테이션 시간은 약 5.5시간으로, Full Annotation 방식(22.5시간)보다 약 4배 이상 적은 시간이 소요되었다.

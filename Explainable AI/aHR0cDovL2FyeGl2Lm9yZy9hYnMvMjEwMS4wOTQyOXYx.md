@@ -13,6 +13,7 @@ Sheikh Rabiul Islam, William Eberle, Sheikh Khaled Ghafoor, Mohiuddin Ahmed (202
 본 논문의 핵심적인 기여는 단순히 기존 XAI 방법론을 나열하는 것에 그치지 않고, **'신용 부도 예측(Credit Default Prediction)'이라는 공통의 테스트 케이스**를 적용하여 다양한 XAI 기법들의 실질적인 작동 방식과 장단점을 다각도에서 분석했다는 점이다.
 
 구체적으로는 다음과 같은 관점에서 방법론들을 비교 분석하였다:
+
 - **Global vs Local**: 모델 전체의 행동을 설명하는지, 특정 인스턴스의 예측을 설명하는지 여부.
 - **Post-hoc vs Ante-hoc**: 이미 학습된 모델에 적용하는지, 모델 설계 단계부터 설명 가능성을 고려하는지 여부.
 - **Inherent vs Emulated/Approximated**: 모델 자체가 내재적으로 해석 가능한지, 혹은 다른 모델을 통해 근사적으로 설명하는지 여부.
@@ -22,6 +23,7 @@ Sheikh Rabiul Islam, William Eberle, Sheikh Khaled Ghafoor, Mohiuddin Ahmed (202
 ## 📎 Related Works
 
 논문은 설명 시스템의 발전 과정을 세 세대로 구분하여 설명한다:
+
 1. **1세대 시스템**: 70년대 전문가 시스템(Expert Systems)으로, 전문가의 지식을 직접 규칙으로 변환하여 내부 작동 과정을 표현하려 했다.
 2. **2세대 시스템**: 지능형 튜터링 시스템과 같은 인간-컴퓨터 시스템으로, 인간의 인지 능력에 맞춘 인지적 지원을 제공하는 데 집중했다.
 3. **3세대 시스템**: 2015년 이후의 르네상스 시기로, 딥러닝이나 앙상블 모델 같은 Black Box 모델의 내부를 밝히려는 최신 XAI 도구와 기술들이 이에 해당한다.
@@ -33,7 +35,9 @@ Sheikh Rabiul Islam, William Eberle, Sheikh Khaled Ghafoor, Mohiuddin Ahmed (202
 본 논문은 XAI 방법론을 크게 세 가지 범주로 분류하여 상세히 설명한다.
 
 ### 1. 내재적 해석 가능 방법론 (Intrinsically Interpretable Methods)
+
 모델 자체가 단순하여 별도의 도구 없이도 해석이 가능한 방식이다.
+
 - **Linear Regression**: 입력 특성과 타겟 간의 선형 관계를 가중치(Weight)로 설명한다.
   $$y = b_0 + b_1 * x_1 + ... + b_n * x_n + \epsilon$$
   여기서 $b_i$는 각 특성의 중요도를 나타내는 계수이다. 다만 특성 간 상관관계가 높을 경우 개별 영향력을 판단하기 어렵다.
@@ -41,7 +45,9 @@ Sheikh Rabiul Islam, William Eberle, Sheikh Khaled Ghafoor, Mohiuddin Ahmed (202
 - **기타**: Logistic Regression, Decision Rules, Naive Bayes, K-Nearest Neighbors(KNN) 등이 포함된다.
 
 ### 2. 모델 독립적 방법론 (Model-Agnostic Methods)
+
 특정 모델의 구조와 상관없이 적용 가능한 방법들로, 주로 예측 결과와 입력값 사이의 관계를 분석한다.
+
 - **PDP (Partial Dependence Plot)**: 한두 개의 특성이 예측 결과에 미치는 한계 효과를 전역적으로 보여준다.
 - **ICE (Individual Conditional Expectation)**: PDP의 개별 인스턴스 버전으로, 각 데이터 포인트마다 특성 변화에 따른 예측값의 변화를 선으로 표시한다.
 - **ALE (Accumulated Local Effects) Plot**: PDP와 유사하나 특성 간 상관관계가 높을 때 발생하는 편향 문제를 해결하며 계산 속도가 빠르다.
@@ -51,12 +57,15 @@ Sheikh Rabiul Islam, William Eberle, Sheikh Khaled Ghafoor, Mohiuddin Ahmed (202
 - **SHAP (Shapley Values)**: 게임 이론의 Shapley Value를 이용하여 각 특성이 최종 예측값과 평균 예측값의 차이에 기여한 정도를 공정하게 배분한다.
 
 ### 3. 예시 기반 설명 (Example-Based Explanations)
+
 데이터셋의 특정 사례를 통해 모델의 동작을 설명한다.
+
 - **Counterfactual (반사실적 설명)**: "만약 X가 아니라 Y였다면 결과가 바뀌었을 것"이라는 방식으로, 예측 결과를 뒤집기 위해 필요한 최소한의 입력값 변화를 제시한다.
 - **Adversarial (적대적 예시)**: 아주 작은 입력 변화로 예측을 잘못하게 만드는 예시를 통해 모델의 취약점을 찾고 설명한다.
 - **Prototypes & Criticisms**: 데이터를 가장 잘 대표하는 사례(Prototype)와 대표성이 떨어지는 사례(Criticism)를 통해 모델의 행동 범위를 설명한다.
 
 ### 4. 지식 주입 기법 (Knowledge Infusion Techniques)
+
 도메인 지식을 모델 설계나 학습 과정에 직접 통합하는 방식이다. 예를 들어, 금융 분야의 '5C's of credit' 원칙이나 보안 분야의 'CIA' 원칙을 모델에 주입하여, 단순한 통계적 상관관계가 아닌 도메인 원리에 기반한 설명 가능성을 확보한다.
 
 ## 📊 Results
@@ -70,13 +79,16 @@ Sheikh Rabiul Islam, William Eberle, Sheikh Khaled Ghafoor, Mohiuddin Ahmed (202
 ## 🧠 Insights & Discussion
 
 ### 강점 및 기여
+
 본 연구는 XAI의 방대한 방법론을 체계적으로 분류하고, 특히 **Mutual test case**를 도입함으로써 서로 다른 기법들이 동일한 문제에 대해 어떻게 다른 설명을 내놓는지 비교할 수 있는 프레임워크를 제공하였다. 이는 실무자가 자신의 문제 상황(전역적 설명 필요 여부, 모델 독립성 필요 여부 등)에 맞는 최적의 XAI 도구를 선택하는 데 실질적인 가이드를 제공한다.
 
 ### 한계 및 비판적 해석
+
 - **Post-hoc의 위험성**: 저자들은 Post-hoc 설명 방식이 실제 모델의 결정 과정을 그대로 보여주는 것이 아니라, 사후에 그럴싸하게 꾸며낸 '근사치'일 수 있음을 경고한다. 따라서 고위험 결정 시스템에서는 Post-hoc 방식보다 처음부터 해석 가능한(Ante-hoc) 모델을 사용하는 것이 바람직하다는 비판적 관점을 제시한다.
 - **정량화의 부재**: 설명 가능성을 측정하는 객관적 지표가 여전히 부족하며, 인간 중심의 평가(Human study)는 비용이 많이 들고 주관적이라는 한계가 있다.
 
 ### 향후 연구 방향
+
 - **Formalism 구축**: 설명의 형식을 정형화하고, 수신자(전문가 vs 일반인)에 맞춘 맞춤형 설명 체계가 필요하다.
 - **인간-기계 팀워크(Human-Machine Teaming)**: AI가 설명을 제공하고 인간이 피드백을 주어 모델이 스스로 개선되는 'Human-in-the-loop' 구조의 연구가 필요하다.
 - **다학제적 접근**: 심리학, 인지 과학, 사회 과학의 이론을 결합하여 인간이 실제로 어떻게 설명을 이해하고 신뢰하는지를 연구해야 한다.

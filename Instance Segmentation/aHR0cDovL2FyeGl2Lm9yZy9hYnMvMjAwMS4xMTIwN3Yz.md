@@ -10,13 +10,14 @@ Jaedong Hwang, Seohyunyun Kim, Jeany Son, Bohyung Han (2020)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 **Deep Community Learning (DCL)** 프레임워크를 통해 여러 태스크 간의 능동적인 상호작용을 유도하고 긍정적인 피드백 루프(Positive feedback loop)를 구축하는 것이다. 
+본 논문의 핵심 아이디어는 **Deep Community Learning (DCL)** 프레임워크를 통해 여러 태스크 간의 능동적인 상호작용을 유도하고 긍정적인 피드백 루프(Positive feedback loop)를 구축하는 것이다.
 
 단순히 여러 목적 함수를 병렬로 학습하는 Multi-task learning과 달리, Community Learning은 Object Detection, Instance Mask Generation (IMG), Instance Segmentation (IS) 모듈이 서로의 결과물을 가이드로 삼아 유기적으로 연결된다. 구체적으로, Detector가 찾은 제안 영역(Proposal)이 IMG의 가이드가 되고, IMG가 생성한 Pseudo-GT mask가 IS의 학습 목표가 되며, 이 과정이 다시 Feature Extractor의 가중치 업데이트로 이어져 전체 시스템의 견고함을 높이는 구조이다.
 
 ## 📎 Related Works
 
 본 논문은 다음과 같은 관련 연구들의 한계를 지적한다.
+
 - **Weakly Supervised Object Detection (WSOD):** 주로 Multiple Instance Learning (MIL) 방식을 사용하며, OICR과 같은 최신 기법들이 존재하지만 여전히 객체의 전체 영역보다는 판별적 부분에 집중하는 문제가 있다.
 - **Weakly Supervised Semantic Segmentation (WSSS):** Class Activation Map (CAM)을 통해 픽셀 수준의 레이블을 추정하지만, 인스턴스 간의 구분(Instance-wise separation)이 어렵다.
 - **Weakly Supervised Instance Segmentation (WSIS):** 기존 연구들은 복잡한 파이프라인을 가지거나, 단순한 후처리(Post-processing)에 의존하며, Detection과 Segmentation 모듈 간의 긴밀한 상호작용이 부족하여 성능 향상에 한계가 있었다.
@@ -24,6 +25,7 @@ Jaedong Hwang, Seohyunyun Kim, Jeany Son, Bohyung Han (2020)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조 및 파이프라인
+
 본 모델은 **Feature Extractor**, **Object Detector (with Regressor)**, **Instance Mask Generation (IMG)**, **Instance Segmentation (IS)**의 네 가지 주요 구성 요소로 이루어져 있으며, end-to-end 방식으로 학습된다.
 
 1. **Feature Extractor:** ResNet50을 백본으로 사용하며, Spatial Pyramid Pooling (SPP) 레이어를 통해 각 Proposal의 특징을 추출한다.
@@ -38,15 +40,17 @@ Jaedong Hwang, Seohyunyun Kim, Jeany Son, Bohyung Han (2020)
 4. **Instance Segmentation Module:** IMG 모듈이 생성한 $\tilde{M}$을 Ground-truth로 삼아 픽셀 단위의 이진 분류(Binary classification)를 수행함으로써 최종 마스크를 예측한다.
 
 ### 2. 손실 함수 (Loss Functions)
+
 전체 손실 함수는 세 모듈의 손실 합으로 정의된다:
 $$L = L_{det} + L_{img} + L_{seg}$$
 
-- **Detection Loss ($L_{det}$):** 이미지 분류 손실($L_{cls}$), 정제 손실($L_{refine}$), 그리고 Bounding box 회귀 손실($L_{reg}$)의 합이다. 
+- **Detection Loss ($L_{det}$):** 이미지 분류 손실($L_{cls}$), 정제 손실($L_{refine}$), 그리고 Bounding box 회귀 손실($L_{reg}$)의 합이다.
   - $L_{reg}$는 Proposal과 Pseudo-GT 간의 $\text{smooth } \ell^1\text{-norm}$을 사용한다.
 - **IMG Loss ($L_{img}$):** Detector에서 얻은 Pseudo-label $\tilde{y}_{rc}$와 CAM 네트워크의 출력 $p_{rc}^k$ 사이의 Binary Cross Entropy (BCE) 손실을 사용한다.
 - **Segmentation Loss ($L_{seg}$):** IMG 모듈이 생성한 Pseudo-GT mask $\tilde{M}$과 Segmentation 네트워크의 출력 $s_{ij}$ 사이의 픽셀 단위 BCE 손실을 사용한다.
 
 ### 3. 추론 및 후처리 (Inference & Post-processing)
+
 추론 시에는 IMG 모듈의 결과 $M_c$와 IS 모듈의 결과 $S_c$를 앙상블하여 최종 마스크 $O_c$를 생성한다:
 $$O_c = \delta \left[ \frac{M_c + S_c}{2} > \xi \right]$$
 이후, 경계선 세부 묘사를 위해 **Multiscale Combinatorial Grouping (MCG)** proposal을 사용하여 최종 마스크를 보정한다.
@@ -54,16 +58,18 @@ $$O_c = \delta \left[ \frac{M_c + S_c}{2} > \xi \right]$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋:** PASCAL VOC 2012 segmentation dataset.
 - **학습 조건:** 이미지 수준의 클래스 레이블만 사용. ResNet50 백본, 단일 Titan XP GPU 사용.
 - **평가 지표:** mAP (IoU threshold 0.25, 0.5, 0.75) 및 ABO (Average Best Overlap).
 
 ### 2. 주요 결과
+
 - **정량적 성능:** 본 제안 방법은 후처리를 제외하고도 기존의 Weakly Supervised 방식들(PRM, IAM, Label-PEnet 등)보다 전반적으로 우수한 성능을 보였다. 특히 MCG 후처리를 적용했을 때 mAP 0.5에서 높은 성능을 기록하였다.
-- **Ablation Study:** 
-    - Detector $\rightarrow$ IMG $\rightarrow$ IS $\rightarrow$ REG 순으로 모듈을 추가할수록 mAP와 CorLoc 성능이 지속적으로 향상됨을 확인하였다.
-    - IMG 모듈 내의 배경 클래스 추가(BG), Weighted GAP, Feature Smoothing(FS) 모두 성능 향상에 기여하였으며, 세 가지를 모두 적용했을 때 최적의 성능을 보였다.
-    - **Class-agnostic regressor**가 Class-specific regressor보다 높은 성능을 보였는데, 이는 모든 클래스가 회귀 모델을 공유함으로써 개별 클래스의 편향(Bias)을 줄이고 정규화 효과를 얻었기 때문으로 분석된다.
+- **Ablation Study:**
+  - Detector $\rightarrow$ IMG $\rightarrow$ IS $\rightarrow$ REG 순으로 모듈을 추가할수록 mAP와 CorLoc 성능이 지속적으로 향상됨을 확인하였다.
+  - IMG 모듈 내의 배경 클래스 추가(BG), Weighted GAP, Feature Smoothing(FS) 모두 성능 향상에 기여하였으며, 세 가지를 모두 적용했을 때 최적의 성능을 보였다.
+  - **Class-agnostic regressor**가 Class-specific regressor보다 높은 성능을 보였는데, 이는 모든 클래스가 회귀 모델을 공유함으로써 개별 클래스의 편향(Bias)을 줄이고 정규화 효과를 얻었기 때문으로 분석된다.
 
 ## 🧠 Insights & Discussion
 

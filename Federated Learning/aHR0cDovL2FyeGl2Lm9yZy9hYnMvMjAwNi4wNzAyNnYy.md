@@ -28,6 +28,7 @@ Chien-Lun Chen, Leana Golubchik, Marco Paolieri (2020)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 학습 절차
+
 본 논문은 $M$명의 사용자가 참여하는 연합 메타 학습 환경을 가정한다. 서버는 선택된 사용자들에게 공유 모델 $\theta_t^G$를 전송하고, 각 사용자는 로컬에서 학습 후 업데이트 $\delta_t^i = \theta_t^i - \theta_t^G$를 서버에 전송한다. 서버는 이를 집계하여 다음 라운드의 모델 $\theta_{t+1}^G = \theta_t^G + \sum_{i=1}^{M_{min}} \alpha_i \delta_t^i$를 생성한다.
 
 메타 학습 알고리즘으로는 1차 근사 방식인 Reptile을 사용한다. 각 사용자는 $B$개의 에피소드로 구성된 메타 배치(meta-batch)를 학습하며, 각 에피소드 $j$에서 $N$개의 클래스와 클래스당 $K$개의 예제를 사용하여 SGD를 수행해 $\theta_{t,j}^i$를 얻는다. 최종 로컬 업데이트는 다음과 같이 계산된다.
@@ -35,11 +36,13 @@ $$\theta_t^i = (1-\epsilon)\theta_t^i + \frac{\epsilon}{B} \sum_{j=1}^{B} \theta
 여기서 $\epsilon$은 outer learning rate이다.
 
 ### 백도어 공격 방법
+
 공격자는 데이터 포이즈닝을 통해 백도어를 삽입한다. 공격자는 백도어 클래스($X_B$)의 데이터를 타겟 클래스($X_T$)의 레이블로 지정하여 학습시킨다. 또한 공격의 효과를 극대화하기 위해 서버로 전송하는 업데이트에 부스팅 팩터 $\lambda$를 곱하여 전송한다.
 $$\delta_a^t = \lambda(\theta_a^t - \theta_t^G)$$
 이를 통해 단 한 번의 업데이트만으로도 전역 모델 $\theta_t^G$에 강력한 영향력을 행사한다.
 
 ### 방어 메커니즘: Matching Networks 기반 접근
+
 제안된 방어 기법은 모델이 직접 클래스를 예측하는 대신, 임베딩 모델 $f_\theta(x)$를 통해 특징을 추출하고 서포트 세트 $S = \{(x_i, y_i)\}_{i=1}^k$와의 유사도를 측정하는 방식을 취한다. 입력 $\hat{x}$의 예측 클래스 $\hat{y}$는 다음과 같이 결정된다.
 $$\hat{y} = \sum_{i} a(\hat{x}, x_i)y_i$$
 여기서 $a(\hat{x}, x_i)$는 어텐션 메커니즘(attention mechanism)으로, 본 논문에서는 스케일링된 코사인 거리(scaled cosine distance)를 기반으로 한 소프트맥스 함수를 사용한다.
@@ -47,6 +50,7 @@ $$a(\hat{x}, x_i) = \frac{e^{c(\alpha_l f_\theta(\hat{x}), f_\theta(x_i))\beta_l
 여기서 $\alpha_l$은 게이트 변수, $\beta_l$은 스케일링 팩터이다.
 
 **방어 절차**:
+
 1. 오염된 모델의 영향력을 줄이기 위해 무작위 Glorot 초기화 값 $\theta_g$를 섞어 새로운 초기값 $\theta' = \delta \theta + (1-\delta)\theta_g$를 설정한다 ($\delta=0.3$).
 2. 고정된 $\theta'$ 상태에서 $\alpha_l$과 $\beta_l$을 먼저 학습시킨다.
 3. 최종적으로 $\theta', \alpha_l, \beta_l$을 공동으로 학습(joint training)시켜 모델을 정제한다.
@@ -54,11 +58,13 @@ $$a(\hat{x}, x_i) = \frac{e^{c(\alpha_l f_\theta(\hat{x}), f_\theta(x_i))\beta_l
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Omniglot (문자 인식), mini-ImageNet (일반 이미지)
 - **설정**: 사용자 $M=4$, 공격자 1명, 1-shot attack 수행 ($\lambda=3$).
 - **지표**: 메인 작업 정확도(main-task accuracy), 백도어 정확도(backdoor accuracy - 백도어 이미지가 타겟으로 분류되는 비율), 메타 테스트 정확도(meta-testing accuracy).
 
 ### 주요 결과
+
 1. **공격의 성공 및 지속성**:
     - **Omniglot**: 단 한 번의 공격으로 백도어 정확도가 약 80%에 달했으며, 메타 테스트 정확도는 단 1%만 하락하여 탐지가 매우 어렵다. 50라운드의 추가 벤더 학습 후에도 백도어 정확도는 50% 수준으로 유지되었다.
     - **mini-ImageNet**: 공격 학습셋에서 75%, 검증셋에서 50%의 성공률을 보였으며, 100라운드의 추가 학습 후에도 성공률이 69%/42%로 유지되어 지속성이 확인되었다.

@@ -4,7 +4,7 @@ Arthur Julian, Kai Arulkumar, Shuntaro Sasai, Ryota Kanai (2022)
 
 ## 🧩 Problem to Solve
 
-본 논문은 대중 매체에서 흔히 묘사되는 '인공 지능의 자각(awareness)과 인간 수준 혹은 그 이상의 지능(superhuman intelligence) 사이의 연결 고리'가 실제로 유효한지를 학술적으로 탐구한다. 
+본 논문은 대중 매체에서 흔히 묘사되는 '인공 지능의 자각(awareness)과 인간 수준 혹은 그 이상의 지능(superhuman intelligence) 사이의 연결 고리'가 실제로 유효한지를 학술적으로 탐구한다.
 
 전통적인 AI 시스템은 특정 도메인에서는 압도적인 성능을 보이지만, 새로운 기술을 습득하는 효율성 측면에서는 인간이나 동물에 비해 매우 낮다. 이는 수백만 개의 데이터 샘플이 필요하거나, 설계 단계에서 이미 방대한 도메인 지식이 주입되어야 하기 때문이다. 즉, 현재의 AI는 '범용 지능(General Intelligence)' 관점에서 심각한 결함이 있으며, 저자들은 이 지능의 격차(intelligence gap)를 메우기 위한 방법으로 인간의 의식 기능(conscious function)에 주목한다.
 
@@ -19,12 +19,16 @@ Arthur Julian, Kai Arulkumar, Shuntaro Sasai, Ryota Kanai (2022)
 ## 📎 Related Works
 
 ### 의식 연구의 배경
+
 논문은 의식을 두 가지 관점으로 구분하는 Ned Block의 이론을 차용한다.
+
 - **Phenomenal Consciousness (현상적 의식):** 주관적인 느낌(qualia)에 관한 것으로, 과학적으로 측정하기 어려운 'Hard Problem'에 해당한다.
 - **Access Consciousness (접근 의식):** 추론, 언어 보고, 행동 제어에 사용 가능한 정보의 상태를 의미하며, 이는 기능적으로 측정 가능하므로 본 논문의 분석 대상이 된다.
 
 ### 기존 AI 접근 방식의 한계
+
 현재의 Deep Learning은 대규모 데이터와 모델 크기를 통해 일반화를 꾀하는 'Foundation Models' 방식과, MBRL(Model-Based RL)이나 Meta-learning과 같은 '원칙적 일반화' 방식으로 나뉜다. 그러나 대부분의 시스템은 다음과 같은 한계를 가진다.
+
 - **데이터 효율성 부족:** 인간은 Few-shot 혹은 Zero-shot 학습이 가능하지만, AI는 수천 배 이상의 경험이 필요하다.
 - **구조적 제약:** 특정 환경(예: Atari 게임)에서 학습된 모델은 유사한 다른 환경에서도 성능이 급격히 떨어진다.
 - **수동적 시뮬레이션:** 현재의 World Model은 주로 관측된 데이터의 재현(Replay)이나 제한적인 미래 예측(Preplay)에 머물러 있으며, 능동적인 가상 시나리오 생성 능력이 부족하다.
@@ -32,6 +36,7 @@ Arthur Julian, Kai Arulkumar, Shuntaro Sasai, Ryota Kanai (2022)
 ## 🛠️ Methodology
 
 ### 1. 의식의 세 가지 기능적 이론
+
 저자들은 범용 지능을 구현하기 위해 다음의 세 가지 이론적 구성 요소가 필요하다고 설명한다.
 
 - **Global Workspace Theory (GWT):** 뇌의 다양한 모듈이 정보를 공유하는 공통의 대표 공간(representational space)이 존재한다는 이론이다. 여기서 'Attention'은 관련 정보를 워크스페이스에 진입시키는 정책이며, 진입된 정보는 시스템 전체로 방송(broadcast)되어 공유된다. 이는 AI의 Modularity 및 Transformer의 Attention 메커니즘과 연결된다.
@@ -39,6 +44,7 @@ Arthur Julian, Kai Arulkumar, Shuntaro Sasai, Ryota Kanai (2022)
 - **Attention Schema Theory (AST):** 의식은 주의(attention) 그 자체가 아니라, '주의 프로세스에 대한 고수준 모델(meta-representation)'을 가지는 것이라는 이론이다. 이를 통해 에이전트는 자신이 무엇에 집중하고 있는지 인식하고, 상황에 맞춰 주의 정책을 유연하게 수정할 수 있다. 이는 AI의 Meta-learning 및 Self-modeling과 연결된다.
 
 ### 2. 경험 생성의 계층 구조 (Hierarchy of Experience Generation)
+
 저자들은 지능의 수준을 경험 생성 능력에 따라 네 단계로 정의한다.
 
 1. **Direct Experience:** 현재의 궤적에서만 학습하는 단계.
@@ -47,6 +53,7 @@ Arthur Julian, Kai Arulkumar, Shuntaro Sasai, Ryota Kanai (2022)
 4. **Mental Time Travel (MTT):** 경험하지 않은 가상의 환경과 가상의 정책을 생성하여 시뮬레이션하는 단계.
 
 ### 3. 통합 시스템 구조
+
 저자들이 제안하는 통합 아키텍처의 흐름은 다음과 같다.
 $$\text{IGT (경험 생성)} \rightarrow \text{GWT (정보 선택 및 공유)} \rightarrow \text{AST (주의 정책 제어 및 자기 인식)}$$
 
@@ -65,9 +72,11 @@ $$\text{IGT (경험 생성)} \rightarrow \text{GWT (정보 선택 및 공유)} \
 ## 🧠 Insights & Discussion
 
 ### 강점 및 의의
+
 본 논문은 모호한 개념인 '의식'과 '지능'의 관계를 '접근 의식'이라는 기능적 관점으로 끌어내어, AI 연구자가 추구해야 할 구체적인 공학적 목표(MTT 구현)를 제시했다는 점에서 매우 높은 가치가 있다. 특히 뇌 과학의 세 가지 주요 이론을 통합하여 하나의 시스템 아키텍처로 제안한 점이 독창적이다.
 
 ### 한계 및 비판적 해석
+
 - **현상적 의식의 배제:** 저자들은 'Qualia'와 같은 현상적 의식을 논외로 하였으나, 실제 지능의 발현에 있어 주관적 가치 판단이나 감정적 valence가 어떤 역할을 하는지에 대한 설명이 부족하다.
 - **구현의 복잡성:** 세 이론을 통합하는 것은 이론적으로는 완벽해 보이지만, 이를 실제 신경망 아키텍처로 구현했을 때 발생할 계산 복잡도와 학습 불안정성에 대한 구체적인 해결책은 제시되지 않았다.
 - **가정의 의존성:** MTT가 인간에게만 고유하다는 가정과 이것이 지능의 절대적 지표라는 전제는 여전히 학계에서 논쟁 중인 사안이다.

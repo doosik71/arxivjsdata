@@ -10,7 +10,7 @@ Shaoxiong Sun et al. (2023)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 **동적 특성 선택(Dynamic Feature Selection, DFS)**과 **온라인 모델 업데이트**를 결합하여, 환자의 생체 상태 변화를 실시간으로 반영하는 회귀 모델을 구축하는 것이다. 
+본 논문의 핵심 아이디어는 **동적 특성 선택(Dynamic Feature Selection, DFS)**과 **온라인 모델 업데이트**를 결합하여, 환자의 생체 상태 변화를 실시간으로 반영하는 회귀 모델을 구축하는 것이다.
 
 단순히 고정된 특징량을 사용하는 것이 아니라, 특성별 강건성(Robustness)과 상관관계 기반 특성 선택(Correlation-based Feature Selection, CFS) 원리를 적용하여 매 간헐적 측정 시점마다 최적의 특징 조합을 선택한다. 이를 통해 개별 환자의 혈관 특성 변화와 심혈관 상태를 반영한 맞춤형 SBP 추정 모델을 구현하였다.
 
@@ -23,40 +23,50 @@ Shaoxiong Sun et al. (2023)
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인
+
 전체 시스템은 신호 획득 $\rightarrow$ 특징 추출 $\rightarrow$ 동적 특성 선택 $\rightarrow$ 다중 선형 회귀 모델 구축 $\rightarrow$ SBP 추정의 순서로 진행된다. 30초 단위로 SBP를 추정하며, 10분마다 제공되는 간헐적 SBP 측정값을 사용하여 모델의 특징량과 계수를 업데이트한다.
 
 ### 2. 특징 추출 (Feature Extraction)
+
 SBP와 유의미한 관계가 있다고 알려진 9가지 특징을 4개의 그룹으로 분류하여 추출한다.
+
 - **Group 1:** $\text{PAT}$ (ECG R-peak부터 PPG foot까지의 시간 지연)
 - **Group 2:** $\text{PPG amplitude}$, $\text{sp}_{\text{mean}}$ (수축기 단계 1차 미분 평균), $\text{sp}_{\text{var}}$ (수축기 단계 1차 미분 분산)
 - **Group 3:** $\text{Pulse Delay (PD)}$ (PPG의 첫 번째 피크와 두 번째 피크 사이의 시간 지연)
 - **Group 4:** 2차 미분 기반 특성 ($\text{c/a}$, $\text{e/a}$, $\text{norm a}$, $\text{norm b}$)
 
 ### 3. 동적 특성 선택 (Dynamic Feature Selection, DFS)
+
 특징 선택은 다음의 단계로 이루어진다.
+
 1. **첫 번째 특징 선택:** 최근 9개의 간헐적 측정값과 PAT 사이의 절대 상관계수($\text{ACC}$)를 계산한다. $\text{ACC} > 0.7$이면 PAT를 선택하고, 그렇지 않으면 Group 2 $\rightarrow$ Group 3 $\rightarrow$ Group 4 순으로 탐색하여 가장 높은 $\text{ACC}$를 가진 특성을 선택한다. (부트스트래핑을 통해 이상치 영향을 최소화한 정밀 선택 수행)
 2. **추가 특징 선택 (CFS):** 첫 번째 선택된 특성과 상호 보완적인 정보를 제공하는 특성을 추가한다. 이때 다음과 같은 $\text{merit}$ 함수를 사용하여 중복성을 최소화하고 타겟 변수와의 상관관계를 최대화하는 부분 집합을 찾는다.
 $$\text{merit} = \frac{\sqrt{\sum_{i=1}^{k} r_{sf_i}}}{\sqrt{k + 2 \sum_{i=1}^{k-1} \sum_{j=i+1}^{k} r_{f_i f_j}}}$$
 여기서 $r_{sf_i}$는 $i$번째 특성과 $\text{SBP}$ 사이의 상관계수이고, $r_{f_i f_j}$는 특성 간의 상관계수이며, $k$는 선택된 특성의 수이다. 과적합 방지를 위해 최대 특성 수는 3개로 제한한다.
 
 ### 4. 회귀 모델 및 추론
+
 선택된 특성들을 바탕으로 최근 9개의 간헐적 측정 데이터를 이용하여 다중 선형 회귀(Multiple Linear Regression) 모델을 구축한다. 모델의 최종 출력값에는 가장 최근의 간헐적 측정값과 일치하도록 오프셋(Offset)을 추가하여 정밀도를 높인다.
 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋:** 수술을 받는 29명의 환자 중 신호 품질이 양호한 23명의 데이터(총 91.2시간)를 사용하였다.
 - **비교 대상:** Zero-order hold(최근 측정값 유지), PAT-only 모델, PPG-only 모델, PCA 기반 모델 등과 비교하였다.
 - **평가 지표:** $\text{RMSE}$, $\text{Bland-Altman analysis (Bias } \pm \text{ SD)}$, $\text{Pearson correlation coefficient}$를 사용하였다.
 
 ### 2. 정량적 결과
+
 제안 방법은 다음과 같은 성능을 기록하며 AAMI 표준을 충족하였다.
+
 - **Mean Difference (Bias):** $0.08\text{ mmHg}$
 - **Standard Deviation of Difference (SDD):** $7.97\text{ mmHg}$
 - **Correlation Coefficient:** $0.89$ ($p < 0.001$)
 - **Pooled RMSE:** $7.97\text{ mmHg}$
 
 ### 3. 주요 분석 결과
+
 - **모델 비교:** 제안 방법은 Zero-order hold, PAT-only, PPG-only 및 PCA 기반 방법보다 통계적으로 유의미하게 낮은 $\text{RMSE}$와 높은 상관계수를 보였다.
 - **특성 수의 영향:** 최대 특성 수를 3개로 설정했을 때, 1개 또는 2개로 설정했을 때보다 성능이 우수하였다.
 - **업데이트의 필요성:** 모델 업데이트 직후의 $\text{RMSE}$($5.42\text{ mmHg}$)가 다음 업데이트 직전의 $\text{RMSE}$($9.38\text{ mmHg}$)보다 훨씬 낮게 나타나, 실시간 모델 업데이트의 필요성이 입증되었다.

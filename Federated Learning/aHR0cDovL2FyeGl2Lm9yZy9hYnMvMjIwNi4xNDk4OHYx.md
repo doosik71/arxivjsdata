@@ -19,12 +19,15 @@ Zihan Chen, Songshang Liu, Hualiang Wang, Howard H. Yang, Tony Q.S. Quek, Zuozhu
 ## 📎 Related Works
 
 ### 중앙 집중식 Long-Tailed Learning (Centralized LT Learning)
+
 중앙 집중식 환경에서는 다음과 같은 방법들이 제안되었다.
+
 - **Re-balancing**: ROS, RUS, Simple calibration, Dynamic curriculum learning 등을 통해 샘플 수를 조절한다.
 - **Re-weighting**: Focal Loss, LDAM Loss와 같이 손실 함수에 가중치를 부여하여 tail 클래스의 영향력을 높인다.
 - **Representation & Classifier Decoupling**: 표현 학습(Representation learning)과 분류기 학습(Classifier learning)을 분리하여 분류기의 결정 경계를 재조정하는 방식이 제안되었다.
 
 ### Federated Learning (FL)
+
 기존 FL 연구들은 주로 데이터의 Heterogeneity(비동질성), 즉 non-IID 분포나 데이터 크기의 불균형 문제를 다루어 왔다. FedProx와 같은 최적화 알고리즘이나 FedPer와 같은 Personalization FL (PFL) 기법들이 제안되었으나, 극단적인 Long-Tailed 분포가 FL 시스템에 미치는 영향에 대한 심층적인 분석은 부족한 상태이다.
 
 ## 🛠️ Methodology
@@ -32,6 +35,7 @@ Zihan Chen, Songshang Liu, Hualiang Wang, Howard H. Yang, Tony Q.S. Quek, Zuozhu
 본 논문은 새로운 알고리즘을 제안하기보다 F-LT 문제를 정의하고 분석하는 프레임워크를 제시한다.
 
 ### 1. 데이터 분포의 정형화
+
 $N$명의 클라이언트와 $M$개의 클래스가 있을 때, 클라이언트 $k$의 로컬 데이터셋 $D^k$에서 클래스 $i$의 샘플 수를 $n_k^{(i)}$, 전체 샘플 수를 $n_k$라고 정의한다.
 
 - **로컬 데이터 분포 ($p^k$):**
@@ -41,11 +45,14 @@ $N$명의 클라이언트와 $M$개의 클래스가 있을 때, 클라이언트 
   여기서 $|D|$는 전체 시스템의 총 샘플 수이다.
 
 ### 2. Imbalance Factor (IF)
+
 데이터의 Long-Tailed 정도를 측정하기 위해 Imbalance Factor를 사용한다.
+
 - **로컬 불균형 지수 ($IF_L^{(k)}$):** $$\text{IF}_L^{(k)} = \frac{\max_j \{n_k^{(j)}\}}{\min_s \{n_k^{(s)}\}}$$
 - **글로벌 불균형 지수 ($\text{IF}_G$):** $$\text{IF}_G = \frac{\max_j \{\sum_{i=1}^N n_i^{(j)}\}}{\min_s \{\sum_{i=1}^N n_i^{(s)}\}}$$
 
 ### 3. F-LT의 세 가지 유형 (Taxonomy)
+
 논문은 로컬과 글로벌 분포의 관계에 따라 F-LT를 세 가지 타입으로 분류한다.
 
 - **Type 1 (Homogeneous LT):** 로컬과 글로벌 분포가 모두 동일한 Long-Tailed 분포를 가진다. 모든 클라이언트가 동일한 head/tail 클래스를 공유하며, 목표는 성능 좋은 **단일 글로벌 모델**을 학습하는 것이다.
@@ -55,12 +62,14 @@ $N$명의 클라이언트와 $M$개의 클래스가 있을 때, 클라이언트 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: CIFAR-10-LT (합성 데이터), iNaturalist, Google Landmarks (실제 데이터).
 - **데이터 분할**: IID 샘플링(Type 1), Dirichlet 분포 기반 샘플링(Type 2), 다양한 head/tail 패턴 샘플링(Type 3)을 사용하였다.
 - **비교 알고리즘**: FedAvg, FedProx, CReFF (LT 특화), FedPer (개인화 특화).
 - **평가 지표**: Test Accuracy.
 
 ### 주요 결과
+
 1. **불균형도와 성능의 관계**: $\text{IF}_G$ 또는 $\text{IF}_L$ 수치가 커질수록(즉, Long-Tailed 특성이 강해질수록) 모든 알고리즘의 테스트 정확도가 하락하는 경향을 보였다.
 2. **알고리즘별 특성**:
    - **FedProx**: 일반적인 non-IID 설정에서는 FedAvg보다 우수하지만, 글로벌 Long-Tailed 데이터 설정에서는 성능이 저하되는 경우가 있었다.
@@ -70,9 +79,11 @@ $N$명의 클라이언트와 $M$개의 클래스가 있을 때, 클라이언트 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 분석
+
 본 논문은 단순히 성능을 높이는 알고리즘을 제시하는 대신, FL 환경에서 Long-Tailed 문제가 가질 수 있는 수학적 구조와 시나리오를 명확히 정의하였다. 특히, 글로벌 분포가 균형 잡혔더라도 로컬 분포가 Long-Tailed일 수 있다는 Type 3 시나리오를 제시함으로써, 기존의 중앙 집중식 LT 학습 관점만으로는 FL 문제를 해결할 수 없음을 시사하였다.
 
 ### 한계 및 논의사항
+
 - **데이터 손실 문제**: CIFAR-10-LT와 같은 합성 데이터셋을 만들 때 Exponential/Pareto 샘플링을 사용하면 많은 양의 데이터를 버리게 되는데, 이는 성능 저하가 단순히 불균형 때문이 아니라 전체 데이터 양의 감소 때문일 가능성이 있음을 언급하였다.
 - **개인화의 중요성**: 실험 결과, PFL(Personalized FL) 기법이 LT 문제 해결의 실마리가 될 수 있음을 보여주었으나, 구체적으로 CLT의 Decoupling 기법이나 Re-weighting 기법을 PFL 구조에 어떻게 통합할지에 대한 상세 설계는 향후 과제로 남겨두었다.
 

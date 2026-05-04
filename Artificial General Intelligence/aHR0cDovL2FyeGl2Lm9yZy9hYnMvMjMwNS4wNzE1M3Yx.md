@@ -17,6 +17,7 @@ Jonas Schuett, Noemi Dreksler, Markus Anderljung, David McCaffary, Lennart Heim,
 ## 📎 Related Works
 
 논문에서는 AGI 및 범용 AI 시스템의 안전성을 확보하려는 기존의 노력들을 소개한다.
+
 - **기업의 자체 노력:** OpenAI, Google DeepMind 등이 일부 거버넌스 관행을 공유하거나 제안하고 있다.
 - **다자간 협의체 및 표준:** Partnership on AI의 대규모 AI 모델 안전 프로토콜 개발, The Future Society의 산업 행동 강령 제정 노력 등이 존재한다.
 - **표준 프레임워크:** NIST의 AI 위험 관리 프레임워크(AI Risk Management Framework) 및 ISO/IEC 23894와 같은 기존의 위험 관리 표준을 범용 AI 시스템에 맞게 조정하려는 시도가 이루어지고 있다.
@@ -29,26 +30,31 @@ Jonas Schuett, Noemi Dreksler, Markus Anderljung, David McCaffary, Lennart Heim,
 본 연구는 정량적 설문 조사와 정성적 워크숍을 결합한 방법론을 사용하였다.
 
 ### 1. 표본 구성 및 설문 설계
+
 - **대상:** AGI 연구소, 학계, 시민 사회, 기타(정부, 컨설팅 등) 섹터의 전문가 92명에게 요청하여 총 51명의 응답을 확보하였다.
 - **설문 내용:** 개발, 배포, 모니터링, 위험 관리, 외부 감시, 정보 보안, 커뮤니케이션 등 8개 영역을 포괄하는 50개의 실천 항목에 대해 동의 여부를 물었다.
 - **응답 척도:** 5점 리커트 척도(Likert scale)를 사용하였다.
-    - 강력히 반대 $(-2) \rightarrow$ 약간 반대 $(-1) \rightarrow$ 보통 $(0) \rightarrow$ 약간 찬성 $(1) \rightarrow$ 강력히 찬성 $(2)$
-    - 또한 '모름(I don't know)' 옵션을 제공하였다.
+  - 강력히 반대 $(-2) \rightarrow$ 약간 반대 $(-1) \rightarrow$ 보통 $(0) \rightarrow$ 약간 찬성 $(1) \rightarrow$ 강력히 찬성 $(2)$
+  - 또한 '모름(I don't know)' 옵션을 제공하였다.
 
 ### 2. 분석 방법
+
 - **전체 합의도 분석:** 각 항목에 대한 평균 동의 점수와 찬성 비율을 계산하였다.
 - **집단 간 차이 분석:**
-    - **Mann-Whitney U test:** 서로 다른 두 집단(예: AGI 연구소 vs 학계) 간의 전체적인 평균 동의 수준에 유의미한 차이가 있는지 테스트하였다.
-    - **Chi-squared tests:** 각 개별 항목에 대한 응답 분포가 집단별로 또는 성별로 유의미하게 다른지 분석하였다.
+  - **Mann-Whitney U test:** 서로 다른 두 집단(예: AGI 연구소 vs 학계) 간의 전체적인 평균 동의 수준에 유의미한 차이가 있는지 테스트하였다.
+  - **Chi-squared tests:** 각 개별 항목에 대한 응답 분포가 집단별로 또는 성별로 유의미하게 다른지 분석하였다.
 - **다중 비교 보정:** $p$-value의 신뢰성을 높이기 위해 Holm-Bonferroni 보정법을 적용하였다.
 
 ## 📊 Results
 
 ### 1. 전반적인 합의 수준
+
 분석 결과, 전문가들은 제시된 50가지 관행의 대부분에 대해 매우 높은 합의를 보였다. 전체 항목의 평균 동의 점수는 $1.39$ (약간 찬성과 강력히 찬성 사이)였으며, 평균적으로 응답자의 $85.2\%$가 각 항목에 찬성하였다.
 
 ### 2. 가장 합의도가 높은 관행 (Top 5)
+
 다음 항목들은 $98\%$의 응답자가 찬성하였으며, 평균 점수가 매우 높게 나타났다.
+
 - **배포 전 위험 평가 (Pre-deployment risk assessment):** $M=1.9$
 - **위험 능력 평가 (Dangerous capabilities evaluations):** $M=1.9$
 - **제3자 모델 감사 (Third-party model audits):** $M=1.8$
@@ -56,7 +62,9 @@ Jonas Schuett, Noemi Dreksler, Markus Anderljung, David McCaffary, Lennart Heim,
 - **레드 티밍 (Red teaming):** $M=1.8$
 
 ### 3. 합의도가 상대적으로 낮은 관행 (Bottom 5)
+
 모든 항목이 양(+)의 평균값을 가졌으나, 상대적으로 동의율이 낮았던 항목들은 다음과 같다.
+
 - **타 연구소에 통지 (Notify other labs):** $M=0.4$
 - **능력 급증 회피 (Avoid capabilities jumps):** $M=0.6$
 - **연구소 간 상호 감시 (Inter-lab scrutiny):** $M=0.7$
@@ -64,20 +72,24 @@ Jonas Schuett, Noemi Dreksler, Markus Anderljung, David McCaffary, Lennart Heim,
 - **배포 전 국가 기관 통지 (Notify a state actor before deployment):** $M=0.9$
 
 ### 4. 집단 및 성별 차이
+
 - **섹터 간 차이:** AGI 연구소 소속 전문가들이 학계나 시민 사회 전문가들보다 전반적인 합의 점수가 유의미하게 높았다 (AGI Lab $M=1.54$ vs Academia $M=1.16$, Civil Society $M=1.36$). 그러나 개별 항목 수준에서는 통계적으로 유의미한 차이가 발견되지 않았다.
 - **성별 차이:** 남성과 여성 응답자 간에는 전반적인 합의도나 개별 항목 응답에서 유의미한 차이가 없었다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. 강점 및 해석
+
 본 연구는 AGI 안전을 위한 '무엇을 해야 하는가'에 대한 광범위한 전문가적 합의가 이미 존재함을 입증하였다. 특히 위험 평가, 제3자 감사, 레드 티밍과 같은 외부 검증 메커니즘에 대한 강력한 지지는, AGI 연구소들이 폐쇄적인 개발 방식에서 벗어나 투명성과 객관성을 확보해야 한다는 필요성을 시사한다.
 
 ### 2. 한계 및 비판적 해석
+
 - **추상성의 함정:** 응답자들이 높은 합의를 보인 이유는 항목들이 다소 추상적으로 제시되었기 때문일 가능성이 크다. 구체적으로 '어떻게' 구현할 것인가(Instantiation)에 대해 논의했다면 합의 수준이 낮아졌을 수 있다.
 - **표본의 크기:** 전체 응답자가 51명으로 적어, 집단 간 차이 분석의 통계적 민감도가 낮았을 수 있다.
 - **실행 가능성의 문제:** '타 연구소 통지'나 '국가 기관 통지'의 점수가 낮은 것은, 이론적 필요성보다는 경쟁 관계에 있는 기업 간의 협력 가능성이나 행정적 절차의 현실적 어려움이 반영된 결과로 해석된다.
 
 ### 3. 정책적 시사점
+
 - **AGI 연구소:** 내부 갭 분석(Gap Analysis)을 통해 특히 위험 거버넌스(Chief Risk Officer 임명, 이사회 위험 위원회 구성 등)의 미비점을 보완해야 한다.
 - **규제 기관:** US, EU, UK의 정부는 본 연구에서 도출된 고합의 항목(배포 전 감사, 위험 능력 평가 등)을 실제 법적 의무 사항으로 우선순위화하여 반영할 수 있다.
 

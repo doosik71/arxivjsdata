@@ -10,10 +10,10 @@ Kun-Peng Ning, Jia-Yu Yao, Yu-Yang Liu, Mu-Nan Ning, Li Yuan (2025)
 
 본 논문의 핵심 아이디어는 모든 언어 데이터셋과 GPT 모델을 **Monte Carlo Language Tree**라는 트리 구조로 표현하여 비교 분석하는 것이다.
 
-1.  **Data-Tree와 GPT-Tree의 제안**: 학습 데이터셋 자체를 확률적 트리 구조인 Data-Tree ($\theta^*$)로, 학습된 GPT 모델을 GPT-Tree ($\hat{\theta}$)로 정형화(flattening)하여 두 구조 간의 유사도를 분석한다.
-2.  **모델 크기와 수렴성의 관계 규명**: 모델의 파라미터 수가 증가할수록 GPT-Tree가 Data-Tree에 더욱 가깝게 수렴한다는 것을 정량적으로 증명한다.
-3.  **확률적 패턴 매칭 관점 제시**: LLM의 추론 과정이 형식적 추론(formal reasoning)보다는 Data-Tree에서 최대 확률 경로를 찾는 확률적 패턴 매칭(probabilistic pattern-matching)에 가깝다는 가설을 제시한다.
-4.  **현상에 대한 이론적 해석**: 제안한 관점을 통해 토큰 편향(token bias), 환각(hallucination), 사고의 사슬(Chain-of-Thought, CoT)과 같은 LLM의 주요 현상들을 설명한다.
+1. **Data-Tree와 GPT-Tree의 제안**: 학습 데이터셋 자체를 확률적 트리 구조인 Data-Tree ($\theta^*$)로, 학습된 GPT 모델을 GPT-Tree ($\hat{\theta}$)로 정형화(flattening)하여 두 구조 간의 유사도를 분석한다.
+2. **모델 크기와 수렴성의 관계 규명**: 모델의 파라미터 수가 증가할수록 GPT-Tree가 Data-Tree에 더욱 가깝게 수렴한다는 것을 정량적으로 증명한다.
+3. **확률적 패턴 매칭 관점 제시**: LLM의 추론 과정이 형식적 추론(formal reasoning)보다는 Data-Tree에서 최대 확률 경로를 찾는 확률적 패턴 매칭(probabilistic pattern-matching)에 가깝다는 가설을 제시한다.
+4. **현상에 대한 이론적 해석**: 제안한 관점을 통해 토큰 편향(token bias), 환각(hallucination), 사고의 사슬(Chain-of-Thought, CoT)과 같은 LLM의 주요 현상들을 설명한다.
 
 ## 📎 Related Works
 
@@ -22,11 +22,14 @@ Kun-Peng Ning, Jia-Yu Yao, Yu-Yang Liu, Mu-Nan Ning, Li Yuan (2025)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조 및 개념
+
 연구진은 언어 데이터셋 $D$와 GPT 모델 $\hat{\theta}$를 각각 트리 구조로 변환하여 비교한다.
+
 - **Data-Tree ($\theta^*$):** 데이터셋 내의 토큰 출현 빈도를 기반으로 구축된 트리이다.
 - **GPT-Tree ($\hat{\theta}$):** 모델이 예측하는 다음 토큰의 확률 분포를 기반으로 구축된 트리이다.
 
 ### 2. Data-Tree 구축 방법
+
 데이터셋 $D$에서 첫 번째 토큰 $t_1$을 루트 노드로 설정하고, 그 다음에 오는 토큰 $t_2$를 리프 노드로 설정한다. 이때 엣지(edge)의 가중치는 조건부 빈도(conditional frequency)로 정의된다.
 
 $$ p_{\theta^*}(x) = \frac{f(t_n | t_1, t_2, \dots, t_{n-1})}{f(t_1, t_2, \dots, t_{n-1})} $$
@@ -34,9 +37,11 @@ $$ p_{\theta^*}(x) = \frac{f(t_n | t_1, t_2, \dots, t_{n-1})}{f(t_1, t_2, \dots,
 여기서 $f(\cdot)$는 빈도 함수이며, $f(t_n | t_1, \dots, t_{n-1})$는 이전 토큰들이 주어졌을 때 $t_n$이 나타나는 횟수를 의미한다.
 
 ### 3. GPT-Tree 구축 방법
+
 토큰 공간에서 임의의 첫 토큰 $t_1$을 샘플링하여 모델에 입력하고, 출력된 다음 토큰의 확률 분포 $p_{\hat{\theta}}(t_2 | t_1)$를 엣지로 설정하여 트리를 확장한다. 이 과정을 반복하여 모델의 예측 경로를 트리 형태로 가시화한다.
 
 ### 4. 학습 목표 및 이론적 배경
+
 GPT 모델은 기본적으로 다음의 최대 가능도 추정(Maximum Likelihood Estimation, MLE) 문제를 해결하도록 학습된다.
 
 $$ \hat{\theta} = \arg \max_{\theta} \sum_{x \sim D} p_{\theta}(x), \quad \text{s.t. } p_{\theta}(x) = \prod_{i=1}^{n} p_{\theta}(t_n | t_1, \dots, t_{n-1}) $$
@@ -46,14 +51,16 @@ $$ \hat{\theta} = \arg \max_{\theta} \sum_{x \sim D} p_{\theta}(x), \quad \text{
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: The Pile (약 825GB)
 - **분석 모델**: GPT-neo-125M, GPT-neo-1.3B, GPT-neo-2.7B, GPT-j-6B (모두 The Pile로 학습됨)
 - **측정 지표**:
-    - **Tree Visualization**: Sankey 다이어그램을 통해 노드(토큰)와 엣지(확률)를 시각화.
-    - **MSE (Mean Squared Error)**: GPT-Tree와 Data-Tree 간의 엣지 확률 차이를 측정.
-    - **Recall@5**: GPT-Tree의 최대 예측 토큰이 Data-Tree의 상위 5개 확률 토큰 내에 포함되는 비율을 측정.
+  - **Tree Visualization**: Sankey 다이어그램을 통해 노드(토큰)와 엣지(확률)를 시각화.
+  - **MSE (Mean Squared Error)**: GPT-Tree와 Data-Tree 간의 엣지 확률 차이를 측정.
+  - **Recall@5**: GPT-Tree의 최대 예측 토큰이 Data-Tree의 상위 5개 확률 토큰 내에 포함되는 비율을 측정.
 
 ### 2. 주요 결과
+
 - **수렴성 확인**: 모델의 파라미터 크기가 커질수록 MSE가 감소하고 Recall@5가 증가한다. 이는 모델 규모가 클수록 Data-Tree에 더 가깝게 근사함을 의미한다.
 - **높은 유사도**: 동일한 데이터셋으로 학습된 서로 다른 모델들은 GPT-Tree 시각화 결과 매우 유사한 구조를 보였다.
 - **정량적 수치**: GPT 출력 토큰의 87% 이상이 Data-Tree에서 리콜될 수 있음을 확인하였다.
@@ -63,12 +70,15 @@ $$ \hat{\theta} = \arg \max_{\theta} \sum_{x \sim D} p_{\theta}(x), \quad \text{
 본 논문은 GPT-Tree 관점을 통해 LLM의 여러 한계점과 특성을 다음과 같이 해석한다.
 
 ### 1. 토큰 편향 (Token Bias)
+
 수학 문제에서 마침표(`.`)를 전각 문자(`。`)로 바꾸었을 때 정답률이 급격히 떨어지는 현상을 분석했다. 연구진은 이를 **희귀 토큰(rare token)이 GPT-Tree 내에서 모델을 잘못된 경로로 유도**했기 때문이라고 설명한다. 즉, 학습 데이터에서 본 적 없는 혹은 매우 드문 패턴의 토큰이 입력되면 모델이 엉뚱한 확률 경로를 타게 된다는 것이다.
 
 ### 2. 환각 현상 (Hallucination)
+
 "캐나다의 수도는 어디인가?"라는 질문에 모델이 "토론토"라고 답하는 현상을 **Data-Tree의 공출현 편향(co-occurrence bias)**으로 설명한다. 학습 데이터 내에서 'Canada'와 'Toronto'라는 단어가 매우 빈번하게 함께 등장하기 때문에, 모델이 실제 사실 관계를 파악하는 것이 아니라 단순히 확률적으로 가장 높은 경로(패턴)를 따라갔기 때문에 발생한다는 분석이다.
 
 ### 3. 사고의 사슬 (Chain-of-Thought, CoT)의 효과
+
 복잡한 문제에서 입력 $X$와 출력 $Y$ 사이에는 큰 간극(I/O gap)이 존재한다. GPT-Tree 관점에서 $X$는 상위 노드에, $Y$는 매우 깊은 리프 노드에 위치한다. CoT는 중간 단계 $Z$를 생성함으로써 **$X$와 $Y$를 연결하는 경로를 생성하여 이 간극을 메우는 역할**을 한다고 해석한다.
 
 ## 📌 TL;DR

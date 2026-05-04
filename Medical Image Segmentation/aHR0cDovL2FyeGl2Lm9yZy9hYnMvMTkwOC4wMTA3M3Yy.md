@@ -24,6 +24,7 @@ MohammadHossein AskariHemmat et al. (2019)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 양자화 함수
+
 본 논문은 32비트 부동 소수점 모델을 베이스라인으로 하여, 추론 경로의 파라미터를 다음과 같은 고정 소수점 양자화 함수로 변환한다.
 
 $$\text{quantize}(x, n) = (\text{round}(\text{clamp}(x, n)) \ll n) \gg n$$
@@ -33,6 +34,7 @@ $$\text{quantize}(x, n) = (\text{round}(\text{clamp}(x, n)) \ll n) \gg n$$
 $$\text{clamp}(x, n) = \begin{cases} 2^{n-1} & \text{when } x \geq 2^{n-1} \\ x & \text{when } 0 < x < 2^{n-1} \\ 0 & \text{when } x \leq 0 \end{cases}$$
 
 ### 고정 소수점 표현 방식
+
 임의의 수 $x$를 고정 소수점으로 매핑하기 위해 먼저 정수부($x_i$)와 소수부($x_f$)를 분리한다.
 
 $$x_f = \text{abs}(x) - \text{floor}(\text{abs}(x)), \quad x_i = \text{floor}(\text{abs}(x))$$
@@ -44,6 +46,7 @@ $$\text{to\_fixed\_point}(x, ibits, fbits) = \text{sign}(x) * \text{quantize}(x_
 본 논문에서는 $Q^p_{i.f}$ 표기법을 사용하여 파라미터 $p$의 정수부 $i$비트, 소수부 $f$비트 양자화를 나타낸다. 실험 결과, 가중치($w$)는 대부분 $[-1, 1]$ 범위에 분포하므로 정수부가 필요 없는 $Q^w_{0.f}$ 형태를 사용하였다.
 
 ### 학습 절차 및 최적화
+
 1. **미분 가능성 확보**: $\text{clamp}$ 함수와 $\text{round}$ 함수는 임계값에서 미분이 불가능하다. 이를 해결하기 위해 Straight-Through Estimator(STE)를 도입하여 역전파 시 그래디언트가 임계값과 반올림 함수를 그대로 통과하도록 설계하였다.
 2. **Dropout 제거**: 양자화 자체가 강력한 규제 효과를 가지므로, Dropout을 함께 사용할 경우 성능이 크게 하락함을 발견하여 모든 레이어에서 Dropout을 제거하였다.
 3. **부분적 정밀도 유지**: 모든 레이어를 양자화하는 대신, 마지막 레이어는 Full Precision(FP32)으로 유지하는 것이 분할 성능 유지에 결정적인 영향을 미친다는 점을 확인하였다.
@@ -52,18 +55,20 @@ $$\text{to\_fixed\_point}(x, ibits, fbits) = \text{sign}(x) * \text{quantize}(x_
 ## 📊 Results
 
 ### 실험 환경
-- **데이터셋**: 
-    - Spinal Cord Gray Matter (GM): 척수 회백질 분할.
-    - ISBI Electron Microscopic (EM): 뉴런 구조 분할.
-    - NIH Pancreas: 복부 CT 내 췌장 분할 (512x512 2D 슬라이스 추출).
+
+- **데이터셋**:
+  - Spinal Cord Gray Matter (GM): 척수 회백질 분할.
+  - ISBI Electron Microscopic (EM): 뉴런 구조 분할.
+  - NIH Pancreas: 복부 CT 내 췌장 분할 (512x512 2D 슬라이스 추출).
 - **평가 지표**: Dice Overlap Score.
 - **손실 함수**: GM과 NIH 데이터셋은 Dice Loss를 사용하였으며, EM 데이터셋은 Weighted Cross Entropy와 Dice Loss의 가중 합을 사용하였다.
 
 ### 주요 결과
+
 - **정량적 결과**: 가중치 4비트($Q^w_{0.4}$), 활성화 값 6비트($Q^a_{6.0}$) 설정을 사용했을 때, FP32 모델 대비 메모리 요구량을 8배 감소시키면서도 Dice score의 하락폭은 EM 2.21%, GM 0.57%, NIH 2.09%로 매우 낮았다.
 - **비교 분석**:
-    - **BNN 및 TernaryNet 대비**: EM 및 GM 데이터셋에서 제안 방법이 BNN과 TernaryNet보다 우수한 성능을 보였다. 특히 BNN은 성능 저하가 매우 심했다.
-    - **하드웨어 효율성**: $\tanh$를 사용하는 TernaryNet보다 $\text{ReLU}$를 사용하는 제안 방법이 추론 속도 면에서 최대 8배 더 빠름을 Intel OpenVino 벤치마크를 통해 입증하였다.
+  - **BNN 및 TernaryNet 대비**: EM 및 GM 데이터셋에서 제안 방법이 BNN과 TernaryNet보다 우수한 성능을 보였다. 특히 BNN은 성능 저하가 매우 심했다.
+  - **하드웨어 효율성**: $\tanh$를 사용하는 TernaryNet보다 $\text{ReLU}$를 사용하는 제안 방법이 추론 속도 면에서 최대 8배 더 빠름을 Intel OpenVino 벤치마크를 통해 입증하였다.
 
 ## 🧠 Insights & Discussion
 

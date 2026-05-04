@@ -10,9 +10,10 @@ Cristian Cioflan, Lukas Cavigelli, Manuele Rusci, Miguel de Prado, Luca Benini (
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 저전력 MCU 환경에서도 동작 가능한 **On-Device Domain Adaptation (ODDA)** 시스템을 설계하여, 배포 후 현장에서 발생하는 미지의 소음에 모델을 최적화하는 것이다. 
+본 논문의 핵심 아이디어는 저전력 MCU 환경에서도 동작 가능한 **On-Device Domain Adaptation (ODDA)** 시스템을 설계하여, 배포 후 현장에서 발생하는 미지의 소음에 모델을 최적화하는 것이다.
 
 주요 기여 사항은 다음과 같다:
+
 - **리소스 최적화 전략**: 모델의 일부 레이어만 업데이트하는 'Flexible Adaptation Depth'와 학습 데이터의 일부만 사용하는 전략을 통해 메모리와 저장 공간 사용량을 획기적으로 줄였다.
 - **초저전력 구현**: GAP9 플랫폼을 활용하여 10kB 미만의 메모리와 806mJ의 매우 적은 에너지로 14초 만에 도메인 적응을 완료하는 시스템을 실증하였다.
 - **성능 향상**: 기존의 소음 강건 모델(Noise-Aware KWS, NA-KWS) 대비 최대 14%의 정확도 향상을 달성하였으며, 특히 작은 모델(DS-CNN S)을 ODDA로 최적화했을 때 훨씬 큰 모델(DS-CNN L)보다 높은 성능을 보임을 입증하였다.
@@ -20,6 +21,7 @@ Cristian Cioflan, Lukas Cavigelli, Manuele Rusci, Miguel de Prado, Luca Benini (
 ## 📎 Related Works
 
 환경 소음을 해결하기 위한 기존 접근 방식은 크게 두 가지로 나뉜다:
+
 1. **Front-end 방법**: Active Noise Cancellation (ANC)이나 Speech Enhancement (SE)를 통해 DNN 입력 전 단계에서 소음을 제거한다. 이는 지연 시간(latency)을 증가시키고 모델 자체의 파인튜닝을 지원하지 않는다는 한계가 있다.
 2. **Back-end 방법**: 학습 단계에서 다양한 소음을 섞어 데이터 증강(Augmentation)을 수행하여 강건한 모델을 만든다. 하지만 이러한 방식은 배포 후 맞닥뜨리는 특정 현장의 특수한 소음에 유연하게 대응하는 '환경 인식(environmental awareness)' 능력이 부족하다.
 
@@ -28,11 +30,14 @@ Cristian Cioflan, Lukas Cavigelli, Manuele Rusci, Miguel de Prado, Luca Benini (
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인 및 시스템 구조
+
 ODDA 시스템은 크게 추론(Inference) 단계와 학습(Training) 단계로 구성된다.
+
 - **추론 단계**: 마이크로폰을 통해 입력된 신호를 MFCC(Mel-Frequency Cepstral Coefficients)로 변환하여 고정된(frozen) Backbone 네트워크에 입력하고, 최상단 Classifier를 통해 키워드를 예측한다.
 - **학습 단계**: 새로운 소음이 감지되면, 현장에서 기록된 소음 신호를 비휘발성 메모리에 저장된 정제된 학습 데이터(clean utterances)에 합성하여 새로운 학습 샘플을 생성한다. 이를 통해 모델을 업데이트한다.
 
 ### 2. 리소스 제약 최적화 전략
+
 저전력 디바이스의 제약을 극복하기 위해 다음과 같은 최적화 방안을 제안한다.
 
 **가. Flexible Adaptation Depth (부분 동결)**
@@ -42,16 +47,19 @@ ODDA 시스템은 크게 추론(Inference) 단계와 학습(Training) 단계로 
 모든 학습 데이터를 사용하는 대신 데이터셋의 일부만 사용하여 저장 공간 및 연산량(FLOPs)을 줄인다.
 
 ### 3. 학습 절차 및 수학적 모델
+
 학습 시간($t_{ODDA}$)은 다음과 같은 관계식으로 정의된다:
 $$t_{ODDA} \propto (t_{infer} + t_{backprop}) * \frac{S_{dataset}}{S_{batch}} * N_{epochs}$$
 여기서 $S_{dataset}$은 데이터셋 크기, $S_{batch}$는 배치 크기, $N_{epochs}$는 학습 횟수를 의미한다.
 
 학습 과정은 다음과 같다:
+
 1. 현장 소음이 합성된 데이터를 모델에 입력하여 예측값을 산출한다.
 2. 정답 레이블과 예측값 사이의 **Cross-Entropy Loss**를 계산한다.
 3. **Gradient Descent (GD)** 알고리즘을 사용하여 손실 함수에 대한 가중치 그래디언트를 계산하고 파라미터를 업데이트한다.
 
 ### 4. 하드웨어 구현
+
 - **플랫폼**: GAP9 MCU (RISC-V 기반 multi-core)
 - **모델 아키텍처**: DS-CNN (Depthwise Separable CNN)
 - **정밀도**: Frozen Backbone은 $\text{int8}$로 양자화하여 효율성을 높였으며, 학습이 이루어지는 Classifier 부분은 수치적 정확도를 위해 $\text{fp32}$ 정밀도를 사용하였다.
@@ -59,24 +67,29 @@ $$t_{ODDA} \propto (t_{infer} + t_{backprop}) * \frac{S_{dataset}}{S_{batch}} * 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: Google Speech Commands (GSC) 및 DEMAND 소음 데이터셋.
 - **조건**: SNR 0 dB의 매우 가혹한 소음 환경.
 - **평가 지표**: Top-1 Accuracy.
 
 ### 2. 주요 결과
+
 **가. 소음 특성에 따른 적응 효과**
+
 - 세탁기 소음과 같은 정적인(stationary) 소음에서는 NA-KWS 모델이 이미 강건하여 성능 향상폭이 낮았으나(약 1.15%), 회의실 소음과 같은 비정적인(non-stationary) 소음에서는 ODDA를 통해 최대 14%의 정확도 향상을 보였다.
 - 특히, 소형 모델인 DS-CNN S를 ODDA로 최적화했을 때, 학습되지 않은 소음 환경에서 17배 더 큰 모델인 DS-CNN L(NA-KWS)보다 정확도가 8% 더 높게 나타났다.
 
 **나. 리소스 트레이드오프**
+
 - **메모리**: 마지막 Linear 레이어($fc1$)만 업데이트했을 때, 10kB 미만의 메모리만으로도 NA-KWS DS-CNN S 대비 5.5%의 성능 향상을 이루었으며, 이는 DS-CNN L의 기본 성능과 유사한 수준이다.
 - **데이터량**: 데이터의 10%만 사용해도 상당한 성능 향상이 있으며, 100% 사용 시 최대 성능(14% 향상)에 도달한다.
 
 **다. GAP9 실측 성능**
+
 - **DS-CNN S (Classifier 업데이트)** 기준:
-    - **학습 시간**: 14초
-    - **에너지 소모**: 806mJ (HPM 모드 기준)
-    - **정확도 향상**: 6% (100개 샘플, 21 epochs 학습 시)
+  - **학습 시간**: 14초
+  - **에너지 소모**: 806mJ (HPM 모드 기준)
+  - **정확도 향상**: 6% (100개 샘플, 21 epochs 학습 시)
 
 ## 🧠 Insights & Discussion
 

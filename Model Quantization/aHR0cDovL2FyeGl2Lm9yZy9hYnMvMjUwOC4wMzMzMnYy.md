@@ -7,6 +7,7 @@ He Xiao, Qingyao Yang, Dirui Xie, Wendong Xu, Zunhai Su, Runming Yang, Haobo Liu
 본 논문은 소형 언어 모델(Small Language Models, SLMs, 특히 파라미터 8B 미만 모델)을 대상으로 한 극단적인 저비트 양자화(Ultra-low bit quantization) 시 발생하는 성능 저하 문제를 해결하고자 한다.
 
 **1. 해결하고자 하는 문제**
+
 - **정확도 붕괴(Accuracy Collapse):** 8B 미만의 SLM은 대형 모델에 비해 중복성(Redundancy)이 부족하여, 2비트 수준의 양자화를 적용할 경우 Perplexity(PPL)가 급격히 상승하는 등 심각한 성능 저하가 발생한다.
 - **하드웨어 효율성 저하:** 기존의 혼합 정밀도(Mixed-precision) 양자화 방식들은 요소별(Element-wise) 또는 그룹별(Group-wise)로 비트를 다르게 할당하여 정확도를 높이려 하지만, 이는 가중치 레이아웃을 불규칙하게 만들어 텐서 연속성을 해치고, 표준 커널(Standard kernels) 사용을 어렵게 하며 추론 지연 시간을 증가시킨다.
 
@@ -27,10 +28,12 @@ He Xiao, Qingyao Yang, Dirui Xie, Wendong Xu, Zunhai Su, Runming Yang, Haobo Liu
 ## 📎 Related Works
 
 **1. 기존 PTQ 및 혼합 정밀도 방식**
+
 - GPTQ, RPTQ 등 초기 방식은 대형 모델에서는 효과적이었으나 SLM에서는 성능이 급격히 떨어진다.
 - AWQ, OmniQuant 등은 활성화 값이나 보정(Calibration)을 통해 정확도를 높이지만, 일부 방식은 비정형 포맷을 사용하여 하드웨어 효율성을 희생한다.
 
 **2. 극단적 저비트 양자화(2-bit)**
+
 - QuIP, AQLM 등은 회전(Rotation)이나 코드북(Codebook) 기반 방식을 통해 2비트에서도 높은 정확도를 달성한다. 하지만 이러한 방식들은 추론 시 추가적인 변환 과정이나 불규칙한 메모리 접근이 필요하여 실제 배포 시 복잡도를 증가시킨다.
 
 **3. 차별점**
@@ -49,6 +52,7 @@ $$\Delta PPL_\ell = PPL_{\setminus \ell} - PPL_{base}$$
 
 **나. 표현 압축성 (Representational Compactness)**
 학습된 가중치 $W$가 정보를 얼마나 효율적으로 집중시키고 있는지를 특이값 분해(SVD)를 통해 측정한다.
+
 1. 학습된 가중치로 투영된 표현 $Z = W^{(\ell)} h^{(\ell)}$와 무작위 초기화된 가중치로 투영된 $\tilde{Z} = \tilde{W}^{(\ell)} h^{(\ell)}$를 생성한다.
 2. 각각의 특이값 $\{\sigma_k\}$와 $\{\tilde{\sigma}_k\}$를 구하고, 정규화된 에너지 $p_k$를 계산한다.
    $$p_k = \frac{\sigma_k^2}{\sum_{j=1}^K \sigma_j^2}$$
@@ -64,6 +68,7 @@ $$\Delta PPL_\ell = PPL_{\setminus \ell} - PPL_{base}$$
 각 레이어 $\ell$의 모든 선형 투영(Linear Projections)에 대해 $\Delta r$의 평균을 내어 최종 점수 $s_\ell$를 산출하고, 이를 내림차순으로 정렬하여 상위 $K$개의 레이어를 고정밀도 세트 $S_{hi}$로, 나머지를 저정밀도 세트 $S_{lo}$로 구분한다.
 
 **나. 비트 할당 규칙**
+
 - $\ell \in S_{hi} \implies b_\ell = 4\text{-bit}$
 - $\ell \in S_{lo} \implies b_\ell = 2\text{-bit}$
 
@@ -76,11 +81,13 @@ LieQ는 특정 양자화 백엔드(예: GPTQ, AWQ)와 결합하여 사용할 수
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **대상 모델:** Qwen3 (0.6B, 1.7B, 4B, 8B), LLaMA 3.x (1B, 3B, 8B)
 - **비교 대상:** GPTQ, AWQ, OmniQuant, PB-LLM, SliM-LLM, QuIP#, AQLM
 - **평가 지표:** WikiText-2 및 C4 데이터셋의 Perplexity(PPL), 7가지 제로샷 추론 태스크(MMLU, ARC, PIQA 등)의 정확도.
 
 ### 2. 주요 결과
+
 - **정확도 회복:** 2비트 수준의 예산에서 LieQ는 나이브한 2비트 baseline들이 보이는 심각한 성능 붕괴를 효과적으로 억제하였다. 특히 Qwen3와 LLaMA3 시리즈에서 FP16에 근접하거나 타 2-bit 방법론보다 월등한 성능을 보였다.
 - **제로샷 추론 성능:** Table 3에 따르면, LLaMA-3-3B 모델에서 LieQ(2.07-bit)는 PIQA, ARC 등 다수 지표에서 FP16에 근접한 성능을 내며 타 방법론을 압도하였다.
 - **하드웨어 효율성:** Microbenchmark 결과, LieQ는 FP16 대비 지연 시간(Latency)을 크게 줄였으며, 불규칙한 포맷을 사용하는 AQLM 등과 달리 표준 커널을 사용하여 처리량을 극대화하였다.
@@ -89,10 +96,12 @@ LieQ는 특정 양자화 백엔드(예: GPTQ, AWQ)와 결합하여 사용할 수
 ## 🧠 Insights & Discussion
 
 **1. 강점 및 통찰**
+
 - 본 연구는 양자화 민감도가 단순히 무작위적인 현상이 아니라, 가중치 매니폴드의 구조적 특성(Representational Geometry)에 뿌리를 두고 있음을 증명하였다.
 - 비용이 많이 드는 PPL 프로빙(Perplexity probing) 없이, 단 한 번의 순전파(Forward pass)와 SVD만으로 중요 레이어를 식별할 수 있는 효율적인 지표를 제시하였다.
 
 **2. 한계 및 논의사항**
+
 - **엔지니어링 최적화:** 본 논문은 분석 프록시(Proxy)를 정립하는 데 집중하였기에, 실제 시스템 레벨에서의 엔드-투-엔드 처리량(Throughput) 최적화에는 여전히 개선의 여지가 있다.
 - **가정:** 본 방법론은 훈련된 모델의 가중치 구조가 특정 정보를 압축하여 저장한다는 가설에 기반하며, 이는 대부분의 트랜스포머 모델에서 유효하지만 모델 아키텍처가 완전히 바뀔 경우 재검증이 필요할 수 있다.
 

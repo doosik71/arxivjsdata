@@ -25,6 +25,7 @@ DR1Conv의 중심 아이디어는 저차원 행렬 분해(low-rank factorization
 ## 🛠️ Methodology
 
 ### 1. Dynamic Rank-1 Convolution (DR1Conv)
+
 DR1Conv는 입력 특징 맵 $X$에 대해 두 개의 동적 팩터(dynamic factors) $A$와 $B$를 사용하여 가중치를 동적으로 조절하는 연산이다. $1 \times 1$ 컨볼루션의 경우, 위치 $(h, w)$에서의 연산은 다음과 같이 정의된다.
 
 $$y_{hw} = (W(x_{hw} \circ a_{hw})) \circ b_{hw}$$
@@ -36,6 +37,7 @@ $$Y = \text{DR1Conv}_{A, B}(X) = \text{Conv}(X \circ A) \circ B$$
 이 구조는 정적 컨볼루션 전후로 동적 텐서를 곱해줌으로써, 매우 적은 연산량으로도 강력한 표현력을 가지며 특히 위치 민감도(position sensitivity)를 유지할 수 있다.
 
 ### 2. DR1Mask 전체 구조
+
 DR1Mask는 크게 두 가지 브랜치로 구성된다.
 
 - **Top-down Branch**: FCOS를 기반으로 하며, 각 인스턴스의 바운딩 박스 $b^{(i)}$, 인스턴스 임베딩 $e^{(i)}$, 그리고 multi-scale conditional feature pyramid $\{C^l = [A^l, B^l]\}$를 생성한다.
@@ -43,6 +45,7 @@ DR1Mask는 크게 두 가지 브랜치로 구성된다.
 $$F^l = \text{DR1Conv}_{A^l, B^l}(\text{Conv}_{3 \times 3}(P^l) + \uparrow_2(F^{l+1}))$$
 
 ### 3. Instance Prediction 및 Factored Attention
+
 인스턴스 마스크 생성을 위해 RoIAlign으로 추출된 특징 $R^{(i)}$에 대해 **Factored Attention**을 적용한다. 기존 BlendMask의 full attention tensor $Q$의 중복성을 줄이기 위해, $Q$를 다음과 같이 저차원 분해한다.
 
 $$Q^{(i)}_k = U^k \Sigma^{(i)}_k V^k$$
@@ -50,6 +53,7 @@ $$Q^{(i)}_k = U^k \Sigma^{(i)}_k V^k$$
 여기서 $U^k, V^k$는 모든 인스턴스가 공유하는 파라미터이며, $\Sigma^{(i)}_k$는 인스턴스별 임베딩 $s^{(i)}$에 의해 결정되는 대각 행렬이다. 이를 통해 임베딩 파라미터 수를 784개에서 16개로 획기적으로 줄이면서도 성능을 유지하였다.
 
 ### 4. Unified Panoptic Segmentation
+
 Panoptic 결과를 얻기 위해 $1 \times 1$ 컨볼루션 레이어 $f_{pano}$를 추가한다. 이 레이어의 가중치 $W_{pano}$는 정적 가중치 $W_{stuff}$와 동적 가중치 $W_{thing}$으로 나뉜다.
 
 $$W_{pano} = [W_{stuff}, W_{thing}]$$
@@ -61,12 +65,14 @@ $$Y_{pano} = W_{pano}^T F$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: MS COCO 2017 (80 thing, 53 stuff 클래스)
 - **백본**: ResNet-50 및 ResNet-101
 - **비교 대상**: Mask R-CNN, BlendMask, CondInst (Instance), Panoptic-DeepLab, UPSNet, SOGNet (Panoptic)
 - **지표**: $\text{AP}$ (Instance), $\text{PQ}$ (Panoptic), $\text{SQ}, \text{RQ}$
 
 ### 주요 결과
+
 1. **Instance Segmentation**: ResNet-101 백본과 Deformable Convolution을 사용했을 때, $\text{AP} 41.2\%$를 기록하며 기존 SOTA 모델인 CondInst 및 BlendMask보다 우수하거나 대등한 성능을 보였다. 특히 BlendMask 대비 약 10% 더 빠르고 1%p 높은 AP를 달성하였다.
 2. **Panoptic Segmentation**: ResNet-50 기반 모델에서 $\text{PQ} 42.9$를 달성하여 Panoptic-DeepLab보다 8포인트 높은 성능을 보였으며, 실행 속도는 UPSNet 등 기존 2-브랜치 방식보다 약 2배 더 빨랐다.
 3. **효율성**: DR1Mask는 단일 브랜치를 사용하므로, 'stuff' 세그멘테이션을 위한 추가 비용이 거의 없으며(단일 레이어 추가), 추론 시간 측면에서 매우 강력한 이점을 가진다.

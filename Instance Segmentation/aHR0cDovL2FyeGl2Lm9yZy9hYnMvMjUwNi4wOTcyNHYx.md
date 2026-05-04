@@ -7,6 +7,7 @@ Ye Zhang, Yu Zhou, Yifeng Wang, Jun Xiao, Ziyue Wang, Yongbing Zhang, Jianxu Che
 생물 의학 이미지 분석에서 세포 인스턴스 분할(Cell Instance Segmentation)은 세포 계수, 분류, 추적 및 임상 진단과 같은 하위 작업의 필수적인 기초가 된다. 그러나 서로 밀접하게 붙어 있는 세포들을 정확하게 구별하는 것은 여전히 어려운 과제로 남아 있다.
 
 기존의 인스턴스 분할 프레임워크는 크게 세 가지 방향으로 발전해 왔으나 각각 명확한 한계가 존재한다:
+
 1. **Detection-based methods**: 객체 검출 기반 방식은 길쭉한 형태의 세포(fibroblasts)나 겹쳐진 세포를 처리하는 데 어려움이 있으며, 검출 누락이 빈번하게 발생한다.
 2. **Contour prediction methods**: 윤곽선 예측 방식은 인스턴스 구분을 위해 별도의 윤곽선 카테고리를 예측하지만, 그 성능이 임계값(threshold) 설정에 매우 민감하게 의존한다.
 3. **Distance mapping methods**: 거리 맵 기반 방식은 복잡한 네트워크 아키텍처와 정교한 후처리(post-processing) 과정이 필수적이며, 이는 계산 오버헤드와 모델 복잡성을 크게 증가시킨다.
@@ -32,33 +33,41 @@ Ye Zhang, Yu Zhou, Yifeng Wang, Jun Xiao, Ziyue Wang, Yongbing Zhang, Jianxu Che
 ## 🛠️ Methodology
 
 ### 1. 사색 정리를 이용한 세포 인코딩 (Cell Encoding)
+
 그리디 알고리즘(Greedy Algorithm)을 사용하여 각 세포에 1~4 사이의 색상을 할당한다.
-- **절차**: 
+
+- **절차**:
   1. 이미지 내 세포들을 노드로, 인접 관계를 엣지로 하는 세포 그래프 $G=(V, E)$를 구축한다.
-  2. 각 노드 $v$에 대해, 이미 색이 할당된 인접 노드들의 색상 집합 $C_{used}$를 수집한다: 
+  2. 각 노드 $v$에 대해, 이미 색이 할당된 인접 노드들의 색상 집합 $C_{used}$를 수집한다:
      $$C_{used} = \{C(u) \mid u \in N(v), C(u) \neq 0\}$$
   3. 사용할 수 있는 색상 집합 $C=\{1, 2, 3, 4\}$에서 $C_{used}$에 포함되지 않은 가장 작은 색상을 할당한다:
      $$C(v) = \min(C \setminus C_{used})$$
 - **결과**: 인접한 두 세포 $v_i, v_j$는 반드시 서로 다른 색상을 갖게 된다 ($C(v_i) \neq C(v_j)$).
 
 ### 2. 점진적 학습 전략 (Asymptotic Training Strategy)
+
 4-색 인코딩의 비유일성(non-uniqueness)과 클래스 불균형 문제를 해결하기 위해 단계적 접근 방식을 채택한다.
 
 - **이진 분류 시맨틱 예측 (Binary Classification)**: 우선 전경(세포)과 배경을 구분한다. 5채널 출력 $\hat{Y}_i$에서 첫 번째 채널은 배경 확률 $\hat{Y}_b$로, 나머지 4개 채널은 합성곱 층(Conv)을 통해 전경 확률 $\hat{Y}_f$로 변환하여 이진 예측 $\hat{Y}_{b,i} = \text{Concat}(\hat{Y}_b, \hat{Y}_f)$를 수행한다.
 - **손실 함수**: $\mathcal{L}_{sem} = CE(\hat{Y}_{b,i}, Y_i) + \text{Dice}(\hat{Y}_{b,i}, Y_i)$.
 
 ### 3. 음수 샘플링 제약 (Negative Sampling Constraint)
+
 인접한 세포들이 서로 다른 특징을 갖도록 강제하기 위해 특성 공간에서의 직교성 제약(orthogonality constraint)을 부여한다.
+
 - 인접한 세포 쌍 $(v_i, v_j)$에서 특징 벡터 집합 $F_i, F_j$를 샘플링하고, 코사인 유사도를 최소화하는 손실 함수를 정의한다:
   $$\mathcal{L}_{ort} = \frac{1}{|E|} \sum_{(v_i, v_j) \in E} \text{Cos}(F_i, F_j)$$
   이를 통해 인접 세포 간의 특징 유사성을 억제하여 구분 능력을 높인다.
 
 ### 4. 인코딩 변환 (Encoding Transformation)
+
 인코딩의 비유일성으로 인한 학습 불안정성을 해결하기 위해, 네트워크의 예측값을 최적의 인코딩 표현으로 매핑하는 변환 모듈(두 개의 Conv 층)을 도입한다.
+
 - 예측된 $\hat{Y}_f$를 최적 인코딩 $\hat{Y}_t$로 변환한 후, 전경 영역에 대해서만 분류 손실을 계산한다:
   $$\mathcal{L}_{cls} = CE(\hat{Y}_t, Y_f) + \text{Dice}(\hat{Y}_t, Y_f)$$
 
 ### 5. 전체 손실 함수
+
 최종 목적 함수는 다음과 같이 구성된다:
 $$\mathcal{L}_{total} = \mathcal{L}_{sem} + \lambda_1 \mathcal{L}_{ort} + \lambda_2 \mathcal{L}_{cls}$$
 ($\lambda_1=2, \lambda_2=1$로 설정)
@@ -66,16 +75,19 @@ $$\mathcal{L}_{total} = \mathcal{L}_{sem} + \lambda_1 \mathcal{L}_{ort} + \lambd
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: BBBC006v1 (형광), DSB2018 (형광), PanNuke (H&E 병리), YeaZ (명시야/위상차) 등 다양한 모달리티의 데이터셋 사용.
 - **지표**: DICE, AJI(Aggregated Jacquard Index), DQ, SQ, PQ(Panoptic Quality)를 사용하여 정량 평가.
 - **비교 대상**: Mask R-CNN, DoNet (Detection-based), DCAN, NucleiSegNet (Contour-based), HoverNet, CellPose, Un-SAM (Distance/Foundation-based).
 
 ### 주요 결과
+
 - **정량적 성과**: FCIS는 대부분의 데이터셋에서 SOTA(State-of-the-art) 성능을 달성하였다. 특히 DSB2018에서 DICE 0.939, PQ 0.770을 기록하며 기존 최고 수준 모델들을 앞질렀다.
 - **효율성**: Table 1에 따르면, FCIS는 파라미터 수(39.75M)와 연산량(58.03G FLOPs) 측면에서 HoverNet(49.7M / 192.7G)이나 DoNet(67.7M / 221.6G)보다 훨씬 가볍다.
 - **정성적 결과**: 시각화 결과, 제안 방법은 인접 세포를 서로 다른 색으로 정확히 인코딩하며, 인스턴스의 구조적 무결성을 잘 유지하는 것으로 나타났다.
 
 ### 절제 연구 (Ablation Study)
+
 - 사색 인코딩을 직접 감독 신호로 사용할 경우 성능이 크게 하락한다. 이는 인코딩의 비유일성 때문이다.
 - **음수 샘플링 제약($\mathcal{L}_{ort}$)**을 추가했을 때 성능 향상 폭이 가장 컸으며, 이는 공간적 일관성을 강제하는 데 핵심적인 역할을 함을 시사한다.
 - 인코딩 변환 모듈은 학습 손실의 수렴 속도를 높이고 AJI 지표를 유의미하게 개선시킨다.
@@ -83,11 +95,14 @@ $$\mathcal{L}_{total} = \mathcal{L}_{sem} + \lambda_1 \mathcal{L}_{ort} + \lambd
 ## 🧠 Insights & Discussion
 
 ### 강점 및 이론적 뒷받침
+
 본 논문은 단순한 딥러닝 구조 제안을 넘어, 수학적 정리를 통해 방법론의 타당성을 증명하였다.
+
 - **Theorem 1**: 세포 분포 그래프는 평면 그래프이며 최대 차수가 4 이하인 경우가 많으므로, 그리디 알고리즘만으로도 전역 최적해(최소 색상 수)를 얻을 수 있음을 증명하였다.
 - **Theorem 2**: 네트워크가 예측한 결과가 치환, 교환, 규칙 수정 등의 관계를 가질 때 이를 다시 원래의 4-색 인코딩으로 매핑할 수 있는 함수 $f$가 존재함을 증명하여 인코딩 변환 모듈의 근거를 마련하였다.
 
 ### 한계 및 논의
+
 - **인코딩의 비유일성**: 동일한 세포 배치라도 그리디 알고리즘의 노드 방문 순서에 따라 다른 색상 조합이 나올 수 있다. 이를 해결하기 위해 제안된 점진적 학습과 변환 모듈이 필수적이며, 이러한 제약 조건이 학습 난이도를 높이는 요인이 된다.
 - **가정**: 본 연구는 세포가 평면 그래프의 특성을 가진다고 가정한다. 만약 3D 이미지에서 세포가 매우 복잡하게 얽혀 있는 경우, 4가지 색상만으로 충분할지는 추가적인 검증이 필요하다.
 

@@ -4,9 +4,9 @@ Rui Li, Qianfen Jiao, Wenming Cao, Hau-San Wong, Si Wu (2025)
 
 ## 🧩 Problem to Solve
 
-본 논문은 기존의 Unsupervised Domain Adaptation (UDA) 설정에서 한 단계 더 나아가, **소스 데이터(Source Data)가 전혀 없는 상태에서 타겟 도메인에 모델을 적응시키는 Unsupervised Model Adaptation** 문제를 해결하고자 한다. 
+본 논문은 기존의 Unsupervised Domain Adaptation (UDA) 설정에서 한 단계 더 나아가, **소스 데이터(Source Data)가 전혀 없는 상태에서 타겟 도메인에 모델을 적응시키는 Unsupervised Model Adaptation** 문제를 해결하고자 한다.
 
-일반적인 UDA 방식은 레이블이 있는 소스 데이터와 레이블이 없는 타겟 데이터를 모두 사용하여 도메인 간의 차이(Domain Shift)를 줄인다. 그러나 실제 산업 현장에서는 데이터 프라이버시 및 보안 문제로 인해 학습된 모델만 제공될 뿐, 모델 학습에 사용된 원본 소스 데이터에 접근할 수 없는 경우가 많다. 또한, 소스 데이터셋의 규모가 너무 커서 플랫폼 간 이동이나 보관이 불가능한 물리적 한계가 존재할 수 있다. 
+일반적인 UDA 방식은 레이블이 있는 소스 데이터와 레이블이 없는 타겟 데이터를 모두 사용하여 도메인 간의 차이(Domain Shift)를 줄인다. 그러나 실제 산업 현장에서는 데이터 프라이버시 및 보안 문제로 인해 학습된 모델만 제공될 뿐, 모델 학습에 사용된 원본 소스 데이터에 접근할 수 없는 경우가 많다. 또한, 소스 데이터셋의 규모가 너무 커서 플랫폼 간 이동이나 보관이 불가능한 물리적 한계가 존재할 수 있다.
 
 따라서 본 연구의 목표는 **오직 사전 학습된 소스 예측 모델($C$)과 레이블이 없는 타겟 데이터($X_t$)만을 이용하여, 타겟 도메인에서의 예측 성능을 극대화하는 방법론을 제안하는 것**이다.
 
@@ -19,6 +19,7 @@ Rui Li, Qianfen Jiao, Wenming Cao, Hau-San Wong, Si Wu (2025)
 ## 📎 Related Works
 
 기존의 UDA 연구들은 크게 두 가지 방향으로 진행되어 왔다.
+
 1. **특징 정렬(Feature Alignment):** Maximum Mean Discrepancy (MMD)나 Adversarial Training을 통해 소스-타겟 간의 도메인 불변 특징(Domain-invariant features)을 학습하는 방식이다. (예: DAN, DANN, JAN 등)
 2. **데이터 변환(Data Translation):** GAN을 이용하여 소스 데이터를 타겟 스타일로 직접 변환하거나, 그 반대의 과정을 거치는 방식이다. (예: CycleGAN, CyCADA, PixelDA 등)
 
@@ -28,12 +29,15 @@ Rui Li, Qianfen Jiao, Wenming Cao, Hau-San Wong, Si Wu (2025)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 제안된 프레임워크는 크게 세 가지 구성 요소로 이루어진다.
+
 - **Predictor ($C$):** 소스 도메인에서 사전 학습된 모델이며, 타겟 도메인에 맞게 업데이트된다.
 - **Generator ($G$):** 랜덤 노이즈 $z$와 클래스 레이블 $y$를 입력받아 타겟 스타일의 이미지 $x_g$를 생성한다.
 - **Discriminator ($D$):** 생성된 이미지 $x_g$와 실제 타겟 이미지 $x_t$를 구분하여 $G$가 타겟 분포를 잘 따르도록 유도한다.
 
 ### 2. 3C-GAN (Collaborative Class Conditional GAN)
+
 소스 데이터 없이 타겟 스타일의 학습 데이터를 확보하기 위해 다음과 같은 손실 함수를 사용한다.
 
 **Discriminator ($D$)의 목표:**
@@ -47,6 +51,7 @@ $$\ell_{sem}(G) = E_{y,z}[-y \log p_{\theta_C}(G(y,z))]$$
 최종 목적 함수: $\min_{\theta_G} \ell_{adv} + \lambda_s \ell_{sem}$ (여기서 $p_{\theta_C}(\cdot)$는 예측 모델 $C$의 출력값이다.)
 
 ### 3. Prediction Model ($C$)의 최적화 및 정규화
+
 예측 모델 $C$는 생성된 데이터 $\{x_g, y\}$를 통해 학습되며, 다음의 세 가지 손실 함수의 합으로 최적화된다.
 $$\min_{\theta_C} \lambda_g \ell_{gen} + \lambda_w \ell_{wReg} + \lambda_{clu} \ell_{cluReg}$$
 
@@ -57,6 +62,7 @@ $$\ell_{wReg} = \|\theta_C - \theta_{C_s}\|^2$$
 $$\ell_{cluReg} = E_{x_t \sim D_t}[-p_{\theta_C}(x_t) \log p_{\theta_C}(x_t)] + [KL(p_{\theta_C}(x_t)||p_{\theta_C}(x_t + \tilde{r}))]$$
 
 ### 4. 학습 절차
+
 1. $D$와 $G$를 교대로 업데이트하여 타겟 스타일의 유효한 샘플 $x_g$를 생성할 수 있게 한다.
 2. 생성된 $x_g$와 타겟 데이터 $x_t$를 사용하여 $C$를 업데이트한다.
 3. 개선된 $C$는 다시 $G$의 $\ell_{sem}$ 계산에 반영되어 더 정확한 가이드를 제공한다. 이 과정이 반복되며 $C$와 $G$가 서로를 강화한다.
@@ -64,16 +70,19 @@ $$\ell_{cluReg} = E_{x_t \sim D_t}[-p_{\theta_C}(x_t) \log p_{\theta_C}(x_t)] + 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋:** Digit(MNIST, USPS, MNIST-M, SVHN, Syn.Digits), Sign(Syn.Signs, GTSRB), Office-31, VisDA17.
 - **백본 네트워크:** Digit/Sign의 경우 소형 CNN, Office-31과 VisDA17의 경우 ResNet50/101을 사용하였다.
 - **평가 지표:** Classification Accuracy (%)를 측정하였으며, 모든 실험에서 적응 과정 중 소스 데이터는 사용하지 않았다.
 
 ### 2. 주요 결과
+
 - **Digit & Sign 데이터셋:** Source-Only(Baseline) 대비 성능이 비약적으로 향상되었다. 특히 MNIST $\rightarrow$ MNIST-M 작업에서 정확도가 약 40% 향상된 98.5%를 기록하였다. 소스 데이터를 사용하는 기존 UDA 방법론들과 비교해서도 대등하거나 더 높은 성능을 보였다.
 - **Office-31:** 6가지 적응 작업의 평균 정확도에서 기존 SOTA 방법론(MADA, GenToAdapt 등)보다 약 3~4% 높은 성능을 보였으며, 특히 어려운 작업(A $\leftrightarrow$ D, A $\leftrightarrow$ W)에서 강세를 보였다.
 - **VisDA17:** 매우 큰 규모의 소스-타겟 격차가 있는 데이터셋임에도 불구하고 81.6% $\sim$ 83.3%의 정확도를 달성하여, 소스 데이터를 사용하는 SimDA나 Self-Ensembling보다 우수한 성능을 기록하였다.
 
 ### 3. 절제 연구 (Ablation Study)
+
 - $\ell_{gen}$이 없으면 모델이 수렴하지 않으며, 이는 생성 데이터가 적응 과정의 핵심임을 시사한다.
 - $\ell_{wReg}$는 학습 곡선을 안정화하며, $\ell_{cluReg}$는 결정 경계를 최적화하여 최종 정확도를 1~3% 추가로 향상시킨다.
 - Smoothness 제약(KL-Divergence 항)을 제거했을 때 성능이 하락하는 것을 통해, 조건부 엔트로피 추정의 정확도가 중요함을 확인하였다.

@@ -18,17 +18,19 @@ Yunke Wang, Bo Du, Chang Xu (2023)
 
 기존의 불완전한 시연 데이터 처리 방법은 크게 두 가지로 나뉜다.
 
-1.  **Confidence-based methods**: 각 시연 데이터에 신뢰도(confidence) 가중치를 부여하는 방식이다. 2IWIL이나 IC-GAIL은 일부 데이터에 대해 사람이 직접 라벨링을 해야 하는 제약이 있으며, WGAIL나 BCND는 모델의 학습 상태에 의존하므로 데이터 오염도가 높을 경우 신뢰도 추정 자체가 붕괴될 위험이 있다.
-2.  **Preference-based methods**: 데이터 간의 상대적 순위(ranking)를 이용하는 방식(T-REX, D-REX 등)이다. 하지만 이는 정확한 순위 정보가 필요하다는 전제가 필요하다.
+1. **Confidence-based methods**: 각 시연 데이터에 신뢰도(confidence) 가중치를 부여하는 방식이다. 2IWIL이나 IC-GAIL은 일부 데이터에 대해 사람이 직접 라벨링을 해야 하는 제약이 있으며, WGAIL나 BCND는 모델의 학습 상태에 의존하므로 데이터 오염도가 높을 경우 신뢰도 추정 자체가 붕괴될 위험이 있다.
+2. **Preference-based methods**: 데이터 간의 상대적 순위(ranking)를 이용하는 방식(T-REX, D-REX 등)이다. 하지만 이는 정확한 순위 정보가 필요하다는 전제가 필요하다.
 
 UID는 이러한 기존 방식들과 달리, 사전 라벨이나 순위 정보 없이도 PU learning 프레임워크를 통해 전문가 데이터 내부의 최적 샘플을 동적으로 구분해냄으로써 차별점을 가진다.
 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 UID는 특정 AIL 백본(GAIL, WAIL 등)에 결합할 수 있는 일반적인 프레임워크이다. 전문가 데이터셋 $D_e$를 라벨이 없는 데이터로 간주하고, 에이전트 정책 $\pi_\theta$의 분포 $\rho^{\pi_\theta}$를 이용하여 정답 분포를 추정한다.
 
 ### 핵심 방정식 및 손실 함수
+
 전문가 분포 $\rho^{\pi_e}$를 최적 분포 $\rho^{\pi_\epsilon}$와 에이전트와 매칭되는 분포 $\rho^{\pi_{\hat{\theta}}}$의 혼합으로 모델링한다.
 $$\rho^{\pi_e}(s, a) = (1-\alpha)\rho^{\pi_\epsilon}(s, a) + \alpha\rho^{\pi_{\hat{\theta}}}(s, a)$$
 여기서 $\alpha$는 매칭된 분포의 비율이다. 판별기 $g$의 기대 리스크 $R^{\pi_e}(g)$는 다음과 같이 정의된다.
@@ -38,30 +40,34 @@ $$\max_\theta \min_g J(g, \theta) = \mathcal{T}\{0, \mathbb{E}_{(s,a)\sim\rho^{\
 여기서 $\phi$는 마진 기반의 손실 함수이며, $\mathcal{T}\{\cdot\}$는 부호를 유지하기 위한 제약 조건이다.
 
 ### AIL 프레임워크로의 확장 (Theorem 1)
+
 본 논문은 $\phi$를 $f$-divergence와 연결하여 다양한 AIL 기법에 적용할 수 있음을 증명하였다.
 
-*   **UID-GAIL**: Jensen-Shannon divergence를 사용하여 다음과 같은 목적 함수를 갖는다.
+* **UID-GAIL**: Jensen-Shannon divergence를 사용하여 다음과 같은 목적 함수를 갖는다.
     $$\min_\theta \max_\psi J(\theta, \psi) = \min\{0, \mathbb{E}_{(s,a)\sim\rho^{\pi_e}} \log[D_\psi(s,a)] - \alpha\mathbb{E}_{(s,a)\sim\rho^{\pi_\theta}} \log[D_\psi(s,a)]\} + \alpha\mathbb{E}_{(s,a)\sim\rho^{\pi_\theta}} \log[1-D_\psi(s,a)]$$
-*   **UID-WAIL**: Total Variation (TV) 거리와 Lipschitz 제약 조건을 추가하여 Wasserstein distance 기반으로 확장한다.
+* **UID-WAIL**: Total Variation (TV) 거리와 Lipschitz 제약 조건을 추가하여 Wasserstein distance 기반으로 확장한다.
 
 ### 학습 절차
-1.  에이전트 정책 $\pi_\theta$와 판별기 $D_\psi$를 초기화한다.
-2.  에이전트 궤적과 전문가 데이터 $D_e$를 샘플링한다.
-3.  위의 PU 기반 목적 함수를 최대화하여 $D_\psi$를 업데이트한다.
-4.  판별기의 출력을 보상으로 사용하여 TRPO와 같은 RL 알고리즘으로 $\pi_\theta$를 업데이트한다.
+
+1. 에이전트 정책 $\pi_\theta$와 판별기 $D_\psi$를 초기화한다.
+2. 에이전트 궤적과 전문가 데이터 $D_e$를 샘플링한다.
+3. 위의 PU 기반 목적 함수를 최대화하여 $D_\psi$를 업데이트한다.
+4. 판별기의 출력을 보상으로 사용하여 TRPO와 같은 RL 알고리즘으로 $\pi_\theta$를 업데이트한다.
 
 ## 📊 Results
 
 ### 실험 설정
-*   **데이터셋**: MuJoCo (Ant-v2, HalfCheetah-v2, Walker2d-v2) 및 RoboSuite (Nut Assembly).
-*   **불완전 데이터 생성**: 최적 정책 데이터 $D_o$와 비최적 정책(학습 중간 체크포인트 또는 가우시안 노이즈 추가) 데이터 $D_n$을 혼합하여 생성.
-*   **지표**: 누적 보상(Cumulative Reward).
+
+* **데이터셋**: MuJoCo (Ant-v2, HalfCheetah-v2, Walker2d-v2) 및 RoboSuite (Nut Assembly).
+* **불완전 데이터 생성**: 최적 정책 데이터 $D_o$와 비최적 정책(학습 중간 체크포인트 또는 가우시안 노이즈 추가) 데이터 $D_n$을 혼합하여 생성.
+* **지표**: 누적 보상(Cumulative Reward).
 
 ### 주요 결과
-1.  **최적 데이터 비율 변화**: 최적 데이터의 비율이 50%에서 16.7%까지 낮아질 때, BCND와 같은 기존 방식은 성능이 급격히 하락하여 baseline(BC)보다 낮아지기도 하지만, UID는 GAIL보다 일관되게 높은 성능을 유지하였다.
-2.  **AIL 백본과의 호환성**: UID-GAIL과 UID-WAIL 모두 vanilla GAIL/WAIL보다 월등한 성능 향상을 보였으며, 이는 통계적으로 유의미함(p-value < 0.05)이 확인되었다.
-3.  **실제 데이터 적용**: RoboSuite의 Nut Assembly 작업에서 실제 인간 운영자의 불완전한 시연 데이터를 사용했을 때, UID가 비교 대상 중 가장 높은 성능을 기록하여 강건함을 증명하였다.
-4.  **판별기 분석**: GAIL의 판별기는 최적 데이터와 비최적 데이터를 모두 positive로 인식하지만, UID의 판별기는 학습 과정에서 두 데이터를 구분하는 능력을 갖추게 됨이 확인되었다.
+
+1. **최적 데이터 비율 변화**: 최적 데이터의 비율이 50%에서 16.7%까지 낮아질 때, BCND와 같은 기존 방식은 성능이 급격히 하락하여 baseline(BC)보다 낮아지기도 하지만, UID는 GAIL보다 일관되게 높은 성능을 유지하였다.
+2. **AIL 백본과의 호환성**: UID-GAIL과 UID-WAIL 모두 vanilla GAIL/WAIL보다 월등한 성능 향상을 보였으며, 이는 통계적으로 유의미함(p-value < 0.05)이 확인되었다.
+3. **실제 데이터 적용**: RoboSuite의 Nut Assembly 작업에서 실제 인간 운영자의 불완전한 시연 데이터를 사용했을 때, UID가 비교 대상 중 가장 높은 성능을 기록하여 강건함을 증명하였다.
+4. **판별기 분석**: GAIL의 판별기는 최적 데이터와 비최적 데이터를 모두 positive로 인식하지만, UID의 판별기는 학습 과정에서 두 데이터를 구분하는 능력을 갖추게 됨이 확인되었다.
 
 ## 🧠 Insights & Discussion
 

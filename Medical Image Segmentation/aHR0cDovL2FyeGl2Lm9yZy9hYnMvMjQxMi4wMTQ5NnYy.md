@@ -10,9 +10,10 @@ Nicholas Konz, Richard Osuala, Preeti Verma, et al. (2025)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 딥러닝 기반의 학습된 특징(Learned Features) 대신, 의료 영상 분석에서 이미 표준화되고 임상적으로 의미가 검증된 **Radiomic Features**를 사용하여 데이터셋 간의 거리를 측정하는 것이다. 
+본 논문의 핵심 아이디어는 딥러닝 기반의 학습된 특징(Learned Features) 대신, 의료 영상 분석에서 이미 표준화되고 임상적으로 의미가 검증된 **Radiomic Features**를 사용하여 데이터셋 간의 거리를 측정하는 것이다.
 
 주요 기여 사항은 다음과 같다.
+
 1. **FRD 제안**: Radiomic 특징을 기반으로 하여 태스크 독립적이며 해석 가능한 의료 영상 분포 비교 지표인 FRD를 제안한다. 특히, 주파수 영역의 특성을 포착하기 위해 Wavelet 필터를 도입하여 기존 버전(FRD v0)보다 표현력을 높였다.
 2. **광범위한 검증**: OOD 탐지, 영상 변환 및 생성 모델 평가, 이상 징후 예측 등 다양한 시나리오에서 FRD가 FID, RadFID 등 기존 지표보다 우수함을 입증하였다.
 3. **임상적 정렬 확인**: 전문 방사선 전문의(Radiologist)가 느끼는 이미지 품질 및 현실성(Realism)과 FRD 수치가 강한 상관관계를 가짐을 보였다.
@@ -29,9 +30,11 @@ Nicholas Konz, Richard Osuala, Preeti Verma, et al. (2025)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 FRD의 기본 흐름은 다음과 같다: $\text{Input Images} \rightarrow \text{Wavelet Filtering} \rightarrow \text{Radiomic Feature Extraction} \rightarrow \text{Normalization} \rightarrow \text{Fréchet Distance Calculation}$.
 
 ### 주요 구성 요소 및 절차
+
 1. **특징 추출 (Feature Extraction)**:
    - PyRadiomics 라이브러리를 사용하여 1차 통계량(First-order statistics), GLCM (Gray Level Co-occurrence Matrix), GLRLM (Gray Level Run Length Matrix), GLSZM (Gray Level Size Zone Matrix) 등 총 464개의 특징을 추출한다.
    - **Wavelet 필터 적용**: 단순 영상뿐만 아니라, 공간 푸리에 변환 후 저주파/고주파 필터 조합(LL, LH, HL, HH)을 적용한 영상에서도 특징을 추출하여 주파수 영역의 세밀한 차이를 포착한다.
@@ -48,11 +51,13 @@ FRD의 기본 흐름은 다음과 같다: $\text{Input Images} \rightarrow \text
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Breast MRI (DBC), Brain MRI (BraTS), Lumbar Spine MRI/CT, Abdominal MRI/CT (CHAOS) 등 다양한 양상(Modality)과 도메인을 포함한다.
 - **비교 대상**: FID, RadFID, KID, CMMD, FRD v0.
 - **측정 지표**: OOD 탐지의 경우 AUC, Accuracy, Sensitivity, Specificity를 사용하며, 영상 변환 평가의 경우 다운스트림 태스크(세그멘테이션 Dice, 분류 AUC 등)와의 피어슨 상관계수($r$)를 측정한다.
 
 ### 주요 결과
+
 1. **OOD 탐지**: FRD는 특히 도메인 차이가 미세한 Breast MRI 사례에서 타 지표보다 월등한 AUC와 민감도를 보였다. 이는 Wavelet 특징이 미세한 시각적 차이를 잘 포착했기 때문이다.
 2. **영상 변환 평가**: FRD는 다운스트림 태스크 성능과 가장 강한 상관관계($r = -0.43$)를 보였다. 특히 해부학적 일관성을 측정하는 세그멘테이션 성능과의 상관관계가 매우 높았으며, 이는 FRD가 단순한 시각적 유사성을 넘어 구조적 보존 상태를 잘 반영함을 의미한다.
 3. **전문가 평가와의 일치**: 방사선 전문의 3인이 평가한 이미지 현실성 점수와 FRD 값 사이에는 강한 음의 상관관계가 나타났다. 즉, 전문가가 보기에 더 실제 같은 이미지일수록 FRD 값이 낮게 측정되었다. 반면, FID와 RadFID는 오히려 전문가의 판단과 반대로 움직이는 경향(양의 상관관계)을 보였다.
@@ -62,12 +67,14 @@ FRD의 기본 흐름은 다음과 같다: $\text{Input Images} \rightarrow \text
 ## 🧠 Insights & Discussion
 
 ### 강점 및 해석
+
 FRD의 가장 큰 강점은 **임상적 해석 가능성(Interpretability)**이다. 학습된 특징을 사용하는 FID와 달리, FRD는 어떤 Radiomic 특징(예: 텍스처, 강도 등)이 두 분포의 차이를 만들었는지 정량적으로 분석할 수 있다. 논문에서는 $\Delta h$ (특징 변화 벡터)를 통해 MRI $\rightarrow$ CT 변환 시 어떤 텍스처 특징이 가장 크게 변했는지 분석함으로써 모델의 동작을 해석하는 가능성을 제시하였다.
 
 또한, 소규모 의료 데이터셋 환경에서 FID의 불안정성을 해결했다는 점이 실무적으로 매우 중요하다. 이는 Radiomic 특징 공간의 유효 차원(Effective Dimensionality)이 학습된 특징 공간보다 낮아, 적은 샘플로도 공분산 행렬을 안정적으로 추정할 수 있기 때문으로 분석된다.
 
 ### 한계 및 비판적 논의
-본 연구는 주로 방사선 영상(Radiology)에 집중되어 있다. 저자들도 언급하였듯이, 조직 병리 영상(Histopathology)이나 피부과 영상 등으로 확장하기 위해서는 각 도메인에 특화된 바이오마커(Biomarker)로 특징 세트를 조정해야 할 필요가 있다. 
+
+본 연구는 주로 방사선 영상(Radiology)에 집중되어 있다. 저자들도 언급하였듯이, 조직 병리 영상(Histopathology)이나 피부과 영상 등으로 확장하기 위해서는 각 도메인에 특화된 바이오마커(Biomarker)로 특징 세트를 조정해야 할 필요가 있다.
 
 또한, FRD의 절대값 자체는 기준 데이터셋 $D_1$이 무엇인지에 따라 달라지므로, 서로 다른 실험 환경 간의 절대적인 수치 비교보다는 동일 데이터셋 내에서의 상대적 비교에 한정하여 사용해야 한다는 제약이 있다.
 

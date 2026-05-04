@@ -20,35 +20,44 @@ Han Xu, Yaxin Li, Xiaorui Liu, Hui Liu, Jiliang Tang (2020)
 ## 📎 Related Works
 
 ### 관련 연구 및 한계
+
 기존의 적대적 공격 연구는 주로 이미 학습이 완료된 딥러닝 모델(DNN)의 테스트 입력값을 조작하여 잘못된 예측을 유도하는 방식에 집중해 왔다. 최근 일부 연구에서 메타 학습의 결과물인 Adapted model이 적대적 예제에 취약하다는 점을 밝혀내기도 하였다.
 
 ### 기존 접근 방식과의 차별점
+
 본 논문은 Adapted model을 공격하는 것이 아니라, **Meta Learner 그 자체를 공격**한다는 점에서 차별점을 가진다. 즉, 테스트 샘플을 수정하는 것이 아니라 Meta Learner가 Adapted model을 생성하기 위해 사용하는 '가이드 데이터(teaching data)'를 오염시키는 방식이다. 이는 공격자가 테스트 샘플을 보지 않고도 생성될 모델의 전체적인 성능을 파괴하거나 특정 클래스에 대한 개념을 왜곡시킬 수 있다는 점에서 훨씬 더 치명적인 위험을 내포한다.
 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 정의
+
 메타 학습의 적응 과정은 다음과 같이 정의된다. 파라미터 $\theta$를 가진 Meta Learner $f_\theta$가 작업 $T$의 학습 데이터 $D_T^{train}$을 입력받아 파라미터 $\phi$를 가진 Adapted model $F(\cdot; \phi)$를 생성한다.
 $$\phi = f_\theta(D_T^{train})$$
 
 ### 적대적 공격 모델 (Threat Model)
+
 공격자는 White-box 설정 하에 Meta Learner의 모든 파라미터와 적응 프로세스를 알고 있다고 가정한다. 공격자는 $D_T^{train}$의 일부를 조작하여 적대적 학습 세트 $D_T^{adv}$를 구축한다.
 
 #### 1. 적대적 목표 (Adversarial Goals)
+
 - **Non-targeted Attack (DoS Attack)**: 적응된 모델이 테스트 데이터 전체에서 낮은 정확도를 갖도록 하여 전체적인 성능을 파괴하는 것이 목표이다.
 - **Targeted Attack**: 특정 클래스 $t$에 대한 샘플들을 오분류하도록 유도하여 해당 클래스에 대한 모델의 지식을 파괴하는 것이 목표이다.
 
 #### 2. 대리 테스트 손실 (Surrogate Test Loss)
+
 실제 환경에서 공격자는 테스트 세트 $D_T^{test}$를 알 수 없으므로, 학습 세트 $D_T^{train}$에서의 경험적 손실을 대리 지표로 사용하여 목적 함수를 다음과 같이 통합한다.
 $$\text{maximize}_{D_T^{adv}} \sum_{x,y \in D_T^{train}} [L(F(x; \phi'), y)] \quad \text{s.t. } \phi' = f_\theta(D_T^{adv})$$
 
 #### 3. 인지 불가능한 섭동 (Unnoticeable Perturbation)
+
 공격이 탐지되지 않도록 두 가지 제약 조건을 둔다.
+
 - **Perturbed Samples Budget**: 조작하는 샘플의 개수를 $k$개 이하로 제한한다.
 - **Perceptual Similarity**: 각 샘플의 섭동 크기를 $l_\infty$ norm 기준 $\epsilon$ 이하로 제한한다.
 $$\|x^{adv} - clean(x^{adv})\| \le \epsilon, \forall x^{adv} \in D_T^{adv}$$
 
 ### MetaAttacker 알고리즘
+
 MetaAttacker는 두 단계의 최적화 과정을 거친다.
 
 **Step 1: 주어진 선택 세트에 대한 적대적 샘플 생성 (Alg 1)**
@@ -62,11 +71,13 @@ $$\nabla_{x_i^k} L_{total}(\phi^k) = \frac{\partial L_{total}(\phi^k)}{\partial 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Omniglot, Mini-ImageNet (5-way 5-shot 설정).
 - **기준선**: Random Noise(무작위 섭동), Random F.T.(MAML의 가이드 없이 무작위 초기값에서 파인튜닝).
 - **지표**: 평균 테스트 정확도(Average Test Accuracy).
 
 ### 주요 결과
+
 1. **MAML에 대한 공격**:
    - Mini-ImageNet에서 MAML의 1-step 적응 모델의 경우, 10개의 샘플만 조작해도 정확도가 $63.3\% \to 16.2\%$로 급락하였다. 이는 Random F.T.($23.4\%$)보다 더 낮은 수치로, 메타 학습의 가이드 자체가 독이 되었음을 의미한다.
    - 파인튜닝 단계($m$)가 증가할수록 강건성이 다소 향상되는 경향을 보였다.
@@ -80,7 +91,7 @@ $$\nabla_{x_i^k} L_{total}(\phi^k) = \frac{\partial L_{total}(\phi^k)}{\partial 
 ## 🧠 Insights & Discussion
 
 본 논문은 Meta Learning이 기존의 일반적인 딥러닝 모델보다 데이터 오염(Data Poisoning)에 더 취약할 수 있다는 중요한 통찰을 제공한다. 그 이유는 다음과 같다.
-첫째, 메타 학습은 극히 적은 수의 샘플에 의존하여 빠르게 적응해야 하므로, 단 몇 개의 샘플만 오염되어도 모델의 방향성이 완전히 틀어질 가능성이 크다. 
+첫째, 메타 학습은 극히 적은 수의 샘플에 의존하여 빠르게 적응해야 하므로, 단 몇 개의 샘플만 오염되어도 모델의 방향성이 완전히 틀어질 가능성이 크다.
 둘째, 메타 학습의 아키텍처 자체가 공격자에게 효율적인 섭동을 삽입할 수 있는 명확한 가이드를 제공하는 구조를 가지고 있다.
 
 특히 MAML에서 고차 미분을 통한 공격이 효과적이었다는 점은, 메타 학습의 최적화 경로(Optimization path) 자체가 공격의 통로가 될 수 있음을 시사한다. 결과적으로, 안전이 중요한 시스템에 메타 학습을 적용하기 위해서는 단순한 성능 향상뿐만 아니라, 적응 단계에서의 강건성을 확보하는 방어 기제 연구가 반드시 선행되어야 한다.

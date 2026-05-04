@@ -12,7 +12,7 @@ Aliasghar Mortazi, Vedat Cicek, Elif Keles, Ulas Bagci (2023)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 기여는 **CLMR(Cyclic Learning/Momentum Rate)**이라는 새로운 최적화 방법을 제안한 것이다. 
+본 논문의 핵심 기여는 **CLMR(Cyclic Learning/Momentum Rate)**이라는 새로운 최적화 방법을 제안한 것이다.
 
 핵심 아이디어는 학습률(Learning Rate, LR)뿐만 아니라 모멘텀률(Momentum Rate, MR) 또한 주기적으로 변화시키는 Cyclic 함수(삼각형 함수)를 적용하는 것이다. 저자들은 기존의 Adaptive Optimizer(예: Adam)가 학습 초기 수렴 속도는 빠르지만, 특정 지역 최솟값(Local minima)에 갇혀 일반화 성능이 떨어질 수 있다는 점에 주목하였다. 이를 해결하기 위해 Nesterov Accelerated Gradient(NAG) Optimizer를 기반으로 LR과 MR을 동시에 주기적으로 가변시킴으로써, 탐색 범위를 넓히고 더 나은 일반화 성능을 달성하고자 하였다.
 
@@ -28,17 +28,21 @@ Aliasghar Mortazi, Vedat Cicek, Elif Keles, Ulas Bagci (2023)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 아키텍처
+
 본 연구에서는 제안한 CLMR의 효과를 검증하기 위해 세 가지 주요 CNN 아키텍처를 사용하였다.
+
 - **Encoder-Decoder**: 기본적인 인코더-디코더 구조이다.
 - **U-Net**: 인코더와 디코더 사이에 Skip Connection을 추가하여 세밀한 정보를 복원한다.
 - **DenseNet (Tiramisu)**: 모든 레이어를 서로 연결하는 Dense Block을 사용한다. 특히 **DenseNet2**는 $1 \times 1$ Convolution 레이어를 통해 채널 수를 조절하며 더 높은 Growth Rate(GR=24)를 적용하여 효율성을 높였다.
 
 ### CLMR Optimizer 설계
+
 CLMR은 Nesterov Accelerated Gradient(NAG)를 기반으로 하며, 업데이트 식은 다음과 같다.
 $$\theta_i = \theta_{i-1} - \alpha \nabla_{\theta_i} J(\theta_i - \beta(\theta_{i-1} - \theta_{i-2})) - \beta(\theta_{i-1} - \theta_{i-2})$$
 여기서 $\theta$는 네트워크 파라미터, $\alpha$는 학습률(LR), $\beta$는 모멘텀률(MR), $J$는 비용 함수이다.
 
 CLMR의 핵심은 $\alpha$와 $\beta$를 다음과 같은 삼각형 주기 함수로 정의하는 것이다.
+
 - **주기 정의**: $\text{cycle}_{lr} = C_{lr} \times I_t$, $\text{cycle}_{mr} = C_{mr} \times I_t$ ($I_t$는 에포크당 반복 횟수)
 - **LR ($\alpha$) 결정**: $\min_{lr}$과 $\max_{lr}$ 사이를 삼각형 형태로 왕복한다.
 - **MR ($\beta$) 결정**: $\min_{mr}$과 $\max_{mr}$ 사이를 삼각형 형태로 왕복한다.
@@ -48,6 +52,7 @@ $$\text{LR} = \begin{cases} 2 \times \frac{\max_{lr} - \min_{lr}}{C_{lr} \times 
 MR 또한 동일한 형태의 함수 구조를 가진다. 저자들은 $\min/\max$ 값들을 고정한 상태에서 $C_{lr}$과 $C_{mr}$에 대한 2D 휴리스틱 탐색을 통해 최적의 주기 값을 찾았다.
 
 ### 학습 절차
+
 - **데이터셋**: ACDC (MICCAI 2017) 데이터셋의 Cine-MRI 영상 150건 사용.
 - **손실 함수**: Cross Entropy Loss를 사용하였다.
 - **전처리**: B-spline 보간법을 통한 $200 \times 200$ 리사이징, Anisotropic filtering 및 Histogram matching 적용.
@@ -55,11 +60,13 @@ MR 또한 동일한 형태의 함수 구조를 가진다. 저자들은 $\min/\ma
 ## 📊 Results
 
 ### 실험 설정
+
 - **평가 지표**: Dice Index (DI) 및 Cross Entropy (CE) Loss.
 - **비교 대상**: Adam, Nesterov, CLR, CLMR.
 - **작업**: 심장의 세 가지 구조(RV, Myo, LV)에 대한 단일 및 다중 객체 분할.
 
 ### 주요 결과
+
 1. **정량적 결과**: 테스트 세트 평가 결과, CLMR이 다른 Optimizer들에 비해 전반적으로 더 높은 Dice Index를 기록하였다. 특히 U-Net 아키텍처에서 CLMR은 CLR 대비 약 2% 이상의 DI 향상을 보였다.
 2. **수렴 특성**: Adam은 학습 초기 매우 빠르게 수렴하지만, 이후 성능이 정체되는 경향을 보였다. 반면 CLMR은 초기 수렴 속도는 Adam보다 느리지만, 최종적으로는 더 높은 정확도와 낮은 Loss에 도달하여 우수한 일반화 능력을 입증하였다.
 3. **아키텍처 영향**: DenseNet2(GR=24)가 가장 좋은 성능을 보였으며, 이는 단순한 파라미터 수의 증가보다 Dense Connection의 Growth Rate를 높이는 것이 성능 향상에 더 효과적임을 시사한다.
@@ -68,9 +75,11 @@ MR 또한 동일한 형태의 함수 구조를 가진다. 저자들은 $\min/\ma
 ## 🧠 Insights & Discussion
 
 ### 강점 및 해석
+
 본 논문은 Adaptive Optimizer의 빠른 수렴 속도라는 장점과 SGD 기반 방식의 뛰어난 일반화 성능이라는 장점을 주기적 가변(Cyclic) 전략을 통해 결합하였다. 특히 LR뿐만 아니라 MR을 함께 주기적으로 변화시키는 것이 의료 영상 분할과 같은 고차원 출력 작업에서 최적의 해를 찾는 데 결정적인 역할을 한다는 것을 보여주었다.
 
 ### 한계 및 비판적 논의
+
 - **파라미터 설정의 어려움**: $\min/\max$ 값과 주기 $C$ 값을 결정하는 과정이 여전히 휴리스틱한 탐색에 의존하고 있다. 저자들도 이를 언급하며 향후 강화학습(Policy Gradient) 등을 통해 이러한 하이퍼파라미터를 자동으로 학습하는 방법이 필요함을 제안하였다.
 - **데이터 일반성**: 본 실험은 Cine-MRI라는 특정 모달리티와 ACDC 데이터셋에 국한되어 수행되었다. 영상의 노이즈 수준이나 클래스 불균형이 심한 다른 데이터셋에서도 동일한 경향이 나타날지는 추가 검증이 필요하다.
 - **계산 비용**: Adaptive 방식보다 계산 비용이 낮다고 주장하지만, 최적의 $C_{lr}, C_{mr}$을 찾기 위한 사전 탐색 비용에 대해서는 구체적으로 언급되지 않았다.

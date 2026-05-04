@@ -19,6 +19,7 @@ Chenyang Gao, Yue Gu, Francesco Caliva, Yuzong Liu (2023)
 ## 📎 Related Works
 
 논문에서는 세 가지 주요 S3RL 접근 방식을 소개한다.
+
 - **Auto-regressive Predictive Coding (APC)**: 과거의 타임스탬프 정보를 사용하여 미래의 프레임을 예측하는 생성적 손실 기반 방식이다.
 - **Masked Predictive Coding (MPC)**: 양방향 컨텍스트를 활용하여 마스킹된 특징을 복원하는 생성적 손실 기반 방식이다.
 - **Contrastive Learning (CL)**: 긍정 샘플 쌍과 부정 샘플 쌍 사이의 거리를 최대화하는 판별적 학습 방식이다.
@@ -28,12 +29,15 @@ Chenyang Gao, Yue Gu, Francesco Caliva, Yuzong Liu (2023)
 ## 🛠️ Methodology
 
 ### 1. Light-weight Transformer 구조
+
 연산 효율성을 위해 다음과 같은 설계를 적용하였다.
+
 - **입력 처리**: VGG-like 모델과 Strided-convolution 기반의 2배 다운샘플링을 통해 입력 시퀀스 길이를 줄여 Transformer의 $T^2$ 시간 복잡도 문제를 완화하였다.
 - **모델 크기**: 깊이와 너비를 줄여 전체 파라미터 수를 330K 개로 제한하였다.
 - **수정 사항**: APC에서는 과거 정보만 참조하도록 Attention mask를 도입하였고, MPC에서는 학습 가능한 Mask-embeddings를 사용하여 복원 성능을 높였다.
 
 ### 2. S3RL 학습 목적 함수
+
 사전 학습에 사용된 세 가지 손실 함수는 다음과 같다.
 
 - **APC 손실**: 현재 프레임에서 $n$ 스텝 앞의 미래 프레임을 예측한다.
@@ -44,6 +48,7 @@ $$L_{MPC} = \sum_{i=1}^{T} w_i \|x_i - y_i\|$$
 $$L_{CL} = -\sum_{i=1}^{T} w_i \log \frac{\exp(\Phi(y_i, q_i)/\kappa)}{\sum_{\tilde{q} \in Q} \exp(\Phi(y_i, \tilde{q})/\kappa)} + \beta L_D$$
 
 ### 3. 발화 단위 구분 강화 (Utterance-wise distinction boosting)
+
 본 논문이 제안하는 핵심 메커니즘으로, 두 개의 경량 Transformer($LWT_1, LWT_2$)를 사용한다.
 
 - **구조**: $LWT_1$은 학습 대상 모델이며, $LWT_2$는 동일한 S3RL로 사전 학습된 후 가중치가 고정(Frozen)된 특징 추출기이다.
@@ -59,11 +64,13 @@ $$L = \alpha L_{S3RL} + (1-\alpha) L_{utt}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 사전 학습에는 LibriSpeech (960시간)를 사용하였으며, 다운스트림 KS 작업에는 Google Speech Commands v2 (35개 클래스) 및 사내(In-house) 데이터셋을 사용하였다.
 - **특징 추출**: 64-D LFBE spectrogram을 사용하였다.
 - **평가 지표**: Google 데이터셋에서는 Accuracy를, 사내 데이터셋에서는 고정된 False Rejection Rate (FRR)에서의 상대적 False Acceptance Rate (FAR)를 측정하였다.
 
 ### 주요 결과
+
 - **S3RL의 유효성**: 모든 S3RL 방법론이 처음부터 학습(Training from scratch)한 BaselineLT보다 높은 성능을 보였다. 이는 매우 작은 모델에서도 대량의 라벨 없는 데이터를 이용한 사전 학습이 유효함을 시사한다.
 - **최적의 방법론**: **APC** 기반의 사전 학습이 Google 및 사내 데이터셋 모두에서 가장 뛰어난 성능을 보였다.
 - **제안 방법의 효과**: 발화 단위 구분 강화($+$ 표시)를 적용했을 때 성능이 추가로 향상되었다. 특히 $\text{LTAPC}^+$ 모델은 BaselineLT 대비 Google 데이터셋에서 1.2%의 정확도 향상을 보였으며, 사내 데이터셋의 4개 키워드에 대해 6% ~ 23.7%의 상대적 FAR 개선을 달성하였다.
@@ -75,6 +82,7 @@ $$L = \alpha L_{S3RL} + (1-\alpha) L_{utt}$$
 본 연구는 S3RL이 반드시 거대 모델에서만 작동하는 것이 아니며, 적절한 아키텍처 설계와 목적 함수를 통해 330K 수준의 초경량 모델에서도 유의미한 성능 향상을 이끌어낼 수 있음을 보여주었다. 특히, 단순히 프레임 단위의 예측에 그치지 않고 발화 수준의 표현력을 강제하는 대조 학습 메커니즘을 도입함으로써 분류 작업(KS)에 특화된 사전 학습 방향을 제시하였다.
 
 **한계 및 비판적 해석**
+
 - **모델 용량의 한계**: CL 기반 방식이 APC나 MPC보다 성능이 낮게 나온 점은, 대조 학습이 유의미한 표현을 찾기 위해 더 많은 모델 용량(Capacity)을 요구하기 때문이라는 저자의 추측이 타당해 보인다.
 - **풀링 방식의 단순함**: 발화 표현을 얻기 위해 Mean-pooling을 사용하였으나, 이는 시퀀스의 시간적 정보를 단순화시킨다는 단점이 있다. 논문에서도 언급되었듯이, 채널 간 상관관계를 분석하는 등 더 정교한 특징 추출 방식에 대한 연구가 필요하다.
 - **데이터 편향**: 사내 데이터셋의 경우 키워드별 데이터 양의 차이가 매우 크지만, 이에 대한 세부적인 분석이나 불균형 해소 방안은 명시되지 않았다.

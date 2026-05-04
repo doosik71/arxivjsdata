@@ -12,7 +12,7 @@ Shichao Xu, Shuyue Lan, Qi Zhu (2019)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 마스크 생성 분기의 성능을 극대화하기 위해 독립적으로 적용 가능한 다섯 가지 기술을 도입하는 것이다. 
+본 논문의 핵심 아이디어는 마스크 생성 분기의 성능을 극대화하기 위해 독립적으로 적용 가능한 다섯 가지 기술을 도입하는 것이다.
 
 1. **Contextual Fusion**: 전역 정보를 마스크 분기에 통합하여 RoI 외부의 문맥 정보를 활용한다.
 2. **Deconvolutional Pyramid Module**: 다단계 세만틱 의미를 결합하여 더 정교한 마스크 예측을 수행한다.
@@ -31,18 +31,23 @@ Shichao Xu, Shuyue Lan, Qi Zhu (2019)
 MaskPlus는 Mask R-CNN 프레임워크를 확장하며, 전체 파이프라인은 FPN(Feature Pyramid Network) 백본과 RoIAlign을 기반으로 한다. 구체적인 다섯 가지 기술의 상세 내용은 다음과 같다.
 
 ### 1. Contextual Fusion
+
 RoI 내부 특징만으로는 전역적인 문맥(Context)을 파악하기 어렵고 RoI가 불완전할 경우 객체의 일부가 누락될 수 있다. 이를 해결하기 위해 RoIAlign 이전 단계의 FPN 마지막 레이어 특징에서 전체 이미지 크기의 제안(Full-image-size proposal)을 추출하는 새로운 분기를 생성한다. 이 분기는 3개의 합성곱 레이어(필터 수 512, 256, 256)를 거쳐 원래의 RoIAlign 특징에 더해진다. 이는 개별 RoI에 갇히지 않고 이미지 전체의 공간적 관계를 마스크 생성에 활용하게 한다.
 
 ### 2. Deconvolutional Pyramid Module
+
 FPN의 구조에서 영감을 얻아, 먼저 업샘플링을 수행한 후 다시 다운샘플링을 수행하는 피라미드 모듈을 설계하였다. 구체적으로는 스트라이드 2인 디컨볼루션 레이어 세트와 그 뒤를 잇는 동일 수의 합성곱 레이어(스트라이드 2)로 구성된다. 이 모듈은 단순한 단일 업샘플링 대신 다단계의 세만틱 의미를 결합함으로써 다양한 크기의 객체에 대해 마스크 정확도를 높인다.
 
 ### 3. Improved Boundary Refinement
+
 마스크의 경계가 흐릿해지는 문제를 해결하기 위해 경계 학습 전용 분기를 추가하였다. 기존 연구의 단순한 잔차 블록(Residual Block) 대신, Dense Connection을 갖춘 여러 개의 합성곱 모듈을 배치하여 학습 능력을 강화하였다. 각 모듈은 $\text{BatchNorm} \rightarrow \text{PReLu} \rightarrow \text{Conv(16 filters)} \rightarrow \text{BatchNorm} \rightarrow \text{PReLu} \rightarrow \text{Conv(4 filters)}$ 순으로 구성되며, 이후 모듈은 이전 모든 모듈의 특징을 연결(Concatenate)하여 입력으로 사용한다.
 
 ### 4. Quasi-multitask Learning
+
 데이터 증강을 네트워크 끝단(출력부)에서 수행하는 전략이다. 학습 단계에서 원본 마스크 크기($28 \times 28$) 외에 $0.5\times(14 \times 14)$ 및 $2\times(56 \times 56)$ 크기의 마스크 분기를 병렬로 추가하여 손실 함수를 계산한다. 중요한 점은 이러한 다양한 스케일 분기는 학습 시 가이드 역할만 할 뿐, 추론 단계에서는 사용되지 않는다는 것이다. 이를 통해 추가적인 연산량 없이 스케일 불변성을 확보한다.
 
 ### 5. Biased Training
+
 마스크 분기가 초기에 불안정한 피드백을 주어 탐지 분기의 학습을 방해하는 문제를 해결하기 위해 손실 함수에 가중치를 부여한다. 전체 다중 작업 손실 함수는 다음과 같이 정의된다.
 
 $$L = L_{cls} + L_{box} + \alpha(L_{mask})$$
@@ -52,11 +57,13 @@ $$L = L_{cls} + L_{box} + \alpha(L_{mask})$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: MS-COCO (훈련 115k, 검증 5k, 테스트 41k 이미지)
 - **지표**: $\text{AP}, \text{AP}_{50}, \text{AP}_{75}$ 및 크기별 $\text{AP}_S, \text{AP}_M, \text{AP}_L$
 - **구현**: Tensorpack 프레임워크 기반, ResNet-50-FPN(절제 연구) 및 ResNet-101-FPN(최종 모델) 사용.
 
 ### 주요 결과
+
 - **Contextual Fusion**: 마스크 $\text{AP}$가 35.1에서 35.5로 상승하였으며, 특히 중대형 객체에서 효과가 컸다.
 - **Deconvolutional Pyramid Module**: 마스크 $\text{AP}$가 35.4로 상승하였으며, 소형 및 중형 객체의 정확도가 개선되었다.
 - **Improved Boundary Refinement**: 기존의 단순한 경계 정교화 방식보다 우수한 성능을 보였으며, 특히 중대형 객체의 정밀도가 향상되었다.
@@ -64,6 +71,7 @@ $$L = L_{cls} + L_{box} + \alpha(L_{mask})$$
 - **Biased Training**: 탐지 성능($\text{AP}_{bb}$)과 마스크 성능 모두에서 이점이 확인되었다.
 
 ### 종합 성능 비교
+
 최종 모델인 MaskPlus는 원본 Mask R-CNN보다 모든 지표에서 우수한 성능을 보였다. 특히 Cascade R-CNN 구조를 결합한 **MaskPlus+** 버전은 $\text{AP}$ 40.9를 달성하며 최신 기법들과 경쟁 가능한 수준의 성능을 입증하였다.
 
 ## 🧠 Insights & Discussion

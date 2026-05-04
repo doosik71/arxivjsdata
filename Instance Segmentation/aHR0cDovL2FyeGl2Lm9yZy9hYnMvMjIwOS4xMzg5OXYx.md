@@ -4,7 +4,7 @@ Bo Yan, Fengliang Qi, Zhuang Li, Yadong Li, Hongbin Wang (2022)
 
 ## 🧩 Problem to Solve
 
-본 논문은 ACM MMSports2022 DeepSportRadar Instance Segmentation Challenge에서 제시한 과제, 즉 농구 코트 위에서 선수, 코치, 심판 등 개별 사람을 정밀하게 분할(segmentation)하는 문제를 해결하고자 한다. 
+본 논문은 ACM MMSports2022 DeepSportRadar Instance Segmentation Challenge에서 제시한 과제, 즉 농구 코트 위에서 선수, 코치, 심판 등 개별 사람을 정밀하게 분할(segmentation)하는 문제를 해결하고자 한다.
 
 이 문제는 다음과 같은 두 가지 주요한 어려움을 가지고 있다. 첫째, 경기 특성상 선수들 간의 겹침(occlusion) 현상이 매우 심하여 개별 인스턴스를 정확히 구분하기 어렵다. 둘째, 학습에 사용할 수 있는 데이터의 양이 매우 제한적이어서 모델이 과적합(overfitting)될 가능성이 높고 일반화 성능을 확보하기 어렵다는 점이다. 따라서 본 연구의 목표는 데이터 부족과 심한 폐색 문제를 극복하여 높은 성능을 내는 강력한 Instance Segmentation 파이프라인을 구축하는 것이다.
 
@@ -28,17 +28,22 @@ Bo Yan, Fengliang Qi, Zhuang Li, Yadong Li, Hongbin Wang (2022)
 제안된 파이프라인은 데이터 증강, 모델 구조, 학습 전략의 세 가지 단계로 구성된다.
 
 ### 1. 데이터 증강 (Data Augmentation)
+
 데이터 부족과 폐색 문제를 해결하기 위해 두 가지 전략을 사용한다.
+
 - **Photometric Distortion**: 이미지의 밝기(brightness), 대비(contrast), 채도(saturation), 색조(hue)를 무작위로 변경하여 조명 변화에 강건한 모델을 만든다.
 - **Copy-Paste**: 한 이미지 내의 객체를 복사하여 다른 이미지에 붙여넣는 방식으로, 인스턴스의 수를 인위적으로 늘리고 다양한 배치 상황을 생성하여 폐색 문제 대응 능력을 키운다.
 
 ### 2. 세그멘테이션 모델 (Segmentation Model)
+
 전체 아키텍처는 다음과 같은 구성 요소로 이루어져 있다.
+
 - **Backbone & FPN**: Swin-Base를 기반으로 하는 $CBNetV2$ 백본과 $CBFPN$을 사용하여 다중 스케일의 풍부한 특징 맵을 추출한다.
 - **Detector**: $Hybrid\ Task\ Cascade\ (HTC)$ 구조를 채택하여 검출과 분할 단계의 상호작용을 강화하였다.
 - **MaskIoU Head**: 기존의 Mask R-CNN 계열은 Bounding Box의 분류 점수를 마스크의 품질로 간주하는 경향이 있다. 이를 개선하기 위해 Mask Scoring R-CNN의 개념을 도입하여, 마스크 자체의 품질($IoU$)을 예측하는 $MaskIoU$ head를 $HTCMaskHead$에 추가하였다. 이를 통해 마스크 품질과 점수 사이의 정렬(alignment)을 통해 정밀도를 높였다.
 
 ### 3. 학습 및 추론 전략 (Training & Inference Strategy)
+
 - **학습 절차**: AdamW 옵티마이저를 사용하며 초기 학습률(learning rate)은 $0.0001$로 설정하였다. 입력 이미지는 짧은 변 기준 $820$에서 $3080$까지 무작위 스케일링 후 $(1920, 1440)$ 크기로 크롭 및 패딩 처리된다.
 - **SWA (Stochastic Weight Averaging)**: 모델이 수렴한 후, SWA 전략을 사용하여 가중치를 평균화함으로써 일반화 성능을 개선하고 더 강건한 모델을 생성한다.
 - **TTA (Test Time Augmentation)**: 추론 단계에서 수평 뒤집기(horizontal flip)와 5가지 스케일 팩터 $(1.0, 1.5, 2.0, 2.5, 3.0)$를 적용한 Multi-scale test를 수행하여 최종 결과를 도출한다.
@@ -46,11 +51,13 @@ Bo Yan, Fengliang Qi, Zhuang Li, Yadong Li, Hongbin Wang (2022)
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: DeepSportRadar Instance Segmentation Challenge 제공 데이터.
 - **평가 지표**: $AP@0.50:0.95$ (Average Precision).
 - **기준선(Baseline)**: HTC-CBSwinBase 모델에 Soft-NMS를 적용한 상태.
 
 ### 주요 결과
+
 최종적으로 챌린지 세트에서 $0.768\ AP$를 달성하였다. 상세한 성능 향상 과정은 다음과 같은 Ablation Study를 통해 확인되었다.
 
 | 방법론 (Pipeline) | 데이터 | 기타 설정 | mAP-Test | mAP-Challenge |
@@ -69,11 +76,13 @@ Bo Yan, Fengliang Qi, Zhuang Li, Yadong Li, Hongbin Wang (2022)
 본 논문은 특정 도메인의 챌린지를 해결하기 위해 개별적인 알고리즘의 혁신보다는, 검증된 고성능 컴포넌트들을 정밀하게 조합하고 최적화하는 파이프라인 구축의 중요성을 보여준다.
 
 **강점**:
+
 - 데이터 부족 문제를 해결하기 위해 단순 증강이 아닌 Copy-Paste와 같은 인스턴스 중심의 증강 전략을 적절히 사용하였다.
 - MaskIoU head를 통해 마스크의 정밀도를 직접적으로 제어함으로써 Instance Segmentation의 고질적인 문제인 '점수-품질 불일치' 문제를 해결하였다.
 - TTA와 SWA 같은 학습/추론 기법이 실제 챌린지 환경에서 상당한 성능 향상을 이끌어낼 수 있음을 정량적으로 입증하였다.
 
 **한계 및 논의사항**:
+
 - 논문에서 최종 성능 향상을 위해 Train, Val, Test 데이터셋 전체를 사용하여 학습하였다고 명시되어 있다. 이는 실전 챌린지에서는 가능하나, 실제 환경(unseen data)에서의 일반화 성능에 대해서는 추가적인 검증이 필요하다.
 - 제안된 파이프라인이 매우 무거운 모델(Swin-Base, HTC, Multi-scale TTA)을 기반으로 하고 있어, 실시간성이 중요한 스포츠 중계 시스템에 적용하기에는 연산 비용이 매우 높을 것으로 판단된다.
 

@@ -16,46 +16,52 @@ Jianbiao Mei, Yu Yang, Mengmeng Wang, Xiaojun Hou, Laijian Li, Yong Liu (2023)
 
 PANet의 핵심 아이디어는 학습이 필요 없는 **Sparse Instance Proposal (SIP)** 모듈과 분절된 인스턴스를 통합하는 **Instance Aggregation (IA)** 모듈을 결합하는 것이다.
 
-1.  **SIP 모듈**: "Sampling-Shifting-Grouping"이라는 단계적 구조를 통해 원본 포인트 클라우드에서 효율적으로 인스턴스 제안(proposal)을 생성한다. 특히 Balanced Point Sampling(BPS)을 통해 균일한 시드 포인트를 추출하고, Bubble Shrinking(BS)을 통해 이를 중심점으로 이동시킨 후, Connected Component Labeling(CCL)으로 그룹화한다.
-2.  **IA 모듈**: SIP 과정에서 발생할 수 있는 대형 객체의 과분할 문제를 해결하기 위해 KNN-Transformer를 도입한다. 인스턴스 간의 유사도(affinity)를 계산하여 동일 객체로 판단되는 분절된 인스턴스들을 병합함으로써 완결성을 높인다.
-3.  **Plug-and-Play 특성**: SIP 모듈은 비학습(non-learning) 방식으로 설계되어, 특정 백본 네트워크나 데이터셋에 종속되지 않고 쉽게 확장하여 적용할 수 있다.
+1. **SIP 모듈**: "Sampling-Shifting-Grouping"이라는 단계적 구조를 통해 원본 포인트 클라우드에서 효율적으로 인스턴스 제안(proposal)을 생성한다. 특히 Balanced Point Sampling(BPS)을 통해 균일한 시드 포인트를 추출하고, Bubble Shrinking(BS)을 통해 이를 중심점으로 이동시킨 후, Connected Component Labeling(CCL)으로 그룹화한다.
+2. **IA 모듈**: SIP 과정에서 발생할 수 있는 대형 객체의 과분할 문제를 해결하기 위해 KNN-Transformer를 도입한다. 인스턴스 간의 유사도(affinity)를 계산하여 동일 객체로 판단되는 분절된 인스턴스들을 병합함으로써 완결성을 높인다.
+3. **Plug-and-Play 특성**: SIP 모듈은 비학습(non-learning) 방식으로 설계되어, 특정 백본 네트워크나 데이터셋에 종속되지 않고 쉽게 확장하여 적용할 수 있다.
 
 ## 📎 Related Works
 
 LPS 방법론은 크게 Detection-based와 Clustering-based 접근법으로 나뉜다.
 
--   **Detection-based**: 3D Object Detection 네트워크를 사용하여 인스턴스를 먼저 찾고 세그멘테이션을 수행한다. 하지만 이 방식은 검출기(detector)의 정확도에 전체 성능이 종속되는 한계가 있다.
--   **Clustering-based**: 중심점 회귀 및 클러스터링 알고리즘을 통해 포인트를 그룹화한다. 최근 DSNet과 같은 연구들이 학습 가능한 Dynamic Shifting 모듈을 제안했으나, 예측된 중심점이 실제 정답(Ground-truth) 중심점과 일치하지 않아 학습이 저해되는 문제가 존재한다.
+- **Detection-based**: 3D Object Detection 네트워크를 사용하여 인스턴스를 먼저 찾고 세그멘테이션을 수행한다. 하지만 이 방식은 검출기(detector)의 정확도에 전체 성능이 종속되는 한계가 있다.
+- **Clustering-based**: 중심점 회귀 및 클러스터링 알고리즘을 통해 포인트를 그룹화한다. 최근 DSNet과 같은 연구들이 학습 가능한 Dynamic Shifting 모듈을 제안했으나, 예측된 중심점이 실제 정답(Ground-truth) 중심점과 일치하지 않아 학습이 저해되는 문제가 존재한다.
 
 PANet은 이러한 기존 방식과 달리 Offset branch를 완전히 제거한 SIP 모듈을 제안하며, 단순히 GNN을 이용해 많은 수의 제안을 병합하는 기존 연구와 달리, 대형 객체의 분절 문제에 집중하여 효율적인 KNN-Transformer 기반의 IA 모듈을 사용한다는 점에서 차별성을 갖는다.
 
 ## 🛠️ Methodology
 
 ### 1. Backbone Design
-PANet은 multi-scale sparse 3D CNN과 소형 2D U-Net을 결합하여 3D 및 2D 특징을 동시에 추출한다. 
--   입력 포인트 클라우드를 Voxelization 하여 $\text{L} \times \text{H} \times \text{W}$ 해상도의 voxel-wise feature $F_v^0$를 생성한다.
--   이를 z-축으로 투영하여 BEV(Bird's Eye View) feature $F_b$를 얻는다.
--   Sparse 3D CNN을 통해 multi-scale 3D 특징을 추출하고, 2D U-Net을 통해 BEV 특징을 인코딩한다.
--   최종적으로 이들을 다시 포인트 단위로 역투영(back-project)하여 결합한 뒤, MLP를 통해 융합된 특징 $f_p \in \mathbb{R}^{N \times 64}$를 생성한다. 이 특징은 Semantic head와 Instance branch의 입력으로 사용된다.
+
+PANet은 multi-scale sparse 3D CNN과 소형 2D U-Net을 결합하여 3D 및 2D 특징을 동시에 추출한다.
+
+- 입력 포인트 클라우드를 Voxelization 하여 $\text{L} \times \text{H} \times \text{W}$ 해상도의 voxel-wise feature $F_v^0$를 생성한다.
+- 이를 z-축으로 투영하여 BEV(Bird's Eye View) feature $F_b$를 얻는다.
+- Sparse 3D CNN을 통해 multi-scale 3D 특징을 추출하고, 2D U-Net을 통해 BEV 특징을 인코딩한다.
+- 최종적으로 이들을 다시 포인트 단위로 역투영(back-project)하여 결합한 뒤, MLP를 통해 융합된 특징 $f_p \in \mathbb{R}^{N \times 64}$를 생성한다. 이 특징은 Semantic head와 Instance branch의 입력으로 사용된다.
 
 ### 2. Sparse Instance Proposal (SIP)
+
 SIP 모듈은 학습 없이 다음 세 단계를 거쳐 인스턴스 제안을 생성한다.
 
 **A. Balanced Point-Sampling (BPS)**
-FPS(Farthest Point Sampling)의 높은 계산 비용과 Random sampling의 불균일한 분포(센서와 가까울수록 밀도가 높은 문제)를 해결하기 위해 BPS를 제안한다. 
--   입력 포인트 클라우드를 voxel block으로 나누고, 각 voxel 내 포인트들의 평균값을 시드 포인트(seed point)로 설정한다.
--   이 방식은 포인트 밀도가 아닌 voxel 해상도와 객체 점유 상태에 영향을 받으므로 거리 범위에 따라 균일한 시드 분포를 생성하며, 샘플링과 할당을 동시에 수행하여 효율적이다.
+FPS(Farthest Point Sampling)의 높은 계산 비용과 Random sampling의 불균일한 분포(센서와 가까울수록 밀도가 높은 문제)를 해결하기 위해 BPS를 제안한다.
+
+- 입력 포인트 클라우드를 voxel block으로 나누고, 각 voxel 내 포인트들의 평균값을 시드 포인트(seed point)로 설정한다.
+- 이 방식은 포인트 밀도가 아닌 voxel 해상도와 객체 점유 상태에 영향을 받으므로 거리 범위에 따라 균일한 시드 분포를 생성하며, 샘플링과 할당을 동시에 수행하여 효율적이다.
 
 **B. Bubble Shrinking (BS)**
 추출된 시드 포인트 $X \in \mathbb{R}^{M \times 3}$를 인스턴스 중심점으로 이동시키는 과정이다.
--   카테고리별 최소 반지름 $r_c$를 기준으로, 같은 카테고리에 속하며 거리가 $r_c$보다 작은 시드 포인트들을 연결하여 그래프 $G=(V, E)$를 구성한다.
--   각 시드 포인트를 중심(bubble)으로 하는 이웃 포인트들의 평균으로 시드 위치를 반복적으로(L=4회) 갱신한다.
--   이 과정에서 인접 행렬 $K$는 처음에 한 번만 계산되어 계산 오버헤드를 줄인다.
+
+- 카테고리별 최소 반지름 $r_c$를 기준으로, 같은 카테고리에 속하며 거리가 $r_c$보다 작은 시드 포인트들을 연결하여 그래프 $G=(V, E)$를 구성한다.
+- 각 시드 포인트를 중심(bubble)으로 하는 이웃 포인트들의 평균으로 시드 위치를 반복적으로(L=4회) 갱신한다.
+- 이 과정에서 인접 행렬 $K$는 처음에 한 번만 계산되어 계산 오버헤드를 줄인다.
 
 **C. Point Grouping**
 이동된 시드 포인트 $X'$를 대상으로 Connected Component Labeling(CCL) 알고리즘을 적용한다. 시드 포인트 간의 거리 임계값(BS에서 사용한 $r_c$의 절반)과 시맨틱 카테고리를 기준으로 연결 성분을 찾으며, 같은 연결 성분에 속한 시드 포인트들이 지배하는 모든 포인트에 동일한 인스턴스 ID를 부여한다.
 
 ### 3. Instance Aggregation (IA)
+
 SIP에서 발생한 대형 객체의 과분할 문제를 해결하기 위해 제안된 모듈이다.
 
 **A. Global Feature Extraction**
@@ -75,18 +81,21 @@ $$s_{i,j} = \text{sigmoid}[\text{MLP}([\hat{g}_i, \hat{g}_j, |p_i - p_j|])]$$
 ## 📊 Results
 
 ### 1. 실험 설정
--   **데이터셋**: SemanticKITTI 및 nuScenes 검증/테스트 셋.
--   **지표**: Panoptic Quality (PQ), Segmentation Quality (SQ), Recognition Quality (RQ) 및 mIoU.
+
+- **데이터셋**: SemanticKITTI 및 nuScenes 검증/테스트 셋.
+- **지표**: Panoptic Quality (PQ), Segmentation Quality (SQ), Recognition Quality (RQ) 및 mIoU.
 
 ### 2. 주요 결과
--   **SemanticKITTI**: PANet은 PQ 기준 61.7%를 기록하며 기존의 Clustering-based 방법들(DSNet, Panoptic-PolarNet, EfficientLPS)보다 크게 앞섰다. 특히 mIoU는 SCAN과 유사한 수준을 유지하면서 PQ는 4.5% 더 높게 나타났다.
--   **nuScenes**: 모든 지표에서 State-of-the-art(SOTA) 성능을 달성하였다 (PQ 69.2%).
--   **정성적 결과**: 시각화 결과, PANet은 밀집된 장면(crowded scenes)과 대형 객체(트럭, 버스) 분할에서 타 모델 대비 우수한 성능을 보였다.
+
+- **SemanticKITTI**: PANet은 PQ 기준 61.7%를 기록하며 기존의 Clustering-based 방법들(DSNet, Panoptic-PolarNet, EfficientLPS)보다 크게 앞섰다. 특히 mIoU는 SCAN과 유사한 수준을 유지하면서 PQ는 4.5% 더 높게 나타났다.
+- **nuScenes**: 모든 지표에서 State-of-the-art(SOTA) 성능을 달성하였다 (PQ 69.2%).
+- **정성적 결과**: 시각화 결과, PANet은 밀집된 장면(crowded scenes)과 대형 객체(트럭, 버스) 분할에서 타 모델 대비 우수한 성능을 보였다.
 
 ### 3. Ablation Study
--   **구성 요소 영향**: BPS와 CCL 기반 그룹화만으로도 기본 성능이 확보되었으며, BS(Bubble Shrinking)를 추가했을 때 $\text{PQ}_{\text{Th}}$가 1.5% 상승했다. IA 모듈은 특히 트럭(Truck) 클래스에서 PQ를 3.1% 향상시켜 대형 객체 병합에 효과적임을 입증했다.
--   **Clustering 알고리즘 비교**: MeanShift, DBScan, HDBScan 등 전통적인 방식보다 PANet의 SIP 방식이 더 높은 PQ를 보였으며, 학습 기반의 DS 모듈보다 정확도와 속도(약 13배 빠름) 면에서 모두 우수했다.
--   **Sampling 알고리즘 비교**: BPS는 FPS와 대등한 정확도를 보이면서도 실행 시간은 FPS보다 3배, Random sampling보다 빠르게 나타났다.
+
+- **구성 요소 영향**: BPS와 CCL 기반 그룹화만으로도 기본 성능이 확보되었으며, BS(Bubble Shrinking)를 추가했을 때 $\text{PQ}_{\text{Th}}$가 1.5% 상승했다. IA 모듈은 특히 트럭(Truck) 클래스에서 PQ를 3.1% 향상시켜 대형 객체 병합에 효과적임을 입증했다.
+- **Clustering 알고리즘 비교**: MeanShift, DBScan, HDBScan 등 전통적인 방식보다 PANet의 SIP 방식이 더 높은 PQ를 보였으며, 학습 기반의 DS 모듈보다 정확도와 속도(약 13배 빠름) 면에서 모두 우수했다.
+- **Sampling 알고리즘 비교**: BPS는 FPS와 대등한 정확도를 보이면서도 실행 시간은 FPS보다 3배, Random sampling보다 빠르게 나타났다.
 
 ## 🧠 Insights & Discussion
 

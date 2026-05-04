@@ -34,16 +34,19 @@ Loïc Jézéquel, Ngoc-Son Vu, Jean Beaudet, and Aymeric Histace (2022)
 전체 시스템은 판별적(Discriminative) 작업과 생성적(Generative) 작업으로 구성된 두 개의 브랜치(U-branch, L-branch) 구조를 가진다.
 
 ### 1. Discriminative Branch (U-branch)
+
 이 브랜치는 하나의 공유 Encoder $\phi$를 사용하며, 두 가지 작업을 수행한다.
 
 **A. Piece-wise Puzzle Task**
 기존의 전체 퍼즐 정답(permutation index)을 맞추는 방식 대신, 각 조각(piece)의 원래 위치를 예측하는 방식으로 개선하였다.
+
 - **학습**: 이미지를 $n$개의 조각으로 나누고 셔플한 뒤, 각 조각 $i$에 대해 원래 위치 $\Pi^i$를 예측한다. 손실 함수로는 Cross-Entropy loss $L_{CE}$를 사용한다.
 $$L_{pzl}(\Pi(I)) = \frac{1}{n} \sum_{i=1}^{n} L_{CE}(\phi \circ f_i(\Pi(I)); \Pi^i)$$
 - **추론**: 각 조각의 예측 결과에 대해 OOD score를 계산하고 그 평균을 이상치 점수로 사용한다.
 
 **B. Tint Rotation Task**
 HSV 색 공간의 Hue 채널에 오프셋 $\theta$를 더하는 변환을 통해 색상 정보를 학습한다.
+
 - **학습**: 예측된 각도 $\Theta$를 기반으로 원본 이미지와 예측 이미지 사이의 RGB 공간에서의 $L_1$ 오차를 최소화한다.
 $$L_{tint}(\gamma(I, \theta)) = \mathbb{E}_{\Theta|\gamma(I, \theta)} \left[ \frac{\|I - \gamma(I, \theta - \Theta)\|_1}{W \times H \times 255} \right]$$
 - **추론**: Softmax 확률값과 각 각도별 $L_1$ 오차의 가중 합을 통해 점수를 산출한다.
@@ -52,6 +55,7 @@ $$L_{tint}(\gamma(I, \theta)) = \mathbb{E}_{\Theta|\gamma(I, \theta)} \left[ \fr
 퍼즐 조각 내부에서 Tint rotation을 동시에 수행하며, 이때 객체 영역에 가중치를 두는 Attention map $P_{ij}$를 학습한다. 배경에 과적합되는 것을 방지하기 위해 Attention map의 분산을 조절하는 $L_{density}$를 추가한다.
 
 ### 2. Generative Branch (L-branch)
+
 이미지의 질감을 학습하기 위해 Partial Re-colorization 작업을 수행한다.
 
 - **구조**: UNet 아키텍처를 사용하여 L(luminance) 채널과 이미지 외곽 border $\alpha$의 색상 정보를 입력받아 중심부의 $(A, B)$ 색상 채널을 예측한다.
@@ -60,24 +64,27 @@ $$p(A_{ij}, B_{ij} | I^{part}) = \sum_{k=1}^{K} \pi_{ij}^{(k)} \mathcal{N}(A_{ij
 - **학습**: EM 알고리즘을 통해 파라미터 $\pi, \mu, \Sigma$를 최적화하며, Cholesky decomposition을 사용하여 공분산 행렬 $\Sigma$의 양의 정정치(positive definite)를 보장한다.
 
 ### 3. OOD Detection 및 Fusion
+
 - **OOD 함수**: Softmax truth(정답 클래스의 확률값)와 Mahalanobis distance를 실험하였으며, 최종 모델에서는 Softmax truth를 사용한다.
 - **Fusion**: 각 작업(Puzzle, Tint, Colorization)에서 나온 OOD score들을 Median 함수를 통해 하나의 최종 이상치 점수로 통합한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**:
-    - Object Anomalies: F-MNIST, CIFAR-10, CIFAR-100 (One-vs-all 프로토콜)
-    - Style Anomalies: CUB-200 (Birds), FounderType-200 (Fonts)
-    - Local/Complex Anomalies: WMCA (Face anti-spoofing; 실물 얼굴 vs 가짜 얼굴 탐지)
+  - Object Anomalies: F-MNIST, CIFAR-10, CIFAR-100 (One-vs-all 프로토콜)
+  - Style Anomalies: CUB-200 (Birds), FounderType-200 (Fonts)
+  - Local/Complex Anomalies: WMCA (Face anti-spoofing; 실물 얼굴 vs 가짜 얼굴 탐지)
 - **지표**: AUROC, EER (Equal Error Rate), APCER @ 5% BPCER.
 - **비교 대상**: ADGAN, GANomaly, GeoTrans, MHRot, PuzzleGeom, DROC-contrastive 등.
 
 ### 주요 결과
-- **정량적 성과**: 
-    - CIFAR-10에서 PuzzleGeom 대비 상대 오차가 36% 개선되었다.
-    - WMCA(얼굴 위조 탐지) 데이터셋에서 AUROC 91.4%를 달성하며, SOTA 모델 및 심지어 일부 Semi-supervised 모델보다 높은 성능을 보였다.
-    - 특히 WMCA에서 APCER @ 5% BPCER 수치를 33.8%(PuzzleGeom)에서 27.3%로 크게 낮추었다.
+
+- **정량적 성과**:
+  - CIFAR-10에서 PuzzleGeom 대비 상대 오차가 36% 개선되었다.
+  - WMCA(얼굴 위조 탐지) 데이터셋에서 AUROC 91.4%를 달성하며, SOTA 모델 및 심지어 일부 Semi-supervised 모델보다 높은 성능을 보였다.
+  - 특히 WMCA에서 APCER @ 5% BPCER 수치를 33.8%(PuzzleGeom)에서 27.3%로 크게 낮추었다.
 - **정성적 분석**: 각 작업(Puzzle, Tint, Colorization)이 서로 다른 유형의 이상치(구조적 결함, 색상 왜곡, 질감 이상)를 상보적으로 잘 잡아내는 것을 확인하였다.
 
 ## 🧠 Insights & Discussion

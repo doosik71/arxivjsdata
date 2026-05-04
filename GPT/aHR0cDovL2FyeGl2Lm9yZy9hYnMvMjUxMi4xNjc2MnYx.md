@@ -4,9 +4,9 @@ Nima Dehmamy, Benjamin Hoover, Bishwajit Saha, Leo Kozachkov, Jean-Jacques Sloti
 
 ## 🧩 Problem to Solve
 
-본 논문은 현대 언어 모델링의 주류인 Generative Pre-trained Transformer(GPT) 아키텍처와 Energy-Based Modeling(EBM) 패러다임을 통합하고자 한다. 
+본 논문은 현대 언어 모델링의 주류인 Generative Pre-trained Transformer(GPT) 아키텍처와 Energy-Based Modeling(EBM) 패러다임을 통합하고자 한다.
 
-일반적인 GPT는 입력 시퀀스를 고정된 레이어들에 통과시켜 다음 토큰을 예측하는 순방향 연산(forward pass) 구조를 가진다. 반면, EBM은 추론 과정을 에너지 지형(energy landscape) 위에서의 동역학적 과정(dynamical process)으로 간주하며, 데이터와 유사한 샘플은 낮은 에너지 상태에, 그렇지 않은 샘플은 높은 에너지 상태에 배치한다. 
+일반적인 GPT는 입력 시퀀스를 고정된 레이어들에 통과시켜 다음 토큰을 예측하는 순방향 연산(forward pass) 구조를 가진다. 반면, EBM은 추론 과정을 에너지 지형(energy landscape) 위에서의 동역학적 과정(dynamical process)으로 간주하며, 데이터와 유사한 샘플은 낮은 에너지 상태에, 그렇지 않은 샘플은 높은 에너지 상태에 배치한다.
 
 EBM 프레임워크를 LLM에 도입하는 것은 매우 중요하다. 왜냐하면 EBM은 추론 과정을 명시적인 최적화 문제로 변환함으로써, 솔루션 공간의 체계적인 탐색을 가능하게 하고, 문제의 난이도에 따른 가변 연산량(variable computation) 설정 및 정규화(regularizers)를 통한 모델 정렬(model alignment)에 자연스러운 해법을 제공하기 때문이다. 그러나 기존의 에너지 기반 트랜스포머들은 주로 마스크드 토큰 예측(masked token prediction)에 치중되어 있어, GPT와 같은 인과적(causal) 언어 모델링 설정에 적용하는 데 한계가 있었다. 따라서 본 연구의 목표는 GPT 설정을 에너지 기반 프레임워크로 변환한 **NRGPT(eNeRgy-GPT)**를 제안하고 그 성능과 이론적 성질을 검증하는 것이다.
 
@@ -29,9 +29,11 @@ EBM 프레임워크를 LLM에 도입하는 것은 매우 중요하다. 왜냐하
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 NRGPT는 입력 토큰 시퀀스를 다음 토큰 시퀀스로 매핑하며, 이 과정에서 단일 NRGPT 블록을 반복적으로 적용하는 recurrent 구조를 가진다. 각 반복 단계는 에너지 지형에서의 한 단계의 경사하강법(GD)으로 해석된다.
 
 ### 2. 에너지 함수 설계
+
 전체 에너지는 어텐션 에너지와 피드포워드 에너지의 합으로 정의된다:
 $$E = E_{AT} + E_{FF}$$
 
@@ -46,15 +48,19 @@ $$E = E_{AT} + E_{FF}$$
   여기서 $F$는 활성화 함수 $\sigma$와 관련된 스칼라 함수이며, 이를 통해 표준 MLP의 연산을 에너지 기반으로 구현한다.
 
 ### 3. 업데이트 규칙 및 추론 절차
+
 토큰 상태 $x$의 업데이트는 다음과 같은 규칙을 따른다:
 $$\dot{x} = x^{(t+1)} - x^{(t)} = -\eta^{(t)} \frac{\partial E}{\partial g^{(t)}}$$
 여기서 $\eta^{(t)}$는 **Inference Rate** 행렬로, 추론 시 에너지 지형에서 이동하는 보폭을 결정한다.
 
 ### 4. 정규화 및 수렴 조건
+
 LayerNorm 또는 RMSNorm을 사용하여 $g$를 정의하며, $\eta = c \text{diag}(\gamma)$ (여기서 $\gamma$는 정규화 가중치)일 때 에너지가 점진적으로 감소함($\dot{E} < 0$)이 증명되었다.
 
 ### 5. 점근적 안정성 (Asymptotic Stability)
+
 인과적 마스크(Causal Mask)로 인해 토큰 $A$의 에너지는 $B \le A$인 토큰들의 상태에만 의존한다. 따라서:
+
 1. 첫 번째 토큰 $x_1$은 외부 영향 없이 자신의 에너지를 최소화하며 수렴한다.
 2. $x_1$이 수렴하여 고정되면, 두 번째 토큰 $x_2$는 고정된 $x_1$을 배경으로 자신의 에너지를 최소화하며 수렴한다.
 3. 이 과정이 재귀적으로 반복되어 모든 토큰이 결국 안정된 상태(fixed point)에 도달하게 된다.
@@ -62,11 +68,13 @@ LayerNorm 또는 RMSNorm을 사용하여 $g$를 정의하며, $\eta = c \text{di
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: ListOps (중첩 산술 연산), Shakespeare (문자 단위 생성), OpenWebText (OWT, 자연어 생성).
 - **비교 대상**: 표준 GPT, Recurrent GPT (GPT_Rec_parallel).
 - **지표**: Accuracy (ListOps), Perplexity, GQS (Grammar Quality Score), Distinct-1/2 (다양성).
 
 ### 2. 주요 결과
+
 - **ListOps**: NRGPT 변형 모델들이 Recurrent GPT와 유사한 정확도를 보였으며, 일부 설정에서는 더 적은 파라미터로도 학습 가능함을 확인하였다.
 - **Shakespeare**: 파라미터 규모에 따른 검증 손실(Validation Loss)이 Recurrent GPT와 대등하였으며, 특히 모델 규모가 커질 때 표준 GPT보다 **과적합(overfitting)에 더 강한 모습**을 보였다.
 - **OpenWebText**:
@@ -76,14 +84,17 @@ LayerNorm 또는 RMSNorm을 사용하여 $g$를 정의하며, $\eta = c \text{di
 ## 🧠 Insights & Discussion
 
 ### 1. 강점 및 이론적 가치
+
 NRGPT는 GPT의 순방향 연산을 명시적인 에너지 최소화 과정으로 해석함으로써, LLM의 추론 과정을 최적화 관점에서 분석할 수 있는 기반을 마련하였다. 특히 파라미터 효율성이 높으며, 과적합 억제 능력이 뛰어난 점이 고무적이다.
 
 ### 2. 한계 및 비판적 해석
+
 - **연산 복잡도(FLOPs)**: 파라미터 수는 적지만, 에너지 기울기를 계산하는 과정에서 발생하는 연산량(FLOPs)은 표준 트랜스포머보다 약 1~2배 높다. 즉, 메모리 효율성을 얻는 대신 계산 시간을 지불하는 트레이드오프가 존재한다.
 - **하이퍼파라미터 민감도**: 에너지 기반의 제약 조건으로 인해 표준 GPT보다 하이퍼파라미터 설정에 더 민감하게 반응하는 경향이 있다.
 - **학습 속도**: 에너지 지형을 통한 수렴 과정이 필수적이므로, 단순 피드포워드 방식보다 추론 시의 벽시계 시간(wall-clock time)이 느릴 수 있다.
 
 ### 3. 논의 사항
+
 저자들은 $\eta$에 엄격한 제약을 두지 않더라도 경험적으로는 수렴이 일어남을 관찰하였다. 이는 모델의 목적 함수 자체가 에너지 최소화를 유도하도록 학습되기 때문일 가능성이 크며, 향후 $\eta$를 더 유연하게 설계할 수 있는 가능성을 시사한다.
 
 ## 📌 TL;DR

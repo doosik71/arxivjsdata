@@ -21,9 +21,11 @@ Dongjune Lee, Minchan Kim, Sung Hwan Mun, Min Hyun Han, Nam Soo Kim (2022)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 본 프레임워크는 $\text{wav2vec2.0}$의 표현력을 이용해 추출한 의사 음소(Pseudo Phoneme)를 기반으로 한 $\text{pseudo-TTS}$ 모델을 데이터 생성기로 사용하며, 이를 통해 생성된 데이터를 Prototypical Networks로 학습시킨다.
 
 ### 2. 학습 과정 및 목표 (Training)
+
 **가. 학습 목표 (Training Objective)**
 본 연구는 $N$-way $K$-shot 분류 시나리오를 채택한 Prototypical Networks를 사용한다. 각 클래스 $n$에 대해 $K$개의 서포트 샘플과 1개의 쿼리 샘플이 주어진다.
 
@@ -38,6 +40,7 @@ $$L = -\frac{1}{N} \sum_{n=1}^N \log p(y=n|x^{n,K+1})$$
 
 **나. pseudo-TTS를 이용한 데이터 생성**
 텍스트 레이블 없이 데이터를 생성하기 위해 다음과 같은 절차를 거친다.
+
 1. 레이블이 없는 음성 코퍼스에서 $\text{wav2vec2.0}$ 임베딩을 추출하고, 이를 $k$-means 클러스터링하여 의사 음소(Pseudo Phoneme) 시퀀스를 얻는다.
 2. 이 시퀀스를 무작위로 잘라(Random crop) 임의의 길이($L_{\min}, L_{\max}$)를 가진 의사 키워드를 생성한다.
 3. $\text{pseudo-TTS}$ 모델에 의사 음소 시퀀스와 참조 음성(Reference speech)을 입력하여, 동일한 발음을 가지되 화자와 운율이 다른 다양한 합성 음성을 생성한다.
@@ -47,6 +50,7 @@ $$L = -\frac{1}{N} \sum_{n=1}^N \log p(y=n|x^{n,K+1})$$
 매 반복(Iteration)마다 수천 초의 음성을 합성하는 것은 계산 비용이 너무 크므로, 데이터 버퍼(Data Buffer)를 사용한다. 버퍼에 $M_{\text{buffer}}$개의 클래스를 미리 생성해 두고, 매 반복마다 일부 클래스만 업데이트하는 방식으로 학습 속도를 높였다.
 
 ### 3. 추론 과정 (Inference)
+
 추론 시에는 등록된 타겟 키워드 샘플들로 프로토타입 $c_n$을 계산한다. 입력 쿼리 $x$에 대해 가장 가까운 프로토타입을 찾고, 그 거리가 특정 임계값 $D_{\text{th}}$보다 작으면 해당 키워드로 판정하고, 그렇지 않으면 '알 수 없음(Unknown)' 클래스로 분류한다.
 $$\hat{y} = \arg\min_n \text{dist}(f_\phi(x), c_n)$$
 $$y_{\text{pred}} = \begin{cases} \hat{y}, & \text{if } \text{dist}(f_\phi(x), c_{\hat{y}}) < D_{\text{th}} \\ N+1, & \text{else} \end{cases}$$
@@ -54,16 +58,18 @@ $$y_{\text{pred}} = \begin{cases} \hat{y}, & \text{if } \text{dist}(f_\phi(x), c
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: Google Speech Commands v1 (GSCv1), Multilingual Spoken Word Corpus (MSWC-en).
 - **모델 아키텍처**: $\text{TC-Resnet}$을 기반으로 하되, Average Pooling 레이어를 $\text{GRU}$ 레이어로 교체하여 시간적 동적 특성을 더 잘 포착하도록 수정하였다. 입력은 40차원 MFCC, 출력 임베딩은 192차원이다.
 - **비교 대상**: $\text{Supervised (MSWC)}$, $\text{Unsupervised (w/o aug)}$, $\text{Unsupervised (w aug)}$ (제안 방법).
 - **지표**: $\text{Acc (target)}$, $\text{Acc (total)}$, $\text{AUROC}$.
 
 ### 2. 주요 결과
+
 - **데이터 증강의 중요성**: $\text{Unsupervised (w aug)}$ 모델이 $\text{w/o aug}$ 모델보다 모든 지표에서 압도적으로 높은 성능을 보였다. 이는 단순한 깨끗한 합성 음성보다 적절한 증강이 가해진 데이터가 실제 음성 도메인과의 간극을 줄이는 데 핵심적임을 시사한다.
 - **지도 학습과의 비교**:
-    - **GSCv1**: 제안 방법이 지도 학습 모델과 비슷하거나 오히려 약간 더 높은 성능을 기록하였다. 이는 레이블링된 데이터 없이도 충분한 일반화 성능을 얻을 수 있음을 입증한다.
-    - **MSWC**: 지도 학습 모델이 더 높은 성능을 보였으나, 이는 학습 데이터와 테스트 데이터 간의 도메인 불일치로 인한 결과로 분석된다.
+  - **GSCv1**: 제안 방법이 지도 학습 모델과 비슷하거나 오히려 약간 더 높은 성능을 기록하였다. 이는 레이블링된 데이터 없이도 충분한 일반화 성능을 얻을 수 있음을 입증한다.
+  - **MSWC**: 지도 학습 모델이 더 높은 성능을 보였으나, 이는 학습 데이터와 테스트 데이터 간의 도메인 불일치로 인한 결과로 분석된다.
 - **정성적 분석**: t-SNE 시각화 결과, 동일 클래스의 임베딩들이 서로 가깝게 클러스터링되는 것을 확인하였으며, 이는 제안한 비지도 학습 방식이 유의미한 특징 추출을 수행하고 있음을 보여준다.
 
 ## 🧠 Insights & Discussion

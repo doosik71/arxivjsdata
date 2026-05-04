@@ -27,9 +27,11 @@ AGAIL의 핵심 아이디어는 시연 데이터를 상태 궤적(state trajecto
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 AGAIL은 상태 기반의 적대적 모방 학습(State-Based Adversarial Imitation)과 행동 가이드 정규화(Action-Guided Regularization)라는 두 가지 핵심 메커니즘으로 구성된다. 전체 파이프라인은 Generator $\pi_\theta$, Discriminator $D_\omega$, Guide $Q_\psi$ 세 네트워크가 유기적으로 작동하며, TRPO(Trust Region Policy Optimization)를 통해 정책을 업데이트한다.
 
 ### 1. State-Based Adversarial Imitation
+
 기존 GAIL은 상태-행동 쌍 $\rho(s, a)$의 분포를 일치시키려 하지만, AGAIL은 보상 함수 $r$이 주로 상태 $s$에 의존한다는 가정하에 상태 분포 $\nu(s)$만을 일치시키는 방식으로 단순화한다.
 
 정책 $\pi$에 의한 상태 방문 빈도를 $\nu^\pi(s)$라고 할 때, 목적 함수는 다음과 같이 상태 분포 간의 차이를 줄이는 방향으로 정의된다.
@@ -38,6 +40,7 @@ $$\max_{D} \mathbb{E}_{s \sim \pi} [\log D(s)] + \mathbb{E}_{s \sim \pi^E} [\log
 여기서 $D_\omega(s)$는 입력된 상태가 전문가의 것인지 생성자의 것인지 판별하는 Discriminator이며, Generator는 이 Discriminator를 속이는 방향으로 학습되어 전문가의 상태 분포를 따라가게 된다.
 
 ### 2. Action-Guided Regularization
+
 상태 정보만으로는 학습 속도가 느릴 수 있으므로, 가용한 행동 정보를 활용하여 정책을 가이드한다. 본 논문은 전문가의 행동 $a^E$와 생성된 행동 $a \sim \pi(s^E)$ 사이의 상호 정보량(Mutual Information) $I(a^E; a)$을 최대화하는 방식을 채택한다.
 
 상호 정보량의 직접적인 계산이 어려우므로, InfoGAIL의 아이디어를 빌려 변분 하한(variational lower bound) $L_I$를 도입한다.
@@ -45,6 +48,7 @@ $$L_I(\pi, Q) = \mathbb{E}_{a^E \sim \{\tau^E_a\}} [\log Q(a^E | a, s^E)] + H(a^
 여기서 $Q_\psi(a^E | a, s^E)$는 생성된 행동 $a$를 통해 전문가의 행동 $a^E$를 예측하는 Guide 네트워크이다. 행동 데이터가 존재하는 상태에 대해서만 $Q_\psi$를 업데이트하며, 이는 Generator에게 추가적인 보상을 제공하는 역할을 한다.
 
 ### 3. 학습 절차 및 최종 목적 함수
+
 최종 목적 함수는 정책 엔트로피 $H(\pi_\theta)$, 상호 정보량 하한 $L_I$, 그리고 상태 기반 적대적 손실의 합으로 정의된다.
 $$\min_{\pi \in \Pi} [ -\lambda_1 H(\pi_\theta) - \lambda_2 L_I(\pi_\theta, Q_\psi) + \max_{D} \mathbb{E}_{s \sim \pi_\theta} \log D_\omega + \mathbb{E}_{s \sim \pi^E} \log(1 - D_\omega) ]$$
 
@@ -55,12 +59,14 @@ $$r(s^E, a) = \alpha D_\omega(s^E) + \beta Q(a^E | s, a)$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋/환경**: CartPole, Hopper, Walker2d, Humanoid (이산/연속 공간 및 저/고차원 제어 포함).
 - **비교 대상**: TRPO(정답 보상 사용), GAIL(완전한 시연), State-GAIL(상태만 사용).
 - **측정 지표**: 누적 보상(Empirical Return).
 - **변수**: 행동 불완전성 비율 $\eta \in \{0\%, 25\%, 50\%, 75\%\}$.
 
 ### 주요 결과
+
 1. **불완전한 데이터에서의 성능**: AGAIL은 행동 정보가 75%까지 누락된 상황에서도 TRPO 및 GAIL과 대등한 성능을 보였다. 특히 Humanoid와 같은 고차원 작업에서 State-GAIL보다 월등한 성능 향상을 보여, Guide 네트워크의 중요성을 입증하였다.
 2. **불완전성 비율의 영향**: 흥미롭게도 일부 환경(Hopper, Walker2d, Humanoid)에서는 행동 정보가 완전히 제공된 $\text{AGAIL}_{.00}$보다 일부가 누락된 $\text{AGAIL}_{.75}$의 성능이 더 높게 나타났다. 이는 전문가의 시연 데이터에 노이즈나 불안정한 행동이 포함되어 있을 경우, 이를 모두 학습하는 것보다 일부를 배제하는 것이 더 효과적일 수 있음을 시사한다.
 3. **강건성(Robustness)**: 행동 누락 비율이 변하더라도 AGAIL은 GAIL보다 일관되게 높은 보상을 얻었으며, 특히 Hopper 환경에서는 GAIL을 압도하는 결과를 보였다.
@@ -70,10 +76,12 @@ $$r(s^E, a) = \alpha D_\omega(s^E) + \beta Q(a^E | s, a)$$
 본 논문은 모방 학습에서 행동 정보가 반드시 완전할 필요가 없으며, 상태 분포 일치와 행동 가이드라는 두 가지 경로를 분리하여 학습하는 것이 효율적임을 보여주었다.
 
 **강점 및 해석**:
+
 - **정보의 효율적 활용**: 행동 정보를 직접적인 타겟(label)으로 쓰는 BC 방식과 달리, 상호 정보량 최대화를 통한 '가이드'로 활용함으로써 데이터 누락에 유연하게 대응하였다.
 - **데이터 품질 문제 제기**: 실험 결과에서 나타난 $\text{AGAIL}_{.75}$의 높은 성능은, 시연 데이터의 '양'보다 '질'이 중요하며, 불완전한 데이터가 때로는 정규화(regularization) 효과를 주어 과적합을 방지하고 더 일반적인 정책을 학습하게 할 수 있다는 가능성을 제시한다.
 
 **한계 및 논의사항**:
+
 - **보상 함수 가정**: 본 방법론은 보상 함수 $r$이 주로 상태 $s$에 의존한다는 가정하에 성립한다. 만약 보상 함수가 상태-행동의 복잡한 상호작용에 강하게 의존하는 도메인이라면, 상태 분포 일치만으로는 한계가 있을 수 있다.
 - **하이퍼파라미터 민감도**: $\alpha$와 $\beta$의 설정이 성능에 큰 영향을 미칠 수 있으며, 특히 불완전성 비율 $\eta$에 따른 $\beta$의 동적 설정 방식에 대한 추가적인 분석이 필요해 보인다.
 

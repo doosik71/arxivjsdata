@@ -6,8 +6,8 @@ Byeonggeun Kim, Seunghan Yang, Inseop Chung, & Simyung Chang (2022)
 
 본 논문은 키워드 스포팅(Keyword Spotting, KWS) 분야에서 **Few-Shot Open-Set Recognition (FSOSR)** 문제를 해결하고자 한다. 일반적인 KWS는 미리 정의된 키워드 집합을 분류하는 것을 목표로 하지만, 실제 환경에서는 다음과 같은 두 가지 복합적인 요구사항이 존재한다.
 
-1.  **Few-Shot Learning (FSL)**: 새로운 키워드를 등록할 때 매우 적은 수의 샘플(support samples)만으로 해당 키워드를 인식할 수 있어야 한다.
-2.  **Open-Set Recognition (OSR)**: 학습 과정에서 보지 못한, 그리고 지원 샘플조차 없는 예상치 못한 카테고리(open-set)의 발화가 입력되었을 때, 이를 기존 클래스로 오분류하지 않고 '알 수 없음'으로 거부(reject)할 수 있어야 한다.
+1. **Few-Shot Learning (FSL)**: 새로운 키워드를 등록할 때 매우 적은 수의 샘플(support samples)만으로 해당 키워드를 인식할 수 있어야 한다.
+2. **Open-Set Recognition (OSR)**: 학습 과정에서 보지 못한, 그리고 지원 샘플조차 없는 예상치 못한 카테고리(open-set)의 발화가 입력되었을 때, 이를 기존 클래스로 오분류하지 않고 '알 수 없음'으로 거부(reject)할 수 있어야 한다.
 
 특히 FSOSR은 일반적인 OSR보다 더 어렵다. 그 이유는 에피소드마다 선택되는 $N$개의 기지 클래스(known classes)가 달라지므로, 이에 따라 **'알 수 없는 영역(open-set)'의 정의가 에피소드마다 동적으로 변하기 때문**이다. 따라서 본 논문의 목표는 이러한 가변적인 open-set에 적응하여 효과적으로 미지 클래스를 탐지하는 시스템을 구축하는 것이다.
 
@@ -19,13 +19,14 @@ Byeonggeun Kim, Seunghan Yang, Inseop Chung, & Simyung Chang (2022)
 
 ## 📎 Related Works
 
-1.  **Few-Shot Learning (FSL)**: 주로 Adaptation, Hallucination, Metric Learning 방법론으로 나뉜다. 본 논문은 거리 기반의 Metric Learning, 특히 Prototypical Networks(ProtoNets)를 기반으로 한다.
-2.  **Open-Set Recognition (OSR)**: 고정된 closed-set 환경에서 미지 클래스를 탐지하는 연구들이 진행되었으며, 최근에는 Manifold Mixup 등을 이용한 learnable dummy classifier 연구가 있었다. 하지만 이는 고정된 환경을 전제로 하므로, 에피소드마다 클래스가 변하는 FSOSR에는 적용하기 어렵다.
-3.  **Few-Shot Open-Set Recognition (FSOSR)**: PEELER나 SnaTCHer 같은 최신 기법들이 존재한다. PEELER는 엔트로피 최대화 손실과 Gaussian Embedding을 사용하며, SnaTCHer는 변환 일관성(transformation consistency)을 통해 미지 클래스를 탐지한다. 본 제안 방법은 이러한 간접적 탐지 대신 더미 클래스를 직접 학습한다는 점에서 차별화된다.
+1. **Few-Shot Learning (FSL)**: 주로 Adaptation, Hallucination, Metric Learning 방법론으로 나뉜다. 본 논문은 거리 기반의 Metric Learning, 특히 Prototypical Networks(ProtoNets)를 기반으로 한다.
+2. **Open-Set Recognition (OSR)**: 고정된 closed-set 환경에서 미지 클래스를 탐지하는 연구들이 진행되었으며, 최근에는 Manifold Mixup 등을 이용한 learnable dummy classifier 연구가 있었다. 하지만 이는 고정된 환경을 전제로 하므로, 에피소드마다 클래스가 변하는 FSOSR에는 적용하기 어렵다.
+3. **Few-Shot Open-Set Recognition (FSOSR)**: PEELER나 SnaTCHer 같은 최신 기법들이 존재한다. PEELER는 엔트로피 최대화 손실과 Gaussian Embedding을 사용하며, SnaTCHer는 변환 일관성(transformation consistency)을 통해 미지 클래스를 탐지한다. 본 제안 방법은 이러한 간접적 탐지 대신 더미 클래스를 직접 학습한다는 점에서 차별화된다.
 
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 시스템 구조
+
 D-ProtoNets는 기본적으로 Prototypical Networks 구조를 따르되, 더미 생성기(Dummy Generator)가 추가된 형태이다. 인코더 $f_\phi(\cdot)$를 통해 특징 공간으로 투영된 후, 기지 클래스의 프로토타입들과 함께 생성된 더미 프로토타입이 분류에 참여한다.
 
 ### 주요 구성 요소 및 절차
@@ -55,22 +56,24 @@ $$L_{CE} = L_{CE}^K + \lambda \cdot L_{CE}^U$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Google Speech Commands (GSC) ver2를 기반으로 한 `splitGSC` 벤치마크를 제안하였다. (Train 15, Val 10, Test 10 키워드로 분할)
 - **평가 지표**: FSL 성능은 Accuracy로, OSR 성능은 AUROC(Area Under the ROC Curve)로 측정하였다.
 - **비교 대상**: ProtoNet, FEAT, PEELER, SnaTCHer.
 - **백본**: Conv4-64, ResNet-12, BCResNet-8.
 
 ### 주요 결과
-1.  **`splitGSC` 결과**: D-ProtoNets는 모든 백본에서 Vanilla ProtoNet보다 월등한 AUROC 향상을 보였으며, 최신 FSOSR 기법인 SnaTCHer보다도 우수한 성능을 기록하였다. 특히 ResNet-12 백본의 5-shot 설정에서 AUROC 86.7%를 달성하며 SOTA 성능을 보였다.
-2.  **miniImageNet 결과**: 이미지 데이터셋에서도 검증한 결과, FSL 성능을 유지하면서도 open-set 탐지율(AUROC)에서 SOTA 수준의 성능을 기록하였다.
-3.  **Ablation Study**: 
+
+1. **`splitGSC` 결과**: D-ProtoNets는 모든 백본에서 Vanilla ProtoNet보다 월등한 AUROC 향상을 보였으며, 최신 FSOSR 기법인 SnaTCHer보다도 우수한 성능을 기록하였다. 특히 ResNet-12 백본의 5-shot 설정에서 AUROC 86.7%를 달성하며 SOTA 성능을 보였다.
+2. **miniImageNet 결과**: 이미지 데이터셋에서도 검증한 결과, FSL 성능을 유지하면서도 open-set 탐지율(AUROC)에서 SOTA 수준의 성능을 기록하였다.
+3. **Ablation Study**:
     - 더미 프로토타입의 도입만으로도 AUROC가 10% 이상 크게 향상되었다.
     - 더미의 개수 $L=3$, 온도 계수 $\gamma=3$에서 성능이 수렴하는 경향을 보였다.
     - **RFN (Relaxed instance Frequency-wise Normalization)**: 오디오 특징의 불필요한 변동(예: 화자 ID)을 줄여주는 RFN 모듈을 추가했을 때, 모든 설정에서 성능이 일관되게 향상됨을 확인하였다.
 
 ## 🧠 Insights & Discussion
 
-본 논문은 FSOSR 문제에서 '미지 영역'이 에피소드마다 변한다는 점에 주목하여, 이를 동적으로 생성하는 **더미 프로토타입**이라는 단순하면서도 강력한 해결책을 제시하였다. 
+본 논문은 FSOSR 문제에서 '미지 영역'이 에피소드마다 변한다는 점에 주목하여, 이를 동적으로 생성하는 **더미 프로토타입**이라는 단순하면서도 강력한 해결책을 제시하였다.
 
 특히 흥미로운 점은 SnaTCHer와 같은 거리 기반 탐지 방식보다, 명시적인 더미 클래스를 학습시켜 소프트맥스 확률로 판단하는 방식이 더 효과적일 수 있음을 보였다는 것이다. 또한, 오디오 데이터의 특성상 화자나 환경에 따른 변동성이 크기 때문에, RFN과 같은 정규화 기법이 FSOS-KWS 성능 향상에 매우 중요한 역할을 한다는 통찰을 제공하였다.
 

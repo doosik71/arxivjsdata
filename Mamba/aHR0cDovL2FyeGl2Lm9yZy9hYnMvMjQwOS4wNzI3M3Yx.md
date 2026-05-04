@@ -23,6 +23,7 @@ Xiangyu Zhang, Jianbo Ma, Mostafa Shahin, Beena Ahmed, Julien Epps (2024)
 ## 🛠️ Methodology
 
 ### 1. 상호 정보량 추정 (Mutual Information Estimation)
+
 본 논문은 고차원 연속 확률 변수 간의 상호 정보량을 측정하기 위해 MINE(Mutual Information Neural Estimation) 기법을 사용한다. 입력 지역 특징(local features) $X \in \mathbb{R}^{L \times D}$와 모델의 $i$번째 레이어 특징 $T_i \in \mathbb{R}^{L \times D}$ 사이의 상호 정보량은 다음과 같이 정의된다.
 
 $$I_i(X; T_i) = H(X) - H(X|T_i) = D_{KL}(P(X, T_i) \parallel P(X) \otimes P(T_i))$$
@@ -34,7 +35,9 @@ $$I_\Theta(X; T_i) = \sup_{\theta \in \Theta} \mathbb{E}_{P_{X, T_i}}[\psi_\thet
 분석을 위해 LibriSpeech 데이터셋에서 1,000개의 샘플을 무작위로 추출하여 각 레이어별 평균 상호 정보량 $\bar{I}_i(X; T_i)$를 계산하였다.
 
 ### 2. 분석 대상 및 실험 설계
+
 가설 검증을 위해 세 가지 서로 다른 성격의 모델을 분석하였다.
+
 - **ConBiMamba**: ASR 작업 수행 모델로, Decoder 유무에 따른 MI 패턴 변화를 관찰한다.
 - **SSAMBA**: 스펙트럼 패치 재구성 작업 모델로, 기본적으로 높은 성능을 보이는 모델의 MI 패턴을 분석한다.
 - **Mamba-HuBERT**: Transformer 레이어를 ConBiMamba로 대체하여 학습시킨 자기지도학습 모델이다. HuBERT의 특성상 분류 작업에 가깝기 때문에, 단독 사용 시와 downstream 모델(Conformer) 결합 시의 성능 및 MI 변화를 비교한다.
@@ -42,14 +45,17 @@ $$I_\Theta(X; T_i) = \sup_{\theta \in \Theta} \mathbb{E}_{P_{X, T_i}}[\psi_\thet
 ## 📊 Results
 
 ### 1. 음성 인식 작업 (ConBiMamba)
+
 - **결과**: Decoder가 없는 경우 Word Error Rate (WER)가 상승하며 성능이 저하되었다. 이때 MI 패턴은 레이어가 깊어질수록 지속적으로 감소하는 경향을 보였다. 반면, Decoder를 추가했을 때 성능이 크게 향상되었으며, MI 패턴은 초기에 감소하다가 이후 다시 증가하는 'V'자 형태의 재구성 패턴을 나타냈다.
 - **의미**: Mamba가 ASR에서 성공하려면 정보를 다시 복원하는 과정이 필요함을 시사한다.
 
 ### 2. 스펙트럼 재구성 작업 (SSAMBA)
+
 - **결과**: SSAMBA-base 및 SSAMBA-tiny 모델 모두에서 MI가 처음에는 감소하다가 이후 뚜렷하게 증가하는 패턴이 관찰되었다. 특히 최종 레이어에서의 MI 증가폭이 ASR 모델보다 훨씬 컸다.
 - **의미**: 재구성 작업의 본질 자체가 입력 정보의 복원을 포함하고 있으므로, Mamba가 단독으로도 매우 효율적으로 작동함을 보여준다.
 
 ### 3. Mamba-HuBERT 분석
+
 - **결과**: Mamba-HuBERT를 단독으로 fine-tuning 했을 때는 MI가 지속적으로 감소하며 HuBERT(Transformer 기반)보다 낮은 성능을 보였다. 그러나 뒤에 Conformer 모델을 추가로 연결했을 때, MI 패턴이 '감소 후 증가'하는 재구성 패턴으로 변하며 표준 HuBERT + Conformer 조합에 근접하는 성능을 달성하였다.
 - **정량적 지표 (WER)**: Mamba-HuBERT (Layer 9 특징 기반) 단독일 때는 Test Clean 기준 12.32%였으나, Conformer 추가 시 9.2%까지 낮아져 HuBERT + Conformer(9.3%)와 유사한 수준이 되었다.
 

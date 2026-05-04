@@ -10,9 +10,10 @@ Woong Bae, Seungho Lee, Yeha Lee, Beomhee Park, Minki Chung, and Kyu-Hwan Jung (
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 3D 의료 영상의 특성을 고려하여 연산 비용이 높은 Micro search(세부 셀 구조 탐색) 대신 **Macro search(전체적인 네트워크 구조 탐색)**에 집중하는 것이다. 
+본 논문의 핵심 아이디어는 3D 의료 영상의 특성을 고려하여 연산 비용이 높은 Micro search(세부 셀 구조 탐색) 대신 **Macro search(전체적인 네트워크 구조 탐색)**에 집중하는 것이다.
 
 주요 기여 사항은 다음과 같다.
+
 1. **자원 최적화된 탐색 공간 설계**: 3D 의료 영상의 비등방성(Anisotropic) 특성을 반영하여 입력 패치 크기와 다운샘플링 양을 탐색 공간에 포함시켰다.
 2. **Parameter Sharing 기반의 RL 컨트롤러**: 가중치 공유(Parameter Sharing) 방식을 채택하여 최적 구조를 찾은 후 네트워크를 처음부터 다시 학습(Retraining)시켜야 하는 기존 NAS의 비효율성을 제거하였다.
 3. **메모리 효율적 아키텍처 설계**: Concatenation 기반의 Skip connection 대신 Element-wise sum 기반의 연결을 사용하고, PyTorch 등의 프레임워크에서 메모리 효율이 떨어지는 Depth-wise convolution을 일반 Convolution으로 대체하여 GPU 메모리 사용량을 최소화하였다.
@@ -26,7 +27,9 @@ Woong Bae, Seungho Lee, Yeha Lee, Beomhee Park, Minki Chung, and Kyu-Hwan Jung (
 ## 🛠️ Methodology
 
 ### 1. Resource-Optimized Search Space
+
 본 논문은 3D 의료 영상의 특성을 반영하여 다음과 같은 탐색 공간을 구성하였다.
+
 - **비등방성 고려**: 입력 영상의 높이($H$), 너비($W$), 깊이($D$)가 서로 다른 점을 고려하여, 입력 패치 크기를 탐색 범위에 포함하였다. 패치 크기는 다음 식에 의해 결정된다.
   - 높이 및 너비 패치 크기: $$\text{Search Space of Patch Size } H/W = \lfloor \frac{\max(H, W)}{S^4} \rfloor \times S^4 - S^4 \times \{0,1,2,3,4\}$$
   - 깊이 패치 크기: $$\text{Search Space of Patch Size Depth} = \lfloor \frac{D}{S^4} \rfloor \times S^4 - S^4 \times \{0,1,2,3,4\}$$
@@ -35,12 +38,15 @@ Woong Bae, Seungho Lee, Yeha Lee, Beomhee Park, Minki Chung, and Kyu-Hwan Jung (
 - **정규화**: 과적합을 방지하고 컨트롤러의 안정적인 구조 생성을 위해 일부 연산이나 연결을 비활성화하는 Drop-path regularization(Zero operation)을 도입하였다.
 
 ### 2. Base Architecture
+
 기본 구조는 U-Net을 수정하여 사용하며, 다음과 같은 특징을 갖는다.
+
 - **Deep Supervision**: DeepLabV3+의 $1 \times 1 \times 1$ convolution skip connection과 Deep Supervision 기법을 결합하였다.
 - **Normalization**: GPU 메모리 절약을 위해 Batch Normalization 대신 Instance Normalization을 사용하였다.
 - **Skip Connection**: 메모리 사용량을 줄이기 위해 Concatenation 후 $1 \times 1 \times 1$ convolution을 적용하는 방식 대신, 채널 크기를 맞춘 후 Element-wise sum을 수행하는 매칭 연산(Matching operation)을 사용하였다.
 
 ### 3. Controller 및 학습 절차
+
 - **RL 기반 컨트롤러**: ENAS의 Parameter sharing 방식을 사용하여 RNN(LSTM) 기반의 컨트롤러를 학습시켰다. 이는 새로운 구조를 샘플링할 때마다 네트워크를 처음부터 학습시키지 않고 기존 가중치를 공유함으로써 탐색 시간을 획기적으로 단축한다.
 - **보상(Reward)**: 각 에피소드마다 컨트롤러가 20개의 자식 네트워크(Child network)를 생성하며, 검증 데이터셋에 대한 환자별 Dice score를 보상으로 받아 컨트롤러를 업데이트한다.
 - **손실 함수**: 자식 네트워크의 학습에는 Dice loss가 사용된다.
@@ -48,12 +54,14 @@ Woong Bae, Seungho Lee, Yeha Lee, Beomhee Park, Minki Chung, and Kyu-Hwan Jung (
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Medical Segmentation Decathlon (MSD)의 Brain, Heart, Prostate 3D 영상 데이터셋을 사용하였다.
 - **비교 대상**: 수동 설계의 정점인 nnU-Net과 기존 NAS 방식인 SCNAS를 기준으로 비교하였다.
 - **평가 지표**: Mean Dice score를 사용하여 5-fold cross-validation으로 평가하였다.
 - **자원**: 단일 RTX 2080Ti (10.8GB GPU memory)를 사용하였다.
 
 ### 주요 결과
+
 정량적 결과는 Table 2에 제시되어 있으며, RONASMIS는 모든 태스크에서 SCNAS를 상회하고 nnU-Net과 대등하거나 더 높은 성능을 보였다.
 
 - **Dice Score 결과**:
@@ -67,14 +75,16 @@ Woong Bae, Seungho Lee, Yeha Lee, Beomhee Park, Minki Chung, and Kyu-Hwan Jung (
 
 ## 🧠 Insights & Discussion
 
-본 논문은 3D 의료 영상이라는 특수한 도메인에서 NAS를 적용하기 위해 '무엇을 포기하고 무엇에 집중해야 하는가'를 명확히 보여준다. 
+본 논문은 3D 의료 영상이라는 특수한 도메인에서 NAS를 적용하기 위해 '무엇을 포기하고 무엇에 집중해야 하는가'를 명확히 보여준다.
 
 **강점 및 통찰**:
+
 - **Macro search의 효율성**: 모든 가능한 세부 연산을 탐색하는 Micro search 대신, 패치 크기, 다운샘플링, Skip connection 지점과 같은 Macro 수준의 구조적 결정이 3D 의료 영상 성능에 더 결정적인 영향을 미친다는 것을 입증하였다.
 - **실질적인 자원 최적화**: 단순히 알고리즘적 개선뿐만 아니라, PyTorch의 Depth-wise convolution 메모리 효율 문제와 같은 구현 레벨의 디테일을 파악하여 실제 GPU 메모리 점유율을 낮춘 점이 인상적이다.
 - **컨트롤러의 안정성**: 엔트로피(Entropy)가 감소하고 보상(Reward)이 꾸준히 증가하는 그래프를 통해 컨트롤러가 안정적으로 최적 구조를 찾아가고 있음을 증명하였다.
 
 **한계 및 논의**:
+
 - **데이터셋의 제한**: MSD 데이터셋만 사용하였으며, 더 다양한 의료 영상 도메인에서의 일반화 성능에 대한 검증이 추가로 필요하다.
 - **One-shot Inference**: 추론 속도를 위해 One-shot 방식을 택했으나, 저자들이 언급했듯이 이는 성능 저하의 원인이 될 수 있다. 만약 Overlapped patch-wise 방식을 적용했다면 더 압도적인 성능 향상이 있었을 가능성이 크다.
 

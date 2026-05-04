@@ -27,21 +27,28 @@ Hengkai Guo, Wenji Wang, Guanjun Guo, Huaxia Li, Jiachen Liu, Qian He, Xuefeng X
 본 논문은 전파 기반 VOS 시스템을 크게 세 가지 구성 요소로 정의하고 분석한다.
 
 ### 1. Feature Encoder (특징 추출기)
+
 특징 추출기는 이미지와 마스크가 결합된 입력을 받아 마스크 디코더에 전달할 특징 맵을 생성한다.
+
 - **Fusion Methods**: 서로 다른 프레임의 정보를 결합하기 위해 FEELVOS는 Correlation matching을, STM은 Non-local matching을 사용한다. 본 논문에서는 Correlation matching이 Non-local matching의 특수한 사례(특징 맵을 key로, 마스크를 value로 사용)로 볼 수 있음을 지적한다.
 - **Input Cues**: 입력으로 사용하는 정보에 따라 성능이 달라지며, 이전 프레임의 마스크($M$), 이전 이미지($I$), 그리고 참조 프레임의 이미지 및 마스크($Ref$)를 조합하여 사용한다.
 
 ### 2. Mask Decoder (마스크 디코더)
+
 디코더는 추출된 특징을 바탕으로 각 객체별 단일 마스크를 독립적으로 예측한 후, 이를 다중 객체 예측 결과로 병합한다.
+
 - **Background Probabilities**: 배경 확률을 계산하는 방법으로 상수값(0.5) 사용, 확률 곱셈(probability production), 또는 배경 추적(mask tracking) 방식을 비교한다.
 - **Normalization**: 병합 후 결과값을 정규화하는 방법으로 합계 기반 정규화(sum)와 로짓 집계(logit aggregation) 방식을 분석한다.
 
 ### 3. Training Paradigms (학습 패러다임)
+
 학습은 크게 두 단계로 나뉜다.
+
 - **Off-line Stage**: VOS 데이터셋이나 정적 이미지 데이터셋을 사용하여 모델을 사전 학습시킨다. 이때, 누적 오차를 반영하기 위해 시간적 역전파(Back-propagation Through Time, BPTT)를 적용하기도 한다.
 - **On-line Stage**: 테스트 세트의 첫 번째 프레임 주석(annotation)을 사용하여 모델을 미세 조정(fine-tuning)한다. 여기서 데이터셋 단위(per-dataset) 혹은 비디오 단위(per-video)의 미세 조정 전략을 탐구한다.
 
 ### 4. 구현 세부 사항
+
 - **Architecture**: DeepLabv3+ (ResNet-50, output stride 16)를 사용한다.
 - **Loss Function**: 교차 엔트로피 손실(Cross Entropy Loss)을 최소화하며, Adam 옵티마이저와 poly 학습률 정책을 사용한다.
 - **Hyperparameters**: 입력 종류에 따라 학습률을 다르게 설정하였다. (결합 입력: $1e-5$, 마스크 매칭: $5e-4$, Non-local 특징 매칭: $5e-5$)
@@ -49,18 +56,23 @@ Hengkai Guo, Wenji Wang, Guanjun Guo, Huaxia Li, Jiachen Liu, Qian He, Xuefeng X
 ## 📊 Results
 
 ### 1. 입력 힌트 및 융합 방법의 영향
+
 실험 결과, 더 많은 입력 힌트(M $\rightarrow$ +I $\rightarrow$ +Ref)를 사용할수록 성능이 일관되게 향상되었다. 특히 STM의 Non-local matching 방식이 다른 융합 방법보다 압도적인 성능을 보였는데, 이는 시공간 차원에서 정보를 효율적으로 융합하여 더 강력한 특징을 생성하기 때문이다.
 
 ### 2. Soft Probability 입력의 효과
+
 테스트 시 이전 프레임의 이진 마스크 대신 소프트 확률값을 입력으로 넣었을 때, FEELVOS와 STM은 성능이 향상되었으나 MaskTrack은 오히려 성능이 저하되었다. 이는 BPTT 없이 학습된 MaskTrack이 원-핫(one-hot) 표현에 과적합되어 확률값 입력에 취약하기 때문으로 분석된다.
 
 ### 3. 다중 객체 결합 및 정규화
+
 BPTT를 통한 재귀적 학습을 수행하지 않은 경우, 정규화(Normalization)를 적용한 방법들이 적용하지 않은 방법보다 성능이 낮게 나타났다. 배경 확률 계산 방식은 최종 성능에 결정적인 영향을 미치지 않았으며, 본 연구에서는 정규화 없는 상수 배경 확률 방식을 채택하였다.
 
 ### 4. 온라인 학습(Fine-tuning) 전략
+
 데이터셋 단위의 미세 조정(per-dataset FT)이 모델의 정확도를 향상시켰으며, 베이스라인 모델이 약할수록 미세 조정으로 인한 이득이 컸다. 비디오 단위의 미세 조정(per-video FT)은 본 실험 설정(단순 데이터 증강 사용)에서는 데이터셋 단위보다 성능이 낮게 나타났다.
 
 ### 5. 최종 벤치마크 결과
+
 DAVIS 2017 검증 세트에서 STM 모델에 데이터셋 단위 미세 조정을 적용한 결과, Global Mean $G=76.1$ ($J=73.5, F=78.8$)을 달성하였다. 이는 많은 기존 방법론들을 상회하는 결과이며, 오직 PReMVOS와 원본 STM 논문의 결과만이 이를 앞선다.
 
 ## 🧠 Insights & Discussion

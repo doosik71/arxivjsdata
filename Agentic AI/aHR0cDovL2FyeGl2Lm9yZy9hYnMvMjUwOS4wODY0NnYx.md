@@ -4,7 +4,7 @@ Ron F. Del Rosario, Klaudia Krawiecka, Christian Schroeder de Witt (2025)
 
 ## 🧩 Problem to Solve
 
-최근 Large Language Model (LLM) 에이전트가 복잡한 다단계 작업을 자동화하는 능력이 향상됨에 따라, 시스템의 견고함(Robustness), 보안성(Security), 그리고 예측 가능성(Predictability)을 보장하는 아키텍처 패턴의 필요성이 증대되었다. 
+최근 Large Language Model (LLM) 에이전트가 복잡한 다단계 작업을 자동화하는 능력이 향상됨에 따라, 시스템의 견고함(Robustness), 보안성(Security), 그리고 예측 가능성(Predictability)을 보장하는 아키텍처 패턴의 필요성이 증대되었다.
 
 특히, 외부 데이터 소스(웹페이지, PDF, 이메일 등)에 숨겨진 악의적인 지시사항이 에이전트의 동작을 조작하는 **Indirect Prompt Injection** 공격은 기존의 반응형(Reactive) 에이전트 구조에서 매우 치명적인 취약점으로 작용한다. 또한, 에이전트가 복잡한 작업을 수행할 때 목적을 상실하고 루프에 빠지거나, 비효율적인 경로를 선택하는 등 추론의 일관성이 떨어지는 문제 또한 해결해야 할 과제이다.
 
@@ -24,15 +24,16 @@ Ron F. Del Rosario, Klaudia Krawiecka, Christian Schroeder de Witt (2025)
 논문은 P-t-E 패턴을 설명하기 위해 가장 널리 쓰이는 **ReAct (Reason + Act)** 패턴과 비교 분석한다.
 
 - **ReAct 패턴**: `Thought $\rightarrow$ Action $\rightarrow$ Observation`의 타이트한 반복 루프를 통해 동작한다. 매 단계마다 LLM이 다음 행동을 결정하므로 매우 유연하고 적응력이 높지만, 다음과 같은 한계가 있다.
-    - **단기적 사고 (Short-term thinking)**: 전체 작업에 대한 총체적 관점이 부족하여 복잡한 의존성이 있는 작업에서 비효율적인 경로를 선택할 가능성이 크다.
-    - **보안 취약성**: 도구 실행 결과(Observation)가 다시 LLM의 입력으로 들어가기 때문에, 외부 데이터에 포함된 악의적 프롬프트가 에이전트의 다음 판단을 즉각적으로 하이재킹할 수 있다.
-    - **비용 및 지연 시간**: 매 단계마다 LLM 호출이 필요하므로 작업 단계가 많아질수록 API 비용과 지연 시간이 선형적으로 증가한다.
+  - **단기적 사고 (Short-term thinking)**: 전체 작업에 대한 총체적 관점이 부족하여 복잡한 의존성이 있는 작업에서 비효율적인 경로를 선택할 가능성이 크다.
+  - **보안 취약성**: 도구 실행 결과(Observation)가 다시 LLM의 입력으로 들어가기 때문에, 외부 데이터에 포함된 악의적 프롬프트가 에이전트의 다음 판단을 즉각적으로 하이재킹할 수 있다.
+  - **비용 및 지연 시간**: 매 단계마다 LLM 호출이 필요하므로 작업 단계가 많아질수록 API 비용과 지연 시간이 선형적으로 증가한다.
 
 반면, **P-t-E 패턴**은 실행 전 전체 계획을 수립하므로 경로가 예측 가능하고, 고비용의 추론 모델(Planner)은 초기에 한 번만 사용하고 실행 단계에서는 경량 모델(Executor)을 사용할 수 있어 비용 효율적이다.
 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 P-t-E 패턴은 크게 다음과 같은 구성 요소로 이루어진다.
 
 1. **Planner (계획 수립자)**: 사용자의 모호한 요청을 분석하여 구체적이고 실행 가능한 하위 작업의 시퀀스로 분해한다. 출력물은 단순 텍스트가 아닌 JSON이나 DAG와 같은 구조화된 형태의 '계획 아티팩트'이다.
@@ -40,6 +41,7 @@ P-t-E 패턴은 크게 다음과 같은 구성 요소로 이루어진다.
 3. **Verifier & Refiner (검증 및 수정자, 선택 사항)**: 실행 전 계획의 논리적 타당성과 보안 준수 여부를 검토하며, 오류가 발견될 경우 이를 수정한다.
 
 ### 보안 구현 메커니즘
+
 본 논문은 단순한 패턴 적용을 넘어 다음과 같은 보안 통제 장치를 강조한다.
 
 - **제어 흐름 무결성 (Control-Flow Integrity)**: 외부 데이터를 읽기 전에 계획을 확정(Lock-in)하여, 도구 출력값이 계획 자체를 변경하지 못하도록 차단한다.
@@ -47,6 +49,7 @@ P-t-E 패턴은 크게 다음과 같은 구성 요소로 이루어진다.
 - **격리된 실행 환경 (Sandboxing)**: 코드 실행 능력이 있는 에이전트의 경우, 반드시 Docker 컨테이너와 같은 ephemeral한 환경에서 코드를 실행하고 결과를 반환받은 뒤 컨테이너를 파기함으로써 호스트 시스템으로의 RCE(Remote Code Execution) 공격을 방지한다.
 
 ### 프레임워크별 구현 특징
+
 - **LangGraph**: 상태 머신(State Machine) 기반의 그래프 구조로 구현한다. `planner_node` $\rightarrow$ `executor_node` $\rightarrow$ `replan_node` 순으로 노드를 구성하며, 조건부 엣지(Conditional Edge)를 통해 실행 상태에 따라 재계획 루프로 진입하거나 종료한다.
 - **CrewAI**: 계층적 프로세스($\text{Process.hierarchical}$)를 사용한다. $\text{Manager Agent}$가 Planner 역할을 수행하며, 하위 $\text{Worker Agents}$에게 태스크를 위임한다. 특히 $\text{Task.tools}$가 $\text{Agent.tools}$보다 우선순위가 높다는 점을 이용하여 태스크 수준의 정밀한 도구 제어를 수행한다.
 - **AutoGen**: 대화형 에이전트 구조를 활용한다. `GroupChat` 내에서 사용자 정의 화자 선택 함수(`speaker_selection_method`)를 통해 $\text{Planner} \rightarrow \text{Coder} \rightarrow \text{Executor}$ 순의 결정론적 상태 머신을 구축하며, `use_docker=True` 설정을 통해 기본적으로 샌드박싱을 제공한다.
@@ -66,9 +69,11 @@ P-t-E 패턴은 크게 다음과 같은 구성 요소로 이루어진다.
 ## 🧠 Insights & Discussion
 
 ### 강점 및 통찰
+
 본 논문의 가장 큰 통찰은 LLM 보안의 패러다임을 **행동적 억제(Behavioral Containment)**에서 **아키텍처적 격리(Architectural Containment)**로 전환해야 한다는 점이다. 시스템 프롬프트를 통해 "악의적인 지시를 따르지 마라"고 지시하는 것은 취약하지만, P-t-E와 같이 구조적으로 제어 흐름을 고정하고 샌드박스를 적용하는 것은 확률적인 LLM의 특성과 무관하게 하드웨어/소프트웨어 수준의 강제성을 부여할 수 있다.
 
 ### 한계 및 논의사항
+
 1. **초기 지연 시간 (Time-to-First-Action)**: 전체 계획을 수립해야 하므로 사용자가 첫 번째 액션을 보기까지의 시간이 길어진다. 이는 실시간성이 중요한 챗봇 서비스에서는 단점이 될 수 있다.
 2. **토큰 소비량**: 복잡한 작업을 위해 상세한 계획을 세울 경우, 초기 계획 단계에서 수천 개의 토큰이 한 번에 소비될 수 있다. 이를 해결하기 위해 본 논문은 하위 계획 수립자(Sub-planners)를 두는 계층적 계획 구조를 대안으로 제시한다.
 3. **신뢰의 보정 (Calibration of Trust)**: LLM은 "그럴듯하게 틀린(Convincingly wrong)" 계획을 세울 수 있다. 따라서 단순히 자동화를 하는 것이 아니라, 고위험 작업의 경우 $\text{Plan} \rightarrow \text{Validate} \rightarrow \text{Execute}$ 순서로 인간이 계획 단계에서 개입하는 것이 실행 단계에서 개입하는 것보다 훨씬 효과적임을 강조한다.

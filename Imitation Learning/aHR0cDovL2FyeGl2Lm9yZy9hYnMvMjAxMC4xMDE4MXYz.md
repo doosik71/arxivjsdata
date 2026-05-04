@@ -4,7 +4,7 @@ Voot Tangkaratt, Nontawat Charoenphakdee, Masashi Sugiyama (2021)
 
 ## 🧩 Problem to Solve
 
-본 논문은 노이즈가 포함된 시연 데이터(Noisy Demonstrations)로부터 강건하게 정책을 학습하는 Imitation Learning (IL) 문제를 다룬다. 
+본 논문은 노이즈가 포함된 시연 데이터(Noisy Demonstrations)로부터 강건하게 정책을 학습하는 Imitation Learning (IL) 문제를 다룬다.
 
 일반적인 IL은 전문가(Expert)가 생성한 고품질의 데이터를 가정하지만, 실제 환경에서는 데이터 수집 과정에 인간이 개입하거나 시연자의 숙련도가 부족하여 전문가 데이터와 비전문가 데이터가 섞인 저품질 데이터셋이 생성되는 경우가 많다. 이러한 저품질 데이터는 학습의 효율성을 떨어뜨리고 최적의 정책 도달을 방해한다.
 
@@ -15,12 +15,14 @@ Voot Tangkaratt, Nontawat Charoenphakdee, Masashi Sugiyama (2021)
 본 논문의 핵심 아이디어는 **대칭 손실 함수(Symmetric Loss)를 이용한 분류 리스크(Classification Risk) 최적화**를 통해 강건한 IL을 달성할 수 있다는 이론적 증명과 이를 구현한 **RIL-Co (Robust IL with Co-pseudo-labeling)** 방법론의 제안이다.
 
 중심적인 직관은 다음과 같다:
+
 1. **이론적 기반**: 대칭 손실 함수를 사용하는 분류 리스크를 최적화하면, 데이터에 노이즈가 섞여 있더라도 최적의 분류기가 전문가와 비전문가 데이터를 구분하는 방향으로 학습되며, 이를 통해 전문가 정책을 유도할 수 있다.
 2. **Co-pseudo-labeling**: 실제 환경에서는 비전문가 데이터의 분포를 알 수 없으므로, 두 개의 분류기를 서로 교차 학습시켜 가짜 라벨(Pseudo-label)을 생성하는 Co-training 기법을 도입함으로써 분류기의 과잉 확신(Over-confidence)과 과적합 문제를 해결한다.
 
 ## 📎 Related Works
 
 논문에서는 기존의 강건한 IL 접근 방식과 그 한계를 다음과 같이 설명한다.
+
 - **Ranking 기반 방법 (Brown et al.)**: 노이즈가 섞인 시연 데이터들 간의 상대적 성능 순위 라벨이 필요하여 실용성이 떨어진다.
 - **Score 기반 방법 (Wu et al.)**: 각 시연 데이터가 전문가에 의해 생성되었을 확률에 대한 점수 라벨이 필요하다.
 - **분포 가정 기반 방법 (VILD, Tangkaratt et al.)**: 노이즈가 가우시안 분포를 따른다는 가정을 전제로 한다. 만약 실제 노이즈가 이 가정에서 벗어나면 성능이 급격히 저하된다.
@@ -29,6 +31,7 @@ Voot Tangkaratt, Nontawat Charoenphakdee, Masashi Sugiyama (2021)
 ## 🛠️ Methodology
 
 ### 1. 이론적 목적 함수 (Risk Optimization)
+
 본 논문은 다음과 같은 Balanced Risk를 최적화하는 문제를 제안한다.
 
 $$\max_{\pi} \min_{g} R(g; \rho_1, \rho_{\lambda}^{\pi}, \ell_{\text{sym}})$$
@@ -44,9 +47,11 @@ $$R(g; \rho_1, \rho_{\lambda}^{\pi}, \ell) = \frac{1}{2} \mathbb{E}_{\rho_1}[\el
 논문은 $\alpha > 0.5$ (데이터의 과반수가 전문가 데이터)인 조건하에서 위 리스크를 최적화하면 최종적으로 전문가 정책 $\pi_E$에 수렴함을 이론적으로 증명하였다.
 
 ### 2. RIL-Co 알고리즘
+
 이론적으로는 $\rho_N$ (비전문가 분포)에 대한 기대값이 필요하지만, 실제로는 이를 알 수 없다. 이를 해결하기 위해 **Co-pseudo-labeling**을 도입한다.
 
 **전체 파이프라인 및 학습 절차:**
+
 1. **데이터 분할**: 시연 데이터셋 $D$를 서로 겹치지 않는 두 개의 집합 $D_1, D_2$로 나눈다.
 2. **두 개의 분류기 학습**: 두 개의 분류기 $g_1, g_2$를 서로 교차하여 학습시킨다.
    - $g_1$은 $D_1$의 실제 데이터와, $g_2$가 $D_2$에서 비전문가라고 예측한 데이터($g_2(x) < 0$)를 이용하여 학습한다.
@@ -57,6 +62,7 @@ $$R(g; \rho_1, \rho_{\lambda}^{\pi}, \ell) = \frac{1}{2} \mathbb{E}_{\rho_1}[\el
    즉, 분류기가 '비전문가'라고 판단하는 정도가 클수록 더 높은 보상을 주어, 정책이 전문가 데이터의 특성을 갖도록 유도한다.
 
 ### 3. 주요 설정 및 수식
+
 - **하이퍼파라미터 $\lambda$**: $\lambda = 0.5$를 제안한다. 이는 $\alpha > 0.5$일 때 이론적 강건성이 보장되는 최소값이다.
 - **Symmetric Loss ($\ell_{\text{AP}}$)**: 본 논문에서는 Active-Passive (AP) loss를 사용한다.
   $$\ell_{\text{AP}}(z) = 0.5 \left( \frac{\log(1+e^{-z})}{\log(1+e^{-z}) + \log(1+e^z)} + \frac{1}{1+e^z} \right)$$
@@ -65,12 +71,14 @@ $$R(g; \rho_1, \rho_{\lambda}^{\pi}, \ell) = \frac{1}{2} \mathbb{E}_{\rho_1}[\el
 ## 📊 Results
 
 ### 실험 설정
+
 - **환경**: PyBullet 시뮬레이터의 continuous-control 벤치마크 (HalfCheetah, Hopper, Walker2d, Ant).
 - **비교 대상**: BC, FAIRL, VILD, GAIL 변형 모델(logistic, unhinged, AP loss 사용 버전).
 - **측정 지표**: 누적 실제 보상(Cumulative True Rewards).
 - **노이즈 설정**: 전문가 데이터와 비전문가 데이터를 섞어 노이즈 비율 $\delta \in \{0, 0.1, 0.2, 0.3, 0.4\}$를 설정하였다.
 
 ### 주요 결과
+
 1. **노이즈 강건성**: $\delta$가 증가함에 따라 다른 모든 방법론(특히 GAIL, FAIRL)의 성능이 급격히 하락하는 반면, **RIL-Co는 $\delta=0.4$의 고노이즈 상황에서도 성능을 안정적으로 유지**하였다.
 2. **데이터 효율성**: 동일한 노이즈 수준($\delta=0.4$)에서 RIL-Co는 다른 방법들보다 더 적은 수의 Transition Sample을 사용하여 더 높은 성능에 도달하였다.
 3. **가우시안 노이즈 실험**: VILD의 가정인 가우시안 노이즈 환경에서도 RIL-Co는 VILD와 대등하거나 준수한 성능을 보였으며, 이는 RIL-Co가 훨씬 더 완만한 가정(milder assumption) 하에서 동작함을 시사한다.
@@ -80,10 +88,12 @@ $$R(g; \rho_1, \rho_{\lambda}^{\pi}, \ell) = \frac{1}{2} \mathbb{E}_{\rho_1}[\el
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 - **이론적 보장**: 단순한 휴리스틱이 아니라, 대칭 손실 함수를 통한 리스크 최적화라는 수학적 기반 위에서 강건성을 증명하였다.
 - **실용적 제약 해소**: 전문가의 추가 라벨이나 정교한 노이즈 분포 가정 없이도 동작하므로 실제 현장에 적용 가능성이 매우 높다.
 
 ### 한계 및 비판적 해석
+
 - **전문가 데이터셋에서의 성능**: 노이즈가 전혀 없는($\delta=0$) 환경에서는 GAIL 등의 기존 방법론이 RIL-Co보다 약간 더 좋은 성능을 보였다. 이는 Co-pseudo-labeling 과정에서 도입되는 추가적인 편향(bias) 때문으로 분석된다.
 - **분류기 의존성**: 정책 학습의 품질이 분류기 $g$의 성능에 전적으로 의존한다. 비록 Co-training으로 완화했으나, 초기 분류기가 매우 잘못된 방향으로 학습될 경우 정책 학습이 지연될 가능성이 있다.
 

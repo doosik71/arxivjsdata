@@ -18,14 +18,15 @@ Jiayan Li, Jun Li, Zhourui Zhang, and Jianhua Xu (2025)
 
 논문은 지식 증류를 크게 Feature Distillation (FD)과 Logit Distillation (LD)의 두 그룹으로 분류하여 설명한다.
 
-1.  **Feature Distillation (FD):** FitNet과 같이 교사 모델의 중간 레이어 특징을 모방하게 하여 로컬 패턴과 구조적 정보를 전이하는 방식이다. 이후 RKD, CRD, OFD 등 다양한 연구가 진행되었으나, 주로 중간 특징 맵의 정렬에 집중한다.
-2.  **Logit Distillation (LD):** 교사 모델의 출력 확률 분포를 학생 모델이 모방하도록 하는 방식이다. 최근에는 다중 레벨 증류(Multi-level LD), 타겟/비타겟 클래스 분리(DKD), 커리큘럼 학습 기반의 온도 조절(CTKD) 등이 제안되었다.
+1. **Feature Distillation (FD):** FitNet과 같이 교사 모델의 중간 레이어 특징을 모방하게 하여 로컬 패턴과 구조적 정보를 전이하는 방식이다. 이후 RKD, CRD, OFD 등 다양한 연구가 진행되었으나, 주로 중간 특징 맵의 정렬에 집중한다.
+2. **Logit Distillation (LD):** 교사 모델의 출력 확률 분포를 학생 모델이 모방하도록 하는 방식이다. 최근에는 다중 레벨 증류(Multi-level LD), 타겟/비타겟 클래스 분리(DKD), 커리큘럼 학습 기반의 온도 조절(CTKD) 등이 제안되었다.
 
 기존 LD 방식들은 계산 효율성이 높고 적용이 쉽다는 장점이 있지만, 여전히 높은 확률의 클래스에 의존하여 낮은 확률 클래스의 중요성을 간과한다는 한계가 있다. PCD는 이러한 한계를 극복하기 위해 클래스 간의 예측 차이를 기반으로 우선순위를 정하고 단계별로 접근한다는 점에서 기존 연구들과 차별화된다.
 
 ## 🛠️ Methodology
 
 ### 1. 배경 및 기본 수식
+
 기본적인 LD에서는 온도 계수 $\tau$를 적용한 Softmax 함수를 통해 교사와 학생의 확률 분포 $p$와 $q$를 계산한다.
 
 $$p_i = \frac{\exp(z^t_i/\tau)}{\sum_{j=1}^C \exp(z^t_j/\tau)}, \quad q_i = \frac{\exp(z^s_i/\tau)}{\sum_{j=1}^C \exp(z^s_j/\tau)}$$
@@ -35,6 +36,7 @@ $$p_i = \frac{\exp(z^t_i/\tau)}{\sum_{j=1}^C \exp(z^t_j/\tau)}, \quad q_i = \fra
 $$L^{KD} = \alpha \cdot L^{CE} + \beta \cdot \tau^2 \cdot KL(p_\tau, q_\tau)$$
 
 ### 2. Logit Difference Ranking (LDR)
+
 PCD는 학습하기 어려운 클래스를 우선적으로 다루기 위해, 교사와 학생 모델 간의 로짓 차이를 계산하여 내림차순으로 정렬한다.
 
 $$I = \text{argsort}(|z^t - z^s|, \downarrow)$$
@@ -42,38 +44,43 @@ $$I = \text{argsort}(|z^t - z^s|, \downarrow)$$
 여기서 $I$는 정렬된 클래스 인덱스의 시퀀스이며, 차이가 큰(즉, 학생 모델이 예측하기 어려워하는) 클래스가 우선순위를 갖게 된다.
 
 ### 3. Bidirectional Stage-wise Distillation (BSD)
+
 정렬된 시퀀스를 바탕으로 증류 과정을 여러 단계($S$)로 나누어 수행하며, 두 가지 방향의 학습 프로세스를 거친다.
 
-*   **Fine-to-Coarse Learning (F2CL):** 세밀한 부분에서 거친 부분으로 나아가는 과정으로, 지식을 점진적으로 축적한다.
-*   **Coarse-to-Fine Learning (C2FL):** 반대로 거친 부분에서 세밀한 부분으로 돌아오며 지식을 정제한다.
+* **Fine-to-Coarse Learning (F2CL):** 세밀한 부분에서 거친 부분으로 나아가는 과정으로, 지식을 점진적으로 축적한다.
+* **Coarse-to-Fine Learning (C2FL):** 반대로 거친 부분에서 세밀한 부분으로 돌아오며 지식을 정제한다.
 
 각 단계 $i$에서 클래스 그룹의 크기 $m_i$는 다음과 같이 결정된다.
 $$m^{F2CL}_i = \frac{C}{S-i+1}, \quad m^{C2FL}_i = \frac{C}{i} \quad (i=1, 2, \dots, S)$$
 
-#### 세부 구현 절차:
-1.  **Logit Masking:** 특정 단계의 그룹 $I_{i,j}$에 속하지 않는 클래스의 로짓은 $-\infty$로 마스킹하여 Softmax 계산 시 제외한다.
+#### 세부 구현 절차
+
+1. **Logit Masking:** 특정 단계의 그룹 $I_{i,j}$에 속하지 않는 클래스의 로짓은 $-\infty$로 마스킹하여 Softmax 계산 시 제외한다.
     $$z^s_{i,j} = \text{mask}(z^s, I_{i,j}), \quad z^t_{i,j} = \text{mask}(z^t, I_{i,j})$$
-2.  **Weighted Distillation Mechanism (WDM):** 교사와 학생의 확률 분포 간 코사인 거리를 측정하여 가중치 $\lambda_{i,j}$를 부여함으로써, 학습이 부족한 클래스에 더 집중하게 한다.
+2. **Weighted Distillation Mechanism (WDM):** 교사와 학생의 확률 분포 간 코사인 거리를 측정하여 가중치 $\lambda_{i,j}$를 부여함으로써, 학습이 부족한 클래스에 더 집중하게 한다.
     $$\lambda_{i,j} = 1 - \cos(p_{i,j}, q_{i,j})$$
     $$\text{가중치 적용 손실: } D_{i,j} = \lambda_{i,j} \cdot KL(p_{i,j} \| q_{i,j}) \cdot \tau^2$$
-3.  **최종 손실 함수:**
+3. **최종 손실 함수:**
     $$L = L^{CE} + \alpha \cdot (L^{F2CL}_{KL} + L^{C2FL}_{KL})$$
 
 ## 📊 Results
 
 ### 실험 설정
-*   **데이터셋:** CIFAR, ImageNet, MS-COCO.
-*   **평가 지표:** classification의 경우 Top-1, Top-5 accuracy, detection의 경우 Average Precision (AP).
-*   **모델 구성:** VGG, ResNet, MobileNet, ShuffleNet 등 다양한 구조의 모델을 교사와 학생으로 설정하여 동종(Homogeneous) 및 이종(Heterogeneous) 환경에서 테스트하였다.
+
+* **데이터셋:** CIFAR, ImageNet, MS-COCO.
+* **평가 지표:** classification의 경우 Top-1, Top-5 accuracy, detection의 경우 Average Precision (AP).
+* **모델 구성:** VGG, ResNet, MobileNet, ShuffleNet 등 다양한 구조의 모델을 교사와 학생으로 설정하여 동종(Homogeneous) 및 이종(Heterogeneous) 환경에서 테스트하였다.
 
 ### 주요 결과
-1.  **CIFAR 분류 성능:** vanilla KD 대비 비약적인 성능 향상을 보였다. 특히 ResNet32$\times$4 $\rightarrow$ ResNet8$\times$4 설정에서 Baseline 대비 Top-1 정확도를 3.01% 향상시켜 76.34%를 달성하였다. 또한, 이종 모델 간의 증류에서도 타 LD 방법론들보다 우수한 성능을 보였다.
-2.  **ImageNet 분류 성능:** 대규모 데이터셋에서도 효과적임을 입증하였다. vanilla KD 대비 Top-1 정확도를 약 1.5%, Top-5 정확도를 0.9% 향상시켰으며, RC 및 LR 등의 최신 LD 방법보다 우월한 결과를 나타냈다.
-3.  **MS-COCO 객체 검출 성능:** Faster-RCNN 기반의 검출 작업에서도 vanilla KD 대비 AP를 각각 0.31%, 0.14% 향상시키며 범용적인 적용 가능성을 보여주었다.
+
+1. **CIFAR 분류 성능:** vanilla KD 대비 비약적인 성능 향상을 보였다. 특히 ResNet32$\times$4 $\rightarrow$ ResNet8$\times$4 설정에서 Baseline 대비 Top-1 정확도를 3.01% 향상시켜 76.34%를 달성하였다. 또한, 이종 모델 간의 증류에서도 타 LD 방법론들보다 우수한 성능을 보였다.
+2. **ImageNet 분류 성능:** 대규모 데이터셋에서도 효과적임을 입증하였다. vanilla KD 대비 Top-1 정확도를 약 1.5%, Top-5 정확도를 0.9% 향상시켰으며, RC 및 LR 등의 최신 LD 방법보다 우월한 결과를 나타냈다.
+3. **MS-COCO 객체 검출 성능:** Faster-RCNN 기반의 검출 작업에서도 vanilla KD 대비 AP를 각각 0.31%, 0.14% 향상시키며 범용적인 적용 가능성을 보여주었다.
 
 ### 분석 및 소결
-*   **Ablation Study:** LDR, F2CL, C2FL 세 가지 모듈을 모두 사용했을 때 최적의 성능이 나타났다. 특히 LDR을 제거했을 때 성능 저하가 뚜렷하여, '어려운 클래스 $\rightarrow$ 쉬운 클래스' 순의 정렬이 점진적 학습에 핵심적임을 확인하였다.
-*   **하이퍼파라미터 분석:** 단계 수 $S$의 경우, 동종 모델은 $S=3$, 이종 모델은 $S=5$일 때 최적의 성능을 보였다. 이는 모델 간 구조적 차이가 클수록 더 많은 증류 단계가 필요함을 시사한다.
+
+* **Ablation Study:** LDR, F2CL, C2FL 세 가지 모듈을 모두 사용했을 때 최적의 성능이 나타났다. 특히 LDR을 제거했을 때 성능 저하가 뚜렷하여, '어려운 클래스 $\rightarrow$ 쉬운 클래스' 순의 정렬이 점진적 학습에 핵심적임을 확인하였다.
+* **하이퍼파라미터 분석:** 단계 수 $S$의 경우, 동종 모델은 $S=3$, 이종 모델은 $S=5$일 때 최적의 성능을 보였다. 이는 모델 간 구조적 차이가 클수록 더 많은 증류 단계가 필요함을 시사한다.
 
 ## 🧠 Insights & Discussion
 

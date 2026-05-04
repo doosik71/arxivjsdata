@@ -21,7 +21,7 @@ Can Cui, Wei Wang, Meihui Zhang, Gang Chen, Zhaojing Luo, Beng Chin Ooi (2021)
 
 ## 📎 Related Works
 
-기존 연구는 크게 두 방향으로 진행되었다. 
+기존 연구는 크게 두 방향으로 진행되었다.
 
 - **Machine Learning Alphas**: LSTM, Attention 메커니즘, Graph Neural Networks(GNN) 등을 활용하여 고차원 특징을 캡처한다. 하지만 이러한 모델들은 구조가 복잡하여 전문가가 설계해야 하며, 상관관계가 낮은 여러 모델을 동시에 관리하기 어렵다. 특히 일부 모델은 "같은 섹터의 주식은 유사하게 움직인다"는 강한 구조적 가정에 의존하는데, 이는 변동성이 큰 시장에서는 유효하지 않을 수 있다.
 - **Formulaic Alphas**: 단순한 산술 연산의 조합으로 구성되며, 주로 유전 알고리즘(Genetic Algorithm, GA)을 통해 탐색된다. 그러나 GA는 탐색 공간이 좁고 주로 단기 특징만을 활용한다는 한계가 있다.
@@ -31,13 +31,17 @@ Can Cui, Wei Wang, Meihui Zhang, Gang Chen, Zhaojing Luo, Beng Chin Ooi (2021)
 ## 🛠️ Methodology
 
 ### 1. 알파의 정의 및 구조
+
 AlphaEvolve에서 알파는 연산자($\text{OP}$), 입력 피연산자, 출력 피연산자의 시퀀스로 정의된다. 각 피연산자는 스칼라($s$), 벡터($v$), 행렬($m$) 중 하나이다. 하나의 알파는 다음 세 가지 함수로 구성된다.
+
 - $\text{Setup}()$: 피연산자를 초기화하는 함수이다.
 - $\text{Predict}()$: 최종 예측값($s_1$)을 생성하는 함수이다.
 - $\text{Update}()$: 훈련 단계에서 파라미터를 업데이트하여 추론 단계로 전달하는 함수이다. 이를 통해 Formulaic alpha가 하지 못하는 장기 데이터 활용이 가능해진다.
 
 ### 2. 진화 알고리즘 (Evolutionary Algorithm)
+
 AlphaEvolve는 제한된 시간 내에 최적의 알파를 찾는 반복적인 선택 과정을 거친다.
+
 1. **초기화 및 변이**: 부모 알파로부터 변이(mutation)를 통해 자식 알파 집단(population)을 생성한다. 변이는 피연산자나 $\text{OP}$를 무작위로 변경하거나, 연산을 삽입/삭제하는 방식으로 이루어진다.
 2. **평가**: $\text{Information Coefficient (IC)}$를 적합도 점수로 사용하여 평가한다.
 $$IC_i = \frac{1}{N} \sum_{t=1}^{N} \text{corr}(\hat{y}^{(i)}_t, y_t)$$
@@ -46,22 +50,25 @@ $$IC_i = \frac{1}{N} \sum_{t=1}^{N} \text{corr}(\hat{y}^{(i)}_t, y_t)$$
 4. **반복**: 훈련 예산이 소진될 때까지 이 과정을 반복하며, 최종적으로 가장 우수한 알파를 선택한다.
 
 ### 3. 최적화 기법
-- **RelationOp & ExtractionOp**: 
-    - $\text{RelationOp}$는 같은 섹터나 산업군에 속한 주식들의 데이터를 활용하여 랭킹($\text{RankOp}$, $\text{Relation-RankOp}$)이나 평균 차이($\text{RelationDemeanOp}$)를 계산한다.
-    - $\text{ExtractionOp}$는 입력 행렬 $X$에서 특정 스칼라나 벡터를 추출하여 ML 모델의 복잡함을 피하고 효율적인 탐색을 유도한다.
-- **Pruning Technique**: 
-    - 알파를 연산자(edge)와 피연산자(node)로 이루어진 그래프로 표현한다.
-    - 최종 예측값 $s_1$로부터 역추적하여, 계산에 기여하지 않는(root 노드에 도달하지 않는) 중복 연산 및 피연산자를 제거한다.
-    - 이를 통해 중복된 알파에 대한 불필요한 평가를 방지하고 탐색 속도를 높인다.
+
+- **RelationOp & ExtractionOp**:
+  - $\text{RelationOp}$는 같은 섹터나 산업군에 속한 주식들의 데이터를 활용하여 랭킹($\text{RankOp}$, $\text{Relation-RankOp}$)이나 평균 차이($\text{RelationDemeanOp}$)를 계산한다.
+  - $\text{ExtractionOp}$는 입력 행렬 $X$에서 특정 스칼라나 벡터를 추출하여 ML 모델의 복잡함을 피하고 효율적인 탐색을 유도한다.
+- **Pruning Technique**:
+  - 알파를 연산자(edge)와 피연산자(node)로 이루어진 그래프로 표현한다.
+  - 최종 예측값 $s_1$로부터 역추적하여, 계산에 기여하지 않는(root 노드에 도달하지 않는) 중복 연산 및 피연산자를 제거한다.
+  - 이를 통해 중복된 알파에 대한 불필요한 평가를 방지하고 탐색 속도를 높인다.
 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: NASDAQ의 5년치(2013-2017) 주가 데이터를 사용하였다.
 - **비교 대상**: 유전 알고리즘($\text{alpha\_G}$), $\text{Rank\_LSTM}$, $\text{RSR}$(관계적 지식이 주입된 모델) 등과 비교하였다.
 - **평가 지표**: $\text{Sharpe ratio}$ (리스크 조정 수익률), $\text{IC}$, 그리고 기존 알파와의 상관관계를 측정하였다.
 
 ### 2. 주요 결과
+
 - **약상관 알파 마이닝 성능**: 표 2에 따르면, AlphaEvolve는 라운드가 진행되어 상관관계 제약(cutoff 15%)이 엄격해짐에도 불구하고 유전 알고리즘보다 훨씬 높은 Sharpe ratio와 IC를 유지하였다. 특히 유전 알고리즘은 탐색 공간의 한계로 인해 제약이 많아질수록 성능이 급격히 저하되었다.
 - **초기화 영향**: 도메인 전문가가 설계한 알파로 초기화했을 때 가장 좋은 성능을 보였으며, 이는 AlphaEvolve가 기존의 우수한 지식을 기반으로 더 나은 알파로 진화시킬 수 있음을 시사한다.
 - **복잡한 ML 모델과의 비교**: 표 5에서 $\text{alpha\_AE\_D\_0}$는 $\text{Rank\_LSTM}$ 및 $\text{RSR}$보다 월등히 높은 Sharpe ratio와 IC를 기록하였다. 특히 $\text{RSR}$의 부진은 NASDAQ 시장의 높은 변동성으로 인해 정적인 관계 지식 주입이 오히려 독이 되었음을 보여준다.

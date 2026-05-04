@@ -21,18 +21,21 @@ Sihao Xue, Qianyao Shen, Guoqing Li (2023)
 ## 🛠️ Methodology
 
 ### 1. 시스템 구조 및 파이프라인
+
 BTNN은 크게 **Feature Embedding** 부분과 **Tail Neural Network** 부분으로 구성된다.
 
 - **Feature Embedding**: 입력 음향 신호를 추상적인 특징 공간으로 변환하는 비선형 변환 단계이다. 본 논문에서는 DFSMN(Deep-FSMN) 구조를 사용하며, 깊은 은닉층의 출력을 특징 임베딩으로 간주한다.
 - **Tail Neural Network**: 임베딩된 특징을 입력으로 받아 특정 음향 상태인지를 판별하는 다수의 이진 분류기이다. 각 Tail 네트워크는 $128 \times 64 \times 32 \times 1$ 크기의 피라미드 구조(pyramid architecture)를 가진 피드포워드 모델이다.
 
 ### 2. 학습 목표 및 손실 함수
+
 각 Tail 분류기는 독립적으로 학습되며, 각 음향 상태에 대해 평균 제곱 오차(MSE) 손실 함수를 사용한다. 긍정 샘플과 부정 샘플의 불균형을 해소하기 위해 스케일 계수 $S_i$를 적용한다.
 
 $$loss_i = \begin{cases} MSE(o_{s_i}, 0) & \text{for negative samples} \\ MSE(o_{s_i}, 1) \times S_i & \text{for positive samples} \end{cases}$$
 
 ### 3. 음향 후처리 (Acoustic Post-processing)
-MSE 손실을 사용하므로 모델의 출력값은 확률값이 아니다. 이를 확률로 변환하기 위해 개발 데이터셋을 통해 출력값의 통계적 분포를 분석한다. 
+
+MSE 손실을 사용하므로 모델의 출력값은 확률값이 아니다. 이를 확률로 변환하기 위해 개발 데이터셋을 통해 출력값의 통계적 분포를 분석한다.
 
 분포를 여러 구간으로 나누어 경계 확률 $P_n$을 계산하며, 다음과 같은 수식을 통해 확률을 산출한다.
 $$P_n = \begin{cases} 0 & \text{for } n = 0 \\ 1 & \text{for } n = N \\ \frac{P_{n+1} - C_{n+1}}{C_{total}} & \text{for } 1 \le n \le N-1 \end{cases}$$
@@ -42,6 +45,7 @@ $$P_n = \begin{cases} 0 & \text{for } n = 0 \\ 1 & \text{for } n = N \\ \frac{P_
 $$p_s(x) = \left( \frac{p_{s,p}(x)}{S_{s,p}} \times \frac{p_{s,n}(x)}{S_{s,n}} \right)^{\frac{1}{S_{s,p} + S_{s,n}}}$$
 
 ### 4. 디코딩 절차
+
 디코딩에는 Token Push 방식과 가중 유한 상태 트랜스듀서(WFST)가 사용된다. 특히 음향적으로 일부 프레임이 잘못 계산되어 인식이 실패하는 상황을 방지하기 위해 **Jump Arc**를 도입하였으며, 오경보를 줄이기 위해 Jump Arc에 패널티 점수를 부여한다.
 
 추론 시에는 현재 활성화된 토큰(active token)에서 필요한 음향 상태만을 식별하고 해당 상태의 Tail 네트워크만 활성화하여 연산 효율을 극대화한다.
@@ -49,12 +53,14 @@ $$p_s(x) = \left( \frac{p_{s,p}(x)}{S_{s,p}} \times \frac{p_{s,n}(x)}{S_{s,n}} \
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 3,000시간의 차량 내부 데이터 및 시뮬레이션된 소음(AEC simulation 등) 데이터 사용.
 - **테스트 데이터**: 40개의 키워드가 포함된 5,000개의 긍정 발화와 키워드가 없는 50시간의 부정 데이터.
 - **비교 대상**: 8-layer DFSMN, 10-layer DFSMN.
 - **평가 지표**: 24시간당 오경보 1회(1 false alarm per 24 hours) 수준에서의 깨움률(Wakeup Rate).
 
 ### 정량적 결과
+
 실험 결과, 제안된 BTNN 방식이 기존의 단일 강한 분류기 모델보다 우수한 성능을 보였다.
 
 | Model | Wakeup Rate | 비고 |

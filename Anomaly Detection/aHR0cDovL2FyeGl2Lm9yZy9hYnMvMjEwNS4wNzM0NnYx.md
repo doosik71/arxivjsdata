@@ -23,6 +23,7 @@ Ziyu Ye, Yuxin Chen, and Haitao Zheng (2021)
 ## 🛠️ Methodology
 
 ### 1. 문제 정의 및 프레임워크
+
 본 논문은 이상치 탐지를 '주어진 허위 양성률(False Positive Rate, FPR) 하에서 재현율(Recall/True Positive Rate, TPR)을 최대화하는 문제'로 정의한다.
 
 모델 $\theta$는 입력 $x$를 연속적인 값인 이상치 점수 $s_\theta(x)$로 매핑하며, 임계값 $\tau_\theta$를 기준으로 이분법적 레이블을 결정한다. 이때 FPR과 TPR은 다음과 같이 정의된다.
@@ -30,15 +31,18 @@ $$\text{FPR}(s_\theta, \tau_\theta) = P[s_\theta(x) > \tau_\theta | y=0]$$
 $$\text{TPR}(s_\theta, \tau_\theta) = P[s_\theta(x) > \tau_\theta | y=1]$$
 
 실제 알고리즘은 다음의 2단계 과정을 거친다.
+
 1. 대리 손실 함수(Surrogate Loss)를 통해 스코어 함수 $s_\theta$를 학습한다.
 2. 검증 데이터셋을 사용하여 목표 FPR($1-q$)을 만족하는 최적의 임계값 $\hat{\tau}_\theta$를 계산한다. 이때 임계값은 정상 데이터의 경험적 누적분포함수(Empirical CDF) $\hat{F}_0$를 이용하여 $\hat{\tau}_\theta = \max\{u \in \mathbb{R} : \hat{F}_0(u) \le q\}$로 결정된다.
 
 ### 2. Relative Scoring Bias의 정의
+
 두 개의 스코어 함수 $s$와 $s'$가 있을 때, 이에 대응하는 임계값을 $\tau, \tau'$라고 하면 **Relative Scoring Bias** $\xi(s, s')$는 다음과 같이 정의된다.
 $$\xi(s, s') = \text{TPR}(s', \tau') - \text{TPR}(s, \tau)$$
 이는 두 알고리즘 간의 상대적인 탐지 성능 차이를 나타내며, 학습 데이터의 편향이 실제 성능에 미치는 영향을 측정하는 지표가 된다.
 
 ### 3. 이론적 분석 (Finite Sample Analysis)
+
 본 논문은 무한한 데이터가 있을 때의 상대적 스코어링 편향을 누적분포함수(CDF)의 형태로 나타낸 Proposition 1을 제시한다.
 $$\xi(s, s') = F_a(F_0^{-1}(q)) - F'_a(F'_0^{-1}(q))$$
 여기서 $F_0^{-1}$는 분위수 함수(Quantile function)이다. 더 나아가, 유한한 샘플 $\hat{\xi}$가 실제 $\xi$에 수렴하기 위한 샘플 복잡도(Sample Complexity)를 Theorem 3를 통해 증명하였다. 분석 결과, 추정 오차 $\epsilon$을 달성하기 위한 샘플 수 $n$은 $O(\frac{1}{\alpha^2 \epsilon^2} \log \frac{1}{\delta})$의 속도로 증가하며, 이는 이상치 데이터의 비율 $\alpha$가 높을수록 더 적은 샘플로도 편향을 정확히 추정할 수 있음을 의미한다.
@@ -46,16 +50,18 @@ $$\xi(s, s') = F_a(F_0^{-1}(q)) - F'_a(F'_0^{-1}(q))$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: Fashion-MNIST, StatLog (Landsat Satellite), Cellular Spectrum Misuse.
 - **모델**: Hypersphere 기반(Deep SVDD, Deep SAD, HSC) 및 Reconstruction 기반(AE, SAE, ABC).
 - **비교 대상**: 정상 데이터만 사용한 모델($\theta_0$) vs 정상 및 일부 이상치 데이터를 함께 사용한 모델($\theta_s$).
 
 ### 2. 주요 결과
+
 - **수렴성 검증**: 합성 데이터 및 실제 데이터 실험 결과, 샘플 수 $n$이 증가함에 따라 FPR은 목표치(0.05)에 수렴하고, 경험적 상대적 스코어링 편향 $\hat{\xi}$ 역시 이론적 예측대로 특정 값으로 수렴함을 확인하였다.
 - **시나리오별 성능 분석**:
-    - **Scenario 1 (학습 이상치가 정상과 시각적으로 유사할 때)**: 학습에 사용된 이상치 클래스에 대해서는 성능이 크게 향상되지만, 이와 유사하지 않은 다른 이상치 클래스들에 대해서는 오히려 성능이 급격히 떨어지는 **Downward Bias**가 관찰되었다.
-    - **Scenario 2 (학습 이상치가 정상과 시각적으로 매우 다를 때)**: 학습 이상치와 유사한 클래스의 성능은 향상되며, 다른 클래스들의 성능은 거의 유지되거나 소폭 상승하였다. 즉, 유해한 편향이 적게 발생한다.
-    - **Scenario 3 (혼합 학습 데이터)**: 여러 종류의 이상치를 함께 학습시키면 전반적인 성능은 올라가지만, 여전히 학습 집합과 매우 이질적인 클래스에 대해서는 하향 편향이 발생할 수 있음을 보였다.
+  - **Scenario 1 (학습 이상치가 정상과 시각적으로 유사할 때)**: 학습에 사용된 이상치 클래스에 대해서는 성능이 크게 향상되지만, 이와 유사하지 않은 다른 이상치 클래스들에 대해서는 오히려 성능이 급격히 떨어지는 **Downward Bias**가 관찰되었다.
+  - **Scenario 2 (학습 이상치가 정상과 시각적으로 매우 다를 때)**: 학습 이상치와 유사한 클래스의 성능은 향상되며, 다른 클래스들의 성능은 거의 유지되거나 소폭 상승하였다. 즉, 유해한 편향이 적게 발생한다.
+  - **Scenario 3 (혼합 학습 데이터)**: 여러 종류의 이상치를 함께 학습시키면 전반적인 성능은 올라가지만, 여전히 학습 집합과 매우 이질적인 클래스에 대해서는 하향 편향이 발생할 수 있음을 보였다.
 
 ## 🧠 Insights & Discussion
 

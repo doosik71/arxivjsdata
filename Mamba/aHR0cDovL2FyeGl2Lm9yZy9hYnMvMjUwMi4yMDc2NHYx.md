@@ -4,9 +4,9 @@ Junpeng Wang, Chin-Chia Michael Yeh, Uday Singh Saini, Mahashweta Das (2025)
 
 ## 🧩 Problem to Solve
 
-본 연구는 최근 Transformer의 효율적인 대안으로 부상한 State Space Models (SSMs), 특히 Mamba 모델이 시각 데이터(Vision)를 처리하는 방식에서의 Attention 메커니즘을 해석하는 것을 목표로 한다. 
+본 연구는 최근 Transformer의 효율적인 대안으로 부상한 State Space Models (SSMs), 특히 Mamba 모델이 시각 데이터(Vision)를 처리하는 방식에서의 Attention 메커니즘을 해석하는 것을 목표로 한다.
 
-Vision-based Mamba 모델은 2D 이미지를 작은 패치(patch)로 분해하고 이를 1D 시퀀스로 배열하여 입력으로 사용한다. Transformer는 모든 패치를 동시에 입력하며 Positional Encoding을 통해 위치 정보를 구분하므로 패치의 배열 순서가 상대적으로 덜 중요하지만, Mamba는 RNN과 유사하게 패치를 순차적으로 처리한다. 이로 인해 각 패치는 이전 패치들로부터만 정보를 수집할 수 있으며, 이는 패치의 배열 순서가 모델의 Attention 분포에 결정적인 영향을 미침을 의미한다. 
+Vision-based Mamba 모델은 2D 이미지를 작은 패치(patch)로 분해하고 이를 1D 시퀀스로 배열하여 입력으로 사용한다. Transformer는 모든 패치를 동시에 입력하며 Positional Encoding을 통해 위치 정보를 구분하므로 패치의 배열 순서가 상대적으로 덜 중요하지만, Mamba는 RNN과 유사하게 패치를 순차적으로 처리한다. 이로 인해 각 패치는 이전 패치들로부터만 정보를 수집할 수 있으며, 이는 패치의 배열 순서가 모델의 Attention 분포에 결정적인 영향을 미침을 의미한다.
 
 따라서 본 논문은 다음과 같은 세 가지 구체적인 의문을 해결하고자 한다. 첫째, 동일한 스테이지 내의 서로 다른 Mamba 블록들이 일관된 Attention 패턴을 보이는가? 둘째, 모델의 층이 깊어짐에 따라 Attention 패턴이 어떻게 진화하는가? 셋째, 패치 배열 전략(patch-ordering strategies)이 학습된 Attention 패턴에 구체적으로 어떤 영향을 미치는가?
 
@@ -25,32 +25,40 @@ Attention 메커니즘의 해석을 위한 기존 연구들은 주로 Transforme
 본 연구는 VMamba 모델을 대상으로 분석을 수행하며, ImageNet 데이터셋으로 학습된 모델을 사용한다. 입력 이미지 크기는 $224 \times 224 \times 3$이며, 4개의 스테이지를 거치며 패치 크기가 $56 \times 56 \to 28 \times 28 \to 14 \times 14 \to 7 \times 7$로 점진적으로 줄어든다.
 
 ### 1. Inter-Block Attention Pattern 분석
+
 동일 스테이지 내의 서로 다른 블록들 간의 Attention 패턴 유사성을 측정한다.
-- 각 스테이지의 $m$개 블록에서 $n$개의 테스트 이미지에 대한 Attention 행렬을 추출한다. 
+
+- 각 스테이지의 $m$개 블록에서 $n$개의 테스트 이미지에 대한 Attention 행렬을 추출한다.
 - 각 Attention 행렬의 크기는 $p^2 \times p^2$이며, 이를 하나의 데이터 포인트로 간주한다.
 - 전체 데이터 형태는 $(m \times n) \times (p^2 \times p^2)$가 되며, 이를 PCA, tSNE, UMAP과 같은 차원 축소(Dimensionality Reduction, DR) 기술을 사용하여 2차원 평면에 투영한다.
 - 만약 서로 다른 블록의 포인트들이 독립된 클러스터를 형성한다면, 이는 블록 간 Attention 패턴이 서로 다름을 의미한다.
 
 ### 2. Intra-Block Attention Pattern 분석
+
 단일 블록 내에서 각 패치가 가지는 Attention의 공간적 분포를 분석한다.
+
 - 특정 블록과 특정 이미지에 대한 Attention 행렬 $A \in \mathbb{R}^{p^2 \times p^2}$에서 $i$번째 행은 패치 $i$가 다른 모든 패치에 부여하는 Attention 강도를 나타낸다.
 - 이미지 콘텐츠에 의한 영향을 배제하고 일반적인 패턴을 찾기 위해, $n$개 이미지의 Attention 행렬을 평균하여 하나의 대표 행렬 $\text{avg\_attn}$을 생성한다.
 $$\text{avg\_attn} = \frac{1}{n} \sum_{i=1}^{n} \text{Attention}(image_i, stage, block)$$
 - 이 $\text{avg\_attn}$ 행렬의 각 행(패치별 패턴)을 차원 축소하여 $p^2 \times 2$의 좌표로 변환하고 Scatterplot으로 시각화한다.
 
 ### 3. 시각적 분석 시스템 구성
+
 - **ScatterplotView**: 차원 축소 결과를 보여준다. Mode 1에서는 블록 간 유사성을, Mode 2에서는 패치 간 유사성을 탐색한다. 특히 패치 간 분석 시, 포인트의 색상과 크기를 패치의 열(column)과 행(row) 인덱스에 매핑하여 공간적 상관관계를 파악한다.
 - **PatchView**: 선택된 패치들을 2D 그리드 형태로 보여준다. Scatterplot에서 선택한 클러스터가 실제 이미지의 어느 위치에 해당하는지 하이라이트하며, 특정 패치를 클릭하면 해당 패치가 다른 패치들에 부여하는 Attention 강도를 Heatmap 형태로 시각화한다.
 
 ## 📊 Results
 
 ### 1. 블록 및 스테이지별 Attention 특성
+
 - **블록 간 차별성**: 동일 스테이지 내의 블록들이 Scatterplot에서 명확히 분리된 클러스터를 형성함을 확인하였다. 이는 각 블록이 서로 다른 Attention 역할을 수행하고 있음을 시사한다.
 - **상호 보완적 패턴**: 일부 블록은 자기 자신과 주변 패치에 강하게 집중하는 반면, 다른 블록은 오히려 주변을 무시하고 먼 거리의 패치에 집중하는 상호 보완적(complementary)인 양상을 보였다.
 - **계층적 진화**: 초기 스테이지(Stage 0, 1)에서는 공간적으로 인접한 패치들이 유사한 Attention 패턴을 가지는 강한 공간적 상관관계가 나타난다. 그러나 후반 스테이지(Stage 3)로 갈수록 클러스터 구조가 희미해지며, 이는 Attention이 단순한 위치 정보보다는 이미지의 실제 콘텐츠(content-dependent)에 더 많이 의존하게 됨을 의미한다.
 
 ### 2. 패치 배열 순서(Patch Order)의 영향
+
 연구팀은 패치 배열 순서를 변경한 세 가지 대안 전략(Diagonal, Morton/z-order, Spiral)을 제안하고 모델을 처음부터 다시 학습시켜 비교하였다.
+
 - **정량적 결과**: 세 가지 새로운 배열 전략 모두 ImageNet에서 $82.6\%$ 이상의 정확도를 달성하여, 원래의 VMamba 모델과 유사한 성능을 보였다.
 - **정성적 결과**: Attention 패턴은 배열 순서에 따라 완전히 달라졌다. 예를 들어 Diagonal order를 사용하면 Attention이 대각선 방향의 이전 패치들에 집중되는 경향이 나타났다. 이는 Mamba의 Attention이 '공간적 위치' 그 자체보다는 '시퀀스 상의 선후 관계(preceding patches)'에 강하게 결합되어 있음을 입증한다.
 

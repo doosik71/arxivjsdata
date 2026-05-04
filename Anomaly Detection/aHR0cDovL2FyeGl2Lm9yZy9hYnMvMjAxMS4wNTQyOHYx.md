@@ -10,9 +10,10 @@ Abinav Ravi Venkatakrishnan, Seong Tae Kim, Rami Eisawy, Franz Pfister, Nassir N
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 **국소적인 픽셀 수준의 정보(Local fine-grained information)**와 **전역적인 이미지 수준의 기하학적 문맥(Global context)**을 동시에 활용하여 이상치 점수를 계산하는 것이다. 
+본 논문의 핵심 아이디어는 **국소적인 픽셀 수준의 정보(Local fine-grained information)**와 **전역적인 이미지 수준의 기하학적 문맥(Global context)**을 동시에 활용하여 이상치 점수를 계산하는 것이다.
 
 구체적으로는 다음의 두 가지 설계를 통해 이를 달성한다.
+
 1. **Reconstruction-based module**: Variational Autoencoder(VAE)를 통해 정상 데이터의 분포를 학습하고, 이를 재구성함으로써 국소적인 이상 부위를 탐지한다.
 2. **Geometric transformation predictor**: 이미지에 적용된 기하학적 변환(회전, 이동)을 예측하게 함으로써 모델이 정상 스캔의 전역적인 구조와 특성을 더 잘 학습하도록 유도한다.
 
@@ -27,6 +28,7 @@ Abinav Ravi Venkatakrishnan, Seong Tae Kim, Rami Eisawy, Franz Pfister, Nassir N
 ## 🛠️ Methodology
 
 ### 1. Pretraining with Context Restoration
+
 모델이 뇌 CT 영상의 일반적인 특징을 학습할 수 있도록 사전 학습을 수행한다. 입력 이미지의 일부 패치(Patch)를 서로 바꾸어 섞은(Swapped) 이미지 $\hat{x}_i$를 생성하고, 이를 원래 이미지 $x_i$로 복원하도록 VAE를 학습시킨다. 이때 사용되는 손실 함수는 다음과 같다.
 
 $$L_{cr} = \|x_i - f(\hat{x}_i)\|^2$$
@@ -34,6 +36,7 @@ $$L_{cr} = \|x_i - f(\hat{x}_i)\|^2$$
 여기서 $f$는 VAE 함수를 의미하며, 이 과정을 통해 모델은 이미지의 구조적 문맥을 이해하게 된다.
 
 ### 2. Multi-Task Learning
+
 사전 학습 이후, 모델은 재구성과 기하학적 변환 예측이라는 두 가지 작업을 동시에 수행하는 Multi-task 학습을 진행한다.
 
 **A. Geometric Transformation Predictor**
@@ -51,6 +54,7 @@ $$L_{multitask} = L_{geo} + \epsilon L_{rec}$$
 여기서 $L_{rec} = \|x_i - f(x_i)\|^2$이며, $\epsilon$은 두 손실 항의 균형을 맞추는 스케일링 인자이다.
 
 ### 3. Anomaly Score Calculation
+
 테스트 단계에서 이상치 점수(Anomaly Score)는 기하학적 변환 예측 결과와 재구성 결과의 가중 평균으로 계산된다.
 
 $$\text{score} = (1 - \lambda)s_g + \lambda s_r$$
@@ -62,11 +66,13 @@ $$\text{score} = (1 - \lambda)s_g + \lambda s_r$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 임상 뇌 CT 스캔 데이터를 사용하였으며, 학습에는 오직 **정상 슬라이스(Normal slices)**만 사용하였다.
 - **테스트 셋**: 위축(Atrophy), 뇌출혈(Intracranial bleeding), 허혈(Ischemia), 해면상 혈관종(Cavernoma), 동맥류(Aneurysm), 종양(Tumor) 등 다양한 비정상 사례가 포함되었다.
 - **평가 지표**: 분류 성능 측정을 위해 AUROC와 AUPR을 사용하였고, 국소화 성능 측정을 위해 Dice Similarity Coefficient(DSC)를 사용하였다.
 
 ### 정량적 결과
+
 비교 실험 결과, 제안된 Multi-task Framework가 기존 방법론들보다 우수한 분류 성능을 보였다.
 
 | Method | AUROC | AUPR | DSC |
@@ -77,6 +83,7 @@ $$\text{score} = (1 - \lambda)s_g + \lambda s_r$$
 | **Multi-task Framework (ours)** | **0.822** | **0.868** | $0.086 \pm 0.024$ |
 
 ### 결과 해석
+
 - **분류 성능 향상**: Context Restoration 사전 학습을 적용한 VAE가 기본 VAE보다 성능이 높았으며, 여기에 기하학적 변환 예측을 결합한 Multi-task Framework가 가장 높은 AUROC(0.822)와 AUPR(0.868)을 기록하였다.
 - **세그멘테이션 성능 저하**: 반면, DSC 결과에서는 제안 방법이 다른 모델들보다 약간 낮은 성능을 보였다. 이는 인코더가 재구성과 변환 예측이라는 두 가지 목표를 동시에 학습하면서, 세그멘테이션의 핵심인 재구성 성능이 일부 희생되었기 때문으로 분석된다.
 

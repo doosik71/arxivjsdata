@@ -22,8 +22,8 @@ Ziyuan Zhao, Andong Zhu, Zeng Zeng, Bharadwaj Veeravalli, Cuntai Guan (2022)
 
 논문에서는 라벨 효율적인 학습을 위한 기존 접근 방식을 다음과 같이 설명한다.
 
-1.  **Self-ensembling 기반 반지도 학습**: Temporal Ensembling과 Mean Teacher(MT) 프레임워크가 대표적이다. 특히 Mean Teacher는 학생 모델의 가중치를 EMA 방식으로 업데이트하여 교사 모델을 만들고, 두 모델 간의 출력 일관성(Consistency)을 강제함으로써 라벨이 없는 데이터를 효과적으로 활용한다. 하지만 이러한 방식은 주로 동일한 구조의 네트워크 간 지식 전이에 집중한다.
-2.  **지식 증류(Knowledge Distillation, KD)**: 거대 교사 모델의 지식을 소형 학생 모델로 전이하여 모델을 압축하는 기술이다. 응답 기반, 특징 기반, 관계 기반 증류 등 다양한 방식이 제안되었으나, 대부분의 KD 방법은 대규모의 라벨링된 데이터셋을 필요로 한다는 한계가 있어 라벨이 부족한 의료 영상 분야에 적용하기 어렵다.
+1. **Self-ensembling 기반 반지도 학습**: Temporal Ensembling과 Mean Teacher(MT) 프레임워크가 대표적이다. 특히 Mean Teacher는 학생 모델의 가중치를 EMA 방식으로 업데이트하여 교사 모델을 만들고, 두 모델 간의 출력 일관성(Consistency)을 강제함으로써 라벨이 없는 데이터를 효과적으로 활용한다. 하지만 이러한 방식은 주로 동일한 구조의 네트워크 간 지식 전이에 집중한다.
+2. **지식 증류(Knowledge Distillation, KD)**: 거대 교사 모델의 지식을 소형 학생 모델로 전이하여 모델을 압축하는 기술이다. 응답 기반, 특징 기반, 관계 기반 증류 등 다양한 방식이 제안되었으나, 대부분의 KD 방법은 대규모의 라벨링된 데이터셋을 필요로 한다는 한계가 있어 라벨이 부족한 의료 영상 분야에 적용하기 어렵다.
 
 본 논문은 위 두 가지 접근 방식이 모두 '교사-학생 학습' 구조를 사용한다는 점에 착안하여, 이들을 통합한 비대칭 구조를 제안함으로써 라벨 부족과 모델 복잡도 문제를 동시에 해결하고자 한다.
 
@@ -32,6 +32,7 @@ Ziyuan Zhao, Andong Zhu, Zeng Zeng, Bharadwaj Veeravalli, Cuntai Guan (2022)
 ACT-Net은 Teacher 모델, Student 모델, 그리고 Co-teacher 모델로 구성된 파이프라인을 가진다.
 
 ### 1. Heterogeneous Knowledge Distillation (Hete-KD)
+
 서로 다른 아키텍처를 가진 Teacher($f_t$)와 Student($f_s$) 간의 지식 전이를 수행한다. 동일한 입력 $x_i$에 대해 두 모델의 소프트 예측값(soft predictions)을 다음과 같이 생성한다.
 
 $$P^s_i = \sigma(f_s(x_i; \theta_s) / \tau), \quad P^t_i = \sigma(f_t(x_i; \theta_t) / \tau)$$
@@ -41,6 +42,7 @@ $$P^s_i = \sigma(f_s(x_i; \theta_s) / \tau), \quad P^t_i = \sigma(f_t(x_i; \thet
 $$L^{kd}_{con} = \sum_{i=1}^{N} \| P^s_i - P^t_i \|^2$$
 
 ### 2. Homogeneous Knowledge Distillation (Homo-KD)
+
 라벨 부족 문제를 해결하기 위해 Student 모델과 동일한 구조를 가진 Co-teacher 모델($f_c$)을 구축한다. Co-teacher의 가중치 $\theta_c$는 Student의 가중치 $\theta_s$를 EMA 방식으로 업데이트하여 생성한다.
 
 $$\theta^t_c = \alpha \theta^{t-1}_c + (1 - \alpha) \theta^t_s$$
@@ -50,6 +52,7 @@ $$\theta^t_c = \alpha \theta^{t-1}_c + (1 - \alpha) \theta^t_s$$
 $$L^{co}_{con} = L^{co}_{con}(f_s(x; \theta_s, \xi), f_c(x; \theta_c, \xi'))$$
 
 ### 3. Asymmetric Co-teaching Strategy 및 전체 손실 함수
+
 Student 모델은 라벨링된 데이터 $x_s$에 대해 지도 학습 손실 $L_{seg}$를 사용한다. $L_{seg}$는 Dice loss와 Cross-entropy loss의 합으로 구성된다.
 
 $$L_{seg} = L_{dice}(f_s(x_s; \theta_s), y_s) + L_{ce}(f_s(x_s; \theta_s), y_s)$$
@@ -63,19 +66,22 @@ $$L_{stu} = L_{seg} + \lambda^{kd}_{con} L^{kd}_{con} + \lambda^{co}_{con} L^{co
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: ACDC 데이터셋 (심장 하부 구조 분할: LV, RV, MYO).
 - **데이터 분할**: 총 100케이스 중 70(학습), 10(검증), 20(테스트). 학습 데이터 중 단 **10%(7케이스)**만 라벨링된 데이터로 사용하였다.
 - **모델 구조**: U-Net을 백본으로 사용하였으며, 거대 모델은 U-Net [6, 64], 소형 모델은 U-Net [4, 16]을 사용하였다.
 - **평가 지표**: Dice Similarity Coefficient (DSC).
 
 ### 정량적 결과
+
 - **모델 압축 효율**: Table 2에 따르면, 거대 모델 대비 소형 모델의 파라미터 수는 약 **250배** 적다.
 - **성능 비교**:
-    - 10%의 라벨만 사용했을 때, 일반적인 지도 학습(FS)이나 Mean Teacher(MT) 방식보다 ACT-Net이 더 높은 성능을 보였다.
-    - 특히 소형 모델(U-Net [4, 16])을 사용했음에도 불구하고, ACT-Net은 거대 모델의 성능에 근접하는 결과를 얻었으며, 특정 설정에서는 10% 라벨의 MT 거대 모델보다 더 나은 성능을 기록하였다.
+  - 10%의 라벨만 사용했을 때, 일반적인 지도 학습(FS)이나 Mean Teacher(MT) 방식보다 ACT-Net이 더 높은 성능을 보였다.
+  - 특히 소형 모델(U-Net [4, 16])을 사용했음에도 불구하고, ACT-Net은 거대 모델의 성능에 근접하는 결과를 얻었으며, 특정 설정에서는 10% 라벨의 MT 거대 모델보다 더 나은 성능을 기록하였다.
 - **정성적 결과**: 시각화 결과, ACT-Net이 다른 방법들보다 분할 오류가 적고 더 정확한 경계를 찾아내는 것을 확인하였다.
 
 ### 절제 연구 (Ablation Analysis)
+
 - Hete-KD와 Homo-KD 모두 개별적으로는 성능 향상에 기여한다.
 - 흥미로운 점은 두 방법을 순차적으로 적용(Sequential combination)하는 것보다, ACT-Net처럼 **동일한 학습 단계에서 동시에 통합하여 학습시키는 것**이 더 좋은 결과를 냈다는 점이다. 저자들은 순차적 적용 시 '부정적 전이(negative transfer)'가 발생할 수 있다고 분석하였다.
 

@@ -39,6 +39,7 @@ Jingru Yi, Hui Tang, Pengxiang Wu, Bo Liu, Daniel J. Hoeppner, Dimitris N. Metax
 제안된 프레임워크는 ResNet50을 인코더로 사용하며, 크게 **객체 탐지 브랜치(Object Detection Branch)**와 **객체 가이드 분할 브랜치(Object-Guided Segmentation Branch)**의 두 부분으로 구성된다.
 
 ### 1. Object Detection Branch
+
 객체를 중심점(Center point)을 통해 직접 위치 추정한다. 출력값은 세 가지 맵으로 구성된다.
 
 - **Center Heatmap:** 객체의 중심 위치를 예측한다. 배경 픽셀에 대한 페널티를 줄이기 위해 가우시안 원형 주변의 페널티를 완화한 Variant Focal Loss를 사용한다.
@@ -49,6 +50,7 @@ Jingru Yi, Hui Tang, Pengxiang Wu, Bo Liu, Daniel J. Hoeppner, Dimitris N. Metax
 - **Width-Height Map:** 중심점에서 객체의 너비와 높이를 직접 회귀(Regression)하며, 역시 $L_1$ loss를 사용한다.
 
 ### 2. Object-Guided Segmentation Branch
+
 탐지 브랜치에서 예측된 Bounding Box를 이용하여 인코더의 특징 맵에서 RoI 패치를 크롭(Crop)한 후 분할을 수행한다.
 
 - **특징 재사용:** 인코더의 얕은 층(Layer 0-1)에서는 형태적 디테일을, 깊은 층(Layer 2-4)에서는 객체 가이드 정보를 가져온다. 객체 특징(Object features)은 RoI 내에서 밀집된 객체들을 분리하는 가이드 역할을 한다.
@@ -60,10 +62,12 @@ Jingru Yi, Hui Tang, Pengxiang Wu, Bo Liu, Daniel J. Hoeppner, Dimitris N. Metax
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** DSB2018(세포핵), Plant Phenotyping(식물), Neural Cell(신경세포)의 세 가지 생물학적 데이터셋을 사용하였다.
 - **평가 지표:** $\text{AP}_{\text{box}}$ (탐지 성능), $\text{AP}_{\text{mask}}$ (분할 성능), $\text{AIoU}_{\text{mask}}$ (분할 품질)를 측정하였다. $\text{AP}$는 $\text{IoU}$ 임계값 0.5에서 0.95까지 0.05 간격으로 평균을 내어 계산하였다.
 
 ### 주요 결과
+
 - **정량적 성능:** 제안 방법($\text{Ours-objBranchIN}$)은 모든 데이터셋에서 비교 대상(DCAN, Mask R-CNN, Cosine Embedding, Keypoint Graph)보다 우수한 $\text{AP}_{\text{mask}}$와 $\text{AIoU}_{\text{mask}}$를 기록하였다. 특히 신경세포 데이터셋처럼 구조가 길고 복잡한 경우 기존 방식 대비 성능 향상이 뚜렷했다.
 - **추론 속도:** NVIDIA GeForce GTX 1080 GPU 기준, 기존 Box-based 방식들보다 빠른 FPS를 기록하며 효율성을 입증하였다.
 - **정성적 결과:** 제안 방법은 작은 객체를 정확히 식별할 뿐만 아니라, 신경세포의 돌출부나 식물의 잎 줄기와 같은 세밀한 디테일을 보존하면서 서로 붙어 있는 객체들을 효과적으로 분리해냈다.
@@ -71,10 +75,12 @@ Jingru Yi, Hui Tang, Pengxiang Wu, Bo Liu, Daniel J. Hoeppner, Dimitris N. Metax
 ## 🧠 Insights & Discussion
 
 ### 강점 및 분석
+
 - **객체 특징과 IN의 시너지:** Ablation Study를 통해 객체 특징만 사용할 경우(Ours-objBranch) 분할 마스크가 불완전해지고, IN만 사용할 경우(Ours-sepBranchIN) 밀집된 객체 분리 능력이 떨어진다는 것을 확인하였다. 두 요소를 결합했을 때 비로소 주변 노이즈를 억제하고 타겟의 디테일을 완벽하게 회복할 수 있었다.
 - **멀티모달 분포 처리:** RoI 내에서 타겟과 주변 객체가 섞여 있을 때, 모델이 IN의 정도와 채널별 가중치를 학습함으로써 타겟의 지배적인 분포를 하이라이트하고 주변 분포를 억제할 수 있음을 시사한다.
 
 ### 한계 및 가정
+
 - **BBox 정확도 의존성:** 본 방법은 탐지된 Bounding Box가 타겟 객체를 타이트하게 감싸고 있다는 가정하에 작동한다.
 - **잠재적 실패 사례:** 만약 Bounding Box가 너무 크게 예측되어 내부에 동일한 크기의 여러 객체가 포함될 경우, 타겟 객체를 단독으로 분리해내는 데 실패할 가능성이 있다. 다만, 배경과 타겟만 포함된 과추정 BBox의 경우에는 분류 정보가 포함되어 있어 강건하게 작동한다.
 

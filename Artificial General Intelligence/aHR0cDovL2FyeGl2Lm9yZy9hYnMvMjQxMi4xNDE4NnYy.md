@@ -27,32 +27,40 @@ Chao Yang, Chaochao Lu, Yingchun Wang, Bowen Zhou (2024)
 ## 🛠️ Methodology
 
 ### 1. AI-45° Law
+
 $\text{AI-45}^\circ \text{ Law}$는 AI의 능력(Capability)과 안전성(Safety)이 평행하게 발전해야 한다는 원칙이다.
+
 - **Red Line**: 자가 복제 및 개선, 권력 추구, 무기 개발 지원, 사이버 공격, 기만 등 인류에게 돌이킬 수 없는 재앙을 초래할 수 있는 실존적 위험 영역을 의미한다.
 - **Yellow Line**: 시스템이 Red Line에 진입하기 전, 능력이 위험 수준에 도달했음을 알리는 조기 경보 임계치이다.
 
 ### 2. Causal Ladder of Trustworthy AGI
+
 본 프레임워크는 내재적 신뢰성(Endogenous Trustworthiness)과 외재적 신뢰성(Exogenous Trustworthiness)을 모두 포함하며, 다음의 세 계층으로 구성된다.
 
 **계층 1: Approximate Alignment Layer (근사 정렬 계층)**
 인과 사다리의 '연관(Association)' 단계에 해당하며, 관찰 데이터 기반의 상관관계를 학습하여 "무엇인가(What is it)"라는 질문에 답하는 단계이다.
+
 - **Supervised Fine-Tuning (SFT)**: 인간의 가치와 일치하는 고품질 데이터를 통해 모델을 정렬한다.
 - **Machine Unlearning**: 개인정보나 오류 데이터의 영향력을 제거하여 데이터 유출 및 프라이버시 문제를 해결한다.
 
 **계층 2: Intervenable Layer (개입 가능 계층)**
 인과 사다리의 '개입(Intervention)' 단계에 해당하며, "X에 개입하면 어떤 일이 벌어지는가(What will happen if X is intervened on)"를 다룬다.
+
 - **Learning from X Feedback**: RLHF(인간 피드백 기반 강화학습)나 RLAIF(AI 피드백 기반 강화학습)를 통해 모델의 출력을 가이드한다.
 - **Mechanistic Interpretability**: 모델 내부의 뉴런 가중치나 특징에 개입하여 동작을 분석하고 안전 성능을 확인한다.
 - **Controllable Generation**: 명시적/암묵적 지침을 통해 유해하지 않은 콘텐츠 생성을 제어한다.
 
 **계층 3: Reflectable Layer (성찰 가능 계층)**
 인과 사다리의 '반사실(Counterfactual)' 단계에 해당하며, "다른 선택을 했다면 어떤 결과가 나왔을까(What would have happened if a different choice had been made)"를 추론하는 단계이다.
+
 - **Value Reflection**: 자신의 행동과 선택에 대해 깊이 숙고하여 인간의 가치에 최적화한다.
 - **World Models (Mental Models)**: 외부 환경과의 상호작용을 수학적으로 표현하여 의사결정의 하류 효과를 예측하고 반사실적 추론을 수행한다.
 - **Counterfactual Interpretability**: 인과적 귀속 및 매개 분석을 통해 의사결정의 근본 원인을 이해한다.
 
 ### 3. Matrix of Trustworthy AGI (신뢰성 수준)
+
 신뢰성의 수준을 다음의 5단계로 정의하며, 단계가 올라갈수록 Reflectable Layer에 대한 의존도가 높아진다.
+
 1. **Perception Trustworthiness (지각 신뢰성)**: 감각 데이터 수집 및 해석의 정확성과 편향 없음.
 2. **Reasoning Trustworthiness (추론 신뢰성)**: 논리적, 인과적 추론 과정의 투명성과 검증 가능성.
 3. **Decision-making Trustworthiness (의사결정 신뢰성)**: 물리적 세계와의 상호작용 시 가치 정렬 및 상황 인지 능력.

@@ -19,6 +19,7 @@ Vladimir Nikulin (2011)
 ## 📎 Related Works
 
 논문에서는 AL의 대표적인 방법론으로 다음 두 가지를 언급한다.
+
 - **Uncertainty Sampling**: 학습 모델이 가장 불확실하다고 판단하는 인스턴스를 쿼리하는 방식이다.
 - **Query-by-Committee**: 여러 모델로 구성된 위원회(Committee)가 서로 가장 의견이 일치하지 않는 인스턴스를 선택하는 방식이다.
 
@@ -27,9 +28,11 @@ Vladimir Nikulin (2011)
 ## 🛠️ Methodology
 
 ### 1. AL 프로세스 구현 및 앙상블 구조
+
 저자는 AL 프로세스를 초기(Initial), 실제(Actual), 검증(Validation)의 세 단계로 구분하여 접근하였다.
 
 **Uncertainty Sampling의 적용**:
+
 - 초기에는 소수의 양성 샘플을 기반으로 무작위 세트를 구성하여 학습을 시작하였다.
 - 이후 결정 함수(Decision Function)를 오름차순으로 정렬하고, 함수 값의 하락 폭이 급격한 구간에서 완만한 구간으로 변하는 지점의 샘플들을 쿼리하는 방식을 사용하였다.
 - 분류기로는 `k-ridge`, `neural`, `GLM`, `ADA`, `GBM` 등 다양한 모델을 실험적으로 사용하였다.
@@ -42,6 +45,7 @@ $$x_{ens} = \tau \cdot x_1 + (1-\tau) \cdot x_3$$
 여기서 $0 < \tau < 1$은 각 솔루션의 성능에 따라 결정되는 가중치 계수이다.
 
 ### 2. ALC (Area Under Learning Curve) 분석
+
 챌린지에서 사용된 ALC의 정의는 다음과 같다.
 
 $$\text{ALC} = \frac{2}{\log_2(T)} \sum_{i=1}^{N} \hat{\text{AUC}}_i \log_2 \frac{t_{i+1}}{t_i}$$
@@ -53,6 +57,7 @@ $$\text{ALC} \sim \hat{\text{AUC}}_1 \log_2(n_2 + 1) + \sum_{i=2}^{N-1} \hat{\te
 여기서 가중치 $w_i = \log_2(1 + \frac{1}{i-1})$이다. 분석 결과, $w_i$는 $i$가 증가함에 따라 급격히 감소하며, 특히 첫 번째 계수인 $w_1$의 값이 압도적으로 커서 초기 성능이 전체 점수를 지배하게 된다.
 
 ### 3. 제안하는 새로운 평가 지표
+
 저자는 초기 $\delta$ 샘플까지의 구간(Initial subinterval)은 평가에서 제외하고, 그 이후의 실제 AL 구간만을 평가하는 방식을 제안한다. 제안된 지표 $Q$는 다음과 같다.
 
 $$Q = \max_{i=1, \dots, N} \frac{\delta \cdot \text{AUC}_i}{\delta + \alpha \cdot \max(0, t_i - \delta)}$$
@@ -62,11 +67,13 @@ $$Q = \max_{i=1, \dots, N} \frac{\delta \cdot \text{AUC}_i}{\delta + \alpha \cdo
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: A부터 F까지 총 6개의 데이터셋을 사용하였다.
 - **지표**: AUC(Area Under the ROC Curve)와 ALC를 주요 지표로 사용하였다.
 - **비교 전략**: 점진적인 AL 전략과, 초기에 대량의 샘플을 한 번에 가져오는 'Binary Strategy'($\text{ALC}_2$)를 비교하였다.
 
 ### 주요 결과
+
 - **Binary Strategy의 효율성**: 표 1의 $\text{ALC}_2$ 행을 보면, 많은 데이터셋(B, C, E, F)에서 점진적 AL보다 단순한 Binary 전략(초기 소량 $\rightarrow$ 대량 무작위 샘플링)이 더 높은 ALC 점수를 기록하였다.
 - **샘플 효율성**: 저자는 전체 데이터의 1.33% ~ 8.95% 수준의 매우 적은 샘플만 사용하고도 경쟁력 있는 결과를 냈음을 보여준다.
 - **지표에 따른 궤적 변화**: 그림 3(AUC 궤적)과 그림 6(제안된 지표 $Q$에 의한 궤적)을 비교하면, 기존 ALC에서는 보이지 않던 '점진적 개선'의 가치가 제안된 지표 $Q$에서는 명확하게 드러남을 알 수 있다.

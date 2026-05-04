@@ -33,7 +33,7 @@ Lien P. Le, Xuan-Hien Nguyen Thi, Thu Nguyen, Michael A. Riegler, Pål Halvorsen
 시계열 데이터 $x^{(i)}$가 길이 $T_i$를 가진 벡터일 때, 이를 다음과 같은 행렬 $X^{(i)}$로 변환한다.
 
 $$
-X^{(i)} = \begin{pmatrix} 
+X^{(i)} = \begin{pmatrix}
 x^{(i)}_1 & x^{(i)}_2 & \dots & x^{(i)}_{T_{period}} \\
 x^{(i)}_{T_{period}+1} & x^{(i)}_{T_{period}+2} & \dots & x^{(i)}_{2T_{period}} \\
 \vdots & \vdots & \ddots & \vdots \\
@@ -57,11 +57,13 @@ $$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** Psykose (조현병 예측, 단변량), Depresjon (우울증 예측, 단변량), HTAD (가정 내 활동 예측, 다변량) 세 가지를 사용하였다.
 - **평가 지표:** Imputation 정확도는 Mean Absolute Error (MAE)로 측정하였으며, 실제 활용 가능성을 평가하기 위해 하위 분류 작업의 F1-score, AUC, MCC를 측정하였다.
 - **비교 기준:** 결측률을 10%에서 80%까지 10% 단위로 증가시키며 실험하였으며, 각 데이터셋의 원본 논문에서 사용한 분류기(Logistic Regression, AdaBoost, KNN)를 베이스라인으로 사용하였다.
 
 ### 주요 결과
+
 1. **MAE 관점:** Psykose와 Depresjon과 같은 단변량 데이터셋에서는 결측률 60% 미만일 때 MICE-RF가 가장 낮은 MAE를 기록하였다. 반면, 주기성이 없는 다변량 데이터셋인 HTAD에서는 SAITS가 가장 낮은 MAE를 유지하며 강건함을 보였다.
 2. **분류 성능(Downstream Task) 관점:** 흥미롭게도 MAE가 가장 낮다고 해서 반드시 분류 성능이 가장 좋은 것은 아니었다. HTAD 데이터셋의 경우 MICE-RF가 MAE는 높았으나 하위 분류 작업에서는 가장 좋은 성적을 거두었다.
 3. **Denoising 효과 발견:** Psykose 데이터셋의 결과(Table 1)를 보면, 결측률 10%~30% 구간에서 MICE-RF로 Imputation한 데이터의 F1-score(0.853~0.863)가 원본 데이터의 베이스라인(0.848)보다 높게 나타났다. 이는 Imputation 과정이 데이터의 노이즈를 제거하여 분류 모델이 더 깨끗한 특징을 학습하게 했음을 의미한다.

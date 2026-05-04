@@ -27,6 +27,7 @@ Mengyu Dai, Haibin Hang, Anuj Srivastava (2022)
 ## 🛠️ Methodology
 
 ### 1. 목적 함수 (Objective Function)
+
 제안하는 GAN의 목적 함수는 다음과 같이 정의된다.
 
 $$\min_{G} \max_{D} \left( \mathbb{E}_{x \sim P_r} [\|D(x)\|^p] \right)^{1/p} - \left( \mathbb{E}_{z \sim p(z)} [\|D(G(z))\|^p] \right)^{1/p}$$
@@ -34,6 +35,7 @@ $$\min_{G} \max_{D} \left( \mathbb{E}_{x \sim P_r} [\|D(x)\|^p] \right)^{1/p} - 
 여기서 $D$는 판별자로, 출력값은 $\mathbb{R}^n$ 공간의 $n$차원 벡터이다. $\|\cdot\|$는 $L_2$ 노름을 의미하며, $p$는 모멘트의 차수를 결정하는 하이퍼파라미터이다.
 
 ### 2. $p$-centrality 함수 및 거리 척도
+
 $p$-centrality 함수 $\sigma_{P,p}(x)$는 거리 공간 $(M, d)$ 위의 확률 분포 $P$에 대해 다음과 같이 정의된다.
 
 $$\sigma_{P,p}(x) := \left( \int_M d^p(x, y) dP(y) \right)^{1/p} = \left( \mathbb{E}_{y \sim P} [d^p(x, y)] \right)^{1/p}$$
@@ -45,6 +47,7 @@ $$\mathcal{L}_{p,n,K}(P, Q) = \sup_{f \in \text{Lip}(K)} \left( \int \|f\|^p dP 
 이론적 분석 결과, 출력 차원 $n$이 커질수록 $\mathcal{L}_{p,n,K}$ 값은 증가하며($n < n' \implies \mathcal{L}_{p,n,K} \leq \mathcal{L}_{p,n',K}$), 이는 판별자가 실데이터와 가짜 데이터의 차이를 더 쉽게 포착할 수 있음을 의미한다.
 
 ### 3. Square Root Velocity Transformation (SRVT)
+
 판별자의 출력층이 FC 층일 경우, 뉴런의 순서가 바뀌어도 결과가 동일한 순열 대칭성이 발생한다. 이를 깨기 위해 본 논문은 다음과 같은 비대칭 변환인 SRVT를 제안한다.
 
 출력 벡터 $(x_1, x_2, \dots, x_n)$이 주어졌을 때, 변환된 벡터 $(y_1, y_2, \dots, y_n)$의 각 요소는 다음과 같다.
@@ -57,28 +60,32 @@ $$y_i = \text{sgn}(x_i - x_{i-1}) \sqrt{|x_i - x_{i-1}|}, \quad i=1, 2, \dots, n
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: CIFAR-10, CIFAR-100, ImageNet-1K, STL-10, LSUN bedroom.
 - **평가 지표**: FID(Frechet Inception Distance), KID(Kernel Inception Distance), Precision, Recall.
 - **백본 네트워크**: StyleGAN2, ResNet, BigGAN.
 - **구현 세부사항**: $n$의 값은 1, 16, 128, 1024 등으로 설정하여 비교하였으며, $p=1$을 기본값으로 사용하였다.
 
 ### 2. 주요 결과
+
 - **출력 차원 $n$의 영향**: CIFAR-10 데이터셋에서 StyleGAN2를 사용한 실험 결과, $n$이 클수록(특히 $n=1024$) FID 수렴 속도가 빠르고 최종 성능이 우수함을 확인하였다.
 - **SRVT의 효과**: ResNet 백본 실험에서 SRVT를 적용했을 때, 모든 $n$ 설정에서 성능이 향상되었으며, 특히 고차원 출력($n=1024$)에서 그 효과가 극대화되었다.
 - **정량적 비교**:
-    - CIFAR-10, STL-10, LSUN 데이터셋에서 제안 방법은 WGAN-GP, SNGAN, Sphere GAN 등 기존 방법론보다 낮은 FID를 기록하며 우수한 성능을 보였다. (예: CIFAR-10 ResNet 기반 FID 8.5 달성)
-    - ImageNet-1K 대규모 실험에서도 $n=1024$ 설정이 $n=1$보다 더 낮은 FID와 더 높은 Recall(다양성)을 보였다.
-    - 조건부 생성(Conditional Generation) 태스크인 BigGAN 설정에서도 기존 Hinge loss 대비 더 나은 성능을 기록하였다.
+  - CIFAR-10, STL-10, LSUN 데이터셋에서 제안 방법은 WGAN-GP, SNGAN, Sphere GAN 등 기존 방법론보다 낮은 FID를 기록하며 우수한 성능을 보였다. (예: CIFAR-10 ResNet 기반 FID 8.5 달성)
+  - ImageNet-1K 대규모 실험에서도 $n=1024$ 설정이 $n=1$보다 더 낮은 FID와 더 높은 Recall(다양성)을 보였다.
+  - 조건부 생성(Conditional Generation) 태스크인 BigGAN 설정에서도 기존 Hinge loss 대비 더 나은 성능을 기록하였다.
 
 ## 🧠 Insights & Discussion
 
-본 논문은 판별자의 출력을 단순히 '진위 판별'을 위한 스칼라 값으로 보는 시각에서 벗어나, 이를 '분포의 특징을 추출하는 고차원 지표'로 재정의하였다. 
+본 논문은 판별자의 출력을 단순히 '진위 판별'을 위한 스칼라 값으로 보는 시각에서 벗어나, 이를 '분포의 특징을 추출하는 고차원 지표'로 재정의하였다.
 
 **강점**:
+
 - 이론적으로 고차원 출력이 왜 유리한지를 $p$-centrality discrepancy를 통해 증명함으로써, 단순한 휴리스틱이 아닌 수학적 근거를 제시하였다.
 - SRVT라는 간단한 구조적 변경만으로 딥러닝의 고질적인 문제인 대칭성 문제를 해결하고 다차원 출력의 효율성을 높였다.
 
 **한계 및 논의**:
+
 - 고차원 출력을 사용할 때 StyleGAN2의 $\mathcal{R}_1$ 정규화 계수 $\gamma$를 $n$에 따라 조정해야 한다는 점이 발견되었다. 이는 고차원 출력으로 인해 목적 함수의 스케일이 변하기 때문으로 추측되나, 최적의 $\gamma$를 찾는 명확한 가이드는 제시되지 않았다.
 - $p$ 값에 대한 실험에서 $p=1$ 혹은 $p=1, 2$ 조합이 효과적이었으나, $p > 2$인 경우 성능 향상이 없었다는 점은 $p$-centrality가 특정 차수 이상의 모멘트 정보까지는 필요하지 않음을 시사한다.
 

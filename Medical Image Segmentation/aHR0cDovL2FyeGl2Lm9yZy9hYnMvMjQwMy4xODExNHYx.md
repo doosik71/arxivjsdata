@@ -36,7 +36,9 @@ Yihao Liu, Jiaming Zhang, Andrés Diaz-Pinto, Haowei Li, Alejandro Martin-Gomez,
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 SAMME는 크게 세 가지 주요 구성 요소로 이루어져 있다 (Figure 3 참조).
+
 1. **3D Slicer**: 사용자 인터페이스(GUI), 데이터 저장, 시각화 및 렌더링을 담당하는 오픈 소스 소프트웨어이다.
 2. **SAMME Bridge**: 3D Slicer의 이미지 좌표 데이터를 SAM 모델이 이해할 수 있는 좌표로 해석하고 변환하는 중간 계층이다.
 3. **SAMME Server**: 모델 계산 및 마스크 예측을 수행하는 Task Queue를 운영하며, 실제 SAM 모델들이 구동되는 서버이다.
@@ -54,6 +56,7 @@ SAM의 구조는 매우 무거운 Image Encoder와 상대적으로 가벼운 Mas
 
 **4. 모델 통합 조건**
 SAMME는 다음과 같은 조건을 만족하는 모든 SAM 변형 모델을 통합할 수 있다.
+
 - 학습된 가중치(Weights)가 제공될 것.
 - SAM의 `SamPredictor` 클래스 인터페이스를 통해 추론이 가능할 것.
 - $\text{Prompt Encoder} \rightarrow \text{Image Encoder} \rightarrow \text{Mask Decoder}$ 구조를 따를 것.
@@ -61,17 +64,20 @@ SAMME는 다음과 같은 조건을 만족하는 모든 SAM 변형 모델을 통
 ## 📊 Results
 
 ### 실험 설정 및 지표
+
 - **하드웨어**: Ubuntu 20.04, AMD Ryzen 9 3900X, Nvidia GeForce RTX 3090.
 - **테스트 데이터**: 3D Slicer 샘플 데이터 (256 $\times$ 256 $\times$ 130 볼륨).
 - **평가 모델**: MobileSAM, MedSAM, Vanilla SAM (vit-b, vit-l, vit-h).
 - **측정 지표**: 마스크 오버레이 시간(Mask overlay time), 추론 시간(Inference time), 임베딩 계산 시간(Embedding calculation time).
 
 ### 정량적 결과 (Table 1)
+
 - **전체 사이클 시간**: 프롬프트 전송부터 마스크 시각화까지의 전체 시간은 약 $0.06$초로, 이전 버전인 SAMM($0.6$초) 대비 10배 향상되었다.
 - **추론 속도**: 실제 모델의 추론 시간(Inference time)은 모델 종류에 관계없이 약 $0.008$초로 매우 빠르게 나타났다.
 - **임베딩 계산 시간**: 모델의 크기에 따라 차이가 있으며, MobileSAM($7.231$s)이 가장 빠르고 Vanilla vit-h($146.783$s)가 가장 느렸다.
 
 ### 정성적 결과 및 분석
+
 - **모델별 성능**: Figure 5에서 확인되듯, 동일한 바운딩 박스 프롬프트에 대해서도 모델마다 분할 결과에 차이가 발생한다.
 - **전처리의 영향**: 특히 Window/Level 값(밝기 및 대비 설정)에 따라 분할 결과가 민감하게 변하는 것이 확인되었다(Figure 4b). 이는 SAM 변형 모델을 학습시키거나 사용할 때 의료 영상 특유의 윈도잉 처리가 중요함을 시사한다.
 
@@ -81,6 +87,7 @@ SAMME는 다음과 같은 조건을 만족하는 모든 SAM 변형 모델을 통
 SAMME는 단순한 알고리즘 제안이 아니라, 실제 의료 영상 분석가들이 겪는 '반복 작업의 고통'을 시스템적으로 해결하려 했다는 점에서 실용적 가치가 높다. 특히 Save-and-Retrieve 패러다임을 통해 Foundation Model의 무거운 연산 비용 문제를 해결하고 실시간 상호작용을 가능케 한 점이 돋보인다.
 
 **한계 및 논의사항**
+
 1. **프롬프트의 주관성**: 논문에서도 언급되었듯, 프롬프트를 어떻게 입력하느냐에 따라 결과가 달라지며, 이에 대한 일관된 가이드라인이 부족하다.
 2. **전처리 일관성**: MedSAM 등 일부 모델은 내부적으로 $1024 \times 1024$ 리사이징을 수행하지만, SAMME는 원본 크기를 유지한다. 이러한 전처리 과정의 차이가 실제 성능 편차를 야기할 수 있으며, 이에 대한 정밀한 비교 분석이 필요하다.
 3. **3D 맥락 부족**: 본 시스템은 2D 슬라이스의 연속적인 처리를 효율화한 것이지, 모델 자체가 3D 공간 정보(volumetric context)를 직접 학습하여 추론하는 것은 아니다.

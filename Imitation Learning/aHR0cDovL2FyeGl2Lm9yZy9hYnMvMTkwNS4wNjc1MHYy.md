@@ -4,9 +4,10 @@ Ruohan Wang, Carlo Ciliberto, Pierluigi Amadori, Yiannis Demiris (2019)
 
 ## 🧩 Problem to Solve
 
-본 논문은 강화 학습(Reinforcement Learning, RL) 신호 없이 유한한 전문가 궤적(Expert Trajectories) 세트만을 이용하여 정책을 학습하는 모방 학습(Imitation Learning, IL) 문제를 다룬다. 
+본 논문은 강화 학습(Reinforcement Learning, RL) 신호 없이 유한한 전문가 궤적(Expert Trajectories) 세트만을 이용하여 정책을 학습하는 모방 학습(Imitation Learning, IL) 문제를 다룬다.
 
 기존의 모방 학습 방식들은 다음과 같은 한계점을 가지고 있다.
+
 1. **Behavioral Cloning (BC)**: 전문가의 상태-동작 매핑을 직접 학습하는 지도 학습 방식이나, 학습 데이터에 없는 상태에 진입했을 때 오차가 누적되는 Covariate Shift 문제가 발생하여 치명적인 오류로 이어진다.
 2. **Inverse Reinforcement Learning (IRL)**: 전문가의 궤적에서 보상 함수를 역으로 추정하고 RL을 통해 정책을 학습하지만, 파티션 함수(Partition Function) 계산 등의 비용이 매우 크고 계산적으로 효율적이지 않다.
 3. **Generative Adversarial Imitation Learning (GAIL) 및 GMMIL**: 전문가와 에이전트의 정책 분포를 일치시키는 방식이다. 특히 GAIL은 GAN의 구조를 따르므로 학습 과정이 불안정하며, 훈련 데이터에 과적합(Overfitting)되는 경향이 있다.
@@ -15,7 +16,7 @@ Ruohan Wang, Carlo Ciliberto, Pierluigi Amadori, Yiannis Demiris (2019)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 전문가 정책이 방문하는 상태-동작 공간의 **지지집합(Support)을 추정**하여 이를 보상 함수로 활용하는 것이다. 
+본 논문의 핵심 아이디어는 전문가 정책이 방문하는 상태-동작 공간의 **지지집합(Support)을 추정**하여 이를 보상 함수로 활용하는 것이다.
 
 중심적인 직관은 다음과 같다. 만약 어떤 상태-동작 쌍 $(s, a)$가 전문가의 지지집합 내에 있다면, 이는 전문가가 선택했을 가능성이 높은 행동이므로 높은 보상을 부여하고, 지지집합 밖에 있다면 낮은 보상을 부여하는 것이다. 이를 위해 저자들은 Random Network Distillation (RND)의 개념을 도입하여, 전문가 데이터로 학습된 예측 네트워크와 랜덤하게 고정된 타겟 네트워크 간의 예측 오차를 통해 지지집합 여부를 판별하는 **Random Expert Distillation (RED)** 프레임워크를 제안한다.
 
@@ -31,14 +32,16 @@ Ruohan Wang, Carlo Ciliberto, Pierluigi Amadori, Yiannis Demiris (2019)
 ## 🛠️ Methodology
 
 ### 1. 전문가 정책 지지집합 추정의 이론적 배경
+
 커널 방법론의 분리 성질(Separating Property)에 따르면, 재생 커널 힐베르트 공간(RKHS) 내에서 데이터의 공분산 연산자는 지지집합의 기하학적 특성을 캡처할 수 있다. 이를 통해 점 $x$가 지지집합 $U$에 속하는지 여부를 $\|(I - P_U)\phi(x)\|_H = 0$ 인지를 통해 판별할 수 있다. 여기서 $P_U$는 $\Phi(U)$로의 직교 투영 연산자이다.
 
 ### 2. Random Expert Distillation (RED) 아키텍처
+
 저자들은 위 이론을 신경망으로 구현하기 위해 RND 구조를 채택한다.
 
-- **네트워크 구성**: 
-    - **타겟 네트워크 ($f_\theta$)**: 랜덤하게 초기화된 후 고정된 네트워크로, 상태-동작 쌍 $(s, a)$를 임베딩 공간으로 매핑한다.
-    - **예측 네트워크 ($\hat{f}_{\hat{\theta}}$)**: 전문가의 궤적 데이터 $\mathcal{D}$를 사용하여 타겟 네트워크의 출력을 예측하도록 학습된다.
+- **네트워크 구성**:
+  - **타겟 네트워크 ($f_\theta$)**: 랜덤하게 초기화된 후 고정된 네트워크로, 상태-동작 쌍 $(s, a)$를 임베딩 공간으로 매핑한다.
+  - **예측 네트워크 ($\hat{f}_{\hat{\theta}}$)**: 전문가의 궤적 데이터 $\mathcal{D}$를 사용하여 타겟 네트워크의 출력을 예측하도록 학습된다.
 - **학습 절차**: 예측 네트워크는 다음의 MSE 손실 함수를 최소화하도록 학습된다.
   $$L(s, a) = \|\hat{f}_{\hat{\theta}}(s, a) - f_\theta(s, a)\|_2^2$$
 - **보상 함수 생성**: 학습이 완료된 후, 예측 오차 $L(s, a)$를 이용하여 다음과 같이 고정된 보상 함수 $\hat{r}(s, a)$를 정의한다.
@@ -46,10 +49,12 @@ Ruohan Wang, Carlo Ciliberto, Pierluigi Amadori, Yiannis Demiris (2019)
   여기서 $\sigma_1$은 하이퍼파라미터이며, 전문가 데이터에 대해 $r(s, a)$가 1에 가깝게 나오도록 설정한다.
 
 ### 3. Terminal Reward Heuristic
+
 자율 주행과 같이 충돌과 같은 치명적인 상태가 존재하는 태스크를 위해 터미널 보상 휴리스틱을 도입한다. 전문가 궤적의 평균 보상을 $\bar{r}$이라 할 때, 에피소드의 마지막 상태 $(s_T, a_T)$의 보상이 특정 임계치보다 낮으면 페널티를 부여한다.
 $$r^{term} = \begin{cases} -\sigma_2 \bar{r} & \text{if } \sigma_3 \bar{r} > r(s_T, a_T) \\ 0 & \text{otherwise} \end{cases}$$
 
 ### 4. 전체 파이프라인
+
 1. 전문가 데이터 $\mathcal{D}$를 수집한다.
 2. 타겟 네트워크 $f_\theta$를 랜덤 생성하고 고정한다.
 3. 예측 네트워크 $\hat{f}_{\hat{\theta}}$를 $\mathcal{D}$에 대해 학습시킨다.
@@ -59,11 +64,13 @@ $$r^{term} = \begin{cases} -\sigma_2 \bar{r} & \text{if } \sigma_3 \bar{r} > r(s
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **단순 도메인 (Simple Domain)**: 상태 $s \in (-1, 1)$, 동작 $a \in \{-1, 1\}$, 보상 $r = as$인 환경에서 Deep Q-Learning을 사용하여 평가하였다.
 - **Mujoco 태스크**: Hopper, HalfCheetah, Reacher, Walker2d, Ant 등 5개 연속 제어 태스크에서 TRPO를 사용하여 평가하였다. 전문가 궤적 4개를 사용하였다.
 - **자율 주행 태스크**: 사람이 운전한 단일 궤적을 사용하여 장애물 회피 주행 능력을 평가하였으며, SVG(1)-ER 알고리즘을 사용하였다.
 
 ### 2. 주요 결과
+
 - **단순 도메인**: RED와 AutoEncoder(AE) 방식이 GAIL이나 GMMIL보다 빠르게 전문가 정책에 수렴하였다. GAIL은 판별기(Discriminator)의 과적합으로 인해 불안정한 모습을 보였다.
 - **Mujoco 태스크**: RED는 GAIL 및 GMMIL과 비교하여 성능의 편차가 매우 적었으며(분산 감소), 초기 학습 속도가 더 빨랐다. 다만, HalfCheetah와 Ant 태스크에서는 랜덤 초기화보다 BC(Behavioral Cloning)를 통한 정책 초기화가 필요했다.
 - **자율 주행 태스크**: RED가 가장 높은 성능을 기록하였다. 특히 RED와 AE는 충돌 상황이나 도로 이탈 상황에서 보상을 0으로 낮게 책정하여 에이전트가 위험 상황을 피하도록 유도하는 것이 정성적으로 확인되었다. 반면 GAIL은 전문가 궤적에 과적합되어 장애물 회피 능력을 일관되게 유지하지 못했다.
@@ -71,11 +78,13 @@ $$r^{term} = \begin{cases} -\sigma_2 \bar{r} & \text{if } \sigma_3 \bar{r} > r(s
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 - **안정성**: 보상 함수가 학습 과정 중에 변하는 GAIL과 달리, RED는 고정된 보상 함수를 사용하므로 학습 과정의 분산이 낮고 안정적이다.
 - **효율성**: 복잡한 Minimax 게임이나 파티션 함수 계산 없이, 단순한 네트워크 학습만으로 보상 함수를 생성할 수 있다.
 - **일반화**: 전문가의 궤적과 유사한 영역에 보상을 부여함으로써, 단순한 복제(BC)를 넘어 RL의 탐색을 통해 최적 정책을 찾을 수 있게 한다.
 
 ### 한계 및 비판적 해석
+
 - **초기화 의존성**: 일부 복잡한 태스크(HalfCheetah, Ant)에서 BC 초기화가 필수적이라는 점은, 고정된 보상 함수만으로는 충분한 탐색 유인이 부족할 수 있음을 시사한다. 저자들은 이를 GAIL의 동적 보상 함수가 제공하는 탐색 유인과 대조하여 설명한다.
 - **하이퍼파라미터 민감도**: $\sigma_1, \sigma_2, \sigma_3$와 같은 하이퍼파라미터가 보상 함수의 형태를 결정하므로, 이에 대한 정밀한 튜닝이 필요할 것으로 보인다.
 - **표본 효율성**: 지지집합 추정의 정확도는 전문가 데이터의 양에 의존하므로, 데이터가 극도로 적은 경우 보상 함수가 부정확해질 가능성이 있다.

@@ -10,7 +10,7 @@ Chengkun Wang, Wenzhao Zheng, Jie Zhou, Jiwen Lu (2024)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 이미지를 공간 도메인이 아닌 주파수 도메인(frequency domain)에서 분석하여 시퀀스를 생성하는 Global Image Serialization (GIS) 방법론이다. 
+본 논문의 핵심 아이디어는 이미지를 공간 도메인이 아닌 주파수 도메인(frequency domain)에서 분석하여 시퀀스를 생성하는 Global Image Serialization (GIS) 방법론이다.
 
 핵심 직관은 인간이 이미지를 인식할 때 윤곽선과 같은 저주파 성분을 먼저 파악하고 이후 세부적인 고주파 정보를 통해 보완한다는 점과, 신경망이 저주파 신호를 우선적으로 학습하는 경향(frequency principle)이 있다는 점에 기반한다. 이를 위해 Discrete Cosine Transform (DCT)를 이용하여 이미지를 저주파부터 고주파까지의 순서로 배열함으로써, Mamba 모델이 전역적 특징에서 세부 특징으로 이어지는 자연스러운 인과적 관계를 학습할 수 있도록 설계하였다.
 
@@ -53,16 +53,19 @@ $$z_n = t_n + \text{MLP}(\text{Norm}(t_n))$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: ImageNet-1K (분류), MS COCO 2017 (객체 탐지), ADE20K (시맨틱 세그멘테이션)
 - **비교 대상**: Vim, VMamba 등 기존 Vision Mamba 모델 및 ResNet, Swin Transformer 등
 - **지표**: Top-1 Accuracy, box AP, mask AP, mIoU
 
 ### 2. 주요 결과
+
 - **이미지 분류 (ImageNet-1K)**: GlobalMamba는 다양한 모델 크기(Mini, Tiny, Small, Base)에서 베이스라인보다 일관된 성능 향상을 보였다. 특히 Vim 대비 약 $+0.6\%$의 성능 향상을 달성하였다.
 - **객체 탐지 및 인스턴스 분할 (COCO)**: Mask-RCNN을 사용하여 평가한 결과, GlobalMamba-S가 VMamba-S보다 $1\times$ 및 $3\times$ 학습 스케줄 모두에서 box AP 및 mask AP 수치가 더 높게 나타났다.
 - **시맨틱 세그멘테이션 (ADE20K)**: UPerNet을 사용하여 평가하였으며, GlobalMamba-S가 VMamba-S 대비 mIoU(SS) 기준 $0.3$ 포인트 높은 성능을 기록하였다.
 
 ### 3. 분석 실험 (Ablation Study)
+
 - **인과적 순서**: 저주파 $\rightarrow$ 고주파 순서의 배치가 무작위 배치나 고주파 $\rightarrow$ 저주파 배치보다 훨씬 높은 분류 정확도를 보였다. 이는 저주파 우선 학습이라는 신경망의 특성과 일치한다.
 - **세그먼트 수 ($K$)**: $K$값이 2에서 6으로 증가함에 따라 성능이 상승하다가 $K=4$ 지점에서 안정화되는 경향을 보였다. 따라서 최적의 값인 $K=4$를 기본 설정으로 사용하였다.
 - **Causal Transformer 적용**: 제안한 GIS 방법론을 Mamba가 아닌 Decoder-only Transformer에 적용했을 때도 성능이 향상됨을 확인하여, GIS의 범용적인 우수성을 입증하였다.

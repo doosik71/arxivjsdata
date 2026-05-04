@@ -30,6 +30,7 @@ Yu Cheng, Mo Yu, Xiaoxiao Guo, Bowen Zhou (2017/2019)
 ## 🛠️ Methodology
 
 ### 1. Base Learner: Matching Networks
+
 Base learner는 Matching Networks를 사용한다. 두 개의 임베딩 함수 $f(\cdot)$와 $g(\cdot)$가 텍스트 $\mathbf{x}$를 벡터 공간으로 매핑한다. 지원 집합 $S = \{(\mathbf{x}_i, y_i)\}_{i=1}^k$가 주어졌을 때, 새로운 샘플 $\hat{\mathbf{x}}$에 대한 라벨 예측 확률은 다음과 같이 정의된다.
 
 $$P(y|\hat{\mathbf{x}}, S) = \sum_{i=1}^k \alpha(\hat{\mathbf{x}}, \mathbf{x}_i; \theta) y_i$$
@@ -41,6 +42,7 @@ $$\alpha(\hat{\mathbf{x}}, \mathbf{x}_i; \theta) = \frac{\exp(f(\hat{\mathbf{x}}
 $\theta$는 임베딩 함수 $f$와 $g$의 파라미터이다.
 
 ### 2. Meta Learner: LSTM-based Optimizer
+
 Meta learner는 파라미터 $\theta$를 업데이트하는 최적화 규칙을 학습하는 LSTM 네트워크이다. 표준적인 경사 하강법은 다음과 같다.
 
 $$\theta_{t+1} = \theta_t - \alpha_{t+1} \nabla L(\theta_t)$$
@@ -48,6 +50,7 @@ $$\theta_{t+1} = \theta_t - \alpha_{t+1} \nabla L(\theta_t)$$
 본 모델은 LSTM의 Cell state $c_t$를 learner의 파라미터 $\theta_t$로 설정하고, LSTM의 업데이트 메커니즘을 통해 위 수식의 $\alpha_{t+1}$(학습률) 및 업데이트 방향을 학습한다. 즉, Meta-learner $R$은 손실 함수 값 $L_t$와 그 기울기 $\nabla_{\theta_{t-1}} L_t$를 입력으로 받아 새로운 파라미터 $\theta_t$를 출력한다.
 
 ### 3. 전체 파이프라인 및 학습 절차
+
 1. **Meta-training:** 여러 Task에서 샘플링된 $\mathcal{D}_{meta-train}$을 사용하여 LSTM Meta-learner $\Theta$를 학습시킨다. 각 Task 내에서 Base learner의 파라미터를 업데이트하고, 최종 Test loss를 통해 $\Theta$를 최적화한다.
 2. **Updating Learner Parameters:** 새로운 Task가 주어지면, 학습된 Meta-learner를 사용하여 Base learner의 파라미터 $\theta$를 빠르게 업데이트한다.
 3. **Auxiliary Task Retrieval:** 데이터가 매우 부족한 경우, 타겟 Task와 관련성이 높은 보조 Task $\mathcal{D}_{aux}$를 검색하여 학습에 활용한다. 관련성은 각 Task의 모델 $M_i$를 타겟 Task에 적용했을 때의 정확도 $acc_{i \to k}$를 기준으로 상위 $s$개를 선정하여 결정한다.
@@ -55,11 +58,13 @@ $$\theta_{t+1} = \theta_t - \alpha_{t+1} \nabla L(\theta_t)$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** Sentence Classification Service (SCS, 텍스트), Omniglot (이미지), Amazon Reviews (텍스트)
 - **비교 대상:** Matching Network (Basic, FCE), Meta-learner LSTM
 - **지표:** Average Accuracy (1-shot 및 5-shot 설정)
 
 ### 주요 결과
+
 1. **Multi-tasks/domains Setting:**
    - **SCS:** Meta Metric-learner가 모든 설정에서 가장 높은 정확도를 기록하였다. 특히 1-shot에서 Matching Network보다 우수한 성능을 보였다.
    - **Omniglot:** 제안 방법론이 Baseline들을 상회하였으며, 보조 데이터를 활용했을 때 Matching Network보다 더 높은 성능 향상을 보였다.

@@ -25,12 +25,15 @@ Anthony Hu, Alex Kendall & Roberto Cipolla (2019)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 모델은 **Encoder $\rightarrow$ Temporal Model $\rightarrow$ Decoders**의 순차적인 파이프라인으로 구성된다.
+
 - **Encoder**: ResNet-18을 사용하여 입력 프레임을 콤팩트한 특징 맵 $x_t$로 인코딩한다.
 - **Temporal Model**: 3D Residual Convolutional Block으로 구성된 인과적 3D CNN이다. $t$ 시점의 표현 $z_t$를 계산할 때 $s \le t$인 과거 및 현재 프레임만을 참조한다.
 - **Decoders**: $z_t$로부터 인스턴스 임베딩 $y_t \in \mathbb{R}^{p \times H \times W}$와 단안 깊이 맵 $\hat{D}_t \in \mathbb{R}^{1 \times H \times W}$를 각각 출력한다.
 
 ### 시공간 임베딩 손실 함수
+
 임베딩 공간에서 동일 인스턴스는 뭉치고 서로 다른 인스턴스는 밀어내기 위해 세 가지 힘(Force)을 정의한다. $K$를 인스턴스 개수, $S_k$를 인스턴스 $k$의 픽셀 집합, $y_i$를 픽셀 $i$의 임베딩, $\mu_k$를 인스턴스 $k$의 평균 임베딩이라 할 때:
 
 1. **Attraction Force (인력)**: 동일 인스턴스 픽셀들이 평균 $\mu_k$에 가깝게 위치하도록 유도한다.
@@ -43,6 +46,7 @@ Anthony Hu, Alex Kendall & Roberto Cipolla (2019)
 최종 인스턴스 손실 함수는 $L_{instance} = \lambda_a L_a + \lambda_r L_r + \lambda_{reg} L_{reg}$로 정의된다.
 
 ### 자기지도 기반 깊이 추정
+
 객체의 3D 구조는 미래 위치를 제약하는 강력한 단서가 된다. 본 논문은 연속된 프레임을 이용하여 별도의 정답 라벨 없이 깊이를 학습하는 View Synthesis Loss를 도입한다. 타겟 뷰 $I_t$와 소스 뷰 $I_s$가 있을 때, 예측된 깊이 $\hat{D}_t$와 카메라 변환 $\hat{T}_{t \to s}$를 이용해 합성된 이미지 $\hat{I}_{s \to t}$를 생성하고, 이를 실제 이미지 $I_t$와 비교한다.
 
 $$L_{vs} = \min_{s \neq t} e(I_t, \hat{I}_{s \to t})$$
@@ -51,15 +55,18 @@ $$L_{vs} = \min_{s \neq t} e(I_t, \hat{I}_{s \to t})$$
 $$L_{embedding} = \lambda_a L_a + \lambda_r L_r + \lambda_{reg} L_{reg} + \lambda_{vs} L_{vs}$$
 
 ### 추론 및 추적 절차
+
 추론 시에는 먼저 Mask Network로 배경을 제거한 후, 전경 픽셀들의 임베딩을 **Mean Shift** 알고리즘으로 클러스터링하여 인스턴스를 구분한다. 새로운 프레임에서 분할된 인스턴스의 평균 임베딩을 이전 프레임의 인스턴스 평균 임베딩과 비교하여, 거리가 $\rho_r$보다 작으면 동일한 객체로 판단하여 추적한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: KITTI Multi-Object and Tracking Dataset (MOTS). 총 8,008 프레임, 26,899대의 차량이 포함되어 있다.
 - **지표**: MOTSP(정밀도), MOTSA(정확도), sMOTSA(소프트 정확도)를 사용하여 세그멘테이션 품질과 시간적 일관성을 측정한다.
 
 ### 정량적 결과
+
 실험 결과, 제안 방법은 특히 시간적 일관성을 측정하는 **MOTSA와 sMOTSA 지표에서 기존 Baseline들보다 우수한 성능**을 보였다.
 
 | 모델 | MOTSA $\uparrow$ | sMOTSA $\uparrow$ | MOTSP $\uparrow$ | AP $\uparrow$ |
@@ -71,6 +78,7 @@ $$L_{embedding} = \lambda_a L_a + \lambda_r L_r + \lambda_{reg} L_{reg} + \lambd
 분석 결과, MOTSP나 AP 같은 단일 프레임 검출 성능은 Mask R-CNN이 높았으나, 비디오 추적의 핵심인 시간적 일관성 지표에서는 제안 모델이 가장 높게 나타났다. 이는 본 모델이 단순히 픽셀을 잘 따는 것을 넘어, 인스턴스의 ID를 시간축으로 매우 안정적으로 유지하고 있음을 의미한다.
 
 ### Ablation Study 및 분석
+
 1. **Temporal Model의 영향**: 템포럴 모델이 없을 경우, 오직 공간적 외형에만 의존하게 되어 시간적 일관성이 크게 떨어진다.
 2. **Depth Loss의 영향**: 깊이 추정 손실을 추가했을 때 임베딩의 구조가 더욱 명확해지며, 특히 폐색 상황에서 객체를 구분하는 능력이 향상된다.
 3. **시퀀스 길이의 영향**: 학습 시 참조하는 시퀀스 길이가 너무 길어지면(예: 15프레임), 외형과 깊이가 시간에 따라 변함에도 불구하고 동일한 임베딩을 갖도록 강제하는 $L_a$ 항이 오히려 학습을 방해하여 성능이 하락한다. 본 데이터셋에서는 5프레임(0.5초)이 최적의 길이었다.

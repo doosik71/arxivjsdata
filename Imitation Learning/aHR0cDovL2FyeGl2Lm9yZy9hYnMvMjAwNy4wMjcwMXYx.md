@@ -21,13 +21,15 @@ Artemij Amiranashvili, Nicolai Dorka, Wolfram Burgard, Vladlen Koltun, Thomas Br
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 시스템 구조
+
 본 시스템은 전문가의 시연 데이터($s_t, a_t$)를 입력받아 상태 $s$가 주어졌을 때 전문가의 행동 $a$를 예측하는 정책 $\pi(s)$를 학습하는 구조이다.
 
 ### 주요 구성 요소 및 역할
-1. **상태 공간(State Space)**: 
+
+1. **상태 공간(State Space)**:
     - **시각 정보**: $64 \times 64$ RGB 이미지.
     - **벡터 정보**: 현재 손에 든 아이템(one-hot encoding)과 인벤토리 내 아이템 보유 현황(multi-hot 또는 float 값으로 인코딩)을 포함한다.
-2. **액션 공간(Action Space)**: 
+2. **액션 공간(Action Space)**:
     - 이동(앞, 뒤, 좌, 우, 점프, 질주, 공격, 잠입)과 카메라 회전(yaw, pitch) 및 아이템 제작/장착/배치 액션으로 구성된다.
     - 연속적인 카메라 제어는 $22.5^\circ$ 단위로 양자화(quantization)하여 이산적인 액션으로 변환하였다. 최종적으로는 총 130개의 이산 액션으로 정의된다.
 3. **네트워크 아키텍처**:
@@ -36,6 +38,7 @@ Artemij Amiranashvili, Nicolai Dorka, Wolfram Burgard, Vladlen Koltun, Thomas Br
     - **Final Part**: 이미지 임베딩과 벡터 임베딩을 결합(concatenate)한 후 두 개의 FC 레이어를 거쳐 최종 액션 확률을 출력한다.
 
 ### 훈련 목표 및 손실 함수
+
 본 논문에서는 두 가지 학습 방식을 비교하였다.
 
 1. **Behavior Cloning (Cross-Entropy Loss)**:
@@ -49,17 +52,20 @@ Artemij Amiranashvili, Nicolai Dorka, Wolfram Burgard, Vladlen Koltun, Thomas Br
     - 여기서 $m(a_E, a)$는 $a = a_E$일 때 0이고, 그렇지 않으면 $b > 0$인 마진 함수이다. 이는 $Q(s, a_E)$의 값이 다른 액션들의 값보다 최소 $b$만큼 더 크게 만들어 전문가의 행동을 유도한다.
 
 ### 학습 절차
+
 - **옵티마이저**: Adam ($\text{lr} = 6.25 \times 10^{-5}$, $\text{weight decay} = 10^{-5}$)을 사용하며 최대 $3 \times 10^6$ 스텝까지 학습한다.
 - **데이터 보강**: `Treechop` 데이터셋에는 인벤토리 정보가 없으므로, 주 작업 데이터셋에서 무작위 상태를 샘플링하여 인벤토리 벡터를 합성해 넣어 학습에 활용하였다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: MineRL-v0 데이터셋.
 - **작업**: `ObtainIronPickaxe`(철 곡괭이 획득) 및 `Treechop`(나무 베기).
 - **지표**: 에피소드당 평균 보상(Average Return).
 
 ### 주요 결과
+
 1. **아키텍처 영향**: 네트워크 크기가 커질수록 성능이 향상되었다. Double Deep Impala가 가장 높은 성능을 보였으며, 이는 DQN 대비 비약적인 상승이다.
 2. **데이터 증강**: 수평 뒤집기(Horizontal Flipping)가 성능을 $73\%$ 향상시킨 반면, 밝기, 대비, 포스터라이제이션 등의 다른 증강 기법은 효과가 없거나 오히려 성능을 떨어뜨렸다.
 3. **손실 함수 비교**: Cross-Entropy(CE) 기반의 샘플링 정책이 Margin Loss 기반의 결정론적 정책보다 우수한 성능을 보였다. 다만, CE 기반 정책에서도 $\text{argmax}$를 사용하여 결정론적으로 행동하게 하면 성능이 Margin Loss보다 낮아지는 특성을 보였다.
@@ -67,6 +73,7 @@ Artemij Amiranashvili, Nicolai Dorka, Wolfram Burgard, Vladlen Koltun, Thomas Br
 5. **RL과의 비교**: `Treechop` 작업에서 모방 학습은 단 $50,000$ 스텝 만에 거의 최적의 성능에 도달한 반면, 강화학습(Rainbow)은 대부분의 실행에서 유의미한 보상을 얻지 못했다.
 
 ### 최종 성능
+
 최적의 설정(Double Deep Impala + CE Loss + Treechop 데이터 + Flipping)을 사용한 에이전트는 에피소드의 $82\%$에서 돌 곡괭이(stone pickaxe)를 제작하는 데 성공하였으며, 철 곡괭이 제작 성공률은 약 $1\%$ 수준이었다.
 
 ## 🧠 Insights & Discussion

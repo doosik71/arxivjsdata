@@ -17,16 +17,19 @@ James Harrison, Apoorva Sharma, Chelsea Finn, Marco Pavone (2020)
 ## 📎 Related Works
 
 ### 관련 연구 및 한계
+
 1. **Online & Continual Learning**: 데이터 스트림에서 이전 작업의 지식을 재사용하면서 **Negative transfer**(이전 지식이 현재 학습을 방해하는 현상)를 방지하는 연구들이 진행되었다. 주로 정규화(Regularization) 기법을 통해 망각을 방지하지만, 이는 고정된 모델을 최적화하는 방식이며 빠르게 적응하는 학습 알고리즘 자체를 학습하는 Meta-learning과는 차이가 있다.
 2. **Meta-Learning for Continual Learning**: 일부 연구에서는 고정된 크기의 **Sliding window** 방식을 사용하여 최근 데이터만으로 모델을 조건화한다. 하지만 윈도우 크기가 고정되어 있어 작업 변화에 유연하게 대응하지 못하며, Negative transfer의 위험이 여전히 존재한다.
 3. **Empirical Bayes for Changepoint Models**: BOCPD(Bayesian Online Changepoint Detection)와 같은 연구들이 변경점 탐지를 다루어 왔으나, 주로 단순한 분포를 다루었으며 신경망 기반의 강력한 Meta-learning 모델과 결합하여 전체를 최적화하는 시도는 부족했다.
 
 ### 차별점
+
 MOCA는 고정된 윈도우를 사용하는 대신, 현재 작업의 지속 시간(Run length)을 확률적으로 추론하여 **적응형 윈도우(Adaptive windowing)**를 구현한다. 또한, 미분 가능한 구조를 통해 변경점 탐지와 예측 모델을 통합적으로 학습시킨다는 점에서 기존 방식과 차별화된다.
 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 MOCA는 베이지안 필터링(Bayesian Filtering)을 사용하여 Run length $r_t$(마지막 변경점 이후 경과 시간)에 대한 신념 분포 $b_t(r_t) = p(r_t | y_{1:t-1})$를 유지한다. 시스템은 다음과 같은 순환 과정을 거친다.
 
 1. **입력 관찰 및 신념 업데이트**: 새로운 입력 $x_t$를 관찰하고, 모델의 생성적 특성을 이용해 Run length 신념을 업데이트한다.
@@ -47,10 +50,10 @@ $$b_t(r_t | x_t, y_t) \propto p_\theta(y_t | x_t, \eta_{t-1}[r_t]) b_t(r_t | x_t
 
 **3. 시간 전파 (Time Propagation)**
 작업이 바뀔 확률 $\lambda$를 적용하여 다음 시점의 신념을 계산한다.
-$$b_{t+1}(r_{t+1} = k) = 
-\begin{cases} 
-\lambda & \text{if } k=0 \\ 
-(1-\lambda)b_t(r_t = k-1 | x_t, y_t) & \text{if } k > 0 
+$$b_{t+1}(r_{t+1} = k) =
+\begin{cases}
+\lambda & \text{if } k=0 \\
+(1-\lambda)b_t(r_t = k-1 | x_t, y_t) & \text{if } k > 0
 \end{cases}$$
 
 **4. 최종 예측 (Marginalization)**

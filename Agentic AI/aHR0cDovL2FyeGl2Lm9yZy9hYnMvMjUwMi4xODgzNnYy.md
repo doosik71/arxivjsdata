@@ -14,14 +14,15 @@ Longling Geng, Edward Y. Chang (2025)
 
 REALM-Bench의 중심 아이디어는 단순한 정적 작업의 반복이 아니라, **난이도의 단계적 상승(Difficulty Progression)**과 **동적 변동성(Dynamic Disruptions)**을 결합하여 시스템의 신뢰성을 엄격하게 테스트하는 것이다.
 
-1.  **계층적 난이도 설계**: 기초적인 단일 에이전트 정적 계획(Tier 1)부터 대규모 다중 도메인 통합 계획(Tier 5)까지 5단계의 난이도로 구성된 14개의 문제를 설계하여 시스템의 한계를 정밀하게 측정한다.
-2.  **동적 중단 시나리오 도입**: 장비 고장, 자원 부족, 교통 체증, 항공편 지연 등 실제 발생 가능한 중단 상황을 포함하여, 실시간 재계획(Replanning) 및 복구 능력을 평가한다.
-3.  **확장 가능한 복잡도**: 문제의 난이도와 별개로 인스턴스의 크기(예: 차량 대수, 작업 수)를 조정할 수 있는 확장성(Scalability) 축을 제공하여 계산 효율성과 확장성을 테스트한다.
-4.  **표준화된 평가 프레임워크**: 다양한 LLM(GPT-4o, Claude-3.7, DeepSeek-R1 등)과 다중 에이전트 프레임워크(LangGraph, AutoGen, CrewAI, Swarm 등)를 통합하여 객관적으로 비교할 수 있는 환경을 구축하였다.
+1. **계층적 난이도 설계**: 기초적인 단일 에이전트 정적 계획(Tier 1)부터 대규모 다중 도메인 통합 계획(Tier 5)까지 5단계의 난이도로 구성된 14개의 문제를 설계하여 시스템의 한계를 정밀하게 측정한다.
+2. **동적 중단 시나리오 도입**: 장비 고장, 자원 부족, 교통 체증, 항공편 지연 등 실제 발생 가능한 중단 상황을 포함하여, 실시간 재계획(Replanning) 및 복구 능력을 평가한다.
+3. **확장 가능한 복잡도**: 문제의 난이도와 별개로 인스턴스의 크기(예: 차량 대수, 작업 수)를 조정할 수 있는 확장성(Scalability) 축을 제공하여 계산 효율성과 확장성을 테스트한다.
+4. **표준화된 평가 프레임워크**: 다양한 LLM(GPT-4o, Claude-3.7, DeepSeek-R1 등)과 다중 에이전트 프레임워크(LangGraph, AutoGen, CrewAI, Swarm 등)를 통합하여 객관적으로 비교할 수 있는 환경을 구축하였다.
 
 ## 📎 Related Works
 
 기존의 계획 수립 벤치마크들은 다음과 같은 한계를 지닌다.
+
 - **고전적 계획 벤치마크**: IPC(International Planning Competition) 등 PDDL 기반의 벤치마크는 결정론적 환경과 완전한 정보 제공을 가정하며, 실제 세계의 동적 중단 상황을 반영하지 못한다.
 - **LLM 전용 벤치마크**: TimeBench, TaskBench, PlanBench 등은 시간적 추론이나 자동화 작업을 테스트하지만, 시나리오가 지나치게 단순하거나 합성 데이터에 의존하는 경향이 있어 실제 세계의 복잡한 제약 조건을 충분히 반영하지 않는다.
 
@@ -30,11 +31,14 @@ REALM-Bench는 이러한 한계를 극복하기 위해 **연쇄적 중단(Cascad
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 문제 구성
+
 REALM-Bench는 크게 두 가지 카테고리의 문제로 구성된다.
+
 - **P-series (General Planning)**: 물류, 스케줄링, 자원 할당, 위기 대응 등 실제 시나리오를 다루는 10개의 문제이다.
 - **J-series (JSSP)**: 조합 최적화의 전형적인 문제인 Job-Shop Scheduling Problem을 다루는 4개의 문제로, 수학적 최적성과 제약 조건 만족 여부를 엄격하게 평가한다.
 
 ### 난이도 계층 (Tiers)
+
 - **Tier 1 (Foundational)**: 단일 에이전트 정적 계획 (예: P1 캠퍼스 투어)
 - **Tier 2 (Moderate)**: 다중 에이전트 정적 조정 (예: P2 다중 그룹 투어)
 - **Tier 3 (Challenging)**: 복잡한 정적 의존성 (예: P6 추수감사절 저녁 계획)
@@ -42,6 +46,7 @@ REALM-Bench는 크게 두 가지 카테고리의 문제로 구성된다.
 - ** uma Tier 5 (Expert)**: 대규모 다중 도메인 통합 (예: P10 글로벌 공급망 관리)
 
 ### 수학적 정식화 (JSSP 예시)
+
 JSSP 문제의 핵심 목표는 모든 작업의 완료 시간 중 가장 늦은 시간인 **Makespan**을 최소화하는 것이다. 이를 위한 혼합 정수 계획법(MIP) 모델은 다음과 같다.
 
 - **목표 함수**:
@@ -49,13 +54,16 @@ $$ \text{Minimize } \max_{i,j} (S_{ij} + P_{ij}) $$
 여기서 $S_{ij}$는 작업 $i$의 작업 $j$의 시작 시간이고, $P_{ij}$는 처리 시간이다.
 
 - **제약 조건**:
+
 1. **우선순위 제약 (Precedence Constraint)**: 작업 내의 순서를 준수해야 한다.
 $$ S_{i,j+1} \ge S_{ij} + P_{ij} $$
 2. **기계 충돌 제약 (Machine Conflict Constraint)**: 동일한 기계에서 두 작업 $a$와 $b$가 동시에 수행될 수 없다.
 $$ (S_a \ge S_b + P_b) \text{ or } (S_b \ge S_a + P_a) $$
 
 ### 평가 지표
+
 시스템의 성능은 다음과 같은 지표로 측정된다.
+
 - **계획 품질**: 목표 달성률 및 솔루션의 완전성.
 - **최적성**: Makespan 최소화 및 자원 효율성.
 - **조정 효율성**: 에이전트 간 일관성 및 통신 오버헤드.
@@ -65,27 +73,31 @@ $$ (S_a \ge S_b + P_b) \text{ or } (S_b \ge S_a + P_a) $$
 ## 📊 Results
 
 ### 실험 설정
-- **비교 대상 (Baselines)**: 
-    - 휴리스틱: Random, LPT (Longest Processing Time), SPT (Shortest Processing Time), STPT, MPSR, LSO 등.
-    - 강화 학습 및 최적화: DRL-Liu, DRL-Chen, DRL-Zhang, Genetic Programming (GP), Gene Expression Programming (GEP).
-    - LLM 기반: SeEvo (GLM3, GPT-3.5), 그리고 저자들이 제안한 ALAS (Static/Dynamic).
+
+- **비교 대상 (Baselines)**:
+  - 휴리스틱: Random, LPT (Longest Processing Time), SPT (Shortest Processing Time), STPT, MPSR, LSO 등.
+  - 강화 학습 및 최적화: DRL-Liu, DRL-Chen, DRL-Zhang, Genetic Programming (GP), Gene Expression Programming (GEP).
+  - LLM 기반: SeEvo (GLM3, GPT-3.5), 그리고 저자들이 제안한 ALAS (Static/Dynamic).
 - **데이터셋**: DMU, TA, ABZ, SWV, YN 등 5가지 JSSP 데이터셋 (총 188개 인스턴스).
 
 ### 주요 결과
-- **JSSP 성능**: 
-    - DMU 데이터셋에서는 **ALAS-static**이 우수한 성능을 보였으나, TA 데이터셋에서는 동적 적응 능력을 갖춘 **ALAS-dynamic**이 더 뛰어난 성능을 기록하였다.
-    - ALAS-dynamic은 특히 중단 상황에서의 반응성 덕분에 TA 벤치마크에서 UB(Upper Bound)와의 격차를 매우 좁혔다 (Gap $\approx 0.86\%$).
+
+- **JSSP 성능**:
+  - DMU 데이터셋에서는 **ALAS-static**이 우수한 성능을 보였으나, TA 데이터셋에서는 동적 적응 능력을 갖춘 **ALAS-dynamic**이 더 뛰어난 성능을 기록하였다.
+  - ALAS-dynamic은 특히 중단 상황에서의 반응성 덕분에 TA 벤치마크에서 UB(Upper Bound)와의 격차를 매우 좁혔다 (Gap $\approx 0.86\%$).
 - **난이도별 성공률**:
-    - Tier 1 (단일 정적) 문제는 85-95%의 높은 성공률을 보였다.
-    - Tier 4 (다중 동적) 시나리오에서는 성공률이 45-70%로 급격히 하락하였으며, 이는 현재의 LLM 기반 시스템이 불확실성 하에서의 조정 능력에 큰 한계가 있음을 시사한다.
+  - Tier 1 (단일 정적) 문제는 85-95%의 높은 성공률을 보였다.
+  - Tier 4 (다중 동적) 시나리오에서는 성공률이 45-70%로 급격히 하락하였으며, 이는 현재의 LLM 기반 시스템이 불확실성 하에서의 조정 능력에 큰 한계가 있음을 시사한다.
 - **모델별 분석**: Pass@1 평가에서 대부분의 최신 LLM(GPT-4o, Claude 3.7 등)이 단순한 정적 계획은 수행하나, 기계 고장과 같은 동적 이벤트가 발생했을 때 제약 조건을 위반하는 오류를 빈번하게 범하는 것이 확인되었다. (Pass@2에서는 개선됨).
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 통찰
+
 본 연구는 LLM이 단순한 텍스트 생성을 넘어, 복잡한 제약 조건이 얽힌 최적화 문제를 해결하기 위해서는 **상태 관리(State Management)**와 **명시적인 제약 조건 추적**이 필수적임을 입증하였다. 특히 ALAS-dynamic과 같이 다중 에이전트가 협력하여 실시간으로 계획을 수정하는 구조가 단일 에이전트의 One-shot 계획보다 훨씬 강력한 회복 탄력성을 제공한다는 점을 보여주었다.
 
 ### 한계 및 비판적 해석
+
 1. **Statelessness의 문제**: LLM은 기본적으로 상태를 유지하지 않기 때문에, 동적 중단 상황에서 차량의 현재 위치나 기계의 가동 상태를 실시간으로 추적하는 데 어려움을 겪는다. 이는 단순한 프롬프팅보다는 외부 메모리나 상태 저장소(State Store)를 갖춘 아키텍처가 필요함을 의미한다.
 2. **최적성 보장의 어려움**: LLM 기반 에이전트들이 '실행 가능한(feasible)' 계획은 생성하지만, 수학적 최적해(Optimal Solution)에 도달하는 경우는 드물다. 이는 LLM이 조합 최적화 문제를 해결하는 내재적 능력이 부족하며, 여전히 휴리스틱이나 외부 솔버에 의존해야 함을 시사한다.
 3. **계산 비용**: DeepSeek-R1과 같은 추론 모델은 높은 최적성을 보였으나, 추론 시간이 매우 길어 실시간 재계획이 필요한 실제 응용 분야에 적용하기에는 지연 시간(Latency) 문제가 발생할 수 있다.

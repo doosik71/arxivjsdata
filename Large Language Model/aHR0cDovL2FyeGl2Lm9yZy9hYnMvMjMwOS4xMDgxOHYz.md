@@ -7,6 +7,7 @@ Zhiqiang Shen, Tianhua Tao, Liqun Ma, Willie Neiswanger, Zhengzhong Liu, Hongyi 
 현대 거대 언어 모델(LLM)의 성공은 단순히 데이터의 양이 아니라 데이터의 '다양성'에 달려 있다. 하지만 여러 출처(Web, Wikipedia, GitHub, Books 등)에서 수집된 데이터를 단순히 합쳐서 사용할 경우, 서로 다른 소스 간에 중복된 데이터가 존재하게 되어 학습 효율이 떨어지고 모델이 특정 패턴에 과적합(Overfitting)될 위험이 있다.
 
 본 논문은 특히 다음과 같은 문제들을 해결하고자 한다:
+
 1. **중복 제거 전략의 영향 분석**: 개별 데이터셋 내부에서만 중복을 제거하는 Local Deduplication과 전체 통합 데이터셋에서 중복을 제거하는 Global Deduplication이 모델 성능에 미치는 영향을 분석한다.
 2. **데이터 조합 및 비율의 최적화**: 서로 다른 도메인의 데이터 조합과 그 구성 비율이 모델의 일반화 능력과 특정 작업의 전문성 사이의 트레이드오프(Trade-off)에 어떤 영향을 주는지 탐구한다.
 
@@ -33,11 +34,14 @@ Zhiqiang Shen, Tianhua Tao, Liqun Ma, Willie Neiswanger, Zhengzhong Liu, Hongyi 
 ## 🛠️ Methodology
 
 ### 1. 데이터 전처리 파이프라인
+
 SlimPajama-DC는 다음과 같은 엄격한 전처리 과정을 거친다.
+
 - **Low-length Document Filtering**: 구두점 및 공백 등을 제거한 후 200자 미만의 문서를 필터링하여 메타데이터만 포함된 저품질 데이터를 제거한다.
 - **Global Deduplication**: MinHashLSH 알고리즘을 사용하여 전체 데이터셋에서 중복을 제거한다. Jaccard 유사도 임계값을 $0.8$로 설정하고, 소문자로 변환된 13-gram을 사용하여 문서 시그니처를 생성한다.
 
 ### 2. 모델 아키텍처 및 학습 설정
+
 - **Cerebras-GPT Architecture**: GPT-3와 유사한 자기회귀(Autoregressive) 트랜스포머 디코더 구조를 사용하지만, 모든 블록에 Dense Attention을 적용한다.
 - **ALiBi (Attention with Linear Biases)**: 위치 임베딩을 더하는 대신, 쿼리-키 어텐션 점수에 거리에 따른 편향(Bias)을 직접 적용하여 입력 길이 외삽(Extrapolation) 능력을 높인다.
 - **SwiGLU 활성화 함수**: 다음과 같은 수식의 SwiGLU를 사용하여 비선형성을 구현한다.
@@ -45,18 +49,23 @@ SlimPajama-DC는 다음과 같은 엄격한 전처리 과정을 거친다.
 - **학습 세부 사항**: AdamW 옵티마이저를 사용하며, $\beta_1=0.9, \beta_2=0.95$, Weight Decay $0.1$을 적용한다. 모든 모델은 bf16 혼합 정밀도로 학습되었다.
 
 ### 3. 데이터 조합 설정 (Configurations)
-총 7가지 조합(DC-1 $\sim$ DC-7)을 통해 데이터 다양성과 비율의 영향을 분석한다. 
+
+총 7가지 조합(DC-1 $\sim$ DC-7)을 통해 데이터 다양성과 비율의 영향을 분석한다.
+
 - **DC-1**: SlimPajama CommonCrawl 전용.
 - **DC-6**: 가장 다양한 도메인(CC, C4, GitHub, Books, ArXiv, Wikipedia, StackExchange)을 모두 포함한 조합.
 - **DC-7**: 비교군으로서 RefinedWeb 데이터셋을 사용.
 
 ### 4. RRGS (Risk of Random Guessing Score)
+
 MMLU 벤치마크에서 1.3B 모델의 점수가 단순 추측인지 확인하기 위해 다음 수식을 제안한다.
 $$RRGS = 1 - \frac{1}{N} \sum_{i=1}^N (|s_i - 0.25|)$$
 여기서 $s_i$는 MMLU의 각 서브 아이템 점수이며, $0.25$는 4지선다형 문제의 무작위 추측 기댓값이다. 이 값이 낮을수록 모델의 예측이 무작위 추측에서 벗어나 실제 능력을 반영하고 있음을 의미한다.
 
 ### 5. PTWD (Progressive Training on Weight Decay)
+
 7B 모델의 대규모 배치 학습 시 과적합을 방지하기 위해 가중치 감쇠를 3단계로 적용한다.
+
 1. **Phase 1**: $WD = 0$으로 설정하여 모델이 빠르게 수렴하게 한다.
 2. **Phase 2**: $WD = 0.5$로 높여 과적합을 강하게 억제한다.
 3. **Phase 3**: $WD = 0.1$로 조정하여 표준적인 LLM 학습 상태로 마무리한다.
@@ -64,15 +73,18 @@ $$RRGS = 1 - \frac{1}{N} \sum_{i=1}^N (|s_i - 0.25|)$$
 ## 📊 Results
 
 ### 1. 벤치마크 평가 결과
+
 - **종합 성능**: DC-6(최대 다양성 조합)가 SlimPajama 조합 중 가장 높은 평균 정확도를 기록하였다.
 - **비교 분석**: DC-1 $\sim$ DC-6의 결과는 동일한 토큰 수(330B)로 학습된 RedPajama-1.3B보다 전반적으로 우수한 성능을 보였다. 이는 Global Deduplication의 효과와 데이터 다양성의 중요성을 입증한다.
 - **특수 도메인 성능**: DC-1(CommonCrawl 전용)은 ARC 및 MMLU에서 높은 점수를 보였으나, TruthfulQA에서는 최하위를 기록하여 다양성 부족으로 인한 한계를 보였다.
 
 ### 2. 학습 손실(Training Loss) 분석
+
 - **손실과 성능의 비상관성**: 가장 높은 성능을 보인 DC-7의 학습 손실이 오히려 가장 높게 나타났다. 이는 낮은 Training Loss가 반드시 높은 모델 성능으로 이어지지 않음을 시사한다.
 - **코드 데이터의 영향**: 코드 데이터 비중이 높은 DC-3가 가장 낮은 학습 손실을 기록하였다. 이는 코드 데이터가 언어 데이터보다 예측 가능성이 높아 손실 값을 낮추는 경향이 있음을 보여준다.
 
 ### 3. LBS-7B 모델 결과
+
 - **학습 효율**: LBS-7B 모델은 LLaMA나 MPT-7B보다 훨씬 높은 처리량(Throughput)과 MFU(Model FLOPs Utilization)를 달성하였으며, 총 GPU 사용 시간을 크게 단축하였다.
 - **Instruction Tuning**: Pre-trained LBS-7B 모델에 ShareGPT 데이터로 Instruction Tuning을 적용한 결과, MMLU와 TruthfulQA 성능이 대폭 향상되었다.
 

@@ -13,6 +13,7 @@ Eleonora Grassucci, Edoardo Cicero and Danilo Comminiello (2021)
 본 논문의 핵심 아이디어는 쿼터니언 대수(quaternion algebra)의 특성, 특히 Hamilton product를 활용하여 다채널 데이터를 하나의 엔티티(single entity)로 처리하는 Quaternion Generative Adversarial Networks (QGANs) 제품군을 제안하는 것이다.
 
 주요 기여 사항은 다음과 같다.
+
 1. **QGAN 프레임워크 제안**: 쿼터니언 도메인에서 완전히 정의된 GAN을 통해 생성 능력을 향상시키면서 전체 파라미터 수를 최대 75%까지 줄였다.
 2. **Quaternion Batch Normalization (QBN) 정의**: 이론적으로 올바른 QBN 접근 방식을 정의하고, 기존의 방식들이 이에 대한 근사치임을 규명하였다.
 3. **Quaternion Spectral Normalization (QSN) 제안**: 쿼터니언 도메인에서의 Spectral Normalization을 정의하고, 이를 통해 학습 안정성을 확보하였다.
@@ -26,11 +27,13 @@ Eleonora Grassucci, Edoardo Cicero and Danilo Comminiello (2021)
 ## 🛠️ Methodology
 
 ### 1. 쿼터니언 대수 기초
+
 쿼터니언 $q$는 하나의 스칼라 성분과 세 개의 허수 성분으로 정의된다.
 $$q = q_0 + q_1 \hat{i} + q_2 \hat{j} + q_3 \hat{k}$$
 여기서 $\hat{i}^2 = \hat{j}^2 = \hat{k}^2 = -1$이며, Hamilton product는 비가환(non-commutative) 특성을 가진다.
 
 ### 2. Quaternion Core Blocks
+
 - **Quaternion Fully Connected & Convolutional Layers**:
   실수 기반 레이어의 가중치 행렬 $W_r$ 대신 쿼터니언 가중치 $W = W_0 + W_1 \hat{i} + W_2 \hat{j} + W_3 \hat{k}$를 사용한다. 연산은 Hamilton product를 통해 수행된다.
   $$W \ast x = (W_0 \ast x_0 - W_1 \ast x_1 - W_2 \ast x_2 - W_3 \ast x_3) + \dots (\text{imaginary parts})$$
@@ -41,28 +44,34 @@ $$q = q_0 + q_1 \hat{i} + q_2 \hat{j} + q_3 \hat{k}$$
   $$y = \text{ReLU}(z_0) + \text{ReLU}(z_1)\hat{i} + \text{ReLU}(z_2)\hat{j} + \text{ReLU}(z_3)\hat{k}$$
 
 ### 3. Quaternion Batch Normalization (QBN)
+
 본 논문은 쿼터니언 신호가 자신의 involution과 상관관계가 없다는 $\text{Q-properness}$ 가정을 도입하여 계산 복잡도를 줄인 QBN을 제안한다.
 $$\text{QBN}(x) = \gamma \frac{x - \mu_q}{\sqrt{\text{var}(x)}} + \beta$$
 여기서 $\mu_q$는 쿼터니언 평균이며, $\gamma$는 스칼라, $\beta$는 쿼터니언 파라미터이다.
 
 ### 4. Quaternion Spectral Normalization (QSN)
+
 Discriminator의 Lipschitz 연속성을 보장하기 위해 가중치의 Spectral norm을 제한한다. 본 논문은 두 가지 방식을 비교 분석하였다.
+
 - **QSN Split**: 각 하위 행렬 $W_0 \dots W_3$를 독립적으로 정규화한다.
 - **QSN Full**: 전체 쿼터니언 가중치 행렬 $W$의 Spectral norm을 계산하여 모든 성분을 동시에 정규화한다. 실험 결과, QSN Full이 더 안정적이고 높은 성능을 보였다.
 
 ### 5. QGAN 아키텍처
+
 - **Vanilla QGAN**: DCGAN 구조를 쿼터니언 도메인으로 재정의한 모델이다.
 - **QSNGAN (Advanced QGAN)**: SNGAN을 기반으로 하며, Quaternion Residual Blocks (QResBlock)를 사용한다. Generator에는 QBN을, Discriminator에는 QSN을 적용하며, Hinge loss를 통해 학습한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: CelebA-HQ ($128 \times 128$), 102 Oxford Flowers ($128 \times 128$), CIFAR10, STL10.
 - **평가 지표**: Fréchet Inception Distance (FID, 낮을수록 좋음), Inception Score (IS, 높을수록 좋음).
 - **비교 대상**: 실수 값 기반의 SNGAN.
 
 ### 주요 결과
-1. **정량적 성능**: 
+
+1. **정량적 성능**:
    - CelebA-HQ 데이터셋에서 QSNGAN은 SNGAN보다 낮은 FID와 높은 IS를 기록하였다.
    - 특히 Discriminator의 반복 횟수(Critic iterations) 설정에 대해 QSNGAN이 SNGAN보다 훨씬 더 강건(robust)한 모습을 보였다.
 2. **파라미터 효율성**:

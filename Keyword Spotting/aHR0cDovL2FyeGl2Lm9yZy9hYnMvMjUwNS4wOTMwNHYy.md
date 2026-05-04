@@ -13,6 +13,7 @@ Luciano Sebastian Martinez-Rau, Quynh Nguyen Phuong Vu, Yuxuan Zhang, Bengt Oelm
 본 논문의 핵심 아이디어는 **전이 학습(Transfer Learning, TL)**을 활용하여 모델의 전체 파라미터가 아닌 **마지막 완전 연결 계층(Last Fully-Connected Layer)만을 미세 조정(Fine-tuning)**하는 것이다.
 
 중심적인 설계 직관은 다음과 같다.
+
 - **계산 효율성 극대화**: 컨볼루션 계층(Convolutional layers)을 동결(Frozen)시키고 출력층만 학습시킴으로써 메모리 사용량과 연산량을 획기적으로 줄인다.
 - **극소량의 데이터 활용**: 단 하나의 샘플만으로 학습하는 **1-shot learning**과 단 **1회(1 epoch)**의 학습만으로도 소음 환경에 효과적으로 적응할 수 있음을 입증하여, 온디바이스 배포 가능성을 높였다.
 
@@ -25,19 +26,25 @@ Luciano Sebastian Martinez-Rau, Quynh Nguyen Phuong Vu, Yuxuan Zhang, Bengt Oelm
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인 및 시스템 구조
+
 시스템은 크게 **전처리 $\rightarrow$ 특징 추출 $\rightarrow$ 분류 $\rightarrow$ 도메인 적응** 단계로 구성된다.
+
 - **전처리 및 특징 추출**: 16 kHz로 샘플링된 오디오 신호를 25 ms 윈도우, 10 ms 홉 사이즈, 64개의 Mel-필터를 사용하여 **log-Mel spectrogram**으로 변환한다.
 - **모델 아키텍처**: 그림 2에 제시된 구조를 따르며, 5개의 컨볼루션 계층(Convolutional layers)과 배치 정규화(Batch normalization) 계층이 배치되어 있다. 이후 채널 평균 풀링(Channel average pooling)을 통해 전체 이미지의 평균값을 구하고, 이를 최종 완전 연결 계층(Fully-connected layer)에 전달하여 12개의 클래스(키워드 10개, Unknown, Silence) 중 하나로 분류한다.
 
 ### 2. 훈련 및 학습 절차
+
 본 연구에서는 두 가지 사전 학습 모델을 생성하여 비교 분석한다.
+
 - **baseline-model**: 소음이 없는 깨끗한(Clean) 데이터만으로 학습된 모델이다.
 - **noise-aware-model**: 깨끗한 데이터와 다양한 소음이 섞인 데이터를 함께 사용하여 학습된 모델이다.
 
 학습 시에는 Adam 옵티마이저와 교차 엔트로피 손실 함수(Cross-entropy loss)를 사용하며, 초기 학습률은 $10^{-4}$로 설정하였다.
 
 ### 3. 소음 적응(Noise Adaptation) 방법
+
 특정 소음 환경에 적응하기 위해 다음과 같은 전이 학습 절차를 수행한다.
+
 - **동결(Freezing)**: 모델의 모든 컨볼루션 계층의 가중치를 고정하여 업데이트하지 않는다.
 - **미세 조정(Fine-tuning)**: 오직 마지막 완전 연결 계층(FC layer)만을 학습시킨다.
 - **학습 조건**: 1-shot learning(클래스당 1개 샘플) 및 1 epoch 학습을 기본으로 하며, 확률적 경사 하강법(SGD)과 교차 엔트로피 손실 함수를 사용한다.
@@ -46,11 +53,13 @@ Luciano Sebastian Martinez-Rau, Quynh Nguyen Phuong Vu, Yuxuan Zhang, Bengt Oelm
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: Google Speech Command (GSC) v2 데이터셋을 사용하였다.
 - **소음원**: 색상 소음(White, Pink), 실내 소음(Babble, Office, Kitchen, Living room), 현장 소음(Car horn, Dog bark, Street music) 등 총 3가지 범주를 활용하였다.
 - **평가 지표**: 분류 정확도(Accuracy)를 측정하였으며, SNR 범위는 $-3\text{ dB}$에서 $24\text{ dB}$까지 $3\text{ dB}$ 간격으로 설정하였다.
 
 ### 2. 주요 결과
+
 - **사전 학습 모델 비교**: `noise-aware-model`(100% 소음 학습)이 일반적인 실내 소음 환경에서 `baseline-model`보다 전반적으로 높은 정확도를 보였다.
 - **적응 후 성능 향상**: 1-shot, 1 epoch의 매우 가벼운 적응만으로도 두 모델 모두 성능이 크게 향상되었다. 특히 $\text{SNR} \le 18\text{ dB}$인 저음질 환경에서 정확도가 $4.9\%$에서 최대 $46.0\%$까지 증가하는 괄목할만한 성과를 거두었다.
 - **적응의 효율성**: 1-shot과 5-shot 학습을 비교했을 때, 1 epoch 학습에서는 두 방식 간의 정확도 차이가 거의 없었다. 이는 극소량의 데이터만으로도 충분한 적응이 가능함을 의미한다. 다만, $\text{SNR} < 3\text{ dB}$와 같은 매우 심한 소음 환경에서는 학습 epoch 수를 5회까지 늘렸을 때 성능이 추가로 향상되는 경향을 보였다.

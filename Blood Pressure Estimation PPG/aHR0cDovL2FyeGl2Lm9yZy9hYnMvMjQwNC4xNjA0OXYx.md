@@ -10,7 +10,7 @@ Felipe M. Dias, Diego A.C. Cardenas, Marcelo A.F. Toledo, Filipe A.C. Oliveira, 
 
 ## ✨ Key Contributions
 
-본 연구의 핵심 아이디어는 **정규화된 IABP(N-IABP) 신호를 벤치마크로 활용**하여 PPG 기반 혈압 추정의 이론적 성능 한계를 설정하는 것이다. IABP 신호는 신체 내부의 압력 센서로부터 직접 측정되므로 PPG보다 더 정확한 정보를 제공한다. 여기서 IABP 신호를 Max-Min 정규화하여 절대적인 수치(Systolic/Diastolic 값)를 제거하고 형태학적(Morphological) 정보만 남긴 N-IABP를 구성한다. 
+본 연구의 핵심 아이디어는 **정규화된 IABP(N-IABP) 신호를 벤치마크로 활용**하여 PPG 기반 혈압 추정의 이론적 성능 한계를 설정하는 것이다. IABP 신호는 신체 내부의 압력 센서로부터 직접 측정되므로 PPG보다 더 정확한 정보를 제공한다. 여기서 IABP 신호를 Max-Min 정규화하여 절대적인 수치(Systolic/Diastolic 값)를 제거하고 형태학적(Morphological) 정보만 남긴 N-IABP를 구성한다.
 
 만약 직접적인 압력 정보가 제거된 N-IABP 신호만으로도 혈압 추정이 어렵다면, 간접적인 광학 측정치인 PPG 신호를 이용한 혈압 추정은 더욱 어려울 것이라는 가설을 세운다. 이를 통해 PPG 기반 혈압 추정 모델이 도달할 수 있는 현실적인 성능 지표를 제시하고, 필터링 조건에 따른 성능 변화를 분석하여 PPG 신호의 정보 손실 가능성을 탐색한다.
 
@@ -23,9 +23,11 @@ Felipe M. Dias, Diego A.C. Cardenas, Marcelo A.F. Toledo, Filipe A.C. Oliveira, 
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 본 연구는 보정 기반의 딥러닝 파이프라인을 제안한다. 시스템은 (1) 보정 시점의 신호(N-PPG 또는 N-IABP)와 해당 시점의 혈압 값(SBP, DBP), (2) 추론 대상이 되는 시점의 신호(N-PPG 또는 N-IABP)를 입력으로 받아 대상 신호의 혈압을 예측한다.
 
 ### 데이터 전처리 및 정규화
+
 - **데이터셋**: VitalDB 데이터셋을 사용하여 PPG와 IABP가 모두 기록된 3,338명의 환자 데이터를 추출하였다.
 - **윈도우 및 정렬**: 신호를 24초(2400 samples, 100Hz) 단위로 분할하고, 상호 상관(Cross-correlation)을 통해 PPG와 IABP 간의 시간 지연(Lag)을 보정하여 정렬하였다.
 - **신호 품질 분석**: 4차 Chebyshev Type II 밴드패스 필터를 적용한 후, 평균 비트(Mean beat)와 개별 비트 간의 피어슨 상관계수가 0.9 이상인 윈도우만 유효한 데이터로 간주하였다.
@@ -33,9 +35,10 @@ Felipe M. Dias, Diego A.C. Cardenas, Marcelo A.F. Toledo, Filipe A.C. Oliveira, 
 - **페어 몽타주(Pair Montage)**: 보정 신호와 추론 신호 쌍을 구성할 때, 시간 간격을 3분에서 2시간 사이로 설정하고 SBP 차이가 60 mmHg 이내인 경우만 선택하여 과적합을 방지하였다.
 
 ### 모델 아키텍처: Siamese ResNet
+
 모델은 두 개의 동일한 ResNet 기반 네트워크가 공유 가중치를 사용하는 Siamese 구조로 설계되었다.
 
-1. **Base Network**: 
+1. **Base Network**:
    - 1D Convolution $\rightarrow$ Batch Normalization $\rightarrow$ ReLU 순으로 처리한다.
    - 이후 4개의 ResNet-like 블록이 이어지며, 각 블록은 필터 수 128, 196, 256, 320개를 사용한다.
    - 각 블록 내부에서는 Stride $S=4$인 컨볼루션 경로와 Max Pooling 및 $1 \times 1$ 컨볼루션을 통한 지름길(Shortcut) 경로가 합쳐지며, ReLU와 Dropout(20%)이 적용된다.
@@ -46,17 +49,20 @@ Felipe M. Dias, Diego A.C. Cardenas, Marcelo A.F. Toledo, Filipe A.C. Oliveira, 
    - 결합된 벡터는 세 개의 Fully-connected 레이어(128 $\rightarrow$ 64 $\rightarrow$ 2)를 통과하여 최종적으로 $\text{SBP}$와 $\text{DBP}$를 출력한다.
 
 ### 학습 및 비교 대상
+
 - **손실 함수**: 회귀 분석을 위한 선형 활성화 함수를 출력층에 사용하였다.
 - **베이스라인 모델**: 추론 혈압을 단순히 보정 혈압과 동일하게 예측하는 모델($P_{\text{inference}} = P_{\text{calibration}}$)을 설정하여, 모델이 단순 복제가 아닌 실제 상관관계를 학습하는지 확인하였다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **지표**: AAMI 표준(평균 차이 $\pm 5\text{ mmHg}$, 표준편차 $\le 8\text{ mmHg}$), BHS 표준(오차 범위 $\le 5, 10, 15\text{ mmHg}$에 따른 A~D 등급), MAE, 피어슨 상관계수($\rho$)를 사용하였다.
 - **필터 조건**: 필터 없음(Raw), $0.5\text{ Hz} \sim 10\text{ Hz}$, $0.5\text{ Hz} \sim 3.5\text{ Hz}$ 세 가지 조건을 비교하였다.
 
 ### 주요 결과
-1. **N-IABP 성능**: 
+
+1. **N-IABP 성능**:
    - Raw 신호의 경우 SBP와 DBP 모두 AAMI 표준을 만족하였으며, BHS 평가에서 **Grade A**를 획득하였다.
    - 필터 범위가 좁아질수록($0.5 \sim 3.5\text{ Hz}$) 성능이 크게 하락하여 SBP는 Grade D까지 떨어졌다.
 

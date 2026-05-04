@@ -18,21 +18,24 @@ Arnout Devos and Matthias Grossglauser (2020)
 
 본 연구는 다음과 같은 기존 연구들과의 관계 및 차별점을 가진다.
 
-1.  **Metric-learning 기반 방법론**: MatchingNet은 순수하게 방향성 정보만을 활용하며, ProtoNet과 RelationNet은 클래스의 집계된 표현(aggregated representations)을 사용하여 성능을 개선하였다. 본 제안 방법은 이 두 가지 장점(방향성 정보 + 집계된 표현)을 모두 수용한다.
-2.  **Linear Regression Classification (LRC)**: 얼굴 인식 등을 위해 각 클래스를 벡터 부분공간으로 표현하는 방식이다. 하지만 LRC는 선형 임베딩에 의존하는 반면, 본 논문은 신경망을 이용한 비선형 임베딩과 에피소드 학습(episodic training)을 결합하여 Few-shot 시나리오에 적용하였다.
-3.  **Affine Subspaces 연구**: Simon et al. (2018)은 아핀 부분공간(affine subspaces)을 탐구하였으나, 이는 1-shot 학습 환경에서는 구축이 불가능하다는 한계가 있다. 반면 본 논문이 제안하는 벡터 부분공간 방식은 1-shot에서도 동작 가능하다.
-4.  **R2D2**: 정규화된 선형 회귀를 분류기로 사용하지만, 본 논문의 RegressionNet은 LRC의 철학을 계승하여 본질적으로 분류 문제에 최적화된 구조를 가진다.
+1. **Metric-learning 기반 방법론**: MatchingNet은 순수하게 방향성 정보만을 활용하며, ProtoNet과 RelationNet은 클래스의 집계된 표현(aggregated representations)을 사용하여 성능을 개선하였다. 본 제안 방법은 이 두 가지 장점(방향성 정보 + 집계된 표현)을 모두 수용한다.
+2. **Linear Regression Classification (LRC)**: 얼굴 인식 등을 위해 각 클래스를 벡터 부분공간으로 표현하는 방식이다. 하지만 LRC는 선형 임베딩에 의존하는 반면, 본 논문은 신경망을 이용한 비선형 임베딩과 에피소드 학습(episodic training)을 결합하여 Few-shot 시나리오에 적용하였다.
+3. **Affine Subspaces 연구**: Simon et al. (2018)은 아핀 부분공간(affine subspaces)을 탐구하였으나, 이는 1-shot 학습 환경에서는 구축이 불가능하다는 한계가 있다. 반면 본 논문이 제안하는 벡터 부분공간 방식은 1-shot에서도 동작 가능하다.
+4. **R2D2**: 정규화된 선형 회귀를 분류기로 사용하지만, 본 논문의 RegressionNet은 LRC의 철학을 계승하여 본질적으로 분류 문제에 최적화된 구조를 가진다.
 
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인
+
 전체 시스템은 입력 데이터를 고차원 임베딩 공간으로 보내는 함수 $f_\phi$와, 임베딩된 포인트와 클래스 부분공간 사이의 거리를 계산하는 회귀 기반의 거리 함수 $\tilde{d}$로 구성된다.
 
 ### 2. 클래스 부분공간 구축
+
 $N$-way $K$-shot 문제에서, 각 클래스 $n$에 대해 $K$개의 서포트 예시가 주어지면 이를 임베딩 함수 $f_\phi: \mathbb{R}^D \to \mathbb{R}^M$를 통해 매핑한다. 클래스 $n$의 부분공간 행렬 $S_n \in \mathbb{R}^{M \times K}$는 다음과 같이 정의된다.
 $$S_n = [f_\phi(x_{n1}) \dots f_\phi(x_{nK})]$$
 
 ### 3. 회귀 기반 거리 측정
+
 쿼리 포인트 $e_i \in \mathbb{R}^M$와 클래스 부분공간 $S_n$ 사이의 거리 $\tilde{d}(e_i, S_n)$는 $S_n$의 열벡터들의 선형 결합으로 $e_i$를 가장 잘 근사하는 지점을 찾는 최소자승법(least-squares) 문제로 정의된다.
 $$\tilde{d}(e_i, S_n) = \min_a \|e_i - S_n a\|^2$$
 
@@ -42,11 +45,13 @@ $$\tilde{d}(e_i, S_n) = \|e_i - P_n e_i\|^2$$
 $$P_n = S_n (S_n^T S_n + \lambda_1 I)^{-1} S_n^T$$
 
 ### 4. 분류 및 학습 목표
+
 쿼리 포인트 $x$가 클래스 $n$에 속할 확률은 각 클래스 부분공간으로의 거리 $\tilde{d}$에 대해 Softmax를 적용하여 결정한다.
 $$p_\phi(y=n|x) = \frac{\exp(-\tilde{d}(f_\phi(x), S_n))}{\sum_{n'} \exp(-\tilde{d}(f_\phi(x), S_{n'}))}$$
 학습은 정답 클래스에 대한 Negative Log-Probability를 최소화하는 방향으로 진행된다.
 
 ### 5. 부분공간 직교화 (Subspace Orthogonalization)
+
 학습 시 각 클래스의 부분공간들이 서로 최대한 다른 방향을 가지도록 유도하기 위해 다음과 같은 직교화 항을 손실 함수에 추가한다.
 $$L_T = L_{base} + \lambda_2 \sum_{i \neq j} \frac{\|S_i^T S_j\|_F^2}{\|S_i\|_F^2 \|S_j\|_F^2}$$
 여기서 $\|\cdot\|_F$는 Frobenius norm이며, $\lambda_2$는 하이퍼파라미터이다.
@@ -54,12 +59,14 @@ $$L_T = L_{base} + \lambda_2 \sum_{i \neq j} \frac{\|S_i^T S_j\|_F^2}{\|S_i\|_F^
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: mini-ImageNet, CUB-200-2011
 - **백본 네트워크**: Conv-4, ResNet-10, ResNet-34
 - **비교 대상**: MatchingNet, ProtoNet, RelationNet, MAML, R2D2
 - **평가 지표**: 5-way 1-shot 및 5-shot 정확도(%)
 
 ### 2. 주요 결과
+
 - **Shot 수에 따른 성능**: 모든 방법론에서 Shot 수가 1에서 5로 증가할 때 성능이 향상되었으나, 특히 RegressionNet은 5-shot 설정에서 타 모델들을 유의미하게 앞섰다. 이는 풍부한 클래스 표현(부분공간)을 활용하는 능력이 더 많은 데이터가 주어질 때 극대화됨을 시사한다.
 - **백본 깊이의 영향**: 백본이 깊어질수록(Conv-4 $\to$ ResNet-10 $\to$ ResNet-34) RegressionNet과 ProtoNet의 성능 향상 폭이 컸으며, ResNet-10 이상의 깊이에서는 RegressionNet이 가장 우수한 성능을 보였다.
 - **직교화 효과**: Ablation study 결과, 부분공간 직교화 항($\lambda_2 > 0$)을 추가했을 때 정확도가 최대 2%까지 향상됨을 확인하였다.

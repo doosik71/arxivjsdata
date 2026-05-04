@@ -19,17 +19,22 @@ Yichi Zhang and Jicong Zhang (2021)
 ## 📎 Related Works
 
 ### 준지도 의료 영상 분할 (Semi-Supervised Medical Image Segmentation)
+
 기존 연구들은 주로 다음과 같은 두 가지 접근 방식을 사용했다.
+
 - **의사 라벨링(Pseudo-labeling)**: 모델이 예측한 결과를 라벨로 사용하여 다시 학습하는 방식이다. 하지만 모델이 생성한 의사 라벨에 노이즈가 섞여 있을 경우, 학습 과정에서 부정적인 영향을 미칠 수 있다는 한계가 있다.
 - **일관성 규제(Consistency Regularization)**: 입력 데이터에 작은 섭동(Perturbation)을 가했을 때 모델의 출력이 일정하게 유지되도록 하는 방식이다. 최근에는 Mean Teacher 구조나 적대적 학습(Adversarial learning)을 통해 분포의 유사성을 강제하는 방법들이 연구되었다.
 
 ### Signed Distance Maps (SDM)
+
 일반적인 이진 마스크(Binary mask)와 달리, SDM은 각 픽셀에서 가장 가까운 경계선까지의 거리를 값으로 가지는 회색조 이미지이다. 이는 정답지(Ground Truth)에 대한 암시적 표현을 제공하여 모델이 경계선을 더 정밀하게 학습하도록 돕는다. 기존 연구들은 주로 보조 헤드(Auxiliary head)를 추가하는 방식으로 SDM을 활용했다.
 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 프레임워크는 동일한 백본(Backbone) 구조를 공유하는 두 개의 개별 네트워크 $M_s$와 $M_d$로 구성된다.
+
 - **$M_s$ (Segmentation Network)**: 입력 영상으로부터 분할 확률 맵(Segmentation probabilistic maps) $\hat{Y}_{seg}$를 생성한다.
 - **$M_d$ (Regression Network)**: 입력 영상으로부터 Signed Distance Map(SDM) $\hat{Y}_{dis}$를 회귀(Regression)한다.
 
@@ -38,11 +43,11 @@ Yichi Zhang and Jicong Zhang (2021)
 **1. Signed Distance Map (SDM) 정의**
 SDM $\text{G}_{\text{SDF}}$는 픽셀 $x$와 경계 $\partial\text{G}$ 사이의 유클리드 거리를 기반으로 정의된다.
 $$
-\text{G}_{\text{SDF}} = 
-\begin{cases} 
+\text{G}_{\text{SDF}} =
+\begin{cases}
 -\inf_{y\in\partial\text{G}} \|x-y\|_2, & x \in \text{G}_{\text{in}} \\
 0, & x \in \partial\text{G} \\
-+\inf_{y\in\partial\text{G}} \|x-y\|_2, & x \in \text{G}_{\text{out}} 
++\inf_{y\in\partial\text{G}} \|x-y\|_2, & x \in \text{G}_{\text{out}}
 \end{cases}
 $$
 여기서 객체 내부($\text{G}_{\text{in}}$)는 음수 값, 외부($\text{G}_{\text{out}}$)는 양수 값을 가지며, 절대값은 경계까지의 거리를 나타낸다.
@@ -55,9 +60,10 @@ $$
 여기서 $z$는 SDM의 값이며, $k$는 변환 계수이다.
 
 **3. 손실 함수 및 학습 절차**
+
 - **Supervised Loss (라벨 데이터 대상)**:
-    - $M_s$는 Dice Loss와 Cross-Entropy Loss의 조합인 $L_{seg}$를 통해 학습한다.
-    - $M_d$는 변환된 마스크와 정답 마스크 사이의 Dice Loss인 $L_{mask}$를 통해 학습한다. (실험적으로 $L_2$ 거리 손실보다 성능이 우수함이 확인되었다.)
+  - $M_s$는 Dice Loss와 Cross-Entropy Loss의 조합인 $L_{seg}$를 통해 학습한다.
+  - $M_d$는 변환된 마스크와 정답 마스크 사이의 Dice Loss인 $L_{mask}$를 통해 학습한다. (실험적으로 $L_2$ 거리 손실보다 성능이 우수함이 확인되었다.)
 
 - **Unsupervised Cross-Task Consistency Loss (비라벨 데이터 대상)**:
     unlabeled data에 대해 $M_s$의 예측값과 $M_d$의 예측값(변환 후)이 일치하도록 강제한다.
@@ -78,23 +84,27 @@ $$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Atrial Segmentation Challenge의 좌심방(Left Atrium, LA) 데이터셋 (100개의 3D GE-MRI 스캔).
 - **데이터 분할**: 학습 데이터 80개(라벨 16개, 비라벨 64개), 테스트 데이터 20개.
 - **백본**: V-Net.
 - **평가 지표**: Dice Similarity Coefficient (Dice), Jaccard Index, Average Surface Distance (ASD), 95% Hausdorff Distance (95HD).
 
 ### 주요 결과
+
 - **Ablation Study**: $M_s$ 단독 또는 $M_d$ 단독 학습보다 DTML 프레임워크를 적용했을 때 모든 지표에서 유의미한 성능 향상이 나타났다 (p < 0.05).
 - **정량적 비교**: 최신 준지도 학습 방법들(ASD-Net, TCSE, UA-MT, DTC, SASS, DoubleUnc)과 비교했을 때, 제안 방법이 가장 높은 성능을 보였다.
-    - **Dice 결과**: 제안 방법(90.12%) $\gg$ DoubleUnc(89.65%) $>$ SASS(89.54%).
-    - 특히, 모든 데이터를 사용한 Full-supervised (Upper bound) 성능인 91.14%에 근접하는 결과를 달성하였다.
+  - **Dice 결과**: 제안 방법(90.12%) $\gg$ DoubleUnc(89.65%) $>$ SASS(89.54%).
+  - 특히, 모든 데이터를 사용한 Full-supervised (Upper bound) 성능인 91.14%에 근접하는 결과를 달성하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 연구의 핵심 강점은 서로 다른 성격의 두 태스크(분할 vs 회귀)를 결합하여 상호 학습을 유도했다는 점이다. 특히 SDM을 통해 경계 정보를 명시적으로 학습하게 함으로써, 단순한 픽셀 분류 모델이 놓치기 쉬운 기하학적 형상 제약을 효과적으로 부여하였다.
 
 ### 한계 및 논의
+
 - **백본 의존성**: 모든 실험이 V-Net 기반으로 수행되었으므로, 다른 아키텍처(예: UNet++, Swin-UNETR 등)에서도 동일한 성능 향상이 나타날지는 추가 검증이 필요하다.
 - **가정**: SDM을 마스크로 변환하는 과정에서 사용되는 계수 $k$의 설정이 결과에 영향을 줄 수 있으나, 이에 대한 최적화 방법론은 상세히 다뤄지지 않았다.
 - **비판적 해석**: $M_d$의 학습 시 $L_{dis}$($L_2$ loss)보다 $L_{mask}$가 더 효과적이었다는 점은, 결국 SDM 자체의 정밀한 값보다는 그것이 암시하는 '경계의 위치'가 분할 성능에 더 결정적임을 시사한다.

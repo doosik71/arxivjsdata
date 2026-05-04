@@ -28,7 +28,9 @@ Morio Matsumoto, Hiroya Matsuba, and Toshihiro Kujirai (2022)
 RMRL-GTS는 MAML 프레임워크를 기반으로 하며, 태스크 샘플링 단계를 다음과 같은 두 가지 접근 방식으로 개선한다.
 
 ### 1. MAML 기본 구조 (Baseline)
+
 기본적으로 MAML은 다음과 같은 절차를 따른다.
+
 1. 태스크 $\tau_i$에 대해 현재 파라미터 $\theta$에서 gradient step을 수행하여 적응된 파라미터 $\theta'_i$를 계산한다.
    $$\theta'_i = \theta - \alpha \nabla_\theta L_{\tau_i}(\pi_\theta)$$
 2. 모든 샘플링된 태스크에 대한 손실 함수의 합을 최소화하도록 메타 파라미터 $\theta$를 업데이트한다.
@@ -37,6 +39,7 @@ RMRL-GTS는 MAML 프레임워크를 기반으로 하며, 태스크 샘플링 단
 ### 2. RMRL-GTS의 핵심 구성 요소
 
 #### Approach I: 태스크 샘플링 영역의 제한 (Restriction of Task Sampling Region)
+
 태스크의 난이도 $\tau$가 클수록 어렵다고 가정할 때, 학습 초기에 모든 영역을 샘플링하지 않고 영역을 세 가지($T_{easy}, T_{middle}, T_{difficult}$)로 나눈다.
 
 - **초기 설정 ($\text{epoch}=0$):** 태스크를 일정 간격으로 샘플링하여 평균 보상을 계산하고, 평균 보상에 가장 가까운 값을 $\tau_{mean}$으로 설정하여 영역의 기준점으로 삼는다.
@@ -47,6 +50,7 @@ RMRL-GTS는 MAML 프레임워크를 기반으로 하며, 태스크 샘플링 단
 - **동적 확장:** 학습의 절반($0.5 N_{epoch}$)까지는 $T_{easy}$와 $T_{middle}$에서만 샘플링한다. 그 이후부터는 일정 주기($n_{batch}$)마다 $\tau_{middle1}$과 $\tau_{middle2}$를 오른쪽으로 이동시켜 $T_{easy}$ 영역을 확장하고 $T_{difficult}$ 영역을 축소한다. 결국 학습 종료 시점에는 전체 영역이 샘플링 대상이 된다.
 
 #### Approach II: 점수 기반 우선순위 샘플링 (Prioritized Sampling with Score)
+
 단순 무작위 샘플링 대신, 현재 성능이 낮은 태스크가 더 많이 뽑히도록 확률 분포 $p(\tau)$를 조정한다.
 
 - **가중 점수 계산:** 최근 에포크일수록 더 높은 가중치를 부여하여 평균 보상 $f(\tau)$를 계산한다.
@@ -59,6 +63,7 @@ RMRL-GTS는 MAML 프레임워크를 기반으로 하며, 태스크 샘플링 단
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋 및 환경:** MuJoCo의 Ant-Velocity, HalfCheetah-Velocity, 그리고 2D Navigation.
 - **비교 대상:** MAML, 이전의 커리큘럼 기반 방법론 [5].
 - **평가 지표:** 평균 총 보상(Mean Total Reward), Variance, 그리고 **Bias Score**.
@@ -66,7 +71,8 @@ RMRL-GTS는 MAML 프레임워크를 기반으로 하며, 태스크 샘플링 단
   Bias Score가 낮을수록 태스크 분포 전반에 걸쳐 성능이 균일하며 강건하다는 것을 의미한다.
 
 ### 주요 결과
-1. **Ant-Velocity:** 
+
+1. **Ant-Velocity:**
    - RMRL-GTS는 MAML보다 어려운 태스크 영역($v \ge 1.5$)에서 월등히 높은 점수를 기록했다.
    - 특히 $v \in [0, 3]$ 범위에서의 Variance가 MAML보다 현저히 낮았으며, 이는 Meta-overfitting이 억제되었음을 보여준다.
    - 학습 분포 밖의 영역($v \in [3, 5]$)에서도 MAML보다 더 높은 적응 성능을 보였다.
@@ -76,6 +82,7 @@ RMRL-GTS는 MAML 프레임워크를 기반으로 하며, 태스크 샘플링 단
    - 2D 좌표계의 넓은 목표 지점 분포에서도 MAML보다 높은 평균 보상을 기록하며 강건함을 입증했다.
 
 ### 절제 실험 (Ablation Study)
+
 - **Approach I만 사용 시:** MAML과 유사한 결과가 나타나, 단순한 영역 제한만으로는 부족함을 알 수 있다.
 - **Approach II만 사용 시:** 어려운 태스크에 어느 정도 적응하지만, 전체적인 성능은 RMRL-GTS(I+II 결합)보다 낮았다.
 - **결론:** 영역 제한(I)과 우선순위 샘플링(II)이 모두 결합되어야 샘플링 효율이 극대화되고 강건한 Meta-policy를 얻을 수 있다.
@@ -85,10 +92,12 @@ RMRL-GTS는 MAML 프레임워크를 기반으로 하며, 태스크 샘플링 단
 본 논문은 Meta-RL에서 단순히 "어려운 것을 많이 학습시킨다"는 아이디어만으로는 부족하며, **"어느 시점에 어떤 난이도의 범위를 학습시킬 것인가"**에 대한 전략적 접근(Curriculum)이 필수적임을 보여주었다.
 
 **강점:**
+
 - 보상 함수의 수학적 구조를 몰라도 점수만으로 작동하므로 실제 환경 적용 가능성이 높다.
 - 단순한 샘플링 전략 수정만으로 MAML의 고질적인 문제인 Meta-overfitting을 효과적으로 해결했다.
 
 **한계 및 논의사항:**
+
 - 태스크 난이도가 $\tau$ 값에 비례한다는 가정이 필요하다. 비록 좌표 변환을 통해 해결 가능하다고 언급했으나, 난이도를 정의하기 어려운 복잡한 다차원 태스크에서는 이 가정을 설정하는 것이 어려울 수 있다.
 - 제안된 방법은 샘플링 효율을 높이지만, MAML 자체의 gradient 기반 최적화 한계(예: Local minima)까지 해결하는 것은 아니다.
 

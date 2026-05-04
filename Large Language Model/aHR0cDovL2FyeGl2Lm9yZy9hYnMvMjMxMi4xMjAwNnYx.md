@@ -17,25 +17,33 @@ Md. Rafiul Biswas, Ashhadul Islam, Zubair Shah, Wajdi Zaghouani, Samir Brahim Be
 ## 🛠️ Methodology
 
 ### 1. 데이터셋 준비
+
 본 연구는 아랍어 의료 질의응답 데이터셋인 MAQA(Medical Arabic Q&A)를 사용하였다. 이 데이터셋은 20개의 의료 전문 분야에 걸쳐 약 43만 개의 질문과 답변으로 구성되어 있다.
+
 - **데이터 구조**: `q_body`(환자의 질문), `a_body`(의사의 답변), `q_body_count`, `a_body_count`, `category`, `category_id`의 6개 컬럼으로 이루어져 있다.
 - **전처리**: SQL 데이터베이스에서 CSV로 추출한 후, 아랍어 텍스트만 남기고 불완전한 질의응답 쌍을 제거하였다. 이후 GPT-3.5-turbo 모델 학습을 위해 `system`, `user`, `assistant`의 세 가지 역할이 정의된 JSONL 형식으로 변환하였다.
 
 ### 2. 프롬프트 엔지니어링 (Prompt Engineering)
+
 모델의 출력을 최적화하기 위해 세 가지 프롬프트를 설계하였다.
+
 - **System Prompt**: 챗봇의 전반적인 기능과 페르소나를 가이드한다.
 - **User Prompt**: 환자가 묻는 질문(`q_body`)이 입력된다.
 - **Assistant Prompt**: 의료 전문가의 답변(`a_body`)이 제공되어 모델이 학습해야 할 목표값이 된다.
 
 ### 3. 학습 절차
-실험을 위해 데이터셋 중 샘플 수가 가장 많은 산부인과(Gynecological, category 15) 데이터를 선택하였다. 
+
+실험을 위해 데이터셋 중 샘플 수가 가장 많은 산부인과(Gynecological, category 15) 데이터를 선택하였다.
+
 - **데이터 구성**: 총 103,683개의 Q&A 중 무작위로 4,000개를 학습 데이터(training set)로, 1,000개를 검증 데이터(validation set)로 사용하였다.
 - **학습 방법**: OpenAI API를 통해 GPT-3.5-turbo 모델을 미세 조정하였으며, 총 3 epoch 동안 학습을 진행하였다.
 
 ## 📊 Results
 
 ### 1. 정량적 평가 (Automated Evaluation)
+
 학습 후 모델의 성능을 측정하기 위해 네 가지 지표를 사용하였다.
+
 - **Perplexity (PPL)**: 모델이 텍스트를 얼마나 잘 예측하는지 측정하며, 값이 낮을수록 정밀도가 높다.
   $$\text{PP}(W) = 2^{-\frac{1}{N} \sum_{i=1}^{N} \log_2 P(w_i | w_1, w_2, \dots, w_{i-1})}$$
   측정 결과 평균 13.96을 기록하여 모델이 어느 정도의 확신과 정밀도를 가지고 예측함을 보였다.
@@ -46,7 +54,9 @@ Md. Rafiul Biswas, Ashhadul Islam, Zubair Shah, Wajdi Zaghouani, Samir Brahim Be
 - **Token Count**: 기본 GPT-3.5 모델은 정답(0~50 tokens)보다 훨씬 긴 응답(50~200 tokens)을 생성하는 경향이 있었으나, 미세 조정된 모델은 정답과 유사한 토큰 길이를 생성하여 학습이 효과적으로 이루어졌음을 입증하였다.
 
 ### 2. 인간 평가 (Human Evaluation)
+
 아랍어 원어민이자 의료 전문가 2명이 500개의 생성 텍스트를 5점 척도로 평가하였다. 평가자 간 일치도는 Cohen's Kappa 계수 0.6377로 나타났다.
+
 - **Accuracy (정확성)**: 평균 4.10으로 가장 높은 점수를 기록하여 신뢰할 수 있는 의료 정보를 제공함을 보였다.
 - **Logic (논리성) & Originality (독창성)**: 각각 평균 3.98, 3.94로 양호한 수준의 논리적 추론과 중복 없는 답변 생성 능력을 보였다.
 - **Relevance (관련성) & Precision (정밀성)**: 관련성의 최빈값(mode)은 2(Bad)로 낮게 나타났으며, 정밀성 또한 변동성이 컸다. 이는 향후 개선이 필요한 부분으로 분석되었다.

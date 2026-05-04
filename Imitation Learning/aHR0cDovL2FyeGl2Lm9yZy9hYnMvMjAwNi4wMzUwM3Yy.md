@@ -27,9 +27,11 @@ GAIL은 GAN의 구조를 차용하여 모델 없이(model-free) 직접 정책을
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 WDAIL은 판별자 $D$와 정책 $\pi$가 서로 경쟁하는 적대적 학습 구조를 가진다. 판별자는 전문가의 궤적과 정책이 생성한 궤적을 구분하려 하며, 정책은 판별자가 구분하지 못하도록 전문가의 행동을 모방하며 보상을 최대화한다.
 
 ### 1. Wasserstein Distance 기반의 적대적 학습
+
 본 논문은 정책의 점유 측정치(occupancy measure) $\rho^\pi$와 전문가의 점유 측정치 $\rho^E$ 사이의 거리를 $L_1$-Wasserstein distance로 정의한다. 목적 함수는 다음과 같다.
 
 $$\min_{\pi \in \Pi} \{ -H(\pi) + W_1^d(\rho^\pi, \rho^E) \}$$
@@ -43,6 +45,7 @@ $$W_1^d(\rho^\pi, \rho^E) = \max_{\|d\|_L \le 1} \{ \mathbb{E}_{\pi^E}[d(s,a)] -
 $$L_{gp} = (\|\nabla_{(\hat{s},\hat{a})} D((\hat{s},\hat{a}))\|_2 - 1)^2$$
 
 ### 2. 정책 최적화 (PPO)
+
 정책 $\pi_\theta$를 업데이트하기 위해 Clipped PPO 목적 함수를 사용한다. 이는 정책 업데이트 폭을 제한하여 학습의 안정성을 높인다.
 
 $$L^{CLIP}(\theta) = \hat{\mathbb{E}} [ \min(r_t(\theta)\hat{A}_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A}_t) ]$$
@@ -50,6 +53,7 @@ $$L^{CLIP}(\theta) = \hat{\mathbb{E}} [ \min(r_t(\theta)\hat{A}_t, \text{clip}(r
 여기서 $r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)}$는 확률 비율이며, $\hat{A}_t$는 Advantage 추정치이다.
 
 ### 3. 보상 함수 형태 설계 (Reward Shaping)
+
 판별자의 출력 $x = D(s,a)$를 입력으로 하여 다양한 보상 함수 $f_{rew}(x)$를 정의한다. (여기서 $\sigma(x)$는 시그모이드 함수이다.)
 
 - **양수 보상 형태**: $\sigma(x)$, $e^x$, $-\log(1-\sigma(x))$
@@ -57,6 +61,7 @@ $$L^{CLIP}(\theta) = \hat{\mathbb{E}} [ \min(r_t(\theta)\hat{A}_t, \text{clip}(r
 - **선형/무편향 형태**: $x$ (이는 $\log(\sigma(x)) - \log(1-\sigma(x))$와 동등함)
 
 ### 4. 학습 절차
+
 전체 과정은 다음과 같은 Minimax 게임으로 정의된다.
 
 $$\min_\theta \max_w L_{wdail}(\theta, w) = L_{wd} - \lambda L_{gp}$$
@@ -68,12 +73,14 @@ $$\min_\theta \max_w L_{wdail}(\theta, w) = L_{wd} - \lambda L_{gp}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **환경**: MuJoCo의 고차원 연속 제어 작업 (Hopper, Walker2d, HalfCheetah).
 - **비교 대상**: BC, GAIL, Random Policy.
 - **지표**: 전문가 성능과 랜덤 정책 성능 사이로 정규화된 $[0, 1]$ 범위의 점수.
 - **변수**: 전문가 궤적의 수 (1, 5, 10, 50개) 및 보상 함수의 형태.
 
 ### 주요 결과
+
 1. **보상 형태의 영향**:
     - $\sigma(x)$, $e^x$, $-\log(1-\sigma(x))$와 같은 **양수 보상 형태**가 세 가지 모든 작업에서 가장 효과적이었으며, 전문가 데이터의 양에 관계없이 강건한 성능을 보였다.
     - 무편향 보상 함수 $x$ 및 $\log(\sigma(x))$는 HalfCheetah에서는 양호했으나, 다른 환경에서는 랜덤 수준의 낮은 성능을 보였다.

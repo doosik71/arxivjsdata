@@ -18,10 +18,10 @@ Victor Kulikov, Victor Yurchenko, and Victor Lempitsky (2018)
 
 논문에서는 Instance Segmentation의 기존 접근 방식을 크게 네 가지로 분류하여 설명한다.
 
-1.  **Proposal-based methods**: Mask R-CNN과 같이 객체 제안(Proposal)을 생성하고 이를 정교화하는 방식이다. 성능은 뛰어나나, Object Detection 루틴의 품질에 의존하며 경계 상자(Bounding box)로 근사하기 어려운 객체에는 취약하다.
-2.  **Recurrent methods**: RNN/LSTM을 사용하여 인스턴스를 하나씩 순차적으로 생성하는 방식이다. 추론 시간이 객체 수에 비례하여 증가하며 구조가 복잡하다.
-3.  **Proposal-free methods**: Semantic Segmentation 결과를 기반으로 인스턴스를 분리하는 방식이다. Deep Watershed Transform이나 픽셀 임베딩을 이용한 Metric Learning 방식(De Brabandere et al. [23])이 이에 해당한다.
-4.  **Weakly-supervised semantic segmentation**: 타겟 라벨을 동적으로 수정하며 학습하는 방식으로, 본 논문의 동적 색상 할당 과정과 철학적으로 유사하다.
+1. **Proposal-based methods**: Mask R-CNN과 같이 객체 제안(Proposal)을 생성하고 이를 정교화하는 방식이다. 성능은 뛰어나나, Object Detection 루틴의 품질에 의존하며 경계 상자(Bounding box)로 근사하기 어려운 객체에는 취약하다.
+2. **Recurrent methods**: RNN/LSTM을 사용하여 인스턴스를 하나씩 순차적으로 생성하는 방식이다. 추론 시간이 객체 수에 비례하여 증가하며 구조가 복잡하다.
+3. **Proposal-free methods**: Semantic Segmentation 결과를 기반으로 인스턴스를 분리하는 방식이다. Deep Watershed Transform이나 픽셀 임베딩을 이용한 Metric Learning 방식(De Brabandere et al. [23])이 이에 해당한다.
+4. **Weakly-supervised semantic segmentation**: 타겟 라벨을 동적으로 수정하며 학습하는 방식으로, 본 논문의 동적 색상 할당 과정과 철학적으로 유사하다.
 
 본 연구는 특히 Metric Learning과 Clustering 기반의 후처리를 사용하는 [23]의 방식과 유사하지만, 이를 **Classification Learning**과 **Connected Component Analysis**로 대체함으로써 파이프라인을 획기적으로 단순화하고 속도를 높였다는 점에서 차별점을 갖는다.
 
@@ -31,12 +31,12 @@ Victor Kulikov, Victor Yurchenko, and Victor Lempitsky (2018)
 
 추론 단계는 크게 두 단계로 구성된다.
 
-1.  **Coloring Stage**: 입력 이미지 $x$를 Coloring Network $\Psi$ (주로 U-Net 아키텍처 사용)에 통과시켜 $C$개의 채널을 가진 확률 맵 $y \in \mathbb{R}^{C \times W \times H}$를 생성한다. 마지막 층의 Softmax 함수를 통해 각 픽셀 $p$는 $C$개의 색상 중 하나를 가질 확률을 부여받는다. 이때 첫 번째 채널($c=1$)은 배경(Background)으로 예약된다.
-2.  **Post-processing Stage**:
-    *   각 픽셀에서 가장 확률이 높은 색상을 선택하여 맵 $z$를 생성한다.
-    *   $z$에서 Connected Component Analysis(CCA)를 수행하여 연결된 성분들을 찾는다.
-    *   크기 임계값 $\tau$보다 작은 성분은 배경으로 처리하여 노이즈를 제거한다.
-    *   (옵션) 동일한 색상을 가진 두 성분 사이의 Hausdorff 거리가 임계값 $\rho$보다 작으면, 폐색(Occlusion)으로 인해 분리된 동일 객체로 판단하여 병합한다.
+1. **Coloring Stage**: 입력 이미지 $x$를 Coloring Network $\Psi$ (주로 U-Net 아키텍처 사용)에 통과시켜 $C$개의 채널을 가진 확률 맵 $y \in \mathbb{R}^{C \times W \times H}$를 생성한다. 마지막 층의 Softmax 함수를 통해 각 픽셀 $p$는 $C$개의 색상 중 하나를 가질 확률을 부여받는다. 이때 첫 번째 채널($c=1$)은 배경(Background)으로 예약된다.
+2. **Post-processing Stage**:
+    * 각 픽셀에서 가장 확률이 높은 색상을 선택하여 맵 $z$를 생성한다.
+    * $z$에서 Connected Component Analysis(CCA)를 수행하여 연결된 성분들을 찾는다.
+    * 크기 임계값 $\tau$보다 작은 성분은 배경으로 처리하여 노이즈를 제거한다.
+    * (옵션) 동일한 색상을 가진 두 성분 사이의 Hausdorff 거리가 임계값 $\rho$보다 작으면, 폐색(Occlusion)으로 인해 분리된 동일 객체로 판단하여 병합한다.
 
 ### 학습 과정 (Learning)
 
@@ -58,27 +58,31 @@ $$L(x, \theta) = -\sum_{k=1}^K \frac{1}{|M_k|} \sum_{p \in M_k} \log y[c_k, p] -
 ## 📊 Results
 
 ### 실험 설정
-- **데이터셋**: CVPPP (식물 잎), E.Coli (미생물 현미경 이미지), Cityscapes (자율주행 도로 장면).
-- **아키텍처**: 기본적으로 U-Net 스타일의 Encoder-Decoder 구조를 사용하였으며, Cityscapes의 경우 성능 향상을 위해 PSP-module과 Batch Normalization을 추가하였다.
-- **지표**: CVPPP에서는 SBD(Symmetric Best Dice coefficient)와 $|DiC|$(개수 차이)를, Cityscapes에서는 AP(Average Precision)를 사용하였다.
+
+* **데이터셋**: CVPPP (식물 잎), E.Coli (미생물 현미경 이미지), Cityscapes (자율주행 도로 장면).
+* **아키텍처**: 기본적으로 U-Net 스타일의 Encoder-Decoder 구조를 사용하였으며, Cityscapes의 경우 성능 향상을 위해 PSP-module과 Batch Normalization을 추가하였다.
+* **지표**: CVPPP에서는 SBD(Symmetric Best Dice coefficient)와 $|DiC|$(개수 차이)를, Cityscapes에서는 AP(Average Precision)를 사용하였다.
 
 ### 주요 결과
-1.  **CVPPP 데이터셋**: 제안 방법이 대부분의 기존 방법보다 우수한 성능(SBD 0.87)을 보였다. 특히 임베딩 기반 방식([23])과 비교했을 때, 후처리 속도가 수십 배 빠르며(0.05s vs 30s), 하이퍼파라미터 튜닝이 훨씬 용이함을 확인하였다.
-2.  **E.Coli 데이터셋**: 매우 많은 수의 인스턴스가 밀집된 환경에서도 효과적으로 작동하였다. Clustering 기반 방식([23])은 인스턴스 수가 많아질수록 성능이 급격히 떨어졌으나, 제안된 CCA 기반 방식은 안정적인 성능을 유지하였다.
-3.  **Cityscapes 데이터셋**: 
-    *   단순히 클래스별 색상을 할당하는 방식보다는, 별도의 Semantic Segmentation 헤드를 두어 결과를 퓨전하는 방식이 더 높은 성능을 보였다.
-    *   특히 PSP-Net의 Semantic Segmentation 결과와 Deep Coloring의 인스턴스 분리 능력을 결합했을 때 가장 좋은 성능(AP 25.2)을 달성하여, 제안 방법이 경쟁력 있는 Proposal-free 방식임을 입증하였다.
+
+1. **CVPPP 데이터셋**: 제안 방법이 대부분의 기존 방법보다 우수한 성능(SBD 0.87)을 보였다. 특히 임베딩 기반 방식([23])과 비교했을 때, 후처리 속도가 수십 배 빠르며(0.05s vs 30s), 하이퍼파라미터 튜닝이 훨씬 용이함을 확인하였다.
+2. **E.Coli 데이터셋**: 매우 많은 수의 인스턴스가 밀집된 환경에서도 효과적으로 작동하였다. Clustering 기반 방식([23])은 인스턴스 수가 많아질수록 성능이 급격히 떨어졌으나, 제안된 CCA 기반 방식은 안정적인 성능을 유지하였다.
+3. **Cityscapes 데이터셋**:
+    * 단순히 클래스별 색상을 할당하는 방식보다는, 별도의 Semantic Segmentation 헤드를 두어 결과를 퓨전하는 방식이 더 높은 성능을 보였다.
+    * 특히 PSP-Net의 Semantic Segmentation 결과와 Deep Coloring의 인스턴스 분리 능력을 결합했을 때 가장 좋은 성능(AP 25.2)을 달성하여, 제안 방법이 경쟁력 있는 Proposal-free 방식임을 입증하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 통찰
-- **단순성 및 효율성**: Instance Segmentation을 Semantic Segmentation의 형태로 환원함으로써, 기존의 수많은 Semantic Segmentation 최적화 기법(U-Net, PSP-Net 등)을 그대로 적용할 수 있다.
-- **확장성**: 고정된 색상 수만으로도 공간적 분리를 통해 무한한 수의 인스턴스를 처리할 수 있으며, 추론 속도가 객체 수에 영향을 받지 않는다.
-- **동적 학습의 효과**: 정적인 라벨링 대신 네트워크의 예측 상태에 따라 정답을 동적으로 생성하는 방식이 학습의 유연성을 높였다.
+
+* **단순성 및 효율성**: Instance Segmentation을 Semantic Segmentation의 형태로 환원함으로써, 기존의 수많은 Semantic Segmentation 최적화 기법(U-Net, PSP-Net 등)을 그대로 적용할 수 있다.
+* **확장성**: 고정된 색상 수만으로도 공간적 분리를 통해 무한한 수의 인스턴스를 처리할 수 있으며, 추론 속도가 객체 수에 영향을 받지 않는다.
+* **동적 학습의 효과**: 정적인 라벨링 대신 네트워크의 예측 상태에 따라 정답을 동적으로 생성하는 방식이 학습의 유연성을 높였다.
 
 ### 한계 및 비판적 해석
-- **하이퍼파라미터 민감도**: 마진 거리 $m$과 가중치 $\mu$의 설정에 따라 Undersegmentation(인접 객체를 하나로 인식) 또는 Fragmentation(하나의 객체를 여러 개로 인식) 현상이 발생한다. 비록 실험적으로 둔감하다고 주장하지만, 데이터셋의 객체 크기에 따라 최적값이 달라지므로 사전 분석이 필요하다.
-- **Semantic 성능 의존성**: Cityscapes 실험에서 드러났듯, 복잡한 장면에서는 정확한 Semantic Segmentation 결과가 뒷받침되어야 인스턴스 분리 성능이 극대화된다. 즉, Coloring Network 단독으로는 고수준의 시맨틱 이해를 수행하는 데 한계가 있을 수 있다.
+
+* **하이퍼파라미터 민감도**: 마진 거리 $m$과 가중치 $\mu$의 설정에 따라 Undersegmentation(인접 객체를 하나로 인식) 또는 Fragmentation(하나의 객체를 여러 개로 인식) 현상이 발생한다. 비록 실험적으로 둔감하다고 주장하지만, 데이터셋의 객체 크기에 따라 최적값이 달라지므로 사전 분석이 필요하다.
+* **Semantic 성능 의존성**: Cityscapes 실험에서 드러났듯, 복잡한 장면에서는 정확한 Semantic Segmentation 결과가 뒷받침되어야 인스턴스 분리 성능이 극대화된다. 즉, Coloring Network 단독으로는 고수준의 시맨틱 이해를 수행하는 데 한계가 있을 수 있다.
 
 ## 📌 TL;DR
 

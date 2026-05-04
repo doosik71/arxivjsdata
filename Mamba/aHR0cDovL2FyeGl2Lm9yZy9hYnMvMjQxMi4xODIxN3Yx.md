@@ -14,26 +14,31 @@ Shaoxiang Dang, Tetsuya Matsumoto, Yoshinori Takeuchi, and Hiroaki Kudo (2024)
 
 ## 📎 Related Works
 
-음성 분리를 위해 초기에는 시간-주파수 영역 및 시간 영역 처리에서 RNN이 널리 사용되었으며, 글로벌 정보를 모델링하기 위해 Dual-path(DP) 구조가 도입되었다. 이후 병렬 계산이 가능한 Transformer의 Self-attention 메커니즘이 DP 구조에 적용되었으나, 앞서 언급한 계산 오버헤드 문제가 제기되었다. 
+음성 분리를 위해 초기에는 시간-주파수 영역 및 시간 영역 처리에서 RNN이 널리 사용되었으며, 글로벌 정보를 모델링하기 위해 Dual-path(DP) 구조가 도입되었다. 이후 병렬 계산이 가능한 Transformer의 Self-attention 메커니즘이 DP 구조에 적용되었으나, 앞서 언급한 계산 오버헤드 문제가 제기되었다.
 
 또한, 생물 의학 이미지 분할을 위해 개발된 U-Net 아키텍처가 Demucs나 SuDoRM-RF와 같은 연구를 통해 음악 및 오디오 소스 분리에서도 성공적으로 적용된 바 있다. U-Net은 완전 합성곱 신경망(fully convolutional neural network)으로 구성되어 크기가 작고 계산 복잡도가 낮다는 장점이 있지만, 전역적 관계를 학습하는 능력이 부족하다는 한계가 있다. 본 논문은 이러한 U-Net의 한계를 Mamba 모듈을 통해 보완하였다.
 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 U-Mamba-Net은 크게 **Encoder $\rightarrow$ U-Mamba blocks $\rightarrow$ Decoder**의 구조로 이루어져 있다.
+
 1. **Encoder**: 1차원 합성곱 층을 사용하여 파형(waveform) 데이터를 시간-주파수 유사 표현으로 매핑한다.
 2. **U-Mamba blocks**: 본 모델의 핵심으로, 고도의 표현 능력을 갖춘 특징을 학습한다.
 3. **Mask Estimation**: U-Mamba 블록 이후의 합성곱 층을 통해 각 음원(source)에 대한 마스크를 추정한다.
 4. **Decoder**: 추정된 마스크를 혼합 음성 표현에 적용한 후, 1차원 전치 합성곱 층(transposed convolutional layer)을 통해 최종 분리된 음성을 복원한다.
 
 ### U-Mamba Block
+
 하나의 U-Mamba 블록은 **U-net 모듈**과 **Mamba 모듈**로 구성된다.
+
 - **U-net 모듈**: $L$개의 연속적인 다운샘플링 및 업샘플링 층으로 구성되며, 동일 깊이의 층 사이에는 residual connection이 연결되어 있다.
 - **Mamba 모듈**: U-net 모듈의 출력을 입력으로 받아 전역적인 특징을 필터링한다.
 - 최종적으로 U-Mamba 블록의 출력은 U-net 모듈의 출력과 다시 한번 residual connection으로 연결된다.
 
 ### Mamba (Selective SSM)
+
 Mamba는 상태 공간 모델(State Space Models, SSMs)의 확장으로, 입력 $x(t) \in \mathbb{R}^F$를 은닉 상태 $h(t) \in \mathbb{R}^N$를 거쳐 출력 $y(t) \in \mathbb{R}^F$로 매핑한다.
 
 연속형 수식은 다음과 같다:
@@ -49,6 +54,7 @@ $$\bar{B} = (I - \frac{\Delta}{2}A)^{-1}\Delta B$$
 Mamba는 S4(Structured SSMs)의 HiPPO 초기화를 계승하여 신호를 직교 다항식으로 분해하는 능력을 가지며, 여기에 입력 의존적(input-dependent) 선택 메커니즘을 추가하여 계산 효율성과 표현력을 동시에 확보하였다.
 
 ### 학습 절차 및 손실 함수
+
 모델은 Permutation-Invariant Scale-Invariant Signal-to-Noise Ratio (SI-SNR)를 손실 함수로 사용하여 학습한다:
 $$\mathcal{L} = -\max_{\pi \in \mathcal{P}} \frac{1}{I} \sum_{i} \text{SI-SNR}(\hat{s}_{\pi(i)}, s_i)$$
 여기서 $\pi$는 전체 SI-SNR을 최대화하는 최적의 순열 매핑 집합이다.
@@ -56,16 +62,19 @@ $$\mathcal{L} = -\max_{\pi \in \mathcal{P}} \frac{1}{I} \sum_{i} \text{SI-SNR}(\
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Libri2mix를 사용하였으며, WHAM!의 소음과 Pyroomacoustics를 통한 잔향 시뮬레이션을 추가하여 복잡한 환경을 구축하였다. (샘플링 레이트 8 kHz)
 - **비교 대상**: TasNet, SuDoRM-RF, Conv-TasNet, DPRNN (E2E 및 CMTL 방식)
 - **평가 지표**: SI-SNRi, SDRi, SIRi (분리 성능), STOI, PESQ (지각적 품질), CSIG, CBAK, COVL (잡음 제거 성능), 모델 파라미터 수 및 GMACs (연산 효율성)
 
 ### 주요 결과
+
 1. **정량적 성능**: U-Mamba-Net은 SI-SNRi 기준 8.50 dB를 기록하여 DPRNN (E2E)보다 0.92 dB 높았으며, CMTL 기반의 DPRNN보다도 0.42 dB 높은 성능을 보였다.
 2. **연산 효율성**: 계산 비용(GMACs) 측면에서 압도적인 효율성을 보였다. U-Mamba-Net의 GMACs는 2.5인 반면, DPRNN (CMTL)은 40.2, DPRNN (E2E)은 23.9로, 각각 $1/16$, $1/9$ 수준의 연산량만으로 더 높은 성능을 달성하였다.
 3. **지각적 품질 및 잡음 제거**: STOI 지표에서는 경쟁 모델들보다 우위에 있었으나, CBAK 등 잡음 제거 지표에서는 CMTL 기반의 DPRNN이 더 우수한 결과를 보였다. 이는 다단계 감독 학습을 수행하는 CMTL 구조의 특성으로 분석된다.
 
 ### Ablation Study
+
 - **특징 차원 ($F$)**: $F$가 64 $\rightarrow$ 128 $\rightarrow$ 192로 증가함에 따라 SI-SNRi가 7.12 $\rightarrow$ 8.50 $\rightarrow$ 8.85 dB로 크게 향상되었으나 모델 크기도 함께 증가하였다.
 - **블록 수 ($R$)**: 블록 수를 늘리면 성능이 향상되지만, 특징 차원만큼의 영향력은 낮았다.
 - **모델 깊이 ($L$)**: 모델의 깊이를 과도하게 늘리는 것은 테스트 셋 성능에 부정적인 영향을 주었으며, 이는 분리 작업에서 너무 낮은 해상도가 유익하지 않기 때문으로 추정된다.

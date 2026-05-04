@@ -27,18 +27,23 @@ Prashant Gohel, Priyanka Singh, and Manoranjan Mohanty (2021)
 본 논문은 특정 알고리즘을 제안하는 대신, XAI의 전체적인 파이프라인과 분류 체계를 방법론으로 제시한다.
 
 ### 1. 투명한 모델 (Transparent Methods)
+
 모델의 내부 작동 방식이 단순하여 인간이 직접 해석할 수 있는 모델이다.
+
 - **Simulatability**: 인간이 모델의 계산 과정을 직접 시뮬레이션할 수 있는 능력이다.
 - **Decomposability**: 입력 데이터, 하이퍼파라미터 등 각 구성 요소의 역할을 개별적으로 설명할 수 있는 능력이다.
 - **Algorithmic Transparency**: 입력부터 최종 결정까지의 알고리즘적 흐름이 투명하게 공개되는 것이다.
 - **해당 모델**: 선형/로지스틱 회귀, 의사결정 나무(Decision Trees), K-최근접 이웃(KNN), 베이지안 모델(Bayesian Model) 등이 포함된다.
 
 ### 2. 사후 분석 방법 (Post-hoc Methods)
+
 이미 학습이 완료된 블랙박스 모델을 대상으로 해석을 수행하는 방법으로, 다시 두 가지로 나뉜다.
+
 - **모델 특화 기법 (Model-specific)**: 특정 모델 구조(예: CNN의 가중치)에 의존하는 방식이다. Saliency Map이나 LRP(Layer-wise Relevance Propagation)가 이에 해당한다.
 - **모델 불가지론적 기법 (Model-agnostic)**: 모델 내부 구조와 상관없이 입력과 출력의 관계만을 분석하는 방식이다. LIME과 SHAP이 대표적이다.
 
 ### 3. 주요 알고리즘 설명
+
 - **LIME (Local Interpretable Model-agnostic Explanations)**:
   설명하고자 하는 데이터 주변에 섭동(Perturbation)을 주어 생성한 가상 샘플들을 통해 국소적으로 단순한 선형 모델을 학습시켜 근사화한다.
   $$ \text{explanation}(x) = \arg \min_{g \in G} L(f, g, \pi_x) + \Omega(g) $$
@@ -65,6 +70,7 @@ Prashant Gohel, Priyanka Singh, and Manoranjan Mohanty (2021)
 본 논문은 XAI를 단순히 알고리즘의 집합이 아니라, 신뢰성과 책임감 있는 AI(Responsible AI)를 구현하기 위한 필수 도구로 정의하였다. 특히 멀티미디어 데이터별로 서로 다른 XAI 접근 방식이 필요함을 역설하며, 실질적인 적용 사례(의료, 국방, 산업)를 통해 XAI의 필요성을 설득력 있게 제시하였다.
 
 **한계 및 비판적 해석**:
+
 1. **정확도와 해석 가능성의 트레이드-오프**: 논문에서도 언급되었듯, 모델이 단순해지면 해석은 쉬워지나 정확도가 떨어지고, 복잡해지면 정확도는 높아지나 해석이 어려워지는 딜레마가 존재한다.
 2. **Saliency Map의 한계**: 픽셀 단위의 중요도 표시(Heatmap)는 모델이 '어디'를 보았는지는 알려주지만, 그 특징들이 어떻게 결합되어 최종 판단을 내렸는지에 대한 '논리적 구조'는 제공하지 못한다.
 3. **충실도 문제**: 사후 분석 모델(Post-hoc)이 생성한 설명이 실제 블랙박스 모델의 내부 작동 로직을 100% 반영하는지(Faithfulness)에 대한 검증 방법이 여전히 부족하다.

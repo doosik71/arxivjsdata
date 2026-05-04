@@ -29,6 +29,7 @@ Zexin Ji, Beiji Zou, Xiaoyan Kui, Hua Li, Pierre Vera, and Su Ruan (2025)
 ## 🛠️ Methodology
 
 ### 1. Specific Modality Mamba Encoder
+
 각 모달리티는 서로 다른 특성(예: T1-Gd는 강화된 종양 영역, FLAIR는 부종에 민감)을 가지므로, 개별 Mamba 인코더를 통해 특징을 추출한다. Mamba의 핵심인 상태 공간 모델(SSM)은 다음과 같은 연속 시간 방정식으로 정의된다.
 
 $$h'(t) = Ah(t) + Bx(t), \quad y(t) = Ch(t)$$
@@ -44,6 +45,7 @@ $$h_t = \bar{A}h_{t-1} + \bar{B}x_t, \quad y_t = C h_t$$
 본 모델의 Mamba Block은 $\text{Layer Norm} \rightarrow \text{Linear} \rightarrow \text{DW Conv} \rightarrow \text{SS3D (3D-Selective-Scan)} \rightarrow \text{Layer Norm} \rightarrow \text{Linear}$ 경로와 단순 선형 경로를 병렬로 구성하며, SS3D를 통해 전방향 및 후방향의 문맥 정보를 모두 활용한다. 이후 $\text{Res Block}$을 추가하여 세밀한 공간 세부 사항을 보완한다.
 
 ### 2. Bi-Level Synergistic Integration Block
+
 다양한 모달리티에서 추출된 특징 맵 $\mathcal{X} = \{X^{(1)}, X^{(2)}, \dots, X^{(M)}\}$ (여기서 $X^{(m)} \in \mathbb{R}^{C \times H \times W \times D}$)을 입력으로 받는다.
 
 - **Modality-level Attention**: 모든 모달리티 특징을 결합(concatenation)하고 $\text{AvgPool}$을 적용하여 전역 기술자를 생성한 후, $\text{Linear} \rightarrow \text{ReLU} \rightarrow \text{Linear} \rightarrow \text{Softmax}$ 과정을 통해 각 모달리티의 가중치 $A_{modality}$를 계산한다.
@@ -55,16 +57,19 @@ $$X^{(m)}_{out} = A^{(m)}_{modality} \cdot (A_{channel} \odot X^{(m)})$$
 여기서 $\odot$은 채널 차원에서의 요소별 곱셈을 의미한다.
 
 ### 3. Decoder
+
 디코더는 업샘플링 층과 인코더로부터의 skip connection을 통해 공간 해상도를 점진적으로 복원한다. 특히 bottleneck 지점에 Mamba Block을 배치하여 압축된 특징에서 중요한 정보를 선택적으로 증폭시킨다. 최종적으로 $\text{Res block}$을 통해 고수준의 시맨틱 정보와 저수준의 공간 세부 정보를 결합하여 종양 세그멘테이션 맵을 생성한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: $\text{BraTS2023}$ (MRI: T1, T1-Gd, T2, FLAIR) 및 $\text{Hecktor2022}$ (PET, CT).
 - **평가 지표**: $\text{Dice Score}$ (예측 영역과 실제 영역의 겹침 정도), $\text{Hausdorff Distance}$ (경계면의 최대 거리 편차).
 - **구현**: PyTorch, NVIDIA RTX A6000, SGD 옵티마이저, Cross-entropy 손실 함수 사용.
 
 ### 주요 결과
+
 1. **Ablation Study (BraTS2023)**:
    - $\text{SingleModality} < \text{SimpleFusion} < \text{MambaEncoder} < \text{Ours}$ 순으로 성능이 향상되었다.
    - 특히 $\text{MambaEncoder}$에 Bi-level synergistic integration block을 추가한 제안 방법이 Dice Score에서 2.02% 상승, Hausdorff Distance에서 1.16mm 감소하는 성과를 보였다.

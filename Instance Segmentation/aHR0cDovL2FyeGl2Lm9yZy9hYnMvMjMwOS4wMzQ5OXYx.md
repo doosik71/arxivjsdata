@@ -25,17 +25,23 @@ Karina Ruzaeva, Kishan Govind, Marc Legros, Stefan Sandfeld (2023)
 ## 🛠️ Methodology
 
 ### 1. 인스턴스 세그멘테이션 모델
+
 본 연구에서는 다음 두 가지 모델을 비교하였다.
+
 - **Mask R-CNN**: Faster R-CNN 구조에 마스크 브랜치를 추가한 모델이다. Region Proposal Network(RPN)에서 앵커(Anchors)를 사용하여 후보 바운딩 박스를 생성하고, 각 박스에 대해 이진 마스크를 출력한다.
 - **YOLOv8**: 앵커-프리(Anchor-free) 모델로, 객체의 중심을 직접 예측하여 연산 속도를 높이고 Non-Maximum Suppression(NMS) 과정을 효율화하였다. 또한 Mosaic augmentation 등의 데이터 증강 기법을 사용하여 일반화 성능을 높였다.
 
 ### 2. 전위 길이 추출 파이프라인
+
 모델이 예측한 마스크는 전문가의 어노테이션 방식에 따라 너비가 일정하지 않을 수 있다. 재료 과학자에게 중요한 것은 마스크의 너비가 아니라 전위의 길이와 기하학적 구조이다. 이를 해결하기 위해 다음과 같은 절차를 거친다.
+
 - **Lee Skeletonization**: 예측된 마스크를 1픽셀 너비의 골격(Skeleton)으로 축소시킨다.
 - **길이 계산**: 생성된 골격의 픽셀 합계를 이용해 길이를 추정하거나, 폴리곤/스플라인 피팅(Polygon/Spline fitting)을 통해 더 정밀한 길이를 계산한다.
 
 ### 3. Length-aware Recall (LAR) 지표
+
 전위 세그멘테이션의 품질을 깊이 있게 분석하기 위해 제안된 새로운 지표이다. 계산 과정은 다음과 같다.
+
 - 정답 마스크 $M_{gt}$와 예측 마스크 $M_{p}$ 리스트를 입력으로 받는다.
 - 각 $M_{gt}^i$에 대해 가장 높은 IoU(Intersection over Union)를 가진 $M_{p}^j$를 찾는다.
 - 만약 $IoU(M_{p}^j, M_{gt}^i) \ge t$ (여기서 $t=0.5$)라면, 두 마스크 모두 skeletonization을 적용하고 길이를 계산한다.
@@ -49,12 +55,15 @@ $$LAR = \text{mean}(LAR_1, LAR_2, ..., LAR_n)$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 단상 면심입방(fcc) CoCrFeMnNi 합금의 in-situ TEM 스트레이닝 실험 영상에서 추출한 230개의 프레임 (학습 70%, 검증 30%).
 - **비교 대상**: YOLOv8 (n, s, m, l, x 모델) vs Mask R-CNN.
 - **평가 지표**: $mAP_{50}$, $mAP_{50..90}$ (바운딩 박스 및 마스크 각각 측정), 그리고 제안된 $LAR$.
 
 ### 주요 결과
+
 정량적 결과는 Table I에 제시되어 있으며, 주요 내용은 다음과 같다.
+
 - **YOLOv8의 우수성**: 모든 YOLOv8 모델이 Mask R-CNN보다 바운딩 박스 검출 및 마스크 세그멘테이션 성능에서 월등히 높은 수치를 기록하였다. 특히 $mAP_{50}$ (Mask) 기준 YOLOv8m 모델은 0.891을 기록한 반면, Mask R-CNN은 0.533에 그쳤다.
 - **Mask R-CNN의 한계**: Mask R-CNN은 전위의 위치는 비교적 잘 찾아내지만, 개별 전위를 정확하게 분리하여 세그멘테이션하는 데 어려움을 겪었다. 특히 전위가 밀집된 영역(pile-ups)에서 성능이 크게 저하되었다.
 - **손실 함수 가중치 실험**: Mask R-CNN의 세그멘테이션 성능을 높이기 위해 마스크 손실 함수 $\mathcal{L}_{mask}$의 가중치 $w$를 3, 5, 10으로 높여 학습시켰으나($\mathcal{L} = \mathcal{L}_{cls} + \mathcal{L}_{box} + w \cdot \mathcal{L}_{mask}$), 약간의 개선만 있을 뿐 YOLOv8의 성능에는 미치지 못했다.

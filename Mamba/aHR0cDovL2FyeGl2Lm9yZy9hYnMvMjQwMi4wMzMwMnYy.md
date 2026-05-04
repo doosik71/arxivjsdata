@@ -31,12 +31,15 @@ Swin-UMamba는 이러한 기존 Mamba 기반 모델들과 달리, 일반 비전 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 Swin-UMamba는 전형적인 U-자형(U-shaped) 아키텍처를 따르며, 크게 세 부분으로 구성된다:
+
 1. **Mamba-based Encoder**: ImageNet으로 사전 학습된 VMamba-Tiny 구조를 활용하여 다중 스케일 특징을 추출한다.
 2. **Decoder**: 인코더에서 추출된 고수준 세맨틱 정보와 스킵 연결(Skip connection)을 통해 전달된 저수준 디테일을 결합하여 최종 분할 맵을 생성한다.
 3. **Skip Connections**: 인코더와 디코더 사이의 정보 격차를 줄이기 위해 사용된다.
 
 ### Mamba-based VSS Block 및 SS2D
+
 본 모델의 기본 단위는 **Visual State Space (VSS) block**이다. 2D 이미지를 1D 시퀀스로 단순 변환할 때 발생하는 수용 영역 제한 문제를 해결하기 위해 **2D-selective-scan (SS2D)** 메커니즘을 도입하였다. SS2D는 이미지 패치를 네 가지 방향으로 전개하여 네 개의 서로 다른 시퀀스를 생성하고, 각각을 SSM으로 처리한 후 다시 병합한다.
 
 입력 특징 $z$에 대해 SS2D의 출력 $\bar{z}$는 다음과 같이 정의된다.
@@ -46,13 +49,16 @@ $$\bar{z} = \text{merge}(\bar{z}^1, \bar{z}^2, \bar{z}^3, \bar{z}^4)$$
 여기서 $v \in \{1, 2, 3, 4\}$는 네 가지 스캔 방향을 의미하며, $\text{S6}$는 각 요소가 압축된 은닉 상태를 통해 이전 샘플들과 상호작용하게 하는 핵심 SSM 연산자이다.
 
 ### Encoder 및 사전 학습 통합
+
 인코더는 총 5단계(Stage)로 구성된다.
+
 - **Stage 1 (Stem)**: $7 \times 7$ 커널과 stride 2를 가진 Conv 레이어를 통해 $2\times$ 다운샘플링을 수행한다.
 - **Stage 2**: $2 \times 2$ 패치 임베딩 레이어를 통해 해상도를 원래 이미지의 $1/4$로 유지한다.
 - **Stage 3-5**: 패치 병합(Patch Merging) 레이어로 $2\times$ 다운샘플링을 수행하며, 각 단계마다 여러 개의 VSS 블록이 배치되어 특징을 추출한다.
 - **사전 학습 적용**: VSS 블록과 패치 병합 레이어의 가중치는 ImageNet으로 사전 학습된 VMamba-Tiny 모델에서 가져와 초기화한다. 단, 패치 임베딩 블록은 입력 채널 및 패치 크기 차이로 인해 제외된다.
 
 ### Decoder 구조 (Swin-UMamba vs Swin-UMamba$\dagger$)
+
 1. **Swin-UMamba (CNN-based Decoder)**:
    - 전치 합성곱(Transpose Convolution)을 통한 업샘플링을 수행한다.
    - 스킵 연결된 특징 $z'_l$과 이전 단계의 특징 $z_{l+1}$을 결합(Cat)한 후, 잔차 연결(Residual connection)이 포함된 두 개의 Conv 블록($\text{Res}^{(1)}_l, \text{Res}^{(2)}_l$)을 통과시킨다.
@@ -69,11 +75,13 @@ $$\bar{z} = \text{merge}(\bar{z}^1, \bar{z}^2, \bar{z}^3, \bar{z}^4)$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: AbdomenMRI (복부 장기 분할), Endoscopy (내시경 도구 분할), Microscopy (세포 분할).
 - **지표**: Dice Similarity Coefficient (DSC), Normalized Surface Distance (NSD), F1 score.
 - **비교 모델**: nnU-Net, SegResNet (CNN), UNETR, Swin-UNETR, nnFormer (ViT), U-Mamba (Mamba).
 
 ### 주요 결과
+
 1. **성능 우위**: 모든 데이터셋에서 Swin-UMamba와 Swin-UMamba$\dagger$가 기존 CNN, ViT, Mamba 기반 모델들을 능가하였다. 특히 AbdomenMRI에서 U-Mamba\_Enc 대비 평균 2.72%의 성능 향상을 보였다.
 2. **사전 학습의 중요성**:
    - AbdomenMRI에서 사전 학습을 제외했을 때 DSC가 $0.7760 \rightarrow 0.7054$로 급격히 하락하였다.
@@ -87,6 +95,7 @@ $$\bar{z} = \text{merge}(\bar{z}^1, \bar{z}^2, \bar{z}^3, \bar{z}^4)$$
 본 연구는 Mamba 모델이 비전 태스크에서 강력한 성능을 보임에도 불구하고, 정작 의료 영상 분야에서는 사전 학습의 이점을 활용하지 못하고 있었다는 점을 정확히 짚어냈다. 실험 결과는 Mamba-based 모델 역시 CNN이나 ViT와 마찬가지로, 대규모 일반 데이터셋(ImageNet)에서 학습된 가중치를 통해 강건한 초기값을 가질 때 의료 영상과 같은 특수 도메인에서도 빠르게 수렴하고 높은 성능을 낼 수 있음을 보여준다.
 
 **한계 및 논의**:
+
 - **디코더의 역할**: AbdomenMRI에서는 CNN 기반 디코더가 더 좋은 성능을 냈으나, 다른 데이터셋에서는 Mamba 기반 디코더가 유리했다. 이는 데이터셋의 해상도와 타겟 객체의 특성에 따라 최적의 디코더 구조가 다를 수 있음을 의미한다.
 - **하이퍼파라미터**: 저자들은 SOTA 달성보다 사전 학습의 영향력 분석에 집중했으므로, 추가적인 튜닝을 통해 성능을 더 끌어올릴 여지가 남아 있다.
 - **데이터 의존성**: 사전 학습이 매우 효과적이었지만, 이는 결국 ImageNet이라는 거대 데이터셋에 의존하는 결과이다. 의료 영상 전용 대규모 데이터셋으로 사전 학습을 진행했을 때의 효과에 대한 추가 연구가 필요하다.

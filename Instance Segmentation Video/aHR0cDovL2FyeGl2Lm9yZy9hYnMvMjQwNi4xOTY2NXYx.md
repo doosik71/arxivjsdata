@@ -27,38 +27,43 @@ VIS 방법론은 크게 오프라인(Offline) 방식과 온라인(Online) 방식
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인 (Method Flow)
+
 $\text{PM-VIS}^+$의 전체 워크플로우는 비디오 어노테이션 없이 다음의 3단계 과정으로 진행된다.
 
-1.  **의사 라벨 데이터 생성**: 이미지 데이터셋으로 학습된 $\text{PM-VIS}^+(\text{Image})$ 모델을 사용하여 비디오 데이터에 대해 추론을 수행하고 의사 라벨을 생성한다.
-2.  **의사 라벨 데이터 최적화**: 생성된 의사 라벨은 $\text{DeAOT}$ 모델을 통해 시간적 일관성을 부여받아 마스크의 질을 높이며, 이후 $\text{TopK}$ 및 $\text{PScore}$ 필터링을 통해 신뢰도가 낮은 데이터를 제거한다.
-3.  **최종 모델 학습**: 최적화된 의사 라벨 데이터를 사용하여 $\text{PM-VIS}^+(\text{Video})$ 모델을 최종 학습시킨다.
+1. **의사 라벨 데이터 생성**: 이미지 데이터셋으로 학습된 $\text{PM-VIS}^+(\text{Image})$ 모델을 사용하여 비디오 데이터에 대해 추론을 수행하고 의사 라벨을 생성한다.
+2. **의사 라벨 데이터 최적화**: 생성된 의사 라벨은 $\text{DeAOT}$ 모델을 통해 시간적 일관성을 부여받아 마스크의 질을 높이며, 이후 $\text{TopK}$ 및 $\text{PScore}$ 필터링을 통해 신뢰도가 낮은 데이터를 제거한다.
+3. **최종 모델 학습**: 최적화된 의사 라벨 데이터를 사용하여 $\text{PM-VIS}^+(\text{Video})$ 모델을 최종 학습시킨다.
 
 ### 2. 모델 학습 프로세스 및 동적 감독 (Dynamic Supervision)
+
 $\text{PM-VIS}^+$는 학습 데이터의 어노테이션 유형에 따라 손실 함수를 다르게 적용한다.
 
-*   **Pixel-level 데이터 ($\text{COCO}$)**: 마스크 예측 헤드를 학습시키기 위해 $\text{MaskLoss}$를 사용하며, 동시에 Bounding Box 감독을 위한 $\text{BoxInstLoss}$를 함께 적용한다.
-*   **Box-level 데이터 ($\text{ImageNet-bbox}$)**: 픽셀 수준의 정답이 없으므로 마스크 예측 헤드를 학습시키지 않고, $\text{BoxInstLoss}$만을 사용하여 객체 탐지 및 위치 정보만을 학습시킨다.
-*   **의사 라벨 비디오 데이터**: 픽셀 수준의 마스크가 존재하지만 품질이 일정하지 않으므로, $\text{MaskLoss}$와 $\text{BoxInstLoss}$를 모두 사용하여 상호 보완적인 감독을 수행한다.
+* **Pixel-level 데이터 ($\text{COCO}$)**: 마스크 예측 헤드를 학습시키기 위해 $\text{MaskLoss}$를 사용하며, 동시에 Bounding Box 감독을 위한 $\text{BoxInstLoss}$를 함께 적용한다.
+* **Box-level 데이터 ($\text{ImageNet-bbox}$)**: 픽셀 수준의 정답이 없으므로 마스크 예측 헤드를 학습시키지 않고, $\text{BoxInstLoss}$만을 사용하여 객체 탐지 및 위치 정보만을 학습시킨다.
+* **의사 라벨 비디오 데이터**: 픽셀 수준의 마스크가 존재하지만 품질이 일정하지 않으므로, $\text{MaskLoss}$와 $\text{BoxInstLoss}$를 모두 사용하여 상호 보완적인 감독을 수행한다.
 
 ### 3. 비디오 의사 라벨 최적화 전략
+
 단순한 추론 결과는 누락된 객체(Missed instances), 오탐(False positives), 부정확한 경계 등의 문제를 가진다. 이를 해결하기 위해 다음 과정을 거친다.
 
-*   **초기화 및 추적**: 비디오 내에서 예측 점수가 가장 높은 프레임을 키프레임(Keyframe)으로 설정하고, $\text{DeAOT}$ 모델을 통해 해당 프레임으로부터 비디오의 양방향(앞뒤)으로 마스크를 전파(Propagation)하여 전체 프레임의 마스크를 완성한다.
-*   **필터링 메커니즘**:
-    *   $\text{TopK}$ 필터링: 비디오 내 인스턴스의 평균 예측 점수가 높은 상위 $K$개의 마스크만 선택한다.
-    *   $\text{PScore}$ 필터링: 평균 예측 점수가 특정 임계값 $\tau$ 이상인 인스턴스만 유지하고 나머지는 폐기한다.
+* **초기화 및 추적**: 비디오 내에서 예측 점수가 가장 높은 프레임을 키프레임(Keyframe)으로 설정하고, $\text{DeAOT}$ 모델을 통해 해당 프레임으로부터 비디오의 양방향(앞뒤)으로 마스크를 전파(Propagation)하여 전체 프레임의 마스크를 완성한다.
+* **필터링 메커니즘**:
+  * $\text{TopK}$ 필터링: 비디오 내 인스턴스의 평균 예측 점수가 높은 상위 $K$개의 마스크만 선택한다.
+  * $\text{PScore}$ 필터링: 평균 예측 점수가 특정 임계값 $\tau$ 이상인 인스턴스만 유지하고 나머지는 폐기한다.
 
 ## 📊 Results
 
 ### 1. 실험 설정
-*   **데이터셋**: $\text{YTVIS2019}$, $\text{YTVIS2021}$, $\text{OVIS}$ 데이터셋을 사용하여 검증하였다.
-*   **백본 네트워크**: $\text{ResNet-50}$ 및 $\text{Swin-L}$을 사용하였다.
-*   **지표**: $\text{AP}$ (Average Precision), $\text{AP}_{50}$, $\text{AP}_{75}$, $\text{AR}_1$, $\text{AR}_{10}$ 등을 측정하였다.
+
+* **데이터셋**: $\text{YTVIS2019}$, $\text{YTVIS2021}$, $\text{OVIS}$ 데이터셋을 사용하여 검증하였다.
+* **백본 네트워크**: $\text{ResNet-50}$ 및 $\text{Swin-L}$을 사용하였다.
+* **지표**: $\text{AP}$ (Average Precision), $\text{AP}_{50}$, $\text{AP}_{75}$, $\text{AR}_1$, $\text{AR}_{10}$ 등을 측정하였다.
 
 ### 2. 주요 결과 및 분석
-*   **필터링의 효과**: 필터링 없이 의사 라벨을 직접 학습에 사용했을 때보다 $\text{TopK}(K=4)$ 및 $\text{PScore}(\tau=0.2)$를 적용했을 때 $\text{AP}$가 유의미하게 상승하였다. ($\text{YTVIS2019}$ 기준, 필터링 미적용 $41.2\% \rightarrow$ 적용 시 $44.7\%$)
-*   **손실 함수의 영향**: 의사 라벨 학습 시 $\text{MaskLoss}$와 $\text{BoxInstLoss}$를 동시에 사용했을 때 가장 높은 성능을 보였다. 특히 $\text{MaskLoss}$ 단독 사용보다 $\text{BoxInstLoss}$를 함께 사용했을 때 성능이 향상되었는데, 이는 의사 라벨의 픽셀 정밀도가 낮아 박스 수준의 감독이 보완 역할을 했음을 시사한다.
-*   **백본 네트워크별 성능**: $\text{Swin-L}$ 백본을 사용했을 때 $\text{ResNet-50}$보다 월등한 성능 향상이 나타났다. 특히 $\text{PM-VIS}^+(\text{Video})$ 모델은 $\text{PM-VIS}^+(\text{Image})$ 모델 대비 모든 데이터셋에서 성능 향상을 보였다. ($\text{YTVIS2019}$ $\text{Swin-L}$ 기준: $54.5\% \rightarrow 57.2\%$)
+
+* **필터링의 효과**: 필터링 없이 의사 라벨을 직접 학습에 사용했을 때보다 $\text{TopK}(K=4)$ 및 $\text{PScore}(\tau=0.2)$를 적용했을 때 $\text{AP}$가 유의미하게 상승하였다. ($\text{YTVIS2019}$ 기준, 필터링 미적용 $41.2\% \rightarrow$ 적용 시 $44.7\%$)
+* **손실 함수의 영향**: 의사 라벨 학습 시 $\text{MaskLoss}$와 $\text{BoxInstLoss}$를 동시에 사용했을 때 가장 높은 성능을 보였다. 특히 $\text{MaskLoss}$ 단독 사용보다 $\text{BoxInstLoss}$를 함께 사용했을 때 성능이 향상되었는데, 이는 의사 라벨의 픽셀 정밀도가 낮아 박스 수준의 감독이 보완 역할을 했음을 시사한다.
+* **백본 네트워크별 성능**: $\text{Swin-L}$ 백본을 사용했을 때 $\text{ResNet-50}$보다 월등한 성능 향상이 나타났다. 특히 $\text{PM-VIS}^+(\text{Video})$ 모델은 $\text{PM-VIS}^+(\text{Image})$ 모델 대비 모든 데이터셋에서 성능 향상을 보였다. ($\text{YTVIS2019}$ $\text{Swin-L}$ 기준: $54.5\% \rightarrow 57.2\%$)
 
 ## 🧠 Insights & Discussion
 

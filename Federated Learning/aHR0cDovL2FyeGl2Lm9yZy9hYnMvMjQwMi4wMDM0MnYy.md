@@ -21,6 +21,7 @@ Masahiro HAYASHITANI, Junki MORI, and Isamu TERANISHI (2024)
 논문에서는 기존의 프라이버시 보존 연구들이 주로 HFL과 VFL이라는 두 가지 축으로 나뉘어 진행되었음을 지적한다. HFL 관련 서베이 연구들은 주로 그래디언트 누출을 통한 데이터 복원 공격에 집중했으며, VFL 관련 연구들은 서로 다른 피처를 가진 클라이언트 간의 정렬 과정에서 발생하는 위험을 주로 다루었다.
 
 그러나 이러한 기존 접근 방식은 다음과 같은 한계가 있다.
+
 1. **통합적 관점의 부재**: HFL, VFL, FTL의 구조적 차이로 인해 발생하는 서로 다른 위협들을 하나의 체계 내에서 비교 분석하지 못했다.
 2. **FTL 연구의 부족**: FTL은 샘플과 피처가 모두 다른 복잡한 설정임에도 불구하고, 이에 특화된 프라이버시 위협 및 방어 기제에 대한 체계적인 분석이 거의 이루어지지 않았다.
 
@@ -31,20 +32,26 @@ Masahiro HAYASHITANI, Junki MORI, and Isamu TERANISHI (2024)
 본 논문은 분석 대상인 FL의 구조를 먼저 정의하고, 이를 바탕으로 위협 모델과 공격 유형, 방어 기법을 체계화하는 방법론을 취한다.
 
 ### 1. Federated Learning의 분류
+
 데이터 구조에 따라 FL을 다음과 같이 세 가지로 정의한다.
+
 - **Horizontal Federated Learning (HFL)**: 피처 공간과 레이블 공간은 동일하지만, 샘플 공간이 서로 다른 경우이다. 주로 중앙 서버가 모델 파라미터를 취합하는 $\text{FedAvg}$ 방식이 사용된다.
 - **Vertical Federated Learning (VFL)**: 샘플 공간은 동일하지만, 피처 공간이 서로 다른 경우이다. 레이블을 가진 Active client와 피처만 가진 Passive client가 중간 출력값을 교환하며 학습한다.
 - **Federated Transfer Learning (FTL)**: 샘플 공간과 피처 공간이 모두 서로 다른 경우이다. 소스 클라이언트의 지식을 타겟 클라이언트로 전이하여 레이블이 없는 타겟 클라이언트의 예측 성능을 높이는 것이 목표이다.
 
 ### 2. 위협 모델 (Threat Model)
+
 공격 상황을 분석하기 위해 네 가지 관점을 정의한다.
+
 - **공격자 역할**: Server(서버), Client(클라이언트), Third Party(외부 제3자).
 - **공격 정보**: $\text{Gradients}$(그래디언트) 또는 $\text{Model Parameters}$(모델 파라미터).
 - **공격 스타일**: $\text{Malicious}$(능동적 간섭), $\text{Honest-but-curious}$(프로토콜 준수하에 추론 시도), $\text{Honest}$(추론 시도 없음).
 - **FL 유형**: HFL, VFL, FTL.
 
 ### 3. 프라이버시 공격의 분류
+
 타겟 데이터의 성격에 따라 6가지로 분류한다.
+
 - **Feature Inference**: 입력 피처를 복구하는 공격 ($\text{Reconstruction attack}$ 또는 $\text{Attribute inference}$).
 - **Property Inference**: 클래스 분포나 민감한 속성과 같은 데이터셋의 전반적 특성을 추론하는 공격.
 - **Membership Inference**: 특정 데이터 포인트가 학습 세트에 포함되었는지 여부를 확인하는 공격.
@@ -53,9 +60,11 @@ Masahiro HAYASHITANI, Junki MORI, and Isamu TERANISHI (2024)
 - **Relation Leaks**: 그래프 데이터 등에서 샘플 간의 연결 관계를 추론하는 공격.
 
 ### 4. 방어 메커니즘
+
 방어 방법은 크게 두 가지 범주로 나눈다.
 
 #### 일반 방어 방법 (General Defense)
+
 - **통신 채널 방어**: $\text{SMPC}$(Secure Multi-Party Computation)를 통해 암호화된 상태로 연산을 수행한다. 여기에는 $\text{Homomorphic Encryption (HE)}$, $\text{Garbled Circuit (GC)}$, $\text{Secret Sharing (SS)}$ 등이 포함된다. 또한 $\text{Blockchain}$을 이용해 신뢰할 수 없는 서버를 배제한 P2P FL을 구현할 수 있다.
 - **차분 프라이버시 (Differential Privacy, DP)**: 데이터에 노이즈를 추가하여 개별 레코드의 영향력을 제한한다.
   - **$\text{CDP}$ (Central DP)**: 신뢰할 수 있는 서버가 집계 결과에 노이즈를 추가한다.
@@ -67,6 +76,7 @@ $\text{DP}$의 수학적 정의는 다음과 같다. $\epsilon > 0, 0 \le \delta
 $$\Pr[M(D) \in S] \le \exp(\epsilon) \cdot \Pr[M(D') \in S] + \delta$$
 
 #### 특화 방어 방법 (Specialized Defense)
+
 - **Feature Inference**: $\text{Batch size}$를 크게 설정하여 최적화 복잡도를 높이거나, $\text{Dropout}$을 통해 가시적인 그래디언트 수를 줄인다.
 - **Property Inference**: $\text{Dropout}$ 적용 및 그래디언트 업데이트 공유 횟수를 제한한다.
 - **Membership Inference**: 정규화($\text{Regularization}$), $\text{Dropout}$, $\text{Distillation}$ 등을 적용한다.

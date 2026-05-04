@@ -4,7 +4,7 @@ M.A. Ganaie, Minghui Hu, A.K. Malik, M. Tanveer, P.N. Suganthan (2022)
 
 ## 🧩 Problem to Solve
 
-본 논문은 개별 딥러닝 모델이 가진 한계를 극복하고 일반화 성능(generalization performance)을 향상시키기 위한 방법론인 딥 앙상블 학습(Deep Ensemble Learning)에 대해 다룬다. 딥러닝 아키텍처는 다층 처리 구조를 통해 뛰어난 특징 표현 능력을 보여주지만, 여전히 vanishing/exploding gradients나 degradation problem과 같은 최적화 문제와 높은 계산 비용이라는 병목 현상이 존재한다. 
+본 논문은 개별 딥러닝 모델이 가진 한계를 극복하고 일반화 성능(generalization performance)을 향상시키기 위한 방법론인 딥 앙상블 학습(Deep Ensemble Learning)에 대해 다룬다. 딥러닝 아키텍처는 다층 처리 구조를 통해 뛰어난 특징 표현 능력을 보여주지만, 여전히 vanishing/exploding gradients나 degradation problem과 같은 최적화 문제와 높은 계산 비용이라는 병목 현상이 존재한다.
 
 연구의 핵심 문제는 여러 모델의 예측을 결합하여 단일 모델보다 더 나은 성능을 내는 앙상블 학습의 원리를 딥러닝에 효율적으로 적용하는 것이다. 특히, 딥러닝 모델은 파라미터 수가 방대하여 여러 모델을 학습시키는 데 막대한 비용이 소모되므로, 다양성(diversity)을 어떻게 확보하고, 계산 복잡도를 어떻게 낮추며, 최종 예측값을 어떻게 효과적으로 융합(fusion)할 것인가가 주요 해결 과제이다. 본 논문의 목표는 최신 딥 앙상블 모델들의 상태를 종합적으로 검토하고, 이를 체계적으로 분류하여 연구자들에게 광범위한 요약 정보를 제공하는 것이다.
 
@@ -28,6 +28,7 @@ M.A. Ganaie, Minghui Hu, A.K. Malik, M. Tanveer, P.N. Suganthan (2022)
 본 논문은 특정 알고리즘을 제안하는 것이 아니라 기존 연구들을 분석하는 리뷰 논문이므로, 딥 앙상블의 이론적 토대와 방법론적 분류를 상세히 설명하는 구조를 취한다.
 
 ### 1. 이론적 배경
+
 앙상블 학습의 성공 이유는 다음과 같은 수식과 이론으로 설명된다.
 
 **Bias-Variance Decomposition**: 앙상블 모델의 오차는 편향(bias), 분산(variance), 그리고 공분산(covariance)의 합으로 분해될 수 있다.
@@ -37,15 +38,17 @@ $$\text{Error} = \text{bias}^2 + \frac{1}{M}\text{var} + \left(1 - \frac{1}{M}\r
 **다양성(Diversity)**: 모델들이 서로 다른 오류를 범하게 함으로써 이를 상쇄시키는 것이 핵심이다. 데이터 샘플링(Bagging), 가중치 조정(Boosting), 혹은 서로 다른 알고리즘 사용(Heterogeneous)을 통해 다양성을 확보한다.
 
 ### 2. 주요 앙상블 전략
+
 - **Bagging**: 중복 허용 샘플링(Bootstrap)을 통해 여러 독립적인 모델을 학습시킨 후, 다수결 투표(Majority Voting)나 평균(Averaging)으로 결과를 통합하여 분산을 줄인다.
 - **Boosting**: 약한 학습기(Weak Learner)를 순차적으로 학습시키며, 이전 단계에서 틀린 샘플에 가중치를 두어 편향과 분산을 동시에 줄인다. $\text{ResNet}$과 같은 구조가 Boosting의 원리와 유사하다고 분석한다.
 - **Stacking**: 베이스 모델들의 출력을 다시 입력으로 사용하는 메타 학습기(Meta-learner)를 두어 최종 예측을 수행하는 계층적 구조이다.
 - **Implicit/Explicit Ensembles**:
-    - **Implicit**: Dropout, DropConnect와 같이 하나의 네트워크 내에서 가중치를 공유하며 학습 시 무작위성을 부여해 테스트 시 앙상블 효과를 내는 방식이다.
-    - **Explicit**: Snapshot Ensembling처럼 서로 다른 로컬 미니마(local minima)에 도달한 모델들을 저장하여 결합하는 방식으로 가중치를 공유하지 않는다.
+  - **Implicit**: Dropout, DropConnect와 같이 하나의 네트워크 내에서 가중치를 공유하며 학습 시 무작위성을 부여해 테스트 시 앙상블 효과를 내는 방식이다.
+  - **Explicit**: Snapshot Ensembling처럼 서로 다른 로컬 미니마(local minima)에 도달한 모델들을 저장하여 결합하는 방식으로 가중치를 공유하지 않는다.
 - **Homogeneous vs Heterogeneous**: 동일한 알고리즘을 사용하느냐(HOE), 서로 다른 알고리즘(예: CNN + SVM)을 섞어 사용하느냐(HEE)의 차이이다.
 
 ### 3. 의사결정 융합(Decision Fusion) 절차
+
 - **Unweighted Averaging**: 단순 평균을 내며, Softmax 확률값 $P_i^j$를 다음과 같이 계산하여 합산한다.
 $$P_i^j = \text{softmax}_j(O_i) = \frac{\exp(O_j^i)}{\sum_{k=1}^K \exp(O_k^i)}$$
 - **Majority Voting**: 가장 많은 득표를 얻은 클래스를 최종 결과로 선택한다.
@@ -66,6 +69,7 @@ $$f_{\text{stacking}}(x) = \sum_{j=1}^m w_j f_j(x)$$
 본 논문은 딥 앙상블의 복잡한 지형을 이론(Bias-Variance) $\rightarrow$ 전략(Bagging/Boosting 등) $\rightarrow$ 융합(Fusion) $\rightarrow$ 응용(Application)으로 이어지는 논리적 흐름으로 정리하여, 새로운 연구자가 어떤 방향으로 모델을 설계해야 할지에 대한 가이드라인을 제공한다. 특히 implicit 앙상블과 snapshot ensembling을 통해 계산 비용 문제를 해결하려는 시도들을 잘 짚어내었다.
 
 **한계 및 비판적 논의**
+
 1. **모델 선택 기준의 부재**: 논문에서도 언급되었듯이, 앙상블에 몇 개의 모델을 넣어야 하는지, 어떤 알고리즘 조합이 최적인지에 대한 일반적인 기준(Criterion)은 여전히 문제 종속적(problem-dependent)이며 명확한 해답이 제시되지 않았다.
 2. **계산 비용의 실질적 문제**: 이론적으로는 앙상블이 우수하지만, 실제 대규모 데이터셋에서 수십 개의 딥러닝 모델을 유지하고 추론하는 데 발생하는 메모리 및 지연 시간(latency) 문제에 대한 심층적인 분석은 부족하다.
 3. **융합 전략의 단순성**: 많은 연구가 여전히 단순 평균(Naive Averaging)에 의존하고 있으며, 데이터 적응형(data-adaptive) 융합 전략에 대한 연구가 더 필요함을 시사한다.

@@ -28,6 +28,7 @@ Rabia Ali, Muhammad Umar Karim Khan, Chong Min Kyung (2020)
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인 및 프레임 순열 예측
+
 비디오에서 시공간적 특징을 학습하기 위해, 모델은 무작위로 섞인 프레임들의 순서를 예측하는 과제를 수행한다.
 
 - **데이터 구성**: $N$개의 프레임을 가진 비디오를 $M$개의 연속된 프레임으로 구성된 $Z = N - M + 1$개의 서브 시퀀스로 나눈다.
@@ -36,6 +37,7 @@ Rabia Ali, Muhammad Umar Karim Khan, Chong Min Kyung (2020)
   $$\arg \min_{\psi} \sum_{i} \ell(W_\psi(s_i^*), y_i)$$
 
 ### 2. M-Stream Siamese CNN 아키텍처
+
 모델은 $M$개의 병렬 스트림을 가진 Siamese 구조를 채택한다.
 
 - **Base-CNN (BCNN)**: 각 스트림은 CaffeNet(AlexNet의 변형)의 $\text{conv1}$부터 $\text{fc7}$ 레이어로 구성되며, 모든 스트림은 가중치를 공유한다. 각 BCNN은 프레임 $f_k$를 입력받아 특징 표현 $r_k$를 출력한다.
@@ -45,6 +47,7 @@ Rabia Ali, Muhammad Umar Karim Khan, Chong Min Kyung (2020)
 - **Top-CNN (TCNN)**: 연결된 벡터 $x_i$를 입력으로 받는 로지스틱 분류기로, $M!$개의 가능한 순열 클래스에 대한 확률 분포 $P(Y|x_i; \phi)$를 출력한다.
 
 ### 3. 훈련 및 이상치 탐지 절차
+
 - **손실 함수**: 클래스 분류를 위해 교차 엔트로피 손실(Cross Entropy Loss)을 사용하며, $\theta$(BCNN 가중치)와 $\phi$(TCNN 가중치)를 공동 최적화한다.
   $$L(s_i, y_i, \theta, \phi) = -\frac{1}{M!} \sum_{i=1}^{M!} y_i \log(T(O(B(g(s_i, y_i); \theta)); \phi))$$
 - **이상치 점수 계산**: 모델을 **정상 비디오 데이터로만** 학습시킨다. 테스트 단계에서 새로운 비디오 세그먼트가 입력되었을 때, 모델이 순열 인덱스를 예측하는 데 어려움을 겪으면 손실 함수 값(교차 엔트로피)이 높게 나타난다. 이 손실 값을 Min-Max 정규화하여 이상치 점수 $A(s_i)$로 사용한다.
@@ -53,16 +56,18 @@ Rabia Ali, Muhammad Umar Karim Khan, Chong Min Kyung (2020)
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: 이미지(CIFAR-10, CIFAR-100, Fashion-MNIST, ImageNet) 및 비디오(UCF101, ILSVRC2015)를 사용하였다.
 - **평가 지표**: AUROC(Area Under the ROC Curve)를 사용하여 성능을 측정하였다.
 - **평가 방식**: One-vs-All 스킴을 적용하여, 특정 한 클래스를 정상으로 학습시키고 나머지 클래스들을 이상치로 간주하는 실험을 모든 클래스에 대해 반복하여 평균을 냈다.
 
 ### 2. 주요 결과
+
 - **이미지 기반 결과**: 다양한 SSL 방법 중 RotNet이 ImageNet에서 가장 높은 성능을 보였다. 이는 회전 예측을 위해 모델이 객체의 모양, 방향 등 고수준 특징을 학습해야 하기 때문이다.
 - **비디오 기반 결과**: 제안된 프레임 순열 예측 방법이 기존의 비디오 SSL 방법들(Colorization, Tracking, AoT 등)보다 우수한 성능을 기록하였다.
   - **UCF101**: 제안 방법이 76.4%의 AUROC를 기록하여 가장 높았다.
   - **ILSVRC2015**: 제안 방법이 75.5%의 AUROC를 기록하였다.
-- **하이퍼파라미터 분석**: 
+- **하이퍼파라미터 분석**:
   - 프레임 수 $M=5$일 때 최적의 성능을 보였다. $M$이 너무 작으면 정보가 부족하고, 너무 크면 성능 향상이 없었다.
   - 프레임을 선택할 때 연속된 프레임보다 2프레임씩 건너뛰며 선택(Skip=2)하는 것이 더 효과적이었다. 이는 연속된 프레임 간의 유사성이 너무 높아 시공간적 특징 학습에 방해가 되기 때문이다.
 

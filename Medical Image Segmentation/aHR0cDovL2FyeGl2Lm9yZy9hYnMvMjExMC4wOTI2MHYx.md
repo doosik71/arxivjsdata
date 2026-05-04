@@ -29,25 +29,31 @@ Hengji Cui, Dong Wei, Kai Ma, Shi Gu, and Yefeng Zheng (2021)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 MRE-Net은 입력 이미지를 임베딩 공간으로 투영하고, 학습된 카테고리 프로토타입과의 거리를 계산하여 픽셀 단위의 분할을 수행하는 구조이다. 전체 파이프라인은 **Backbone $\rightarrow$ AMS Embedding $\rightarrow$ DML Dense Prediction** 순으로 구성된다.
 
 ### 주요 구성 요소 및 역할
+
 1. **Backbone Network**: modified 3D U-Net을 사용하여 특징을 추출한다. 기존 U-Net의 skip connection에 transition convolution을 추가하여 저수준 특징과 고수준 특징의 채널 수를 조정함으로써 성능을 높였다.
 2. **Attentional Multi-Scale (AMS) Embedding**: U-Net의 각 레벨에서 추출된 특징 맵들을 결합하고, 여기에 픽셀의 정규화된 좌표 정보(Cartesian coordinates)를 추가 채널로 입력한다. 이후 SE block(Channel-wise attention)과 ASPP(Atrous Spatial Pyramid Pooling)를 거쳐 다중 스케일의 특징을 통합한 최종 임베딩 벡터 $e_i$를 생성한다.
 3. **Multimodal Representation Embedding**: 각 클래스 $k$를 $M$개의 프로토타입 $\{c_{k,j}\}_{j=1}^M$의 집합으로 정의한다. 이를 통해 단일 벡터로는 표현하기 힘든 클래스 내부의 다양한 변동성을 캡처한다.
 
 ### 학습 목표 및 방정식
+
 #### 1. 거리 기반 확률 계산
+
 픽셀 임베딩 $e_i$와 프로토타입 $c_{k,j}$ 사이의 거리를 $d(e_i, c_{k,j})$라고 할 때, 픽셀 $i$가 클래스 $k$에 속할 확률 $P(s_i=k)$는 다음과 같이 정의된다.
 $$P(s_i=k) = \frac{\sum_{j=1}^{M} \alpha_{k,j} \exp(\xi \hat{e}_i^T \hat{c}_{k,j})}{\sum_{k=1}^{K} \sum_{j=1}^{M} \alpha_{k,j} \exp(\xi \hat{e}_i^T \hat{c}_{k,j})}$$
 여기서 $\hat{e}_i$와 $\hat{c}_{k,j}$는 $L_2$ 정규화된 벡터이며, $\xi$는 학습 가능한 스케일링 인자이다.
 
 #### 2. 적응형 혼합 계수 ($\alpha_{k,j}$)
+
 모든 모드에 동일한 가중치를 주는 대신, 입력 $e_i$에 따라 가중치를 조절하는 self-attention 메커니즘을 사용한다.
 $$\alpha_{k,j} = \frac{\exp(\beta_{k,j})}{\sum_{m=1}^{M} \exp(\beta_{k,m})}$$
 여기서 $\beta$는 $e_i$를 입력으로 받는 두 개의 FC 레이어(Squeeze & Excitation 구조)를 통해 계산된다.
 
 #### 3. 손실 함수 및 학습 절차
+
 손실 함수로는 클래스별로 정규화된 Cross-Entropy Loss를 사용한다.
 $$L_{CE} = -\sum_{k} \frac{\delta_k(a_i) \log[P(s_i=k)]}{N_k}$$
 또한, 클래스 불균형 문제를 해결하기 위해 **OHEM (Online Hard Example Mining)**을 적용하여, 다수 클래스(Majority group)에서는 손실 값이 큰 어려운 샘플들만 선택적으로 학습에 참여시킨다.
@@ -55,13 +61,15 @@ $$L_{CE} = -\sum_{k} \frac{\delta_k(a_i) \log[P(s_i=k)]}{N_k}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: MRBrainS18 (뇌 MRI, 8개 구조 분할), BTCV (복부 CT, 8개 장기 분할).
 - **비교 대상**: 3D U-Net, ANTs (Registration-based), sSE method, DataAug (Semi-supervised).
 - **지표**: Dice Similarity Coefficient (Dice), 95th percentile Hausdorff Distance ($HD_{95}$).
 - **설정**: One-shot ($L=1$) 및 Few-shot ($L=2, 3$) 시나리오에서 실험을 수행하였다.
 
 ### 주요 결과
-1. **One-shot 성능**: 
+
+1. **One-shot 성능**:
    - MRBrainS18 데이터셋에서 MRE-Net-1은 평균 Dice $78.39\%$, $HD_{95}$ $6.30\text{mm}$를 기록하여, U-Net-1 ($14.86\%$)과 ANTs ($65.93\%$)를 압도하였다.
    - BTCV 데이터셋에서도 MRE-Net-1은 평균 Dice $69.13\%$, $HD_{95}$ $19.02\text{mm}$를 달성하여, 다른 모든 방법론보다 월등한 성능을 보였다. 특히 ANTs와 U-Net은 복부 CT의 큰 개체 간 변동성으로 인해 유의미한 결과를 내지 못했다.
 2. **Few-shot 확장성**: 학습 샘플 수가 1개에서 3개로 증가함에 따라 성능이 점진적으로 향상되었으며, MRE-Net-3는 U-Net-6(6개 샘플 학습)보다 더 나은 성능을 보이기도 하였다.
@@ -71,9 +79,11 @@ $$L_{CE} = -\sum_{k} \frac{\delta_k(a_i) \log[P(s_i=k)]}{N_k}$$
 ## 🧠 Insights & Discussion
 
 ### 강점 및 해석
+
 본 연구의 가장 큰 강점은 **DML을 통한 비파라메트릭(Non-parametric) 접근 방식**을 채택하여 극소량의 데이터에서도 과적합을 효과적으로 억제했다는 점이다. t-SNE 시각화 결과, MRE-Net은 3D U-Net에 비해 클래스별 특징 공간을 훨씬 더 명확하고 조밀하게 클러스터링하는 것으로 나타났다. 또한, 단일 프로토타입이 아닌 다중 모드 표현을 사용함으로써 동일 장기라도 환자마다 다를 수 있는 형태적/강도적 변동성을 효과적으로 모델링할 수 있었다.
 
 ### 한계 및 논의사항
+
 - **계산 자원**: DML 특성상 모든 픽셀과 프로토타입 간의 거리 계산이 필요하므로, 일반 U-Net보다 GPU 메모리 사용량이 많고 학습 시간이 약간 더 소요된다.
 - **불규칙한 구조 분할**: 뇌의 백질 고혈압(WMH)과 같이 형태와 위치가 매우 불규칙한 영역의 분할 성능은 상대적으로 낮았다. 이는 현재의 거리 기반 매칭 방식만으로는 해결하기 어려운 문제이며, 향후 특화된 전략이 필요함을 시사한다.
 - **전이 학습의 미적용**: 본 논문에서는 scratch부터 학습하였으나, 다른 도메인에서 사전 학습된 모델을 전이 학습(Transfer Learning)시킨다면 데이터 부족 문제를 더욱 완화할 수 있을 것으로 보인다.

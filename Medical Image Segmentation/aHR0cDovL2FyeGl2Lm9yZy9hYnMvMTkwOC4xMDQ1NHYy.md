@@ -17,6 +17,7 @@ Nima Tajbakhsh, Laura Jeyaseelan, Qian Li, Jeffrey N. Chiang, Zhihao Wu, and Xia
 ## 📎 Related Works
 
 기존의 의료 영상 관련 서베이 논문들은 다음과 같은 한계가 있었다.
+
 - Litjens et al. (2017)은 의료 영상 전반의 딥러닝 솔루션을 다루었으나, 특정 문제(데이터 불완전성)에 집중하지 않았다.
 - Yi et al. (2018)은 GAN의 활용에만 초점을 맞췄으며, Cheplygina et al. (2019)은 준지도 학습 및 전이 학습을 다루었으나 일반적인 의료 영상 분석 범위에 머물렀다.
 - Zhang et al. (2019b)은 소규모 샘플 문제(Small Sample Size)만을 다루었고, Karimi et al. (2019)은 레이블 노이즈(Label Noise) 문제에 국한되었다.
@@ -28,9 +29,11 @@ Nima Tajbakhsh, Laura Jeyaseelan, Qian Li, Jeffrey N. Chiang, Zhihao Wu, and Xia
 본 논문은 불완전한 데이터셋 문제를 두 가지 시나리오로 나누어 분석한다.
 
 ### 1. Scarce Annotations (희소 어노테이션) 해결 방안
+
 데이터 양이 절대적으로 부족한 경우, 크게 세 가지 전략을 사용한다.
 
 **가. 학습 데이터셋 확장 (Enlarging the Training Set)**
+
 - **Data Augmentation**: 전통적인 공간/강도 변환 외에도, 두 이미지를 선형 결합하는 Mixup을 사용한다. Mixup의 수식은 다음과 같다.
   $$\tilde{x} = \lambda x_i + (1-\lambda)x_j$$
   $$\tilde{y} = \lambda y_i + (1-\lambda)y_j$$
@@ -40,16 +43,19 @@ Nima Tajbakhsh, Laura Jeyaseelan, Qian Li, Jeffrey N. Chiang, Zhihao Wu, and Xia
 - **Unlabeled Data**: 레이블이 없는 데이터를 활용하는 Self-supervised pre-training과 Semi-supervised learning을 적용한다.
 
 **나. 학습 정규화 강화 (Strengthening Regularization)**
+
 - **Altered Image Representation**: 3D 영상을 2.5D나 멀티뷰 뷰(Multi-view)로 변환하여 모델이 학습해야 할 복잡도를 낮춘다.
 - **Multi-task Learning**: 분할과 함께 분류나 재구성(Reconstruction) 작업을 동시에 학습시켜 공유 인코더가 더 일반적인 특징을 학습하도록 유도한다.
 - **Shape Regularization**: 결과물이 해부학적으로 타당하도록 제약을 가한다. 예를 들어, Star shape prior는 중심점과 내부 점 사이의 모든 경로가 내부여야 한다는 제약을 주어 구멍이 없는 매끄러운 마스크를 생성하게 한다.
 
 **다. 사후 정제 (Post-segmentation Refinement)**
+
 - **Conditional Random Fields (CRF)**: 픽셀 간의 관계를 모델링하여 경계를 날카롭게 다듬는다. 에너지 함수 $E(x|I)$는 다음과 같이 정의된다.
   $$E(x|I) = \sum_{i} \phi_u(x_i) + \sum_{i \neq j} \phi_p(x_i, x_j)$$
   여기서 $\phi_u$는 유니러리 포텐셜(Unary potential), $\phi_p$는 페어와이즈 포텐셜(Pairwise potential)이다. 최근에는 이를 RNN 형태로 구현한 RNN-CRF를 통해 end-to-end 학습을 수행한다.
 
 ### 2. Weak Annotations (약한 어노테이션) 해결 방안
+
 정답의 질이 낮거나 불완전한 경우, 어노테이션의 유형에 따라 대응한다.
 
 - **Image-level Labels**: 이미지 전체에 대한 레이블만 있는 경우, Class Activation Maps (CAM)를 통해 활성화 맵을 생성하거나, 이미지 전체를 하나의 '백(Bag)'으로 보는 Multiple Instance Learning (MIL)을 통해 픽셀 수준의 예측을 수행한다.
@@ -60,23 +66,26 @@ Nima Tajbakhsh, Laura Jeyaseelan, Qian Li, Jeffrey N. Chiang, Zhihao Wu, and Xia
 
 본 논문은 개별 제안 방법론들의 실험 결과를 종합하여 분석하였다.
 
-- **정량적 성과**: 
-    - **Self-supervised learning**의 경우, Models Genesis와 같은 프레임워크가 3D 폐 결절 및 간 분할에서 IoU를 3~5포인트 향상시켰음을 확인하였다.
-    - **Domain Adaptation**은 타겟 도메인의 레이블이 없을 때도 합성 데이터를 통해 실측 데이터 기반 모델과 유사한 수준의 성능에 도달할 수 있음을 보여주었다.
-    - **Active Learning**은 전체 데이터의 20~50%만 레이블링하고도 전체 데이터를 사용했을 때와 유사한 성능을 낼 수 있음을 입증하였다.
-- **방법론 비교**: 
-    - 2D 분할에서는 CRF 기반의 사후 정제가 매우 효과적이지만, 3D 분할에서는 계산 복잡도와 하이퍼파라미터 튜닝의 어려움으로 인해 그 효과가 상대적으로 낮게 나타났다.
-    - 전이 학습(Transfer Learning)은 2D 모델에서는 유효하나, 3D 의료 영상 모델로의 직접적인 적용은 여전히 도전적인 과제로 남아 있다.
+- **정량적 성과**:
+  - **Self-supervised learning**의 경우, Models Genesis와 같은 프레임워크가 3D 폐 결절 및 간 분할에서 IoU를 3~5포인트 향상시켰음을 확인하였다.
+  - **Domain Adaptation**은 타겟 도메인의 레이블이 없을 때도 합성 데이터를 통해 실측 데이터 기반 모델과 유사한 수준의 성능에 도달할 수 있음을 보여주었다.
+  - **Active Learning**은 전체 데이터의 20~50%만 레이블링하고도 전체 데이터를 사용했을 때와 유사한 성능을 낼 수 있음을 입증하였다.
+- **방법론 비교**:
+  - 2D 분할에서는 CRF 기반의 사후 정제가 매우 효과적이지만, 3D 분할에서는 계산 복잡도와 하이퍼파라미터 튜닝의 어려움으로 인해 그 효과가 상대적으로 낮게 나타났다.
+  - 전이 학습(Transfer Learning)은 2D 모델에서는 유효하나, 3D 의료 영상 모델로의 직접적인 적용은 여전히 도전적인 과제로 남아 있다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 추천 전략
+
 저자들은 데이터 자원 수준에 따라 다음과 같은 전략을 추천한다.
+
 1. **저자원 상황 (추가 데이터 없음)**: 전통적인 Data Augmentation과 더불어 Mixup, Shape Regularization, 그리고 2D의 경우 CRF 정제를 우선적으로 사용해야 한다.
 2. **중자원 상황 (미레이블 데이터 존재)**: Self-supervised pre-training이 가장 유망하며, 구현이 쉽고 성능 향상 폭이 크다.
 3. **고자원 상황 (전문가 투입 가능)**: Active Learning과 Interactive Segmentation을 결합하여 레이블링 비용을 최소화하면서 데이터셋을 확장하는 것이 가장 확실한 방법이다.
 
 ### 한계 및 비판적 해석
+
 - **결합 전략의 부재**: 대부분의 연구가 하나의 제약 조건(예: Scarce 또는 Weak)만 해결하려 한다. 하지만 실제 임상 데이터는 두 가지 문제가 동시에 나타나는 경우가 많으므로, 이를 통합적으로 해결하는 파이프라인 연구가 필요하다.
 - **3D 확장성의 한계**: 많은 기법들이 2D에서 성공했으나 3D로 넘어올 때 성능 저하가 발생하거나 계산 비용이 기하급수적으로 증가하는 경향이 있다. 이는 단순히 차원을 늘리는 것이 아니라 3D의 공간적 특성을 반영한 새로운 아키텍처가 필요함을 시사한다.
 - **현실적 비용 측정**: Active Learning 연구들이 '레이블 수'의 감소는 강조하지만, 실제 전문가가 느끼는 '인지적 노력'이나 '시간 비용'에 대한 정밀한 분석은 부족한 편이다.

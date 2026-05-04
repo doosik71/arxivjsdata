@@ -25,6 +25,7 @@ Takayasu Moriya et al. (2018)
 제안된 방법론은 크게 두 단계의 페이즈로 구성된다.
 
 ### 1. Deep Representation Learning (Phase 1)
+
 첫 번째 단계에서는 대상 영상에서 무작위로 추출한 3D 패치들을 이용하여 JULE를 통해 깊은 특징 표현을 학습한다. JULE의 핵심은 의미 있는 클러스터 라벨이 표현 학습의 지도 신호가 되고, 다시 변별력 있는 표현이 더 정확한 클러스터링을 가능하게 한다는 상호 보완적 관계에 있다.
 
 JULE의 목적 함수는 다음과 같이 정의된다:
@@ -32,43 +33,51 @@ $$\hat{y}, \hat{\theta} = \arg \min_{y, \theta} L(y, \theta | I)$$
 여기서 $I$는 레이블이 없는 이미지 패치 집합, $y$는 클러스터 라벨, $\theta$는 CNN의 파라미터, 그리고 $L$은 손실 함수를 의미한다.
 
 학습 과정은 다음과 같은 순환 구조를 가진다:
+
 - **Forward Pass**: 현재 CNN 파라미터 $\theta_t$를 통해 추출된 표현 $X_t$에 대해 Agglomerative Clustering을 수행하여 새로운 라벨 $y_t$를 할당한다.
 - **Backward Pass**: 할당된 $y_t$를 정답 라벨로 간주하여 3D CNN을 학습시키고 파라미터를 $\theta_{t+1}$로 업데이트한다.
 
 본 논문은 이를 3D 의료 영상에 적용하기 위해 CNN 전체 아키텍처에 3D Convolution을 적용하였으며, 최종 클러스터 라벨을 사용한 마지막 Backward pass를 추가하여 CNN이 가장 정밀한 표현을 학습할 수 있도록 확장하였다.
 
 ### 2. Segmentation (Phase 2)
+
 학습된 CNN을 이용하여 대상 영상 전체를 분할한다.
+
 1. 대상 영상에서 일정 간격(stride $s$)으로 $w \times w \times w$ 크기의 패치를 모두 추출한다.
 2. 학습된 CNN을 통해 각 패치를 160차원의 특징 표현으로 변환한다.
 3. 변환된 표현들에 대해 $k$-means 클러스터링을 적용하여 $K=3$개의 클러스터로 나눈다.
 4. 각 패치의 중심을 기준으로 $s \times s \times s$ 크기의 서브패치 영역에 해당 클러스터 라벨을 투영하여 최종 3D 분할 영상을 생성한다.
 
 ### CNN 아키텍처 및 세부 설정
+
 - **구조**: 3개의 Convolutional layers $\rightarrow$ 1개의 Max pooling layer $\rightarrow$ 2개의 Fully-connected layers 순으로 구성된다.
 - **세부 사양**:
-    - 모든 Convolutional kernel 크기는 $5 \times 5 \times 5$, stride는 1이며, 각 층마다 50개의 커널을 사용한다.
-    - Max pooling kernel은 $2 \times 2 \times 2$, stride는 2이다.
-    - FC layer의 뉴런 수는 각각 1350개와 160개이며, 마지막 FC layer 이후에는 L2-normalization을 적용한다.
-    - 활성화 함수로는 ReLU를 사용하며, 각 Convolutional layer 출력에 Batch Normalization을 적용한다.
-    - 입력 패치 크기는 $27 \times 27 \times 27$ voxels이다.
+  - 모든 Convolutional kernel 크기는 $5 \times 5 \times 5$, stride는 1이며, 각 층마다 50개의 커널을 사용한다.
+  - Max pooling kernel은 $2 \times 2 \times 2$, stride는 2이다.
+  - FC layer의 뉴런 수는 각각 1350개와 160개이며, 마지막 FC layer 이후에는 L2-normalization을 적용한다.
+  - 활성화 함수로는 ReLU를 사용하며, 각 Convolutional layer 출력에 Batch Normalization을 적용한다.
+  - 입력 패치 크기는 $27 \times 27 \times 27$ voxels이다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: micro-CT로 촬영된 3개의 폐암 조직 영상(lung-A, lung-B, lung-C)을 사용하였다.
 - **평가 지표**: 분할 정확도를 측정하기 위해 Normalized Mutual Information (NMI)을 사용하였으며, 수동으로 어노테이션된 7개의 슬라이스를 기준으로 평가하였다.
 - **비교 대상**: 전통적인 $k$-means 분할 방식과 Multithreshold Otsu 방법론을 기준선(baseline)으로 설정하였다.
 
 ### 정량적 결과
+
 실험 결과, JULE 기반의 분할 방법이 기존의 비지도 학습 방법들보다 높은 NMI 값을 기록하며 우수한 성능을 보였다. 비록 절대적인 NMI 수치가 매우 높지는 않았으나, 모든 데이터셋에서 기존 방법론을 상회하는 결과를 나타냈다.
 
 ### 정성적 결과
+
 정성적 평가 결과, 제안 방법은 정상 조직 영역과 암 영역(침습성 및 비침습성 암)을 효과적으로 구분해 내는 것으로 확인되었다. 특히 정상 조직은 저강도(low intensity) 영역으로, 암 영역은 고강도(high intensity) 영역으로 잘 분리되었다.
 
 ## 🧠 Insights & Discussion
 
-본 연구의 결과는 JULE가 영상의 강도(intensity) 및 강도의 변화량(variation)을 반영하는 특징을 효과적으로 학습할 수 있음을 시사한다. 
+본 연구의 결과는 JULE가 영상의 강도(intensity) 및 강도의 변화량(variation)을 반영하는 특징을 효과적으로 학습할 수 있음을 시사한다.
+
 - **강도 기반 분리**: 일반적으로 정상 조직은 낮은 강도를, 암 조직은 높은 강도를 가지므로, CNN이 이를 구분하는 특징을 학습하였다.
 - **변화량 기반 분리**: 침습성 암과 정상 조직은 강도의 변화가 적은 반면, 비침습성 암은 강도의 변화가 큰 특성이 있다. JULE 기반 분할이 lung-A와 lung-B에서 침습성 암과 비침습성 암을 구분해 낸 것은 CNN이 이러한 강도의 변동성 특징까지 포착했음을 의미한다.
 

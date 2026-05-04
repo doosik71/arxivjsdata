@@ -12,9 +12,9 @@ Kyungsu Lee, Jaeseung Yang, Haeyun Lee, Jae Youn Hwang (2022)
 
 본 논문의 핵심 기여는 입력 데이터의 맥락을 반영하여 임계값을 동적으로 조정하는 **Adaptive SwisH (ASH)** 활성화 함수를 제안한 것이다. 중심적인 설계 아이디어는 다음과 같다.
 
-1.  **적응형 임계값(Adaptive Threshold):** 고정된 임계값 대신, 입력 텐서의 통계적 특성(평균과 표준편차)을 이용하여 입력 분포의 상위 $k\%$에 해당하는 요소들만 활성화하는 확률적 샘플링 방식을 도입하였다.
-2.  **학습 가능한 파라미터화:** 단순한 샘플링은 미분이 불가능하여 학습이 어렵지만, 이를 시그모이드(Sigmoid) 함수 기반의 매끄러운 근사 함수로 변환함으로써 임계값 관련 파라미터를 역전파(Backpropagation)를 통해 학습 가능하게 만들었다.
-3.  **Swish 함수의 일반화:** 제안된 ASH가 기존에 경험적으로 우수함이 증명된 Swish 활성화 함수의 일반화된 형태임을 수학적으로 증명하여, Swish의 성능 우위에 대한 이론적 배경을 제공하였다.
+1. **적응형 임계값(Adaptive Threshold):** 고정된 임계값 대신, 입력 텐서의 통계적 특성(평균과 표준편차)을 이용하여 입력 분포의 상위 $k\%$에 해당하는 요소들만 활성화하는 확률적 샘플링 방식을 도입하였다.
+2. **학습 가능한 파라미터화:** 단순한 샘플링은 미분이 불가능하여 학습이 어렵지만, 이를 시그모이드(Sigmoid) 함수 기반의 매끄러운 근사 함수로 변환함으로써 임계값 관련 파라미터를 역전파(Backpropagation)를 통해 학습 가능하게 만들었다.
+3. **Swish 함수의 일반화:** 제안된 ASH가 기존에 경험적으로 우수함이 증명된 Swish 활성화 함수의 일반화된 형태임을 수학적으로 증명하여, Swish의 성능 우위에 대한 이론적 배경을 제공하였다.
 
 ## 📎 Related Works
 
@@ -25,6 +25,7 @@ Kyungsu Lee, Jaeseung Yang, Haeyun Lee, Jae Youn Hwang (2022)
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인 및 설계 원리
+
 ASH의 기본 아이디어는 입력 특징 맵(Feature-map) $\mathbf{X}$에서 상위 $k\%$의 정보성 높은 요소(Informative elements)만을 선택적으로 통과시키고 나머지는 억제하는 것이다. 이를 위해 저자는 뉴런의 출력이 정규분포(Gaussian Distribution)를 따른다는 가정을 세우고, $\text{Z-score}$ 정규화를 통해 상위 $k\%$를 추출하는 조건을 다음과 같이 정의한다.
 
 $$\text{Element } x^{(i)} \in \mathbf{X} \text{ is in the top-k\% if } x^{(i)} \ge \mu_{\mathbf{X}} + z_k \sigma_{\mathbf{X}}$$
@@ -32,16 +33,19 @@ $$\text{Element } x^{(i)} \in \mathbf{X} \text{ is in the top-k\% if } x^{(i)} \
 여기서 $\mu_{\mathbf{X}}$는 입력의 평균, $\sigma_{\mathbf{X}}$는 표준편차이며, $z_k$는 표준정규분포표에서 $k\%$에 해당하는 $\text{Z-value}$이다.
 
 ### 2. ASH의 수학적 공식화 및 학습 가능 구조
+
 단순한 조건문은 미분이 불가능하여 $z_k$를 학습시킬 수 없다. 이를 해결하기 위해 저자는 Heaviside 계단 함수를 시그모이드 함수로 근사하여 다음과 같은 최종 형태의 ASH 식을 도출하였다.
 
 $$\text{ASH}(x^{(i)}) = \frac{x^{(i)}}{1 + e^{-2\alpha(x^{(i)} - \mu_{\mathbf{X}} - z_k \sigma_{\mathbf{X}})}}$$
 
 이 식은 다음과 같은 특성을 가진다.
--   **$\mu_{\mathbf{X}}, \sigma_{\mathbf{X}}$:** 입력 텐서 전체의 통계량을 사용하므로, 입력 데이터의 맥락에 따라 임계값이 동적으로 변하는 **Context-aware** 특성을 부여한다.
--   **$z_k$:** 학습 가능한 파라미터로, 모델이 각 층(Layer)과 유닛의 위치에 따라 최적의 샘플링 비율($k\%$)을 스스로 학습하게 한다.
--   **$\alpha$:** 근사 함수의 가파른 정도를 조절하는 하이퍼파라미터이다.
+
+- **$\mu_{\mathbf{X}}, \sigma_{\mathbf{X}}$:** 입력 텐서 전체의 통계량을 사용하므로, 입력 데이터의 맥락에 따라 임계값이 동적으로 변하는 **Context-aware** 특성을 부여한다.
+- **$z_k$:** 학습 가능한 파라미터로, 모델이 각 층(Layer)과 유닛의 위치에 따라 최적의 샘플링 비율($k\%$)을 스스로 학습하게 한다.
+- **$\alpha$:** 근사 함수의 가파른 정도를 조절하는 하이퍼파라미터이다.
 
 ### 3. Swish 함수와의 관계
+
 위 식을 시그모이드 함수 $S(x) = \frac{1}{1+e^{-x}}$ 형태로 정리하면 다음과 같이 표현될 수 있다.
 
 $$\text{ASH}(x^{(i)}) = x^{(i)} S(ax^{(i)} + b)$$
@@ -51,26 +55,31 @@ $$\text{ASH}(x^{(i)}) = x^{(i)} S(ax^{(i)} + b)$$
 ## 📊 Results
 
 ### 1. 실험 설정
--   **데이터셋:** ImageNet, CIFAR-10, CIFAR-100 (분류), COCO, PASCAL VOC (탐지), ADE20K, PASCAL VOC (분할).
--   **모델:** ResNet, Wide ResNet, DenseNet, Mask R-CNN, SSD, YOLOv4, U-Net, DeepLabV3+, EfficientNet 등.
--   **비교 대상:** $\text{ReLU, LReLU, PReLU, Softplus, ELU, SELU, GELU, Swish}$.
--   **평가 지표:** Top-1/5 Accuracy, $\text{mAP@50}$, $\text{mIoU}$.
+
+- **데이터셋:** ImageNet, CIFAR-10, CIFAR-100 (분류), COCO, PASCAL VOC (탐지), ADE20K, PASCAL VOC (분할).
+- **모델:** ResNet, Wide ResNet, DenseNet, Mask R-CNN, SSD, YOLOv4, U-Net, DeepLabV3+, EfficientNet 등.
+- **비교 대상:** $\text{ReLU, LReLU, PReLU, Softplus, ELU, SELU, GELU, Swish}$.
+- **평가 지표:** Top-1/5 Accuracy, $\text{mAP@50}$, $\text{mIoU}$.
 
 ### 2. 주요 결과
--   **분류(Classification):** ImageNet에서 $\text{ReLU}$($76.4\%$) 및 $\text{Swish}$($77.5\%$) 대비 높은 $\text{Top-1 Accuracy}$($78.5\%$)를 기록하였다. CIFAR 데이터셋에서도 일관되게 가장 높은 성능을 보였다.
--   **탐지 및 분할(Detection & Segmentation):** COCO 데이터셋(mAP)과 ADE20K 데이터셋(mIoU) 모두에서 ASH가 베이스라인들보다 우수한 성능을 기록하였다. 특히 분할 작업에서 타겟 객체를 정밀하게 국소화(Localization)하는 능력이 뛰어남을 확인하였다.
--   **학습 효율:** 검증 손실(Validation Loss) 곡선을 분석한 결과, ASH가 다른 활성화 함수들에 비해 훨씬 가파른 하강 곡선을 그리며 더 빠르게 수렴(Earlier convergence)함을 확인하였다.
+
+- **분류(Classification):** ImageNet에서 $\text{ReLU}$($76.4\%$) 및 $\text{Swish}$($77.5\%$) 대비 높은 $\text{Top-1 Accuracy}$($78.5\%$)를 기록하였다. CIFAR 데이터셋에서도 일관되게 가장 높은 성능을 보였다.
+- **탐지 및 분할(Detection & Segmentation):** COCO 데이터셋(mAP)과 ADE20K 데이터셋(mIoU) 모두에서 ASH가 베이스라인들보다 우수한 성능을 기록하였다. 특히 분할 작업에서 타겟 객체를 정밀하게 국소화(Localization)하는 능력이 뛰어남을 확인하였다.
+- **학습 효율:** 검증 손실(Validation Loss) 곡선을 분석한 결과, ASH가 다른 활성화 함수들에 비해 훨씬 가파른 하강 곡선을 그리며 더 빠르게 수렴(Earlier convergence)함을 확인하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. 강점 및 생물학적 해석
-ASH는 단순히 성능을 높인 것이 아니라, 인간 뉴런의 특성을 효과적으로 모사하였다. 
--   **국소화 특성(Localization Property):** 분석 결과, 네트워크의 얕은 층(입력에 가까운 층)에서는 $z_k$ 값이 작아 넓은 범위의 정보를 수용하고, 깊은 층(출력에 가까운 층)으로 갈수록 $z_k$ 값이 커져 매우 정밀하고 선택적인 정보만을 통과시키는 경향을 보였다. 이는 모델이 계층적으로 정보를 정제하는 과정과 일치한다.
--   **적응적 임계값:** 입력 분포의 통계량을 직접 이용함으로써, 서로 다른 도메인의 데이터가 들어오더라도 그에 맞는 최적의 임계값을 동적으로 적용할 수 있다.
+
+ASH는 단순히 성능을 높인 것이 아니라, 인간 뉴런의 특성을 효과적으로 모사하였다.
+
+- **국소화 특성(Localization Property):** 분석 결과, 네트워크의 얕은 층(입력에 가까운 층)에서는 $z_k$ 값이 작아 넓은 범위의 정보를 수용하고, 깊은 층(출력에 가까운 층)으로 갈수록 $z_k$ 값이 커져 매우 정밀하고 선택적인 정보만을 통과시키는 경향을 보였다. 이는 모델이 계층적으로 정보를 정제하는 과정과 일치한다.
+- **적응적 임계값:** 입력 분포의 통계량을 직접 이용함으로써, 서로 다른 도메인의 데이터가 들어오더라도 그에 맞는 최적의 임계값을 동적으로 적용할 수 있다.
 
 ### 2. 한계 및 비판적 해석
--   **수학적 증명의 부족:** 실험적으로는 우수한 성능과 수렴 속도를 보였으나, 이러한 성능 향상이 구체적으로 왜 발생하는지에 대한 엄밀한 수학적 증명은 다소 부족하며, 향후 과제로 남겨두고 있다.
--   **계산 복잡도:** 평균($\mu$)과 표준편차($\sigma$)를 계산해야 하므로 단순한 $\text{ReLU}$보다는 계산 비용이 추가된다. 다만, 저자는 이를 '낮은 계산 비용'이라고 설명하며 실용적인 수준임을 주장한다.
+
+- **수학적 증명의 부족:** 실험적으로는 우수한 성능과 수렴 속도를 보였으나, 이러한 성능 향상이 구체적으로 왜 발생하는지에 대한 엄밀한 수학적 증명은 다소 부족하며, 향후 과제로 남겨두고 있다.
+- **계산 복잡도:** 평균($\mu$)과 표준편차($\sigma$)를 계산해야 하므로 단순한 $\text{ReLU}$보다는 계산 비용이 추가된다. 다만, 저자는 이를 '낮은 계산 비용'이라고 설명하며 실용적인 수준임을 주장한다.
 
 ## 📌 TL;DR
 

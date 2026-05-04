@@ -17,16 +17,19 @@ Lu Wang, Xuanqing Liu, Jinfeng Yi, Yuan Jiang, Cho-Jui Hsieh (2020)
 ## 📎 Related Works
 
 ### 관련 연구 및 한계
-1.  **Metric Learning**: Mahalanobis distance를 학습하는 NCA, LMNN, ITML, LFDA 등 다양한 선형 메트릭 학습 방법이 존재한다. 그러나 이들은 모두 정밀도 향상에만 치중했을 뿐, 적대적 강건성은 고려하지 않았다.
-2.  **신경망의 적대적 강건성**: 경험적 방어(Empirical defense)와 인증된 방어(Certified defense)로 나뉜다. 인증된 방어는 특정 입력 영역 내에 적대적 예제가 없음을 보장하지만, 이는 모델의 매끄러움(smoothness) 가정에 의존하므로 $K$-NN과 같은 이산 모델에는 적용할 수 없다.
-3.  **$K$-NN의 강건성**: 기존 연구들은 주로 $K$-NN에 대한 적대적 공격(attack)이나 Euclidean distance 기반의 강건성 검증(verification)에 집중하였다. 일반적인 Mahalanobis distance에 대한 강건성 검증 및 학습 방법은 본 논문 이전까지 연구되지 않았다.
+
+1. **Metric Learning**: Mahalanobis distance를 학습하는 NCA, LMNN, ITML, LFDA 등 다양한 선형 메트릭 학습 방법이 존재한다. 그러나 이들은 모두 정밀도 향상에만 치중했을 뿐, 적대적 강건성은 고려하지 않았다.
+2. **신경망의 적대적 강건성**: 경험적 방어(Empirical defense)와 인증된 방어(Certified defense)로 나뉜다. 인증된 방어는 특정 입력 영역 내에 적대적 예제가 없음을 보장하지만, 이는 모델의 매끄러움(smoothness) 가정에 의존하므로 $K$-NN과 같은 이산 모델에는 적용할 수 없다.
+3. **$K$-NN의 강건성**: 기존 연구들은 주로 $K$-NN에 대한 적대적 공격(attack)이나 Euclidean distance 기반의 강건성 검증(verification)에 집중하였다. 일반적인 Mahalanobis distance에 대한 강건성 검증 및 학습 방법은 본 논문 이전까지 연구되지 않았다.
 
 ### 기존 방식과의 차별점
+
 ARML은 단순히 공격을 막아내는 경험적 방어를 넘어, 수학적 하한선을 통해 강건성을 보장하는 '인증된 방어'를 Mahalanobis $K$-NN에 최초로 도입하였다. 또한, 신경망의 강건한 학습에서 흔히 나타나는 '깨끗한 정확도'와 '강건한 정확도' 사이의 트레이드오프(trade-off) 문제를 해결하였다.
 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 방법론은 양의 준정부호(positive semi-definite) 행렬 $M$으로 매개변수화되는 Mahalanobis distance $d_M(x, x') = (x-x')^T M (x-x')$를 학습하여, $K$-NN 분류기의 인증된 강건성 오류(certified robust error)를 최소화하는 것을 목표로 한다. $M$의 양의 준정부호 성질을 보장하기 위해 $M = G^T G$로 정의하여 $G$를 학습한다.
 
 ### 핵심 구성 요소 및 수식
@@ -46,6 +49,7 @@ $$\epsilon^*(x_{test}, y_{test}; M) \geq \text{kth min}_{j: y_j \neq y_{test}} \
 단, $k = (K+1)/2$이다. 이는 각 클래스 내외의 샘플들에 대해 위에서 정의한 $\tilde{\epsilon}$ 값을 계산하여 $k$번째 최소/최대값을 취함으로써 얻어진다.
 
 ### 학습 절차
+
 전체 학습 목표는 모든 훈련 데이터에 대해 위에서 도출한 강건성 하한선의 손실(loss)을 최소화하는 것이다.
 $$\min_{G} \frac{1}{N} \sum_{i=1}^N \ell(\epsilon^* \text{ lower bound})$$
 실제 구현에서는 계산 효율성을 위해 모든 쌍을 계산하는 대신, 각 샘플의 주변(neighborhood)에서 양성 및 음성 샘플을 무작위로 샘플링하는 $\text{randnear}^+_M$ 및 $\text{randnear}^-_M$ 절차를 사용하여 근사적으로 최적화한다. $G$는 Adam optimizer를 통해 업데이트된다.
@@ -53,16 +57,18 @@ $$\min_{G} \frac{1}{N} \sum_{i=1}^N \ell(\epsilon^* \text{ lower bound})$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: MNIST, Fashion-MNIST, Splice, Pendigits, Satimage, USPS (총 6개).
 - **비교 대상**: Euclidean distance, NCA, LMNN, ITML, LFDA.
 - **평가 지표**: Clean error, Certified robust error ($\text{cre}$), Empirical robust error ($\text{ere}$).
 - **설정**: $K=11$ (K-NN의 경우), $M$은 정방 행렬.
 
 ### 주요 결과
-1.  **강건성 향상**: 모든 데이터셋에서 ARML은 다른 모든 메트릭 학습 방법 및 Euclidean distance보다 훨씬 낮은 인증된 강건성 오류와 경험적 강건성 오류를 기록하였다.
-2.  **트레이드오프 부재**: NCA나 LMNN은 깨끗한 정확도를 높였지만 강건성이 Euclidean보다 떨어지는 경향을 보였다. 반면, ARML은 깨끗한 정확도 면에서 NCA/LMNN과 경쟁 가능한 수준을 유지하면서도 강건성을 획기적으로 높였다.
-3.  **신경망과의 비교**: Randomized Smoothing을 적용한 신경망의 경우 강건성을 높이면 깨끗한 정확도가 떨어지는 트레이드오프가 뚜렷하게 나타났으나, ARML은 이러한 현상 없이 두 성능을 모두 확보하였다.
-4.  **계산 효율성**: GPU 구현 시 평균 런타임이 약 10.6초(USPS 기준)로 매우 효율적이며, 기존의 LMNN이나 ITML과 비교해도 오버헤드가 크지 않다.
+
+1. **강건성 향상**: 모든 데이터셋에서 ARML은 다른 모든 메트릭 학습 방법 및 Euclidean distance보다 훨씬 낮은 인증된 강건성 오류와 경험적 강건성 오류를 기록하였다.
+2. **트레이드오프 부재**: NCA나 LMNN은 깨끗한 정확도를 높였지만 강건성이 Euclidean보다 떨어지는 경향을 보였다. 반면, ARML은 깨끗한 정확도 면에서 NCA/LMNN과 경쟁 가능한 수준을 유지하면서도 강건성을 획기적으로 높였다.
+3. **신경망과의 비교**: Randomized Smoothing을 적용한 신경망의 경우 강건성을 높이면 깨끗한 정확도가 떨어지는 트레이드오프가 뚜렷하게 나타났으나, ARML은 이러한 현상 없이 두 성능을 모두 확보하였다.
+4. **계산 효율성**: GPU 구현 시 평균 런타임이 약 10.6초(USPS 기준)로 매우 효율적이며, 기존의 LMNN이나 ITML과 비교해도 오버헤드가 크지 않다.
 
 ## 🧠 Insights & Discussion
 

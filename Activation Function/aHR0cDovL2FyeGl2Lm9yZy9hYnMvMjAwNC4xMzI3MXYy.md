@@ -21,7 +21,9 @@ Zhaohe Liao (2020)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
-본 연구에서는 CIFAR-10 데이터셋을 사용하여 이미지 분류 작업을 수행하며, 필터 수에 따라 세 가지 크기(Small, Middle, Large)의 단순 CNN 구조를 사용한다. 
+
+본 연구에서는 CIFAR-10 데이터셋을 사용하여 이미지 분류 작업을 수행하며, 필터 수에 따라 세 가지 크기(Small, Middle, Large)의 단순 CNN 구조를 사용한다.
+
 - **Small**: 필터 수 $[16, 32, 32]$
 - **Middle**: 필터 수 $[32, 64, 64]$
 - **Large**: 필터 수 $[48, 96, 96]$
@@ -29,6 +31,7 @@ Zhaohe Liao (2020)
 각 모델 크기별로 ReLU(기준), Fourier series, Linear combination 세 가지 활성화 함수를 적용하여 총 9개의 네트워크를 비교 분석한다.
 
 ### 2. Fourier Series Simulated Activation (Fourier-CNN)
+
 저자는 푸리에 급수가 적절한 조건(Dirichlet 조건)을 만족하는 모든 함수를 표현할 수 있다는 점에 착안하여, 활성화 함수를 다음과 같이 정의한다.
 
 $$act(x) = A + \sum_{n=1}^{\infty} (a_n \cos(n\omega x) + b_n \sin(n\omega x))$$
@@ -41,6 +44,7 @@ $$act(x) = A + \sum_{n=1}^{\infty} (a_n \cos(n\omega x) + b_n \sin(n\omega x))$$
 - $\frac{\partial act(x)}{\partial \omega} = \sum_{n=1}^{\infty} nx(a_n \cos(n\omega x) - b_n \sin(n\omega x))$
 
 ### 3. Linear Combination of Activation Functions (LC-CNN)
+
 또 다른 방법은 여러 후보 활성화 함수들의 가중 평균을 사용하는 것이다.
 
 $$act(x) = \frac{\sum_{i=1}^{n} w_i act_i(x)}{\sum_{i=1}^{n} w_i}$$
@@ -48,6 +52,7 @@ $$act(x) = \frac{\sum_{i=1}^{n} w_i act_i(x)}{\sum_{i=1}^{n} w_i}$$
 본 실험에서는 $act_i(x)$로 $\text{ReLU, Sigmoid, tanh, linear}$ 네 가지 함수를 사용하였다. 가중치 $w_i$가 one-hot 벡터가 되면 특정 하나의 활성화 함수로 수렴하므로, 이론적으로는 기존의 단일 활성화 함수보다 성능이 낮아질 가능성이 없음을 보장한다.
 
 ### 4. 학습 절차
+
 - **손실 함수**: 교차 엔트로피(Cross Entropy)를 사용한다.
 - **최적화 알고리즘**: RMSProp을 사용하며, 에폭(Epoch) 구간에 따라 학습률(Learning Rate)을 $0.001 \rightarrow 0.0001 \rightarrow 0.00001 \rightarrow 0.000001$로 단계적으로 감소시킨다.
 - **데이터**: 데이터 증강(Data Augmentation) 없이 CIFAR-10 원본 데이터를 사용한다.
@@ -55,31 +60,37 @@ $$act(x) = \frac{\sum_{i=1}^{n} w_i act_i(x)}{\sum_{i=1}^{n} w_i}$$
 ## 📊 Results
 
 ### 1. 실험 설정 및 지표
+
 - **데이터셋**: CIFAR-10 (60,000장, 10개 클래스)
 - **평가 지표**: 학습 및 검증 데이터셋에 대한 정확도(Accuracy)와 손실(Loss)
 
 ### 2. 주요 결과
+
 실험 결과, 학습 가능한 활성화 함수를 사용한 모델이 표준 ReLU 모델보다 전반적으로 더 높은 정확도와 낮은 손실을 기록하였다.
 
 - **네트워크 크기별 경향**:
-    - **Small 모델**: Fourier-CNN이 가장 높은 성능 향상을 보였으며, 일반화 성능이 크게 개선되었다.
-    - **Large 모델**: LC-CNN이 가장 좋은 성능을 보였으며, 특히 검증 데이터셋에서의 정확도가 표준 CNN보다 높았다.
-- **정량적 향상**: Table 2에 따르면, Small 모델에서 Fourier-CNN은 검증 정확도를 약 $5.09\%$ 포인트 향상시켰다. 
+  - **Small 모델**: Fourier-CNN이 가장 높은 성능 향상을 보였으며, 일반화 성능이 크게 개선되었다.
+  - **Large 모델**: LC-CNN이 가장 좋은 성능을 보였으며, 특히 검증 데이터셋에서의 정확도가 표준 CNN보다 높았다.
+- **정량적 향상**: Table 2에 따르면, Small 모델에서 Fourier-CNN은 검증 정확도를 약 $5.09\%$ 포인트 향상시켰다.
 - **학습 특성**: 모델의 크기가 커질수록 표준 CNN은 학습 데이터에 과적합(Overfitting)되는 경향이 강해져 학습 정확도는 높으나 검증 정확도가 낮아지는 반면, 학습 가능한 활성화 함수를 사용한 모델은 검증 정확도가 더 높게 유지되는 일반화 능력을 보였다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. 표현력과 일반화 능력의 상관관계
+
 저자는 모델 크기에 따라 성능 향상의 원인이 다르다고 분석한다.
+
 - **Small 모델**: 파라미터 수가 적어 Underfitting이 발생하는 단계이므로, 학습 가능한 활성화 함수가 모델의 **표현력(Expressiveness)**을 직접적으로 높여 성능을 향상시킨다.
 - **Middle/Large 모델**: 이미 충분한 파라미터를 가지고 있어 표현력보다는 **일반화 능력(Generalization ability)**이 병목 구간이 된다. 학습 가능한 활성화 함수가 데이터에 최적화된 비선형성을 학습함으로써 과적합을 방지하고 일반화 성능을 높인 것으로 해석된다.
 
 ### 2. 한계 및 비판적 해석
+
 - **구조적 한계**: 본 실험은 네트워크의 깊이(Depth)를 변경하지 않고 레이어의 필터 수(Width)만 변경하여 실험하였다. 따라서 최신 딥러닝 모델의 핵심인 '깊은 구조'에서의 효과는 검증되지 않았다.
 - **SOTA 모델 적용 부재**: 단순한 CNN 구조에서만 실험이 진행되었으므로, ResNet이나 EfficientNet과 같은 최신 SOTA 모델에 적용했을 때도 동일한 효과가 있을지는 불분명하다.
 - **최적화 문제**: 푸리에 급수 기반의 활성화 함수가 지역 최적점(Local Minima)에 빠져 단순 함수보다 성능이 낮아질 가능성에 대한 방안이 구체적으로 제시되지 않았다.
 
 ### 3. 추가 실험 (Autoencoder & PSO)
+
 - **Autoencoder**: Middle Fourier-CNN을 오토인코더로 사전 학습(Pre-training)했을 때, 수렴 속도가 빨라지고 더 높은 정확도에 도달함을 확인하였다.
 - **PSO (Particle Swarm Optimization)**: 경사 하강법(BP) 대신 PSO 알고리즘을 사용하여 파라미터를 최적화했으나, 결과는 BP보다 훨씬 낮았다. 이는 스웜(Swarm)의 크기가 충분하지 않았거나 업데이트 주기가 너무 이산적이었기 때문으로 분석된다.
 

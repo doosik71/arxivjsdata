@@ -25,6 +25,7 @@ Ao Zhang, Pan Zhou, Kaixun Huang, Yong Zou, Ming Liu, Lei Xie (2023)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 U2-KWS는 Shared Encoder, Bias Module, CTC Decoder, Attention Decoder, 그리고 Keyword Encoder의 다섯 가지 주요 구성 요소로 이루어져 있다. 전체 파이프라인은 다음과 같이 동작한다.
 
 1. **Shared Encoder**: Conformer 레이어로 구성되며, Dynamic chunk 전략을 사용하여 지연 시간(Latency)을 제어한다.
@@ -33,11 +34,12 @@ U2-KWS는 Shared Encoder, Bias Module, CTC Decoder, Attention Decoder, 그리고
 4. **Second-pass (Non-streaming Branch)**: 1단계에서 후보가 발견되면, 해당 구간의 오디오 표현을 Clipping 하여 Attention Decoder에 입력하고 최종적으로 키워드 존재 여부를 검증(Rescoring)한다.
 
 ### Keyword Bias 메커니즘
+
 본 논문은 서로 다른 쿼리(Query) 구성을 가진 두 가지 Cross-attention을 사용하여 키워드 정보를 주입한다. 기본 Attention 수식은 다음과 같다.
 
 $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
 
-- **Acoustic-query Attention (1단계)**: 오디오 표현 $h_a$를 Query로, 키워드 표현 $h_k$를 Key와 Value로 사용한다. 
+- **Acoustic-query Attention (1단계)**: 오디오 표현 $h_a$를 Query로, 키워드 표현 $h_k$를 Key와 Value로 사용한다.
   $$\tilde{h}_a = \text{Attention}(Q_a, K_k, V_k)$$
   이 방식은 프레임 단위 처리가 가능하여 스트리밍 추론에 적합하며, 오디오 표현에 키워드 정보를 더해 phonetic posteriorgrams를 예측한다.
 
@@ -46,7 +48,8 @@ $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)
   이 방식은 전체 오디오와 키워드 간의 전역적 상관관계를 모델링할 수 있어 정밀한 검증에 유리하지만, 계산 비용이 높아 2단계에서만 사용된다.
 
 ### 학습 절차 및 손실 함수
-학습은 두 단계로 나누어 진행된다. 
+
+학습은 두 단계로 나누어 진행된다.
 
 1. **1단계 학습**: Streaming 브랜치만을 먼저 학습시킨다. 텍스트 전사 데이터에서 무작위로 연속된 단어 시퀀스를 추출하여 긍정 샘플을 만들고, 렉시콘에서 무작위로 단어를 조합해 부정 샘플을 생성한다. 특히 키워드 뒤에 `<eok>`(end of keyword) 토큰을 추가하여 모델이 키워드 정보에 집중하도록 유도한다.
 2. **2단계 학습**: 전체 모델을 공동 최적화한다. Attention Decoder의 입력은 `<sos> + keyword`로 고정하며, 긍정 샘플은 `keyword + <eok>`를, 부정 샘플은 `</s>`를 예측하도록 학습시킨다.
@@ -55,15 +58,18 @@ $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)
 $$L = \lambda L_{ctc} + (1-\lambda) L_{att}$$
 
 ### Encoder Clipping (Spike-based)
+
 디코더의 복잡도를 줄이기 위해 1단계에서 탐지된 키워드의 타임스탬프를 기반으로 인코더 출력을 자르는(Clip) 기법을 사용한다. `<eok>` 토큰의 확률이 가장 높은 프레임을 종료 지점으로 설정하고, 종료 지점부터 역순으로 비-블랭크(non-blank) 토큰의 확률이 임계값을 넘는 'Spike'의 개수가 키워드 길이와 일치할 때를 시작 지점으로 설정하는 **Spike-based clipping** 방식을 제안하였다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 1,000시간의 차량 내 음성 데이터(Internal Corpus)와 공개 데이터셋인 AISHELL-1을 사용하였다.
 - **평가 지표**: ROC 곡선 및 F1-score를 통해 성능을 측정하였다. 특히 False Alarm rate를 시간당 0.5회로 고정했을 때의 Wake-up rate(재현율)를 주요 지표로 삼았다.
 
 ### 주요 결과
+
 - **성능 향상**: 제안된 U2-KWS는 기존의 Customized KWS 시스템 대비 False Alarm rate가 0.5회/h일 때 Wake-up rate가 상대적으로 **41% 향상**되는 결과를 보였다.
 - **디코더 전략의 효과**: Baseline(CTC 전용) $\rightarrow$ Keyword Bias 추가(1단계) $\rightarrow$ Causal Decoder 추가(2단계) $\rightarrow$ Full Decoder 추가 순으로 성능이 지속적으로 향상되었다. 특히 Full Decoder(전체 컨텍스트 활용) 방식이 가장 높은 정밀도를 보였다.
 - **키워드 길이에 따른 영향**: 키워드의 길이가 길수록 F1-score가 높아지는 경향을 보였다. 이는 짧은 키워드일수록 오경보 발생 확률이 높으며, 긴 키워드일수록 디코더의 변별력이 더 크게 작용하기 때문이다.

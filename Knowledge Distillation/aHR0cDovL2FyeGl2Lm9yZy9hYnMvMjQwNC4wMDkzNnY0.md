@@ -28,25 +28,30 @@ Gousia Habib, Tausifa jan Saleem, Sheikh Musa Kaleem, Tufail Rouf, Brejesh Lall 
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 시스템 구조
+
 Knowledge Distillation은 기본적으로 **Teacher-Student Framework**를 따른다. 거대 모델인 Teacher가 입력 데이터에 대해 생성한 예측값이나 중간 특징 맵(feature maps)을 가이드라인으로 삼아, 작은 모델인 Student가 이를 모방하도록 학습시킨다.
 
 ### 주요 지식 전송 유형
+
 1. **Response-based Knowledge Transfer**: Teacher의 최종 출력층에서 나오는 확률 분포(Soft targets)를 Student가 예측하도록 학습한다.
 2. **Feature-based Knowledge Transfer**: Teacher의 중간 레이어에서 추출된 특징 표현(feature representations)을 Student가 모방하게 한다.
 3. **Relation-based Knowledge Transfer**: 데이터 샘플 간의 관계(예: 샘플 A와 B의 유사도)를 Teacher가 어떻게 파악했는지를 Student에게 전달한다.
 
 ### 학습 목표 및 손실 함수
+
 Student 모델은 일반적으로 실제 정답(Ground-truth)과의 차이를 줄이는 손실과 Teacher의 예측과 일치시키려는 증류 손실의 가중 합을 최소화하는 방향으로 학습된다.
 
 $$L_{distill} = \alpha \cdot T^2 \cdot \text{cross\_entropy}(y_{student}, y_{teacher}/T) + (1 - \alpha) \cdot \text{cross\_entropy}(y_{student}, t)$$
 
 여기서 각 변수의 의미는 다음과 같다.
+
 - $y_{student}, y_{teacher}$: 각각 Student와 Teacher 모델의 출력(logits)이다.
 - $t$: 실제 정답 레이블(true labels)이다.
 - $T$: Temperature(온도) 파라미터로, Softmax 함수를 통과시키기 전 logit을 나눠줌으로써 확률 분포를 더 부드럽게(soften) 만들어 'Dark Knowledge'(정답 외 클래스 간의 관계)를 더 잘 학습하게 한다.
 - $\alpha$: 두 손실 항 사이의 가중치를 조절하는 하이퍼파라미터이다.
 
 ### 증류 체계 (Distillation Schemes)
+
 - **Offline Distillation**: 미리 학습된 고정된 Teacher 모델로부터 Student가 지식을 배운다.
 - **Online Distillation**: Teacher와 Student가 동시에 학습하며 서로 상호작용한다.
 - **Self-distillation**: 모델 스스로가 자신의 더 큰 버전이나 이전 상태의 지식을 전수한다.
@@ -64,15 +69,19 @@ $$L_{distill} = \alpha \cdot T^2 \cdot \text{cross\_entropy}(y_{student}, y_{tea
 ## 🧠 Insights & Discussion
 
 ### 강점 및 유효성
+
 KD는 단순히 모델을 작게 만드는 것을 넘어, Teacher 모델이 가진 일반화 능력을 Student에게 전이시킴으로써 Student 모델 단독 학습 시보다 더 높은 정확도를 얻게 할 수 있다. 특히 'Soft targets'를 활용함으로써 클래스 간의 상관관계를 학습하는 것이 모델의 강건성(robustness) 향상에 기여한다는 점이 확인되었다.
 
 ### 한계 및 미해결 질문
+
 논문은 효율적인 KD 설계를 위해 다음과 같은 변수들이 매우 중요함을 언급한다.
+
 - **Teacher-Student Gap**: Teacher와 Student 사이의 용량(capacity) 차이가 너무 크면 오히려 학습 효율이 떨어질 수 있다.
 - **Loss Function Selection**: 작업(Task)에 따라 단순한 Logit 일치가 아닌 Feature나 Relation 기반의 손실 함수 선택이 필수적이다.
 - **Computational Cost**: 일부 최신 KD 방법론은 학습 과정에서 Teacher의 연산량이 추가되어 학습 시간이 매우 길어지는 문제가 있다.
 
 ### 비판적 해석
+
 본 논문은 광범위한 분야를 다루고 있어 전반적인 흐름을 파악하기에 매우 훌륭하지만, 각 방법론의 상세한 하이퍼파라미터 튜닝 방법이나 구체적인 구현 디테일보다는 결과 중심의 요약에 치중되어 있다. 또한, 최근의 LLM 기반 Vision-Language Model로의 패러다임 변화에 따른 KD의 역할 변화에 대해 더 깊은 논의가 필요할 것으로 보인다.
 
 ## 📌 TL;DR

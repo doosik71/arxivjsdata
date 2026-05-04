@@ -27,9 +27,11 @@ Heinrich Dinkel, Yongqing Wang, Zhiyong Yan, Junbo Zhang, Yujun Wang (2022)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 UniKW-AT는 KWS 레이블 세트 $L_{KWS}$와 AT 레이블 세트 $L_{AT}$를 결합하여 하나의 통합 레이블 세트 $L = L_{KWS} \cup L_{AT}$를 구성한다. 구체적으로 AudioSet의 527개 사운드 이벤트 레이블에 $K$개의 타겟 키워드를 추가하여 총 $C + K$개의 출력 노드를 가진다. 이때, KWS 데이터셋에서 타겟이 아닌 'noise' 레이블은 AT 레이블 세트의 'Speech' 레이블로 매핑하여 중복을 피한다.
 
 ### 학습 절차 및 손실 함수
+
 입력 오디오는 16kHz로 샘플링된 후, 32ms 윈도우와 10ms 홉 크기를 가진 64-bin log-Mel Spectrograms (LMS)로 변환된다. 모델의 백본으로는 파라미터 수가 2.9M개인 MobileNetV2를 사용한다.
 
 학습에는 멀티 레이블 분류를 위해 Binary Cross Entropy (BCE) 손실 함수를 사용한다. BCE는 각 레이블의 예측 확률이 독립적이므로, 추론 시 특정 레이블의 가중치만 남기고 제거하여 모델 크기를 더 줄일 수 있는 실용적인 이점이 있다. 손실 함수는 다음과 같이 정의된다.
@@ -39,11 +41,12 @@ $$\mathcal{L}_{BCE}(\hat{y}, y) = y \log \hat{y} + (1-y) \log(1-\hat{y})$$
 여기서 $\hat{y}$는 모델의 예측값이며, $y$는 실제 레이블이다.
 
 ### 주요 구성 요소 및 기법
+
 1. **Pseudo Strong Labels (PSL)**: AT 데이터셋(AudioSet)은 보통 10초 단위의 약한 지도 학습(weakly supervised) 레이블을 가진다. 하지만 KWS와 통합하기 위해 1초 단위로 랜덤 크롭(random crop)을 수행하면 레이블 불일치 문제가 발생한다. 이를 해결하기 위해 사전 학습된 기계 어노테이터(machine annotator)를 사용하여 각 짧은 세그먼트에 대한 정밀한 가짜 강한 레이블(PSL)을 생성하여 학습에 사용한다.
 2. **추론 절차 (Post-processing)**: 모델은 멀티 레이블 출력을 내보내므로, 단일 타겟 레이블 $\bar{y}$를 결정하기 위해 다음과 같은 결정 임계값 $\gamma$를 사용한다.
 
-$$\bar{y} = 
-\begin{cases} 
+$$\bar{y} =
+\begin{cases}
 \arg \max \hat{y}_{KWS}, & \text{if } \max \hat{y}_{KWS} \geq \gamma \\
 \arg \max \hat{y}_{AT}, & \text{otherwise}
 \end{cases}$$
@@ -68,7 +71,7 @@ $$\bar{y} =
 
 ## 🧠 Insights & Discussion
 
-본 연구는 KWS와 AT라는 두 작업이 기술적으로 동일하다는 점에 착안하여 이를 통합함으로써 실무적인 이득을 얻을 수 있음을 증명하였다. 
+본 연구는 KWS와 AT라는 두 작업이 기술적으로 동일하다는 점에 착안하여 이를 통합함으로써 실무적인 이득을 얻을 수 있음을 증명하였다.
 
 **강점 및 의의**:
 - **유연한 프레임워크**: 단순한 키워드 감지를 넘어, "어린이가 말할 때만 웨이크업"과 같은 조건부 KWS 구현이 가능해졌다.

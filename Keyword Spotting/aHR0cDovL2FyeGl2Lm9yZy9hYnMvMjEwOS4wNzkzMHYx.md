@@ -4,7 +4,7 @@ Anwesh Mohanty, Adrian Frischknecht, Christoph Gerum, and Oliver Bringmann (2021
 
 ## 🧩 Problem to Solve
 
-본 논문은 인공지능 및 스마트 기기의 핵심 기능인 Keyword Spotting (KWS) 시스템이 고소음 환경(High Noise Conditions)에서 겪는 성능 저하 문제를 해결하고자 한다. 
+본 논문은 인공지능 및 스마트 기기의 핵심 기능인 Keyword Spotting (KWS) 시스템이 고소음 환경(High Noise Conditions)에서 겪는 성능 저하 문제를 해결하고자 한다.
 
 최근의 KWS 연구들은 저소음 또는 중등도 소음 환경의 데이터셋에서 높은 정확도를 달성하는 다양한 아키텍처를 제안해 왔다. 하지만 실제 환경(예: 심한 교통 소음, 건설 현장 등)에서는 신호 대 잡음비(Signal-to-Noise Ratio, SNR)가 매우 낮아지며, 특히 추론(Inference) 단계에서 발생하는 소음의 특성이 학습(Training) 단계에서 경험하지 못한 종류일 경우 모델의 성능이 급격하게 하락하는 문제가 발생한다.
 
@@ -21,6 +21,7 @@ Anwesh Mohanty, Adrian Frischknecht, Christoph Gerum, and Oliver Bringmann (2021
 ## 📎 Related Works
 
 기존의 KWS 연구는 주로 하드웨어 구현을 위한 저전력, 소형 모델 개발에 집중해 왔다.
+
 - **MFCC 기반 접근**: TC-ResNet과 같은 모델은 MFCC(Mel-Frequency Cepstral Coefficients) 특징량을 입력으로 사용하여 매우 높은 정확도와 속도를 달성하였다.
 - **Raw Audio 기반 접근**: MFCC 전처리 과정 없이 원시 오디오 데이터를 직접 처리하기 위해 SincNet 기반의 SCN 아키텍처가 제안되었으며, 이는 Sinc-convolution을 통해 효율적으로 특징을 추출한다.
 
@@ -29,6 +30,7 @@ Anwesh Mohanty, Adrian Frischknecht, Christoph Gerum, and Oliver Bringmann (2021
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 비교 모델
+
 본 연구에서는 다음 세 가지 모델을 비교 분석한다.
 
 1. **TC-ResNet8**: MFCC 특징량을 입력으로 받으며, 1차원 Temporal Convolution과 Residual Block을 사용하여 연산량을 줄인 구조이다.
@@ -38,7 +40,9 @@ Anwesh Mohanty, Adrian Frischknecht, Christoph Gerum, and Oliver Bringmann (2021
     - Sinc-convolution 레이어의 Stride를 두 배로 늘려 이후 레이어로 전달되는 피처 맵의 크기를 줄임으로써 전체 MACs를 획기적으로 낮추었다.
 
 ### Sinc-convolution의 원리
+
 SCN의 핵심인 Sinc-convolution 필터는 주파수 영역에서 rectangular band-pass filter로 정의된다.
+
 - 주파수 영역 표현:
 $$H[f, f_1, f_2] = \text{rect}\left(\frac{f}{f_2}\right) - \text{rect}\left(\frac{f}{f_1}\right)$$
 - 시간 영역 표현:
@@ -46,6 +50,7 @@ $$h[n, f_1, f_2] = 2f_2 \text{sinc}(2\pi f_2 n) - 2f_1 \text{sinc}(2\pi f_1 n)$$
 여기서 $f_1$과 $f_2$는 각각 하한 및 상한 컷오프 주파수로, 필터는 이 두 지점 사이의 정보만을 추출한다. 이 과정 이후에는 $y = \log(|x| + 1)$ 형태의 log-compression 활성화 함수가 적용된다.
 
 ### Adaptive Batch Normalization
+
 일반적인 Batch Normalization (BatchNorm)은 학습 단계에서 계산된 이동 평균(Moving Average) 통계값을 테스트 단계에서 고정하여 사용한다. 하지만 테스트 데이터의 소음 분포가 학습 데이터와 크게 다를 경우(Covariate Shift), 고정된 통계값은 오히려 성능 저하를 유발한다.
 
 본 논문에서는 추론 단계에서도 BatchNorm 레이어를 끄지 않고, 현재 입력된 배치의 통계값을 실시간으로 계산하여 정규화에 사용하는 방식을 제안한다. 이를 통해 네트워크가 추론 시점의 소음 특성에 적응(Adaptation)하게 함으로써 성능을 높인다.
@@ -53,14 +58,16 @@ $$h[n, f_1, f_2] = 2f_2 \text{sinc}(2\pi f_2 n) - 2f_1 \text{sinc}(2\pi f_1 n)$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Google Speech Commands Dataset (10개 키워드 + unknown + silence).
 - **소음 종류**: White noise, Pink noise, Miscellaneous noise (실제 생활 소음).
 - **SNR 범위**: $-5\text{dB}$에서 $+10\text{dB}$까지.
-- **평가 시나리오**: 
+- **평가 시나리오**:
     1. 학습/검증/테스트 세트에 동일한 종류의 소음이 포함된 경우 (Known Noise).
     2. 학습 시에는 White/Pink noise만 사용하고, 테스트 시에만 Miscellaneous noise를 주입한 경우 (Unknown Noise).
 
 ### 주요 결과
+
 1. **소음 강도에 따른 성능**: 모든 모델에서 SNR이 낮아질수록(소음이 심해질수록) 정확도가 하락한다. 특히 SNR이 $-5\text{dB}$에 도달하면 최신 모델들도 약 $10\%$ 이상의 성능 하락을 보인다.
 2. **미지 소음의 영향**: 학습 시 경험하지 못한 Miscellaneous noise가 주입되었을 때, SNR $-5\text{dB}$ 환경에서 성능이 파괴적으로(Catastrophically) 떨어진다. 알려진 소음 환경과 비교했을 때 최대 $40\%$의 정확도 차이가 발생하였다.
 3. **Adaptive BatchNorm의 효과**: 이 기법을 적용했을 때 고소음 영역에서 성능이 비약적으로 향상되었다. 특히 SNR $-5\text{dB}$에서 TC-ResNet8은 약 $20\%$, SCN 모델들은 약 $10\%$의 정확도 상승을 기록하였다.
@@ -68,13 +75,15 @@ $$h[n, f_1, f_2] = 2f_2 \text{sinc}(2\pi f_2 n) - 2f_1 \text{sinc}(2\pi f_1 n)$$
 
 ## 🧠 Insights & Discussion
 
-본 논문은 KWS 모델이 단순한 데이터 증강만으로는 해결할 수 없는 '미지의 고소음 환경'에서의 취약성을 명확히 드러냈다. 
+본 논문은 KWS 모델이 단순한 데이터 증강만으로는 해결할 수 없는 '미지의 고소음 환경'에서의 취약성을 명확히 드러냈다.
 
-**강점**: 
+**강점**:
+
 - 단순한 아키텍처 수정(Stride, Grouping)과 추론 방식의 변경(Adaptive BN)만으로 연산 효율성과 강건성을 동시에 확보하였다.
 - 특히 Adaptive BN은 추가적인 학습 시간이나 복잡한 모델 구조 변경 없이도 성능을 높일 수 있는 매우 실용적인 해결책임을 입증하였다.
 
 **한계 및 논의**:
+
 - 저자들은 모델의 크기를 키우거나 더 방대한 소음 데이터셋으로 학습시키는 방법이 성능을 높일 수는 있겠지만, 이는 '소형 풋프린트(Small Footprint)'라는 KWS의 본질적인 목표에 어긋난다고 지적한다.
 - Adaptive BN은 배치 단위의 통계량을 사용하므로, 실제 실시간 추론 시 배치 크기가 1인 경우(Single sample inference) 어떻게 적용할 것인지에 대한 구체적인 구현 방법이 명시되지 않았다.
 

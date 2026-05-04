@@ -23,23 +23,28 @@ A. Marrone, A.D. Polosa, G. Scioscia, S. Stramaglia, and A. Zenzola (1999)
 ## 🛠️ Methodology
 
 ### 1. 데이터 획득 및 전처리
+
 연구진은 9명의 건강한 피험자와 10명의 혈관미주신경성 실신 환자를 대상으로 20분 동안의 수축기 혈압(Systolic blood pressure) 최대값 시계열 $\{P_i\}$를 추출하였다. 전체 데이터 포인트의 수 $M$은 $2^{10}$개이다.
 
 ### 2. Discrete Wavelet Transform (DWT)
+
 혈압 신호의 분석을 위해 다음과 같은 이산 웨이브렛 변환 식을 사용한다.
 
 $$W_s(n) = s^{-1} \sum_{i=1}^{M} P_i \psi((i-n)/s)$$
 
 여기서 $\psi$는 생성 웨이브렛(Generating wavelet), $s$는 스케일(Scale), $n$은 계수가 계산되는 지점을 의미한다. 본 연구에서는 두 가지 서로 다른 Wavelet basis를 사용하였다.
+
 - **Haar basis**: 0차 추세(Zero order trends)만을 제거할 수 있다.
 - **Third Derivative of Gaussian (TDG) basis**: 더 높은 차수의 다항식 추세(Higher polynomial trends)에 영향을 받지 않는다.
 
 ### 3. 분석 척도 (Measures)
 
 #### 3.1 스케일 의존적 척도 (Scale-dependent measure)
+
 특정 스케일 $s$에서 Wavelet 계수의 제곱평균제곱근(RMS)인 $\sigma_w(s)$를 계산하여 신호의 변동성을 측정한다.
 
 #### 3.2 스케일 독립적 척도 (Scale-independent measure)
+
 Wavelet 계수의 모멘트 합으로 정의되는 파티션 함수 $Z_q(s)$를 이용한다.
 
 $$Z_q(s) = \sum_{n} |W_s(n)|^q$$
@@ -53,15 +58,18 @@ $$Z_q(s) \sim s^{\tau(q)}$$
 ## 📊 Results
 
 ### 1. 실험 설정 및 지표
+
 - **대상**: 건강한 대조군 9명, 실신 환자군 10명.
 - **지표**: $\sigma_w(s)$ 및 $\tau(q)$.
 - **통계 검정**: 두 집단이 동일한 분포에서 추출되었는지를 확인하기 위해 Wilcoxon-Mann-Whitney (WMW) 테스트를 수행하였다.
 
 ### 2. 주요 결과
+
 - **Scale-dependent 분석 (Haar basis)**: Haar 웨이브렛을 사용했을 때, 스케일 $s=32$에서 건강한 군과 환자군 사이에 뚜렷한 분리가 나타났다. 건강한 피험자가 더 큰 변동성($\sigma_w$)을 보였으며, WMW 테스트 결과 $p = 3.5 \times 10^{-3}$으로 1% 유의 수준에서 통계적으로 유의미한 차이가 확인되었다. 반면, TDG basis를 사용했을 때는 어떤 스케일에서도 이러한 분리가 나타나지 않았다.
 - **Scale-independent 분석 (TDG basis)**: TDG 웨이브렛을 사용하여 $\tau(q=1)$을 계산했을 때, 건강한 군이 환자군보다 더 낮은 $\tau(1)$ 값을 가짐을 확인하였다. WMW 테스트 결과 $p = 4.5 \times 10^{-3}$으로 나타나, 앞선 $\sigma_w(32)$의 결과와 매우 유사한 통계적 유의성을 보였다. Haar basis를 사용해 $\tau(1)$을 계산했을 때는 $p = 2.1 \times 10^{-2}$로 유의성이 다소 떨어졌다.
 
 ### 3. 종합 비교
+
 $\sigma_w(32)$ (Haar)와 $\tau(1)$ (TDG)을 두 축으로 하는 2차원 평면에 데이터를 투영했을 때, 두 지표 모두 동일한 수준으로 두 클래스를 분리하는 것을 확인하였다.
 
 ## 🧠 Insights & Discussion

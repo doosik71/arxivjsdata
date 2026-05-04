@@ -31,14 +31,17 @@ Guangkun Nie, Jiabao Zhu, Gongzheng Tang, Deyun Zhang, Shijia Geng, Qinghao Zhao
 분석의 핵심 프레임워크는 다음과 같다.
 
 **1. 작업(Tasks) 분류**
+
 - **Medical-related**: 혈압 분석(SBP, DBP 추정 및 연속 파형 재구성), 심혈관 진단(AF 검출, 심박수 추정), 수면 건강(수면 단계 분류, OSA 검출), 정신 건강(스트레스 인식), 호흡 분석(호흡률 $\text{RR}$ 추정), 혈당 분석 등이 포함된다.
 - **Non-medical-related**: 신호 처리(Denoising, 품질 평가), 생체 인식(Biometric Identification), ECG 재구성, 인간 활동 인식(HAR) 등이 포함된다.
 
 **2. 모델(Models) 분석**
+
 - **Discriminative Models**: 입력과 출력의 관계를 학습하여 분류 및 회귀를 수행하는 모델로, FC, CNN, RNN(LSTM, GRU), CRNN, Transformer가 포함된다.
 - **Generative Models**: 데이터의 분포를 학습하여 새로운 샘플을 생성하거나 복원하는 모델로, AE, GAN, U-Net이 포함된다.
 
 **3. 데이터(Data) 분석**
+
 - MIMIC-III, UCI_BP, PPG-BP, PPG_DaLiA 등 공개 데이터셋의 특성(인구 통계, 샘플링 레이트 등)을 분석하여 모델 학습에 사용된 데이터의 소스를 파악하였다.
 
 ## 📊 Results
@@ -46,18 +49,21 @@ Guangkun Nie, Jiabao Zhu, Gongzheng Tang, Deyun Zhang, Shijia Geng, Qinghao Zhao
 분석 결과, 총 193편의 논문 중 의료 관련 작업이 159편, 비의료 관련 작업이 41편으로 나타났다.
 
 **1. 모델 활용도**
+
 - 가장 많이 사용된 모델은 CNN(116편)이며, 그 뒤를 CRNN(44편), RNN(32편)이 이었다.
 - **CNN**은 로컬 특징 추출 능력이 뛰어나고 병렬 연산이 가능하여 시계열 데이터에서도 강력한 성능을 보였다.
 - **CRNN**은 CNN의 특징 추출 능력과 RNN의 장기 의존성(Long-term dependency) 모델링 능력을 결합하여 실제 응용 분야에서 우수한 성과를 거두었다.
 - **U-Net**은 특히 혈압 파형 재구성이나 호흡 파형 추출과 같은 시계열 데이터 생성 작업에서 세부 정보 보존 능력이 뛰어나 자주 사용되었다.
 
 **2. 주요 작업별 결과**
+
 - **혈압 분석**: 단순 분류를 넘어 연속적인 혈압 파형(Continuous ABP Waveforms)을 재구성하는 방향으로 발전하고 있으며, ResUNet과 Self-Attention을 결합한 모델 등이 높은 정확도를 보였다.
 - **심혈관 모니터링**: AF 검출은 이진 분류 또는 다중 클래스 분류 문제로 접근하며, 딥러닝을 통해 정적인 상태뿐 아니라 활동 중에도 강건한 심박수 추정이 가능해졌다.
 - **수면 건강**: CNN-GRU 기반의 CRNN 구조를 통해 수면 단계를 자동으로 분류하며, PSG(수면다원검사)라는 골드 스탠다드와 높은 상관관계를 보였다.
 - **비의료 작업**: 생체 인식 분야에서는 PPG 신호를 2D 이미지(Gram matrix, Spectrogram)로 변환하여 2D-CNN을 적용함으로써 97% 이상의 높은 인식 정확도를 달성하였다.
 
 **3. 데이터셋**
+
 - MIMIC-III(약 30,000명의 ICU 환자 데이터)와 UCI_BP 등이 가장 널리 사용되었으며, 대부분의 연구가 공개 데이터셋에 의존하고 있음을 확인하였다.
 
 ## 🧠 Insights & Discussion
@@ -71,6 +77,7 @@ Guangkun Nie, Jiabao Zhu, Gongzheng Tang, Deyun Zhang, Shijia Geng, Qinghao Zhao
 ECG나 가속도계(ACC) 신호를 PPG와 함께 사용하는 멀티모달 접근 방식은 성능을 향상시키지만, 서로 다른 모달리티 간의 정렬(Alignment) 문제와 계산 오버헤드라는 비용이 발생한다.
 
 **3. 실제 적용의 한계 (Bottlenecks)**
+
 - **피험자 변동성**: 체질량지수(BMI), 피부색, 연령 등에 따라 PPG 신호의 특성이 크게 달라지므로, 범용적인 모델을 구축하는 것이 매우 어렵다.
 - **데이터 표준화 부족**: 데이터 획득 프로토콜과 처리 방법이 표준화되지 않아 서로 다른 연구 간의 성능 비교가 어렵다.
 - **해석 가능성**: 딥러닝의 'Black-box' 특성은 의료 현장에서의 신뢰성을 저하시키며, 이를 해결하기 위한 Explainable AI(XAI)의 도입이 시급하다.

@@ -4,9 +4,9 @@ Chenrui Han, Xuan Yu, Yuxuan Xie, Yili Liu, Sitong Mao, Shunbo Zhou, Rong Xiong,
 
 ## 🧩 Problem to Solve
 
-본 논문은 대화형 포인트 클라우드 세그멘테이션(Interactive Point Cloud Segmentation)에서 발생하는 **인스턴스 간의 규모 차이(Scale Disparity)** 문제를 해결하고자 한다. 
+본 논문은 대화형 포인트 클라우드 세그멘테이션(Interactive Point Cloud Segmentation)에서 발생하는 **인스턴스 간의 규모 차이(Scale Disparity)** 문제를 해결하고자 한다.
 
-일반적인 인스턴스 세그멘테이션에서는 주로 형태가 분명한 'Thing'(사물) 카테고리에 집중하지만, 실제 사용자가 대화형 인터페이스를 통해 세그멘테이션을 수행할 때는 'Stuff'(배경/환경, 예: 도로, 벽) 카테고리를 하나의 인스턴스로 분리해내길 원하는 경우가 많다. 이 경우, 컵과 같이 매우 작은 객체부터 건물이나 도로와 같이 매우 큰 객체까지 그 크기의 범위가 극단적으로 넓어진다. 
+일반적인 인스턴스 세그멘테이션에서는 주로 형태가 분명한 'Thing'(사물) 카테고리에 집중하지만, 실제 사용자가 대화형 인터페이스를 통해 세그멘테이션을 수행할 때는 'Stuff'(배경/환경, 예: 도로, 벽) 카테고리를 하나의 인스턴스로 분리해내길 원하는 경우가 많다. 이 경우, 컵과 같이 매우 작은 객체부터 건물이나 도로와 같이 매우 큰 객체까지 그 크기의 범위가 극단적으로 넓어진다.
 
 기존의 CNN 기반 방식은 수용 영역(Receptive Field)의 한계로 인해 대규모 인스턴스 세그멘테이션에 취약하며, 기존 트랜스포머 기반 방식은 사용자 클릭만을 쿼리로 사용하기 때문에 포인트 클라우드 전체를 커버하는 능력이 부족하여 규모 차이 문제를 해결하지 못했다. 따라서 본 연구의 목표는 사물(Thing)과 환경(Stuff) 모두를 정확하게 세그멘테이션할 수 있는 모델을 구축하는 것이다.
 
@@ -14,9 +14,9 @@ Chenrui Han, Xuan Yu, Yuxuan Xie, Yili Liu, Sitong Mao, Shunbo Zhou, Rong Xiong,
 
 본 논문의 핵심 아이디어는 **쿼리의 양을 늘리고 주의 집중(Attention)의 범위를 확장**하여 인스턴스의 크기에 상관없이 일관된 성능을 유지하는 것이다. 이를 위해 다음과 같은 설계를 제안한다.
 
-1.  **Query Augmentation Module**: 사용자 클릭 외에 전역 쿼리 샘플링 전략(Global Query Sampling)을 통해 추가적인 쿼리를 생성함으로써, 인스턴스의 크기가 커지더라도 충분한 수의 쿼리가 해당 영역을 커버할 수 있도록 한다.
-2.  **Global Attention**: 쿼리 증강으로 인해 발생할 수 있는 오탐(False Positive)을 방지하기 위해, 로컬 어텐션 대신 전역 어텐션을 사용하여 쿼리들이 전역적인 정보를 교환하고 마스크를 최적화하도록 한다.
-3.  **ClickFormer**: 위 요소들을 통합하여 실내외 환경 및 오픈 월드 설정에서 적은 수의 클릭만으로도 높은 정확도를 보이는 대화형 세그멘테이션 모델을 제안한다.
+1. **Query Augmentation Module**: 사용자 클릭 외에 전역 쿼리 샘플링 전략(Global Query Sampling)을 통해 추가적인 쿼리를 생성함으로써, 인스턴스의 크기가 커지더라도 충분한 수의 쿼리가 해당 영역을 커버할 수 있도록 한다.
+2. **Global Attention**: 쿼리 증강으로 인해 발생할 수 있는 오탐(False Positive)을 방지하기 위해, 로컬 어텐션 대신 전역 어텐션을 사용하여 쿼리들이 전역적인 정보를 교환하고 마스크를 최적화하도록 한다.
+3. **ClickFormer**: 위 요소들을 통합하여 실내외 환경 및 오픈 월드 설정에서 적은 수의 클릭만으로도 높은 정확도를 보이는 대화형 세그멘테이션 모델을 제안한다.
 
 ## 📎 Related Works
 
@@ -32,19 +32,22 @@ Chenrui Han, Xuan Yu, Yuxuan Xie, Yili Liu, Sitong Mao, Shunbo Zhou, Rong Xiong,
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 ClickFormer는 크게 세 가지 구성 요소로 이루어진다.
-1.  **Feature Encoder**: 입력 포인트 클라우드를 복셀 특징(Voxel Features)으로 인코딩한다. 실외 장면에는 GD-MAE를, 실내 장면에는 MinkowskiUNet을 사용한다.
-2.  **Query Augmentation Module**: 사용자 클릭과 전역 샘플링된 증강 쿼리를 인코딩한다.
-3.  **Mask Decoder**: Query-Voxel Transformer와 Mask Segmentation Module로 구성되어 최종 바이너리 마스크를 생성한다.
+
+1. **Feature Encoder**: 입력 포인트 클라우드를 복셀 특징(Voxel Features)으로 인코딩한다. 실외 장면에는 GD-MAE를, 실내 장면에는 MinkowskiUNet을 사용한다.
+2. **Query Augmentation Module**: 사용자 클릭과 전역 샘플링된 증강 쿼리를 인코딩한다.
+3. **Mask Decoder**: Query-Voxel Transformer와 Mask Segmentation Module로 구성되어 최종 바이너리 마스크를 생성한다.
 
 ### 상세 구성 요소 및 알고리즘
 
 #### 1. Query Augmentation Module
+
 사용자의 클릭 $S = \{s_1, s_2, \dots, s_t\}$를 각각 독립적인 쿼리로 인코딩한다. 여기서 각 클릭 $s_t$는 좌표 $\text{pos}_t$와 양성/음성 여부를 나타내는 $\text{sgn}_t$를 가진다. 여기에 더해 **Farthest Point Sampling(FPS)**을 사용하여 포인트 클라우드 전체에서 균일하게 분포된 **증강 쿼리(Augmentation Queries)**를 추가로 샘플링한다.
 
 각 쿼리 $q_k$는 다음과 같이 정의된다.
-$$q_k = (c_k, pe_k) = 
-\begin{cases} 
+$$q_k = (c_k, pe_k) =
+\begin{cases}
 (v_k + v_{pos}, pe_k) & \text{for positive clicks} \\
 (v_k + v_{neg}, pe_k) & \text{for negative clicks} \\
 (v_k, pe_k) & \text{for augmentation points}
@@ -101,11 +104,11 @@ $$L = w_{class} [\lambda_{fg} L_{BCE}(M_{fg}, M_{gt}) + \lambda_{bg} L_{BCE}(M_{
 
 ## 🧠 Insights & Discussion
 
-본 논문은 대화형 세그멘테이션에서 간과되었던 **'인스턴스 규모의 다양성'**이라는 문제를 명확히 정의하고 이를 해결하기 위한 구조적 대안을 제시했다. 
+본 논문은 대화형 세그멘테이션에서 간과되었던 **'인스턴스 규모의 다양성'**이라는 문제를 명확히 정의하고 이를 해결하기 위한 구조적 대안을 제시했다.
 
 **강점**은 단순히 모델의 용량을 키운 것이 아니라, FPS 기반의 전역 쿼리 증강을 통해 인스턴스 크기에 관계없이 일정한 수용 영역을 확보했다는 점이다. 또한, 쿼리 수를 일반적인 트랜스포머 모델보다 훨씬 적게 유지함으로써 계산 비용을 낮추고, 그 여유분으로 Global Attention을 적용해 정확도를 높인 전략이 효율적이었다.
 
-**한계 및 논의점**은 다음과 같다. 
+**한계 및 논의점**은 다음과 같다.
 - 증강 쿼리의 수를 2배로 늘렸을 때 성능이 소폭 향상되었으나 계산 비용이 증가하는 트레이드-오프가 존재한다. 최적의 쿼리 수를 결정하는 일반적인 기준에 대한 논의가 더 필요하다.
 - 현재의 클릭 시뮬레이션 방식이 실제 인간의 정교한 인터랙션 패턴을 완전히 대체할 수 있는지에 대한 검증이 추가된다면 더 설득력 있는 연구가 될 것이다.
 

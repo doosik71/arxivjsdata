@@ -12,10 +12,10 @@ Ningyuan Huang, Miguel Sarabia, Abhinav M uma Moudgil, Pau Rodríguez, Luca Zapp
 
 본 논문의 핵심 기여는 Mamba의 입력 선택성이 제공하는 기능적 이점을 수학적으로 증명하고, 이를 통해 모델의 작동 원리를 메커니즘적으로 이해했다는 점에 있다. 주요 기여 사항은 다음과 같다.
 
-1.  **Haar Wavelet 표현 능력 증명**: S6 레이어가 Haar wavelet으로의 투영(projection)을 표현할 수 있음을 증명하였다. 이는 불연속적인 함수를 근사할 때 S4D와 같은 기존 SSM보다 훨씬 효율적임을 의미하며, 실제 데이터에서 빈번하게 발생하는 불연속 신호를 처리하는 데 유리함을 보였다.
-2.  **메모리 감쇠의 동적 제어**: 민감도 분석(sensitivity analysis)을 통해 S6 레이어 역시 기본적으로는 지수적인 메모리 감쇠를 겪지만, 입력 선택성을 통해 시간의 흐름을 동적으로 조절함으로써 이러한 감쇠를 상쇄할 수 있는 메커니즘을 제시하였다.
-3.  **연상 회상(Associative Recall)의 분석적 솔루션**: MQAR(Multiple-Query Associative Recall) 태스크를 해결하기 위한 1계층 Mamba, Mamba-2, S4D 모델의 분석적 구조를 제안하였다. 특히 Mamba-2가 더 적은 파라미터로 효율적인 솔루션을 찾을 수 있음을 보였으며, S6의 선택성이 없더라도 합성곱과 게이팅만으로 MQAR를 해결할 수 있다는 점을 밝혀 아키텍처 내 구성 요소들의 역할을 재조명하였다.
-4.  **Mamba-$\Delta^\top$ 변형 제안**: Induction Heads 태스크의 성능을 높이기 위해, 입력 의존성을 임베딩 차원이 아닌 상태(state) 차원에 적용하는 $\text{Mamba-}\Delta^\top$ 구조를 제안하고 그 효과를 입증하였다.
+1. **Haar Wavelet 표현 능력 증명**: S6 레이어가 Haar wavelet으로의 투영(projection)을 표현할 수 있음을 증명하였다. 이는 불연속적인 함수를 근사할 때 S4D와 같은 기존 SSM보다 훨씬 효율적임을 의미하며, 실제 데이터에서 빈번하게 발생하는 불연속 신호를 처리하는 데 유리함을 보였다.
+2. **메모리 감쇠의 동적 제어**: 민감도 분석(sensitivity analysis)을 통해 S6 레이어 역시 기본적으로는 지수적인 메모리 감쇠를 겪지만, 입력 선택성을 통해 시간의 흐름을 동적으로 조절함으로써 이러한 감쇠를 상쇄할 수 있는 메커니즘을 제시하였다.
+3. **연상 회상(Associative Recall)의 분석적 솔루션**: MQAR(Multiple-Query Associative Recall) 태스크를 해결하기 위한 1계층 Mamba, Mamba-2, S4D 모델의 분석적 구조를 제안하였다. 특히 Mamba-2가 더 적은 파라미터로 효율적인 솔루션을 찾을 수 있음을 보였으며, S6의 선택성이 없더라도 합성곱과 게이팅만으로 MQAR를 해결할 수 있다는 점을 밝혀 아키텍처 내 구성 요소들의 역할을 재조명하였다.
+4. **Mamba-$\Delta^\top$ 변형 제안**: Induction Heads 태스크의 성능을 높이기 위해, 입력 의존성을 임베딩 차원이 아닌 상태(state) 차원에 적용하는 $\text{Mamba-}\Delta^\top$ 구조를 제안하고 그 효과를 입증하였다.
 
 ## 📎 Related Works
 
@@ -35,7 +35,7 @@ Ningyuan Huang, Miguel Sarabia, Abhinav M uma Moudgil, Pau Rodríguez, Luca Zapp
 
 $$h^M_n(t) = \int_{0}^{t} e^{-\lambda_n \int_{s}^{t} \Delta(x_r) dr} B_n x(s) ds$$
 
-여기서 $\Delta(x)$는 입력 의존적인 이산화 단계(discretization step)이다. S4D는 $\Delta(x) \equiv 1$인 특수 사례로, 오직 지수 함수 형태의 기저 함수만을 가진다. 반면, Mamba는 $\Delta(x)$를 조절함으로써 **Heaviside 함수**를 근사할 수 있으며, 이를 선형 결합하여 **Haar wavelet** $\psi_{j,k}$를 구현할 수 있다. 
+여기서 $\Delta(x)$는 입력 의존적인 이산화 단계(discretization step)이다. S4D는 $\Delta(x) \equiv 1$인 특수 사례로, 오직 지수 함수 형태의 기저 함수만을 가진다. 반면, Mamba는 $\Delta(x)$를 조절함으로써 **Heaviside 함수**를 근사할 수 있으며, 이를 선형 결합하여 **Haar wavelet** $\psi_{j,k}$를 구현할 수 있다.
 
 이러한 특성 덕분에 Mamba는 불연속적인 피스와이즈 상수 함수(piecewise-constant function)를 근사할 때, $O(N^{-1})$의 오차를 보이는 S4D에 비해 $O(2^{-N/3m})$라는 압도적으로 빠른 수렴 속도를 보인다.
 
@@ -51,10 +51,10 @@ $$\left| \frac{\partial h^M_t}{\partial x_j} \right| \approx \tilde{c} e^{-\lamb
 
 MQAR 태스크(키-값 쌍을 저장하고 쿼리에 따라 값을 회상하는 작업)를 해결하기 위해 1계층 Mamba 모델의 파이프라인을 다음과 같이 설계한다.
 
-1.  **Embedding**: 키($k$)와 값($v$)을 서로 직교하는 공간에 임베딩한다.
-2.  **Convolution**: 크기 2의 비선형 커널을 사용하여 $(k_i, v_j)$ 쌍을 추출하고, 무의미한 쌍(예: $v, v$)은 제거한다.
-3.  **SSM (S6)**: 상태 행렬 $h \in \mathbb{R}^{d \times N}$의 각 열을 특정 키에 할당하고, 해당 열에 연관된 값의 임베딩을 저장한다. 이때 $B_t$와 $C_t$가 입력에 따라 선택적으로 작동하여 올바른 열에 쓰고 읽는다.
-4.  **Gating & Output**: 게이팅 레이어를 통해 필요한 정보를 필터링하고, 최종 선형 층에서 값을 분류한다.
+1. **Embedding**: 키($k$)와 값($v$)을 서로 직교하는 공간에 임베딩한다.
+2. **Convolution**: 크기 2의 비선형 커널을 사용하여 $(k_i, v_j)$ 쌍을 추출하고, 무의미한 쌍(예: $v, v$)은 제거한다.
+3. **SSM (S6)**: 상태 행렬 $h \in \mathbb{R}^{d \times N}$의 각 열을 특정 키에 할당하고, 해당 열에 연관된 값의 임베딩을 저장한다. 이때 $B_t$와 $C_t$가 입력에 따라 선택적으로 작동하여 올바른 열에 쓰고 읽는다.
+4. **Gating & Output**: 게이팅 레이어를 통해 필요한 정보를 필터링하고, 최종 선형 층에서 값을 분류한다.
 
 ### 4. Mamba-$\Delta^\top$ 및 Induction Heads 해결
 
@@ -67,13 +67,17 @@ $$h_t = e^{\Lambda \odot (1_d \otimes \Delta(\hat{x}_t))} \odot h_{t-1} + \hat{x
 ## 📊 Results
 
 ### 1. KEEPn-TH 태스크 (함수 근사 및 메모리 검증)
+
 시퀀스의 $n$번째 토큰을 기억하는 태스크에서, Positional Encoding(PE)을 추가한 Mamba는 100% 정확도를 보였다. 반면 S4D는 시퀀스 길이가 길어질수록 정확도가 급격히 하락하였으며, Mamba에서 PE를 제거했을 때도 성능이 S4D 수준으로 떨어졌다. 이는 Mamba의 입력 선택성이 PE와 결합했을 때 불연속적인 위치 정보를 정확히 포착할 수 있음을 시사한다.
 
 ### 2. MQAR 태스크 (연상 회상 능력 및 효율성)
-다양한 모델 크기($d, N$)에 따른 MQAR 정확도를 측정한 결과, 이론적으로 도출한 모델 크기 하한선(theoretical bound)이 실제 임계값과 매우 유사함을 확인하였다. 
+
+다양한 모델 크기($d, N$)에 따른 MQAR 정확도를 측정한 결과, 이론적으로 도출한 모델 크기 하한선(theoretical bound)이 실제 임계값과 매우 유사함을 확인하였다.
+
 - **효율성**: $\text{Mamba-2} > \text{Mamba} > \text{S4D}$ 순으로 파라미터 효율성이 높았다. 특히 Mamba-2는 독립적인 세 개의 합성곱 층을 사용하여 가장 작은 모델 크기로도 100% 정확도를 달성하였다.
 
 ### 3. Induction Heads 태스크 ($\text{Mamba-}\Delta^\top$ 검증)
+
 표준 Mamba와 $\text{Mamba-}\Delta^\top$를 비교한 결과, 모든 모델 크기에서 $\text{Mamba-}\Delta^\top$가 동등하거나 더 우수한 성능을 보였다. 특히 상태 차원에서의 선택적 삭제 메커니즘이 장기 기억 유지와 최신 정보 갱신이라는 상충하는 목표를 동시에 달성하게 함을 입증하였다.
 
 ## 🧠 Insights & Discussion

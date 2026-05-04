@@ -12,7 +12,7 @@ Xinpeng Xie, Jiawei Chen, Yuexiang Li, Linlin Shen, Kai Ma, and Yefeng Zheng (20
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 신경망이 세포핵의 크기(Size)와 수량(Quantity)이라는 사전 지식(Prior-knowledge)을 암시적으로 학습하도록 유도하는 **Instance-aware Self-supervised Learning** 프레임워크를 설계한 것이다. 
+본 논문의 핵심 아이디어는 신경망이 세포핵의 크기(Size)와 수량(Quantity)이라는 사전 지식(Prior-knowledge)을 암시적으로 학습하도록 유도하는 **Instance-aware Self-supervised Learning** 프레임워크를 설계한 것이다.
 
 이를 위해 저자들은 두 가지 보조 작업(Proxy tasks)인 **Scale-wise Triplet Learning**과 **Count Ranking**을 제안하였다. 이는 기존의 일반적인 SSL 방식들이 단순한 이미지 변형이나 전역적 특징에 집중했던 것과 달리, 인스턴스 분할의 핵심인 '개별 객체의 특성'을 학습하도록 설계되었다는 점에서 차별성을 가진다.
 
@@ -25,39 +25,48 @@ Xinpeng Xie, Jiawei Chen, Yuexiang Li, Linlin Shen, Kai Ma, and Yefeng Zheng (20
 ## 🛠️ Methodology
 
 ### 1. 이미지 조작 (Image Manipulation)
+
 신경망이 핵의 크기와 수량을 학습할 수 있도록 다음과 같이 트리플렛(Triplet) 샘플을 생성한다.
+
 - **Anchor ($A$):** 원본 이미지에서 $768 \times 768$ 크기로 크롭한 패치이다.
 - **Positive ($P$):** Anchor와 인접한 영역에서 동일한 크기($768 \times 768$)로 크롭한 패치로, Anchor와 유사한 크기의 핵들을 포함한다.
 - **Negative ($N$):** Positive 샘플 내에서 무작위로 작은 영역($512 \times 512$ ~ $64 \times 64$)을 크롭한 후, 이를 다시 $768 \times 768$ 크기로 확대(Resize)한 샘플이다. 이 과정에서 Negative 샘플 내의 핵들은 Anchor/Positive보다 상대적으로 더 크게 나타나게 된다.
 
 ### 2. Self-supervised Proxy Tasks
+
 세 개의 공유 가중치 인코더(Shared-weight Encoders)를 통해 샘플들을 128차원의 잠재 특징 공간(Latent Feature Space) $Z$로 임베딩한다. $E_A: A \to z_a, E_P: P \to z_p, E_N: N \to z_n$으로 정의한다.
 
 #### Proxy Task 1: Scale-wise Triplet Learning
+
 핵의 크기 정보를 학습하기 위해 Triplet Loss를 사용한다. 동일한 스케일의 샘플은 가깝게, 다른 스케일(확대된 샘플)은 멀게 배치한다.
 $$L_{ST}(z_a, z_p, z_n) = \sum \max(0, d(z_a, z_p) - d(z_a, z_n) + m_1)$$
 여기서 $d(\cdot)$는 제곱된 $L_2$ 거리이며, $m_1$은 마진(1.0)이다.
 
 #### Proxy Task 2: Count Ranking
+
 Positive 샘플은 Negative 샘플(Positive의 부분 집합)보다 항상 더 많은 수의 핵을 포함한다는 점을 이용한다. 특징 벡터 $z$를 스칼라 값으로 변환하는 매핑 함수 $f$(Fully Convolutional Layer)를 도입하여 수량의 상대적 순위를 학습시킨다.
 $$L_{CR} = \sum \max(0, f(z_n) - f(z_p) + m_2)$$
 여기서 $m_2$는 마진(1.0)이며, 이 손실 함수는 $f(z_p)$가 $f(z_n)$보다 크게 만들어 네트워크가 핵의 밀도와 수량을 인식하게 한다.
 
 #### 전체 목적 함수 및 학습 절차
+
 전체 SSL 손실 함수는 다음과 같다.
 $$L = L_{ST} + L_{CR}$$
 학습은 크게 두 단계로 진행된다.
+
 1. **Pre-training:** 위 목적 함수를 사용하여 ResNet-101 인코더를 사전 학습시킨다.
 2. **Fine-tuning:** 사전 학습된 인코더를 U-shape 구조의 **ResUNet-101** 프레임워크에 통합하고, 랜덤 초기화된 디코더와 함께 타겟 작업(핵 body, boundary, background의 3클래스 분할)을 수행하도록 미세 조정한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** MoNuSeg 2018 (7개 장기 이미지, 학습셋 30장, 테스트셋 14장) 및 CPM 데이터셋.
 - **평가 지표:** Aggregated Jaccard Index (AJI) 및 Dice score. AJI는 객체 수준의 분할 성능을 측정하는 데 더 적합한 지표이다.
 - **비교 대상:** Train-from-scratch, ImageNet Pre-trained, 그리고 기존 SSL 방식(Jigsaw Puzzles, RotNet, ColorMe).
 
 ### 주요 결과
+
 - **SOTA 달성:** 제안된 SSL 기반 ResUNet-101은 MoNuSeg 테스트셋에서 **70.63%의 AJI**를 기록하며 새로운 State-of-the-art를 달성하였다. 이는 기존 1위 모델인 CIA-Net(69.07%)보다 높은 수치이다.
 - **데이터 효율성:** 레이블 데이터의 양을 줄였을 때 성능 향상 폭이 더 두드러졌다. 특히 데이터의 10%만 사용했을 때, Train-from-scratch 대비 AJI가 **11.43%** 향상되었다.
 - **SSL 방식 간 비교:** 일반적인 SSL(RotNet 등)보다 높은 성능을 보였는데, 이는 인스턴스 특성(크기, 수량)을 직접적으로 학습했기 때문으로 분석된다.

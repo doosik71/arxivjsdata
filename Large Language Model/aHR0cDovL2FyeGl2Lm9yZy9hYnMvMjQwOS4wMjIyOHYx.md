@@ -23,12 +23,15 @@ Eric Zhang, Leshem Choshen & Jacob Andreas (2024)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 시스템 구조
+
 본 연구는 기술(Skill)의 망각을 연구하기 위해 모든 작업을 이진 다지선다형(Binary Multiple-Choice) 질문 답변 작업으로 정형화하였다. 실험 절차는 다음과 같다:
+
 1. **Pre-training**: 기본 언어 모델(Llama2-7B 등)을 사용한다.
 2. **Fine-tuning**: 정답 레이블을 사용하여 모델을 먼저 학습시킨다.
 3. **Forgetting**: 동일한 훈련 세트를 사용하되, 레이블을 무작위로 섞어(Randomized labels) 모델을 다시 학습시켜 기존 능력을 상쇄시킨다.
 
 ### 망각의 정량화 지표
+
 망각의 정도를 측정하기 위해 다음 두 가지 지표를 정의하였다.
 
 첫째, **Forget Gap**은 망각 후의 정확도와 무작위 추측 정확도($0.5$)의 차이를 의미한다.
@@ -40,6 +43,7 @@ $$\text{Forget Ratio} = \frac{\text{Accuracy After Fine-Tuning} - \text{Accuracy
 이 값이 $1$이면 완전한 망각을, $0$이면 성능 감소가 없음을 의미한다.
 
 ### 학습 및 추론 절차
+
 - **모델**: Llama2-7B를 주 모델로 사용하며, 비교를 위해 GPT-J-6B 및 GPT-2를 사용하였다.
 - **데이터**: 상식 추론(PIQA, ARC 등), 독해(BoolQ, SciQ 등), 수학(MathQA), 독성(ToxiGen), NLU(GLUE 벤치마크 내 작업들) 등 21개 작업을 사용하였다.
 - **학습 설정**: 하프 프리시전(Half-precision) 환경에서 SGD를 사용하였으며, 망각 단계에서는 학습률을 $1 \times 10^{-4}$로 설정하여 망각이 점진적으로 일어나도록 유도하였다.
@@ -47,19 +51,25 @@ $$\text{Forget Ratio} = \frac{\text{Accuracy After Fine-Tuning} - \text{Accuracy
 ## 📊 Results
 
 ### 망각의 일반화 여부
+
 실험 결과, 작업에 따라 망각의 일반화 양상이 극명하게 갈렸다.
+
 - **일반화가 잘 되는 작업**: 함의 분류(Entailment classification)나 언어 수용성(Linguistic acceptability) 같은 저수준 언어 이해 작업들은 무작위 레이블 학습 후 새로운 데이터에 대해서도 성능이 급격히 떨어지며 효과적으로 망각되었다.
 - **망각에 저항하는 작업**: 물리적 상식 추론(Physical commonsense reasoning)이나 과학적 질문 답변(Scientific QA) 같은 작업들은 훈련 세트의 데이터는 잊었으나, 이와 매우 유사한 테스트 세트 데이터에 대해서는 여전히 높은 정확도를 유지하였다.
 
 ### 교차 작업 망각(Cross-task Forgetting)
+
 한 작업의 무작위 레이블로 학습시킨 후 다른 작업을 평가했을 때, 망각의 효과는 '어떤 데이터를 잊게 했는가'보다 **'어떤 작업을 평가하는가'**에 더 크게 의존하였다. 즉, 상식 추론 작업은 어떤 작업의 무작위 레이블로 학습시키더라도 잘 잊혀지지 않는 강건함(Resilience)을 보였다.
 
 ### 망각의 예측 변수
+
 데이터셋의 난이도는 망각 여부를 예측하지 못했다. 대신 다음 두 가지 요소가 상관관계를 보였다:
+
 1. **모델의 확신도(Confidence)**: 모델이 정답에 대해 가지는 상대적 확률(Correct vs Distractor)이 낮을수록 더 쉽게 망각되었다.
 2. **표현의 변동성(Representation Variance)**: 마지막에서 다섯 번째 레이어의 은닉 상태(Hidden states)의 전체 분산(Total Variance, 공분산 행렬의 Trace)이 작을수록 망각이 더 잘 일어났다.
 
 ### 얕은 망각(Shallow Forgetting)
+
 가장 주목할 만한 결과는 Linear Probe 실험이다. 모델이 겉으로는 무작위 응답을 내놓아 망각된 것처럼 보이더라도, 은닉 상태를 이용해 학습시킨 선형 분류기(Linear Probe)는 여전히 매우 높은 정확도로 정답을 맞혔다. 이는 무작위 레이블 학습이 내부의 지식을 삭제한 것이 아니라, 단지 출력 단계에서의 매핑만 방해한 것임을 시사한다.
 
 ## 🧠 Insights & Discussion

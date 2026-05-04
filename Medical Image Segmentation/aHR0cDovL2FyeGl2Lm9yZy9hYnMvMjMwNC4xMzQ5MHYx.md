@@ -32,6 +32,7 @@ Xiaoqing Liu, Kenji Ono, Ryoma Bise (2023)
 제안된 방법론의 핵심은 전경 마스크(Ground Truth)를 활용하여 이미지의 특정 영역을 선택적으로 변형하는 것이다.
 
 ### 1. KeepMask
+
 KeepMask는 전경 영역의 특징을 유지하고 배경 영역에만 섭동을 추가한다. 입력 이미지 $x_i$와 이에 대응하는 전경 마스크 $y_i$가 있을 때, 증강된 이미지 $\tilde{x}_i$는 다음과 같이 정의된다.
 
 $$\tilde{x}_i = y_i \odot x_i + (1 - y_i) \odot x'_i, \quad x'_i = f_{DA}(x_i)$$
@@ -39,6 +40,7 @@ $$\tilde{x}_i = y_i \odot x_i + (1 - y_i) \odot x'_i, \quad x'_i = f_{DA}(x_i)$$
 여기서 $\odot$은 원소별 곱셈(Element-wise multiplication)을 의미하며, $f_{DA}$는 배경에 적용할 증강 함수이다. 본 논문에서는 서로 다른 장비의 영상 선명도 차이를 모사하기 위해 $\text{GaussianBlur}$와 $\text{GridDropout}$을 사용하였다. 증강 후의 마스크 $\tilde{y}_i$는 원본 마스크 $y_i$와 동일하게 유지된다.
 
 ### 2. KeepMix
+
 KeepMix는 서로 다른 두 이미지의 전경과 배경을 섞어 배경의 다양성을 확보하는 방법이다. 전경(장기)이 포함된 이미지 $x_i$와 전경이 포함되지 않은 배경 이미지 $x_j$를 한 쌍으로 사용하여 다음과 같이 증강된 이미지 $\tilde{x}_i$를 생성한다.
 
 $$\tilde{x}_i = (1 - y_i) \odot x_i + y_j \odot x_j$$
@@ -50,17 +52,21 @@ $$\tilde{x}_i = (1 - y_i) \odot x_i + y_j \odot x_j$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: CT 스캔 데이터인 CHAOS(간), SLIVER07(간), MSD spleen(비장) 세 가지를 사용하였다.
 - **아키텍처**: MobileNet v2를 인코더로 사용하는 Unet 및 Unet++를 사용하였으며, 사전 학습(Pre-training)은 수행하지 않았다.
 - **지표**: 전경 영역의 겹침 정도를 측정하는 Dice Similarity Coefficient (Dice)를 평가지표로 사용하였다.
 - **비교 대상**: Baseline(증강 없음), Basic DA(Shift, Rotation, Elastic), Real-ESRGAN, RandomFog, MaskDrop.
 
 ### 정량적 결과
+
 표 1에 따르면 제안 방법(Ours)이 모든 데이터셋과 아키텍처에서 가장 높은 성능을 기록하였다.
+
 - **Unet 사용 시**: CHAOS에서 94.15% (Baseline 대비 +3.04%), MSD spleen에서 74.70% (Baseline 대비 +5.25%)의 Dice 계수를 달성하였다.
 - **Unet++ 사용 시**: MSD spleen에서 77.64% (Baseline 대비 +7.41%)로 가장 큰 폭의 향상을 보였다.
 
 ### 분석 및 추가 실험
+
 - **단일 연산 비교**: KeepGaussianBlur, KeepGridDropout, KeepMix(diff/same) 각각의 단일 적용만으로도 Baseline보다 성능이 향상되었으며, 이들을 결합했을 때 최적의 성능이 나타났다.
 - **데이터 양에 따른 효과**: 학습 데이터의 양이 적을수록(1/4, 1/2 비율) 제안 방법의 성능 향상 폭이 더 크게 나타났다. 이는 데이터가 부족한 의료 영상 분석 환경에서 본 방법론이 매우 유효함을 시사한다.
 - **강건성**: 증강 적용 비율인 $p$ 값의 변화에도 불구하고 KeepMask는 Baseline 및 일반 GridDropout보다 일관되게 높은 성능을 유지하였다.

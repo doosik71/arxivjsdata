@@ -7,6 +7,7 @@ Daniel Jarrett, Ioana Bica, Mihaela van der Schaar (2020)
 본 논문은 **Strictly Batch Imitation Learning (SBIL)** 문제를 해결하고자 한다. 일반적인 Imitation Learning(모방 학습)은 강화 학습 신호(reinforcement signals)에 접근하거나, 환경의 전이 역학(transition dynamics)을 알고 있거나, 혹은 환경과 직접 상호작용하며 정책을 개선하는 과정을 거친다. 하지만 의료 서비스(healthcare)와 같이 실제 환경에서의 실험 비용이 매우 높거나 위험한 분야에서는 이러한 조건들이 충족되기 어렵다.
 
 따라서 본 연구는 다음과 같은 제약 조건 하에서의 학습을 목표로 한다:
+
 1. 강화 학습 신호(보상 함수)에 접근할 수 없다.
 2. 환경의 전이 역학(dynamics)에 대한 지식이 없다.
 3. 학습 과정 중 환경과의 추가적인 상호작용(online interaction)이 완전히 배제된다.
@@ -32,16 +33,19 @@ EDM은 이러한 방식들과 달리, 정책 파라미터 $\theta$를 통해 정
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 파라미터화
+
 먼저 정책 $\pi_\theta(a|s)$를 다음과 같은 Softmax 형태로 정의한다:
 $$\pi_\theta(a|s) = \frac{e^{f_\theta(s)[a]}}{\sum_{a'} e^{f_\theta(s)[a']}}$$
 여기서 $f_\theta(s)[a]$는 액션 $a$에 대한 로짓(logits)이다.
 
 ### 에너지 기반 모델 (EBM)의 도입
+
 본 논문은 정책의 로짓 $f_\theta$를 사용하여 상태 분포 $\rho_\theta(s)$에 대한 에너지 함수 $E_\theta(s)$를 다음과 같이 정의한다:
 $$E_\theta(s) = -\log \sum_a e^{f_\theta(s)[a]}$$
 즉, 정책의 파라미터 $\theta$가 결정되면 자동으로 상태 분포의 에너지 함수가 결정되는 구조이다.
 
 ### 학습 목표 및 손실 함수 (Surrogate Objective)
+
 최종 목표는 전문가의 방문 분포 $\rho^D$와 모방자의 분포 $\rho^\theta$ 사이의 KL Divergence를 최소화하는 것이다. 하지만 $\rho^\theta(s)$를 직접 계산하는 것은 불가능하므로, 다음과 같은 **Surrogate Objective** $L_{surr}(\theta)$를 제안한다:
 $$L_{surr}(\theta) = L_\rho(\theta) + L_\pi(\theta)$$
 
@@ -51,7 +55,9 @@ $$L_{surr}(\theta) = L_\rho(\theta) + L_\pi(\theta)$$
    $$L_\rho(\theta) = \mathbb{E}_{s \sim \rho^D} E_\theta(s) - \mathbb{E}_{s \sim \rho^\theta} E_\theta(s)$$
 
 ### 학습 절차 및 최적화
+
 $\mathbb{E}_{s \sim \rho^\theta} E_\theta(s)$ 항을 계산하기 위해, 모델 $\rho^\theta$로부터 상태 샘플을 생성해야 한다. 이를 위해 다음과 같은 절차를 사용한다:
+
 - **SGLD (Stochastic Gradient Langevin Dynamics):** 에너지 함수의 그래디언트를 따라 상태 공간에서 샘플링을 수행한다.
   $$\tilde{s}_{i} = \tilde{s}_{i-1} - \alpha \frac{\partial E_\theta(\tilde{s}_{i-1})}{\partial \tilde{s}_{i-1}} + \sigma \mathcal{N}(0, I)$$
 - **PCD (Persistent Contrastive Divergence):** 매번 처음부터 샘플링하는 대신, 샘플 버퍼(Buffer)를 유지하여 계산 효율성을 높인다.
@@ -61,13 +67,15 @@ $\mathbb{E}_{s \sim \rho^\theta} E_\theta(s)$ 항을 계산하기 위해, 모델
 ## 📊 Results
 
 ### 실험 설정
-- **데이터셋 및 작업:** 
-    - **Control Tasks:** OpenAI Gym의 CartPole, Acrobot, LunarLander, BeamRider.
-    - **Healthcare:** MIMIC-III (중환자실 환자의 치료 궤적 데이터).
+
+- **데이터셋 및 작업:**
+  - **Control Tasks:** OpenAI Gym의 CartPole, Acrobot, LunarLander, BeamRider.
+  - **Healthcare:** MIMIC-III (중환자실 환자의 치료 궤적 데이터).
 - **비교 대상:** Behavioral Cloning (BC), Reward-Regularized Classification (RCAL), Deep Successor Feature Network (DSFN), Value-Dice (VDICE).
 - **측정 지표:** Gym 환경에서는 평균 리턴(Average Returns), MIMIC-III에서는 액션 매칭 정확도(ACC), AUC, APR을 사용한다.
 
 ### 주요 결과
+
 1. **정량적 성능:** EDM은 모든 환경에서 BC 및 다른 오프라인 적응 알고리즘들보다 일관되게 우수한 성능을 보였다.
 2. **데이터 효율성:** 특히 전문가의 궤적(trajectories) 수가 매우 적은 **Low-data regime**에서 EDM의 성능 향상 폭이 가장 컸다. 이는 EBM이 희소한 데이터 $\rho^D$를 매끄러운(smoothed) 분포 모델 $\rho^\theta$로 대체하여 학습함으로써 발생하는 효과이다.
 3. **의료 데이터 적용:** MIMIC-III 데이터셋에서도 ACC, AUC, APR 모든 지표에서 타 모델 대비 우위를 점하며 실제 의료 환경에서의 적용 가능성을 입증하였다.
@@ -76,9 +84,11 @@ $\mathbb{E}_{s \sim \rho^\theta} E_\theta(s)$ 항을 계산하기 위해, 모델
 ## 🧠 Insights & Discussion
 
 ### 강점 및 해석
+
 EDM의 가장 큰 강점은 정책 학습과 상태 분포 학습을 단일 파라미터 $\theta$로 묶어 **멀티태스크 학습(Multitask Learning)** 형태로 구현했다는 점이다. 이를 통해 별도의 보상 함수 추정이나 환경 상호작용 없이도, 정책이 방문하게 될 상태 분포를 간접적으로 제어할 수 있게 되었다. 특히, BC가 단순히 전문가의 행동을 복제하는 것에 그치는 반면, EDM은 "어떤 상태에 머물러야 하는가"에 대한 생성적 정보를 함께 학습함으로써 분포 불일치(distribution mismatch) 문제를 완화한다.
 
 ### 한계 및 비판적 논의
+
 - **액션 공간의 제한:** 본 연구에서는 Joint EBM 구조를 사용하므로 액션이 범주형(categorical)인 경우에만 적용 가능하다. 연속적인 액션 공간으로 확장하기 위해서는 EBM의 회귀(regression) 적용 방식에 대한 추가 연구가 필요하다.
 - **EBM 학습의 불안정성:** 일반적으로 에너지 기반 모델은 학습이 어렵고 수렴 여부를 판단하기 어렵다. 저자들은 본 실험 환경에서는 큰 문제가 없었다고 주장하지만, 더 고차원적인 상태 공간에서는 SGLD 샘플링의 효율성과 안정성이 문제가 될 가능성이 크다.
 - **데이터 대표성 가정:** $\rho^D$가 실제 전문가 분포를 충분히 대표한다는 가정하에 작동하므로, 데이터 자체가 심하게 편향되어 있을 경우 모델이 잘못된 상태 분포를 학습할 위험이 있다.

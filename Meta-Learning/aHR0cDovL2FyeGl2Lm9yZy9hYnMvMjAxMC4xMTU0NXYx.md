@@ -28,13 +28,14 @@ Huaxiu Yao, Yingbo Zhou, Mehrdad Mahdavi, Zhenhui Li, Richard Socher, Caiming Xi
 OSML은 메타 러너를 여러 층(layer)으로 구성하고, 각 층에 여러 개의 지식 블록을 배치한 그래프 구조로 정의한다. 전체 프로세스는 크게 '메타 지식 경로 구축'과 '지식 블록 업데이트'의 두 단계로 나뉜다.
 
 ### 1. 메타 지식 경로 구축 (Meta-knowledge Pathway Construction)
+
 새로운 태스크 $T_t$가 도착하면, 모델은 각 층에서 가장 관련성이 높은 지식 블록을 찾아 경로를 생성한다. 이때 효율적인 탐색을 위해 미분 가능한(differentiable) 방식으로 이 과정을 완화하여 처리한다.
 
 층 $l$에서의 입력 표현 $g_{l-1,t}$에 대해, 출력 $g_{l,t}$는 다음과 같이 계산된다.
 
 $$g_{l,t} = \frac{\sum_{b_l=1}^{B_l+1} \exp(o^{b_l}) M_t(w^{0b_l,t})(g_{l-1,t})}{\sum_{b'_l=1}^{B_l+1} \exp(o^{b'_l})}$$
 
-여기서 $o$는 각 지식 블록의 중요도를 나타내는 계수이며, $M_t$는 서포트 셋 $D_{supp}^t$를 이용한 내부 업데이트(inner update) 과정을 의미한다. 
+여기서 $o$는 각 지식 블록의 중요도를 나타내는 계수이며, $M_t$는 서포트 셋 $D_{supp}^t$를 이용한 내부 업데이트(inner update) 과정을 의미한다.
 
 $$M_t(w^{0b_l,t}) = w^{0b_l,t} - \alpha \nabla_{w^{0b_l,t}} L(w^{0,t}, D_{supp}^t)$$
 
@@ -46,6 +47,7 @@ $$o \leftarrow o - \beta_2 \nabla_o L(w_t, o; D_{query}^t)$$
 최종적으로 각 층에서 중요도 $o^{b_l}$가 가장 큰 블록 $b^*_l = \arg \max o^{b_l}$을 선택하여 메타 지식 경로 $\{w^{0b^*_1,t}, \dots, w^{0b^*_L,t}\}$를 형성한다.
 
 ### 2. 지식 블록 메타 업데이트 (Knowledge Block Meta-Updating)
+
 선택된 경로상의 블록들은 새로운 태스크의 정보를 반영하여 업데이트된다. 계산 효율성을 위해 2차 미분 대신 1차 근사(first-order approximation)를 사용하며, 태스크 버퍼 $B$에서 해당 블록을 공유하는 이전 태스크 $T_k$들을 샘플링하여 업데이트를 수행한다.
 
 $$\text{update: } w^{0b^*_l,t} \leftarrow w^{0b^*_l,t} - \beta_3 \sum_{k=1}^K \nabla_{w^{b_l,k}} L(w^k; D_{query}^k)$$
@@ -57,13 +59,15 @@ $$w^{b^*_1,t} = w^{0b^*_l,t} - \beta_5 \nabla_w L(w; D_{supp}^t \oplus D_{query}
 ## 📊 Results
 
 ### 실험 설정
-- **데이터셋**: 
-    - Homogeneous: Rainbow MNIST (색상, 크기, 각도가 변형된 56개 태스크).
-    - Heterogeneous: Multi-filtered mini-Imagenet (Blur, Night, Pencil 필터 적용), Meta-dataset (Flower, Fungi, Aircraft 포함).
+
+- **데이터셋**:
+  - Homogeneous: Rainbow MNIST (색상, 크기, 각도가 변형된 56개 태스크).
+  - Heterogeneous: Multi-filtered mini-Imagenet (Blur, Night, Pencil 필터 적용), Meta-dataset (Flower, Fungi, Aircraft 포함).
 - **비교 대상(Baselines)**: Non-transfer (NT), Fine-tune (FT), FTML, DPM, HSML.
 - **평가 지표**: 정확도(Accuracy) 및 평균 순위(Average Ranking, AR).
 
 ### 주요 결과
+
 - **정량적 성과**: OSML은 모든 데이터셋에서 다른 베이스라인보다 높은 정확도를 보였으며, 특히 이질적인 태스크 분포(Multi-filtered mini-Imagenet, Meta-dataset)에서 FTML 대비 월등한 성능 향상을 보였다.
 - **모델 용량 분석**: 단순히 모델의 파라미터 수를 늘린 버전(NT-Large, FT-Large, FTML-Large)과 비교했을 때, OSML의 성능 향상은 단순히 용량이 커졌기 때문이 아니라 구조화된 지식 활용 능력에서 기인함이 확인되었다.
 - **학습 효율성**: Rainbow MNIST 실험에서 OSML은 목표 정확도(90%)에 도달하기 위해 필요한 샘플 수가 다른 방법들보다 적어, 더 빠른 학습 효율성을 입증하였다.

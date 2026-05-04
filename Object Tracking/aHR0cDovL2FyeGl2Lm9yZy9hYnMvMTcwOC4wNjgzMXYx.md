@@ -4,9 +4,10 @@ Zheng Tang, Gaoang Wang, Tao Liu, Young-Gun Lee, Adwin Jahn, Xu Liu, Xiaodong He
 
 ## 🧩 Problem to Solve
 
-본 논문은 도시 환경의 교통 감시 시스템에서 발생하는 **다중 객체 추적(Multiple Object Tracking, MOT)** 문제를 해결하고자 한다. 특히 도시 환경의 특성상 차량, 가로수, 전신주 등에 의해 발생하는 **빈번한 폐쇄(Frequent Occlusion)** 현상은 기존 추적 알고리즘의 성능을 저하시키는 핵심적인 요인이다. 
+본 논문은 도시 환경의 교통 감시 시스템에서 발생하는 **다중 객체 추적(Multiple Object Tracking, MOT)** 문제를 해결하고자 한다. 특히 도시 환경의 특성상 차량, 가로수, 전신주 등에 의해 발생하는 **빈번한 폐쇄(Frequent Occlusion)** 현상은 기존 추적 알고리즘의 성능을 저하시키는 핵심적인 요인이다.
 
 또한, 수많은 카메라가 설치된 AI City 네트워크 환경에서 각 카메라를 수동으로 보정(Manual Calibration)하는 것은 현실적으로 불가능하다. 따라서 본 연구의 목표는 다음과 같다.
+
 1. 3D 변형 가능한 차량 모델(3D Deformable Model)과 제약 조건이 적용된 다중 커널(Constrained Multiple-Kernel, CMK)을 통해 폐쇄 상황에서도 강건하게 차량을 추적하는 시스템을 구축하는 것이다.
 2. 보행자 추적 데이터를 활용하여 카메라 파라미터를 자동으로 계산하는 비지도 학습 기반의 카메라 자가 보정(Camera Self-Calibration) 방법을 구현하는 것이다.
 3. 딥러닝 기반의 객체 검출 모델을 앙상블하여 다양한 차량 클래스에 대한 검출 정확도를 높이는 것이다.
@@ -16,6 +17,7 @@ Zheng Tang, Gaoang Wang, Tao Liu, Young-Gun Lee, Adwin Jahn, Xu Liu, Xiaodong He
 본 논문의 핵심 아이디어는 **차량의 3D 기하학적 구조를 추적 과정에 통합**하여, 일부가 가려지더라도 나머지 가시적인 부분(커널)과 그들 사이의 3D 공간적 제약 조건을 통해 객체의 위치를 정확히 추정하는 것이다.
 
 주요 기여 사항은 다음과 같다.
+
 - **3D CMK Tracking**: 3D 차량 모델의 각 패치를 커널로 정의하고, 이들 간의 3D 거리 및 상대적 각도(Yaw, Pitch)를 제약 조건으로 설정하여 폐쇄에 강건한 추적을 수행한다.
 - **Evolutionary Camera Self-Calibration**: 보행자를 수직 기둥(Pole)으로 모델링하고, 소실점(Vanishing Point) 추정과 진화 전략 알고리즘(EDA)을 통해 카메라의 투영 행렬을 자동으로 계산한다.
 - **MAST (Multi-kernel Adaptive Segmentation and Tracking)**: 추적 결과로부터의 피드백을 통해 배경 제거 및 그림자 검출 임계값을 적응적으로 조절하여 전경 마스크(Foreground Mask)의 정밀도를 높인다.
@@ -24,6 +26,7 @@ Zheng Tang, Gaoang Wang, Tao Liu, Young-Gun Lee, Adwin Jahn, Xu Liu, Xiaodong He
 ## 📎 Related Works
 
 논문에서는 MOT를 크게 두 가지 접근 방식으로 분류하여 설명한다.
+
 1. **Tracking by Detection**: 객체 검출 결과에 기반하여 데이터 연관(Data Association)을 수행하는 방식이다. SORT나 RNN 기반 방법들이 대표적이며, 최근 딥러닝 기반 방법들이 높은 성능을 보이고 있다. 하지만 복잡한 폐쇄 상황에서는 추적 실패 가능성이 높다.
 2. **Tracking by Segmentation**: 객체 분할을 통해 추적하는 방식이다. 본 연구팀의 이전 연구인 MAST 등이 이에 해당하며, 배경과 객체의 색상이 유사할 때 발생하는 '객체 병합' 문제가 한계점으로 지적된다.
 
@@ -32,26 +35,34 @@ Zheng Tang, Gaoang Wang, Tao Liu, Young-Gun Lee, Adwin Jahn, Xu Liu, Xiaodong He
 ## 🛠️ Methodology
 
 ### 1. 객체 검출 및 분류 (Object Detection/Classification)
+
 VGG-based SSD와 YOLO9000을 결합한 앙상블 학습을 사용한다.
+
 - **다중 스케일 테스트**: 이미지를 50% 중첩되는 9개 하위 영역으로 나누어 검출함으로써 원거리의 작은 객체를 더 잘 탐지한다.
 - **앙상블 전략**: SSD와 YOLO9000의 Bounding Box 간 $\text{IoU} \ge 0.5$인 경우 동일 객체로 간주한다.
-    - 클래스가 일치하면 선형 회귀(Linear Regression)를 통해 박스를 병합한다: $\hat{B} = d_1 B_1 \oplus d_2 B_2$.
-    - 클래스가 다르면 신뢰도 점수($s_1, s_2$)를 이용한 회귀 식 $\hat{y} = d_3 s_1 + d_4 s_2$를 통해 더 신뢰할 수 있는 클래스를 선택한다.
+  - 클래스가 일치하면 선형 회귀(Linear Regression)를 통해 박스를 병합한다: $\hat{B} = d_1 B_1 \oplus d_2 B_2$.
+  - 클래스가 다르면 신뢰도 점수($s_1, s_2$)를 이용한 회귀 식 $\hat{y} = d_3 s_1 + d_4 s_2$를 통해 더 신뢰할 수 있는 클래스를 선택한다.
 
 ### 2. 다중 커널 적응형 분할 (MAST)
+
 배경과 색상이 유사한 차량의 전경 마스크를 정밀하게 얻기 위해 추적 피드백 루프를 사용한다.
+
 - **유사도 측정**: 현재 프레임과 배경 모델 간의 색상/채도 히스토그램의 Bhattacharyya 거리를 계산하여 유사도 $sim$을 측정한다.
 - **패널티 가중치**: 유사도에 따라 퍼지 가우시안 함수를 사용하여 패널티 가중치 $d_{pen}$을 계산한다.
 $$d_{pen} = \begin{cases} \exp\left[-\frac{9 \cdot (1.0-sim)^2}{4 \cdot (1.0-sim_{min})^2}\right], & sim_{min} \le sim < sim_{max} \\ 0, & \text{otherwise} \end{cases}$$
 - 이 가중치를 배경 제거 및 그림자 검출 임계값에 곱하여 전경 영역을 적응적으로 보존한다.
 
 ### 3. 진화적 카메라 자가 보정 (Evolutionary Camera Self-Calibration)
+
 보행자를 수직 기둥으로 가정하여 카메라 파라미터를 추정한다.
+
 - **소실점 추정**: 보행자의 머리와 발 지점을 연결하여 수직 소실점 $V_Y$와 지평선 $L_\infty$를 찾는다. 노이즈 제거를 위해 Mean Shift 클러스터링과 Laplace 선형 회귀를 사용한다.
 - **최적화**: 추정된 3D 보행자 높이의 표준편차와 지면 투영 오차(Reprojection Error)를 최소화하도록 $\text{EMNA}_{\text{global}}$ (다변량 EDA 알고리즘)을 사용하여 카메라 파라미터를 최적화한다.
 
 ### 4. 3D 차량 모델 기반 CMK 추적
+
 3D 차량 모델의 각 면(Patch)을 하나의 커널로 정의하여 추적을 수행한다.
+
 - **비용 함수**: 각 커널 $\kappa$에 대해 색상 유사도($P_\kappa^s$)와 형태 적합도($P_\kappa^f$)의 합으로 정의된다.
 $$P(\mathbf{x}) = \sum_{\kappa=1}^{n_\kappa} w_\kappa (P_\kappa^s(\mathbf{x}) + P_\kappa^f(\mathbf{x}))$$
 - **색상 유사도**: 2D 픽셀을 3D 공간으로 역투영하여 3D 가우시안 커널 가중치가 적용된 히스토그램 $q$를 생성하고 이를 비교한다.
@@ -62,10 +73,12 @@ $$\|\mathbf{P}_{c\kappa} - \mathbf{P}_{c\kappa^*}\|^2 = r_{\kappa, \kappa^*}^2$$
 ## 📊 Results
 
 ### 1. 객체 검출 결과 (Track 1)
+
 - **성능**: NVIDIA AI City Challenge의 전체 mAP 기준 18개 팀 중 4위를 기록하였다.
 - **효과**: 다중 스케일 테스트를 통해 $\text{aic}1080$ 데이터셋에서 작은 객체 검출 능력이 향상되었으며, 이는 $\text{aic}540$ 대비 mAP가 0.03 상승한 결과로 입증되었다.
 
 ### 2. 다중 객체 추적 결과 (Track 2)
+
 Silicon Valley Intersection 데이터셋(1,356 프레임, 32개 객체)에서 CMK3D와 기존 방식(MAST, Kalman, RNN, SORT)을 비교 분석하였다.
 
 | Methods | MOTA% | MOTP% | FAF | FP | FN | ID Sw. |
@@ -84,10 +97,12 @@ Silicon Valley Intersection 데이터셋(1,356 프레임, 32개 객체)에서 CM
 본 논문은 단순한 2D 추적을 넘어 **3D 기하학적 제약을 추적 루프에 직접 통합**함으로써 폐쇄 문제를 획기적으로 해결하였다. 특히 카메라 보정 과정에서 사람이 걷는 행위(수직 기둥 모델)를 이용해 비지도 방식으로 파라미터를 추출한 점은 실무적으로 매우 효율적인 접근이다.
 
 **강점**:
+
 - 3D 모델을 통해 차량의 유형, 속도, 방향 등의 속성을 추적과 동시에 파악할 수 있다.
 - 3D 제약 조건을 통해 부분 폐쇄 시에도 가시적인 부분만으로 전체 위치를 추정할 수 있어 ID Switch가 거의 발생하지 않는다.
 
 **한계 및 비판적 해석**:
+
 - 카메라 자가 보정이 보행자의 존재와 정확한 세그멘테이션에 의존하고 있다. 보행자가 없는 환경에서는 초기 보정이 불가능할 수 있다.
 - 3D 변형 가능 모델의 초기 설정이 차량의 실제 형태와 차이가 클 경우, 추적 초기 단계에서 적합도(FES) 계산에 오차가 발생할 가능성이 있다.
 - 계산 복잡도 측면에서 3D 역투영 및 반복적 최적화 과정이 실시간 처리 속도에 어떤 영향을 미치는지에 대한 상세한 분석이 부족하다.

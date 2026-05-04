@@ -15,6 +15,7 @@ Andrew Nader, Danielle Azar (2021)
 ## 📎 Related Works
 
 논문에서는 전통적인 활성화 함수부터 최신 경향까지 다음과 같이 설명한다.
+
 - **Sigmoidal Functions**: $\tanh$나 logistic function 등이 있으며, 입력값이 커질수록 기울기가 0에 수렴하는 Gradient Vanishing 문제가 발생하여 깊은 망의 학습을 어렵게 만든다.
 - **ReLU (Rectified Linear Unit)**: $\phi(x) = \max(0, x)$로 정의되며, 양수 영역에서 기울기가 1로 유지되어 학습 속도를 높이고 희소성(sparsity)을 제공한다. 하지만 음수 영역에서 뉴런이 완전히 비활성화되는 'Dying ReLU' 문제가 존재한다.
 - **ReLU 변형 모델**: Leaky ReLU는 음수 영역에 작은 기울기를 추가하여 Dying ReLU 문제를 해결하며, ELU와 SELU는 평균 활성값을 0에 가깝게 밀어내어 학습의 안정성을 높인다. GELU는 확률적 정규화 개념을 도입하여 ReLU와 ELU보다 우수한 성능을 보이기도 한다.
@@ -23,28 +24,34 @@ Andrew Nader, Danielle Azar (2021)
 ## 🛠️ Methodology
 
 ### 1. 염색체 인코딩 (Chromosome Encoding)
+
 본 연구에서 개체(individual)는 $\langle \phi, F \rangle$ 형태의 염색체로 표현된다.
+
 - **활성화 함수 트리 ($\phi$)**: 유전 프로그래밍의 트리 구조를 사용하여 수학 함수를 표현한다. 리프 노드는 입력값 $x$를 나타내며, 내부 노드는 단항(unary) 또는 이항(binary) 연산자로 구성된다.
-    - **단항 연산자**: $\text{relu, elu, sigmoid, tanh, swish, sin, cos, atan, sinh, cosh, leaky relu, softplus, erf, \text{absolute value}}$
-    - **이항 연산자**: $\text{add, subtract, multiply, maximum, minimum}$
+  - **단항 연산자**: $\text{relu, elu, sigmoid, tanh, swish, sin, cos, atan, sinh, cosh, leaky relu, softplus, erf, \text{absolute value}}$
+  - **이항 연산자**: $\text{add, subtract, multiply, maximum, minimum}$
 - **가중치 초기화 기법 ($F$)**: $\text{random normal, random uniform, truncated normal, variance scaling, orthogonal, lecun uniform/normal, glorot uniform/normal, he uniform/normal}$ 중 하나를 선택하는 명목 변수이다.
 
 ### 2. 진화 절차
+
 - **집단 구성**: 인구 수 100명, 총 50세대 동안 진화시킨다. 상위 4개의 개체를 보존하는 Elitism 전략을 사용한다.
 - **선택 및 변이**: Rank selection을 사용하며, 교차율(crossover rate)은 80%, 변이율(mutation rate)은 5%이다.
-    - **교차(Crossover)**: 단일 지점 염색체 교차 후, 트리 구조에 대해 leaf-biased one-point crossover를 수행한다.
-    - **변이(Mutation)**: 무작위로 가지(branch)를 선택해 그 하위 노드 중 하나로 대체하는 shrink mutation을 사용한다.
+  - **교차(Crossover)**: 단일 지점 염색체 교차 후, 트리 구조에 대해 leaf-biased one-point crossover를 수행한다.
+  - **변이(Mutation)**: 무작위로 가지(branch)를 선택해 그 하위 노드 중 하나로 대체하는 shrink mutation을 사용한다.
 - **Bloat 제어**: 트리의 깊이가 10을 초과하면 부모 트리로 대체하여 계산 복잡도를 제한한다.
 
 ### 3. 학습 및 평가 절차
-- **적합도 측정 (Fitness)**: 훈련 데이터의 10%를 검증셋으로 분리하여 측정한다. 
-    - 이진 분류: $F_1$ measure
-    - 다중 클래스 분류: Categorical Accuracy
-    - 회귀: Mean Squared Error (MSE)
+
+- **적합도 측정 (Fitness)**: 훈련 데이터의 10%를 검증셋으로 분리하여 측정한다.
+  - 이진 분류: $F_1$ measure
+  - 다중 클래스 분류: Categorical Accuracy
+  - 회귀: Mean Squared Error (MSE)
 - **훈련 세부사항**: ADAM 옵티마이저를 사용하며, 진화 과정 중에는 Early Stopping(10 epoch tolerance)을 적용하여 과적합을 방지한다. 최종 선택된 최우수 함수들은 30회 반복 실행하여 평균과 표준편차를 측정한다.
 
 ### 4. 활성화 함수 특성 분석
+
 발견된 함수의 형태를 분석하기 위해 다음 네 가지 속성의 진화 과정을 추적한다.
+
 - **Monotonicity**: 함수가 단조 증가하는지 여부.
 - **Zero on Non-Negative Real Axis**: $x \le 0$일 때 $\phi(x) = 0$인지 여부 (Sparsity 확인).
 - **Upper Unbounded**: $x \to \infty$일 때 $\phi(x) \to \infty$인지 여부.
@@ -55,18 +62,21 @@ Andrew Nader, Danielle Azar (2021)
 실험은 크게 세 가지 태스크(다변량 분류, 회귀, 이미지 분류)에서 수행되었다.
 
 ### 1. 다변량 분류 (Multi-variate Classification)
+
 - **데이터셋**: Electricity, Magic Telescope, Robot Navigation, EEG Eye State.
 - **결과**: 다수의 데이터셋에서 진화된 함수($\phi_1, \phi_2, \phi_3$)가 ReLU, ELU, SELU 등 베이스라인보다 높은 성능을 보였다. 특히 Magic Telescope 데이터셋에서는 정밀도(Precision)가 약 6% 향상되었다.
 - **통계적 유의성**: Tukey HSD 테스트 결과, 대부분의 데이터셋에서 진화된 함수들의 개선 사항이 통계적으로 유의미함($p < 0.001$)이 확인되었다.
 
 ### 2. 회귀 (Regression)
+
 - **데이터셋**: Red Wine Quality, White Wine Quality, California Housing.
 - **결과**: 모든 회귀 데이터셋에서 진화된 함수가 베이스라인보다 낮은 MSE를 기록하였다.
 - **특이점**: 회귀 문제에서는 $\sin, \cos$와 같은 주기적 함수가 포함된 비단조(non-monotonic) 함수들이 발견되었으며, 이들이 기존의 단조 함수들보다 훨씬 우수한 성능을 보였다.
 
 ### 3. 이미지 분류 (Image-based Classification)
+
 - **데이터셋**: CIFAR-10, Fashion-MNIST, MNIST (각 5,000개의 샘플 서브셋 사용).
-- **결과**: CIFAR-10에서 정확도가 약 3% 향상되었고, MNIST에서도 약 0.7%의 향상이 있었다. 
+- **결과**: CIFAR-10에서 정확도가 약 3% 향상되었고, MNIST에서도 약 0.7%의 향상이 있었다.
 - **특이점**: CIFAR-10과 Fashion-MNIST에서는 ReLU와 유사하게 $x \le 0$에서 0이 되는 특성이 선호되었으나, MNIST에서는 매우 특이한 형태의 함수들이 발견되었다.
 
 ## 🧠 Insights & Discussion
@@ -79,6 +89,7 @@ Andrew Nader, Danielle Azar (2021)
 셋째, **알고리즘의 일반성**이다. Robot Navigation 데이터셋의 경우 알고리즘이 스스로 ReLU 함수를 재발견(recover)하였다. 이는 제안된 방법론이 특정 방향으로 편향되지 않고, 실제 최적이 ReLU라면 이를 찾아낼 수 있음을 입증한다.
 
 **한계점**:
+
 - 계산 자원의 한계로 인해 이미지 데이터셋의 전체 크기를 사용하지 못하고 서브셋만 사용하였다.
 - 발견된 함수들이 수학적으로는 복잡하지만, 실제 구현 시 계산 비용(computational cost)에 대한 정밀한 분석이 부족하다.
 

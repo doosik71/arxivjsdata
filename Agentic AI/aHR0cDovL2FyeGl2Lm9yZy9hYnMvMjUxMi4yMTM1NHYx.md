@@ -25,18 +25,21 @@ Bin Wang, Jiazheng Quan, Xingrui Yu, Hansen Hu, Yuhao, Ivor Tsang (2026)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 논문은 $\text{Plan} \rightarrow \text{Reflect} \rightarrow \text{Verify}$로 이어지는 에이전트 프레임워크를 제안하며, 그 중심에 플러그인 형태로 통합 가능한 **Reflex Module**을 배치한다. 이 모듈은 일반적인 에이전트 오케스트레이션에 쉽게 통합될 수 있도록 설계되었다.
 
 ### 핵심 구성 요소 및 역할
+
 Reflex Module은 다음과 같은 세 가지 핵심 구성 요소로 이루어져 있다.
 
-1.  **Lightweight Self-Checker**: 입력 코드를 빠르게 스캔하여 "SAFE" 또는 "UNSAFE"로 분류하는 이진 분류기이다. "SAFE"로 판정되면 불필요한 계산을 피하기 위해 즉시 메모리에 저장하고 종료하며, "UNSAFE"일 경우에만 전체 성찰 및 수정 파이프라인을 가동하여 추론 비용을 최적화한다.
-2.  **Reflective Prompt Engine**: "UNSAFE" 판정을 받은 코드에 대해 심층 분석을 수행한다. 단일 생성 작업을 다회차의 $\text{Chain-of-Thought}$ 성찰 대화로 변환하여 $\text{취약점 식별} \rightarrow \text{원인 분석 및 완화 전략 수립} \rightarrow \text{보안 코드 수정}$의 단계를 거치게 한다.
-3.  **Reflective Memory Repository**: 지속적인 학습과 경험 재사용을 위한 지식 베이스이다. 이는 두 가지 계층으로 구성된다.
-    *   **Dynamic Memory ($M_D$)**: 시스템 운영 중 생성되고 검증된 수정 사례를 저장하는 ChromaDB 기반의 벡터 데이터베이스이다.
-    *   **Static Memory ($M_S$)**: 표준 보안 코딩 규격 및 취약점 데이터베이스와 같은 기초 지식을 저장한다.
+1. **Lightweight Self-Checker**: 입력 코드를 빠르게 스캔하여 "SAFE" 또는 "UNSAFE"로 분류하는 이진 분류기이다. "SAFE"로 판정되면 불필요한 계산을 피하기 위해 즉시 메모리에 저장하고 종료하며, "UNSAFE"일 경우에만 전체 성찰 및 수정 파이프라인을 가동하여 추론 비용을 최적화한다.
+2. **Reflective Prompt Engine**: "UNSAFE" 판정을 받은 코드에 대해 심층 분석을 수행한다. 단일 생성 작업을 다회차의 $\text{Chain-of-Thought}$ 성찰 대화로 변환하여 $\text{취약점 식별} \rightarrow \text{원인 분석 및 완화 전략 수립} \rightarrow \text{보안 코드 수정}$의 단계를 거치게 한다.
+3. **Reflective Memory Repository**: 지속적인 학습과 경험 재사용을 위한 지식 베이스이다. 이는 두 가지 계층으로 구성된다.
+    * **Dynamic Memory ($M_D$)**: 시스템 운영 중 생성되고 검증된 수정 사례를 저장하는 ChromaDB 기반의 벡터 데이터베이스이다.
+    * **Static Memory ($M_S$)**: 표준 보안 코딩 규격 및 취약점 데이터베이스와 같은 기초 지식을 저장한다.
 
 ### 주요 방정식 및 절차
+
 보안 코드 생성 작업은 다음과 같은 조건부 생성 프로세스로 공식화된다.
 
 $$y = G(x, C_f, C_{fn}, R(x, C_f, C_{fn}; M), \theta)$$
@@ -52,18 +55,20 @@ $$E = \text{Retrieve}(M_D, M_S, q) = \begin{cases} \text{Top-k from } M_D, & \te
 ## 📊 Results
 
 ### 실험 설정
-- **데이터셋**: MITRE의 Top 25 위험 소프트웨어 약점을 기반으로 한 8가지 CWE(Common Weakness Enumeration) 카테고리의 챌린징 시나리오를 사용하였다. (예: SQL Injection, Buffer Overflow, XSS 등)
-- **측정 지표**:
-    - $\text{Security Rate (Sec. Rate)}$: 컴파일 가능한 샘플 중 보안 결함이 없는 비율.
-    - $\text{Pass Rate}$: 컴파일 가능 샘플 중 기능적 테스트를 통과한 비율.
-    - $\text{Total Efficiency (Eff. Total)}$: 성공적으로 컴파일된 작업의 수.
-- **검증 도구**: 정적 분석 도구인 CodeQL과 LLM Judge를 활용하여 정량적/정성적 평가를 수행하였다.
+
+* **데이터셋**: MITRE의 Top 25 위험 소프트웨어 약점을 기반으로 한 8가지 CWE(Common Weakness Enumeration) 카테고리의 챌린징 시나리오를 사용하였다. (예: SQL Injection, Buffer Overflow, XSS 등)
+* **측정 지표**:
+  * $\text{Security Rate (Sec. Rate)}$: 컴파일 가능한 샘플 중 보안 결함이 없는 비율.
+  * $\text{Pass Rate}$: 컴파일 가능 샘플 중 기능적 테스트를 통과한 비율.
+  * $\text{Total Efficiency (Eff. Total)}$: 성공적으로 컴파일된 작업의 수.
+* **검증 도구**: 정적 분석 도구인 CodeQL과 LLM Judge를 활용하여 정량적/정성적 평가를 수행하였다.
 
 ### 주요 결과
-1.  **보안성 및 기능성 향상**: GPT-3.5, GPT-4, Qwen-3-Coder, Gemini-2.5-Pro 등 다양한 모델에서 Reflex Module 적용 시 $\text{Security Rate}$가 일관되게 상승하였다. 특히 Qwen 모델의 경우 $83.7\% \rightarrow 94.9\%$로 $11.2\%$p의 큰 폭의 향상을 보였다. $\text{Pass Rate}$는 대부분의 모델에서 유지되거나 소폭 상승하여, 보안 강화가 기능적 정확성을 해치지 않음을 입증하였다.
-2.  **동적 RAG의 지식 축적**: 반복적인 실행 횟수가 늘어남에 따라 검색 유사도가 $0.850$에서 $0.980$으로 증가하였으며, 정적 메모리로의 폴백(fallback) 비율이 $15\%$에서 $0\%$로 감소하여 시스템이 자가 강화되는 양상을 보였다.
-3.  **성찰 깊이와 한계 효용**: 성찰 횟수가 늘어날수록 성능이 향상되지만, 약 4회차 이후부터는 성능 향상이 정체되는 지점(plateau)이 발견되었다. 특히, 단 한 번의 정교한 성찰 라운드만으로도 핵심 수정 패턴의 약 $90\%$를 포착할 수 있다는 점이 확인되었다.
-4.  **비용 및 오버헤드**: 시나리오당 평균 비용은 $5.37 \times 10^{-4}$ 달러로 매우 낮았으며, 전체 실행 시간의 $84.4\%$가 LLM 추론 시간에 집중되어 있어, Reflex 모듈 자체의 논리적 오버헤드(RAG 검색 등)는 무시할 수 있는 수준($2.8\%$)이었다.
+
+1. **보안성 및 기능성 향상**: GPT-3.5, GPT-4, Qwen-3-Coder, Gemini-2.5-Pro 등 다양한 모델에서 Reflex Module 적용 시 $\text{Security Rate}$가 일관되게 상승하였다. 특히 Qwen 모델의 경우 $83.7\% \rightarrow 94.9\%$로 $11.2\%$p의 큰 폭의 향상을 보였다. $\text{Pass Rate}$는 대부분의 모델에서 유지되거나 소폭 상승하여, 보안 강화가 기능적 정확성을 해치지 않음을 입증하였다.
+2. **동적 RAG의 지식 축적**: 반복적인 실행 횟수가 늘어남에 따라 검색 유사도가 $0.850$에서 $0.980$으로 증가하였으며, 정적 메모리로의 폴백(fallback) 비율이 $15\%$에서 $0\%$로 감소하여 시스템이 자가 강화되는 양상을 보였다.
+3. **성찰 깊이와 한계 효용**: 성찰 횟수가 늘어날수록 성능이 향상되지만, 약 4회차 이후부터는 성능 향상이 정체되는 지점(plateau)이 발견되었다. 특히, 단 한 번의 정교한 성찰 라운드만으로도 핵심 수정 패턴의 약 $90\%$를 포착할 수 있다는 점이 확인되었다.
+4. **비용 및 오버헤드**: 시나리오당 평균 비용은 $5.37 \times 10^{-4}$ 달러로 매우 낮았으며, 전체 실행 시간의 $84.4\%$가 LLM 추론 시간에 집중되어 있어, Reflex 모듈 자체의 논리적 오버헤드(RAG 검색 등)는 무시할 수 있는 수준($2.8\%$)이었다.
 
 ## 🧠 Insights & Discussion
 

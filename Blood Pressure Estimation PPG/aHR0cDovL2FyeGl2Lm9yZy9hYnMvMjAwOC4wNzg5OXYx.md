@@ -21,9 +21,11 @@ Mousumi Das, Tilendra Choudhary, L.N. Sharma, and M.K. Bhuyan (2020)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 원리
+
 본 제안 방법은 가속도계 센서로 SCG 신호를 획득하고, 여기서 $\text{LVET}$와 $\text{HR}$을 추출한 뒤, 선형 회귀 모델을 통해 혈압을 추정하는 파이프라인을 가진다. 혈압은 기본적으로 심박출량($Q$)과 말초 저항($\Omega$)의 곱으로 표현되며, 심박출량은 심박수($\text{HR}$)와 1회 박출량($\text{SV}$)에 의존한다. 여기서 $\text{LVET}$는 $\text{SV}$와 직접적인 연관이 있으므로, $\text{LVET}$를 통해 혈압을 추정할 수 있다는 생리학적 근거를 바탕으로 한다.
 
 ### 주요 방정식 및 모델링
+
 실제 $\text{LVET}$를 측정하기 위한 $\text{AC}$ 지점(대동맥 판막 폐쇄)의 식별이 어렵기 때문에, 본 논문에서는 $\text{AC}$ 직후에 나타나는 $\text{pAC}$ 피크를 사용하여 $\text{LVET}$를 근사한 $\text{LVET}'$를 정의한다.
 
 $$ \text{LVET}' = \text{pAC} - \text{AO} $$
@@ -41,13 +43,15 @@ $$ \begin{bmatrix} \text{BP}_1 \\ \text{BP}_2 \\ \vdots \\ \text{BP}_n \end{bmat
 $$ X = (A^T A)^{-1} A^T \text{BP} $$
 
 ### 신호 처리 및 피크 검출 절차
-1.  **AO Peak 검출**: MVMD(Multivariate Variational Mode Decomposition)를 사용하여 저주파 잡음을 제거하고, 가우시안 미분 필터(Gaussian derivative filter)를 적용하여 수축기 프로필을 강화한다. 이후 힐베르트 변환(Hilbert transform)과 심장 주기 엔벨로프(CCE)를 사용하여 $\text{AO}$ 지점을 정밀하게 찾는다.
-2.  **후처리(Post-processing)**: $\text{AO}$ 피크 검출 시 발생하는 오검출(Missing peak, False positive)을 줄이기 위해, 인접한 피크 간의 거리와 중앙값(Median) 차이를 비교하여 잘못된 피크를 제거하거나 누락된 피크를 보간한다.
-3.  **pAC Peak 검출**: $\text{AO}$-$\text{AO}$ 간격을 4등분 하여 특정 구간($M_2$에서 $M_1$ 사이)을 설정하고, 버터워스 고역 통과 필터(Butterworth high pass filter, 10Hz)를 적용하여 해당 구간의 최댓값을 $\text{pAC}$ 피크로 결정한다.
+
+1. **AO Peak 검출**: MVMD(Multivariate Variational Mode Decomposition)를 사용하여 저주파 잡음을 제거하고, 가우시안 미분 필터(Gaussian derivative filter)를 적용하여 수축기 프로필을 강화한다. 이후 힐베르트 변환(Hilbert transform)과 심장 주기 엔벨로프(CCE)를 사용하여 $\text{AO}$ 지점을 정밀하게 찾는다.
+2. **후처리(Post-processing)**: $\text{AO}$ 피크 검출 시 발생하는 오검출(Missing peak, False positive)을 줄이기 위해, 인접한 피크 간의 거리와 중앙값(Median) 차이를 비교하여 잘못된 피크를 제거하거나 누락된 피크를 보간한다.
+3. **pAC Peak 검출**: $\text{AO}$-$\text{AO}$ 간격을 4등분 하여 특정 구간($M_2$에서 $M_1$ 사이)을 설정하고, 버터워스 고역 통과 필터(Butterworth high pass filter, 10Hz)를 적용하여 해당 구간의 최댓값을 $\text{pAC}$ 피크로 결정한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **대상**: 건강한 성인 10명 (앙와위, Supine position)
 - **측정 데이터**: 6분간 SCG, ECG, PPG 및 기준 혈압(ABP)을 동시 측정
 - **기준 장비**: CNAP Monitor 500 (Finger-cuff 방식)
@@ -55,12 +59,15 @@ $$ X = (A^T A)^{-1} A^T \text{BP} $$
 - **데이터 분할**: 각 대상자 데이터의 70%를 보정(Calibration)에 사용, 30%를 테스트에 사용
 
 ### 정량적 결과
+
 제안된 $\text{LVET}'$ 기반 방법의 결과는 다음과 같다.
+
 - **수축기 혈압(SBP)**: $\text{ME} = -0.19 \pm 3.3\text{ mmHg}$, $\text{MAE} = 3.2\text{ mmHg}$
 - **이완기 혈압(DBP)**: $\text{ME} = -1.29 \pm 2.6\text{ mmHg}$, $\text{MAE} = 2.6\text{ mmHg}$
 - 위 결과는 IEEE 표준 요구 사항인 $5 \pm 8\text{ mmHg}$ 오차 범위를 만족한다.
 
 ### 비교 분석
+
 기존의 PTT 방식(ECG-PPG 조합) 및 $\text{PTT}_1$ 방식(SCG-PPG 조합)과 비교했을 때, 제안 방법은 유사한 수준의 정확도를 보였다. Bland-Altman plot과 회귀 분석(Regression plot) 결과, 제안 방법과 기존 방법 간의 상관관계가 매우 높게 나타났으며, 이는 단일 센서만으로도 다중 센서 기반의 기존 시스템을 대체할 수 있는 가능성을 시사한다.
 
 ## 🧠 Insights & Discussion

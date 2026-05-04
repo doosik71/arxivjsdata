@@ -23,6 +23,7 @@ Peter Sollich (1996)
 ## 🛠️ Methodology
 
 ### 시스템 구조: Tree-Committee Machine (TCM)
+
 TCM은 $N$개의 입력 유닛, $K$개의 은닉 유닛, 그리고 1개의 출력 유닛으로 구성된 2층 신경망이다. 각 은닉 유닛의 수용 영역(Receptive fields)은 서로 겹치지 않으며, 은닉 층에서 출력 층으로 가는 모든 가중치는 1로 고정되어 있다. 출력 $y$는 다음과 같이 정의된다.
 
 $$y = \text{sgn} \left( \frac{1}{\sqrt{K}} \sum_{i=1}^{K} \sigma_i \right)$$
@@ -31,6 +32,7 @@ $$\sigma_i = \text{sgn} \left( \sqrt{K} \mathbf{x}_i^T \mathbf{w}_i \right)$$
 여기서 $\mathbf{w}_i$는 은닉 유닛의 가중치 벡터이며, $\mathbf{x}_i$는 해당 유닛이 받는 $N/K$ 차원의 입력 벡터이다. 가중치 벡터는 $\mathbf{w}_i^2 = N/K$로 정규화되어 있다고 가정한다.
 
 ### 학습 및 쿼리 선택 절차
+
 본 논문은 모든 학습 예제를 정확하게 예측하는 학생(Student) 네트워크를 무작위로 선택하는 zero-temperature Gibbs learning을 사용한다.
 
 쿼리 학습의 목표는 학생 네트워크의 파라미터 공간에서의 엔트로피 $S$를 최대화하는 입력을 선택하는 것이다. 엔트로피는 버전 공간(Version space, 학습 데이터를 모두 만족하는 가중치 공간)의 부피 $V$의 로그값으로 정의된다.
@@ -40,16 +42,19 @@ $$S(\Theta^{(p)}) = \ln V(\Theta^{(p)})$$
 최적의 쿼리는 기대 엔트로피 감소량 $\langle \Delta S \rangle$을 최대화하는 입력 $\mathbf{x}_{p+1}$이며, 이는 새로운 입력이 기존 버전 공간을 정확히 이분(Bisect)할 때, 즉 출력값 $y = \pm 1$일 확률이 각각 $1/2$일 때 달성된다.
 
 ### 이론적 분석 도구
+
 분석을 위해 열역학적 극한(Thermodynamic limit, $N \to \infty$)과 은닉 유닛의 수가 매우 많은 경우($K \to \infty$)를 가정한다. 복제 대칭성(Replica symmetry) 가정을 사용하여 평균 엔트로피를 계산하며, 일반화 오차 $\epsilon_g$는 다음과 같은 유효 오버랩(Effective overlap) 파라미터 $R_{\text{eff}}$로 표현된다.
 
 $$\epsilon_g = \frac{1}{\pi} \arccos R_{\text{eff}}$$
 
 ### 제안하는 구성적 알고리즘 (Constructive Algorithm)
+
 기존의 Query by Committee(QBC) 방식은 무작위 입력 스트림에서 조건을 만족하는 쿼리를 필터링하므로 시간이 매우 오래 걸린다. 이를 해결하기 위해 본 논문은 각 은닉 유닛의 엔트로피가 디커플링(Decoupling)되어 있다는 가정하에, 각 은닉 유닛 $i$에 대해 $\mathbf{x}_{i}^{\mu+1}$가 현재의 평균 가중치 벡터 $\mathbf{\bar{w}}^\mu_i$와 직교하도록 직접 구성하는 방식을 제안한다.
 
 ## 📊 Results
 
 ### 일반화 오차의 감소 속도
+
 실험 결과, 최소 엔트로피 쿼리를 사용했을 때 일반화 오차 $\epsilon_g$는 학습 예제 수 $\alpha = p/N$에 대해 다음과 같이 지수적으로 감소한다.
 
 $$\epsilon_g \propto \exp(-c\alpha), \quad c = \frac{1}{2} \ln 2$$
@@ -57,6 +62,7 @@ $$\epsilon_g \propto \exp(-c\alpha), \quad c = \frac{1}{2} \ln 2$$
 이는 무작위 예제를 사용할 때의 $\epsilon_g \propto 1/\alpha$ (대수적 감소)와 비교하여 매우 비약적인 성능 향상이다.
 
 ### 엔트로피와 일반화 오차의 관계
+
 이진 퍼셉트론의 경우 엔트로피 $s$와 일반화 오차의 관계가 $s \approx \ln \epsilon_g$인 반면, TCM에서는 다음과 같은 관계가 성립함을 확인하였다.
 
 $$s \approx \ln \epsilon_g^2$$
@@ -64,6 +70,7 @@ $$s \approx \ln \epsilon_g^2$$
 이는 동일한 일반화 성능을 얻기 위해 TCM이 이진 퍼셉트론보다 이론적으로 두 배 더 많은 예제가 필요함을 시사한다.
 
 ### 구성적 알고리즘의 효율성
+
 제안된 구성적 알고리즘을 통해 선택된 쿼리의 성능을 분석한 결과, 정확한 최소 엔트로피 쿼리와 거의 동일한 엔트로피 감소율($ds/d\alpha = -\ln 2$)을 보였다. 특히, 수치적 결과에서는 구성적 알고리즘이 정확한 최소 엔트로피 쿼리보다 약간(약 4%) 더 낮은 일반화 오차를 기록하였다. 이는 엔트로피 감소와 일반화 오차 감소가 강하게 상관되어 있지만, 완전히 일치하는 관계는 아님을 보여준다.
 
 ## 🧠 Insights & Discussion

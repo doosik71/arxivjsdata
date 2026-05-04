@@ -21,20 +21,25 @@ ABP 파형 복원을 시도한 일부 선행 연구들은 통계적 방법이나
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 시스템 구조
+
 본 연구에서 제안하는 PPG to ABP Translator (PAT)는 PPG 신호를 입력받아 ABP 파형을 생성하는 구조이다. 전체 과정은 다음과 같다:
+
 1. **전처리**: PPG 신호에는 0.1~8Hz 대역 통과 필터(band-pass filter)를, ABP 신호에는 5Hz 저역 통과 필터(low-pass filter)를 적용하여 노이즈를 제거한 뒤 정규화를 수행한다.
 2. **윈도우 분할**: 정규화된 신호를 256 샘플 길이의 윈도우로 나누며, 이때 25%의 중첩(overlap)을 둔다.
 3. **CycleGAN 학습**: PPG 도메인($X$)과 ABP 도메인($Y$) 사이의 매핑 함수를 학습한다.
 4. **평가**: 복원된 ABP 파형에서 SBP와 DBP 수치를 추출하여 실제 값과 비교한다.
 
 ### 주요 구성 요소 및 역할
+
 CycleGAN은 두 쌍의 생성기(Generator)와 판별기(Discriminator)로 구성된다.
+
 - **생성기 $G: X \to Y$**: PPG 신호를 ABP 신호로 변환한다.
 - **생성기 $F: Y \to X$**: ABP 신호를 다시 PPG 신호로 변환한다.
 - **판별기 $D_Y$**: 입력된 ABP 신호가 실제 데이터인지 $G$가 생성한 가짜 데이터인지 판별한다.
 - **판별기 $D_X$**: 입력된 PPG 신호가 실제 데이터인지 $F$가 생성한 가짜 데이터인지 판별한다.
 
 ### 손실 함수 및 학습 절차
+
 학습의 목표는 실제 데이터의 분포를 맞추는 Adversarial Loss와, 변환 후 다시 원래 도메인으로 돌아왔을 때 원래 신호와 같아야 한다는 Cycle Consistency Loss를 동시에 최적화하는 것이다.
 
 1. **Adversarial Loss**: 생성된 신호가 대상 도메인의 실제 신호와 유사해지도록 유도한다.
@@ -49,17 +54,20 @@ $$L(G, F, D_X, D_Y) = L^{GAN}(G, D_Y, X, Y) + L^{GAN}(F, D_X, Y, X) + \lambda L_
 여기서 $\lambda$는 사이클 일관성의 중요도를 조절하는 가중치로, 본 논문에서는 10으로 설정하였다.
 
 ### 아키텍처 상세
+
 - **Generator**: 2개의 stride-2 convolution, 9개의 residual blocks, 그리고 2개의 fractionally-strided convolutions (stride 0.5)로 구성된다.
 - **Discriminator**: $70 \times 70$ PatchGAN 구조를 사용하여 신호의 국소적 특징을 판별한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: MIMIC-II 온라인 파형 데이터베이스를 사용하였으며, 92명의 피험자로부터 얻은 5분 분량의 데이터를 활용하였다. (샘플링 주파수 $f_s = 125\text{Hz}$)
 - **평가 방법**: 5-fold 교차 검증(cross-validation)을 수행하였으며, 피험자 간(cross-subject) 평가와 피험자 내(per-subject) 평가를 모두 실시하였다.
 - **지표**: 평균 절대 오차(MAE), 평균 제곱근 오차(RMSE), Pearson 상관계수($r_P$)를 사용하였으며, 영국 고혈압 학회(BHS) 표준 가이드라인에 따른 등급을 산출하였다.
 
 ### 주요 결과
+
 1. **교차 피험자(Cross-subject) 평가**:
    - SBP MAE: $2.89 \pm 4.52\text{mmHg}$
    - DBP MAE: $3.22 \pm 4.67\text{mmHg}$

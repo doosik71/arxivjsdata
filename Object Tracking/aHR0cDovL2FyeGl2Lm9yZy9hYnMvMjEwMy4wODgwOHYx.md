@@ -30,6 +30,7 @@ TraDeS의 핵심 아이디어는 추적 과정에서 얻은 모션 단서를 검
 TraDeS는 포인트 기반 검출기인 CenterNet을 기반으로 구축되었으며, 전체 파이프라인은 CVA 모듈과 MFW 모듈의 유기적 결합으로 구성된다.
 
 ### 1. Cost Volume based Association (CVA)
+
 CVA 모듈은 두 프레임 $I_t$와 $I_{t-\tau}$에서 추출된 임베딩 특징 $e_t, e_{t-\tau} \in \mathbb{R}^{H_C \times W_C \times 128}$를 사용하여 4차원 Cost Volume $C$를 생성한다.
 
 **Cost Volume 생성**
@@ -38,6 +39,7 @@ $$C_{i,j,k,l} = e'_{t,i,j} \cdot e'_{t-\tau,k,l}$$
 
 **추적 오프셋(Tracking Offset) 추론**
 객체 $x$가 현재 프레임의 $(i,j)$ 지점에 있을 때, $C$에서 해당 지점의 2D 맵 $C_{i,j} \in \mathbb{R}^{H_C \times W_C}$를 추출한다. 이후 다음 과정을 거친다.
+
 1. $C_{i,j}$를 가로/세로 방향으로 Max Pooling하고 Softmax를 적용하여, 객체가 이전 프레임의 특정 가로/세로 위치에 존재할 확률분포 $C^W_{i,j}$와 $C^H_{i,j}$를 구한다.
 2. 미리 정의된 오프셋 템플릿 $M_{i,j}$ (가로)와 $V_{i,j}$ (세로)와의 내적을 통해 최종 추적 오프셋 $O_{i,j}$를 도출한다.
 $$O_{i,j} = [C^H_{i,j} V_{i,j}, C^W_{i,j} M_{i,j}^\top]^\top$$
@@ -46,6 +48,7 @@ $$O_{i,j} = [C^H_{i,j} V_{i,j}, C^W_{i,j} M_{i,j}^\top]^\top$$
 CVA는 임베딩 $e$를 학습시키기 위해 Cost Volume에 대해 Focal Loss 형태의 손실 함수 $L_{CVA}$를 적용한다. 이는 객체가 이전 프레임의 자신과는 가까워지게 하고, 다른 객체나 배경과는 멀어지게 강제함으로써 클래스 간 차이를 명확히 한다.
 
 ### 2. Motion-guided Feature Warper (MFW)
+
 MFW는 CVA에서 예측된 추적 오프셋 $O_C$를 사용하여 이전 프레임의 특징 $f_{t-\tau}$를 현재 프레임으로 전파하여 $f_t$를 보강한다.
 
 **특징 전파 (Temporal Propagation)**
@@ -59,7 +62,9 @@ $$\tilde{f}_t^q = w_t \circ f_t^q + \sum_{\tau=1}^T w_{t-\tau} \circ \hat{f}_{t-
 이 $\tilde{f}_t$가 최종적으로 검출 및 세그멘테이션 헤드로 입력되어 객체를 탐지한다.
 
 ### 3. 데이터 연관 및 전체 손실 함수
+
 데이터 연관은 2단계로 진행된다.
+
 - **1라운드**: $O_C$를 이용해 이전 프레임의 근접 영역에서 가장 가까운 검출물과 매칭한다.
 - **2라운드**: 1라운드에서 실패한 경우, 임베딩 $e_t$의 코사인 유사도를 기반으로 히스토리 트랙렛과 매칭하여 장기 추적(Long-term association)을 수행한다.
 
@@ -69,11 +74,13 @@ $$L = L_{CVA} + L_{det} + L_{mask}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: MOT16/17 (2D 추적), nuScenes (3D 추적), MOTS (인스턴스 세그멘테이션 추적), YouTube-VIS (인스턴스 세그멘테이션 추적).
 - **지표**: MOTA, IDF1, AMOTA, AMOTP, AP 등 각 작업에 맞는 표준 지표 사용.
 - **구현**: DLA-34 백본 사용, $\text{T}=2$ (MOT, MOTS) 또는 $\text{T}=1$ (nuScenes, YouTube-VIS) 설정.
 
 ### 주요 결과
+
 1. **2D 추적 (MOT16/17)**: TraDeS는 MOT16에서 70.1 MOTA, MOT17에서 69.1 MOTA를 기록하며 기존 JDT 방식인 CenterTrack을 상회하는 성능을 보였다. 특히 FN(False Negative)을 크게 줄여 객체 복구 능력이 뛰어남을 입증했다.
 2. **3D 추적 (nuScenes)**: 단안(Monocular) 3D 추적기 중 가장 높은 성능을 기록했다. 특히 nuScenes처럼 프레임 레이트가 낮고 움직임이 큰 데이터셋에서 Baseline 대비 압도적인 성능 향상을 보였는데, 이는 Cost Volume 기반의 오프셋 추정이 일반적인 회귀 방식보다 강건하기 때문이다.
 3. **인스턴스 세그멘테이션 추적 (MOTS, YouTube-VIS)**: MOTS에서 sMOTSA 50.8을 기록하여 TrackR-CNN을 능가했으며, YouTube-VIS에서도 Baseline 대비 AP를 6.2나 향상시키며 범용적인 추적기임을 증명했다.
@@ -81,11 +88,13 @@ $$L = L_{CVA} + L_{det} + L_{mask}$$
 ## 🧠 Insights & Discussion
 
 **강점 및 분석**
+
 - **상호 보완적 구조**: 추적 $\rightarrow$ 검출 $\rightarrow$ 추적으로 이어지는 선순환 구조를 구축하였다. 특히 MFW를 통한 특징 전파가 폐색이나 블러 상황에서 검출 누락을 방지하는 핵심 기제로 작용한다.
 - **Cost Volume의 효용성**: 단순한 오프셋 예측 대신 Cost Volume을 사용함으로써, 학습 데이터에서 보지 못한 매우 큰 움직임(Large motion)에 대해서도 강건한 추적 오프셋을 생성할 수 있음을 확인하였다.
 - **학습 호환성**: 제안한 $L_{CVA}$ 손실 함수가 Re-ID 성능을 유지하면서도 검출 성능을 저하시키지 않는다는 점은, JDT 모델 설계 시 임베딩 학습과 검출 학습 사이의 균형이 중요함을 시사한다.
 
 **한계 및 논의**
+
 - **계산 비용**: 특징 전파를 위해 이전 프레임의 특징을 저장하고 DCN을 수행하므로, 단순 검출기보다는 추론 시간이 증가한다 ($\text{T}=2$일 때 약 57ms).
 - **가정**: 본 모델은 CenterNet과 같은 포인트 기반 검출기에 의존하고 있으며, 특징 전파를 위해 이전 프레임의 히트맵 정보가 정확하다는 가정하에 작동한다.
 

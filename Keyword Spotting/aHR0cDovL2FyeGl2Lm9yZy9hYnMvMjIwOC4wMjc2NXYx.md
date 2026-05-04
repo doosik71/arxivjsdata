@@ -7,6 +7,7 @@ Jingyi Wang, Shengchen Li (2022)
 본 연구는 저전력 엣지 디바이스, 특히 Cortex-M 기반의 마이크로컨트롤러(MCU)에서 실시간으로 동작하는 Keyword Spotting(KWS) 시스템을 구현하고 최적화하는 문제를 다룬다. KWS는 음성 기반의 사용자 인터랙션을 가능하게 하며, 스마트폰이나 IoT 기기에서 'Always-on' 상태로 동작해야 하므로 전력 소비, 대역폭 절약, 개인정보 보호를 위해 엣지 컴퓨팅 환경에서의 구현이 필수적이다.
 
 그러나 마이크로컨트롤러는 다음과 같은 하드웨어적 제약 사항을 가지고 있다.
+
 - **제한된 메모리 공간**: SRAM은 보통 $20\text{KB}$에서 $512\text{KB}$ 사이이며, Flash 메모리 역시 $64\text{KB}$에서 $1\text{MB}$ 정도로 매우 제한적이다.
 - **낮은 연산 속도**: CPU 클럭 주파수가 일반적으로 $72\text{MHz}$에서 $216\text{MHz}$ 사이로 낮아, 딥러닝 모델의 높은 연산량과 저지연 요구사항을 충족하기 어렵다.
 
@@ -30,6 +31,7 @@ Jingyi Wang, Shengchen Li (2022)
 ## 🛠️ Methodology
 
 ### 1. 시스템 아키텍처 및 파이프라인
+
 전체 시스템은 오디오 획득 $\rightarrow$ 특징 추출 $\rightarrow$ 모델 추론 단계로 구성되며, FreeRTOS를 통해 태스크가 스케줄링된다.
 
 - **특징 추출(Feature Extraction)**:
@@ -42,8 +44,9 @@ Jingyi Wang, Shengchen Li (2022)
   - **Output**: 최종적으로 Softmax를 통해 6개의 클래스("yes", "no", "left", "right", "background", "unknown")를 분류한다.
 
 ### 2. Pruning 및 가속 기법
+
 - **Pruning Granularity**: Fine-grained(Unstructured), Vector-level, Kernel-level, Filter-level의 네 가지 수준의 희소성(Sparsity)을 평가하였다.
-- **Weight Prioritized Loop**: 일반적인 루프는 출력 맵의 각 값에 대해 반복하지만, 제안된 방식은 가중치 값을 기준으로 반복한다. 
+- **Weight Prioritized Loop**: 일반적인 루프는 출력 맵의 각 값에 대해 반복하지만, 제안된 방식은 가중치 값을 기준으로 반복한다.
   - 가중치 $w=0$인 경우, 해당 가중치와 관련된 모든 연산을 하나의 `if` 문으로 건너뜀으로써 불필요한 연산을 제거한다.
 - **Quantization & SIMD**:
   - **Quantization**: 32-bit floating-point 데이터를 16-bit integer(int16)로 변환하여 메모리 사용량을 절반으로 줄이고 연산 비용을 낮춘다.
@@ -52,11 +55,13 @@ Jingyi Wang, Shengchen Li (2022)
 ## 📊 Results
 
 ### 1. 실험 환경
+
 - **하드웨어**: STM32F767IGT6 (Cortex-M7 @ 216MHz, 512KB SRAM).
 - **데이터셋**: Speech Command Data Set v0.01 (4개 키워드 + 배경음 + 알 수 없는 음성).
 - **평가 지표**: 추론 시간(Inference Time), 전력 소모(Power Consumption), 메모리 점유율.
 
 ### 2. 주요 결과
+
 - **기본 시스템**: 실시간 특징 추출을 포함하여 약 $37\text{ms}$마다 분류 결과를 생성하며, 단일 추론 시간은 약 $31\text{ms}$이다. 모델 파라미터는 총 $119,936$개이며 약 $468.5\text{KB}$의 메모리를 사용한다.
 - **Pruning 분석**:
   - Unstructured pruning의 경우 단순한 `if` 문 추가는 오히려 명령어 파이프라인 중단으로 인해 성능이 저하될 수 있다.

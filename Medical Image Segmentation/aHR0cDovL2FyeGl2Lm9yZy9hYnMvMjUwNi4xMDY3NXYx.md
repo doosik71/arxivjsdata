@@ -29,9 +29,11 @@ ConStyX는 특징 공간에서의 직접적인 이동을 통해 콘텐츠와 스
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 ConStyX는 인코더 $E(\cdot; \theta_1)$와 세그멘테이션 헤드 $H(\cdot; \theta_2)$로 구성된 모델을 기반으로 한다. 전체 과정은 DFA를 통해 특징을 증강하고, AFU를 통해 증강된 특징의 기여도를 계산하여 손실 함수에 반영하는 구조로 이루어져 있다.
 
 ### 1. Deep Feature Augmentation (DFA)
+
 DFA는 원본 특징 $z_i^j$를 다음과 같은 수식을 통해 증강된 특징 $\hat{z}_i^j$로 변환한다.
 
 $$\hat{z}_i^j = z_i^j + \alpha_{ic} + \alpha_{cd}$$
@@ -42,6 +44,7 @@ $$\hat{z}_i^j = z_i^j + \alpha_{ic} + \alpha_{cd}$$
 - **특징 그래디언트 ($\alpha_{cd}$)**: 소스 도메인을 넘어 보지 못한 도메인까지 커버하기 위해 그래디언트 가이드를 사용한다. 세그멘테이션 손실 $\mathcal{L}_{seg}$에 대한 특징 $z_i^j$의 그래디언트를 구한 뒤, 그래디언트 값이 가장 작은(즉, 변화에 둔감하여 시맨틱 정보가 잘 유지되는) 하위 $k$개의 차원을 선택하여 마스크 $v_i^j$를 생성한다. 이후 $\alpha_{cd} \sim U(0, \lambda_2 v_i^j)$ 분포에서 샘플링하여 특징을 이동시킨다.
 
 ### 2. Augmented Feature Utilization (AFU)
+
 증강된 특징 $\hat{Z}_i$는 세 가지 유형으로 구분된다: (1) 원본과 거의 유사한 **Trivial-augmented**, (2) 시맨틱을 유지하며 적절히 변한 **Well-augmented**, (3) 정보가 파괴된 **Over-augmented**.
 
 이를 구분하기 위해 코사인 유사도 맵 $S_i$와 예측 확신도(Prediction confidence) $F_i$를 계산한다. 확신도 $F_i$는 다음과 같이 정의된다.
@@ -54,21 +57,23 @@ $$W_i^j = \begin{cases} 1 & \text{if } S_i^j > \tau \\ e^{F_i^j-1} & \text{other
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 5개의 안저(Fundus) 영상 데이터셋(BinRushed, Magrabia, REFUGE, ORIGA, Drishti-GS)을 사용하여 시신경 유두(OD)와 시신경 컵(OC) 세그멘테이션을 수행하였다.
 - **설정**: 단일 도메인 일반화(Single-domain generalization) 설정을 채택하여, 하나의 데이터셋만 학습에 사용하고 나머지 4개 데이터셋에서 테스트하였다.
 - **지표**: Dice Similarity Coefficient (DSC, %)를 사용하였다.
 - **베이스라인**: MixStyle, DSU, EFDM, TriD, CSU, RandConv, MoreStyle, CCSDG 등 최신 DG 방법론들과 비교하였다.
 
 ### 주요 결과
+
 - **정량적 성능**: ConStyX는 평균 DSC 78.88%를 기록하며 모든 비교 대상 모델보다 우수한 성능을 보였다. 특히 두 번째로 성능이 좋았던 CCSDG(76.19%)보다 약 2.09% 높은 성능 향상을 달성하였다.
 - **정성적 결과**: 시각화 결과, 다른 방법론들이 경계선이나 세부 영역에서 오검출을 일으키는 반면, ConStyX는 타겟 도메인에서도 정답(GT)에 훨씬 근접한 세그멘테이션 결과를 보여주었다.
-- **절제 연구(Ablation Study)**: 
-    - Baseline $\to$ Baseline+DFA $\to$ Baseline+DFA+AFU 순으로 성능이 점진적으로 향상됨을 확인하였다. (평균 DSC: $69.10\% \to 78.27\% \to 78.88\%$)
-    - 그래디언트 가이드 시, 무작위 위치보다 최소 그래디언트 위치($k$ positions)를 섭동시켰을 때 성능이 가장 높게 나타나 방향성 제어의 중요성을 입증하였다.
+- **절제 연구(Ablation Study)**:
+  - Baseline $\to$ Baseline+DFA $\to$ Baseline+DFA+AFU 순으로 성능이 점진적으로 향상됨을 확인하였다. (평균 DSC: $69.10\% \to 78.27\% \to 78.88\%$)
+  - 그래디언트 가이드 시, 무작위 위치보다 최소 그래디언트 위치($k$ positions)를 섭동시켰을 때 성능이 가장 높게 나타나 방향성 제어의 중요성을 입증하였다.
 
 ## 🧠 Insights & Discussion
 
-본 논문은 단순히 데이터의 양을 늘리는 것이 아니라, **'어느 방향으로'** 증강하고 **'어떤 데이터를 학습에 사용할 것인가'**에 집중하였다. 
+본 논문은 단순히 데이터의 양을 늘리는 것이 아니라, **'어느 방향으로'** 증강하고 **'어떤 데이터를 학습에 사용할 것인가'**에 집중하였다.
 
 특히 주목할 점은 특징 공간에서의 이동을 통해 이미지 공간에서의 콘텐츠와 스타일 변화를 동시에 모사했다는 점이다. 기존의 스타일 전이 방식은 텍스처 변화에 그치지만, DFA는 클래스 내 변동성과 그래디언트 정보를 이용해 구조적인 변화(Content)까지 유도함으로써 훨씬 넓은 도메인 범위를 커버할 수 있게 되었다.
 

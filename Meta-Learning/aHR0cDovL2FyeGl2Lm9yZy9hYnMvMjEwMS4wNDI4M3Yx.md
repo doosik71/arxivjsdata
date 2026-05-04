@@ -12,17 +12,18 @@ Huimin Peng (2021)
 
 본 논문의 핵심 아이디어는 Meta-Learning을 단순한 Few-shot 학습 도구가 아니라, 일반 인공지능을 구축하기 위한 상위 수준의 프레임워크로 보는 것이다. 저자는 일반 인공지능을 실현하기 위해 필요한 핵심 메커니즘으로 다음의 요소들을 제시하며, 이들이 Meta-Learning의 관점에서 어떻게 설계되어야 하는지 설명한다.
 
-1.  **Memory Module & Meta-Learner**: 과거의 학습 경험을 저장하고 이를 바탕으로 새로운 작업에 빠르게 적응하는 구조.
-2.  **Coevolution (공진화)**: 학습자와 작업, 또는 학습자와 학습자 간의 상호작용을 통해 함께 진화하며 성능을 높이는 메커니즘.
-3.  **Artificial Curiosity (인공 호기심)**: 보상 중심의 최적화에서 벗어나 새로운 영역을 탐색함으로써 Local Optima(지역 최적점)를 회피하고 전역 최적해를 찾는 능력.
-4.  **Forgetting (망각)**: 불필요하거나 중복된 정보를 제거하여 메모리 효율을 높이고, 과거의 잘못된 결정을 수정하는 능력.
-5.  **AI-Generating Algorithm (AI-GA)**: 스스로 더 복잡한 작업을 생성하고 이를 해결하며 자가 발전하는 일반 AI 알고리즘 체계.
+1. **Memory Module & Meta-Learner**: 과거의 학습 경험을 저장하고 이를 바탕으로 새로운 작업에 빠르게 적응하는 구조.
+2. **Coevolution (공진화)**: 학습자와 작업, 또는 학습자와 학습자 간의 상호작용을 통해 함께 진화하며 성능을 높이는 메커니즘.
+3. **Artificial Curiosity (인공 호기심)**: 보상 중심의 최적화에서 벗어나 새로운 영역을 탐색함으로써 Local Optima(지역 최적점)를 회피하고 전역 최적해를 찾는 능력.
+4. **Forgetting (망각)**: 불필요하거나 중복된 정보를 제거하여 메모리 효율을 높이고, 과거의 잘못된 결정을 수정하는 능력.
+5. **AI-Generating Algorithm (AI-GA)**: 스스로 더 복잡한 작업을 생성하고 이를 해결하며 자가 발전하는 일반 AI 알고리즘 체계.
 
 ## 📎 Related Works
 
 논문은 일반 인공지능의 실현 가능성에 대한 상반된 시각을 소개한다. 일부는 빅데이터와 빠른 기술 발전으로 이번 세기 내에 AGI가 가능할 것이라 보지만, 다른 한편으로는 인과관계(Causality)의 이해, 인간의 암묵적 지식(Tacit Knowledge)의 표현 불가능성, 그리고 사회적 네트워크 내에서의 상호작용 부재라는 세 가지 이유로 컴퓨터 기반 알고리즘만으로는 AGI 달성이 불가능하다고 주장한다.
 
 또한, 다음과 같은 기존 연구 및 시스템을 언급한다.
+
 - **AutoML**: 다양한 작업에 최적의 네트워크를 자동으로 찾는 시스템으로, Meta-Learning 도구를 통해 탐색 공간을 가속화할 수 있는 일반 AI의 한 형태로 본다.
 - **Autoformalization**: 자연어를 수학적 추론 형태로 변환하여 인과 추론을 자동화하려는 시도로, Meta-Learner가 추론 변환 탐색을 가이드함으로써 효율성을 높일 수 있다.
 - **ALE (Arcade Learning Environment)**: Atari 2600 게임을 통해 일반 AI 알고리즘의 범용성과 일반화 능력을 평가하는 벤치마크 플랫폼이다.
@@ -32,24 +33,32 @@ Huimin Peng (2021)
 본 논문은 특정 단일 알고리즘을 제안하기보다, 일반 AI를 구축하기 위한 여러 Meta-Learning 기반의 아키텍처와 개념적 프레임워크를 설명한다.
 
 ### 1. AI-GA (AI-Generating Algorithm)
+
 AI-GA는 일반 AI를 구축하기 위한 통합 프레임워크로, 다음 세 가지 구성 요소로 이루어진다.
+
 - **Meta-Learning Architecture**: 일반 AI 알고리즘의 전체적인 뼈대를 제공한다.
 - **Meta-Learning Algorithm**: 특정 머신러닝 모델의 자가 개선(self-improvement)을 수행한다.
 - **Generative Mechanism**: 점점 더 복잡한 작업을 생성하여 솔버(solver)가 지속적으로 도전하고 성장하게 만든다.
 이 구조에서는 '작업-솔버' 쌍이 공진화하며, Meta-Learner는 일종의 '두뇌' 역할을 하여 과거의 경험을 분석하고 미래의 탐색 방향을 결정한다.
 
 ### 2. Coevolution (공진화) 프레임워크
+
 자연계의 호스트-기생체(host-parasite) 관계를 알고리즘에 투영하여, 상호작용을 통해 효율성을 높이는 방식이다.
+
 - **학습자 간 공진화 (Coevolution Between Learners)**: 여러 학습자가 사회적 네트워크를 형성하여 경쟁하고 협력한다. 예를 들어, LAPCA(Layered Pareto Coevolution Archive)와 같은 메모리 아키텍처를 통해 과거의 최적 학습자들을 저장하고 이를 테스트셋으로 활용하여 새로운 학습자를 평가한다.
 - **작업과 솔버 간 공진화 (Coevolution Between Task and Solver)**: POWERPLAY 시스템이 대표적이다. 이 시스템은 **작업 발명(Task Invention) $\rightarrow$ 솔버 수정(Solver Modification) $\rightarrow$ 정답성 입증(Correctness Demonstration)**의 순환 구조를 가진다. 특히 '작업 발명' 단계에서는 현재 솔버가 해결하지 못하는 가장 단순한 문제를 찾아내어 솔버의 약점을 정밀하게 타격하며 개선을 유도한다.
 
 ### 3. Curiosity-based Search (호기심 기반 탐색)
+
 단순한 성능 지표(Performance-based) 최적화는 Local Optima에 빠지기 쉽다. 이를 해결하기 위해 '예측 불가능성(Unexpectedness)'을 극대화하는 인공 호기심을 목적 함수에 도입한다.
+
 - **Novelty Search**: 다른 학습자와 다른 지점을 탐색하도록 유도하여 특정 분야의 전문가를 만든다.
 - **Curiosity Search**: 개별 학습자가 가능한 한 다양한 기술을 습득하도록 하여 범용적인 능력을 갖춘 제너럴리스트를 만든다.
 
 ### 4. Forgetting Mechanism (망각 메커니즘)
+
 메모리 폭발을 방지하고 검색 효율을 높이기 위해 불필요한 정보를 제거한다.
+
 - **LSTM의 Forget Gate**: 과거의 정보 중 불필요한 것을 삭제하여 장기 의존성을 효율적으로 처리한다.
 - **Lasso (L1 Regularization)**: 불필요한 특성 변수를 삭제하여 모델 성능을 개선한다.
 망각은 단순히 삭제하는 것이 아니라, 미래의 정보를 바탕으로 과거의 서브-옵티멀(sub-optimal)한 선택을 재판단하고 수정하는 기회를 제공한다.

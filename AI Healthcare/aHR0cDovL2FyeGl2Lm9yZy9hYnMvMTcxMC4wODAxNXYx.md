@@ -17,6 +17,7 @@ Chenwei Zhang, Nan Du, Wei Fan, Yaliang Li, Chun-Ta Lu, Philip S. Yu (2017)
 ## 📎 Related Works
 
 기존의 의료 의도 탐지 방식은 주로 다음과 같은 한계를 가지고 있었다.
+
 1. **단순 라벨링 및 튜플 방식**: 각 세맨틱 전이를 단일 라벨로 처리하거나 (Symptom, Disease)와 같은 두 가지 요소의 튜플로 모델링하였다. 이러한 방식은 하나의 질의 내에 존재하는 여러 전이 간의 상관관계를 무시하며, 복잡한 구조의 의도를 포착하지 못한다.
 2. **수동 특징 공학(Hand-engineering)**: 도메인 전문가의 지식을 바탕으로 한 단어-개념 매핑 사전이나 사전 정의된 규칙, 템플릿을 사용하였다. 이는 전문가의 많은 노력이 필요할 뿐만 아니라, 실제 사용자의 다양하고 변화무쌍한 표현 방식에 유연하게 대응하지 못하는 일반화 성능의 한계가 있다.
 
@@ -25,7 +26,9 @@ Chenwei Zhang, Nan Du, Wei Fan, Yaliang Li, Chun-Ta Lu, Philip S. Yu (2017)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조 및 파이프라인
+
 본 모델은 입력된 텍스트 질의로부터 단어 수준의 개념 언급과 문장 수준의 개념 전이를 동시에 추출하는 구조를 가진다. 전체 파이프라인은 다음과 같다.
+
 - **입력**: 텍스트 질의 $Q$ (단어 시퀀스와 각 단어의 POS Tag 시퀀스)
 - **임베딩**: Word Embedding과 POS Embedding을 통해 밀집 벡터로 변환
 - **인코딩**: 두 개의 GRU(Gated Recurrent Unit)를 통해 시퀀스 정보 모델링
@@ -35,25 +38,33 @@ Chenwei Zhang, Nan Du, Wei Fan, Yaliang Li, Chun-Ta Lu, Philip S. Yu (2017)
 ### 2. 세부 구성 요소 및 역할
 
 #### 가. Semantic-Syntax 표현 및 RNN
+
 모델은 단어의 의미적 정보(Semantic)와 통사적 정보(Syntax)를 모두 활용한다.
+
 - **Word Embedding**: 6,400만 개의 의료 질의로 사전 학습된 Skip-gram 모델을 사용하여 단어를 100차원 벡터로 표현한다.
 - **POS Embedding**: 단어의 품사(POS Tag)를 20차원 벡터로 표현하여, 동일한 단어가 문맥에 따라 다른 의미(예: '열'이 명사일 때와 동사일 때)를 갖는 모호성을 해결한다.
 - **GRU**: 두 종류의 임베딩 시퀀스를 각각 $\text{RNN}_W$와 $\text{RNN}_P$에 입력하여 문맥이 반영된 은닉 상태(Hidden State)를 생성한다.
 
 #### 나. Concept Encoder (개념 인코더)
+
 각 단어가 특정 개념을 언급하고 있는지 판단한다.
+
 - 두 RNN의 출력 벡터 $o_k$를 결합한 후, **Confidence Score** $s_k$를 학습하여 어떤 단어가 개념 추론에 더 중요한지 가중치를 부여한다(Attention mechanism과 유사).
 - 최종적으로 모든 단어의 정보를 통합하여 각 개념 $c_m$이 활성화될 확률을 다음과 같이 계산한다.
 $$\hat{C}_Q = \frac{1}{1 + e^{-W_{CE} O_{CE} + b_{CE}}}$$
 
 #### 다. Transition Encoder (전이 인코더)
+
 문장 전체의 맥락을 통해 개념 간의 전이가 발생했는지 판단한다.
+
 - 두 RNN의 **마지막 은닉 상태(Last Hidden States)**를 결합하여 전이 벡터 $O_{TE}$를 생성한다.
 - 이를 통해 모든 가능한 전이 $t_n$에 대한 확률 분포 $\hat{T}_Q$를 추론한다.
 $$\hat{T}_Q = \frac{1}{1 + e^{-W_{TE} O_{TE} + b_{TE}}}$$
 
 ### 3. Mutual Transition Loss (상호 전이 손실 함수)
+
 본 논문의 핵심으로, 추론된 개념($\hat{C}_Q$)과 전이($\hat{T}_Q$) 사이의 충돌을 최소화하는 함수이다.
+
 - **직관**: 만약 '증상 $\rightarrow$ 약물'이라는 전이가 강하게 예측되었다면, 반드시 '증상'과 '약물'이라는 개념 자체가 함께 예측되어야 한다.
 - **전이 행렬 $A$**: 개념과 전이 사이의 관계를 정의하는 $M \times N$ 행렬이다. $a_{mn}=1$이면 개념 $c_m$이 전이 $t_n$의 시작점 혹은 끝점임을 의미한다.
 - **손실 함수 구성**:
@@ -63,17 +74,19 @@ $$L_{MTL} = H(T_Q, \hat{T}_Q) + E(\hat{C}_Q, \hat{T}_Q)$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: 온라인 의료 질의응답 포럼에서 수집한 중국어 질의 10,000건.
 - **평가 지표**: $\text{micro-AUC}$, $\text{macro-AUC}$, Coverage Error (낮을수록 좋음), LRAP (높을수록 좋음).
 - **비교 대상 (Baselines)**:
-    - $\text{LR}$: 로지스틱 회귀
-    - $\text{NNID-JM}$: 기존의 신경망 기반 공동 모델링 방식
-    - $\text{CI}$: 개념만 추론하는 모델
-    - $\text{CTI}$: 전이만 추론하는 모델
-    - $\text{coCTI}$: 개념과 전이를 단순히 Multi-task로 학습한 모델
-    - $\text{coCTI-MTL}$: 제안된 모델 (Mutual Transfer Loss 적용)
+  - $\text{LR}$: 로지스틱 회귀
+  - $\text{NNID-JM}$: 기존의 신경망 기반 공동 모델링 방식
+  - $\text{CI}$: 개념만 추론하는 모델
+  - $\text{CTI}$: 전이만 추론하는 모델
+  - $\text{coCTI}$: 개념과 전이를 단순히 Multi-task로 학습한 모델
+  - $\text{coCTI-MTL}$: 제안된 모델 (Mutual Transfer Loss 적용)
 
 ### 2. 주요 결과
+
 - **정량적 성능**: 제안된 `coCTI-MTL` 모델이 $\text{micro-AUC}$ 0.8731을 기록하며 가장 높은 성능을 보였다. 이는 `coCTI` 대비 약 2.5%, `CTI` 대비 약 7.5% 향상된 결과이다.
 - **예측 품질**: Coverage Error가 가장 낮게 나타나, 정답 라벨을 포함하기 위해 예측해야 하는 라벨의 수가 적음을 확인하였다. 이는 예측의 정밀도가 매우 높음을 시사한다.
 - **세부 분석**: 표 3의 세부 AUC 결과를 보면, 거의 모든 유형의 개념 전이(예: $\text{Symptom} \rightarrow \text{Diet}$, $\text{Disease} \rightarrow \text{Surgery}$ 등)에서 제안 모델이 타 모델을 압도한다.

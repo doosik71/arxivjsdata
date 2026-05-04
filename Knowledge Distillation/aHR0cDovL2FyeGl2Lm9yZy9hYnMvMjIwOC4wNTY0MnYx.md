@@ -17,6 +17,7 @@ Hyoje Lee, Yeachan Park, Hyun Seo, Myungjoo Kang (2022)
 ## 📎 Related Works
 
 기존의 Knowledge Distillation 연구는 주로 Teacher-Student 프레임워크에 기반하여 큰 모델의 지식을 작은 모델로 전이하는 방식에 집중했다. 이후 Teacher-Student 구조를 탈피한 연구들이 등장하였는데, 대표적으로 다음과 같은 방식들이 있다.
+
 - **Deep Mutual Learning (DML):** 두 네트워크가 서로의 지식을 상호 증류하는 방식이다.
 - **Data-Distortion Guided Self-Distillation (DDGSD):** 왜곡된 데이터 간의 지식을 증류한다.
 - **Be Your Own Teacher (BYOT):** 모델의 깊은 층과 얕은 층 사이의 지식을 증류한다.
@@ -59,10 +60,10 @@ $$L_{Total}(x,y;u,v,\theta,T) = L_{CE}(x,y;\theta) + \lambda_{SDD} \cdot T^2 \cd
 
 ### 주요 결과
 
-1.  **이미지 분류 성능:** CIFAR-100, CUB-200, Stanford Dogs 모든 데이터셋에서 기본 CE 학습 대비 성능이 향상되었다. 특히 CUB-200-2011에서는 53.8%에서 66.6%로 비약적인 상승을 보였다. 또한, 기존 SKD 방법(BYOT 등)과 결합했을 때 시너지 효과가 나타나 성능이 추가로 향상됨을 확인하였다.
-2.  **대규모 데이터셋 및 타 작업 확장성:** ImageNet(ResNet-152)에서 Top-1 정확도가 74.8% $\to$ 75.5%로 상승하였으며, MS COCO 객체 탐지 작업에서도 mAP가 향상되어 Vision task 전반에 걸쳐 유효함을 입증하였다.
-3.  **Calibration 및 Robustness:** ECE 지표가 감소하여 모델의 Overconfidence 문제가 완화되었으며, FGSM 공격에 대한 adversarial robustness와 CIFAR-C 데이터셋에서의 noise robustness가 모두 향상되었다.
-4.  **OOD(Out-of-Distribution) 탐지:** ODIN detector를 사용한 실험 결과, SD-Dropout을 적용한 모델이 In-distribution 데이터의 불확실성을 줄여 OOD 탐지 성능(AUROC, AUPR)을 높였다.
+1. **이미지 분류 성능:** CIFAR-100, CUB-200, Stanford Dogs 모든 데이터셋에서 기본 CE 학습 대비 성능이 향상되었다. 특히 CUB-200-2011에서는 53.8%에서 66.6%로 비약적인 상승을 보였다. 또한, 기존 SKD 방법(BYOT 등)과 결합했을 때 시너지 효과가 나타나 성능이 추가로 향상됨을 확인하였다.
+2. **대규모 데이터셋 및 타 작업 확장성:** ImageNet(ResNet-152)에서 Top-1 정확도가 74.8% $\to$ 75.5%로 상승하였으며, MS COCO 객체 탐지 작업에서도 mAP가 향상되어 Vision task 전반에 걸쳐 유효함을 입증하였다.
+3. **Calibration 및 Robustness:** ECE 지표가 감소하여 모델의 Overconfidence 문제가 완화되었으며, FGSM 공격에 대한 adversarial robustness와 CIFAR-C 데이터셋에서의 noise robustness가 모두 향상되었다.
+4. **OOD(Out-of-Distribution) 탐지:** ODIN detector를 사용한 실험 결과, SD-Dropout을 적용한 모델이 In-distribution 데이터의 불확실성을 줄여 OOD 탐지 성능(AUROC, AUPR)을 높였다.
 
 ## 🧠 Insights & Discussion
 

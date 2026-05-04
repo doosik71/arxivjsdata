@@ -16,9 +16,9 @@ Anfeng He, Chong Luo, Xinmei Tian, and Wenjun Zeng (2018)
 
 본 논문의 핵심 아이디어는 계산 오버헤드를 최소화하면서 특징 표현력을 높이는 두 가지 단순하지만 효과적인 메커니즘을 도입하는 것이다.
 
-1.  **각도 추정(Angle Estimation):** 객체의 회전을 처리하기 위해 여러 각도 옵션을 탐색하되, 계산량을 줄이기 위해 스케일과 각도를 동시에 변경하는 대신 한 번에 하나씩만 조정하는 전략을 사용한다.
-2.  **공간 마스킹(Spatial Masking):** 객체의 종횡비가 1:1에서 멀어질 때(가늘고 긴 형태일 때) 배경의 방해 요소가 포함될 가능성이 높다는 점에 착안하여, 특정 임계값 이상의 종횡비를 가진 객체에 대해 선택적으로 공간 마스크를 적용하여 특징 추출 영역을 제한한다.
-3.  **템플릿 업데이트(Template Updating):** 객체의 점진적인 외형 변화에 대응하기 위해 이동 평균(Moving Average) 기반의 템플릿 업데이트 메커니즘을 적용한다.
+1. **각도 추정(Angle Estimation):** 객체의 회전을 처리하기 위해 여러 각도 옵션을 탐색하되, 계산량을 줄이기 위해 스케일과 각도를 동시에 변경하는 대신 한 번에 하나씩만 조정하는 전략을 사용한다.
+2. **공간 마스킹(Spatial Masking):** 객체의 종횡비가 1:1에서 멀어질 때(가늘고 긴 형태일 때) 배경의 방해 요소가 포함될 가능성이 높다는 점에 착안하여, 특정 임계값 이상의 종횡비를 가진 객체에 대해 선택적으로 공간 마스크를 적용하여 특징 추출 영역을 제한한다.
+3. **템플릿 업데이트(Template Updating):** 객체의 점진적인 외형 변화에 대응하기 위해 이동 평균(Moving Average) 기반의 템플릿 업데이트 메커니즘을 적용한다.
 
 ## 📎 Related Works
 
@@ -33,6 +33,7 @@ Anfeng He, Chong Luo, Xinmei Tian, and Wenjun Zeng (2018)
 $\text{Siam-BM}$은 $\text{SA-Siam}$을 기반으로 구축되었으며, 외형 브랜치(Appearance branch)와 세만틱 브랜치(Semantic branch)를 모두 사용하여 특징을 추출한다.
 
 ### 1. Angle Estimation
+
 전통적인 $\text{SiamFC}$는 스케일 변화만 고려하여 $M$개의 후보 패치를 생성한다. 만약 $N$개의 각도 옵션을 추가한다면 후보 패치는 $M \times N$개가 되어 연산량이 급증한다. $\text{Siam-BM}$은 이를 해결하기 위해 스케일($s$)이나 각도($a$) 중 하나만 변경하는 전략을 취한다.
 
 즉, $a \neq 0$이면 $s=1$로 고정하고, $s \neq 1$이면 $a=0$으로 고정한다. 이로 인해 후보 패치의 수는 $M \times N$에서 $M+N-1$로 줄어든다. 본 구현에서는 $M=N=3$으로 설정하여 총 5개의 후보 패치 $(s, a) \in \{(1.0375, 0), (0.964, 0), (1, 0), (1, \pi/8), (1, -\pi/8)\}$를 사용한다.
@@ -42,9 +43,11 @@ $$(x_i, y_i, k_i) = \arg \max_{x,y,k} R_k, \quad (k= 1, 2, \dots, K)$$
 여기서 $K=M+N-1$이며, $k_i$는 선택된 스케일과 각도 쌍을 의미한다.
 
 ### 2. Spatial Mask
+
 객체의 종횡비 $r = \max(h/w, w/h)$가 임계값 $thr = 1.5$를 초과할 경우, 해당 객체를 'elongated object'로 판단하고 공간 마스크를 적용한다. 마스크는 $\text{conv4}$($8 \times 8$)와 $\text{conv5}$($6 \times 6$) 특징 맵에 적용되며, 타겟의 형태(가로형 또는 세로형)에 따라 미리 정의된 고정 마스크(White: 1, Black: 0)를 곱하여 배경 정보를 제거한다. 이 마스크는 특히 세만틱 브랜치에만 적용하는데, 이는 세만틱 응답이 외형 응답보다 더 희소하고 중심에 집중되어 있어 마스크로 인한 정보 손실 위험이 적기 때문이다.
 
 ### 3. Template Updating
+
 객체의 외형 변화에 대응하기 위해 다음과 같은 템플릿 업데이트 식을 사용한다:
 $$\phi(T_t) = \lambda^S \times \phi(T_1) + (1 - \lambda^S) \times \phi(T^u_t)$$
 $$\phi(T^u_t) = (1 - \lambda^U) \times \phi(T^u_{t-1}) + \lambda^U \times \hat{\phi}(T_{t-1})$$
@@ -53,11 +56,13 @@ $$\phi(T^u_t) = (1 - \lambda^U) \times \phi(T^u_{t-1}) + \lambda^U \times \hat{\
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** OTB-2013, OTB-100, VOT2017.
 - **지표:** $\text{EAO}$ (Expected Average Overlap), $\text{Accuracy}$, $\text{Robustness}$, $\text{AUC}$ (Success rate), $\text{Precision}$.
 - **환경:** Tesla P100 GPU, TensorFlow 1.7.0.
 
 ### 주요 결과
+
 - **VOT2017 결과:** $\text{Siam-BM}$은 $\text{EAO}$ 0.335를 기록하며 당시 실시간 추적기 중 최고의 성능을 보였다.
 - **Ablation Study (각도 추정):** $\text{SA-Siam}$ 베이스라인(EAO 0.287) 대비 각도 추정만 추가했을 때 EAO가 0.301로 상승하여, 회전 대응의 중요성을 입증했다.
 - **Ablation Study (공간 마스크):** OTB 데이터셋 실험 결과, 종횡비가 큰 객체(elongated objects)에서 공간 마스크 적용 시 성능이 유의미하게 향상되었다. 특히 훈련 단계에서 마스크를 적용했을 때 테스트 단계의 성능까지 함께 올라가는 경향이 확인되었다.

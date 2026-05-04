@@ -12,13 +12,14 @@ Deepak Alapatt, Pietro Mascagni, Vinkle Srivastav, Nicolas Padoy (2020)
 
 ## 📎 Related Works
 
-논문은 생물학적 뉴런 연구에서 시작된 인공 신경망의 역사적 흐름을 설명한다. 1943년 McCulloch와 Pitts의 수학적 모델과 1949년 Donald Hebb의 시냅스 가소성 개념이 기초가 되었으며, 1962년 Hubel과 Wiesel의 시각 피질 계층 구조 연구가 현대 CNN의 핵심인 계층적 특징 추출(Hierarchical processing)의 영감이 되었음을 명시한다. 
+논문은 생물학적 뉴런 연구에서 시작된 인공 신경망의 역사적 흐름을 설명한다. 1943년 McCulloch와 Pitts의 수학적 모델과 1949년 Donald Hebb의 시냅스 가소성 개념이 기초가 되었으며, 1962년 Hubel과 Wiesel의 시각 피질 계층 구조 연구가 현대 CNN의 핵심인 계층적 특징 추출(Hierarchical processing)의 영감이 되었음을 명시한다.
 
 이후 1958년의 Perceptron, 1998년의 LeNet, 2012년의 AlexNet으로 이어지는 발전 과정을 다룬다. 특히 AlexNet이 GPU를 사용하여 대규모 데이터셋(ImageNet)을 학습함으로써 딥러닝의 실용성을 입증한 전환점이 되었음을 강조한다. 수술 분야에서는 Unet을 이용한 해부학적 구조의 픽셀 단위 세그멘테이션이나, AlexNet의 확장판인 EndoNet을 이용한 수술 워크플로우 분석 등이 기존 연구로 소개되고 있다.
 
 ## 🛠️ Methodology
 
 ### 1. 인공 뉴런과 신경망의 구조
+
 인공 뉴런은 다차원 입력 $\mathbf{x} = [x_1, x_2, \dots, x_n]$을 하나의 출력값으로 매핑하는 기본 단위이다. 뉴런의 연산은 가중치(Weights) $w$, 편향(Bias) $b$, 그리고 활성화 함수(Activation function) $f$로 구성되며, 그 수식은 다음과 같다.
 
 $$z = w_1x_1 + w_2x_2 + \dots + w_nx_n + b$$
@@ -27,22 +28,26 @@ $$\text{Output} = f(z)$$
 활성화 함수는 비선형성을 추가하여 복잡한 실세계 데이터를 학습하게 하며, 대표적으로 ReLU, Sigmoid, Tanh, Step function이 사용된다. 다수의 뉴런이 연결된 Fully Connected Layer의 경우, 전체 연산은 행렬 곱셈으로 효율적으로 계산될 수 있다.
 
 ### 2. Convolutional Neural Networks (CNN)
+
 고차원 이미지 데이터의 공간적 정보 유지와 파라미터 수 감소를 위해 Convolutional layer가 도입된다. 필터(Filter)가 입력 이미지 위를 슬라이딩하며 특징을 추출하는 방식이며, 이후 Pooling layer를 통해 차원을 축소하고 중요한 정보만을 남긴다. 최종 출력단에서는 다중 클래스 분류를 위해 Softmax 함수를 사용하여 확률 분포를 생성한다.
 
 $$\text{Softmax}(z_i) = p_i = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}$$
 
 ### 3. 학습 절차 및 최적화
+
 신경망 학습은 Forward Propagation을 통해 예측값을 계산하고, 손실 함수(Loss function) $\mathcal{L}$을 통해 정답(Ground Truth)과의 오차를 측정하는 것으로 시작한다. 이후 Backpropagation을 통해 각 파라미터에 대한 그래디언트(Gradient)를 계산하며, Gradient Descent 알고리즘을 통해 손실을 최소화하는 방향으로 가중치를 업데이트한다.
 
 $$w_{t+1} = w_t - \eta \nabla \mathcal{L}(w)$$
 
 여기서 $\eta$는 학습률(Learning rate)이라는 하이퍼파라미터이다. 또한, 과적합(Overfitting)을 방지하기 위해 다음과 같은 기법들이 사용된다.
+
 - **L2 Regularization**: 손실 함수에 가중치의 제곱합을 추가하여 가중치 값이 지나치게 커지는 것을 방지한다.
   $$\mathcal{L}_{L2} = \mathcal{L}_{orig} + \lambda \sum_{i=1}^{n} \|w_i\|^2$$
 - **Dropout**: 학습 시 무작위로 일부 뉴런을 제외하여 특정 경로에 대한 의존도를 낮춘다.
 - **Data Augmentation**: 회전, 이동 등의 변형을 통해 학습 데이터의 양을 인위적으로 늘린다.
 
 ### 4. 특수 목적 아키텍처
+
 - **Semantic Segmentation**: Encoder-Decoder 구조를 통해 저차원에서 의미론적 정보를 추출하고 다시 원래 해상도로 복원하여 픽셀 단위 분류를 수행한다.
 - **GAN (Generative Adversarial Networks)**: Generator와 Discriminator 두 네트워크가 서로 경쟁하며 실제와 유사한 가공의 데이터를 생성한다.
 - **Temporal Models (RNN, LSTM, GRU)**: 수술 영상과 같은 시계열 데이터를 처리하기 위해 '기억' 능력을 가진 루프 구조를 추가한다. 특히 LSTM과 GRU는 Vanishing/Exploding Gradient 문제를 해결하기 위해 게이트(Gate) 메커니즘을 사용한다.

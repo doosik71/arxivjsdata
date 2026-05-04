@@ -4,13 +4,13 @@ Danilo de Oliveira, Timo Gerkmann (2023)
 
 ## 🧩 Problem to Solve
 
-본 논문은 HuBERT와 같은 자기지도학습(Self-Supervised Learning, SSL) 모델이 매우 강력한 성능을 제공하지만, 모델의 크기가 너무 커서 메모리 소비가 심하고 실제 환경에 적용하기 어렵다는 문제를 해결하고자 한다. 
+본 논문은 HuBERT와 같은 자기지도학습(Self-Supervised Learning, SSL) 모델이 매우 강력한 성능을 제공하지만, 모델의 크기가 너무 커서 메모리 소비가 심하고 실제 환경에 적용하기 어렵다는 문제를 해결하고자 한다.
 
 기존의 HuBERT 압축 연구들(예: DistilHuBERT, FitHuBERT)은 주로 교사 모델의 내부 중간 레이어 표현(Internal features/hints)을 학생 모델이 모방하도록 하는 feature-based distillation 방식을 사용했다. 그러나 이러한 방식은 학생 모델이 교사 모델과 유사한 아키텍처(주로 Transformer)를 가져야 한다는 제약이 있으며, 단순히 레이어를 줄이거나 차원을 축소하는 수준에 머문다는 한계가 있다. 따라서 본 연구의 목표는 아키텍처의 제약에서 벗어나 더 효율적인 구조를 탐색하고, 이를 통해 파라미터 수를 획기적으로 줄이면서도 성능을 유지하거나 향상시킨 압축 모델을 구축하는 것이다.
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 HuBERT의 사전 학습(Pre-training) 과정이 본질적으로 클러스터 예측(Cluster prediction)이라는 분류(Classification) 문제라는 점에 주목한 것이다. 
+본 논문의 핵심 아이디어는 HuBERT의 사전 학습(Pre-training) 과정이 본질적으로 클러스터 예측(Cluster prediction)이라는 분류(Classification) 문제라는 점에 주목한 것이다.
 
 연구진은 내부 특징을 모방하는 대신, 모델의 최종 출력값인 로짓(Logits)을 기반으로 하는 Knowledge Distillation (KD) 및 Decoupled Knowledge Distillation (DKD)을 적용함으로써 학생 모델의 아키텍처를 자유롭게 선택할 수 있게 하였다. 이를 통해 Transformer 기반의 학생 모델뿐만 아니라, 시퀀스 모델링에 효율적인 LSTM(Long Short-Term Memory) 기반의 모델로 HuBERT의 지식을 전이시켰으며, 결과적으로 더 적은 파라미터로도 자동 음성 인식(ASR) 등 특정 작업에서 더 나은 성능을 달성하였다.
 
@@ -55,15 +55,18 @@ TCKD는 타겟 클래스에 대한 지식을, NCKD는 타겟 클래스를 제외
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **벤치마크**: SUPERB (10가지 태스크를 Content, Speaker, Semantics, Paralinguistics의 4개 카테고리로 분류)
 - **비교 대상**: HuBERT-BASE/LARGE, LightHuBERT, DistilHuBERT, FitHuBERT 및 제안하는 KD/DKD-LSTM 모델.
 
 ### 2. 정량적 결과
+
 - **음성 인식 성능**: LSTM 기반의 DKD 모델은 Phoneme Recognition(PR)과 Automatic Speech Recognition(ASR) 작업에서 DistilHuBERT나 FitHuBERT보다 유의미하게 높은 성능을 보였다. 특히 $\beta=4$일 때 PR, ASV, QbE 작업에서 성능 향상이 두드러졌다.
 - **파라미터 효율성**: LSTM 기반 모델은 DistilHuBERT보다 더 적은 수의 파라미터를 사용하면서도 ASR 성능은 오히려 향상시켰다.
 - **기타 작업**: Slot Filling(SF)과 Intent Classification(IC) 역시 LSTM 구조의 이점을 얻었으나, Query-by-Example(QbE)과 Automatic Speaker Verification(ASV)에서는 Transformer 기반 KD 모델 대비 약간의 성능 하락이 있었다.
 
 ### 3. 리소스 분석 (Model Profiling)
+
 - **메모리 및 연산량**: LSTM 모델은 Transformer 기반 모델보다 연산량(GMACs)이 적으며, 특히 입력 시퀀스 길이에 따라 메모리 할당량이 선형적으로 증가한다(Transformer는 제곱으로 증가).
 - **실행 시간**: 레이어 수가 적은 DistilHuBERT가 약간 더 빠르지만, 전반적으로 두 모델 모두 교사 모델 대비 획기적으로 빠른 추론 속도를 보여 실용적임을 입증하였다.
 
@@ -71,7 +74,7 @@ TCKD는 타겟 클래스에 대한 지식을, NCKD는 타겟 클래스를 제외
 
 본 연구 결과, 로짓 기반의 KD/DKD를 통해 LSTM 모델을 구축했을 때 ASR 및 PR 성능이 크게 향상된 점은 매우 중요한 통찰을 제공한다. 이는 HuBERT의 사전 학습 목적 자체가 마스크된 유닛을 예측하는 분류 작업이며, 이는 본질적으로 언어적 내용(Linguistic content)을 식별하는 것과 맞닿아 있기 때문이다. 여기에 LSTM의 순차적 처리(Sequential processing) 특성이 결합되어 음성 인식 작업에서 시너지를 낸 것으로 해석된다.
 
-다만, Speaker Identification(SID)과 같은 작업에서는 성능이 저하되는 경향을 보였는데, 이는 로짓 기반 증류가 모델의 깊은 층에 있는 언어적 정보에 집중하는 반면, 화자 식별에 필요한 전역적 음향 특징(Global acoustic features)은 초기 레이어에 더 많이 분포하기 때문으로 추측된다. 
+다만, Speaker Identification(SID)과 같은 작업에서는 성능이 저하되는 경향을 보였는데, 이는 로짓 기반 증류가 모델의 깊은 층에 있는 언어적 정보에 집중하는 반면, 화자 식별에 필요한 전역적 음향 특징(Global acoustic features)은 초기 레이어에 더 많이 분포하기 때문으로 추측된다.
 
 결론적으로, 본 논문은 지식 증류의 대상을 내부 특징에서 로짓으로 변경함으로써 학생 모델의 아키텍처 선택지를 넓혔으며, 이를 통해 특정 도메인(ASR)에서 더 효율적이고 강력한 경량 모델을 구축할 수 있음을 보여주었다.
 

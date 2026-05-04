@@ -8,6 +8,7 @@ Ou Wu, Rujing Yao (2023)
 
 **1. 해결하고자 하는 문제**
 현실 세계의 데이터는 이상적이지 않으며, 다음과 같은 아홉 가지 주요 문제에 직면한다.
+
 - **직접적인 데이터 문제:** 편향된 분포(Biased distribution), 낮은 품질(Low quality), 작은 데이터 크기(Small size), 샘플 중복성(Sample redundancy), 다양성 부족(Lack of diversity), 분포 드리프트(Distribution drift).
 - **데이터와 밀접한 모델 성능 문제:** 모델 강건성(Model robustness), 공정성(Fairness), 신뢰성(Trustworthiness).
 
@@ -30,6 +31,7 @@ Ou Wu, Rujing Yao (2023)
 논문은 데이터 최적화와 관련된 기존의 주요 연구 분야들을 다음과 같이 설명하며 본 연구와의 차별점을 제시한다.
 
 **1. 관련 연구 분야 및 한계**
+
 - **불균형 학습(Imbalanced Learning):** 클래스 불균형 해결에 집중하며, 최근에는 Long-tailed classification 연구가 주를 이룬다.
 - **노이즈 레이블 학습(Noisy-label Learning):** 잘못된 레이블을 식별하고 제거하거나 가중치를 조정하는 방식에 집중한다.
 - **소량 데이터 학습(Learning with Small Data):** Few-shot learning 등을 포함하며 데이터 증강 및 표현 학습에 주목한다.
@@ -44,44 +46,53 @@ Ou Wu, Rujing Yao (2023)
 본 논문은 데이터 최적화를 위한 체계적인 프레임워크를 제안하며, 그 핵심은 6가지 분류 차원과 최적화 파이프라인에 있다.
 
 ### 1. 데이터 최적화 파이프라인 (Optimization Pipeline)
+
 데이터 최적화는 기본적으로 다음의 세 단계를 거친다.
 $$\text{Data Perception} \rightarrow \text{Analysis} \rightarrow \text{Optimizing}$$
 
 - **데이터 인지(Data Perception):** 학습 데이터의 내재적 특성을 감지하는 단계이다.
-    - **입도(Granularity):** 샘플 단위, 카테고리 단위, 전체 코퍼스 단위로 나뉜다.
-    - **인지 유형:** 분포, 청결도(Cleanliness), 난이도, 다양성, 균형, 일관성, 이웃(Neighborhood), 가치 평가(Valuation) 등을 측정한다.
-    - **변동성:** 정적(Static) 인지와 동적(Dynamic) 인지로 구분된다.
+  - **입도(Granularity):** 샘플 단위, 카테고리 단위, 전체 코퍼스 단위로 나뉜다.
+  - **인지 유형:** 분포, 청결도(Cleanliness), 난이도, 다양성, 균형, 일관성, 이웃(Neighborhood), 가치 평가(Valuation) 등을 측정한다.
+  - **변동성:** 정적(Static) 인지와 동적(Dynamic) 인지로 구분된다.
 - **분석(Analysis):** 인지된 데이터를 바탕으로 통계적 분석을 수행하거나 수학적 모델링을 통해 특성을 파악한다.
 - **최적화(Optimizing):** 분석 결과를 바탕으로 실제 데이터를 조작하여 모델 성능을 향상시킨다.
 
 ### 2. 데이터 최적화 기술 (Optimization Techniques)
+
 논문은 다섯 가지 주요 기술적 경로를 정의한다.
 
 **① 데이터 리샘플링(Data Resampling)**
+
 - 원본 데이터에서 샘플을 다시 추출하여 새로운 세트를 구성한다.
 - **Under-sampling**과 **Over-sampling**으로 나뉘며, 샘플링 확률을 결정하는 기준에 따라 균등, 비율 기반, 중요도 기반, 학습 난이도 기반 등으로 구분된다.
 
 **② 데이터 증강(Data Augmentation)**
+
 - 원본 데이터를 변형하여 새로운 샘플이나 특징을 생성한다.
 - **명시적 증강(Explicit):** GAN, Diffusion 모델, 기본 연산(Rotation, Crop) 등을 통해 실제 데이터를 생성한다.
 - **암시적 증강(Implicit):** 실제 샘플을 만들지 않고 손실 함수 등을 통해 이론적으로 증강 효과를 낸다 (예: ISDA).
 
 **③ 데이터 섭동(Data Perturbation)**
+
 - 데이터 $x$에 작은 변화 $\Delta x$를 주어 $x' = x + \Delta x$를 생성하고 이를 학습에 활용한다.
 - **대상:** 원본 샘플, 특징(Feature), 로짓(Logit), 레이블, 그라디언트에 섭동을 가할 수 있다.
 - **방향:** 손실을 증가시키는 정적 섭동(Positive)과 감소시키는 부적 섭동(Negative)으로 나뉜다.
 
 **④ 데이터 가중치 부여(Data Weighting)**
+
 - 손실 함수 계산 시 각 샘플에 서로 다른 가중치 $w_i$를 부여한다.
 - **학습 난이도 기반:** 쉬운 샘플 우선(Easy-first, 예: Curriculum Learning) 또는 어려운 샘플 우선(Hard-first, 예: Focal Loss) 전략이 있다.
 
 **⑤ 데이터 프루닝(Data Pruning)**
+
 - 불필요한 데이터를 제거하여 효율성을 높인다.
 - **데이터셋 증류(Dataset Distillation):** 원본의 정보를 압축한 작은 합성 데이터셋을 생성한다.
 - **서브셋 선택(Subset Selection):** 원본에서 가장 유용한 샘플들만 선택하여 추출한다.
 
 ### 3. 데이터 최적화 이론 (Optimization Theories)
+
 이론적 분석은 다음 두 가지 관점에서 수행된다.
+
 - **정식화(Formalization):** 가우시안 분포 가정, 클래스 조건부 확률 밀도(CPD) 동일 가정 등을 통해 문제를 수학적으로 정의한다.
 - **설명(Explanation):** 특정 기법이 왜 효과적인지(예: 데이터 증강이 정규화(Regularization) 효과를 준다는 점 등)를 이론적으로 규명한다.
 
@@ -90,10 +101,12 @@ $$\text{Data Perception} \rightarrow \text{Analysis} \rightarrow \text{Optimizin
 본 논문은 서베이 논문이므로 특정 모델의 실험 결과보다는, 제안한 분류 체계가 기존의 수많은 방법론을 얼마나 잘 포괄하는지를 보여주는 정성적/정량적 매핑 결과를 제시한다.
 
 **1. 방법론 매핑 결과**
+
 - **노이즈 레이블 학습:** 리샘플링, 증강, 섭동, 가중치 부여, 프루닝 등 거의 모든 데이터 최적화 기법이 적용됨을 확인하였다 (Table I 참조).
 - **불균형 학습:** 특히 가중치 부여(Weighting)와 리샘플링(Resampling) 기법이 핵심적으로 사용되며, 최근에는 증강과 섭동을 결합한 형태가 많이 나타남을 분석하였다 (Table II 참조).
 
 **2. 기술 간 연결성 확인**
+
 - **인지 기반 연결:** 서로 다른 경로의 기법들이 '학습 손실(Training Loss)'이나 '그라디언트(Gradient)'라는 동일한 인지 지표를 공유하고 있음을 밝혀냈다.
 - **상보적 관계:** 데이터 증강(데이터 증가)과 데이터 프루닝(데이터 감소)이 서로 반대 방향의 조작임에도 불구하고, '데이터의 대표성 강화'라는 동일한 최종 목표를 가지고 있음을 확인하였다.
 
@@ -103,6 +116,7 @@ $$\text{Data Perception} \rightarrow \text{Analysis} \rightarrow \text{Optimizin
 본 논문은 개별적으로 연구되어 온 데이터 최적화 기법들을 '데이터 중심'이라는 하나의 우산 아래 통합하였다. 특히 단순한 분류를 넘어, '인지 $\rightarrow$ 분석 $\rightarrow$ 최적화'라는 파이프라인을 제시함으로써 연구자들이 새로운 최적화 기법을 설계할 때 참고할 수 있는 체계적인 가이드라인을 제공하였다.
 
 **2. 한계 및 가정**
+
 - 본 논문은 데이터 최적화 기법들의 분류에 집중하고 있어, 각 기법의 절대적인 성능 우위를 가리는 벤치마크 실험은 포함되지 않았다.
 - 데이터 인지 단계에서 사용되는 '학습 난이도'의 정의가 연구마다 달라, 이를 통합할 수 있는 엄격한 이론적 기준이 아직 부족하다는 점을 지적하였다.
 

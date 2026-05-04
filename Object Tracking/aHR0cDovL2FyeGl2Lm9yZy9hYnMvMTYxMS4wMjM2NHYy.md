@@ -32,13 +32,16 @@ Yuebin Yang, Guillaume-Alexandre Bilodeau (2017)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 시스템은 크게 **전경 검출(Foreground Detection) $\rightarrow$ Blob 분석(Blob Analysis) $\rightarrow$ 객체 추적(Object Tracking)**의 순서로 구성된다.
 
 ### 1. 전경 검출 및 Blob 분석
+
 - **전경 검출:** LOBSTER 알고리즘 등을 사용하여 전경 Blob($B_i$)을 추출한다.
 - **Blob 분석:** 추출된 $B_i$에 대해 미디언 필터링, Closing, Hole filling 등 형태학적 연산을 적용한다. 이후 크기 임계값($T_r$)이나 가로-세로 비율을 기준으로 부적절한 영역을 제거하고, 공간적으로 매우 가까운($T_c$ 기준) 영역들을 병합하여 최종 후보 영역(Candidate Object Regions, $\text{COR}_i$)을 생성한다.
 
 ### 2. 객체 추적 및 상태 결정
+
 각 프레임 $t$에서 이전 프레임의 KCF 추적기 출력($TO_j^t$)와 현재의 $\text{COR}_i^t$ 사이의 중첩도를 계산하여 객체의 상태를 결정한다. 중첩도는 다음과 같은 IoU(Intersection over Union) 수식을 사용한다.
 
 $$\text{Overlap}(x, y) = \frac{x \cap y}{x \cup y}$$
@@ -61,11 +64,13 @@ $$\text{Overlap}(x, y) = \frac{x \cap y}{x \cup y}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** Urban Tracker 데이터셋의 4가지 영상(Sherbrooke, Rouen, St-Marc, Rene-Levesque)을 사용하였다.
 - **비교 대상:** Urban Tracker (UT), Traffic Intelligence (TI), Mendes et al.의 추적기.
 - **평가 지표:** CLEAR MOT 지표인 MOTA(Multiple Object Tracking Accuracy)와 MOTP(Multiple Object Tracking Precision)를 사용하였다. (MOTA는 높을수록, MOTP는 낮을수록 우수함)
 
 ### 정량적 결과 분석
+
 - **MOTA 성능:** 제안 방법(MKCF)은 UT에 근접하는 경쟁력 있는 성능을 보였다. 특히 Rene-Levesque 영상의 자동차 및 자전거 추적에서는 가장 높은 MOTA를 기록하였다.
 - **객체별 특성:** 보행자 추적의 경우 $\text{COR}_i^t$의 크기 임계값($T_r$) 설정에 따라 성능 변화가 컸는데, 너무 낮추면 환경 노이즈가 증가하고 너무 높이면 작은 보행자를 놓치는 Trade-off가 존재함을 확인하였다.
 - **연산 속도:** Intel Core i5 CPU 환경에서 영상에 따라 6.2 ~ 18.6 FPS의 처리 속도를 보였다.
@@ -73,9 +78,11 @@ $$\text{Overlap}(x, y) = \frac{x \cap y}{x \cup y}$$
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 연구는 매우 단순한 데이터 연관 기법을 사용했음에도 불구하고, KCF라는 강력한 단일 객체 추적기를 MOT 프레임워크에 통합함으로써 SOTA(State-of-the-art) 수준의 성능을 낼 수 있음을 입증하였다. 특히 폐색 상황에서 객체를 개별적으로 유지하는 방식이 기존의 merge-split 방식보다 효율적일 수 있음을 보여주었다.
 
 ### 한계 및 비판적 해석
+
 - **정지 객체 문제:** 배경 제거 방식의 근본적인 한계로 인해, 객체가 오래 정지해 있으면 배경 모델에 통합된다. 이 객체가 다시 움직이기 시작할 때 여러 개의 새로운 객체로 인식되거나 분절되는 문제가 발생하며, 이는 실험 결과에서 자동차 추적 성능이 낮게 나타난 주요 원인으로 분석된다.
 - **파라미터 의존성:** 영상마다 $T_r, T_c$ 등의 임계값을 다르게 설정해야 하는 점은 일반화 성능 측면에서 아쉬운 부분이다.
 - **데이터 연관의 단순함:** 저자는 단순한 연관 기법이 효과적이었다고 주장하지만, 정지 후 재출발하는 객체의 분절 문제를 해결하기 위해서는 더 정교한 데이터 연관 알고리즘이 필요할 것으로 보인다.

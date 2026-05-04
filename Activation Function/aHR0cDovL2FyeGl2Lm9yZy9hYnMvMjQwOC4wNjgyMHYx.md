@@ -4,7 +4,7 @@ Lukas Strack, Mahmoud Safari, Frank Hutter (2024)
 
 ## 🧩 Problem to Solve
 
-딥러닝 모델의 성능은 활성화 함수(activation function)의 선택에 의해 크게 좌우된다. 현재 ReLU, GELU, SiLU와 같은 표준 활성화 함수들이 널리 사용되고 있으나, 이는 일반적인 성능을 보장할 뿐 특정 모델이나 작업(task)에 최적화된 것은 아니다. 
+딥러닝 모델의 성능은 활성화 함수(activation function)의 선택에 의해 크게 좌우된다. 현재 ReLU, GELU, SiLU와 같은 표준 활성화 함수들이 널리 사용되고 있으나, 이는 일반적인 성능을 보장할 뿐 특정 모델이나 작업(task)에 최적화된 것은 아니다.
 
 특정 문제에 최적화된 맞춤형 활성화 함수를 설계하는 것은 매우 까다로운 작업이며, 기존의 자동화된 탐색 방법들은 수천 번의 함수 평가를 요구하는 블랙박스(black-box) 최적화나 진화 전략(evolutionary strategies)에 의존하여 계산 비용이 매우 높다는 한계가 있다.
 
@@ -30,16 +30,20 @@ Lukas Strack, Mahmoud Safari, Frank Hutter (2024)
 ## 🛠️ Methodology
 
 ### 1. 활성화 함수 탐색 공간 (Search Space)
-활성화 함수 $f$는 unary 연산과 binary 연산의 조합으로 구성된 계산 그래프(computational graph)로 정의된다. 
+
+활성화 함수 $f$는 unary 연산과 binary 연산의 조합으로 구성된 계산 그래프(computational graph)로 정의된다.
+
 - **Unary operations**: $\sinh(x), \tanh(x), \text{arcsinh}(x), \arctan(x), \sqrt{x}, \text{erf}(x), \exp(x), \min(0, x), \max(0, x), \sigma(x), \text{GELU}(x), \text{SiLU}(x), \text{ELU}(x), \text{LeakyReLU}(x), \log(1+e^x)$ 등이 포함된다.
 - **Binary operations**: $x_1+x_2, x_1-x_2, x_1 \cdot x_2, x_1 / x_2, \max(x_1, x_2), \min(x_1, x_2), \sigma(\gamma)x_1 + (1-\sigma(\gamma))x_2, \text{L}(x_1, x_2), \text{R}(x_1, x_2)$ 등이 포함된다.
 
 이산적인 탐색 공간을 연속적으로 완화(continuous relaxation)하기 위해, 각 엣지와 정점에 가중합(weighted sum)을 할당한다.
+
 - Unary 엣지 $(i, j)$의 출력: $\sum_u \upsilon_{u}^{(i,j)} u$
 - Binary 정점 $i$의 출력: $\sum_b \beta_{b}^{(i)} b$
 이때 가중치 $\upsilon, \beta$는 심플렉스(simplex) 제약 조건 $\sum \upsilon = 1, \sum \beta = 1$을 따른다.
 
 ### 2. GRAFS (GRadient-based Activation Function Search)
+
 본 논문은 Bi-level optimization 구조를 통해 활성화 함수 파라미터 $\alpha = (\upsilon, \beta)$와 네트워크 가중치 $w$를 최적화한다.
 
 $$
@@ -56,29 +60,34 @@ $$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **대상 모델**: ResNet20/32, ViT-tiny/small, mini/tiny/small GPT.
 - **데이터셋**: CIFAR10, CIFAR100, SVHN Core, TinyStories.
 - **평가 지표**: Test Accuracy (이미지), Test Loss (언어 모델).
 - **비교 대상 (Baselines)**: ReLU, GELU, SiLU, ELU, LeakyReLU.
 
 ### 2. 주요 결과
+
 - **ResNet (CIFAR10)**: 5개의 서로 다른 시드로 탐색한 결과, 발견된 5개 함수 모두 ReLU보다 우수한 성능을 보였으며, 그 중 2개는 모든 baseline을 능가하였다.
 - **Vision Transformer (ViT)**: ViT-tiny에서 탐색된 모든 맞춤형 활성화 함수가 기존 baseline(GELU 포함)보다 일관되게 높은 성능을 기록하였다. 특히 더 큰 모델인 ViT-small에서도 이 성능 향상이 유지되었다.
 - **GPT (TinyStories)**: miniGPT에서 탐색된 함수들이 GELU보다 낮은 test loss를 기록하였으며, 이는 tinyGPT와 smallGPT로 모델 크기를 키웠을 때도 동일하게 나타났다. 특히 $\text{ReLU}(x)^2$ 형태의 거동을 보이는 함수가 효과적임이 확인되었다.
 
 ### 3. 효율성 및 전이 가능성
+
 - **탐색 비용**: 탐색에 소요되는 시간이 실제 모델을 한 번 평가하는 시간의 수 배(ResNet의 경우 2.2~4.1배, ViT의 경우 1배 미만)에 불과하여, 기존의 수천 번 평가가 필요했던 블랙박스 방식보다 압도적으로 효율적이다.
 - **전이 가능성**: 작은 모델(ResNet20, ViT-tiny, miniGPT)에서 찾은 최적의 활성화 함수가 더 큰 모델(ResNet32, ViT-small, smallGPT)과 다른 데이터셋에서도 매우 잘 작동함을 확인하였다.
 
 ## 🧠 Insights & Discussion
 
-본 연구는 gradient 기반의 NAS 기법을 활성화 함수 탐색에 성공적으로 이식하여, 매우 적은 비용으로 모델 맞춤형 활성화 함수를 찾을 수 있음을 보여주었다. 
+본 연구는 gradient 기반의 NAS 기법을 활성화 함수 탐색에 성공적으로 이식하여, 매우 적은 비용으로 모델 맞춤형 활성화 함수를 찾을 수 있음을 보여주었다.
 
 **강점 및 시사점**:
+
 - **실용적 효율성**: 탐색 오버헤드가 극히 적어 실제 딥러닝 파이프라인에 즉시 적용 가능하다.
 - **구조적 인사이트**: 단순한 함수 교체가 아니라, 수학적 연산의 조합을 통해 새로운 형태의 비선형성을 발견할 수 있음을 시사한다. 특히 GPT 실험에서 $\text{ReLU}(x)^2$ 형태가 발견된 것은 기존의 진화적 탐색 결과와 일치하며, gradient 기반 방법의 유효성을 뒷받침한다.
 
 **한계 및 논의 사항**:
+
 - **최적 파이프라인의 미완성**: 저자들은 본 연구가 gradient 기반 탐색의 가능성을 보여준 첫 사례이며, 이것이 최적의 파이프라인은 아닐 수 있음을 명시하였다.
 - **탐색 공간의 제약**: 제안된 search cell 내의 연산들로만 조합이 가능하므로, 이 공간 밖에 존재하는 완전히 새로운 형태의 함수는 찾을 수 없다.
 - **Scaling Behavior**: 향후 연구로 더 큰 네트워크로 확장했을 때 활성화 함수의 성능이 어떻게 변하는지에 대한 scaling behavior 분석이 필요할 것으로 보인다.

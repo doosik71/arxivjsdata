@@ -14,26 +14,29 @@ Saikat Roy, Gregor Koehler, Michael Baumgartner, Constantin Ulrich, Jens Peterse
 
 ## 📎 Related Works
 
-논문은 Vision Transformer (ViT) 및 Swin Transformer와 같은 최신 비전 모델들이 의료 영상 분야로 전이되어 다양한 하이브리드 모델(예: UNETR, SwinUNETR, TransUNet 등)이 제안되었음을 언급한다. 
+논문은 Vision Transformer (ViT) 및 Swin Transformer와 같은 최신 비전 모델들이 의료 영상 분야로 전이되어 다양한 하이브리드 모델(예: UNETR, SwinUNETR, TransUNet 등)이 제안되었음을 언급한다.
 
 기존 연구들은 주로 새로운 아키텍처를 제안하고 SOTA(State-of-the-art) 성능을 달성하는 데 집중하였으나, 본 논문은 이러한 모델들 내에서 Transformer 모듈이 실제로 어떤 역할을 수행하는지, 그리고 그것이 필수적인지를 비판적으로 분석한다는 점에서 기존의 성능 중심 접근 방식과 차별화된다.
 
 ## 🛠️ Methodology
 
 ### Transformer Ablation 정의
+
 Transformer의 self-attention 메커니즘은 기본적으로 다음과 같이 표현된다.
 $$X = s(QK^T) \cdot V$$
-여기서 $Q, K, V \in \mathbb{R}^{N \times d}$이며, $s$는 scaling 함수, $N$은 시퀀스 길이, $d$는 차원 수를 의미한다. 
+여기서 $Q, K, V \in \mathbb{R}^{N \times d}$이며, $s$는 scaling 함수, $N$은 시퀀스 길이, $d$는 차원 수를 의미한다.
 
 **Transformer Ablation**은 위에서 정의된 Transformer 블록을 완전히 제거하고, 대신 다운스트림 텐서의 호환성(tensor compatibility)을 유지하기 위한 단순한 선형 투영(linear projection)으로 대체하는 것을 의미한다.
+
 - **ViT 기반 모델**: linear projection 기반의 tokenizer로 대체한다.
 - **Swin-Transformer 기반 모델**: PatchMerging을 포함한 linear projection으로 대체한다.
 
 ### 실험 설계
+
 - **대상 모델**: UNETR, SwinUNETR, TransUNet, TransBTS, TransFuse, CoTr, nnFormer, UTNet 등 총 8개의 모델을 분석하였으며, 기준선(baseline)으로 순수 Convolutional 모델인 nnUNet을 사용하였다.
-- **데이터셋**: 
-    - Kidney Tumor Segmentation (KiTS) 2021: 300개 볼륨, 3개 분할 구조.
-    - Multi-Organ Abdominal CT (MultiACT): 90개 볼륨, 8개 분할 구조.
+- **데이터셋**:
+  - Kidney Tumor Segmentation (KiTS) 2021: 300개 볼륨, 3개 분할 구조.
+  - Multi-Organ Abdominal CT (MultiACT): 90개 볼륨, 8개 분할 구조.
 - **평가 지표**: Dice Similarity Coefficient (DSC)와 1mm 허용 오차를 가진 Surface Dice Coefficient (SDC)를 사용하였다.
 - **학습 환경**: nnUNet 파이프라인을 기반으로 하되, optimizer를 SGD에서 AdamW로 변경하여 학습하였다.
 
@@ -43,12 +46,12 @@ $$X = s(QK^T) \cdot V$$
 
 - **표현의 대체 가능성**: UNETR를 제외한 대부분의 네트워크에서 Transformer Ablation 이후에도 성능이 유지되었다. 이는 많은 모델이 Transformer 자체보다는 Convolution이나 Swin-block과 같은 데이터 효율적인 구성 요소에 의해 성능이 주도되고 있음을 시사한다.
 - **모델별 특이사항**:
-    - **UNETR**: Ablation 시 성능 저하가 가장 뚜렷하게 나타나, Transformer 활용도가 높음을 보였다.
-    - **SwinUNETR**: Swin Transformer 블록을 제거했음에도 성능 변화가 거의 없었다.
-    - **nnFormer**: Ablation 이후 오히려 성능이 향상되는 결과가 관찰되었다.
-- **정량적 결과 (Table 2 참조)**: 
-    - 많은 경우 $\text{S} - \text{Abl.}$ (Standard 성능과 Ablated 성능의 차이) 값이 매우 작거나 음수로 나타났다.
-    - 특히 파라미터 수의 급격한 감소(Ratio $\ll 1$)에도 불구하고 DSC/SDC 수치가 유지되는 경향을 보였다.
+  - **UNETR**: Ablation 시 성능 저하가 가장 뚜렷하게 나타나, Transformer 활용도가 높음을 보였다.
+  - **SwinUNETR**: Swin Transformer 블록을 제거했음에도 성능 변화가 거의 없었다.
+  - **nnFormer**: Ablation 이후 오히려 성능이 향상되는 결과가 관찰되었다.
+- **정량적 결과 (Table 2 참조)**:
+  - 많은 경우 $\text{S} - \text{Abl.}$ (Standard 성능과 Ablated 성능의 차이) 값이 매우 작거나 음수로 나타났다.
+  - 특히 파라미터 수의 급격한 감소(Ratio $\ll 1$)에도 불구하고 DSC/SDC 수치가 유지되는 경향을 보였다.
 
 ## 🧠 Insights & Discussion
 

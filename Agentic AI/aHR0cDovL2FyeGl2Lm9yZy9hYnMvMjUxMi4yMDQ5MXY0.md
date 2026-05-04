@@ -13,6 +13,7 @@ Agent-Team, StepFun (2025)
 본 논문의 핵심 아이디어는 Deep Research 능력을 구성하는 '원자적 능력(Atomic Capabilities)'으로 분해하고, 이를 단계적으로 학습시키는 것이다. 단순히 다음 토큰을 예측하는 학습에서 벗어나, 다음 '원자적 행동(Atomic Action)'을 결정하도록 학습 목표를 재설정하였다.
 
 주요 기여 사항은 다음과 같다.
+
 1. **원자적 능력 기반 데이터 합성(Atomic-capability data synthesis):** 계획 수립, 정보 탐색, 성찰 및 검증, 보고서 작성이라는 네 가지 핵심 능력에 특화된 데이터 합성 파이프라인을 구축하여 모델의 기초 체력을 강화하였다.
 2. **점진적 학습 파이프라인(Progressive training pipeline):** Agentic Mid-training $\rightarrow$ Supervised Fine-tuning (SFT) $\rightarrow$ Reinforcement Learning (RL)으로 이어지는 체계적인 최적화 경로를 제안하였다.
 3. **ADR-Bench 구축:** 실제 산업 현장의 수요를 반영한 중국어 기반의 Deep Research 벤치마크인 ADR-Bench를 구축하여, 단순 정답 맞추기가 아닌 실질적인 유용성을 평가할 수 있는 체계를 마련하였다.
@@ -26,6 +27,7 @@ Agent-Team, StepFun (2025)
 ## 🛠️ Methodology
 
 ### 1. 원자적 능력 데이터 전략 (Data Strategy for Atomic Capabilities)
+
 모델이 복잡한 행동 공간에서 길을 잃지 않도록, 학습 목표를 $\mathcal{A}_{\text{token}}$에서 더 작은 부분 집합인 $\mathcal{A}_{\text{atomic}}$으로 제한한다.
 
 - **계획 및 과업 분해 (Planning & Task Decomposition):** 실제 고품질 기술 보고서나 학술 논문을 역공학(Reverse Engineering)하여, 해당 결과물이 나오기 위해 필요했을 '프로젝트 과업'과 '계획' 데이터를 생성한다.
@@ -34,6 +36,7 @@ Agent-Team, StepFun (2025)
 - **보고서 생성 (Report Generation):** 전문가의 작성 스타일을 배우는 Mid-training 단계와 지침 준수 및 포맷팅을 배우는 SFT 단계로 나누어 학습시킨다.
 
 ### 2. 점진적 학습 파이프라인 (Training Pipeline)
+
 32B 파라미터 규모의 Qwen2.5-32B-Base 모델을 기반으로 3단계 학습을 진행한다.
 
 - **Stage 1: Agentic Mid-training:** 32K 컨텍스트에서 기초 인지 패턴을 학습시킨 후, 128K 컨텍스트로 확장하며 도구 호출(Tool use) 능력을 주입한다.
@@ -41,6 +44,7 @@ Agent-Team, StepFun (2025)
 - **Stage 3: Reinforcement Learning (RL):** 실시간 도구 환경에서 PPO(Proximal Policy Optimization) 알고리즘을 사용하여 정책을 최적화한다.
 
 ### 3. 보상 설계 및 RL 알고리즘
+
 본 논문은 Rubric(평가 기준) 기반의 보상 시스템을 도입하였다.
 
 - **Rubrics Judge:** 강한 모델(Teacher model)이 매긴 점수와 설명을 학습한 별도의 판별 모델을 구축하여 보상 신호를 제공한다.
@@ -52,22 +56,27 @@ $$r_t(\theta) = \frac{\pi_\theta(a_t | s_t)}{\pi_{\theta_{\text{old}}}(a_t | s_t
 우선순위 추정(Advantage Estimation)을 위해 GAE(Generalized Advantage Estimation)를 사용하며, $\gamma=1, \lambda=1$로 설정하여 희소 보상 환경에서의 신용 할당(Credit assignment)을 단순화하였다.
 
 ### 4. 시스템 아키텍처
+
 ReAct 패러다임을 따르는 단일 에이전트 구조를 사용하며, `batch_web_surfer`, `todo`, `shell` 등의 도구 셋을 활용한다. 특히 컨텍스트 오버플로우를 방지하기 위해 도구 결과가 임계치를 넘으면 요약본만 컨텍스트에 넣고 원문은 로컬 파일에 저장하는 'Implicit Context Management' 전략을 사용한다.
 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **벤치마크:** ResearchRubrics (LLM 기반 평가) 및 ADR-Bench (인간 및 전문가 평가).
 - **비교 대상:** 상용 에이전트 시스템(OpenAI DeepResearch, Gemini DeepResearch 등) 및 ReAct 기반 에이전트(DeepSeek-V3.2, GLM-4.6 등).
 
 ### 2. 정량적 결과 (ResearchRubrics)
+
 Step-DeepResearch는 **61.42점**을 기록하며 단일 에이전트(ReAct Agent) 카테고리에서 1위를 차지하였다. 이는 OpenAI DeepResearch(60.67)를 앞선 수치이며, 최상위권인 Gemini DeepResearch(63.69)에 근접한 성능이다.
 
 ### 3. 인간 평가 및 비용 효율성 (ADR-Bench & Cost)
+
 - **ADR-Bench:** 인간 전문가의 Elo 레이팅 결과, Step-DeepResearch는 대다수의 상용 시스템보다 높은 승률을 보였으며, 특히 일반 도메인에서 높은 유용성을 입증하였다.
 - **비용 효율성:** Gemini나 OpenAI의 시스템이 보고서당 수 RMB의 비용을 소모하는 반면, Step-DeepResearch는 단일 호출 비용을 **0.50 RMB 미만**으로 유지하면서도 유사한 성능을 내어 극도로 높은 비용 효율성을 달성하였다.
 
 ### 4. 세부 분석
+
 - **차원별 분석:** '명시적 기준(Explicit Criteria)'과 '인용 품질(Citation Quality)'에서 매우 높은 점수를 기록하여 사실적 근거에 기반한 작성이 가능함을 보였다.
 - **도메인별 분석:** AI & ML, 역사 분석, 기술 문서 작성 분야에서 Gemini와 대등한 수준의 성능을 보였으나, STEM 및 철학 분야에서는 고차원 추론의 한계로 인해 Gemini에 밀리는 모습을 보였다.
 
@@ -78,6 +87,7 @@ Step-DeepResearch는 **61.42점**을 기록하며 단일 에이전트(ReAct Agen
 또한, 루브릭 기반의 RL이 단순 모방 학습(SFT)의 한계를 넘어 에이전트가 스스로 최적의 경로를 탐색하게 함으로써 실질적인 성능 향상을 이끌어냈다는 점이 주목할 만하다.
 
 **한계점 및 논의 사항:**
+
 1. **도구 사용의 견고성:** API 응답의 변동성이나 매우 복잡한 도구 조합 시나리오에서는 여전히 취약한 모습을 보인다.
 2. **사실성 보장:** 정보 노이즈가 심한 환경에서 '그럴듯하지만 증명 불가능한(plausible but unprovable)' 추론을 내놓는 경우가 존재한다.
 3. **보고서 가독성:** 체크리스트 기반 평가에서는 높은 점수를 얻더라도, 실제 인간이 느끼기에 분석의 깊이가 부족하고 정보가 파편화되어 나열되는 경향이 발견되었다.

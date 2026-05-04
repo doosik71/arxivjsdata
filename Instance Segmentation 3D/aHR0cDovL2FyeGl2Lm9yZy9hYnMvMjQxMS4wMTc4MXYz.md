@@ -10,13 +10,14 @@ Duc Dang Trung Tran, Byeongkeun Kang, and Yeejin Lee (2024)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 객체의 크기에 상관없이 효과적으로 특징을 추출할 수 있는 **Multi-scale Superpoint** 표현과 이를 융합하는 **Twin-attention** 메커니즘을 도입하는 것이다. 
+본 논문의 핵심 아이디어는 객체의 크기에 상관없이 효과적으로 특징을 추출할 수 있는 **Multi-scale Superpoint** 표현과 이를 융합하는 **Twin-attention** 메커니즘을 도입하는 것이다.
 
 또한, 기존의 Semantic Query 외에 공간적 제약을 제공하는 **Box Query**와 이를 정교화하는 **Box Regularizer**를 제안한다. 이는 추가적인 어노테이션 없이도 인스턴스의 공간적 위치 정보를 학습 과정에 통합함으로써, 객체 국소화(Localization) 능력을 향상시키고 배경 노이즈를 줄이는 역할을 한다.
 
 ## 📎 Related Works
 
 3D Instance Segmentation 방법론은 크게 네 가지로 분류된다.
+
 1. **Proposal-based**: 3D Bounding Box를 먼저 생성한 후 마스크를 세그멘테이션한다.
 2. **Grouping-based**: 포인트별 특징을 이용해 클러스터링을 수행한다.
 3. **Kernel-based**: 각 인스턴스를 동적 컨볼루션(Dynamic Convolution)의 커널로 취급한다.
@@ -27,12 +28,15 @@ Duc Dang Trung Tran, Byeongkeun Kang, and Yeejin Lee (2024)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 MSTA3D는 크게 (1) Backbone Network, (2) Twin-attention Decoder, (3) Box Regularizer의 세 가지 구성 요소로 이루어져 있다.
 
 ### 1. Backbone Network 및 Multi-scale Superpoint
+
 Backbone으로는 3D U-Net을 사용하여 복셀화된 포인트 클라우드에서 특징을 추출한다. 메모리 효율을 위해 포인트 단위가 아닌 Superpoint 단위의 레이블을 사용한다. 이때, Superpoint 생성 시 이웃 포인트의 수를 조절하여 **Low-scale($S_\ell$)**과 **High-scale($S_h$)** 두 가지 스케일의 Superpoint 특징을 미리 계산하고 풀링 레이어를 통해 집계한다. 이는 다양한 크기의 객체를 효과적으로 표현하기 위함이다.
 
 ### 2. Twin-attention Decoder
+
 Multi-scale 특징을 통합하기 위해 6개의 Twin-attention 블록으로 구성된 디코더를 사용한다.
 
 **Region Constraint Instance Query**:
@@ -49,13 +53,15 @@ $$ \text{TATT}(Q, K_\ell, V_\ell) = \text{softmax}\left(\frac{QK_\ell^T}{\sqrt{d
 $$ X = \text{FFN}(Z_\ell \otimes Z_h) $$
 
 ### 3. Spatial Constraint Regularizer (Box Regularizer)
-Box Regularizer는 인스턴스별 Box 예측값($\hat{B}$)과 장면 전체의 시맨틱 스코어($F_m$), 장면 전체의 Box 정보($F_{box}$)를 입력으로 받는다. 
+
+Box Regularizer는 인스턴스별 Box 예측값($\hat{B}$)과 장면 전체의 시맨틱 스코어($F_m$), 장면 전체의 Box 정보($F_{box}$)를 입력으로 받는다.
 
 먼저, 개별 인스턴스 Box와 전체 장면 Box 간의 상대적 위치 차이 $R_i$를 계산한다.
 $$ R_i = \{\hat{b}_i\} - F_{box} $$
 이 상대적 위치 정보 $R_i$를 시맨틱 특징 $F_m$과 결합하여 최종 바이너리 마스크 $\hat{M}$을 예측함으로써, 전역적 맥락과 지역적 인스턴스 특성을 모두 반영한 정교한 마스크를 생성한다.
 
 ### 4. 학습 및 추론 절차
+
 **손실 함수**:
 전체 손실 함수 $L$은 다음과 같이 구성된다.
 $$ L = \beta_m(L_{bce} + L_{dice}) + \beta_{cls}L_{cls} + \beta_s L_s + \beta_b L_b + \beta_{bs} L_{bs} $$
@@ -67,11 +73,13 @@ Hungarian 알고리즘을 사용하여 예측된 Proposal과 Ground Truth 인스
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: ScanNetV2, ScanNet200, S3DIS (Area 5)
 - **평가 지표**: mAP, $\text{mAP}_{50}$, $\text{mAP}_{25}$
 - **구현 세부사항**: PyTorch 기반, AdamW 옵티마이저, A100 GPU 사용, 복셀 크기 2cm(ScanNet) / 5cm(S3DIS).
 
 ### 주요 결과
+
 1. **ScanNetV2**: $\text{mAP}$ 기준 기존 SOTA 모델들을 상회하는 성능을 보였다. 특히 책장(bookshelf)과 같은 대형 객체에서 $\text{mAP}_{25}$가 10% 이상 향상되어 과분할 문제가 효과적으로 해결되었음을 입증하였다.
 2. **ScanNet200**: SPFormer 및 TD3D 대비 $\text{mAP}$와 $\text{mAP}_{50}$에서 유의미한 성능 향상을 보였다.
 3. **S3DIS**: Area 5에서 $\text{mAP}_{50}$ 및 $\text{mPrec}$ 지표에서 경쟁력 있는 결과를 나타냈다.

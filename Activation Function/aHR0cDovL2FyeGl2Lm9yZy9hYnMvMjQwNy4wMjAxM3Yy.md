@@ -4,7 +4,7 @@ Krishna Sri Ipsit Mantri, Xinzhi (Aurora) Wang, Carola-Bibiane Schönlieb, Bruno
 
 ## 🧩 Problem to Solve
 
-본 논문은 그래프 신경망(Graph Neural Networks, GNNs)에서 사용되는 활성화 함수(Activation Function)의 한계를 해결하고자 한다. 대부분의 GNN은 ReLU와 같은 표준 활성화 함수를 기본적으로 사용하지만, 활성화 함수의 선택은 네트워크의 성능에 상당한 영향을 미친다. 
+본 논문은 그래프 신경망(Graph Neural Networks, GNNs)에서 사용되는 활성화 함수(Activation Function)의 한계를 해결하고자 한다. 대부분의 GNN은 ReLU와 같은 표준 활성화 함수를 기본적으로 사용하지만, 활성화 함수의 선택은 네트워크의 성능에 상당한 영향을 미친다.
 
 특히 그래프 데이터는 노드의 차수(degree) 차이나 그래프 크기의 변화와 같은 고유한 구조적 특성을 가지고 있어, 이에 적응할 수 있는 **Graph-adaptive**한 활성화 함수가 필요하다. 기존의 그래프 적응형 활성화 함수(예: GReLU)가 제안되었으나, 이들은 조각마다 선형(piecewise linear)인 고정된 구조(blueprint)를 가지고 있어 표현력에 한계가 있으며, 미분 불가능한 지점이 존재한다는 단점이 있다.
 
@@ -21,17 +21,21 @@ Krishna Sri Ipsit Mantri, Xinzhi (Aurora) Wang, Carola-Bibiane Schönlieb, Bruno
 ## 📎 Related Works
 
 ### 관련 연구 및 한계
+
 - **Diffeomorphisms in Neural Networks**: 미분동형사상은 전단사(bijective)이며 미분 가능하고 역함수 또한 미분 가능한 매핑이다. 기존의 CPAB 접근법은 1D 공간에서 효율적인 계산이 가능함을 보였으나, 주로 정렬(alignment)이나 회귀 작업에 사용되었으며 활성화 함수로의 적용은 시도되지 않았다.
 - **General-Purpose Activation Functions**: ReLU, Tanh, Swish 등 다양한 함수가 연구되었으나, 이들은 입력 데이터의 구조에 따라 형태가 변하는 '입력 적응성'이 결여되어 있다.
 - **Graph Activation Functions**: Max/Median 필터나 GReLU와 같은 그래프 전용 활성화 함수가 제안되었다. 하지만 GReLU의 경우 piecewise linear 구조로 인해 표현력이 제한적이며, 미분 불가능한 지점이 발생하여 최적화에 불리하다.
 
 ### 차별점
+
 DIGRAF는 기존의 고정된 blueprint(예: piecewise linear)를 벗어나 CPAB를 통해 훨씬 더 복잡하고 유연한 비선형 함수를 학습할 수 있으며, $\text{GNN}_{\text{ACT}}$를 통해 그래프 구조에 직접적으로 적응한다는 점에서 기존 연구와 차별화된다.
 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 DIGRAF의 전체 파이프라인은 그림 1과 같이 구성된다.
+
 1. **GNN 레이어**: 입력 노드 특징 $H^{(l-1)}$과 인접 행렬 $A$를 통해 중간 특징 $\bar{H}^{(l)}$를 생성한다.
 2. **$\text{GNN}_{\text{ACT}}$**: $\bar{H}^{(l)}$과 $A$를 입력으로 받아, 해당 그래프에 최적화된 활성화 함수 파라미터 $\theta^{(l)}$를 결정한다. 이때 $\text{GNN}_{\text{ACT}}$ 이후에 Graph-wise pooling(max 또는 mean pooling)을 적용하여 단일 벡터 $\theta^{(l)}$를 추출한다.
 3. **DIGRAF 활성화**: 결정된 $\theta^{(l)}$를 사용하여 CPAB 변환 $T^{(l)}$을 정의하고, 이를 $\bar{H}^{(l)}$에 요소별(element-wise)로 적용하여 최종 특징 $H^{(l)}$를 얻는다.
@@ -39,7 +43,8 @@ DIGRAF의 전체 파이프라인은 그림 1과 같이 구성된다.
 ### 주요 메커니즘 및 방정식
 
 #### 1. CPAB Diffeomorphism
-활성화 함수는 1차원 함수이므로, 1D CPAB를 사용한다. 먼저 폐구간 $\Omega = [a, b]$를 $N_P$개의 구간으로 나누는 테셀레이션(tessellation) $P$를 정의한다. 
+
+활성화 함수는 1차원 함수이므로, 1D CPAB를 사용한다. 먼저 폐구간 $\Omega = [a, b]$를 $N_P$개의 구간으로 나누는 테셀레이션(tessellation) $P$를 정의한다.
 
 파라미터 $\theta \in \mathbb{R}^{N_P-1}$에 의해 정의되는 **Continuous Piecewise-Affine (CPA) velocity field** $v_\theta$를 구축한다. 이 속도장(velocity field)은 다음과 같은 적분 방정식을 통해 궤적 $\phi_\theta(x, t)$를 생성한다.
 
@@ -49,12 +54,13 @@ $$\phi_\theta(x, t) = x + \int_0^t v_\theta(\phi_\theta(x, \tau)) d\tau$$
 $$f_\theta(x) \triangleq \phi_\theta(x, t=1)$$
 
 #### 2. DIGRAF 정의
+
 입력값이 도메인 $\Omega$ 내에 있을 때는 CPAB 변환 $T^{(l)}$을 적용하고, 도메인 밖의 값은 항등 함수(identity function)로 처리한다.
 
-$$\text{DIGRAF}(\bar{h}^{(l)}_{u,c}, \theta^{(l)}) = 
-\begin{cases} 
-T^{(l)}(\bar{h}^{(l)}_{u,c}; \theta^{(l)}), & \text{if } \bar{h}^{(l)}_{u,c} \in \Omega \\ 
-\bar{h}^{(l)}_{u,c}, & \text{otherwise} 
+$$\text{DIGRAF}(\bar{h}^{(l)}_{u,c}, \theta^{(l)}) =
+\begin{cases}
+T^{(l)}(\bar{h}^{(l)}_{u,c}; \theta^{(l)}), & \text{if } \bar{h}^{(l)}_{u,c} \in \Omega \\
+\bar{h}^{(l)}_{u,c}, & \text{otherwise}
 \end{cases}$$
 
 #### 3. 학습 절차 및 손실 함수

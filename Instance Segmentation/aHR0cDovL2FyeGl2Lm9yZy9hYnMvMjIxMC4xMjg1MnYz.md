@@ -12,9 +12,9 @@ Junfei Xiao, Zhichao Xu, Shiyi Lan, Zhiding Yu, Alan Yuille, Anima Anandkumar (2
 
 본 솔루션의 핵심 아이디어는 **강건함이 검증된 Vision Transformer(ViT) 기반의 백본**과 **대규모 다중 데이터셋 학습 전략**을 결합하는 것이다. 구체적으로는 다음과 같은 설계를 통해 강건성을 확보하였다.
 
-1.  **FAN-B-Hybrid 백본 채택**: 이미지 분류 및 다운스트림 태스크에서 뛰어난 정확도와 강건성을 보인 Fully Attentional Network (FAN)를 인코더로 사용하여 Out-of-Distribution (OOD) 시나리오에 대한 대응력을 높였다.
-2.  **SegFormer 프레임워크 활용**: 효율적인 MLP 디코더를 통해 다중 레벨 특징을 융합하는 SegFormer 구조를 채택하여 세그멘테이션 성능을 극대화하였다.
-3.  **광범위한 데이터셋 통합 및 균형화**: 9개의 서로 다른 데이터셋을 통합하여 학습 데이터의 다양성을 확보하고, 데이터셋 간 크기 차이로 인한 불균형을 해소하기 위해 단순하지만 효과적인 데이터 리사이징(Resizing) 전략을 사용하였다.
+1. **FAN-B-Hybrid 백본 채택**: 이미지 분류 및 다운스트림 태스크에서 뛰어난 정확도와 강건성을 보인 Fully Attentional Network (FAN)를 인코더로 사용하여 Out-of-Distribution (OOD) 시나리오에 대한 대응력을 높였다.
+2. **SegFormer 프레임워크 활용**: 효율적인 MLP 디코더를 통해 다중 레벨 특징을 융합하는 SegFormer 구조를 채택하여 세그멘테이션 성능을 극대화하였다.
+3. **광범위한 데이터셋 통합 및 균형화**: 9개의 서로 다른 데이터셋을 통합하여 학습 데이터의 다양성을 확보하고, 데이터셋 간 크기 차이로 인한 불균형을 해소하기 위해 단순하지만 효과적인 데이터 리사이징(Resizing) 전략을 사용하였다.
 
 ## 📎 Related Works
 
@@ -25,23 +25,26 @@ Junfei Xiao, Zhichao Xu, Shiyi Lan, Zhiding Yu, Alan Yuille, Anima Anandkumar (2
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
-본 모델은 **FAN-B-Hybrid**를 인코더(Encoder)로, **SegFormer**를 전체적인 세그멘테이션 프레임워크로 사용하는 구조이다. 
 
-1.  **Encoder (Backbone)**: FAN-B-Hybrid를 사용하며, ImageNet-22K에서 사전 학습된 가중치로 초기화한 후 ImageNet-1K에서 미세 조정(Fine-tuning)된 체크포인트를 사용한다.
-2.  **Decoder**: SegFormer의 MLP 기반 디코더를 사용하여 초기 Convolution 블록, 마지막 FAN Transformer 블록, 그리고 최종 Class Attention 블록의 출력을 융합하여 최종 세그멘테이션 마스크를 예측한다.
+본 모델은 **FAN-B-Hybrid**를 인코더(Encoder)로, **SegFormer**를 전체적인 세그멘테이션 프레임워크로 사용하는 구조이다.
+
+1. **Encoder (Backbone)**: FAN-B-Hybrid를 사용하며, ImageNet-22K에서 사전 학습된 가중치로 초기화한 후 ImageNet-1K에서 미세 조정(Fine-tuning)된 체크포인트를 사용한다.
+2. **Decoder**: SegFormer의 MLP 기반 디코더를 사용하여 초기 Convolution 블록, 마지막 FAN Transformer 블록, 그리고 최종 Class Attention 블록의 출력을 융합하여 최종 세그멘테이션 마스크를 예측한다.
 
 ### 학습 전략 및 절차
--   **학습 데이터 구성**: ADE20K, Cityscapes, Mapillary Vistas, ScanNet, VIPER, WildDash 2, IDD, BDD, COCO 등 총 9개의 데이터셋을 통합하여 사용한다.
--   **데이터 균형화 (Dataset Balancing)**: 데이터셋마다 이미지 수가 매우 다르므로(예: COCO는 WildDash 2보다 30배 이상 큼), 각 데이터셋을 $\text{120,000 // len(dataset)}$ 번 반복하여 샘플링하는 단순 리사이징 전략을 통해 데이터 불균형 문제를 완화하였다.
--   **통합 라벨 공간 (Unified Label Space)**: 서로 다른 데이터셋의 라벨을 256개의 클래스로 구성된 통합 라벨 공간으로 투영(Project)하여 학습하였다.
--   **손실 함수**: 표준적인 교차 엔트로피 손실(Cross-Entropy Loss)을 사용하였으며, 별도의 손실 가중치 조정이나 하이퍼파라미터 튜닝은 진행하지 않았다.
--   **추론 및 후처리**: 예측된 세그멘테이션 맵은 통합 라벨 공간에서 각 데이터셋의 원래 라벨 공간으로 다시 투영하는 후처리 과정을 거친다.
+
+- **학습 데이터 구성**: ADE20K, Cityscapes, Mapillary Vistas, ScanNet, VIPER, WildDash 2, IDD, BDD, COCO 등 총 9개의 데이터셋을 통합하여 사용한다.
+- **데이터 균형화 (Dataset Balancing)**: 데이터셋마다 이미지 수가 매우 다르므로(예: COCO는 WildDash 2보다 30배 이상 큼), 각 데이터셋을 $\text{120,000 // len(dataset)}$ 번 반복하여 샘플링하는 단순 리사이징 전략을 통해 데이터 불균형 문제를 완화하였다.
+- **통합 라벨 공간 (Unified Label Space)**: 서로 다른 데이터셋의 라벨을 256개의 클래스로 구성된 통합 라벨 공간으로 투영(Project)하여 학습하였다.
+- **손실 함수**: 표준적인 교차 엔트로피 손실(Cross-Entropy Loss)을 사용하였으며, 별도의 손실 가중치 조정이나 하이퍼파라미터 튜닝은 진행하지 않았다.
+- **추론 및 후처리**: 예측된 세그멘테이션 맵은 통합 라벨 공간에서 각 데이터셋의 원래 라벨 공간으로 다시 투영하는 후처리 과정을 거친다.
 
 ### 구현 세부 사항
--   **최적화**: AdamW 옵티마이저를 사용하였으며, 학습률(Learning rate)은 $6 \times 10^{-5}$, Weight decay는 $0.01$로 설정하였다.
--   **스케줄러**: Poly 학습률 스케줄러를 적용하였으며, 1,500 iteration의 Warmup 기간을 두었다.
--   **학습 설정**: 총 80,000 iteration 동안 학습하였으며, 초기 절반의 학습 단계에서는 BDD와 IDD 데이터셋을 제외하였다.
--   **컴퓨팅 자원**: 64장의 NVIDIA V100 (32G) GPU를 사용하였으며, 총 학습 시간은 약 35시간이 소요되었다.
+
+- **최적화**: AdamW 옵티마이저를 사용하였으며, 학습률(Learning rate)은 $6 \times 10^{-5}$, Weight decay는 $0.01$로 설정하였다.
+- **스케줄러**: Poly 학습률 스케줄러를 적용하였으며, 1,500 iteration의 Warmup 기간을 두었다.
+- **학습 설정**: 총 80,000 iteration 동안 학습하였으며, 초기 절반의 학습 단계에서는 BDD와 IDD 데이터셋을 제외하였다.
+- **컴퓨팅 자원**: 64장의 NVIDIA V100 (32G) GPU를 사용하였으며, 총 학습 시간은 약 35시간이 소요되었다.
 
 ## 📊 Results
 
@@ -58,12 +61,15 @@ Junfei Xiao, Zhichao Xu, Shiyi Lan, Zhiding Yu, Alan Yuille, Anima Anandkumar (2
 ## 🧠 Insights & Discussion
 
 ### 강점 및 분석
+
 본 연구의 결과는 **강력한 ViT 백본(FAN)**과 **방대한 양의 다중 도메인 데이터 학습**이 결합되었을 때, 시맨틱 세그멘테이션 작업에서 매우 높은 일반화 능력과 강건성을 확보할 수 있음을 입증한다. 특히 복잡한 하이퍼파라미터 튜닝이나 정교한 손실 함수 설계 없이도 아키텍처의 선택과 데이터 구성만으로 성능을 극대화했다는 점이 인상적이다.
 
 ### 한계 및 논의사항
+
 논문에서는 ViT 모델의 실제 적용 시 다음과 같은 한계점을 명시하고 있다.
-1.  **자원 소모**: 데이터셋의 규모와 라벨 공간이 커짐에 따라 학습 시 요구되는 계산량과 메모리 소비가 급격히 증가하는 문제가 발생한다.
-2.  **추론 효율성**: 현재의 ViT 모델들은 연산 복잡도가 높아 실제 디바이스에 배포하여 실시간으로 적용하는 데 있어 효율성 문제가 여전히 해결해야 할 과제로 남아 있다.
+
+1. **자원 소모**: 데이터셋의 규모와 라벨 공간이 커짐에 따라 학습 시 요구되는 계산량과 메모리 소비가 급격히 증가하는 문제가 발생한다.
+2. **추론 효율성**: 현재의 ViT 모델들은 연산 복잡도가 높아 실제 디바이스에 배포하여 실시간으로 적용하는 데 있어 효율성 문제가 여전히 해결해야 할 과제로 남아 있다.
 
 ## 📌 TL;DR
 

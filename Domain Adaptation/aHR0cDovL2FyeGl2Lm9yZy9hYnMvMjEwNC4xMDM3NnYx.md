@@ -52,12 +52,14 @@ $$\ell_{total} = \ell_{orig}(x^s, x^t, y^s) + \lambda \ell_{cont}^{(DDG)}(x_{DDG
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** Office-Home, Office-31
 - **부패 종류:** ImageNet-C의 15가지 부패 유형 (Gaussian Noise, Blur, Fog 등) 및 5단계 심각도
 - **지표:** Corruption Error (CE) 및 평균 CE (mCE). mCE가 낮을수록 강건성이 높음을 의미한다.
 - **비교 대상:** CDAN+TN, DCAN (DA 베이스라인), AugMix (강건성 베이스라인)
 
 ### 주요 결과
+
 - **강건성 향상:** Office-Home 데이터셋에서 DDG를 적용했을 때, 기존 DA 모델 대비 mCE가 크게 낮아졌으며 AugMix보다 더 우수한 일반화 성능을 보였다. (예: CDAN+TN $\to$ DDG 적용 시 mCE 감소)
 - **원본 정확도 유지 및 향상:** DDG는 부패에 대한 강건성뿐만 아니라, 깨끗한(Clean) 타겟 데이터에 대한 분류 정확도 또한 유지하거나 오히려 향상시키는 결과를 보였다. 이는 Contrastive Learning을 통한 특징 증류 효과로 해석된다.
 - **부패별 분석:** Figure 4에 따르면 DDG는 Pixelate, Glass Blur 등 다양한 부패에서 성능 향상을 보였으나, Contrast 부패에서는 효과가 적었다. 이는 Contrast 부패가 가정한 $\delta$-이웃 범위를 벗어나는 큰 시프트를 일으키기 때문으로 분석된다.
@@ -65,11 +67,13 @@ $$\ell_{total} = \ell_{orig}(x^s, x^t, y^s) + \lambda \ell_{cont}^{(DDG)}(x_{DDG
 ## 🧠 Insights & Discussion
 
 ### 강점 및 통찰
+
 - **도메인 정보의 활용:** 단순한 데이터 증강(Augmentation) 대신 도메인 간의 불일치(Discrepancy)라는 DA의 고유 정보를 이용하여 부패를 모사했다는 점이 독창적이다.
 - **계산 효율성:** 이론적 분석(Proposition 1)을 통해 $\delta$-이웃의 경계점(edge points)만 정렬해도 강건성을 얻을 수 있음을 보였고, 이를 통해 PGD의 업데이트 단계 $n$을 2회로 매우 낮게 설정해도 충분한 성능이 나옴을 입증하였다.
 - **Order-invariant Representation:** 네트워크가 부패의 심각도 수준에 따라 특징 공간에서의 거리가 일관되게 증가하는 '순서 불변 표현'을 학습한다는 점을 발견하여, DDG의 이론적 근거(Assumption 2)를 뒷받침하였다.
 
 ### 한계 및 비판적 해석
+
 - **$\delta$-범위의 제약:** 본 논문의 방법론은 부패된 샘플이 원본의 $\delta$-근방에 존재한다는 가정(Assumption 1)에 의존한다. 실험 결과에서 나타났듯, 이 범위를 크게 벗어나는 부패(예: Contrast)에 대해서는 대응 능력이 떨어진다.
 - **Lower Bound와의 간극:** 테스트 부패를 미리 알고 훈련했을 때의 성능(Lower Bound)과 비교했을 때 여전히 큰 격차가 존재한다. 이는 "알 수 없는 부패"를 모사하는 것만으로는 완벽한 강건성을 달성하기 어렵다는 것을 시사한다.
 

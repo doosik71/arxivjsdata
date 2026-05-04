@@ -23,6 +23,7 @@ Clement Etienam, Kody Law, Sara Wade, Vitaly Zankin (2020)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 제안된 모델은 $L$개의 Sparse GP 전문가와 하나의 DNN Gating Network로 구성된다. 입력 $x_i$가 주어졌을 때 출력 $y_i$의 조건부 밀도는 다음과 같은 혼합 모델로 정의된다.
 
 $$y_i | x_i \sim \sum_{l=1}^L w_l(x_i; \psi) \mathcal{N}(y_i | f(x_i; \theta_l), \sigma_l^2)$$
@@ -30,13 +31,15 @@ $$y_i | x_i \sim \sum_{l=1}^L w_l(x_i; \psi) \mathcal{N}(y_i | f(x_i; \theta_l),
 여기서 $w_l(x_i; \psi)$는 $l$번째 전문가를 선택할 확률을 출력하는 Gating Network이며, $f(x_i; \theta_l)$은 해당 전문가의 회귀 함수이다.
 
 ### 2. DNN Gating Network
-Gating Network는 Feedforward DNN으로 구현되며, 마지막 층에 Softmax 함수를 사용하여 각 전문가의 가중치 합이 1이 되도록 한다. 
+
+Gating Network는 Feedforward DNN으로 구현되며, 마지막 층에 Softmax 함수를 사용하여 각 전문가의 가중치 합이 1이 되도록 한다.
 
 $$w_l(x; \psi) = \frac{\exp(h_l(x; \psi))}{\sum_{j=1}^L \exp(h_j(x; \psi))}$$
 
 DNN은 ReLU 활성화 함수를 사용하며, 이를 통해 입력 공간을 매우 유연하고 복잡한 형태로 분할할 수 있다.
 
 ### 3. Sparse GP Experts
+
 계산 비용을 줄이기 위해 각 전문가는 $M_l < N_l$개의 유도 지점(inducing points) $\tilde{x}_l$과 유도 타겟(pseudo-targets) $\tilde{f}_l$을 사용하는 Sparse GP를 채택한다. 구체적으로는 FITC (Fully Independent Training Conditional) 근사법을 사용하여 각 데이터 포인트의 예측값 $\hat{\mu}_{l,i}$와 분산 $\lambda_{l,i}$를 다음과 같이 계산한다.
 
 $$\hat{\mu}_{l,i} = \mu_l + (k_{l,M_l,i})^T (K_{l,M_l})^{-1} (\tilde{f}_l - \mu_l)$$
@@ -45,21 +48,24 @@ $$\lambda_{l,i} = K_{\phi_l}(x_i, x_i) - (k_{l,M_l,i})^T (K_{l,M_l})^{-1} k_{l,M
 이 구조를 통해 전문가 한 명당 계산 복잡도를 $O(N_l^3)$에서 $O(N_l M_l^2)$로 낮출 수 있다.
 
 ### 4. 학습 절차 및 알고리즘
+
 본 논문은 MAP 추정을 위해 Maximization-Maximization (MM) 알고리즘을 사용한다. 이는 다음 두 단계를 반복하는 좌표 상승법(coordinate ascent)의 일종이다.
 
-1.  **할당 단계(Clustering):** 현재 모델 파라미터가 주어졌을 때, 각 데이터 포인트 $i$를 가장 확률이 높은 전문가 $z_i$에 할당한다.
-2.  **최적화 단계(Parameter Update):** 할당된 데이터를 바탕으로 DNN Gating Network의 가중치 $\psi$와 각 GP 전문가의 하이퍼파라미터 $\theta_l, \sigma_l^2$ 및 유도 지점 $\tilde{x}_l$을 최적화한다.
+1. **할당 단계(Clustering):** 현재 모델 파라미터가 주어졌을 때, 각 데이터 포인트 $i$를 가장 확률이 높은 전문가 $z_i$에 할당한다.
+2. **최적화 단계(Parameter Update):** 할당된 데이터를 바탕으로 DNN Gating Network의 가중치 $\psi$와 각 GP 전문가의 하이퍼파라미터 $\theta_l, \sigma_l^2$ 및 유도 지점 $\tilde{x}_l$을 최적화한다.
 
 특히, 이 반복 과정을 빠르게 근사하기 위해 **CCR (Cluster-Classify-Regress)** 알고리즘을 제안한다. CCR은 (1) 데이터를 먼저 클러스터링하고, (2) 이를 바탕으로 분류기를 학습시킨 뒤, (3) 각 클러스터 내에서 회귀 모델을 학습시키는 원패스 방식이다. 논문은 CCR이 MM 알고리즘의 매우 훌륭한 초기값 역할을 하며, 많은 경우 추가 반복 없이도 충분한 성능을 낸다는 것을 보여준다.
 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋:** Motorcycle, NASA, Higdon, Bernholdt, kin40k, 그리고 대규모/고차원 데이터인 $\chi_{150k}$ (입력 차원 10, 데이터 수 15만 개)를 사용하였다.
 - **비교 대상:** MDN, gPoE, RBCM, FastGP, BART, ORTHNAT, PPGPR, DSPP, Deep GP 등 최신 GP 및 신경망 기반 모델들과 비교하였다.
 - **평가 지표:** 결정 계수 ($R^2$), 실행 시간(Wall-clock time), 경험적 커버리지(Empirical Coverage, $EC_{95}$), 95% 신뢰 구간의 평균 길이 ($\overline{CI}_{95}$)를 측정하였다.
 
 ### 2. 주요 결과
+
 - **정확도 및 속도:** 대부분의 데이터셋에서 제안 모델(CCR 및 MM 기반)이 가장 높은 $R^2$를 기록하였다. 특히 $\chi_{150k}$ 데이터셋에서 다른 경쟁 모델들보다 압도적으로 빠른 실행 속도와 높은 정확도를 동시에 달성하였다.
 - **불확실성 정량화:** 제안 모델은 $EC_{95} \ge 95\%$를 유지하면서도 신뢰 구간의 길이를 매우 짧게 유지하였다. 이는 MDN처럼 과신(overconfident)하거나 PoE 모델들처럼 지나치게 보수적인(conservative) 구간을 생성하지 않고, 정교하게 캘리브레이션된 불확실성을 제공함을 의미한다.
 - **CCR의 효율성:** CCR 알고리즘은 MM2r(2회 반복 MM)보다 2~3배 빠르면서도 유사하거나 더 나은 정확도를 보였다.

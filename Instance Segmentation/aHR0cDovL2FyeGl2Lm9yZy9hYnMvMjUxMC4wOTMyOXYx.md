@@ -12,8 +12,8 @@ Zenan Lin, Wei Li, Jintao Chen, Zihao Wu, Wenxiong Kang, Changxin Gao, Liansheng
 
 본 연구의 핵심 아이디어는 일관성 규제를 전역적인 맵 단위가 아닌 개별 인스턴스 단위로 수행하는 **Instance-Aware Robust Consistency Regularization (IRCR)** 개념을 도입하는 것이다. 이를 위해 다음의 두 가지 핵심 메커니즘을 설계하였다.
 
-1.  **Matching-Driven Instance-Aware Consistency (MIAC):** 교사 모델과 학생 모델이 예측한 인스턴스들 사이의 이분 매칭(Bipartite Matching)을 통해 서로 일치하는 인스턴스 쌍에 대해서만 일관성 손실을 적용한다. 이를 통해 매칭되지 않는 잘못된 예측(노이즈)이 학습에 반영되는 것을 방지한다.
-2.  **Prior-Driven Instance-Aware Consistency (PIAC):** 병리 이미지 속 핵이 가지는 형태학적 특성(Morphological Prior)을 사전 지식으로 활용한다. 커널 밀도 추정(Kernel Density Estimation, KDE)을 통해 예측된 인스턴스가 실제 핵일 확률을 계산하고, 확률이 낮은 저품질 pseudo-label은 제거하고 고품질 예측은 강화하여 학습의 견고함을 높인다.
+1. **Matching-Driven Instance-Aware Consistency (MIAC):** 교사 모델과 학생 모델이 예측한 인스턴스들 사이의 이분 매칭(Bipartite Matching)을 통해 서로 일치하는 인스턴스 쌍에 대해서만 일관성 손실을 적용한다. 이를 통해 매칭되지 않는 잘못된 예측(노이즈)이 학습에 반영되는 것을 방지한다.
+2. **Prior-Driven Instance-Aware Consistency (PIAC):** 병리 이미지 속 핵이 가지는 형태학적 특성(Morphological Prior)을 사전 지식으로 활용한다. 커널 밀도 추정(Kernel Density Estimation, KDE)을 통해 예측된 인스턴스가 실제 핵일 확률을 계산하고, 확률이 낮은 저품질 pseudo-label은 제거하고 고품질 예측은 강화하여 학습의 견고함을 높인다.
 
 ## 📎 Related Works
 
@@ -24,6 +24,7 @@ Zenan Lin, Wei Li, Jintao Chen, Zihao Wu, Wenxiong Kang, Changxin Gao, Liansheng
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 IRCR-Net은 기본적으로 **Mean-Teacher** 구조를 따르며, 베이스 네트워크로는 **modified Hover-Net**을 사용한다. 학생 모델 $\theta_s$는 역전파를 통해 학습되며, 교사 모델 $\theta_t$는 다음과 같은 지수 이동 평균(EMA) 방식으로 업데이트된다.
 
 $$\theta_t^{(k+1)} \leftarrow \alpha \theta_t^{(k)} + (1-\alpha)\theta_s^{(k+1)}$$
@@ -31,6 +32,7 @@ $$\theta_t^{(k+1)} \leftarrow \alpha \theta_t^{(k)} + (1-\alpha)\theta_s^{(k+1)}
 여기서 $\alpha = 0.95$이다. 학습 과정에서 라벨링된 데이터는 지도 학습 손실 $\mathcal{L}_{sup}$을 생성하고, 라벨링되지 않은 데이터는 강한 증강(Strong Augmentation)과 약한 증강(Weak Augmentation)을 거쳐 각각 학생과 교사 모델에 입력된 후 일관성 손실 $\mathcal{L}_{cons}$를 생성한다.
 
 ### Matching-Driven Instance-Aware Consistency (MIAC)
+
 MIAC는 두 모델이 예측한 인스턴스 세트 $T^{(k)}$(교사)와 $S^{(k)}$(학생)를 정렬한다. 각 인스턴스의 공간적 중심점(Centroid) 간의 유클리드 거리를 기반으로 거리 행렬 $W$를 구성하고, **Munkres 알고리즘**을 사용하여 최적의 일대일 매칭 함수 $\sigma$를 찾는다. 거리 $w_{ij}$는 다음과 같이 계산된다.
 
 $$w_{ij} = \| c(T_i^{(k)}) - c(S_j^{(k)}) \|$$
@@ -42,6 +44,7 @@ $$\mathcal{L}_{MIAC}^{(k+1)} = \frac{1}{N} \sum_{i=1}^{N} \left( \| F_s^{(k+1)} 
 여기서 $\beta=0.5$이며, $\tilde{S}$와 $\tilde{T}$는 Sobel 연산자와 팽창(Dilation)을 통해 추출된 경계 영역이다.
 
 ### Prior-Driven Instance-Aware Consistency (PIAC)
+
 PIAC는 공개 데이터셋에서 추출한 핵의 형태학적 특징(면적, Solidity, Circularity, 강도, Extent)의 통계적 분포를 사전 지식으로 활용한다. 비모수적 방법인 **커널 밀도 추정(KDE)**을 사용하여 특징 $x_1$에 대한 확률 밀도 함수 $p(x_1)$를 다음과 같이 정의한다.
 
 $$p(x_1) = \frac{1}{\sqrt{2\pi}Nh} \sum_{n=1}^{N} \exp \left[ -\frac{(x_1 - x_1^{(n)})^2}{2h^2} \right]$$
@@ -51,6 +54,7 @@ $$p(x_1) = \frac{1}{\sqrt{2\pi}Nh} \sum_{n=1}^{N} \exp \left[ -\frac{(x_1 - x_1^
 $$\mathcal{L}_{PIAC}^{(k+1)} = \frac{1}{N} \sum_{i=1}^{N} \| (F_s^{(k+1)} - F_t^{(k+1)}) \odot U_i^{(k)} \|^2$$
 
 ### 최종 손실 함수
+
 전체 손실 함수 $\mathcal{L}$은 지도 학습 손실과 일관성 손실의 합으로 구성된다.
 
 $$\mathcal{L} = \mathcal{L}_{sup} + \gamma_1 \mathcal{L}_{PIAC} + \gamma_2 \mathcal{L}_{MIAC}$$
@@ -60,11 +64,13 @@ $\mathcal{L}_{sup}$은 NP 브랜치(Dice loss, CE loss)와 HV 브랜치(MSE loss
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** MoNuSeg, MoNuSAC, PanNuke, CoNSeP 4종의 공개 데이터셋 사용.
 - **라벨 데이터 비율:** 1/32, 1/16, 1/8, 1/4 비율로 설정하여 준지도 학습 성능 측정.
 - **평가 지표:** AJI (Aggregated Jaccard Index), Dice coefficient, $F1_{obj}$ (Object-level F1-score).
 
 ### 주요 결과
+
 - **정량적 결과:** IRCR-Net은 모든 데이터셋과 라벨 비율 설정에서 기존의 ST, MT, PG-FANet보다 우수한 성능을 보였다. 특히 라벨이 극도로 부족한 1/32 설정에서 성능 향상 폭이 컸다.
 - **지도 학습 대비 성능:** 1/4 라벨 비율 설정에서는 MoNuSeg와 MoNuSAC 데이터셋에서 완전 지도 학습(Full Supervision) 모델의 성능을 일부 상회하는 결과를 보였다.
 - **정성적 결과:** 시각화 분석 결과, IRCR-Net은 겹쳐진 핵의 분리와 복잡한 경계 묘사에서 FullSup 모델에 근접한 정밀함을 보였으며, 특징 맵의 Attention이 핵 영역에 더 집중되는 양상을 보였다.
@@ -72,9 +78,11 @@ $\mathcal{L}_{sup}$은 NP 브랜치(Dice loss, CE loss)와 HV 브랜치(MSE loss
 ## 🧠 Insights & Discussion
 
 ### 강점 및 해석
+
 본 논문의 가장 큰 강점은 일관성 규제를 적용하기 전 **'인스턴스 매칭'**과 **'사전 지식 기반 필터링'** 단계를 두어 pseudo-label의 신뢰도를 획기적으로 높였다는 점이다. 기존 방식들이 전역 맵을 비교함으로써 발생시켰던 '잘못된 예측의 전이' 문제를 인스턴스 수준에서 원천적으로 차단함으로써, 매우 적은 라벨 데이터만으로도 견고한 학습이 가능함을 입증하였다. 특히 경계 강조 손실($B$ term)을 추가한 것이 겹쳐진 핵을 분리하는 데 결정적인 역할을 하였다.
 
 ### 한계 및 향후 과제
+
 그럼에도 불구하고, 매우 심하게 겹쳐 있거나 경계가 모호하여 형태학적 변동성이 극심한 영역에서는 여전히 오분류가 발생하는 failure case가 관찰되었다. 이는 단순한 형태학적 통계치만으로는 해결하기 어려운 도메인 특성일 수 있으며, 향후 멀티태스크 학습이나 멀티모달 학습 전략을 도입하여 일반화 성능을 높일 필요가 있다.
 
 ## 📌 TL;DR

@@ -12,8 +12,8 @@ Qing Liu, Vignesh Ramanathan, Dhruv Mahajan, Alan Yuille, Zhenheng Yang (2021)
 
 본 논문의 핵심 아이디어는 비디오 내의 광학 흐름(optical flow)과 시간적 연속성을 활용하여 가짜 레이블(pseudo-labels)의 품질을 높이고, 학습 과정에서 누락된 인스턴스를 복구하는 것이다. 이를 위해 다음과 같은 두 가지 주요 기여를 제시한다.
 
-1.  **flowIRN**: 기존의 Inter-pixel Relation Network (IRN)을 확장하여 광학 흐름 정보를 학습 과정에 통합하였다. 이를 통해 객체의 전체적인 영역을 더 잘 포착하고(Flow-Amplified CAMs), 동일 클래스 내에서도 서로 다른 인스턴스를 효과적으로 구분(Flow-boundary loss)할 수 있게 한다.
-2.  **MaskConsist**: 시간적 일관성을 강제하는 새로운 모듈로, 특정 프레임에서 누락된 객체 인스턴스를 인접 프레임의 안정적인 예측 결과로부터 전이(transfer)받아 보완함으로써 예측 누락 문제를 해결한다.
+1. **flowIRN**: 기존의 Inter-pixel Relation Network (IRN)을 확장하여 광학 흐름 정보를 학습 과정에 통합하였다. 이를 통해 객체의 전체적인 영역을 더 잘 포착하고(Flow-Amplified CAMs), 동일 클래스 내에서도 서로 다른 인스턴스를 효과적으로 구분(Flow-boundary loss)할 수 있게 한다.
+2. **MaskConsist**: 시간적 일관성을 강제하는 새로운 모듈로, 특정 프레임에서 누락된 객체 인스턴스를 인접 프레임의 안정적인 예측 결과로부터 전이(transfer)받아 보완함으로써 예측 누락 문제를 해결한다.
 
 ## 📎 Related Works
 
@@ -26,6 +26,7 @@ Qing Liu, Vignesh Ramanathan, Dhruv Mahajan, Alan Yuille, Zhenheng Yang (2021)
 본 프레임워크는 2단계 학습 절차를 따른다. 먼저 `flowIRN`을 통해 초기 가짜 레이블을 생성하고, 이후 이 레이블들을 사용하여 `MaskConsist` 모듈이 포함된 모델을 학습시킨다.
 
 ### 1. flowIRN Module
+
 `flowIRN`은 기존 IRN의 구조를 유지하면서 광학 흐름(optical flow) 정보를 두 가지 방식으로 통합한다.
 
 **Flow-Amplified CAMs**: CAMs가 객체의 일부만을 포착하는 문제를 해결하기 위해, 광학 흐름의 크기가 큰 영역(움직임이 활발한 전경 객체 영역)의 CAMs 값을 증폭시킨다.
@@ -37,27 +38,30 @@ $$L_F^B = \sum_{j \in N_i} ||F'(i) - F'(j)|| \alpha_{i,j} + \lambda |1 - \alpha_
 여기서 $F'(i)$는 픽셀 $i$에서의 광학 흐름 기울기이며, $\alpha_{i,j}$는 픽셀 간의 친밀도(affinity)이다. 이 손실 함수는 흐름 기울기가 유사한 픽셀들은 높은 친밀도를 갖게 하고, 다른 픽셀들은 낮은 친밀도를 갖도록 강제하여 인스턴스 경계를 더 정확히 예측하게 한다.
 
 ### 2. MaskConsist Module
+
 `MaskConsist`는 `flowIRN`이 생성한 가짜 레이블이 여전히 일부 인스턴스를 누락할 수 있다는 점을 보완한다. 인접 프레임 간에 안정적으로 예측된 마스크를 전이하여 누락된 부분을 채우는 것이 핵심이며, 총 3단계로 구성된다.
 
--   **Intra-frame matching**: 현재 Mask R-CNN의 예측 결과 중 신뢰도가 높거나 `flowIRN`의 가짜 레이블과 겹치는 마스크들의 합집합을 구해 확장된 예측 집합 $P_t^{exp}$를 생성한다.
--   **Inter-frame matching**: 두 인접 프레임 $t$와 $t+\delta$ 사이의 예측 집합들 간에 이분 그래프(bipartite graph)를 생성한다. 광학 흐름을 이용해 마스크를 워핑(warping)한 후 IoU를 계산하여 헝가리안 알고리즘(Hungarian algorithm)으로 일대일 매칭을 수행함으로써 시간적으로 안정적인 예측 쌍 $M_{t, t+\delta}$를 찾는다.
--   **Temporally consistent labels**: 매칭된 쌍 중에서 `flowIRN`의 가짜 레이블과 일정 수준 이상($IoU > 0.5$) 겹치는 고품질 예측만을 선택한다. 이를 광학 흐름으로 워핑하여 대상 프레임의 예측 결과와 병합(Merge)함으로써 새로운 가짜 레이블 $P_{maskCon}$을 생성한다.
+- **Intra-frame matching**: 현재 Mask R-CNN의 예측 결과 중 신뢰도가 높거나 `flowIRN`의 가짜 레이블과 겹치는 마스크들의 합집합을 구해 확장된 예측 집합 $P_t^{exp}$를 생성한다.
+- **Inter-frame matching**: 두 인접 프레임 $t$와 $t+\delta$ 사이의 예측 집합들 간에 이분 그래프(bipartite graph)를 생성한다. 광학 흐름을 이용해 마스크를 워핑(warping)한 후 IoU를 계산하여 헝가리안 알고리즘(Hungarian algorithm)으로 일대일 매칭을 수행함으로써 시간적으로 안정적인 예측 쌍 $M_{t, t+\delta}$를 찾는다.
+- **Temporally consistent labels**: 매칭된 쌍 중에서 `flowIRN`의 가짜 레이블과 일정 수준 이상($IoU > 0.5$) 겹치는 고품질 예측만을 선택한다. 이를 광학 흐름으로 워핑하여 대상 프레임의 예측 결과와 병합(Merge)함으로써 새로운 가짜 레이블 $P_{maskCon}$을 생성한다.
 
 최종적으로 $P_{maskCon} \cup P_{fIRN}$을 합친 후, IoM(Intersection over Minimum) 기반의 NMS를 적용하여 중복된 레이블을 제거하고 이를 통해 Mask R-CNN을 학습시킨다.
 
 ## 📊 Results
 
 ### 실험 설정
--   **데이터셋**: Youtube-VIS (YTVIS) 및 Cityscapes.
--   **측정 지표**: 프레임 수준에서는 $AP_{50}$, 비디오 수준(VIS)에서는 $mAP$, $AP_{50}$, $AP_{75}$, $AR$ 등을 사용하였다.
--   **비교 대상**: WISE, IRN, F2F+MCG 및 광학 흐름을 단순 적용한 IRN+F2F 등이 비교군으로 설정되었다.
+
+- **데이터셋**: Youtube-VIS (YTVIS) 및 Cityscapes.
+- **측정 지표**: 프레임 수준에서는 $AP_{50}$, 비디오 수준(VIS)에서는 $mAP$, $AP_{50}$, $AP_{75}$, $AR$ 등을 사용하였다.
+- **비교 대상**: WISE, IRN, F2F+MCG 및 광학 흐름을 단순 적용한 IRN+F2F 등이 비교군으로 설정되었다.
 
 ### 주요 결과
-1.  **프레임 수준 성능**: YTVIS에서 $AP_{50}$ 기준, 기존 IRN 대비 약 5%, IRN+F2F 대비 4% 이상의 성능 향상을 보였다. Cityscapes에서도 IRN 및 WISE 대비 3.7% 이상 높은 성능을 기록하였다.
-2.  **비디오 수준 성능 (VIS)**: YTVIS 검증 서버 평가 결과, $AP_{50}$ 지표에서 IRN이나 WISE 대비 8% 이상의 큰 폭의 향상을 보였다. 이는 시간적 일관성 모델링이 비디오 인스턴스 추적 성능에 결정적인 영향을 미침을 시사한다.
-3.  **Ablation Study**:
-    -   `flowIRN`의 구성 요소 중 f-CAMs와 f-Bound loss 모두 성능 향상에 기여하였으며, 둘을 모두 사용했을 때 최적의 가짜 레이블 품질을 보였다.
-    -   `MaskConsist`에서는 Inter-frame matching이 가장 큰 성능 향상을 이끌어냈으며, IoM-NMS가 거짓 긍정(false positive)을 줄여 성능을 추가로 개선하였다.
+
+1. **프레임 수준 성능**: YTVIS에서 $AP_{50}$ 기준, 기존 IRN 대비 약 5%, IRN+F2F 대비 4% 이상의 성능 향상을 보였다. Cityscapes에서도 IRN 및 WISE 대비 3.7% 이상 높은 성능을 기록하였다.
+2. **비디오 수준 성능 (VIS)**: YTVIS 검증 서버 평가 결과, $AP_{50}$ 지표에서 IRN이나 WISE 대비 8% 이상의 큰 폭의 향상을 보였다. 이는 시간적 일관성 모델링이 비디오 인스턴스 추적 성능에 결정적인 영향을 미침을 시사한다.
+3. **Ablation Study**:
+    - `flowIRN`의 구성 요소 중 f-CAMs와 f-Bound loss 모두 성능 향상에 기여하였으며, 둘을 모두 사용했을 때 최적의 가짜 레이블 품질을 보였다.
+    - `MaskConsist`에서는 Inter-frame matching이 가장 큰 성능 향상을 이끌어냈으며, IoM-NMS가 거짓 긍정(false positive)을 줄여 성능을 추가로 개선하였다.
 
 ## 🧠 Insights & Discussion
 

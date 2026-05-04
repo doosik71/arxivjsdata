@@ -4,7 +4,7 @@ Xiaodan Liang, Yunchao Wei, Xiaohui Shen, Zequn Jie, Jiashi Feng, Liang Lin, Shu
 
 ## 🧩 Problem to Solve
 
-본 논문이 해결하고자 하는 문제는 **Instance-level Object Segmentation**이다. 이는 단순한 Semantic Segmentation을 넘어, 이미지 내의 동일 카테고리에 속하는 개별 객체(Instance)들을 구분하여 픽셀 단위로 마스킹하는 작업이다. 
+본 논문이 해결하고자 하는 문제는 **Instance-level Object Segmentation**이다. 이는 단순한 Semantic Segmentation을 넘어, 이미지 내의 동일 카테고리에 속하는 개별 객체(Instance)들을 구분하여 픽셀 단위로 마스킹하는 작업이다.
 
 이 문제가 어려운 이유는 객체들이 다양한 크기(scale)와 포즈(pose)를 가지며, 심한 가려짐(heavy occlusion)이나 불분명한 경계선 문제를 가지고 있기 때문이다. 기존의 많은 접근 방식은 Object Proposal(객체 제안 영역) 생성 단계와 이후의 세그멘테이션 단계를 분리하여 처리하는 파이프라인을 사용한다. 이로 인해 제안 영역의 품질이 최종 세그멘테이션 성능을 제한하는 병목 현상이 발생한다.
 
@@ -27,31 +27,38 @@ Xiaodan Liang, Yunchao Wei, Xiaohui Shen, Zequn Jie, Jiashi Feng, Liang Lin, Shu
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 R2-IOS는 VGG-16 모델을 기반으로 하며, 크게 두 개의 서브 네트워크로 구성된다: **Instance-level Segmentation Sub-network**와 **Reversible Proposal Refinement Sub-network**. 두 네트워크는 재귀적으로 연결되어 $T$번의 반복 학습을 수행한다.
 
 ### 1. Instance-level Segmentation Sub-network
+
 이 네트워크는 제안 영역 내의 지배적인 객체에 대한 foreground mask를 생성한다.
+
 - **구조**: VGG-16에서 마지막 두 개의 Max pooling 레이어를 제거하여 국부적 디테일을 유지하고, Fully-connected 레이어를 Fully-convolutional 레이어로 대체하여 특징 맵을 생성한다.
 - **ROI Pooling**: 다양한 크기의 Proposal을 $40 \times 40$ 크기의 고정된 특징 맵으로 변환한다.
-- **Instance-aware Denoising Autoencoder**: 
-    - $1 \times 1$ Convolution을 통해 얻은 신뢰도 맵 $C$를 벡터 $\tilde{C}$(차원 $40 \times 40 \times 2$)로 변환한다.
-    - **Encoder**: $\tilde{C}$를 비선형 연산자 $\Phi(\cdot)$를 통해 저차원 은닉 표현 $h = \Phi(\tilde{C})$(512차원)로 매핑한다.
-    - **Decoder**: $h$를 다시 $\Phi'(\cdot)$를 통해 재구성된 벡터 $v = \Phi'(h)$(3200차원)로 매핑하고, 이를 다시 $40 \times 40$ 맵으로 변형한다.
-    - 이 과정은 제안 영역 내의 여러 객체 중 가장 지배적인 객체의 마스크만을 남기고 나머지를 노이즈로 간주하여 제거하는 역할을 한다.
+- **Instance-aware Denoising Autoencoder**:
+  - $1 \times 1$ Convolution을 통해 얻은 신뢰도 맵 $C$를 벡터 $\tilde{C}$(차원 $40 \times 40 \times 2$)로 변환한다.
+  - **Encoder**: $\tilde{C}$를 비선형 연산자 $\Phi(\cdot)$를 통해 저차원 은닉 표현 $h = \Phi(\tilde{C})$(512차원)로 매핑한다.
+  - **Decoder**: $h$를 다시 $\Phi'(\cdot)$를 통해 재구성된 벡터 $v = \Phi'(h)$(3200차원)로 매핑하고, 이를 다시 $40 \times 40$ 맵으로 변형한다.
+  - 이 과정은 제안 영역 내의 여러 객체 중 가장 지배적인 객체의 마스크만을 남기고 나머지를 노이즈로 간주하여 제거하는 역할을 한다.
 
 ### 2. Reversible Proposal Refinement Sub-network
+
 이 네트워크는 객체의 카테고리 신뢰도와 Bounding Box 오프셋을 예측하여 Proposal 위치를 수정한다.
+
 - **Segmentation-aware Features**: 단순히 이미지 특징만 사용하는 것이 아니라, 세그멘테이션 네트워크에서 생성된 마스크 $v$와 정교화 네트워크의 마지막 FC 레이어 특징을 결합(concatenate)하여 사용한다. 이를 통해 픽셀 단위의 경계 정보가 Proposal의 위치 보정에 기여하게 한다.
-- **Reversible Gate**: 
-    - 모든 반복($t=1, \dots, T$)을 수행한 후, 카테고리 신뢰도가 가장 높았던 시점 $t'$를 최적 반복 횟수로 결정한다.
-    - 테스트 시에는 $t'$-번째 결과물을 최종 출력으로 사용하며, 학습 시에는 $t'$ 이전까지의 손실(loss)만 사용하여 파라미터를 업데이트하고 그 이후의 손실은 버린다.
+- **Reversible Gate**:
+  - 모든 반복($t=1, \dots, T$)을 수행한 후, 카테고리 신뢰도가 가장 높았던 시점 $t'$를 최적 반복 횟수로 결정한다.
+  - 테스트 시에는 $t'$-번째 결과물을 최종 출력으로 사용하며, 학습 시에는 $t'$ 이전까지의 손실(loss)만 사용하여 파라미터를 업데이트하고 그 이후의 손실은 버린다.
 
 ### 3. Recursive Learning 및 손실 함수
+
 초기 Proposal $l_0$부터 시작하여 $t$-번째 반복에서 예측된 오프셋 $o_{t,k}$를 이용해 $l_t$를 갱신한다. 각 반복 단계에서의 총 손실 함수 $J_t$는 다음과 같다.
 
 $$J_t = J_{cls}(p_t, g) + \mathbb{1}[g \ge 1]J_{loc}(o_t, g, \tilde{o}_t) + \mathbb{1}[g \ge 1]J_{seg}(v_t, \tilde{v}_t)$$
 
 여기서:
+
 - $J_{cls}$: 클래스 분류를 위한 Log loss이다.
 - $J_{loc}$: Bounding Box 위치 보정을 위한 Smooth $L_1$ loss이다.
 - $J_{seg}$: 픽셀 단위 세그멘테이션을 위한 Cross-entropy loss이다.
@@ -61,15 +68,18 @@ $$J_t = J_{cls}(p_t, g) + \mathbb{1}[g \ge 1]J_{loc}(o_t, g, \tilde{o}_t) + \mat
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: PASCAL VOC 2012 validation set 및 SBD 데이터셋을 사용하였다.
 - **평가 지표**: $AP_r$ (Average Precision)을 사용하였으며, IoU 임계값을 0.5, 0.6, 0.7로 설정하여 측정하였다.
 - **비교 대상**: SDS, HC, PFN 및 Chen et al.의 방법론.
 
 ### 정량적 결과
+
 - **0.5 IoU 기준**: R2-IOS는 **66.7%**의 $AP_r$을 달성하여, PFN(58.7%)과 Chen et al.(46.3%) 및 SDS(43.8%)를 크게 상회하였다.
 - **높은 IoU 기준**: 0.6 및 0.7 IoU 환경에서도 R2-IOS는 타 모델 대비 월등한 성능을 보였다. 특히 0.7 IoU에서 HC 대비 약 7.1%의 성능 향상을 보였다.
 
 ### Ablation Study 결과
+
 - **Recursive Learning**: 반복 횟수가 1회에서 4회로 증가함에 따라 성능이 지속적으로 향상되었으며, 학습 단계에서 recursive training을 수행하는 것이 테스트 시에만 적용하는 것보다 3.3% 더 높은 성능을 보였다.
 - **Reversible Gate**: 적응적 반복 횟수 결정 기능을 추가했을 때, 고정 4회 반복 대비 1.5%의 성능 향상이 있었다.
 - **Instance-aware Autoencoder**: 이 모듈을 제거했을 때 성능이 12.5%나 하락하여, 전역 정보를 이용한 지배적 객체 추출이 매우 중요함을 입증하였다.
@@ -82,6 +92,7 @@ $$J_t = J_{cls}(p_t, g) + \mathbb{1}[g \ge 1]J_{loc}(o_t, g, \tilde{o}_t) + \mat
 또한, Instance-level segmentation의 고질적인 문제인 **'겹쳐진 객체들 사이의 구분'** 문제를 해결하기 위해 Denoising Autoencoder를 도입하여 전역 문맥(global context)을 파악하고 지배적 객체를 추출해낸 점은 기술적으로 매우 유용한 접근이다.
 
 **한계점 및 논의사항**:
+
 - 본 연구는 최대 반복 횟수를 $T=4$로 설정하였는데, 더 많은 반복이 성능 향상을 가져오는지에 대한 분석은 부족하다.
 - Proposal 생성 단계에서 Selective Search라는 전통적인 방식을 사용하였는데, 이를 최신 RPN이나 다른 딥러닝 기반 Proposal 생성기로 대체했을 때의 시너지 효과에 대한 논의가 필요하다.
 - 추론 속도가 이미지당 약 1초(Proposal 생성 시간 제외)로 측정되었으나, 실시간 서비스에 적용하기에는 여전히 무거운 구조일 수 있다.

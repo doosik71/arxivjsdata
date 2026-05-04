@@ -12,9 +12,9 @@ Xuefei Cao, Bor-Chun Chen, Ser-Nam Lim (2019)
 
 본 논문의 핵심 아이디어는 클러스터링을 통한 Metric Learning과 자기지도학습(Self-Supervised Learning, SSL)의 pretext task를 결합하여 학습의 안정성을 높이는 것이다. 구체적인 기여 사항은 다음과 같다.
 
-1.  **UDML-SS 프레임워크 제안**: k-means 클러스터링을 통해 얻은 의사 레이블을 사용하여 Metric Learning을 수행하고, 이를 이미지 회전 예측(Rotation Prediction)이라는 자기지도학습 과제와 결합한 다중 작업 학습(multi-task learning) 구조를 제안한다.
-2.  **학습 안정화**: 클러스터링 결과가 항상 정확하지 않다는 점(unreliable assignments)에 주목하여, 보조 손실 함수인 Rotation Loss를 도입함으로써 모델이 클러스터링 결과에만 과도하게 의존하지 않고 데이터 자체의 유의미한 특징(representation)을 학습하도록 유도한다.
-3.  **성능 입증**: CUB-200-2011, Cars-196, Stanford Online Products 등 주요 벤치마크 데이터셋에서 기존의 최신 비지도 학습 방법론들을 크게 상회하는 성능을 보였으며, 일부 데이터셋에서는 지도 학습 방법론에 근접하는 결과를 달성하였다.
+1. **UDML-SS 프레임워크 제안**: k-means 클러스터링을 통해 얻은 의사 레이블을 사용하여 Metric Learning을 수행하고, 이를 이미지 회전 예측(Rotation Prediction)이라는 자기지도학습 과제와 결합한 다중 작업 학습(multi-task learning) 구조를 제안한다.
+2. **학습 안정화**: 클러스터링 결과가 항상 정확하지 않다는 점(unreliable assignments)에 주목하여, 보조 손실 함수인 Rotation Loss를 도입함으로써 모델이 클러스터링 결과에만 과도하게 의존하지 않고 데이터 자체의 유의미한 특징(representation)을 학습하도록 유도한다.
+3. **성능 입증**: CUB-200-2011, Cars-196, Stanford Online Products 등 주요 벤치마크 데이터셋에서 기존의 최신 비지도 학습 방법론들을 크게 상회하는 성능을 보였으며, 일부 데이터셋에서는 지도 학습 방법론에 근접하는 결과를 달성하였다.
 
 ## 📎 Related Works
 
@@ -30,6 +30,7 @@ DeepCluster와 같은 연구는 k-means 클러스터링과 분류(classification
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 UDML-SS는 특징 추출기(Feature Extractor) 하나에 두 개의 헤드(Metric Learning Head, Rotation Prediction Head)가 붙은 구조를 가진다. 전체 프로세스는 **[임베딩 추출 $\rightarrow$ k-means 클러스터링 $\rightarrow$ 의사 레이블 생성 $\rightarrow$ 손실 함수 최적화 $\rightarrow$ 임베딩 업데이트]** 순으로 반복적으로 수행된다.
 
 ### 주요 구성 요소 및 학습 절차
@@ -40,6 +41,7 @@ $$S(x_i, x_j) = \langle g_{\theta_2}(f_{\theta_1}(x_i)), g_{\theta_2}(f_{\theta_
 
 **2. Multi-similarity Loss ($L_{MS}$)**
 본 논문은 최신 성능이 검증된 Multi-similarity loss를 채택하였다. 클러스터링으로 얻은 의사 레이블 $y$를 기준으로 하드 샘플을 마이닝한다.
+
 - **Negative Pair**: $S(x_i, x_j) > \min_{y_h=y_i} S(x_i, x_h) - \epsilon$ 인 경우
 - **Positive Pair**: $S(x_i, x_k) < \max_{y_h \neq y_i} S(x_i, x_h) + \epsilon$ 인 경우
 위 조건으로 선택된 쌍들을 이용하여 다음의 손실 함수를 최소화한다:
@@ -57,17 +59,21 @@ $$L_{UDML-SS} = L_{MS}(\theta_1, \theta_2, x, y) + \eta L_{rot}(\theta_1, \theta
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: CUB-200-2011, Cars-196, Stanford Online Products (Product)
 - **백본**: ImageNet으로 사전 학습된 Inception-V1 (일부 실험에서 Inception-V2, ResNet 사용)
 - **평가 지표**: Recall@K (이미지 검색 성능), NMI (클러스터링 성능)
 
 ### 정량적 결과
+
 UDML-SS는 모든 데이터셋에서 기존의 비지도 학습 방법론(Instance, DeepCluster, MOM 등)을 크게 앞질렀다.
+
 - **CUB-200-2011**: Recall@1 기준 Instance 방법론 대비 **+8.5%** 상승하여 54.7% 달성.
 - **Cars-196**: Recall@1 기준 **+3.8%** 상승하여 45.1% 달성.
 - **Product**: Recall@1 기준 **+14.6%** 상승하여 63.5% 달성 ($k=10,000$ 기준).
 
 ### 주요 분석 및 어블레이션 연구
+
 - **Rotation Loss의 효과**: Rotation Loss를 제거($\eta=0$)했을 때, 특히 Cars 데이터셋에서 Recall@1 성능이 약 7% 하락하였다. 이는 클러스터링이 불안정한 데이터셋일수록 SSL task가 특징 학습의 가이드라인 역할을 하여 안정성을 부여함을 시사한다.
 - **임베딩 차원**: 임베딩 차원이 64에서 512까지 증가함에 따라 성능이 지속적으로 향상되는 경향을 보였다.
 - **초기값 영향**: 사전 학습된 네트워크 없이 Random Initialization 상태에서 시작하더라도, UDML-SS는 다른 비지도 학습 방법론들보다 월등히 높은 성능을 보였다(Product 데이터셋 기준).

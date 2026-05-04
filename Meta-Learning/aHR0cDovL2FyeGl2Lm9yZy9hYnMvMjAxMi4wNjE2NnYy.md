@@ -12,7 +12,7 @@ Malik Boudiaf, Hoel Kervadec, Ziko Imtiaz Masud, Pablo Piantanida, Ismail Ben Ay
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 추론 단계에서 쿼리 이미지의 라벨링되지 않은 픽셀들의 통계적 정보를 활용하여 분류기를 최적화하는 **RePRI(Region Proportion Regularized Inference)** 방법론을 도입하는 것이다. 
+본 논문의 핵심 아이디어는 추론 단계에서 쿼리 이미지의 라벨링되지 않은 픽셀들의 통계적 정보를 활용하여 분류기를 최적화하는 **RePRI(Region Proportion Regularized Inference)** 방법론을 도입하는 것이다.
 
 핵심 직관은 단순히 Support Set의 라벨 정보에만 의존(Inductive Inference)하는 것이 아니라, 쿼리 이미지 내의 전경(Foreground)과 배경(Background)의 비율(Proportion) 정보를 정규화 도구로 사용하여 과적합을 방지하고 예측의 정밀도를 높이는 데 있다. 이를 통해 메타 학습 없이도 기존 최신 모델(SOTA)과 경쟁하거나 이를 뛰어넘는 성능을 달성할 수 있음을 보여준다.
 
@@ -25,9 +25,11 @@ Malik Boudiaf, Hoel Kervadec, Ziko Imtiaz Masud, Pablo Piantanida, Ismail Ben Ay
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 본 방법론은 크게 두 단계로 나뉜다. 첫째, Base 클래스들에 대해 표준적인 Cross-Entropy 손실 함수를 사용하여 특징 추출기 $f_\phi$를 학습시킨다. 이때 복잡한 에피소드 학습을 배제한다. 둘째, 추론 단계에서 각 Task에 대해 단순한 선형 분류기를 정의하고, 쿼리 이미지의 특성을 반영한 특수 손실 함수를 통해 분류기 파라미터 $\theta$를 최적화한다.
 
 ### Transductive Objective (손실 함수)
+
 추론 시 각 Task에 대해 다음과 같은 목적 함수를 최소화한다.
 
 $$ \min_{\theta} CE + \lambda_H H + \lambda_{KL} D_{KL} $$
@@ -43,6 +45,7 @@ $$ \min_{\theta} CE + \lambda_H H + \lambda_{KL} D_{KL} $$
    이 항은 전경의 비율을 강제함으로써 $CE$와 $H$만으로 발생할 수 있는 퇴행적 해(Degenerate solutions)를 방지한다.
 
 ### 분류기 설계 및 최적화
+
 분류기는 단순한 선형 분류기를 사용하며, 학습 가능한 파라미터 $\theta = \{w, b\}$ (프로토타입 벡터와 바이어스)로 구성된다. 픽셀 $j$의 예측 확률 $p(j)$는 다음과 같이 코사인 유사도를 기반으로 계산된다.
 
 $$ s^{(t)}_\square(j) = \text{sigmoid}\left( \tau \left[ \cos(z_\square(j), w^{(t)}) - b^{(t)} \right] \right) $$
@@ -51,17 +54,20 @@ $$ p^{(t)}_\square(j) = \begin{pmatrix} 1 - s^{(t)}_\square(j) \\ s^{(t)}_\squar
 여기서 $\tau$는 온도 하이퍼파라미터이다. $w^{(0)}$는 Support 전경 특징들의 평균으로 초기화하고, $b^{(0)}$는 쿼리 이미지의 초기 전경 예측 평균으로 설정한다. 이후 SGD를 통해 $w$와 $b$를 최적화한다.
 
 ### 비율 파라미터 $\pi$의 결정
+
 $\pi$에 대한 정보가 없을 경우, 모델의 예측 비율 $\hat{p}_Q$를 사용하여 $\pi$를 함께 학습한다. 구체적으로는 초기 단계에서는 $\hat{p}_Q^{(0)}$를 사용하다가, 특정 반복 횟수 $t_\pi$ 이후에 업데이트된 $\hat{p}_Q^{(t_\pi)}$로 $\pi$를 갱신하여 스스로 정규화하는 방식을 취한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** $\text{PASCAL-5}^i$ 및 $\text{COCO-20}^i$를 사용한다.
 - **백본:** ResNet-50 및 ResNet-101 기반의 PSPNet을 사용한다.
 - **지표:** mIoU(mean Intersection over Union)를 측정한다.
 - **비교 대상:** RPMM, PFENet 등 최신 Meta-learning 기반 FSS 모델들과 비교한다.
 
 ### 주요 결과
+
 1. **표준 벤치마크 성능:** 1-shot 설정에서는 기존 SOTA 모델들과 경쟁 가능한 수준의 성능을 보였으며, 5-shot 설정에서는 $\text{PASCAL-5}^i$ 기준 SOTA 대비 약 5~6%의 성능 향상을 보였다.
 2. **Shot 수 증가에 따른 강건성:** 메타 학습 기반 모델들은 학습 시의 shot 수와 테스트 시의 shot 수가 다를 때 성능이 정체되는 경향이 있으나, RePRI는 shot 수가 증가할수록(1 $\to$ 5 $\to$ 10 shot) 성능 향상 폭이 더 커지는 양상을 보였다.
 3. **Domain Shift 상황:** $\text{COCO-20}^i$로 학습하고 $\text{PASCAL-VOC}$로 테스트하는 교차 도메인 설정에서 RePRI가 기존 방법론들보다 훨씬 우수한 성능을 기록하여, 일반화 능력이 뛰어남을 입증하였다.
@@ -69,7 +75,7 @@ $\pi$에 대한 정보가 없을 경우, 모델의 예측 비율 $\hat{p}_Q$를 
 
 ## 🧠 Insights & Discussion
 
-본 논문은 FSS에서 Meta-learning이 반드시 필수적인 요소가 아니며, 오히려 추론 단계에서의 정교한 Transductive Inference가 더 중요할 수 있음을 시사한다. 
+본 논문은 FSS에서 Meta-learning이 반드시 필수적인 요소가 아니며, 오히려 추론 단계에서의 정교한 Transductive Inference가 더 중요할 수 있음을 시사한다.
 
 특히 주목할 점은 **전경/배경 비율 정보의 중요성**이다. $CE$ 손실만으로는 Support Set에 과적합되어 쿼리 이미지의 작은 영역만 선택하는 문제가 발생하는데, 이를 $\pi$를 통한 KL-divergence 정규화로 해결하였다. Oracle 실험 결과는 정확한 크기 예측 방법만 개발된다면 추가적인 아키텍처 변경 없이도 성능을 획기적으로 높일 수 있다는 가능성을 보여준다.
 

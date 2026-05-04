@@ -15,6 +15,7 @@ Offline Meta-RL에서 에이전트는 사전에 수집된 Behavior Policy ($\pi_
 본 논문의 가장 중심적인 아이디어는 **보상 라벨이 없는 온라인 데이터를 수집하고, 학습된 Reward Decoder를 통해 이를 스스로 라벨링하여 Meta-training을 지속하는 Semi-supervised 학습 체계**를 구축하는 것이다.
 
 핵심 기여 사항은 다음과 같다:
+
 1. Offline Meta-RL에서 발생하는 $z$-space의 분포 변화 문제를 정의하고, 실험적 증거를 통해 이것이 성능 저하의 주된 원인임을 밝혀냈다.
 2. Reward-labeled offline 데이터를 사용하여 보상 함수를 생성하는 모델을 학습시키고, 이를 통해 라벨이 없는 온라인 데이터에 가상 보상을 부여하는 **SMAC (Semi-Supervised Meta Actor-Critic)** 알고리즘을 제안하였다.
 3. 제안된 방법론이 단순한 Offline Meta-RL보다 월등하며, 보상 라벨이 완전히 제공되는 Online Oracle 성능에 근접함을 입증하였다.
@@ -33,7 +34,8 @@ Offline Meta-RL에서 에이전트는 사전에 수집된 Behavior Policy ($\pi_
 SMAC은 크게 두 단계, **Offline Meta-Training**과 **Self-Supervised Online Meta-Training**으로 구성된다.
 
 ### 1. Offline Meta-Training
-먼저, 제공된 오프라인 데이터셋 $\mathcal{D}$를 사용하여 기본적인 Meta-RL 구조를 학습한다. 
+
+먼저, 제공된 오프라인 데이터셋 $\mathcal{D}$를 사용하여 기본적인 Meta-RL 구조를 학습한다.
 
 - **Critic 학습:** 벨만 오차(Bellman error)를 최소화하도록 학습하며, 수식은 다음과 같다.
 $$L_{\text{critic}}(w) = \mathbb{E}_{(s,a,r,s') \sim \mathcal{D}_i, z \sim q_{\phi_e}(z|h), a' \sim \pi_\theta(a'|s',z)} \left[ (Q_w(s,a,z) - (r + \gamma \bar{Q}_w(s',a',z)))^2 \right]$$
@@ -44,6 +46,7 @@ $$L_{\text{reward}}(\phi_d, \phi_e, h, z) = \sum_{(s,a,r) \in h} \| r - r_{\phi_
 여기서 $D_{KL}$ 항은 잠재 공간 $z$에 정보 병목(information bottleneck)을 제공하여 $z$가 의미 있는 변수가 되도록 정규화한다.
 
 ### 2. Self-Supervised Online Meta-Training
+
 오프라인 학습 후, 에이전트는 환경과 직접 상호작용하며 데이터를 수집한다. 이때 실제 보상 라벨은 제공되지 않는다.
 
 - **데이터 수집:** 현재 정책 $\pi_\theta$를 사용하여 궤적 $\tau$를 수집한다.
@@ -54,11 +57,13 @@ $$r_{\text{generated}} = r_{\phi_d}(s, a, z), \quad \text{where } z \sim q_{\phi
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋 및 환경:** MuJoCo 기반의 6가지 작업(Cheetah Velocity, Ant Direction, Humanoid, Walker Param, Hopper Param)과 더 복잡한 Sawyer Manipulation 작업에서 평가하였다.
 - **데이터 수집:** 일부러 매우 서브옵티멀(suboptimal)한 데이터를 사용하여, 제안 방법이 부족한 데이터로부터 얼마나 개선될 수 있는지 테스트하였다.
 - **비교 대상:** MACAW, BOReL(기존 Offline Meta-RL), Meta Behavior Cloning, 그리고 Online Oracle(정답 보상을 모두 받는 온라인 학습)을 비교 대상으로 설정하였다.
 
 ### 주요 결과
+
 - **성능 향상:** 모든 환경에서 SMAC은 Offline 학습 직후보다 Self-supervised 단계 이후에 성능이 지속적으로 향상되는 모습을 보였다.
 - **분포 변화 완화:** Ant Direction 작업에서 시각화 결과, Offline 학습 직후에는 $h_{\text{online}}$에 기반한 적응 성능이 매우 낮았으나, Self-supervised 학습 후에는 데이터 소스에 관계없이 일관되게 높은 성능을 보였다.
 - **비교 우위:** MACAW와 BOReL 같은 기존 방식들은 온라인 데이터 활용 기제가 없으므로 오프라인 성능에 머무는 반면, SMAC은 이들을 크게 상회하며 Online Oracle의 성능에 근접하였다.
@@ -69,11 +74,13 @@ $$r_{\text{generated}} = r_{\phi_d}(s, a, z), \quad \text{where } z \sim q_{\phi
 본 논문은 Offline Meta-RL의 성능 저하가 단순한 데이터 부족이 아니라, **적응 단계에서 사용하는 데이터의 분포가 학습 단계와 다르기 때문에 발생하는 $z$-space의 불일치**에 있음을 날카롭게 지적하였다.
 
 **강점:**
+
 - 보상 라벨링 비용이 높다는 현실적인 제약을 고려하여, '한 번의 라벨링 $\rightarrow$ 무한한 무라벨 데이터 활용'이라는 효율적인 프레임워크를 제시하였다.
 - Reward Decoder를 통한 보상 예측 일반화가 정책 일반화보다 쉽다는 가설을 세우고 이를 실험적으로 증명하였다.
 - $z$-space뿐만 아니라 state-space의 분포 변화 역시 이 방법론으로 완화될 수 있음을 추가 실험(Test task 상호작용)을 통해 보여주었다.
 
 **한계 및 논의:**
+
 - 에이전트가 환경과 자율적으로 상호작용할 수 있다는 가정이 필요하다. 실제 물리 로봇의 경우 안전 문제로 인해 무분별한 온라인 데이터 수집이 어려울 수 있다.
 - Reward Decoder의 정확도가 성능에 미치는 영향에 대해 분석하였으나, 예상보다 낮은 정확도에서도 동작한다는 점은 흥미롭지만 더 깊은 이론적 분석이 필요해 보인다.
 

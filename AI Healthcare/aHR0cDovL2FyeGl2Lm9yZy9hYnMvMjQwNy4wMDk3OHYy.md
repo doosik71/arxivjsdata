@@ -14,10 +14,10 @@ Cheng Su, Jinbo Wen, Jiawen Kang*, Yonghua Wang, Yuanjia Su, Hudan Pan, Zishao Z
 
 본 연구의 핵심 아이디어는 보안, 품질, 그리고 동기부여라는 세 가지 관점을 통합하여 MLLM의 성능을 최적화하는 것이다.
 
-1.  **Cross-chain 기반 보안 프레임워크**: 메인 체인과 서브 체인, 릴레이 체인으로 구성된 계층적 구조를 통해 중앙 기관 없이도 의료 데이터를 안전하게 전송하고 관리할 수 있는 체계를 제안한다.
-2.  **Hybrid Multi-modal RAG**: 단일 모달 검색 결과들을 통합하고, Multi-modal Information Similarity (MIS) 지표를 통해 검색 결과를 재정렬(Re-ranking)함으로써 MLLM에 입력되는 컨텍스트의 질을 높인다.
-3.  **AoI 기반의 계약 이론(Contract Theory) 모델**: 데이터의 최신성을 측정하는 Age of Information (AoI)을 도입하여 데이터 품질을 정의하고, 정보 비대칭 상황에서도 데이터 보유자가 최신 데이터를 공유하도록 유도하는 인센티브 계약 모델을 설계한다.
-4.  **GDM 기반의 DRL 알고리즘**: 계약 설계의 고차원적인 복잡성을 해결하기 위해 생성 확산 모델(Generative Diffusion Model, GDM) 기반의 심층 강화학습(DRL)을 적용하여 최적의 계약 조건을 도출한다.
+1. **Cross-chain 기반 보안 프레임워크**: 메인 체인과 서브 체인, 릴레이 체인으로 구성된 계층적 구조를 통해 중앙 기관 없이도 의료 데이터를 안전하게 전송하고 관리할 수 있는 체계를 제안한다.
+2. **Hybrid Multi-modal RAG**: 단일 모달 검색 결과들을 통합하고, Multi-modal Information Similarity (MIS) 지표를 통해 검색 결과를 재정렬(Re-ranking)함으로써 MLLM에 입력되는 컨텍스트의 질을 높인다.
+3. **AoI 기반의 계약 이론(Contract Theory) 모델**: 데이터의 최신성을 측정하는 Age of Information (AoI)을 도입하여 데이터 품질을 정의하고, 정보 비대칭 상황에서도 데이터 보유자가 최신 데이터를 공유하도록 유도하는 인센티브 계약 모델을 설계한다.
+4. **GDM 기반의 DRL 알고리즘**: 계약 설계의 고차원적인 복잡성을 해결하기 위해 생성 확산 모델(Generative Diffusion Model, GDM) 기반의 심층 강화학습(DRL)을 적용하여 최적의 계약 조건을 도출한다.
 
 ## 📎 Related Works
 
@@ -32,23 +32,29 @@ Cheng Su, Jinbo Wen, Jiawen Kang*, Yonghua Wang, Yuanjia Su, Hudan Pan, Zishao Z
 ## 🛠️ Methodology
 
 ### 1. Cross-Chain Interaction
+
 보안 전송을 위해 메인 체인(Main Chain), 릴레이 체인(Relay Chain), 서브 체인(Subchain) 구조를 사용한다.
+
 - **서브 체인**: 지역 병원에서 IoMT 기기를 통해 실시간 데이터를 수집하고 관리한다.
 - **릴레이 체인**: 서브 체인과 메인 체인 사이의 요청을 검증하고 중계한다.
 - **메인 체인**: 전체적인 데이터 수집 태스크 관리 및 MLLM 학습을 수행하며, 기여도에 따른 보상을 분배한다.
 
 ### 2. Hybrid RAG Pipeline
+
 MLLM의 추론 능력을 높이기 위해 다음과 같은 5단계 절차를 거친다.
-1.  **데이터 저장**: 멀티모달 데이터를 임베딩 모델을 통해 벡터화하여 로컬 DB에 저장한다.
-2.  **데이터 검색**: 쿼리를 벡터화하여 코사인 유사도 기반으로 Top-K 결과를 추출한다.
-3.  **재정렬(Re-rank)**: Multi-modal Information Similarity (MIS) 지표를 사용하여 결과를 필터링한다. MIS는 다음과 같이 정의된다.
+
+1. **데이터 저장**: 멀티모달 데이터를 임베딩 모델을 통해 벡터화하여 로컬 DB에 저장한다.
+2. **데이터 검색**: 쿼리를 벡터화하여 코사인 유사도 기반으로 Top-K 결과를 추출한다.
+3. **재정렬(Re-rank)**: Multi-modal Information Similarity (MIS) 지표를 사용하여 결과를 필터링한다. MIS는 다음과 같이 정의된다.
     $$MIS = \sum_{i=0}^{n} w_i f_i(x_1, x_2)$$
     여기서 $f_i(\cdot)$는 각 모달리티별 유사도 측정 함수이며, $w_i$는 가중치이다.
-4.  **입력 최적화**: 제로샷 프롬프팅(Zero-shot prompting)과 'probability'와 같은 제어 키워드를 사용하여 프롬프트를 구성한다.
-5.  **콘텐츠 생성**: 선형 투영 어댑터(Linear Projection Adapter)를 통해 통일된 임베딩으로 변환 후 MLLM이 최종 답변을 생성한다.
+4. **입력 최적화**: 제로샷 프롬프팅(Zero-shot prompting)과 'probability'와 같은 제어 키워드를 사용하여 프롬프트를 구성한다.
+5. **콘텐츠 생성**: 선형 투영 어댑터(Linear Projection Adapter)를 통해 통일된 임베딩으로 변환 후 MLLM이 최종 답변을 생성한다.
 
 ### 3. Incentive Mechanism based on Contract Theory
+
 데이터의 최신성을 보장하기 위해 AoI를 도입한다.
+
 - **데이터 품질 지표**: $\text{AoI}$가 낮을수록 데이터가 신선함을 의미하며, 품질 지표 $G(A_m)$은 다음과 같이 정의된다.
     $$G(A_m) = \frac{A_{\max}}{A_m}$$
 - **유틸리티 함수**: 데이터 보유자의 효용 $U_k$는 보상 $R_k$에서 업데이트 비용 $f_k \delta_k$를 뺀 값이다. 서비스 제공자의 기대 효용 $U_s$는 다음과 같다.
@@ -57,7 +63,9 @@ MLLM의 추론 능력을 높이기 위해 다음과 같은 5단계 절차를 거
 - **계약 제약 조건**: 개별 합리성(Individual Rationality, IR) 조건 $\left(R_k - f_k \delta_k \geq 0\right)$과 인센티브 호환성(Incentive Compatibility, IC) 조건을 모두 만족해야 한다.
 
 ### 4. GDM-based Optimal Contract Design
+
 계약 최적화 문제를 마르코프 결정 과정(MDP)으로 정의하고 GDM을 통해 해결한다.
+
 - **상태 공간($s$)**: $\left\{M, K, A_{\max}, Q, \mathcal{K}\right\}$로 구성된다.
 - **동작 공간($a_t$)**: 각 타입별 업데이트 빈도와 보상으로 구성된 계약 세트 $\Psi_t = \{(f_k^t, R_k^t), k \in K\}$이다.
 - **GDM 프로세스**: 가우시안 노이즈가 섞인 초기 샘플에서 시작하여, 역확산 과정(Reverse Diffusion Process)을 통해 노이즈를 제거하며 최적의 계약 조건을 생성한다. 이때 Double Q-learning 기반의 비평가(Critic) 네트워크가 보상을 평가하여 정책을 업데이트한다.
@@ -65,15 +73,19 @@ MLLM의 추론 능력을 높이기 위해 다음과 같은 5단계 절차를 거
 ## 📊 Results
 
 ### 1. Hybrid RAG 성능 평가 (Case Study)
+
 LLaVA-Med 모델을 기반으로 prototype을 구현하여 실험하였다. 평가 지표로는 RAI(Responsible AI), SS(Semantic Similarity), 그리고 이를 통합한 Relative LLM Score ($\zeta$)를 사용하였다.
+
 - **정량적 결과**: Hybrid RAG를 적용한 LLaVA-Med는 $\zeta$ 점수에서 0.96을 기록하며, GPT-4o(0.49)나 기본 LLaVA-Med(0.51)보다 월등히 높은 성능을 보였다.
 - **정성적 결과**: 특히 의사가 오판하기 쉬운 까다로운 X-ray 케이스에서도 Hybrid RAG는 유사한 질병 사례를 검색하여 정확한 진단을 내리는 강건함을 보였다.
 
 ### 2. GDM 기반 계약 설계 성능
+
 - **보상 비교**: 정보 비대칭 상황에서 GDM 기반 스킴은 Greedy나 Random 정책보다 훨씬 높은 보상을 획득하였다.
 - **GDM vs DRL-PPO**: GDM은 PPO 대비 최종 테스트 보상이 유의미하게 높았으며, 수치적으로 MLLM 서비스 제공자의 유틸리티를 280.85까지 끌어올려 PPO의 233.2보다 우수한 성능을 보였다. 이는 GDM의 미세한 정책 조정 능력이 지역 최적점(Local Optima) 탈출에 효과적임을 시사한다.
 
 ### 3. 블록체인 보안성 분석
+
 PBFT(Practical Byzantine Fault Tolerance) 합의 알고리즘을 적용하여 보안 확률 $P_{\text{safety}}$를 분석하였다. 릴레이 체인의 크기가 커질수록 악의적인 노드가 존재하더라도 보안 확률이 상승하는 경향을 확인하였다.
 
 ## 🧠 Insights & Discussion

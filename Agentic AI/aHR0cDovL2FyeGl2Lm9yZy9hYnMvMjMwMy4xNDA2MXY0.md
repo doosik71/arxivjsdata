@@ -4,7 +4,7 @@ Leo Ardon, Daniel Furelos-Blanco, Alessandra Russo (2023)
 
 ## 🧩 Problem to Solve
 
-본 논문은 협력적 다중 에이전트 강화학습(Cooperative Multi-Agent Reinforcement Learning, CMARL) 환경에서 에이전트들이 복잡한 공동 목표를 달성하기 위해 필요한 태스크 구조를 어떻게 효율적으로 학습할 것인가에 대한 문제를 다룬다. 
+본 논문은 협력적 다중 에이전트 강화학습(Cooperative Multi-Agent Reinforcement Learning, CMARL) 환경에서 에이전트들이 복잡한 공동 목표를 달성하기 위해 필요한 태스크 구조를 어떻게 효율적으로 학습할 것인가에 대한 문제를 다룬다.
 
 일반적인 MARL 환경은 부분 관측성(partial observability), 비정상성(non-stationarity), 그리고 확장성(scalability) 문제로 인해 학습이 매우 어렵다. 특히 보상 함수가 상태의 단순한 현재 값이 아니라 일련의 사건 순서에 의존하는 비마르코프적(non-Markovian) 성격을 띨 때, 에이전트는 단순한 RL 알고리즘만으로는 최적의 정책을 찾기 어렵다. 이를 해결하기 위해 보상 구조를 유한 상태 기계로 표현한 Reward Machine(RM)을 도입하는 방법이 제안되었으나, 기존 방식은 사람이 직접 RM을 설계(handcrafting)해야 한다는 한계가 있다. 사람이 설계한 RM은 설계자의 편향이 개입될 수 있으며, 태스크가 복잡해질수록 수동 설계가 불가능에 가깝다는 문제가 존재한다.
 
@@ -12,7 +12,7 @@ Leo Ardon, Daniel Furelos-Blanco, Alessandra Russo (2023)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 **'협력적 태스크 분해(Cooperative Task Decomposition)'와 '개별 Reward Machine의 자율 학습'을 결합**하는 것이다. 
+본 논문의 핵심 아이디어는 **'협력적 태스크 분해(Cooperative Task Decomposition)'와 '개별 Reward Machine의 자율 학습'을 결합**하는 것이다.
 
 전역적인 하나의 거대한 RM을 학습하는 것은 상태 공간의 폭발로 인해 NP-complete 문제에 가깝고 매우 어렵다. 대신, 저자들은 전체 태스크를 여러 개의 서브 태스크로 분해하고, 각 에이전트가 자신에게 할당된 서브 태스크에 대한 개별 RM을 분산 방식으로 학습하도록 설계하였다. 이렇게 학습된 개별 RM들은 병렬적으로 실행되며, 에이전트 간의 동기화를 통해 전체 글로벌 태스크를 완수하게 된다. 결과적으로 복잡한 다중 에이전트 문제를 더 작은 단위의 문제로 단순화하여 학습 효율성을 높이고, 학습된 RM을 통해 에이전트의 행동 결정 과정을 심볼릭하게 해석할 수 있는 가독성(interpretability)을 제공한다.
 
@@ -25,14 +25,17 @@ Leo Ardon, Daniel Furelos-Blanco, Alessandra Russo (2023)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 시스템 구조
+
 제안된 방법론은 각 에이전트가 자신의 서브 태스크에 대한 정책(Policy) 학습과 RM 구조 학습을 동시에 수행하는 **인터리빙(Interleaving) 구조**를 가진다. 각 에이전트는 독립적인 상태 공간 $S_i$, 행동 공간 $A_i$, 그리고 자신의 태스크와 관련된 명제 집합 $P_i$를 가진다.
 
 ### Reward Machine (RM) 정의
+
 RM은 보상 함수를 표현하는 유한 상태 기계로, 다음과 같은 튜플로 정의된다:
 $$M = \langle U, P, u_0, u_f, \delta_u, \delta_r \rangle$$
 여기서 $U$는 RM의 상태 집합, $P$는 명제 집합, $u_0$는 초기 상태, $u_f$는 최종 상태, $\delta_u: U \times 2^P \to U$는 상태 전이 함수, $\delta_r: U \times U \to \mathbb{R}$는 보상 전이 함수이다.
 
 ### 학습 절차 및 알고리즘
+
 본 논문은 정책 학습을 위한 QRM 알고리즘과 RM 구조 학습을 위한 ILASP(Inductive Logic Programming 시스템)를 결합하여 사용한다.
 
 1. **Q-learning for RMs (QRM):** 각 RM 상태 $u \in U$에 대해 별도의 Q-함수 $q_u$를 학습한다. 업데이트 식은 다음과 같다:
@@ -52,11 +55,13 @@ $$M = \langle U, P, u_0, u_f, \delta_u, \delta_r \rangle$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋/환경:** $7 \times 7$ 크기의 그리드 월드 환경인 `ThreeButtons` 태스크와 `Rendezvous` 태스크를 사용하였다.
 - **측정 지표:** (1) 팀 전체의 누적 보상(Collective Reward), (2) 목표 달성까지 걸린 평균 단계 수(Number of Steps).
 - **비교 대상:** (1) 수동으로 설계된 RM을 제공한 경우 (Upper Bound), (2) RM 없이 독립적으로 학습한 경우 (Lower Bound).
 
 ### 주요 결과
+
 1. **ThreeButtons Task:**
    - RM을 자율적으로 학습한 경우, RM이 없는 경우보다 학습 속도가 훨씬 빨랐으며, 수동으로 설계된 RM을 제공했을 때와 유사한 성능에 수렴하였다.
    - 학습된 RM을 분석한 결과, 실제 정답 RM과 매우 유사하게 학습되었음을 확인하였다. 다만, 목표 달성에 직접적인 영향을 주지 않는 일부 전이(transition)는 최소 RM 원칙에 따라 생략되는 경향을 보였다.
@@ -71,14 +76,17 @@ $$M = \langle U, P, u_0, u_f, \delta_u, \delta_r \rangle$$
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 연구는 MARL의 고질적인 문제인 비정상성과 비마르코프 보상 문제를 '분산된 RM 학습'이라는 정교한 방법으로 해결하였다. 특히, 심볼릭 학습(ILASP)과 수치적 학습(Q-learning)을 결합하여 성능과 해석력을 동시에 잡았다는 점이 돋보인다. 사람이 설계한 RM에 의존하지 않고 데이터로부터 구조를 유도함으로써, 인간의 편향을 제거하고 확장성을 확보하였다.
 
 ### 한계 및 가정
+
 - **명제 집합의 사전 정의:** 각 에이전트가 어떤 명제(label)를 관찰해야 하는지(labeling function)가 이미 정의되어 있어야 한다. 즉, 관찰 가능한 이벤트의 종류는 사람이 지정해줘야 한다.
 - **태스크 분해의 수동성:** 글로벌 태스크를 에이전트별 서브 태스크로 나누는 과정이 아직은 정적으로 이루어진다. 이를 동적으로 분배하는 메커니즘이 부재하다.
 - **노이즈 취약성:** 레이블링 함수에 노이즈가 섞일 경우, 에이전트 간의 동기화가 깨져 전체 태스크 수행에 실패할 가능성이 크다.
 
 ### 비판적 해석
+
 본 논문은 RM의 자율 학습 가능성을 입증했지만, 실제 현실의 복잡한 환경에서는 '어떤 명제가 중요한가'를 정의하는 레이블링 함수 자체를 학습하는 것이 더 큰 난제가 될 것이다. 또한, RM이 바뀔 때마다 Q-함수를 초기화하는 방식은 학습 효율을 떨어뜨릴 수 있으므로, 이전 RM에서 학습된 지식을 전이(transfer)하는 방법론에 대한 고민이 추가적으로 필요해 보인다.
 
 ## 📌 TL;DR

@@ -10,7 +10,7 @@ Robert R. Hoffman, Shane T. Mueller, Gary Klein, Jordan Litman (2018)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 기여는 XAI의 평가를 단순한 알고리즘의 해석 가능성 지표가 아닌, 인간의 인지 과정과 심리학적 관점에서 접근하여 포괄적인 측정 프레임워크를 제시했다는 점이다. 저자들은 설명의 질(Goodness)과 만족도(Satisfaction), 사용자의 멘탈 모델(Mental Model), 호기심(Curiosity), 신뢰 및 의존성(Trust and Reliance), 그리고 최종적인 작업 성능(Performance)이라는 6가지 핵심 측정 영역을 정의하였다. 
+본 논문의 핵심 기여는 XAI의 평가를 단순한 알고리즘의 해석 가능성 지표가 아닌, 인간의 인지 과정과 심리학적 관점에서 접근하여 포괄적인 측정 프레임워크를 제시했다는 점이다. 저자들은 설명의 질(Goodness)과 만족도(Satisfaction), 사용자의 멘탈 모델(Mental Model), 호기심(Curiosity), 신뢰 및 의존성(Trust and Reliance), 그리고 최종적인 작업 성능(Performance)이라는 6가지 핵심 측정 영역을 정의하였다.
 
 특히, 단순한 설문 조사를 넘어 Content Validity Ratio(CVR)와 Discriminant Validity 분석을 통해 검증된 설명 만족도 척도를 제안하고, 멘탈 모델의 정량적 분석을 위한 Propositional Analysis 방법론을 제시함으로써 XAI 평가의 학술적/실무적 가이드라인을 제공하였다.
 
@@ -25,23 +25,30 @@ Robert R. Hoffman, Shane T. Mueller, Gary Klein, Jordan Litman (2018)
 본 논문은 XAI 평가를 위한 다각적인 측정 파이프라인을 제안하며, 각 구성 요소의 역할은 다음과 같다.
 
 ### 1. 설명의 질(Goodness)과 만족도(Satisfaction)
+
 저자들은 '설명'을 단순한 문장이 아닌 상호작용의 결과로 정의하며, 이를 두 가지 관점에서 구분한다.
+
 - **Explanation Goodness**: 설명 자체의 명확성과 정밀성을 평가하는 것으로, 독립적인 전문가가 사전에(a priori) 판단하는 체크리스트 방식이다.
-- **Explanation Satisfaction**: 사용자가 실제로 설명을 듣고 느낀 만족도로, 사후에(a posteriori) 측정하는 심리적 척도이다. 
+- **Explanation Satisfaction**: 사용자가 실제로 설명을 듣고 느낀 만족도로, 사후에(a posteriori) 측정하는 심리적 척도이다.
 
 만족도 척도 검증을 위해 $35$명의 전문가를 대상으로 CVR 방법을 사용하였으며, 내부 일관성을 측정하기 위해 Cronbach's alpha 계수를 산출하였다.
 
 ### 2. 멘탈 모델(Mental Model) 측정
+
 사용자가 AI 시스템을 어떻게 이해하고 있는지 나타내는 멘탈 모델을 추출하기 위해 다음과 같은 방법론을 제시한다.
+
 - **추출 방법**: Think-Aloud(사고 구술법), Prediction Task(예측 과제), Diagramming Task(다이어그램 작성) 등을 통해 사용자의 이해도를 끌어낸다.
 - **분석 방법(Propositional Analysis)**: 추출된 사용자의 설명을 '개념(Concept) - 관계(Relation) - 명제(Proposition)' 단위로 분해하여 전문가의 모델과 비교 분석한다. 예를 들어, 사용자 모델에 포함된 명제가 전문가 모델의 명제와 얼마나 일치하는지를 통해 모델의 완전성(Completeness)을 측정한다.
 
 ### 3. 호기심(Curiosity) 및 신뢰(Trust) 측정
+
 - **Curiosity**: 사용자가 왜 설명을 요청했는지 분석하는 'Curiosity Checklist'를 통해 지식 격차(Knowledge Gap)를 식별한다.
 - **Trust**: 신뢰를 정적인 상태가 아닌 동적인 프로세스로 보며, 반복 측정(Repeat Measure)을 권장한다. 신뢰 척도는 신뢰성(Reliability), 예측 가능성(Predictability), 효율성(Efficiency) 등의 요인을 포함하는 Likert 척도로 구성된다.
 
 ### 4. 시스템 성능(Performance) 평가
+
 최종적으로 인간-AI 협업 시스템의 성공 여부를 세 가지 수준에서 측정한다.
+
 - **Primary Task Goals**: 작업 성공률, 효율성, 시간 대비 과업 완료 수.
 - **User Performance**: AI의 출력을 얼마나 정확하게 예측하는가에 대한 정답률.
 - **Work System Level**: 학습 곡선(Learning Curves) 분석 및 'Trials-to-Criterion'(기준 도달까지 필요한 시도 횟수)을 통해 시스템의 채택 가능성과 학습 속도를 측정한다.

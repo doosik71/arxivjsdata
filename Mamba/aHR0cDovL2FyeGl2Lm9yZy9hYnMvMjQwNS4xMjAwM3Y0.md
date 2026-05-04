@@ -14,9 +14,9 @@ Weilian Zhou, Sei-ichiro Kamata, Haipeng and others (2024)
 
 본 논문의 핵심 아이디어는 Mamba 아키텍처를 HSI 패치 기반 분류 작업에 적합하도록 재설계한 **Mamba-in-Mamba (MiM)** 구조를 제안하는 것이다. 주요 기여 사항은 다음과 같다.
 
-1.  **Centralized Mamba-Cross-Scan (MCS)**: 이미지를 단순히 일렬로 나열하는 Raster scan 대신, 패치의 양 끝단에서 시작하여 중심 픽셀로 수렴하는 4가지 유형의 중심 집중형 스캔 방식을 도입하여 중심 픽셀의 특징을 효과적으로 보존한다.
-2.  **Tokenized Mamba (T-Mamba) Encoder**: Mamba 인코더 내부에 Gaussian Decay Mask (GDM), Semantic Token Learner (STL), Semantic Token Fuser (STF)를 통합하여, 다중 스케일의 특징을 효과적으로 추출하고 정제한다.
-3.  **Weighted MCS Fusion (WMF) 및 Multi-Scale Loss**: 서로 다른 스캔 방향에서 추출된 특징들을 동적으로 가중 결합하고, 하향 샘플링(Down-sampling) 과정을 통해 얻은 다중 스케일 특징들에 대해 개별적인 손실 함수를 적용하여 학습 효율을 극대화한다.
+1. **Centralized Mamba-Cross-Scan (MCS)**: 이미지를 단순히 일렬로 나열하는 Raster scan 대신, 패치의 양 끝단에서 시작하여 중심 픽셀로 수렴하는 4가지 유형의 중심 집중형 스캔 방식을 도입하여 중심 픽셀의 특징을 효과적으로 보존한다.
+2. **Tokenized Mamba (T-Mamba) Encoder**: Mamba 인코더 내부에 Gaussian Decay Mask (GDM), Semantic Token Learner (STL), Semantic Token Fuser (STF)를 통합하여, 다중 스케일의 특징을 효과적으로 추출하고 정제한다.
+3. **Weighted MCS Fusion (WMF) 및 Multi-Scale Loss**: 서로 다른 스캔 방향에서 추출된 특징들을 동적으로 가중 결합하고, 하향 샘플링(Down-sampling) 과정을 통해 얻은 다중 스케일 특징들에 대해 개별적인 손실 함수를 적용하여 학습 효율을 극대화한다.
 
 ## 📎 Related Works
 
@@ -27,10 +27,13 @@ Weilian Zhou, Sei-ichiro Kamata, Haipeng and others (2024)
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인
+
 입력 HSI 패치는 먼저 PCA(주성분 분석), Depth-wise Convolution, Point-wise Convolution을 통해 차원 축소 및 지역 특징 추출 과정을 거친다. 이후 MCS를 통해 4가지 유형의 시퀀스로 변환되며, 각 시퀀스는 T-Mamba 인코더를 통과한다. 최종적으로 WMF 모듈을 통해 특징이 융합되며, 이 과정이 패치 크기가 1이 될 때까지 반복적으로 수행되는 계층적 구조를 가진다.
 
 ### 2. Centralized Mamba-Cross-Scan (MCS)
+
 MCS는 패치의 공간적 연속성을 유지하기 위해 Snake scan 방식을 사용하며, 중심 픽셀 $x^{(i,j)}$를 향해 수렴하는 4가지 경로를 생성한다.
+
 - **Type-1**: 좌상단 $\to$ 중심 / 우하단 $\to$ 중심 (Snake-like)
 - **Type-2**: 좌상단 $\to$ 중심 / 우하단 $\to$ 중심 (Vertical-like)
 - **Type-3**: 우상단 $\to$ 중심 / 좌하단 $\to$ 중심 (Horizontal-like)
@@ -39,6 +42,7 @@ MCS는 패치의 공간적 연속성을 유지하기 위해 Snake scan 방식을
 각 타입은 두 개의 하위 시퀀스(Forward, Backward)로 나뉘어 Mamba 모델에 입력되며, 중심 픽셀이 시퀀스의 마지막 단계에 위치하게 하여 이전 모든 단계의 특징이 중심 픽셀로 집계되도록 설계되었다.
 
 ### 3. Tokenized Mamba (T-Mamba) Encoder
+
 T-Mamba는 단순한 인코딩을 넘어 특징을 정제하고 압축하는 과정을 포함한다.
 
 - **Gaussian Decay Mask (GDM)**: 시퀀스 내의 각 단계에 가중치를 부여하는 소프트 마스크이다. 인덱스 거리 기반 가중치 $W_{idx}$와 특징 유사도(Euclidean distance) 기반 가중치 $W_{fea}$를 곱하여 중심 픽셀에 가까운 특징이 더 강조되도록 한다.
@@ -47,6 +51,7 @@ T-Mamba는 단순한 인코딩을 넘어 특징을 정제하고 압축하는 과
 - **Semantic Token Fuser (STF)**: 학습된 추상적 토큰 $u$를 원래의 시퀀스 특징 $z$와 융합한다. 영향력 점수 $\bar{z}$를 계산하여 토큰 정보를 시퀀스 차원으로 다시 확산시키고, attention-weighted 특징과 합산하여 최종 출력 $\bar{u}$를 생성한다.
 
 ### 4. Weighted MCS Fusion (WMF) 및 Multi-Scale Loss
+
 4가지 MCS 경로에서 나온 결과 $o_1, o_2, o_3, o_4$를 학습 가능한 가중치 $k_n$을 사용하여 결합한다.
 $$O^{(i,j)}_p = k_1 o^{(i,j)}_1 + k_2 o^{(i,j)}_2 + k_3 o^{(i,j)}_3 + k_4 o^{(i,j)}_4$$
 또한, 모델은 패치 크기가 $p \to p_2 \to \dots \to 1$로 줄어드는 과정을 거치며, 각 스케일 단계마다 예측값 $Y^p$를 도출하고 이를 개별적인 Cross-Entropy Loss로 계산하여 전체 손실 함수를 구성한다.
@@ -55,11 +60,13 @@ $$L_{total} = \frac{1}{n} (L_p + L_{p_2} + \dots + L_{p_n})$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: Indian Pines (IP), Pavia University (PU), Houston 2013 (HU2013), WHU-Hi-HongHu (HongHu).
 - **비교 모델**: vanilla ViT, SpeFormer, MAEST, HiT, SSFTT, 3DViT, HUSST, ViM.
 - **평가 지표**: 전체 정확도(OA), 평균 정확도(AA), Kappa 계수.
 
 ### 2. 주요 결과
+
 - **정량적 성능**: MiM 모델은 4개의 모든 데이터셋에서 기존 베이스라인 및 SOTA 모델들과 경쟁하거나 이를 능가하는 성능을 보였다. 특히 IP 데이터셋에서 OA 92.08%, PU에서 91.58%를 기록하며 매우 높은 정확도를 달성하였다.
 - **시각적 분석**: 분류 맵(Classification Map) 분석 결과, vanilla ViT에서 나타나는 노이즈 같은 아티팩트가 거의 없으며, land-cover 경계선이 매우 뚜렷하고 영역 내부가 매끄럽게 분류됨을 확인하였다.
 - **계산 효율성**: 파라미터 수 측면에서 HiT, SSFTT, HUSST와 같은 복잡한 모델들보다 훨씬 효율적이며, 추론 시간과 모델 크기 사이의 최적의 균형을 이루었다.
@@ -68,12 +75,15 @@ $$L_{total} = \frac{1}{n} (L_p + L_{p_2} + \dots + L_{p_n})$$
 ## 🧠 Insights & Discussion
 
 ### 1. 강점 및 분석
+
 본 논문은 Mamba의 선형 시간 복잡도라는 이점을 유지하면서 HSI의 공간적 특성을 반영하기 위해 '중심 집중형 스캔'과 '시맨틱 토큰화'라는 전략을 성공적으로 결합하였다. 특히 제한된 학습 샘플 환경에서 Transformer보다 우수한 성능을 보인 점은 Mamba 계열 모델이 가진 귀납적 편향이 소규모 데이터셋의 HSI 분류 작업에 유리함을 시사한다.
 
 ### 2. 한계 및 비판적 해석
+
 데이터 증강(Data Augmentation) 실험 결과, 학습 샘플 수가 6배 이상 증가한 환경에서는 MAEST와 같은 Transformer 기반 모델들이 MiM보다 더 높은 성능을 기록하였다. 이는 Transformer의 글로벌 어텐션 메커니즘이 충분한 데이터가 확보되었을 때 일반화 능력이 더 강력하다는 기존의 이론과 일치한다. 따라서 MiM은 **'데이터가 부족한 실제 현장 상황'**에서는 매우 강력하지만, 대규모 데이터셋이 준비된 상황에서는 Transformer 기반 모델에 밀릴 가능성이 있다.
 
 ### 3. 향후 연구 방향
+
 저자들은 현재의 2D 스캔 방식을 확장하여, 분광 정보의 연속성을 함께 고려할 수 있는 3D Mamba 구성으로 발전시킬 계획임을 명시하고 있다.
 
 ## 📌 TL;DR

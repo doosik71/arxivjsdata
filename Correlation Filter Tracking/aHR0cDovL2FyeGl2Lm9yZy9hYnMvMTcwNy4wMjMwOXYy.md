@@ -14,24 +14,28 @@ Chao Ma, Jia-Bin Huang, Xiaokang Yang, Ming-Hsuan Yang (2018)
 
 본 연구의 핵심 아이디어는 서로 다른 역할과 적응성을 가진 세 가지 유형의 상관 필터를 전략적으로 배치하여 추적의 정밀도와 복구 능력을 동시에 확보하는 것이다.
 
-1.  **단기 기억 필터 (Translation & Scale Filters):** 대상의 위치와 크기 변화를 빠르게 추적하기 위해 공격적인 학습률을 적용한 필터들을 사용한다. 특히 위치 추적을 위해 HOG와 HOI(Histogram of Local Intensities)를 결합한 특징량을 사용하여 변별력을 높였다.
-2.  **장기 기억 필터 (Long-term Filter):** 보수적인 학습률을 적용하여 대상의 전반적인 외형 템플릿을 안정적으로 유지한다. 이 필터의 응답값(Response)을 통해 현재 추적의 신뢰도를 측정하고, 추적 실패 여부를 판단하는 척도로 활용한다.
-3.  **온라인 재검출 모듈 (Online Detector):** 장기 기억 필터의 신뢰도가 임계값 아래로 떨어질 경우, Passive-Aggressive 기법으로 학습된 온라인 SVM 검출기를 활성화하여 손실된 대상을 다시 찾는 복구 메커니즘을 제안한다.
+1. **단기 기억 필터 (Translation & Scale Filters):** 대상의 위치와 크기 변화를 빠르게 추적하기 위해 공격적인 학습률을 적용한 필터들을 사용한다. 특히 위치 추적을 위해 HOG와 HOI(Histogram of Local Intensities)를 결합한 특징량을 사용하여 변별력을 높였다.
+2. **장기 기억 필터 (Long-term Filter):** 보수적인 학습률을 적용하여 대상의 전반적인 외형 템플릿을 안정적으로 유지한다. 이 필터의 응답값(Response)을 통해 현재 추적의 신뢰도를 측정하고, 추적 실패 여부를 판단하는 척도로 활용한다.
+3. **온라인 재검출 모듈 (Online Detector):** 장기 기억 필터의 신뢰도가 임계값 아래로 떨어질 경우, Passive-Aggressive 기법으로 학습된 온라인 SVM 검출기를 활성화하여 손실된 대상을 다시 찾는 복구 메커니즘을 제안한다.
 
 ## 📎 Related Works
 
 ### 1. Tracking-by-Detection
+
 이 접근 방식은 매 프레임마다 국부 탐색 영역 내에서 대상을 검출하는 문제로 정의하며, 온라인 분류기를 학습시켜 배경과 대상을 구분한다. 하지만 샘플링 모호성(Sampling Ambiguity)으로 인해 잘못된 샘플이 학습될 경우 드리프트가 발생하기 쉽다. TLD(Tracking-Learning-Detection)와 같은 연구는 추적, 학습, 검출 모듈을 분리하여 안정성과 적응성을 동시에 꾀했으나, 매 프레임 검출기를 작동시켜 계산 비용이 높다는 단점이 있다.
 
 ### 2. Correlation Filter (CF) based Tracking
+
 CF 기반 추적기는 푸리에 도메인(Fourier domain)에서의 연산을 통해 매우 빠른 속도를 가지며, 원형 시프트(Circular shift)를 통한 데이터 증강으로 샘플링 모호성을 완화한다. KCF, DSST 등이 대표적이다. 그러나 대부분의 CF 추적기는 높은 학습률을 사용하는 단기 기억에 의존하므로, 가림 현상이 발생했을 때 복구하지 못하고 실패하는 한계가 있다.
 
 ### 3. 기존 연구와의 차별점
+
 MUSTer와 같은 최신 연구도 장/단기 기억을 활용하지만, MUSTer는 국부 특징점(Local feature pool)을 사용하여 장기 기억을 표현한다. 반면, 본 논문은 전체적인 템플릿을 유지하는 **Long-term Correlation Filter**를 사용하여 특징점 매칭의 불안정성을 극복하고 보다 강인한 복구 성능을 제공한다.
 
 ## 🛠️ Methodology
 
 ### 1. Kernelized Correlation Filters (KCF) 기반 구조
+
 기본적으로 본 논문은 입력 이미지 패치를 원형 시프트(Circularly shifted)하여 가우시안 분포의 소프트 라벨(Soft labels)에 회귀시키는 리지 회귀(Ridge regression) 모델을 사용한다.
 
 푸리에 도메인에서 필터 $W$의 해는 다음과 같이 계산된다.
@@ -39,7 +43,9 @@ $$W = \frac{\bar{X} \odot Y}{\bar{X} \odot X + \lambda}$$
 여기서 $\bar{X}$는 $X$의 켤레 복소수, $\odot$는 아다마르 곱(Hadamard product), $\lambda$는 정규화 파라미터이다.
 
 ### 2. 다중 채널 특징량 (Multi-channel Features)
+
 정밀한 위치 추적을 위해 세 가지 특징량을 결합한다.
+
 - **HOG (Histogram of Oriented Gradients):** 외형의 형태와 구조를 캡처하여 조명 변화에 강인하다.
 - **HOI (Histogram of Local Intensities):** 갑작스러운 움직임으로 인한 블러(Blur) 발생 시 HOG의 변별력이 떨어지는 문제를 해결하기 위해 국부 강도 히스토그램을 사용한다.
 - **Deep Features:** VGGNet-19의 `conv5-4` 층에서 추출한 특징량으로, 고수준의 세만틱 정보를 제공한다.
@@ -48,17 +54,21 @@ $$W = \frac{\bar{X} \odot Y}{\bar{X} \odot X + \lambda}$$
 $$q = \frac{f_h \oplus f_d}{2}$$
 
 ### 3. 크기 추정 모델 (Scale Regression)
+
 대상 주변으로 특징 피라미드(Feature pyramid)를 구성하고, 이를 1차원 스케일 공간에 회귀시키는 상관 필터를 학습한다. 최적의 스케일 $s^*$는 다음과 같이 결정된다.
 $$s^* = \arg \max_{s \in S} \{ g(x_s) \}$$
 여기서 $g(x_s)$는 스케일 필터의 출력 스칼라 값이다.
 
 ### 4. 장/단기 기억 메커니즘
+
 필터 업데이트를 위해 이동 평균(Moving average) 스킴을 사용한다.
 $$\tilde{x}_t = (1-\eta) \tilde{x}_{t-1} + \eta x_t$$
+
 - **단기 기억 ($A_T, A_S$):** 높은 학습률 $\eta$를 적용하여 외형 변화에 빠르게 적응한다.
 - **장기 기억 ($A_L$):** 신뢰도 점수 $\max(f(z))$가 안정성 임계값 $T_s$를 초과할 때만 보수적으로 업데이트하여 대상의 원형을 유지한다.
 
 ### 5. 온라인 재검출 모듈 (Online Detector)
+
 신뢰도 점수가 재검출 임계값 $T_r$보다 낮아지면 SVM 기반 검출기를 활성화한다. 계산 효율성을 위해 하이퍼플레인 $h$를 업데이트할 때 Passive-Aggressive 알고리즘을 사용한다.
 $$h \leftarrow h - \frac{\ell(h, (v, c))}{\|\nabla_h \ell(h, (v, c))\|^2 + \frac{1}{2\tau}} \nabla_h \ell(h, (v, c))$$
 여기서 $\ell$은 힌지 손실(Hinge loss) 함수이며, $\tau$는 업데이트 속도를 조절하는 하이퍼파라미터이다.
@@ -66,16 +76,19 @@ $$h \leftarrow h - \frac{\ell(h, (v, c))}{\|\nabla_h \ell(h, (v, c))\|^2 + \frac
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋:** OTB2013, OTB2015 및 MEEM 데이터셋을 사용하였다.
 - **평가 지표:** 거리 정밀도(Distance Precision, DP)와 중첩 성공률(Overlap Success, OS)을 측정하였다.
 - **비교 대상:** KCF, DSST, MUSTer, MEEM, TLD 등 최신 추적기들과 비교하였다.
 
 ### 2. 정량적 결과
+
 - **성능 우위:** OTB2013 데이터셋에서 `Ours-deep` 모델은 DP 87.8%, OS 79.9%를 기록하며 대부분의 베이스라인 모델을 상회하였다.
 - **속도:** 재검출 모듈을 매 프레임 실행하지 않고 신뢰도가 낮을 때만 선택적으로 활성화함으로써, 약 20 FPS의 실시간에 가까운 속도를 유지하였다.
 - **속성별 분석:** 특히 가림(Occlusion), 변형(Deformation), 시야 외 이동(Out-of-view) 상황에서 MUSTer보다 높은 강인함을 보였다.
 
 ### 3. 정성적 결과 및 분석
+
 - **복구 능력:** Lemming 시퀀스에서 다른 CF 추적기들이 가림 이후 복구에 실패하는 반면, 본 제안 방법은 장기 기억 필터와 SVM 검출기를 통해 대상을 정확히 재포착하였다.
 - **독립적 업데이트의 이점:** MUSTer와 달리 위치 필터($A_T$)를 업데이트할 때 추정된 스케일 값을 반영하지 않고 첫 프레임의 기준 스케일을 사용하여, 스케일 추정 오류가 위치 추적 필터를 오염시키는 현상을 방지하였다.
 

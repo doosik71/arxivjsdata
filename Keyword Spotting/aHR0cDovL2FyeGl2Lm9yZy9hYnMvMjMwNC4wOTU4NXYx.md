@@ -10,9 +10,9 @@ Paul M. Reuter, Christian Rollwage, Bernd T. Meyer (2023)
 
 본 논문의 핵심적인 기여는 다국어 크라우드 소싱 음성 데이터와 Metric Learning을 결합하여, 재학습 없이도 높은 분별력을 가진 단어 임베딩(word embedding) 공간을 학습시킨 점이다. 구체적인 설계 아이디어는 다음과 같다.
 
-1.  **Metric Learning의 도입**: 단순 분류기가 아닌, Circle Loss를 활용한 메트릭 학습을 통해 임베딩 공간에서의 클래스 내 유사도는 높이고 클래스 간 유사도는 낮추어, 학습 시 보지 못한 단어(unseen words)에 대해서도 강건한 유사도 비교가 가능하게 하였다.
-2.  **Phoneme-to-Embedding (P2E) 매핑**: 사용자가 오디오 예시를 직접 녹음해야 하는 불편함을 줄이기 위해, 단어의 음소(phoneme) 시퀀스를 입력받아 KWS 모델이 학습한 임베딩 벡터를 예측하는 LSTM 모델을 제안하였다.
-3.  **효율적인 아키텍처 채택**: Fast-ResNet-34를 사용하여 파라미터 수를 1.4M 수준으로 낮춤으로써 온디바이스 적용이 가능한 small-footprint 시스템을 구현하였다.
+1. **Metric Learning의 도입**: 단순 분류기가 아닌, Circle Loss를 활용한 메트릭 학습을 통해 임베딩 공간에서의 클래스 내 유사도는 높이고 클래스 간 유사도는 낮추어, 학습 시 보지 못한 단어(unseen words)에 대해서도 강건한 유사도 비교가 가능하게 하였다.
+2. **Phoneme-to-Embedding (P2E) 매핑**: 사용자가 오디오 예시를 직접 녹음해야 하는 불편함을 줄이기 위해, 단어의 음소(phoneme) 시퀀스를 입력받아 KWS 모델이 학습한 임베딩 벡터를 예측하는 LSTM 모델을 제안하였다.
+3. **효율적인 아키텍처 채택**: Fast-ResNet-34를 사용하여 파라미터 수를 1.4M 수준으로 낮춤으로써 온디바이스 적용이 가능한 small-footprint 시스템을 구현하였다.
 
 ## 📎 Related Works
 
@@ -21,31 +21,35 @@ Paul M. Reuter, Christian Rollwage, Bernd T. Meyer (2023)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 시스템 구조
+
 시스템은 크게 **특징 추출 $\rightarrow$ Fast-ResNet-34 기반 임베딩 추출 $\rightarrow$ 유사도 측정**의 단계로 구성된다. 입력 신호는 1초 길이의 오디오에서 추출된 40차원 Mel-filterbanks이며, 이를 모델에 통과시켜 고정 길이의 단어 임베딩 벡터를 생성한다.
 
 ### 주요 구성 요소 및 학습 절차
-1.  **모델 아키텍처**: Fast-ResNet-34를 사용한다. 이는 ResNet-34의 채널 수를 줄인 형태로, 마지막 단계에서 Temporal Average Pooling (TAP)을 통해 시간 축을 압축하여 $256 \times 1$ 크기의 최종 임베딩 벡터를 생성한다.
-2.  **2단계 학습 전략**:
-    *   **1단계 (Classification)**: 먼저 3,917개의 단어에 대해 Cross-entropy loss를 사용하여 분류기로 학습시킨다. 이는 모델이 기본적인 음성 특징을 파악하도록 하는 pre-training 단계이다.
-    *   **2단계 (Metric Learning)**: 분류 층을 제거하고 `conv1`부터 `conv4`까지의 가중치를 동결(freeze)한 후, `conv5`와 `fc` 층을 **Circle Loss**로 미세 조정(fine-tuning)한다.
-3.  **Circle Loss**: 본 논문에서 사용한 Circle Loss는 Triplet loss의 일반화된 형태로, 클래스 내 유사도와 클래스 간 유사도의 가중치를 조절하여 더 효율적인 임베딩 공간을 학습한다. 손실 함수는 하이퍼파라미터 $\gamma = 80, m = 0.4$로 설정되었다.
-4.  **Phoneme-to-Embedding (P2E) 모델**:
-    *   입력: 단어의 음소 시퀀스 $\rightarrow$ Embedding Layer (128-dim) $\rightarrow$ 2-layer LSTM $\rightarrow$ Mean Pooling $\rightarrow$ FC Layer.
-    *   목표: KWS 모델이 생성한 실제 오디오 임베딩 벡터를 예측하는 것이며, Cosine loss를 통해 학습한다.
+
+1. **모델 아키텍처**: Fast-ResNet-34를 사용한다. 이는 ResNet-34의 채널 수를 줄인 형태로, 마지막 단계에서 Temporal Average Pooling (TAP)을 통해 시간 축을 압축하여 $256 \times 1$ 크기의 최종 임베딩 벡터를 생성한다.
+2. **2단계 학습 전략**:
+    * **1단계 (Classification)**: 먼저 3,917개의 단어에 대해 Cross-entropy loss를 사용하여 분류기로 학습시킨다. 이는 모델이 기본적인 음성 특징을 파악하도록 하는 pre-training 단계이다.
+    * **2단계 (Metric Learning)**: 분류 층을 제거하고 `conv1`부터 `conv4`까지의 가중치를 동결(freeze)한 후, `conv5`와 `fc` 층을 **Circle Loss**로 미세 조정(fine-tuning)한다.
+3. **Circle Loss**: 본 논문에서 사용한 Circle Loss는 Triplet loss의 일반화된 형태로, 클래스 내 유사도와 클래스 간 유사도의 가중치를 조절하여 더 효율적인 임베딩 공간을 학습한다. 손실 함수는 하이퍼파라미터 $\gamma = 80, m = 0.4$로 설정되었다.
+4. **Phoneme-to-Embedding (P2E) 모델**:
+    * 입력: 단어의 음소 시퀀스 $\rightarrow$ Embedding Layer (128-dim) $\rightarrow$ 2-layer LSTM $\rightarrow$ Mean Pooling $\rightarrow$ FC Layer.
+    * 목표: KWS 모델이 생성한 실제 오디오 임베딩 벡터를 예측하는 것이며, Cosine loss를 통해 학습한다.
 
 ## 📊 Results
 
 ### 실험 설정
-- **데이터셋**: Common Voice (영어, 독일어, 프랑스어, 카탈루냐어) 및 Hey-Snips 데이터셋.
-- **비교 대상**: 5개의 예시로 특정 키워드에 대해 미세 조정을 수행하는 Classifier-based baseline [13].
-- **평가 지표**: Equal Error Rate (EER), False Negative Rate (FNR), False Alarms per hour (FA/h).
+
+* **데이터셋**: Common Voice (영어, 독일어, 프랑스어, 카탈루냐어) 및 Hey-Snips 데이터셋.
+* **비교 대상**: 5개의 예시로 특정 키워드에 대해 미세 조정을 수행하는 Classifier-based baseline [13].
+* **평가 지표**: Equal Error Rate (EER), False Negative Rate (FNR), False Alarms per hour (FA/h).
 
 ### 주요 결과
-1.  **분류 정확도**: 
-    - 학습에 사용된 언어의 새로운 단어(Out-of-vocabulary, OOV)에 대해 baseline 대비 EER을 $1.96\%$에서 $0.82\%$로 **$59.2\%$ 감소**시켰다.
-    - 학습하지 않은 언어(Out-of-embedding, OOE)에 대해서도 EER을 $3.76\%$에서 $2.00\%$로 **$47.9\%$ 감소**시켜 우수한 일반화 성능을 보였다.
-2.  **P2E 성능**: 음소 기반 임베딩 예측 모델(P2E)의 정확도는 실제 오디오 예시 5개를 사용하여 유사도를 측정했을 때의 정확도와 매우 유사하게 나타났다. 이는 KWS 모델이 임베딩 공간에 음소 수준의 정보를 효과적으로 인코딩하고 있음을 시사한다.
-3.  **스트리밍 성능**: 1초 길이의 슬라이딩 윈도우(stride 0.1s)를 사용하여 테스트한 결과, Hey-Snips 데이터셋의 clean audio 환경에서 $0.1$ FA/h일 때 $5.4\%$의 FNR을 기록하였다.
+
+1. **분류 정확도**:
+    * 학습에 사용된 언어의 새로운 단어(Out-of-vocabulary, OOV)에 대해 baseline 대비 EER을 $1.96\%$에서 $0.82\%$로 **$59.2\%$ 감소**시켰다.
+    * 학습하지 않은 언어(Out-of-embedding, OOE)에 대해서도 EER을 $3.76\%$에서 $2.00\%$로 **$47.9\%$ 감소**시켜 우수한 일반화 성능을 보였다.
+2. **P2E 성능**: 음소 기반 임베딩 예측 모델(P2E)의 정확도는 실제 오디오 예시 5개를 사용하여 유사도를 측정했을 때의 정확도와 매우 유사하게 나타났다. 이는 KWS 모델이 임베딩 공간에 음소 수준의 정보를 효과적으로 인코딩하고 있음을 시사한다.
+3. **스트리밍 성능**: 1초 길이의 슬라이딩 윈도우(stride 0.1s)를 사용하여 테스트한 결과, Hey-Snips 데이터셋의 clean audio 환경에서 $0.1$ FA/h일 때 $5.4\%$의 FNR을 기록하였다.
 
 ## 🧠 Insights & Discussion
 

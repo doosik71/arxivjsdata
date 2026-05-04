@@ -13,6 +13,7 @@ Santanu Acharjee and Upashana Gogoi (2023)
 ## 📎 Related Works
 
 논문은 다음과 같은 기존 연구들을 이론적 배경으로 삼는다.
+
 - **Tarski의 귀결 연산자(Consequence Operator):** 논리적 귀결의 정식화된 이론을 제공하며, 본 논문에서는 이를 정신 공간의 사고 확장 모델로 사용한다.
 - **Lewin의 위상심리학(Topological Psychology):** 심리적 과정을 위상 공간 내에서 설명하려는 시도로, 개인과 환경의 상호작용을 나타내는 행동 방정식 $B = f(P, E)$를 제시한다.
 - **Sims et al.의 정신 구조:** 정신 공간을 기호 세트, 연결 규칙, 해석 함수로 구성된 대수적 구조로 정의한 연구이다.
@@ -23,24 +24,30 @@ Santanu Acharjee and Upashana Gogoi (2023)
 ## 🛠️ Methodology
 
 ### 1. Cognitive-Consequence Space의 정의
+
 저자들은 정신 공간을 다음과 같은 4-튜플 구조로 정의한다:
 $$C = (C, \sigma, I, Cn)$$
+
 - $C$: 모든 기호 및 정신적 표현(Mental representations)의 집합이다.
 - $\sigma$: 정신적 문법 연결 규칙(Concatenation rules)이다.
 - $I$: 표현과 연결에 의미를 부여하는 해석 함수이다.
 - $Cn$: Tarski의 공리를 따르는 귀결 연산자(Consequence Operator)로, 집합 $A$로부터 추론 가능한 모든 문장의 집합 $Cn(A)$를 생성한다.
 
 ### 2. Cognitive-Consequence Topology (CCT)
+
 정신 공간 상에 새로운 위상 $\tau$를 다음과 같이 정의한다:
 $$\tau = \{A \subseteq C : Cn(C - A) = (C - A)\}$$
 여기서 $Cn(A) = A$를 만족하는 집합을 **Deductive system**(연역 체계)이라고 하며, 이 보집합이 $\tau$에 속할 때 이를 **Consequence-wise Open (CWO)** 세트라고 정의한다.
 
 ### 3. 사고의 수렴과 Cognitive Limit
-사고의 흐름을 수열 $\{x_i\}_{i=1}^\infty$로 나타내며, 두 사고 간의 유사성을 측정하는 **Cognitive similarity distance** $Cog(x, y)$를 도입한다. 
+
+사고의 흐름을 수열 $\{x_i\}_{i=1}^\infty$로 나타내며, 두 사고 간의 유사성을 측정하는 **Cognitive similarity distance** $Cog(x, y)$를 도입한다.
+
 - $Cog(x, y)$는 거리 함수의 성질(비음수성, 대칭성, 삼각부등식 등)을 만족하며, 가중치 함수 $w$를 이용해 $Cog(x, y) = |w(x) - w(y)|$로 정의될 수 있다.
 - 사고 수열이 특정 사고 $x$로 수렴할 때, $x$를 **Cognitive limit**이라고 한다.
 
 ### 4. Gödel's Incompleteness Black Hole
+
 문제 해결 공간 $S$ 내에서 과거의 경험이나 알려진 지식으로 도달할 수 없는 영역을 **Gödel's incompleteness black hole**이라고 정의한다. 이는 해결책을 찾기 위한 사고 수열이 존재하지만, 특정 임계값 $\varepsilon$ 이하로 접근할 수 없는 영역이 존재함을 의미하며, 이를 통해 문제 해결의 불가능성이나 새로운 접근 방식(대체 경로)의 필요성을 설명한다.
 
 ## 📊 Results
@@ -53,9 +60,11 @@ $$\tau = \{A \subseteq C : Cn(C - A) = (C - A)\}$$
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 논문은 '지능'이라는 추상적인 개념을 위상수학(Topology)과 논리 연산자(Consequence Operator)라는 엄격한 수학적 틀로 정식화하려 시도했다. 특히 인간의 사고를 단순한 데이터 처리가 아닌, 비연역적 추론과 환경과의 상호작용이 포함된 개방형 시스템으로 모델링한 점이 인상적이다.
 
 ### 한계 및 비판적 해석
+
 1. **증명의 비약:** Theorem 3.3, 3.4의 수학적 결과(특정 원소가 집합에 존재함)가 어떻게 "지능의 무한성"이라는 거대한 철학적/인지적 결론으로 직접 연결되는지에 대한 논리적 연결 고리가 다소 부족하다. 수학적 존재성 증명이 곧 지적 능력의 무한함을 의미하는지에 대한 추가적인 논의가 필요하다.
 2. **AI 모델의 단순화:** 현대의 거대 언어 모델(LLM)이나 강화학습 기반 AI는 단순한 고정 공리계보다는 확률적 패턴 매칭과 동적 학습에 가깝다. 논문에서 정의한 '알고리즘적 AI'가 최신 AI의 특성을 모두 반영하고 있는지 의문이다.
 3. **실증적 근거 부족:** 고대 인도 문헌의 빛의 속도 계산 예시 등을 통해 인간 지능의 우월성을 주장하지만, 이는 일화적인 사례일 뿐 수학적 증명과 동일한 수준의 엄밀성을 갖춘 근거라고 보기 어렵다.

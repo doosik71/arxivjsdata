@@ -4,7 +4,7 @@ Jianyu Wang, Zhiqiang Hu, Lidong Bing (2025)
 
 ## 🧩 Problem to Solve
 
-본 논문은 대규모 언어 모델(LLM)의 프롬프팅에 관한 기존의 통념, 즉 "잘 설계된 지시문(instructions)과 정교한 예시(demonstrations)가 In-context Learning(ICL)의 성능을 극대화한다"는 관점에 도전한다. 
+본 논문은 대규모 언어 모델(LLM)의 프롬프팅에 관한 기존의 통념, 즉 "잘 설계된 지시문(instructions)과 정교한 예시(demonstrations)가 In-context Learning(ICL)의 성능을 극대화한다"는 관점에 도전한다.
 
 기존의 프롬프트 엔지니어링은 인간의 언어적 직관에 의존하여 세밀하게 구조화된 프롬프트를 작성하는 데 집중해 왔으나, LLM은 매우 미묘한 문구 변화나 구조적 차이에도 예측 불가능하게 반응하는 특성이 있다. 저자들은 인간이 보기에 일관성이 없고 무의미해 보이는 'gibberish'(횡설수설) 형태의 프롬프트가 오히려 모델의 성능을 향상시킬 수 있다는 가설을 세운다.
 
@@ -12,7 +12,7 @@ Jianyu Wang, Zhiqiang Hu, Lidong Bing (2025)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 **프롬프트 압축(Prompt Compression)을 가이드된 프롬프트 탐색(Guided Prompt Search)으로 재정의**하는 것이다. 
+본 논문의 핵심 아이디어는 **프롬프트 압축(Prompt Compression)을 가이드된 프롬프트 탐색(Guided Prompt Search)으로 재정의**하는 것이다.
 
 1. **Partial Context Hypothesis 제안**: 정교한 자연어 예시를 오히려 무작위로 가지치기(pruning)하여 문법적·의미적으로 파괴된 'gibberish' 상태로 만드는 것이, 역설적으로 다양한 태스크에서 성능을 향상시킬 수 있음을 증명하였다.
 2. **PROMPTQUINE 프레임워크 개발**: 인간의 직관이나 기존의 토큰 중요도 측정 방식으로는 이러한 최적의 가지치기 전략을 찾을 수 없으므로, 유전 알고리즘(Genetic Algorithm) 기반의 자기 발견형 프롬프트 최적화 프레임워크를 제안하였다.
@@ -29,26 +29,31 @@ Jianyu Wang, Zhiqiang Hu, Lidong Bing (2025)
 ## 🛠️ Methodology
 
 ### 1. 문제 정의 (Formalization)
+
 입력 프롬프트 $x = (x_1, x_2, \dots, x_n)$가 주어졌을 때, 목표는 $x$의 부분 수열(subsequence)인 가지치기 된 프롬프트 $z = (z_1, z_2, \dots, z_m)$ ($m \le n$)를 찾아 태스크 성능 $f(z; x, D)$를 최대화하는 것이다.
 
 ### 2. TAPruning (Baseline)
-본격적인 프레임워크 이전에 제안된 단순 힐클라이밍(Hill-climbing) 방식이다. 
+
+본격적인 프레임워크 이전에 제안된 단순 힐클라이밍(Hill-climbing) 방식이다.
+
 - 토큰을 하나씩 제거하며 성능을 측정하고, 성능이 향상되거나 설정된 임계값 $\delta$ 이내로 유지되면 해당 변경 사항을 수용한다.
 - 이는 국소 최적점(Local Optima)에 빠지기 쉽지만, 가지치기 가설을 빠르게 검증하는 베이스라인 역할을 한다.
 
 ### 3. PROMPTQUINE 프레임워크
+
 PROMPTQUINE은 유전 알고리즘(GA)을 사용하여 최적의 토큰 마스크를 탐색한다.
 
 - **유전체(Genotype)와 표현형(Phenotype)**: 각 프롬프트의 토큰 유지 여부를 나타내는 이진 마스크(Binary Mask)가 유전체이며, 실제 가지치기 된 텍스트가 표현형이 된다.
 - **변이(Mutation)**: 비트 플립(bit-flip) 연산을 통해 토큰을 제거($1 \to 0$)한다.
 - **선택 및 생존(Selection & Survival)**:
-    - **Tournament Selection**: 소수의 후보군 중 최적의 개체를 선택하여 복제한다.
-    - **Regularized Evolution**: 새로운 자손들이 기존 부모 세대와 직접 경쟁하지 않고, 오직 새로운 자손들끼리만 경쟁하여 생존 여부를 결정하게 함으로써 조기 수렴(Premature Convergence) 문제를 완화한다.
+  - **Tournament Selection**: 소수의 후보군 중 최적의 개체를 선택하여 복제한다.
+  - **Regularized Evolution**: 새로운 자손들이 기존 부모 세대와 직접 경쟁하지 않고, 오직 새로운 자손들끼리만 경쟁하여 생존 여부를 결정하게 함으로써 조기 수렴(Premature Convergence) 문제를 완화한다.
 - **적합도 함수(Fitness Function)**: 분류 태스크의 경우, 정답 레이블의 확률과 그 외 가장 높은 확률 사이의 간격(Gap)을 이용한 piecewise reward function을 사용한다.
-$$R(z, x, c) = 
-\begin{cases} 
-\lambda_2 \cdot \text{Gap}_z(c) & \text{if Correct} \\ 
-\lambda_1 \cdot \text{Gap}_z(c) & \text{if not Correct} 
+
+$$R(z, x, c) =
+\begin{cases}
+\lambda_2 \cdot \text{Gap}_z(c) & \text{if Correct} \\
+\lambda_1 \cdot \text{Gap}_z(c) & \text{if not Correct}
 \end{cases}$$
 여기서 $\text{Gap}_z(c) := P_z(c) - \max_{c' \neq c} P_z(c')$ 이다.
 
@@ -64,7 +69,7 @@ $$R(z, x, c) =
 
 ### 2. 주요 결과
 - **분류 태스크**: 1-shot ICL 기반의 PROMPTQUINE이 대부분의 SOTA 기법을 능가하거나 대등한 성능을 보였다. 특히 4-shot으로 확장했을 때 성능 향상이 더욱 뚜렷하게 나타났다.
-- **텍스트 생성 및 탈옥**: 
+- **텍스트 생성 및 탈옥**:
     - 스타일 전이(Style Transfer)에서 기존 SOTA인 RLPrompt와 Promptbreeder보다 높은 Joint Score를 기록하였다.
     - 탈옥(Jailbreaking) 실험에서는 가지치기 된 프롬프트가 기존 ICL 대비 공격 성공률(ASR)을 거의 두 배 가까이 높여, 모델의 정렬(Alignment)을 우회하는 데 효과적임을 보였다.
 - **추론 태스크 (CoT)**: 복잡한 수학 추론에서도 가지치기가 효과적이었으며, 일부 경우 1-shot pruned prompt가 8-shot original prompt와 유사한 성능을 내면서도 컨텍스트 길이를 획기적으로 줄였다.

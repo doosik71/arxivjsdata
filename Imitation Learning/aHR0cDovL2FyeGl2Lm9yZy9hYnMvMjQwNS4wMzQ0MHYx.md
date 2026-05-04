@@ -29,6 +29,7 @@ Kento Kawaharazuka, Kei Okada, and Masayuki Inaba (2024)
 ## 🛠️ Methodology
 
 ### 1. 시스템 구성 및 구속 역기구학(Constrained IK)
+
 본 시스템은 두 대의 Franka Emika Panda 로봇 팔과 햅틱 장치(Touch Haptic Device), 그리고 FLS(Fundamentals of Laparoscopic Surgery) 트레이닝 박스로 구성된다.
 
 포트의 물리적 제약을 해결하기 위해 **가상 선형 조인트(Virtual Linear Joint)** 개념을 도입한다. 로봇 손(Robot Hand) 위치 $\mathbf{x}_{\text{hand}}$, 포트 위치 $\mathbf{x}_{\text{port}}$, 포셉 팁(Forceps Tip) 위치 $\mathbf{x}_{\text{forcep}}$ 사이의 관계를 설정하고, 다음과 같은 역기구학(IK)을 계산하여 $\mathbf{x}_{\text{forcep}}$가 목표 위치 $\mathbf{x}_{\text{ref\_forcep}}$에 도달함과 동시에 가상 조인트의 끝단 $\mathbf{x}_{\text{virtual}}$이 포트 위치 $\mathbf{x}_{\text{port}}$와 일치하도록 제어한다.
@@ -36,11 +37,13 @@ Kento Kawaharazuka, Kei Okada, and Masayuki Inaba (2024)
 $$\theta, \theta_{\text{virtual}} = \text{IK}(\mathbf{x}_{\text{forcep}}, \mathbf{x}_{\text{ref\_forcep}}, \mathbf{x}_{\text{virtual}}, \mathbf{x}_{\text{port}})$$
 
 ### 2. 구속 기반 데이터 수집 절차
+
 단안 이미지의 깊이 인지 문제를 해결하기 위해 다음의 4단계 절차를 수행한다.
 
 **1) 단계 전환 조건(Phase Transition Condition) 정의**: 전체 동작을 여러 페이즈로 나눈다. 예를 들어 포셉 팁의 속도 $\|\dot{\mathbf{x}}_{\text{forcep}}\|_2$가 일정 시간 동안 임계값 이하로 유지되거나, 그리퍼의 개폐 상태 $h$가 변할 때 페이즈가 전환되는 것으로 정의한다.
 
 **2) 모션 구속(Motion Constraint) 추출**: 단일 전문가 시연에서 각 페이즈 $i$에 해당하는 $z$축(깊이 방향)의 최솟값 $z_0$와 최댓값 $z_2$를 추출하여 구속 조건 $C_i$를 생성한다.
+
 - 예: $C_1: z_1 < z_{\text{ref\_forcep}} < z_2$
 
 **3) Force Feedback 기반 데이터 수집**: 추출된 $C_i$를 햅틱 장치의 피드백 힘 $F_z$로 변환하여 작업자에게 전달한다.
@@ -50,6 +53,7 @@ $$F_z = \begin{cases} k_p(z_1 - z_{\text{ref\_forcep}}) & \text{if } z_{\text{re
 **4) 모방 학습 수행**: 수집된 데이터를 바탕으로 예측 모델을 학습시킨다.
 
 ### 3. RNNPB (Recurrent Neural Network with Parametric Bias)
+
 다양한 동작 속도와 스타일을 학습하기 위해 Parametric Bias $p$를 도입한 네트워크를 사용한다.
 
 - **예측 모델**: $(s_{t+1}, u_{t+1}) = f(s_t, u_t, p)$
@@ -62,14 +66,18 @@ $$F_z = \begin{cases} k_p(z_1 - z_{\text{ref\_forcep}}) & \text{if } z_{\text{re
 ## 📊 Results
 
 ### 1. 데이터 수집의 안정성 분석
+
 구속 조건이 없는 'Normal' 수집 방식과 구속 조건이 있는 'Constrained' 수집 방식을 비교한 결과, Constrained 방식에서 $z$축 이동 경로의 분산($\sigma_{\text{ave}}$)이 현저히 낮았다.
+
 - **Left Arm**: Normal (6.56) $\to$ Constrained (5.65)
 - **Right Arm**: Normal (4.78) $\to$ Constrained (2.74)
 
 ### 2. 작업 수행 성공률
+
 Peg Transfer Task의 세부 단계(물체 집기 $\to$ 전달하기 $\to$ 삽입하기)에 대한 성공률을 측정한 결과, Constrained 데이터를 통해 학습한 모델이 Normal 모델보다 월등히 높은 성능을 보였다. 특히 '물체 집기(Taking)' 단계에서 Normal 방식은 많은 실패가 발생했으나, Constrained 방식은 매우 높은 성공률을 기록하였다.
 
 ### 3. 잠재 공간(Latent Space) 분석
+
 LSTM의 잠재 공간을 PCA로 시각화한 결과, Constrained 방식에서는 세 개의 서로 다른 펙(Peg)에 대한 궤적이 명확히 구분되어 나타났다. 반면 Normal 방식에서는 궤적이 서로 겹치거나 모호하게 나타나, 모델이 각 상황에 맞는 정밀한 제어 능력을 습득하지 못했음을 시사한다.
 
 ## 🧠 Insights & Discussion
@@ -77,6 +85,7 @@ LSTM의 잠재 공간을 PCA로 시각화한 결과, Constrained 방식에서는
 본 연구는 단안 카메라 환경에서 깊이 방향의 조작 어려움을 **'데이터 수집 단계의 물리적 가이드(Force Feedback)'**라는 단순하지만 강력한 방법으로 해결하였다. 학습 알고리즘 자체를 수정하는 대신, 학습 데이터의 질을 강제적으로 높임으로써 모방 학습의 성능을 끌어올린 점이 인상적이다.
 
 **한계점 및 향후 과제**:
+
 - **수동 설정의 의존성**: 페이즈 전환 조건과 구속 변수를 사람이 직접 결정해야 한다는 한계가 있다. 이를 자동화하여 Task-agnostic하게 확장하는 연구가 필요하다.
 - **환경의 가변성**: 실제 인체 내부(위장 등)는 개인차가 크고 환경이 유동적이므로, 현재의 고정된 구속 조건보다는 더 적응적인(Adaptive) 시스템이 요구된다.
 - **단일 시연의 충분성**: 단 하나의 시연만으로 구속 조건을 추출하는 것이 모든 작업에 일반화될 수 있는지에 대한 추가 연구가 필요하다.

@@ -21,11 +21,14 @@ Pedro Pessoa, Paul Campitelli, Douglas P. Shepherd, S. Banu Ozkan, Steve Pressé
 ## 🛠️ Methodology
 
 ### 전체 구조 및 파이프라인
+
 Mamba-ProbTSF는 두 개의 서로 다른 신경망으로 구성된 이중 네트워크 구조를 가진다.
+
 1. **평균 예측 네트워크 ($\mu$-network):** S-Mamba 아키텍처를 사용하여 미래의 예측 궤적 $\mu_{1:T}^{\phi_\mu}(x_{1:P})$를 생성한다.
 2. **불확실성 추정 네트워크 ($\sigma$-network):** Fully Connected (FC) 신경망을 사용하며, 마지막 레이어에 $\text{softplus}$ 활성화 함수를 적용하여 출력값이 항상 양수가 되도록 하여 표준편차 $\sigma_{1:T}^{\phi_\sigma}(x_{1:P})$를 추정한다.
 
 ### 확률 모델 및 손실 함수
+
 본 모델은 미래 값의 조건부 분포가 가우시안 분포를 따른다고 가정한다.
 $$x_{P+\tau} | x_{1:P} \sim \text{Normal}(\mu_{\phi_\mu}^\tau(x_{1:P}), (\sigma_{\phi_\sigma}^\tau(x_{1:P}))^2)$$
 
@@ -33,10 +36,12 @@ $$x_{P+\tau} | x_{1:P} \sim \text{Normal}(\mu_{\phi_\mu}^\tau(x_{1:P}), (\sigma_
 $$L(\phi_\mu, \phi_\sigma) = \frac{1}{N} \sum_{n=1}^N \sum_{\tau=1}^T \left[ \frac{1}{2} \left( \frac{x_{P+\tau}^n - \mu_{\phi_\mu}^\tau(x_{1:P}^n)}{\sigma_{\phi_\sigma}^\tau(x_{1:P}^n)} \right)^2 + \log \sigma_{\phi_\sigma}^\tau(x_{1:P}^n) \right]$$
 
 ### 학습 절차
+
 1. **$\mu$-network 사전 학습:** 불확실성을 고려하기 전, 점 예측 오차만을 최소화하는 $L^{pre}$ 손실 함수를 통해 $\mu$-network의 파라미터를 먼저 안정화한다.
 2. **결합 확률 학습:** 사전 학습된 $\mu$-network와 초기화된 $\sigma$-network를 함께 사용하여 위에서 정의한 NLL 손실 함수 $L$을 기반으로 전체 모델을 최적화한다.
 
 ### 성능 측정 지표 (Standardized Residuals)
+
 모델이 학습한 분포가 실제 데이터와 일치하는지 확인하기 위해 표준화 잔차(Standardized Residual) $z$를 정의한다.
 $$z_\tau^n = \frac{x_{P+\tau}^n - \mu_{\phi_\mu}^\tau(x_{1:P}^n)}{\sigma_{\phi_\sigma}^\tau(x_{1:P}^n)}$$
 모델이 정확하게 학습되었다면 $z$는 평균 0, 분산 1인 표준 정규 분포 $\mathcal{N}(0, 1)$를 따라야 한다. 이를 위해 **KL 발산(Kullback-Leibler divergence)**과 **잔차의 분산**을 측정하여 모델의 캘리브레이션 상태를 평가한다.
@@ -44,12 +49,14 @@ $$z_\tau^n = \frac{x_{P+\tau}^n - \mu_{\phi_\mu}^\tau(x_{1:P}^n)}{\sigma_{\phi_\
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** 합성 데이터(Sines, Van der Pol), 실제 데이터(Electricity, Traffic)
 - **비교 대상:** 결정론적 S-Mamba, 서로 다른 $\sigma$-network 아키텍처(S-Mamba vs FC)
 - **지표:** KL 발산, 잔차 분산, 예측 구간 내 실제 데이터 포함 비율(Coverage), MAE
 
 ### 주요 결과
-1. **합성 데이터 (Sines, Van der Pol):** 
+
+1. **합성 데이터 (Sines, Van der Pol):**
    - 가우시안 노이즈가 추가된 결정론적 시스템에서 매우 뛰어난 성능을 보였다.
    - KL 발산이 $10^{-3}$에서 $10^{-4}$ 수준으로 매우 낮았으며, 잔차 분산이 1에 가깝게 유지되어 확률 분포를 거의 완벽하게 복원했다.
 2. **실제 데이터 (Electricity, Traffic):**
@@ -62,9 +69,11 @@ $$z_\tau^n = \frac{x_{P+\tau}^n - \mu_{\phi_\mu}^\tau(x_{1:P}^n)}{\sigma_{\phi_\
 ## 🧠 Insights & Discussion
 
 ### 강점 및 성과
+
 본 연구는 Mamba의 효율적인 시퀀스 모델링 능력에 확률적 프레임워크를 결합하여, 실제 세계의 복잡한 시계열 데이터에서도 신뢰할 수 있는 불확실성 구간을 제공할 수 있음을 증명했다. 특히, $\sigma$-network로 S-Mamba 대신 FC 네트워크를 사용했을 때 실제 데이터에서 더 안정적인 결과를 얻었다는 점은, 불확실성의 동역학이 반드시 SSM이 가정하는 잠재 미분 방정식 형태로 나타나지 않을 수 있음을 시사한다.
 
 ### 한계 및 비판적 해석
+
 가장 명확한 한계는 **순수 확률적 역학(Purely Stochastic Dynamics)**에 대한 취약성이다. SSM은 기본적으로 '결정론적인 잠재 상태'가 존재하고 그 위에 노이즈가 더해진 형태를 가정한다. 하지만 브라운 운동처럼 무작위성이 시스템 진화의 핵심인 경우, SSM의 구조적 가정만으로는 불확실성의 누적을 표현하기 어렵다.
 
 또한, 실제 데이터에서 가우시안 분포를 가정하는 것은 일종의 단순화이다. 비록 최대 엔트로피 원리에 의해 가우시안이 가장 편향되지 않은 선택지일 수 있으나, 실제 데이터의 꼬리 부분(Tail)이 두꺼운 경우(Heavy-tailed) 보수적인 예측이 나타나는 원인이 된다.

@@ -29,6 +29,7 @@ Daijin Yang, Erica Kleinman, and Casper Harteveld (2025)
 본 연구는 Scoping Review 방법론을 채택하여 다음과 같은 절차로 진행되었다.
 
 ### 1. 데이터 수집 및 스크리닝
+
 - **검색 키워드**: "game" 및 "GPT"
 - **대상 데이터베이스**: ACM Digital Library, IEEE Xplore, Springer, AAAI (Google Scholar 이용)
 - **선별 기준**:
@@ -38,37 +39,44 @@ Daijin Yang, Erica Kleinman, and Casper Harteveld (2025)
 - **결과**: 1차 검색 결과 5,988편 중 최종적으로 177편의 논문이 선정되었다.
 
 ### 2. 분석 방법 (Coding)
+
 - **Open Coding**: 선정된 논문들을 대상으로 GPT가 생성한 콘텐츠, 게임 시스템에서의 활용 방식, 사용자 상호작용 방식을 코딩하여 범주화하였다.
 - **분류 체계**: 이전 연구에서 도출된 5가지 주요 범주(PCG, MIGDD, MIG, PG, GUR)를 유지하되, 최신 논문에서 나타난 새로운 상호작용 방식을 반영하여 하위 범주(Subcategories)를 업데이트하였다.
 
 ## 📊 Results
 
 ### 1. 일반적인 사용 트렌드
+
 - **양적 성장**: 2023년 39편에서 2024년 122편으로 연구 수가 급증하였으며, GPT-3.5 및 GPT-4 모델에 대한 의존도가 높아졌다.
 - **방법론적 변화**: 단순 텍스트 생성을 넘어 Prompt Engineering, Retrieval-Augmented Generation (RAG), Fine-tuning, Multi-GPT framework 등이 도입되어 출력의 불안정성과 환각(Hallucination) 문제를 해결하려는 시도가 증가하였다.
 
 ### 2. 5대 주요 응용 분야 상세 분석
 
 #### ① Procedural Content Generation (PCG)
+
 - **텍스트 콘텐츠**: 스토리 생성 연구가 주를 이루며, 최신 연구들은 게임 상태(World State)와 플레이어 입력을 실시간으로 반영하는 적응형 서사 생성에 집중한다.
 - **퀘스트 및 레벨 생성**: GPT-2 기반의 Fine-tuning에서 GPT-4 기반의 Prompt Engineering으로 전환되었으며, 최근에는 3D Minecraft 건물 생성과 같이 구조화된 데이터(JSON)를 생성하는 방식이 등장하였다.
 - **캐릭터 생성**: 단순 설정을 넘어 캐릭터의 성격과 배경지식을 유지하며 행동하게 하는 '드라이빙' 연구가 증가하였다. 특히 단기/장기 메모리 저장 메커니즘을 통해 일관성을 유지하려는 시도가 보인다.
 
 #### ② Mixed-Initiative Game Design and Development (MIGDD)
+
 - **시나리오 작성**: 디자이너의 숙련도에 따라 지원 수준을 조절하는 맞춤형 지원 시스템이 제안되었다.
 - **메카닉 및 규칙 설계**: VGDL(Game Description Language)과 같은 특정 언어로의 변환을 위해 2단계 디코딩(Rule $\rightarrow$ Description) 프로세스를 사용하는 등 정확도를 높이는 방향으로 발전하였다.
 - **프로그래밍 지원**: VR 개발과 같은 특수 환경의 코딩 지원 및 Deep Reinforcement Learning(DRL)의 보상 함수(Reward Function)를 자동으로 생성하는 도구로 활용된다.
 
 #### ③ Mixed-Initiative Gameplay (MIG)
+
 - **서사 공동 창작(Co-creation)**: 단순 재미를 넘어 기후 변화, 의료, AI 교육 등 'Serious Games' 영역으로 확장되어 사회적 이슈를 탐구하는 도구로 사용된다.
 - **피드백 및 가이드**: 교육용 게임에서 학습자에게 개인화된 피드백을 제공하거나, 플레이어의 내면 독백(Inner Monologue)을 생성하여 몰입감을 높이는 사례가 확인되었다.
 - **게임 마스터(GM) 지원**: TTRPG에서 GM의 업무를 보조하거나, 완전히 독립적인 AI GM으로서 게임을 운영하는 실험이 진행되었다.
 
 #### ④ Playing Games (PG)
+
 - **텍스트 기반 게임**: 논리적 추론과 사회적 인지 능력을 테스트하는 용도로 활용되며, 유머 생성과 같은 창의적 도약(Leap-of-Thought) 능력의 한계를 극복하기 위한 CLoT 패러다임 등이 제안되었다.
 - **비 텍스트 기반 게임**: 바둑, 체스부터 Angry Birds, Doom과 같은 액션 게임까지 확장되었다. 특히 Doom의 경우 스크린샷을 텍스트 명령어로 변환하여 플레이하지만, 장기적 계획 수립과 공간 인지 능력에서는 여전히 한계를 보인다.
 
 #### ⑤ Game User Research (GUR)
+
 - **리뷰 분석**: 게임 리뷰에서 명시적/암시적 제안을 추출하는 Suggestion Mining 및 독성 메시지(Toxicity) 분류에 활용된다.
 - **행동 분석**: 플레이어의 행동이 캐릭터 설정과 일치하는지 분석하거나, 감정 변화를 예측하는 연구가 수행되었다.
 - **게임 추천**: 전통적인 ID 기반 추천에서 벗어나 스토리라인과 리뷰 등 텍스트 정보를 통합한 LLaRA 시스템 등이 제안되어 정확도와 다양성을 높였다.
@@ -76,11 +84,13 @@ Daijin Yang, Erica Kleinman, and Casper Harteveld (2025)
 ## 🧠 Insights & Discussion
 
 ### 1. 기술적 한계 확장 (Technical Boundaries)
+
 - **환경의 복잡성 증가**: 현재 GPT는 규칙이 명확하고 정적인 환경에서는 우수하지만, 실시간 전략(RTS) 게임이나 대규모 멀티플레이어 온라인 게임(MMO)과 같은 동적이고 개방된 환경에서의 적응력은 부족하다. 향후 연구는 실시간 자원 관리 및 전략적 판단이 필요한 환경으로 확장되어야 한다.
 - **Agentic LLM으로의 전환**: 단순한 Single-agent 프롬프팅에서 벗어나, 각기 다른 전문성을 가진 여러 GPT 에이전트가 협업하는 Multi-agent system(예: 전문가 에이전트와 비평가 에이전트의 협업)의 도입이 필요하다.
 - **Open-weight 모델의 가능성**: 보안, 비용, 수정 가능성 측면에서 proprietary 모델보다 효율적인 소규모 Open-weight 모델의 최적화 및 활용 연구가 중요해질 것이다.
 
 ### 2. 사용자 상호작용 역학 탐구 (Interaction Dynamics)
+
 - **경험 중심 PCG (EDPCG)**: 정량적 벤치마크 지표에 의존하는 현재의 평가 방식에서 벗어나, 플레이어의 실제 감정적 반응과 상호작용 경험을 반영하는 User-centered 평가 체계가 도입되어야 한다.
 - **가변적 지원 설계**: 디자이너의 숙련도나 가치관, 윤리적 프레임워크에 따라 AI의 지원 수준과 스타일을 동적으로 조정하는 맞춤형 도구 설계가 필요하다.
 - **심각한 게임(Serious Games)의 안전성**: 교육 및 사회적 이슈를 다루는 게임에서 GPT의 환각이나 편향된 서사가 발생할 경우 심각한 영향을 줄 수 있으므로, 내용의 정확성과 공정성을 보장하는 제어 메커니즘이 필수적이다.

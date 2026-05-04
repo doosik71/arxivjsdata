@@ -27,16 +27,18 @@ Bryan Chan, Karime Pereida, & James Bergstra (2023)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 논문은 **Multitask Imitation Learning (MTIL)** 프레임워크를 제안하며, 이는 크게 두 단계의 파이프라인으로 구성된다.
 
-1.  **훈련 단계 (Training Phase):** $T$개의 소스 작업에서 공통된 표현 $\hat{\phi}$를 학습한다.
-2.  **전이 단계 (Transfer Phase):** 학습된 $\hat{\phi}$를 고정(freeze)한 상태에서, 타겟 작업 $\tau$에 특화된 매핑 함수 $\hat{f}_\tau$만을 학습한다.
+1. **훈련 단계 (Training Phase):** $T$개의 소스 작업에서 공통된 표현 $\hat{\phi}$를 학습한다.
+2. **전이 단계 (Transfer Phase):** 학습된 $\hat{\phi}$를 고정(freeze)한 상태에서, 타겟 작업 $\tau$에 특화된 매핑 함수 $\hat{f}_\tau$만을 학습한다.
 
 정책 $\pi$는 다음과 같은 softmax 매개변수 구조를 가진다.
 $$\pi_{f, \phi}(s) = \text{softmax}((f \circ \phi)(s))$$
 여기서 $\phi \in \Phi$는 공유 표현(representation)이며, $f \in F$는 작업별 매핑(task-specific mapping)이다.
 
 ### 학습 및 손실 함수
+
 훈련 단계에서는 모든 소스 작업에 대해 다음과 같은 **Empirical Training Risk**를 최소화하는 $\hat{\phi}$를 찾는다.
 $$\hat{R}_{\text{train}}(f, \phi) := \frac{1}{NT} \sum_{t=1}^{T} \sum_{n=1}^{N} \ell(\pi_{f_t, \phi}(s_{t,n}), a_{t,n}) \quad (1)$$
 여기서 $\ell$은 log loss로 정의되며, 이는 전문가와 학습자 사이의 KL-divergence를 최소화하는 것과 같다.
@@ -45,10 +47,12 @@ $$\hat{R}_{\text{train}}(f, \phi) := \frac{1}{NT} \sum_{t=1}^{T} \sum_{n=1}^{N} 
 $$\hat{R}_{\text{test}}(f_\tau, \phi) := \frac{1}{M} \sum_{m=1}^{M} \ell(\pi_{f_\tau, \phi}(s_m), a_m) \quad (2)$$
 
 ### 이론적 보장 및 주요 방정식
+
 본 논문의 핵심인 **Theorem 1**은 타겟 작업의 정책 오차(Policy Error)의 상한선을 다음과 같이 제시한다.
 $$\text{Policy Error} = \|v^{\pi^*_\tau} - v^{\text{softmax}(\hat{f}_\tau \circ \hat{\phi})}\|_\infty \le \frac{2}{\sqrt{2}(1-\gamma)^2} \sqrt{\epsilon_{\text{gen}}} + 2\zeta \quad (3)$$
 여기서 $\epsilon_{\text{gen}}$은 일반화 오차(generalization error)이며, 다음과 같은 복잡도를 가진다.
 $$\epsilon_{\text{gen}} = O\left(\frac{1}{\sqrt{\sigma^2 NT}}, \frac{1}{\sqrt{M}}, \frac{R_{NT}(\Phi)}{\sigma}\right)$$
+
 - $R_{NT}(\Phi)$: 표현 클래스의 Rademacher complexity.
 - $\sigma$: 소스 작업들의 다양성(diversity). $\sigma$가 클수록 전이 효율이 높아진다.
 - $N, T, M$: 각각 소스 작업당 데이터 수, 소스 작업 수, 타겟 데이터 수이다.
@@ -58,21 +62,25 @@ $$\epsilon_{\text{gen}} = O\left(\frac{1}{\sqrt{\sigma^2 NT}}, \frac{1}{\sqrt{M}
 ## 📊 Results
 
 ### 실험 설정
+
 - **환경:** Frozen Lake, Pendulum, Cheetah, Walker 4종의 시뮬레이션 환경을 사용하였다.
 - **비교 대상:** 처음부터 학습하는 Behavioural Cloning(BC)과 제안된 Multitask Behavioural Cloning(MTBC)을 비교하였다.
 - **지표:** Normalized Returns를 통해 성능을 측정하였다.
 - **변수:** 소스 작업의 수 $T$, 소스 데이터 $N$, 타겟 데이터 $M$을 각각 변화시키며 분석하였다.
 
 ### 주요 결과
-1.  **소스 작업의 영향 (Figure 1):** 타겟 데이터 $M$을 고정한 상태에서 $N$과 $T$를 증가시킨 결과, MTBC의 성능이 전반적으로 향상되었으며 특히 Cheetah와 Walker 같은 복잡한 환경에서 BC보다 월등한 성능을 보였다.
-2.  **타겟 데이터의 영향 (Figure 2):** 소스 데이터 $N$을 충분히 확보한 상태에서 타겟 데이터 $M$을 늘렸을 때, 성능 향상 폭이 매우 적었다. 이는 높은 성능이 주로 소스 작업의 데이터와 다양성에서 기인한 표현 $\hat{\phi}$ 덕분이며, 타겟 작업의 매핑 $f$를 학습하는 데는 상대적으로 적은 데이터로도 충분함을 의미한다.
+
+1. **소스 작업의 영향 (Figure 1):** 타겟 데이터 $M$을 고정한 상태에서 $N$과 $T$를 증가시킨 결과, MTBC의 성능이 전반적으로 향상되었으며 특히 Cheetah와 Walker 같은 복잡한 환경에서 BC보다 월등한 성능을 보였다.
+2. **타겟 데이터의 영향 (Figure 2):** 소스 데이터 $N$을 충분히 확보한 상태에서 타겟 데이터 $M$을 늘렸을 때, 성능 향상 폭이 매우 적었다. 이는 높은 성능이 주로 소스 작업의 데이터와 다양성에서 기인한 표현 $\hat{\phi}$ 덕분이며, 타겟 작업의 매핑 $f$를 학습하는 데는 상대적으로 적은 데이터로도 충분함을 의미한다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 해석
+
 본 연구는 딥러닝의 관행이었던 '사전 학습 후 미세 조정(pre-train then fine-tune)' 전략이 모방 학습에서 어떻게 작동하는지를 수학적으로 정립하였다. 특히 타겟 데이터 $M$과 소스 데이터 $(N, T)$ 사이의 trade-off 관계를 명확히 함으로써, 데이터 수집이 어려운 환경에서 소스 작업의 다양성을 확보하는 것이 얼마나 중요한지를 시사한다.
 
 ### 한계 및 비판적 해석
+
 - **$\sigma$-diversity의 정량화 문제:** 이론적으로 $\sigma$가 중요함을 증명했으나, 실제 학습 전에 작업 간의 다양성 $\sigma$를 어떻게 수치적으로 측정할 수 있는지에 대한 실무적인 방법론은 제시되지 않았다.
 - **공유 표현의 가정:** 모든 작업이 하나의 공유 표현 $\phi^*$를 가진다는 가정을 전제로 한다. 하지만 실제 환경에서는 작업마다 최적의 표현이 다를 수 있으며, 저자 또한 이를 해결하기 위해 향후 Meta-learning 관점에서의 접근(작업별 표현을 기준 표현의 근방에 두는 방식)이 필요함을 언급하였다.
 

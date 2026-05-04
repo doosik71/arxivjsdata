@@ -4,7 +4,7 @@ Xinghao Chen, Zhijing Sun, Wenjin Guo, Miaoran Zhang, Yanjun Chen, Yirong Sun, H
 
 ## 🧩 Problem to Solve
 
-본 논문은 Large Language Models (LLMs)의 추론 능력을 향상시키는 Chain-of-Thought (CoT) 프롬프팅의 높은 계산 비용 문제를 해결하기 위해, 이를 Small Language Models (SLMs)로 증류(Distillation)하는 최적의 방법에 대해 탐구한다. 
+본 논문은 Large Language Models (LLMs)의 추론 능력을 향상시키는 Chain-of-Thought (CoT) 프롬프팅의 높은 계산 비용 문제를 해결하기 위해, 이를 Small Language Models (SLMs)로 증류(Distillation)하는 최적의 방법에 대해 탐구한다.
 
 현재 CoT 능력을 SLM에 전이시키려는 시도는 많았으나, 어떤 교사 모델(Teacher Model)을 선택하고, 어느 정도의 상세함(Granularity)으로 가르치며, 어떤 형식(Format)으로 데이터를 구성해야 하는지에 대한 체계적인 분석이 부족했다. 따라서 본 연구의 목표는 SLM의 추론 능력 최적화를 위해 CoT 증류에 영향을 미치는 핵심 요소인 교사 모델, 추론의 상세도, 그리고 추론 형식을 시스템적으로 분석하고 최적의 전략을 제시하는 것이다.
 
@@ -28,6 +28,7 @@ Xinghao Chen, Zhijing Sun, Wenjin Guo, Miaoran Zhang, Yanjun Chen, Yirong Sun, H
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조 및 문제 정의
+
 본 연구는 추론 데이터셋 $D = \{(x_i, y_i)\}_{i=1}^N$에 대해, 학생 모델 $S$가 입력 $x_i$에 대해 정답 $y_i$를 도출하기 위한 중간 추론 단계 $C_i$를 생성하도록 학습시키는 것을 목표로 한다. 학습을 위한 손실 함수(Loss Function)는 다음과 같이 정의된다.
 
 $$L_{distill} = \sum_{i=1}^{N} L(S(x_i), C_{T,g,f}(x_i) \oplus y_i)$$
@@ -37,22 +38,28 @@ $$L_{distill} = \sum_{i=1}^{N} L(S(x_i), C_{T,g,f}(x_i) \oplus y_i)$$
 ### 2. 주요 구성 요소 및 변수 제어
 
 #### 가. 추론 상세도 (Granularity, $g$)
+
 추론 과정의 세밀함을 6단계(Level 1 $\rightarrow$ Level 6)로 구분하였다.
+
 - **Level 1 (Concise)**: 정답에 도달하기 위한 최소한의 필수 단계만 포함.
 - **Level 6 (Comprehensive)**: 모든 가능한 세부 단계와 추가 설명, 검증 과정을 포함한 가장 상세한 형태.
 
 #### 나. 추론 형식 (Format, $f$)
+
 다음 네 가지 형식을 비교 분석하였다.
+
 - **Original CoT**: 일반적인 자연어 단계별 추론.
 - **Least-to-most**: 복잡한 문제를 하위 문제(sub-problems)로 분해하여 순차적으로 해결.
 - **Rephrase and Respond (RaR)**: 질문의 모호성을 제거하기 위해 질문을 재구성한 후 답변.
 - **Symbolic CoT**: 자연어를 기호 논리(symbolic logic, 예: $\forall, \exists, \Rightarrow$)로 변환하여 추론.
 
 #### 다. 교사 모델 (Teacher, $T$)
+
 - **LLM 교사**: GPT-4o, Gemini-1.5-Flash, LLaMA 3 70B.
 - **인간 교사**: 인간 전문가가 작성한 ground-truth CoT 데이터.
 
 ### 3. 학습 및 실험 절차
+
 - **데이터 생성**: 1-shot 프롬프팅을 통해 교사 모델로부터 각 설정별 CoT 데이터를 수집하였다.
 - **학생 모델**: BLOOM (560M, 1.1B, 1.7B, 3B), LLaMA 3.2 (1B, 3B), Gemma (2B) 등 다양한 크기의 SLM을 사용하였다.
 - **평가 지표**: 수학적 추론(SVAMP, GSM8K, AQuA-RAT, MATH) 및 상식 추론(CSQA, OBQA, STQA) 데이터셋에 대해 Accuracy를 측정하였다.
@@ -60,29 +67,35 @@ $$L_{distill} = \sum_{i=1}^{N} L(S(x_i), C_{T,g,f}(x_i) \oplus y_i)$$
 ## 📊 Results
 
 ### 1. 상세도(Granularity)의 영향
+
 - **비단조적(Non-monotonic) 관계**: 대부분의 SLM은 중간 단계의 상세도에서 정점을 찍고, 너무 상세해지면 오히려 성능이 하락하는 경향을 보였다.
 - **모델 역량별 차이**: Gemma 2B나 LLaMA 3.2 3B 같은 상대적으로 강한 SLM은 높은 상세도에서도 성능 이득을 얻었으나, BLOOM과 같은 약한 모델은 단순한 CoT에서 더 좋은 성능을 보였다.
 - **길이 효과 배제**: 단순한 토큰 길이 증가가 성능 향상을 가져오는 것인지 확인하기 위해, 낮은 상세도 데이터에 무의미한 필러(filler)를 채워 길이를 맞춘 실험을 진행했으나 성능 향상이 없었다. 이는 **길이가 아닌 '정보의 밀도(Granularity)'**가 핵심임을 시사한다.
 
 ### 2. 형식(Format)의 영향
+
 - **원본 CoT의 우세**: 복잡한 형식(Symbolic, RaR 등)보다 단순한 Original CoT가 전반적으로 가장 높은 성능을 기록하였다.
 - **태스크별 특이성**: RaR은 상식 추론에서, Least-to-most는 일부 수학 문제에서 이득이 있었으나 일반화되지는 않았다. 이는 SLM의 사전 학습 데이터에 이러한 특수 형식이 부족하여 학습 효율이 낮기 때문으로 분석된다.
 
 ### 3. 교사 모델의 영향
+
 - **성능 불일치**: 교사 모델의 정확도가 높다고 해서 항상 학생 모델의 성능이 비례해서 올라가지는 않았다.
-- **태스크별 소스 차이**: 
-    - **수학적 추론**: LLM이 생성한 구조화된 CoT가 인간의 데이터보다 더 효과적이었다.
-    - **상식 추론**: 인간이 작성한 데이터가 맥락적 이해와 창의적 추론 면에서 LLM보다 우수하여 학생 모델의 성능을 더 높였다.
+- **태스크별 소스 차이**:
+  - **수학적 추론**: LLM이 생성한 구조화된 CoT가 인간의 데이터보다 더 효과적이었다.
+  - **상식 추론**: 인간이 작성한 데이터가 맥락적 이해와 창의적 추론 면에서 LLM보다 우수하여 학생 모델의 성능을 더 높였다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. SLM의 '근접 발달 영역 (Zone of Proximal Development, ZPD)'
+
 본 논문은 Vygotsky의 ZPD 이론을 딥러닝에 접목하여 설명한다. 모델의 역량에 따라 흡수할 수 있는 지식의 복잡도가 다르며, 모델의 ZPD를 벗어난 지나치게 복잡한 추론 단계는 오히려 노이즈로 작용하여 학습을 방해한다.
 
 ### 2. 매튜 효과 (Matthew Effect)
+
 강한 학생 모델일수록 CoT 증류를 통해 더 큰 성능 향상을 얻는 '부익부 빈익빈' 현상이 관찰되었다. 이는 모델의 기본 파라미터 용량이 클수록 복잡한 추론 구조를 내재화할 수 있는 능력이 크기 때문이다.
 
 ### 3. 비판적 해석
+
 - **강점**: 단순히 "더 좋은 모델로 증류하라"는 통념을 깨고, 학생 모델의 역량과 태스크의 성격에 맞춘 **'맞춤형 증류 전략'**의 필요성을 체계적으로 입증하였다.
 - **한계**: 일부 안전 필터링으로 인해 데이터 생성이 거부된 사례가 있으며, 교사 모델이 정답으로부터 역으로 추론 과정을 생성(reverse-engineering)하는 과정에서 발생하는 불완전한 추론 체인의 문제가 존재한다.
 

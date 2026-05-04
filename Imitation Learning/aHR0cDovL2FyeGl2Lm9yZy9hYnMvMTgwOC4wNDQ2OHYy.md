@@ -23,12 +23,14 @@ Jonathan Lacotte, Mohammad Ghavamzadeh, Yinlam Chow, Marco Pavone (2018)
 ## 🛠️ Methodology
 
 ### 1. 위험 척도 정의
+
 본 논문에서는 위험을 측정하기 위해 $\text{VaR}$(Value-at-Risk)와 $\text{CVaR}$를 사용한다. 신뢰 수준 $\alpha \in (0,1]$에 대해 $\text{CVaR}$는 다음과 같이 정의된다.
 $$\rho_\alpha[C^\pi] = \inf_{\nu \in \mathbb{R}} \left\{ \nu + \frac{1}{\alpha} \mathbb{E}[(C^\pi - \nu)^+] \right\}$$
 여기서 $C^\pi$는 정책 $\pi$ 하에서의 손실 랜덤 변수이며, $x^+ = \max(x, 0)$이다. 또한, 평균 성능과 위험의 절충안을 위해 다음과 같은 통합 위험 척도 $\rho_\lambda^\alpha$를 도입한다.
 $$\rho_\lambda^\alpha[C^\pi] = \frac{\mathbb{E}[C^\pi] + \lambda \rho_\alpha[C^\pi]}{1 + \lambda}$$
 
 ### 2. RS-GAIL 최적화 문제
+
 에이전트의 목표는 전문가의 비용 함수 $c$를 모르는 상태에서 다음 문제를 해결하는 것이다.
 $$\min_\pi \mathbb{E}[C^\pi], \quad \text{s.t. } \rho_\alpha[C^\pi] \le \rho_\alpha[C^\pi_E]$$
 이를 라그랑주 완화(Lagrangian relaxation)와 최대 인과 엔트로피(Maximum Causal Entropy) 프레임워크에 적용하여 다음과 같은 RS-GAIL 목적 함수를 도출한다.
@@ -38,44 +40,51 @@ $$L_\lambda(\pi, \pi^E) = \sup_{f \in \mathcal{C}} (1 + \lambda) (\rho_\lambda^\
 $\psi(f)$는 비용 함수에 대한 볼록 정규화 항(Convex regularizer)이다.
 
 ### 3. 변형 알고리즘: JS-RS-GAIL 및 W-RS-GAIL
+
 저자들은 정규화 항 $\psi(f)$의 선택에 따라 두 가지 버전을 제안한다.
 
-*   **JS-RS-GAIL**: JS 발산을 사용하여 왜곡된 점유 측정치 집합 $D_\pi^\xi$와 $D_{\pi_E}^\xi$를 매칭한다.
+* **JS-RS-GAIL**: JS 발산을 사용하여 왜곡된 점유 측정치 집합 $D_\pi^\xi$와 $D_{\pi_E}^\xi$를 매칭한다.
     $$(1 + \lambda) \sup_{f: S \times A \to (0,1)} \rho_\lambda^\alpha[F^\pi_{1,f}] - \rho_\lambda^\alpha[-F^{\pi_E}_{2,f}]$$
-*   **W-RS-GAIL**: Wasserstein 거리를 사용하여 두 집합을 매칭한다.
+* **W-RS-GAIL**: Wasserstein 거리를 사용하여 두 집합을 매칭한다.
     $$(1 + \lambda) \sup_{f \in \mathcal{F}_1} \rho_\lambda^\alpha[C^\pi_f] - \rho_\lambda^\alpha[C^{\pi_E}_f]$$
     여기서 $\mathcal{F}_1$은 1-Lipschitz 함수 집합이다.
 
 ### 4. 학습 절차
+
 알고리즘은 TRPO(Trust Region Policy Optimization)를 기반으로 하며, 다음 과정을 반복한다.
-1.  현재 정책 $\pi_\theta$를 통해 궤적을 생성한다.
-2.  $\text{VaR}$ 값을 추정하고, Adam 옵티마이저를 사용하여 비용 함수(Discriminator) 파라미터 $w$를 업데이트(Gradient Ascent)한다.
-3.  KL-제한(KL-constrained) 하에서 정책 파라미터 $\theta$를 업데이트(Gradient Descent)하여 목적 함수를 최소화한다.
+
+1. 현재 정책 $\pi_\theta$를 통해 궤적을 생성한다.
+2. $\text{VaR}$ 값을 추정하고, Adam 옵티마이저를 사용하여 비용 함수(Discriminator) 파라미터 $w$를 업데이트(Gradient Ascent)한다.
+3. KL-제한(KL-constrained) 하에서 정책 파라미터 $\theta$를 업데이트(Gradient Descent)하여 목적 함수를 최소화한다.
 
 ## 📊 Results
 
 ### 1. 실험 환경 및 설정
-*   **데이터셋/태스크**: OpenAI classical control (CartPole, Pendulum) 및 MuJoCo (Hopper, Walker).
-*   **스토캐스틱성 주입**: 원래 결정론적인 환경에 액션 노이즈나 비용 함수 노이즈를 추가하여 위험 민감도 평가가 가능하도록 설정하였다.
-*   **기준선(Baselines)**: GAIL, RAIL.
-*   **지표**: 평균(Mean), $\text{VaR}_\alpha$, $\text{CVaR}_\alpha$, 그리고 최종 목표인 $\rho_\lambda^\alpha$.
+
+* **데이터셋/태스크**: OpenAI classical control (CartPole, Pendulum) 및 MuJoCo (Hopper, Walker).
+* **스토캐스틱성 주입**: 원래 결정론적인 환경에 액션 노이즈나 비용 함수 노이즈를 추가하여 위험 민감도 평가가 가능하도록 설정하였다.
+* **기준선(Baselines)**: GAIL, RAIL.
+* **지표**: 평균(Mean), $\text{VaR}_\alpha$, $\text{CVaR}_\alpha$, 그리고 최종 목표인 $\rho_\lambda^\alpha$.
 
 ### 2. 정량적 결과
-*   **JS-RS-GAIL의 우수성**: 모든 태스크에서 JS-RS-GAIL이 $\rho_\lambda^\alpha$ 지표에서 GAIL과 RAIL보다 뛰어난 성능을 보였다. 특히 상위 10개 정책을 평균 낸 결과에서 통계적으로 유의미한 우위가 나타났다.
-*   **RAIL과의 비교**: RAIL은 평균 성능은 어느 정도 따라가지만, 위험 지표($\text{CVaR}$) 관점에서는 RS-GAIL보다 성능이 낮았다.
-*   **W-RS-GAIL의 특성**: W-RS-GAIL은 W-GAIL보다는 우수했으나, JS 기반 알고리즘보다는 전반적으로 낮은 성능을 보였다. 이는 작은 네트워크 구조에서 Lipschitz 연속성을 유지하기 위한 Weight clipping이 표현력을 제한했기 때문으로 분석된다.
+
+* **JS-RS-GAIL의 우수성**: 모든 태스크에서 JS-RS-GAIL이 $\rho_\lambda^\alpha$ 지표에서 GAIL과 RAIL보다 뛰어난 성능을 보였다. 특히 상위 10개 정책을 평균 낸 결과에서 통계적으로 유의미한 우위가 나타났다.
+* **RAIL과의 비교**: RAIL은 평균 성능은 어느 정도 따라가지만, 위험 지표($\text{CVaR}$) 관점에서는 RS-GAIL보다 성능이 낮았다.
+* **W-RS-GAIL의 특성**: W-RS-GAIL은 W-GAIL보다는 우수했으나, JS 기반 알고리즘보다는 전반적으로 낮은 성능을 보였다. 이는 작은 네트워크 구조에서 Lipschitz 연속성을 유지하기 위한 Weight clipping이 표현력을 제한했기 때문으로 분석된다.
 
 ## 🧠 Insights & Discussion
 
 본 논문은 위험 민감적 모방 학습에서 단순히 에이전트의 위험을 줄이는 것이 아니라, **전문가의 위험 프로필 자체를 학습하는 것**이 얼마나 중요한지를 이론적, 실험적으로 증명하였다.
 
 **강점 및 해석**:
-*   **이론적 기여**: 위험 척도를 점유 측정치 매칭 문제로 변환하여 GAIL의 프레임워크 내에서 해결할 수 있음을 수학적으로 보였다. 특히 Theorem 3를 통해 단순 점유 측정치 매칭만으로는 $\text{CVaR}$ 차이를 줄일 수 없음을 증명하여 본 연구의 필요성을 뒷받침하였다.
-*   **비판적 분석**: RAIL이 전문가의 위험 성향을 무시하고 평균 점유 측정치와 매칭한다는 점을 명확히 짚어내어, 진정한 의미의 '위험 민감적 모방'이 무엇인지 정의하였다.
+
+* **이론적 기여**: 위험 척도를 점유 측정치 매칭 문제로 변환하여 GAIL의 프레임워크 내에서 해결할 수 있음을 수학적으로 보였다. 특히 Theorem 3를 통해 단순 점유 측정치 매칭만으로는 $\text{CVaR}$ 차이를 줄일 수 없음을 증명하여 본 연구의 필요성을 뒷받침하였다.
+* **비판적 분석**: RAIL이 전문가의 위험 성향을 무시하고 평균 점유 측정치와 매칭한다는 점을 명확히 짚어내어, 진정한 의미의 '위험 민감적 모방'이 무엇인지 정의하였다.
 
 **한계점**:
-*   **샘플 효율성**: $\text{CVaR}$와 같은 꼬리 부분(Tail)의 위험 척도를 학습하기 위해서는 일반적인 RL보다 훨씬 많은 샘플(전문가 궤적 100개 사용)이 필요하며, 이는 여전히 해결해야 할 과제로 남아있다.
-*   **네트워크 민감도**: Wasserstein 기반 방식이 복잡한 문제에서는 더 나을 수 있다는 가설을 제시했으나, 본 실험의 소규모 네트워크에서는 JS 방식보다 성능이 낮게 나왔다.
+
+* **샘플 효율성**: $\text{CVaR}$와 같은 꼬리 부분(Tail)의 위험 척도를 학습하기 위해서는 일반적인 RL보다 훨씬 많은 샘플(전문가 궤적 100개 사용)이 필요하며, 이는 여전히 해결해야 할 과제로 남아있다.
+* **네트워크 민감도**: Wasserstein 기반 방식이 복잡한 문제에서는 더 나을 수 있다는 가설을 제시했으나, 본 실험의 소규모 네트워크에서는 JS 방식보다 성능이 낮게 나왔다.
 
 ## 📌 TL;DR
 

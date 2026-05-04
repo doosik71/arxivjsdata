@@ -16,8 +16,8 @@ Jiaming Lv, Haoyuan Yang, Peihua Li (2024)
 
 본 논문의 핵심 아이디어는 전송 비용(transport cost)의 개념을 가진 Wasserstein Distance를 KD에 적용하여, 단순한 점별(point-wise) 비교를 넘어선 분포 간의 최적 운송(Optimal Transport) 관점에서 지식을 전달하는 것이다.
 
-1.  **WKD-L (Logit Distillation):** 이산적 WD(Discrete WD)를 사용하여 예측 확률 분포를 일치시킨다. 특히 Centered Kernel Alignment (CKA)를 통해 클래스 간의 상호관계를 정량화하고, 이를 WD의 전송 비용으로 설정함으로써 클래스 간의 의미적 유사성을 증류 과정에 명시적으로 반영한다.
-2.  **WKD-F (Feature Distillation):** 연속적 WD(Continuous WD)를 사용하여 중간 계층의 특징 분포를 일치시킨다. 특징 분포를 가우시안(Gaussian) 분포로 모델링하고, 가우시안 공간에서의 리만 메트릭(Riemannian metric)인 WD를 통해 특징의 기하학적 구조를 보존하며 지식을 전달한다.
+1. **WKD-L (Logit Distillation):** 이산적 WD(Discrete WD)를 사용하여 예측 확률 분포를 일치시킨다. 특히 Centered Kernel Alignment (CKA)를 통해 클래스 간의 상호관계를 정량화하고, 이를 WD의 전송 비용으로 설정함으로써 클래스 간의 의미적 유사성을 증류 과정에 명시적으로 반영한다.
+2. **WKD-F (Feature Distillation):** 연속적 WD(Continuous WD)를 사용하여 중간 계층의 특징 분포를 일치시킨다. 특징 분포를 가우시안(Gaussian) 분포로 모델링하고, 가우시안 공간에서의 리만 메트릭(Riemannian metric)인 WD를 통해 특징의 기하학적 구조를 보존하며 지식을 전달한다.
 
 ## 📎 Related Works
 
@@ -65,24 +65,27 @@ $$L_{WKD\text{-}F} = \gamma D_{mean}(\mu^T, \mu^S) + D_{cov}(\Sigma^T, \Sigma^S)
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** ImageNet, CIFAR-100, MS-COCO.
 - **작업:** 이미지 분류(Image Classification), 객체 검출(Object Detection), 자기 지식 증류(Self-KD).
 - **지표:** Top-1 Accuracy, mAP.
 - **기준선:** KL-Div 기반(DKD, NKD, WTTM), 특징 기반(FitNet, CRD, ReviewKD).
 
 ### 주요 결과
-1.  **이미지 분류 (ImageNet/CIFAR-100):**
+
+1. **이미지 분류 (ImageNet/CIFAR-100):**
     - WKD-L은 기존의 강력한 KL-Div 변형 모델들보다 우수한 성능을 보였다. 특히 ResNet34 $\to$ ResNet18 설정에서 Top-1 정확도를 향상시켰다.
     - WKD-F는 FitNet, CRD 등 기존 특징 증류 방법들을 크게 상회하였으며, 특히 CNN과 Transformer 간의 이기종(heterogeneous) 구조 증류에서 매우 강력한 성능을 보였다.
     - WKD-L과 WKD-F를 결합했을 때 가장 높은 성능을 기록하였다.
 
-2.  **객체 검출 (MS-COCO):**
+2. **객체 검출 (MS-COCO):**
     - Faster R-CNN 프레임워크에 적용한 결과, WKD-L과 WKD-F 모두 기존 방법들보다 높은 mAP를 달성하였다. 특히 WKD-F는 이전 최고 성능 모델인 ReviewKD를 유의미하게 앞질렀다.
 
-3.  **자기 지식 증류 (Self-KD):**
+3. **자기 지식 증류 (Self-KD):**
     - BAN(Born-Again Network) 프레임워크에서 WKD-L을 적용한 결과, 기존 KL-Div 기반의 BAN보다 약 0.9% 높은 정확도를 달성하여 일반화 능력을 입증하였다.
 
 ### 정량적 분석 및 효율성
+
 - **지연 시간(Latency):** WKD-L은 Sinkhorn 알고리즘으로 인해 KL-Div보다 약 1.3배 느리지만, WKD-F는 단순한 평균/분산 계산만 필요하므로 KL-Div와 유사한 속도를 보이며 ReviewKD보다 약 1.6배 빨랐다.
 
 ## 🧠 Insights & Discussion
@@ -91,6 +94,7 @@ $$L_{WKD\text{-}F} = \gamma D_{mean}(\mu^T, \mu^S) + D_{cov}(\Sigma^T, \Sigma^S)
 본 연구는 KL-Div의 'point-wise' 비교 방식에서 벗어나 'distribution-wise' 비교 방식으로 전환함으로써 KD의 성능을 한 단계 끌어올렸다. 특히 로짓 단계에서는 클래스 간 상호관계를 이용해 "개"가 "자동차"보다 "늑대"와 더 유사하다는 정보를 학습에 활용했고, 특징 단계에서는 리만 메트릭을 통해 특징 공간의 기하학적 구조를 보존했다는 점이 매우 고무적이다.
 
 **한계 및 비판적 해석:**
+
 - **계산 비용:** WKD-L의 경우 최적 운송 문제를 풀어야 하므로 계산 비용이 증가한다. 비록 GPU 병렬 연산으로 보완 가능하지만, 실시간 학습이 중요한 환경에서는 부담이 될 수 있다.
 - **분포 가정:** WKD-F는 특징 분포가 가우시안 분포를 따른다는 가정을 전제로 한다. 하지만 실제 딥러닝 모델의 고차원 특징이 반드시 가우시안 분포를 따르는지에 대해서는 명확한 근거가 부족하며, 이는 성능 최적화의 한계점으로 작용할 수 있다.
 - **하이퍼파라미터 민감도:** $\lambda, \gamma, \kappa, \tau$ 등 조정해야 할 하이퍼파라미터가 많아, 새로운 데이터셋이나 모델에 적용할 때 튜닝 비용이 발생할 가능성이 크다.

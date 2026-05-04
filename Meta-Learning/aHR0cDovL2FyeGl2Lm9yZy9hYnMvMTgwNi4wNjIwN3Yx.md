@@ -1,4 +1,4 @@
-# Meta-learning: searching in the model space.
+# Meta-learning: searching in the model space
 
 Włodzisław Duch and Karol Grudziński (2018)
 
@@ -17,11 +17,13 @@ Włodzisław Duch and Karol Grudziński (2018)
 ## 🛠️ Methodology
 
 ### SBM (Similarity-Based Methods) 프레임워크
+
 SBM은 새로운 사례와 학습 라이브러리에 있는 사례 간의 유사도를 계산하여 분류하는 모든 방법을 포함한다. 분류 모델 $M$은 다음과 같은 구성 요소들의 집합으로 정의된다.
 
 $$M=\{X(O), \Delta(\cdot, \cdot), D(\cdot, \cdot), k, G(D), \{R\}, \{p_i(R)\}, E[\cdot], K(\cdot), S(\cdot)\}$$
 
 각 요소의 역할은 다음과 같다.
+
 - $X(O)$: 특성 공간을 정의하고 관련 특성을 선택하는 매핑 함수이다.
 - $\Delta_j(X_j, Y_j)$: 개별 특성 $j$에 대한 유사도를 계산한다.
 - $D(X, Y)$: 개별 특성들의 유사도를 결합하여 벡터 간의 유사도(또는 거리)를 계산하는 함수이다.
@@ -40,6 +42,7 @@ $$D(X,Y)^\alpha = \sum_{i=1}^{n} s_i |X_i - Y_i|^\alpha$$
 여기서 $s_i$는 특성 가중치이며, $\alpha$는 거리 측정 방식(예: $\alpha=1$은 Manhattan, $\alpha=2$는 Euclidean)을 결정한다.
 
 ### Meta-learning 탐색 절차
+
 모델 공간에서의 탐색은 가장 단순한 모델(예: 기본 $k$-NN)에서 시작하여, 성능을 향상시킬 수 있는 확장 요소(Optimization Channel)를 단계적으로 추가하는 방식으로 진행된다.
 
 1. **초기화**: 초기 모델 풀(pool) $M=\{M_l\}$을 생성하고 검증 세트에서 정확도를 평가하여 내림차순으로 정렬한다. 가장 우수한 모델 $M_1$을 기준 모델(reference)로 설정한다.
@@ -52,11 +55,13 @@ $$D(X,Y)^\alpha = \sum_{i=1}^{n} s_i |X_i - Y_i|^\alpha$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Monk problems (인공 데이터), Hepatobiliary disorders (의료 데이터), Ionosphere data (전리층 데이터).
 - **지표**: Training accuracy (Leave-one-out 방식) 및 Test accuracy.
 - **비교 대상**: 기존의 $k$-NN, MLP, C4.5 decision tree, Naive Bayes 등.
 
 ### 주요 결과
+
 - **Monk-1 문제**: 기본 $k$-NN($k=1$, Euclidean)은 테스트 정확도 85.9%를 기록했으나, 특성 가중치 최적화와 Camberra 거리 함수를 적용한 결과 테스트 세트에서 100% 정확도를 달성하였다.
 - **Hepatobiliary disorders**: 매우 까다로운 데이터셋으로, 제안된 모델 최적화 방식은 테스트 정확도 80.4%를 기록하였다. 이는 비교 대상인 C4.5(75.5%), MLP(68.0%), Naive Bayes(46.6%)보다 월등히 높은 수치이다.
 - **Ionosphere data**: 학습 세트에서는 정확도가 95.0%까지 상승했으나, 테스트 세트에서는 오히려 성능이 떨어지는 현상이 관찰되었다. 이는 학습 세트와 테스트 세트 간의 클래스 분포 불균형으로 인한 과적합(overfitting) 문제로 해석된다.

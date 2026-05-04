@@ -30,9 +30,11 @@ Alireza Mehrtash, William M. Wells III, Clare M. Tempany, Purang Abolmaesumi, an
 ## 🛠️ Methodology
 
 ### 1. 모델 구조 및 학습 설정
+
 기본 아키텍처로 2D U-Net을 사용하며, 입력 및 출력 크기는 $224 \times 224$ 픽셀이다. 모든 모델은 Batch Normalization을 포함하며, Adam 옵티마이저를 사용하여 학습한다.
 
 ### 2. 손실 함수 (Loss Functions)
+
 논문에서는 두 가지 손실 함수를 비교한다.
 
 - **Cross-Entropy (CE) Loss**: 각 픽셀의 클래스 확률 분포와 실제 라벨 간의 로그 가능도를 최대화한다.
@@ -44,11 +46,13 @@ $$L_{DSC} = -2 \sum_{k=1}^{K} \omega_k \frac{\sum_{i=1}^{N} [p(\hat{y}_i=k|x_i, 
 $\epsilon$은 수치적 안정성을 위한 smoothing factor이다.
 
 ### 3. 신뢰도 보정 및 앙상블 (Confidence Calibration via Ensembling)
+
 Dice loss로 학습된 단일 모델의 과잉 확신 문제를 해결하기 위해, $M$개의 모델을 독립적으로 학습시킨 후 그 확률값의 산술 평균을 최종 예측값으로 사용한다.
 $$p^E(y_j=k|x_j) = \frac{1}{M} \sum_{m=1}^{M} p(y_j=k|x_j, \theta^*_m)$$
 이 방식은 네트워크 구조를 수정할 필요가 없으며, 경험적으로 $M \ge 5$일 때 유의미한 보정 효과가 나타남을 확인하였다.
 
 ### 4. 세그먼트 수준의 불확실성 측정 (Segment-level Uncertainty)
+
 픽셀 단위의 신뢰도를 넘어, 분할된 객체 전체의 품질을 평가하기 위해 예측된 전경(Foreground) 영역 $\hat{S}_k$ 내의 평균 엔트로피 $H(\hat{S}_k)$를 계산한다.
 $$H(\hat{S}_k) = -\frac{1}{|\hat{S}_k|} \sum_{i \in \hat{S}_k} [p \ln p + (1-p) \ln (1-p)]$$
 여기서 $p$는 해당 픽셀이 클래스 $k$에 속할 확률이다. 엔트로피가 높을수록 모델이 해당 영역의 예측에 대해 불확실함을 의미하며, 이는 실제 분할 품질(Dice score)의 저하와 강한 상관관계를 가진다.
@@ -56,12 +60,14 @@ $$H(\hat{S}_k) = -\frac{1}{|\hat{S}_k|} \sum_{i \in \hat{S}_k} [p \ln p + (1-p) 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: 뇌종양(BraTS), 심장 벤트리클(ACDC), 전립선(PROSTATEx, PROMISE12) MRI 영상.
 - **평가 지표**:
-    - Calibration 품질: Negative Log-Likelihood (NLL), Brier Score, Expected Calibration Error (ECE%).
-    - Segmentation 품질: Dice Score, 95th Hausdorff Distance (HD).
+  - Calibration 품질: Negative Log-Likelihood (NLL), Brier Score, Expected Calibration Error (ECE%).
+  - Segmentation 품질: Dice Score, 95th Hausdorff Distance (HD).
 
 ### 2. 주요 결과
+
 - **CE vs Dice**: 단일 모델 기준, CE loss는 Calibration 품질(NLL, ECE)이 우수하지만 Segmentation 품질(Dice)은 낮았다. 반면, Dice loss는 Segmentation 성능은 뛰어나지만 Calibration 품질이 매우 나빴다.
 - **앙상블의 효과**: Dice loss로 학습된 모델들을 앙상블($M=50$)했을 때, Calibration 품질과 Segmentation 품질 모두가 비약적으로 향상되었다. 이는 MC dropout보다 더 우수한 성능을 보였다.
 - **품질 예측 및 OOD 탐지**: 제안한 세그먼트 평균 엔트로피 $H(\hat{S})$와 logit-transformed Dice score 간의 상관계수가 $0.77 \le r \le 0.92$로 매우 높게 나타났다.
@@ -72,10 +78,12 @@ $$H(\hat{S}_k) = -\frac{1}{|\hat{S}_k|} \sum_{i \in \hat{S}_k} [p \ln p + (1-p) 
 본 연구는 의료 영상 분할에서 성능(Dice score)과 신뢰도(Calibration) 사이의 상충 관계(Trade-off)를 명확히 드러냈다. 특히 Dice loss가 유발하는 과잉 확신 문제는 앙상블 기법을 통해 효과적으로 완화될 수 있음을 입증하였다.
 
 **강점 및 시사점:**
+
 - 단순히 성능을 높이는 것이 아니라, 모델의 예측이 얼마나 믿을만한지를 정량화함으로써 의료 현장에서의 안전성을 높일 수 있는 실무적 방법(Recipe)을 제공한다.
 - 세그먼트 수준의 엔트로피를 통해 정답 없이도 추론 시점에 품질을 예측할 수 있다는 점은 매우 실용적이다.
 
 **한계 및 논의 사항:**
+
 - **계산 비용**: 앙상블은 여러 모델을 처음부터 다시 학습시켜야 하므로 시간과 자원 소모가 매우 크다. 학습 없이 보정할 수 있는 Temperature Scaling 등의 대안에 대한 심도 있는 연구가 필요하다.
 - **가정**: 본 연구의 세그먼트 엔트로피 지표는 이진 분류를 가정하고 계산되었으며, 다중 클래스 상황에서의 일반화 가능성에 대해서는 추가 연구가 필요하다.
 - **데이터 범위**: MRI 영상에 한정된 실험이므로, CT 등 다른 모달리티에서도 동일한 경향이 나타나는지 확인이 필요하다.

@@ -34,10 +34,10 @@ Junjia Chen, Zhibin Pan (2023)
 제안하는 활성화 함수 $f^s(x)$의 일반적인 구조는 다음과 같이 정의된다.
 
 $$
-f^s(x) = 
-\begin{cases} 
-x, & x \ge 0 \\ 
-x \cdot s(\beta x), & x < 0 
+f^s(x) =
+\begin{cases}
+x, & x \ge 0 \\
+x \cdot s(\beta x), & x < 0
 \end{cases}
 $$
 
@@ -59,10 +59,10 @@ $$
 제안된 함수들은 $x \ge 0$ 영역에서 기울기가 항상 $1$이다. 음수 영역의 기울기는 각 기반 함수의 미분값을 따른다. 예를 들어 SGELU의 기울기는 다음과 같다.
 
 $$
-\frac{d\text{SGELU}(x)}{dx} = 
-\begin{cases} 
-\frac{x}{2\pi}e^{-\frac{x^2}{2}} + \frac{1}{2} \left[1 + \text{erf}\left(\frac{x}{\sqrt{2}}\right)\right], & x < 0 \\ 
-1, & x \ge 0 
+\frac{d\text{SGELU}(x)}{dx} =
+\begin{cases}
+\frac{x}{2\pi}e^{-\frac{x^2}{2}} + \frac{1}{2} \left[1 + \text{erf}\left(\frac{x}{\sqrt{2}}\right)\right], & x < 0 \\
+1, & x \ge 0
 \end{cases}
 $$
 
@@ -79,6 +79,7 @@ $$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** CIFAR-100 (100개 클래스, 클래스당 학습 이미지 500장, 테스트 이미지 100장).
 - **평가 모델:** MobileNet, MobileNetV2, ShuffleNet V2, SqueezeNet, VGG-11, VGG-13.
 - **학습 설정:** SGD 옵티마이저 (Momentum 0.9, Weight Decay $5 \times 10^{-4}$), 초기 학습률 0.1 (50, 120, 160 에포크에서 5배씩 감소).
@@ -95,9 +96,11 @@ $$
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 연구는 단순한 수식의 조합을 넘어, 활성화 함수를 '통과율(Pass Rate)'이라는 확률적 관점에서 해석하여 양수 영역의 왜곡 문제를 명확히 정의하였다. 또한, 이론적 가설(양수 영역의 선형성이 효율적이다)을 다양한 경량 모델(MobileNet 등)과 무거운 모델(VGG 등) 모두에서 검증함으로써 범용성을 입증하였다.
 
 ### 한계 및 논의사항
+
 - **데이터셋의 제한:** 실험이 CIFAR-100이라는 상대적으로 작은 규모의 데이터셋에 국한되어 있다. ImageNet과 같은 대규모 데이터셋에서도 동일한 성능 향상이 유지되는지에 대한 검증이 필요하다.
 - **계산 비용:** $\text{erf}$나 $\tanh, \ln$과 같은 연산은 단순한 ReLU보다 계산 비용이 높다. 양수 영역은 단순화되었으나 음수 영역의 연산 비용이 전체 추론 속도에 미치는 영향에 대한 분석이 명시되지 않았다.
 - **SqueezeNet의 예외성:** SGELU가 SqueezeNet에서만 GELU보다 약간 낮은 성능을 보인 이유에 대해 구체적인 분석이 제시되지 않았다.

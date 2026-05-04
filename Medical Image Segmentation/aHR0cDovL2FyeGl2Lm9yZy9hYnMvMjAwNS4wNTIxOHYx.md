@@ -10,7 +10,7 @@ Eshal Zahra, Bostan Ali, and Wajahat Siddique (2020)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 U-Net의 인코더 브랜치 끝단인 병목 층에 **완전 지도 학습 기반의 Fully Connected(FC) 레이어 서브넷(sub-net)**을 도입하는 것이다. 
+본 논문의 핵심 아이디어는 U-Net의 인코더 브랜치 끝단인 병목 층에 **완전 지도 학습 기반의 Fully Connected(FC) 레이어 서브넷(sub-net)**을 도입하는 것이다.
 
 일반적인 U-Net은 전체 네트워크의 최종 출력단에서만 손실 함수를 계산하는 엔드-투-엔드(end-to-end) 방식을 취하지만, 본 제안 방법은 병목 층에서 픽셀 단위의 손실(pixel-wise loss)을 직접 계산하는 FC 레이어를 추가한다. 이를 통해 인코더가 최종 디코더(Decoder)로 정보를 넘겨주기 전에, 병목 표현(bottleneck representation) 자체가 이미 정답지(ground-truth)에 가까운 시맨틱 정보를 포함하도록 강제하며, 결과적으로 디코더가 더 정확한 분할 맵을 생성할 수 있도록 돕는다.
 
@@ -29,6 +29,7 @@ Eshal Zahra, Bostan Ali, and Wajahat Siddique (2020)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 제안하는 네트워크는 크게 세 가지 구성 요소로 이루어져 있다.
 
 1. **Encoder Part:** 전형적인 CNN 설계로, $3 \times 3$ 컨볼루션 필터와 ReLU 활성화 함수, 그리고 $2 \times 2$ Max Pooling(stride 2) 층으로 구성된다. 이 과정에서 영상의 공간적 크기는 줄어들고 채널 수는 증가하여 고차원의 특징을 추출한다.
@@ -36,12 +37,14 @@ Eshal Zahra, Bostan Ali, and Wajahat Siddique (2020)
 3. **Decoder Part:** $2 \times 2$ Up-convolution을 통해 특징 맵의 크기를 다시 키우며, 인코더의 중간 층에서 추출된 특징 맵을 스킵 연결(skip-connection)을 통해 결합(concatenation)한다. 이후 $3 \times 3$ 컨볼루션과 ReLU를 통해 최종 분할 맵을 생성한다.
 
 ### 학습 절차 및 손실 함수
+
 본 모델은 두 가지 서로 다른 손실 함수를 사용하여 동시에 학습한다.
 
 - **Bottleneck Sub-net:** 픽셀 단위의 교차 엔트로피 손실(pixel-wise cross entropy loss)을 사용하여 FC 레이어가 정답 맵을 정확히 예측하도록 학습한다.
 - **Main U-Net Architecture:** 전체 네트워크의 최종 출력단에서는 $L1$ 손실 함수를 사용하여 학습을 진행한다.
 
 ### 평가 지표
+
 모델의 성능을 측정하기 위해 다음과 같은 수식을 사용한다.
 
 $$ \text{Sensitivity} = \frac{N_{tp}}{N_p} $$
@@ -68,6 +71,7 @@ $$ \text{Accuracy} = \frac{N_{tp} + N_{tn}}{N_{tp} + N_{tn} + N_{fn} + N_{fp}} $
 본 논문은 U-Net의 잠재 공간(latent space)인 병목 층에 직접적인 감독 신호를 부여함으로써 인코더의 특징 추출 능력을 강제적으로 향상시킬 수 있음을 시사한다. 이는 딥러닝 모델에서 중간 층의 표현력을 높이기 위해 보조 손실 함수(auxiliary loss)를 사용하는 전략과 맥을 같이 한다.
 
 **비판적 해석 및 한계점:**
+
 1. **비교 대상의 부재:** 저자들은 본 방법이 오리지널 U-Net과 "비교 가능한(comparable)" 혹은 더 나은 결과를 낸다고 주장하지만, 정작 baseline인 오리지널 U-Net과의 정량적 비교 수치(Table)를 제시하지 않았다. 따라서 제안 방법이 구체적으로 얼마나 성능을 향상시켰는지 객관적으로 판단하기 어렵다.
 2. **데이터셋 정보 미비:** 사용된 MRI 및 CT Scan 데이터셋의 출처, 이미지의 개수, 클래스의 종류 등 상세 정보가 명시되지 않아 실험의 재현성이 떨어진다.
 3. **손실 함수의 선택:** 일반적으로 분할 작업에서는 Dice Loss나 Cross Entropy를 주 손실 함수로 사용하는데, U-Net 전체 학습에 $L1$ loss를 사용한 구체적인 이유나 근거가 설명되지 않았다.

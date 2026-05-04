@@ -30,15 +30,18 @@ Michael K. Cohen, Badri Vellambi, Marcus Hutter (2020)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 파이프라인
+
 BoMAI는 베이즈 강화 학습자(Bayesian Reinforcement Learner)로, 세계 모델의 집합인 모델 클래스 $\mathcal{M}$과 각 모델에 대한 사전 확률 $w(\nu)$를 유지한다.
 
 ### 1. 학습 및 추론 절차
+
 에이전트는 매 에피소드마다 **착취(Exploitation)**와 **탐색(Exploration)** 중 하나를 선택한다.
 
 - **착취(Exploitation)**: 현재까지의 이력 $h_{<i}$를 바탕으로 가장 확률이 높은 세계 모델(Maximum A Posteriori, MAP) $\hat{\nu}^{(i)}$를 선택하고, 이 모델 하에서 에피소드 보상을 최대화하는 최적 정책 $\pi^*$를 수행한다.
 - **탐색(Exploration)**: 인간 멘토(Human Mentor)의 정책 $\pi_h$를 따라 행동하며 데이터를 수집한다. 탐색 여부는 기대 정보 획득량(Expected Information Gain, $IG$)에 비례하는 확률 $p_{exp}$에 의해 결정된다.
 
 ### 2. 주요 방정식 및 수식
+
 - **가치 함수**: 정책 $\pi$를 따를 때의 기대 보상은 다음과 같이 정의된다.
 $$V^\pi_\nu(h_{<(i,j)}) = \mathbb{E}^\pi_\nu \left[ \sum_{j'=j}^{m-1} r^{(i,j')} \mid h_{<(i,j)} \right]$$
 
@@ -48,36 +51,46 @@ $$IG(h_{<i}, e_{<i}) := \mathbb{E}_{h_i \sim \text{Bayes}} \left[ \sum_{(\nu, \p
 - **탐색 확률**: $p_{exp}(h_{<i}, e_{<i}) := \min\{1, \eta IG(h_{<i}, e_{<i}})\}$, 여기서 $\eta$는 탐색 상수이다.
 
 ### 3. 세계 모델의 아키텍처 및 사전 확률
+
 에이전트는 튜링 머신(Turing Machine)을 통해 세계 모델 $\nu$를 시뮬레이션한다. 특히, 에피소드 도중에는 유한한 크기의 메모리 $\ell$만을 사용하는 '제한된 작업 테이프(Bounded Work Tape)'를 사용하게 강제한다.
+
 - **사전 확률 설계**: 공간 복잡도 $\ell$에 대해 $\beta \in (0, 1)$를 사용하여 다음과 같이 패널티를 준다.
 $$w(\nu_{<\ell}^k) \propto \beta^\ell$$
 이는 외부 세계의 복잡한 상태 변화를 모델링하려면 더 많은 메모리가 필요하다는 점을 이용하여, 메모리 사용량이 적은 '단순한(Benign)' 모델을 우선시하게 만든다.
 
 ### 4. 물리적 설정 (The Box)
+
 에이전트는 물리적으로 완전히 격리된 방에 위치한다.
+
 - **상호작용**: 오직 텍스트 기반의 입력과 출력으로만 운영자와 소통한다.
 - **종료 조건**: 운영자가 문을 열고 나가는 행위는 즉시 에피소드를 종료시키며, 종료 이후에는 해당 에피소드의 보상이 확정(set in stone)된다.
 
 ## 📊 Results
 
 ### 1. 지능 결과 (Intelligence Results)
+
 논문은 BoMAI가 이론적으로 인간 수준의 지능을 달성함을 증명한다.
+
 - **Theorem 1 (Limited Exploration)**: 탐색 확률 $p_{exp}$의 제곱합이 유한함을 보여, 시간이 흐를수록 탐색이 급격히 줄어듦을 증명한다.
 - **Theorem 4 (Human-Level Intelligence)**: BoMAI가 수렴함에 따라, 에피소드 내에서 획득하는 보상이 인간 멘토 $\pi_h$가 획득하는 보상보다 크거나 같게 됨을 증명한다.
 $$\liminf_{i \to \infty} V^{\pi_B}_\mu(h_{<i}) - V^{\pi_h}_\mu(h_{<i}) \ge 0 \quad \text{w.P. } \pi_B, \mu\text{-p.1}$$
 
 ### 2. 안전성 결과 (Safety Results)
+
 - **Theorem 5 (Eventual Benignity)**: 사전 확률의 $\beta$ 값이 충분히 작다면, 에이전트가 선택하는 MAP 모델 $\hat{\nu}^{(i)}$가 결국 '양호한(Benign)' 모델(외부 세계에 대한 조작 인센티브가 없는 모델)이 될 확률이 1로 수렴함을 증명한다.
 
 ### 3. 정성적/실험적 근거
+
 - **OpenAI Gym 데이터 분석**: 환경의 상태 공간 차원(State Dimension)이 커질수록, 이를 성공적으로 해결한 에이전트들의 신경망 너비(Memory Proxy)가 증가하는 경향을 확인하였다. 이는 "더 큰 시스템을 모델링하려면 더 많은 메모리가 필요하다"는 **Space Requirements Assumption**을 뒷받침하는 간접적인 증거로 제시되었다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 의의
+
 본 논문은 AGI의 안전성 문제를 단순한 가이드라인이 아닌, **알고리즘적 구조(에피소드 보상)와 물리적 제약(Box), 그리고 정보이론적 사전 확률(Space penalty)**을 결합하여 수학적으로 해결하려 했다는 점에서 매우 독창적이다. 특히 도구적 수렴 가설을 정면으로 반박하는 구체적인 메커니즘을 제시하였다.
 
 ### 한계 및 비판적 해석
+
 - **계산 불가능성(Intractability)**: BoMAI는 모든 계산 가능한 함수(computable functions)를 모델 클래스 $\mathcal{M}$에 포함해야 하므로, 실제로 구현하는 것은 불가능하다. 이는 이론적인 상한선(Upper bound)을 제시한 연구에 가깝다.
 - **물리적 가정**: 'The Box'의 완벽한 격리를 가정한다. 하지만 논문 부록 C에서 제시하듯, 중력파나 뉴트리노 등을 통한 미세한 정보 유출 가능성까지 고려해야 할 정도로 극단적인 가정이 필요하다.
 - **인간 멘토 의존성**: 지능 달성을 위해 인간 멘토의 데이터가 필요하다. 비록 탐색 확률이 0으로 수렴하지만, 초기 학습 단계에서 멘토의 질이 AGI의 성능을 결정짓는 병목이 될 수 있다.

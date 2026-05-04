@@ -33,9 +33,11 @@ Jens Piekenbrinck, Christian Schmidt, Alexander Hermans, Narunas Vaskevicius, Ti
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 OpenSplat3D는 입력된 다시점 RGB 이미지들로부터 3D 지오메트리를 최적화함과 동시에, 각 가우시안 프리미티브에 인스턴스 임베딩을 추가하여 최적화한다. 이후 클러스터링을 통해 3D 인스턴스를 생성하고, VLM을 통해 각 인스턴스에 언어 특징을 할당하는 파이프라인으로 구성된다.
 
 ### 1. 인스턴스 학습 (Instance Learning)
+
 각 가우시안 $n$에 뷰-독립적인 인스턴스 특징 임베딩 $f_n \in \mathbb{R}^d$를 추가한다. 렌더링된 특징 맵 $F(p)$는 다음과 같이 계산된다.
 $$F(p) = \sum_{n=1}^{N} f_n \alpha_n \prod_{j=1}^{n-1} (1-\alpha_j)$$
 여기서 $\alpha_n$은 가우시안의 기여도이다. 2D SAM 마스크 $M_{v,i}$를 사용하여 각 인스턴스의 프로토타입 특징 $z_i$를 계산하고, 이를 통해 두 가지 대조 손실을 적용한다.
@@ -47,12 +49,14 @@ $$L_{neg} = \frac{2}{N_v(N_v-1)} \sum_{i=1}^{N_v} \sum_{j>i}^{N_v} \text{ReLU}(\
 최종 인스턴스 손실은 $L_{inst2D} = w_p L_{pos} + w_n L_{neg}$로 정의되며, 최적화 후 HDBSCAN을 통해 가우시안들을 클러스터링하여 3D 인스턴스를 확정한다.
 
 ### 2. 언어 정렬 (Language Alignment)
+
 각 가우시안마다 고차원 언어 임베딩을 최적화하는 것은 비효율적이므로, 인스턴스당 하나의 임베딩을 생성하는 전략을 취한다. 가시성 점수(Visibility Score) $s_{v,i}$를 계산하여 가장 정보량이 많은 상위 $K$개의 뷰를 선택한다.
 $$s_{v,i} = \frac{|M_{v,i}|}{|I_v|} \cdot \frac{|G_{v,i}|}{|G_i|}$$
 선택된 뷰에서 인스턴스 중심의 계층적 크롭(Hierarchical Crops)을 추출하고, 이를 MasQCLIP(VLM)의 이미지 인코더에 통과시켜 얻은 임베딩 $l_{i,k,l}$들의 평균을 최종 인스턴스 언어 임베딩 $l_i$로 사용한다.
 $$l_i = \frac{1}{KL} \sum_{k=1}^{K} \sum_{l=1}^{L} l_{i,k,l}$$
 
 ### 3. 인스턴스 특징 정규화 (Instance Feature Regularization)
+
 알파 컴포지팅 렌더링 시 여러 가우시안이 겹치면서 특징이 섞이는 문제가 발생한다. 이를 해결하기 위해 렌더링 광선을 따라 특징 임베딩의 분산을 최소화하는 분산 정규화 손실 $L_{var}$를 도입한다. 픽셀 $p$에서의 분산 $\text{Var}(F(p))$는 다음과 같이 계산된다.
 $$\text{Var}(F(p)) = \left( \sum_{n=1}^{N} f_n^2 \alpha_n \prod_{j=1}^{n-1} (1-\alpha_j) \right) - F(p)^2$$
 최종 손실 함수는 RGB 재구성 손실, 인스턴스 손실, 분산 정규화 손실의 합으로 정의된다.
@@ -61,11 +65,13 @@ $$L = L_{RGB} + \lambda_{inst2d} L_{inst2d} + \lambda_{var} L_{var}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** LERF-mask, LERF-OVS (Open-vocabulary 평가), ScanNet++ v1 (3D 인스턴스 분할 평가).
 - **지표:** mIoU, mBIoU, mAcc (LERF), AP, $AP_{50}$, $AP_{25}$ (ScanNet++).
 - **환경:** RTX 3090 GPU, 인스턴스 최적화에 약 20~45분 소요.
 
 ### 주요 결과
+
 1. **Open-Vocabulary Segmentation:** LERF-mask 데이터셋에서 OpenSplat3D는 대부분의 장면에서 타 방법론(Gaussian Grouping, CGC 등)보다 우수한 mIoU 및 mBIoU 성능을 보였다. LERF-OVS의 3D 객체 선택 작업에서도 OpenGaussian을 포함한 기존 방법들을 크게 앞서며 가장 높은 정확도를 달성했다.
 2. **3D Instance Segmentation:** ScanNet++ 검증 셋에서 클래스 불가지론적(Class-agnostic) 분할 성능을 측정한 결과, Segment3D보다 월등한 성능을 보였으며, 특히 후처리에 대한 의존도가 낮아졌음을 확인했다.
 3. **Open-Vocabulary 성능:** ScanNet++에서 Open-vocabulary 설정으로 평가했을 때, Segment3D 대비 $AP_{50}$ 지표에서 11.2 포인트 높은 성능을 기록하며, 완전 지도 학습 기반의 SGIFormer와의 격차를 상당히 좁혔다.

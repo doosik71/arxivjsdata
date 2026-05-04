@@ -27,6 +27,7 @@ Mirco Planamente, Gabriele Goletto, Gabriele Trivigno, Giuseppe Averta, Barbara 
 ## 🛠️ Methodology
 
 ### 1. Domain Generalization: Relative Norm Alignment (RNA)
+
 다양한 소스 도메인에서 추출된 특징들의 노름 불균형이 특정 도메인으로의 편향을 야기한다는 점에 착안하여, 오디오와 비주얼 특징의 평균 노름 거리를 최소화하는 $L_{RNA}$ 손실 함수를 사용한다.
 
 $$L_{RNA} = \left( \frac{\mathbb{E}[h(X^v)]}{\mathbb{E}[h(X^a)]} - 1 \right)^2$$
@@ -34,17 +35,23 @@ $$L_{RNA} = \left( \frac{\mathbb{E}[h(X^v)]}{\mathbb{E}[h(X^a)]} - 1 \right)^2$$
 여기서 $h(x)$는 특징의 $L_2$-norm을 의미하며, $X^v$와 $X^a$는 각각 비주얼과 오디오 모달리티의 특징 집합이다. 이 손실 함수를 통해 네트워크는 특정 모달리티나 도메인에 의존하지 않는 공통 지식을 학습하게 된다.
 
 ### 2. Unsupervised Domain Adaptation (UDA)
+
 타겟 데이터의 레이블이 없는 상황을 해결하기 위해 두 가지 수준의 접근을 취한다.
+
 - **Multi-Level Adversarial Alignment**: 프레임 수준(frame-level)과 비디오 수준(video-level)에서 판별기(Discriminator)를 두어, 소스와 타겟 도메인을 구분하지 못하도록 특징 표현을 학습시킨다.
 - **Attentive Entropy**: 분류기의 불확실성을 줄이기 위해 엔트로피 최소화 손실을 사용하되, 도메인 간 차이가 적은 비디오에 더 높은 가중치를 두는 Attentive 방식의 재가중치 기법을 적용한다.
 
 ### 3. Multi-Source Multi-Target Domain Adaptation (MSTAA)
+
 환경적 편향을 해결하기 위해 제안된 MSTAA는 두 가지 모듈로 구성된다.
+
 - **MTAA (Multiple Temporal Adversarial Alignment)**: $K$개의 주방(Kitchen) 각각에 대해 도메인 적대적 분기를 두어, 각 주방별로 비디오 및 프레임 수준의 분포를 정렬한다.
 - **MSAA (Multiple Spatial Adversarial Alignment)**: $K$차원의 판별기를 추가하여 서로 다른 주방들 간의 분포를 정렬함으로써 환경적 편향을 완화한다.
 
 ### 4. Ensemble UDA Losses
+
 다양한 아키텍처(I3D, BN-Inception, ResNet-50+TSM)를 앙상블할 때 발생하는 예측 불일치를 해결하기 위해 다음의 손실 함수를 사용한다.
+
 - **Min Entropy Consensus (MEC)**: 서로 다른 백본 모델들이 타겟 데이터에 대해 유사한 예측을 하도록 강제한다.
   $$L_{MEC} = -\frac{1}{m} \sum_{i=1}^{m} \frac{1}{b} \max_{y \in Y} \sum_{b} \log p_b(y|x_i^t)$$
 - **Complement Entropy (CENT)**: 가장 확률이 높은 클래스를 제외한 나머지 '보완 클래스(complement classes)'들의 엔트로피를 최대화하여, 불확실한 예측으로 인한 노이즈를 줄인다.
@@ -53,12 +60,14 @@ $$L_{RNA} = \left( \frac{\mathbb{E}[h(X^v)]}{\mathbb{E}[h(X^a)]} - 1 \right)^2$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: EPIC-KITCHENS-100
 - **평가 지표**: Verb, Noun, Action의 Top-1 및 Top-5 정확도
 - **백본 아키텍처**: I3D (RGB, Flow), BN-Inception (Audio), ResNet-50 with TSM
 - **융합 전략**: Late Fusion 및 SMR (Semantic Mutual Refinement) mid-fusion
 
 ### 주요 결과
+
 - **챌린지 순위**: 'Verb' 부문 2위, 'Noun' 및 'Action' 부문 3위를 기록하였다.
 - **DG 성능 (Table 3)**: RNA 기법을 적용했을 때, Source Only 대비 Top-1 정확도가 최대 3%, Top-5가 10% 향상되었다. 이는 타겟 데이터 없이도 도메인 불변 특징을 추출하는 RNA의 효과를 입증한다.
 - **UDA 및 MSTAA 효과 (Table 2)**: MSTAA를 적용하지 않았을 때 Action Top-1 정확도는 24.83%에 그쳤으나, 제안 기법 적용 후 순위권 성적을 거두었다. 이는 검증 셋과 테스트 셋의 주방 구성이 다르다는 점을 고려할 때, 환경적 편향을 잡는 MSTAA가 필수적이었음을 시사한다.

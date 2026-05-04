@@ -17,22 +17,28 @@ Syeda Kisaa Fatima, Tehreem Zubair, Noman Ahmed, and Asifullah Khan (2025)
 ## 🛠️ Methodology
 
 ### 1. 데이터 전처리 파이프라인
+
 시카고 범죄 데이터셋(Chicago Crime dataset)을 사용하여 다음과 같은 전처리를 수행하였다.
+
 - **속성 제거**: 분석과 무관한 ID, Case Number, Location 등의 중복 속성을 제거하여 계산 효율을 높였다.
 - **결측치 처리**: 범주형 변수는 "unknown regions"로 레이블링하고, 지리적 좌표는 평균값으로 대체하였다.
 - **시간적 구조화**: 날짜 데이터를 연, 월, 일, 시, 요일 단위로 분해하여 다각도 분석이 가능하게 하였다.
 - **공간 정규화 및 합성**: 위도와 경도를 Min-Max Scaling을 통해 $[0, 1]$ 범위로 정규화하였으며, DBSCAN 클러스터링을 통해 범죄 밀집 구역을 도출하였다. 또한, Nearest Neighbors 모델($k=10$)을 사용하여 인접 범죄 간의 관계를 측정하는 'relation' 특성을 생성하였다.
 
 ### 2. LUCID-MA 시스템 구조 및 에이전트 역할
+
 시스템은 LLaMA-2-13B-Chat-GPTQ 모델을 기반으로 하며, 다음의 에이전트들이 협력한다.
+
 - **CrimeAnalysisAssistant**: 데이터셋을 로드하여 통계적 요약, 핫스팟 식별 및 시각화 자료(Heatmaps, Bar charts)를 생성한다.
 - **FeedbackAgent**: 분석 에이전트의 결과물을 검토하여 레이블 명명, 범례 개선, 누락된 분석 관점(예: 성별 기반 분포) 등을 제안하는 건설적 피드백을 제공한다.
 - **CrimePredictorAgent**: 앞선 분석과 피드백을 바탕으로 미래의 범죄 핫스팟과 고위험 기간을 예측하고 예방 조치를 제안한다.
 - **LearningOptimizerAgent (Ablation Study용)**: 에이전트 간의 협업 효율성을 모니터링하고 점수를 기반으로 시스템의 일관성과 다양성을 조정하는 감독 역할을 수행한다.
 
 ### 3. 스코어링 함수 및 학습 절차
+
 에이전트의 성능 향상을 정량적으로 측정하기 위해 다음과 같은 스코어링 함수를 정의하였다.
 $$ \text{Score} = \text{Base Score} + \text{Keyword Bonuses} + \text{Repetition Penalty} + \text{Exponential Learning Boost} $$
+
 - **Base Score**: 분석 에이전트는 $0.02$, 그 외 에이전트는 $0.01$ 부여.
 - **Keyword Bonuses**: "crime", "hotspot", "predict", "suggest" 등의 핵심 단어 사용 시 $+0.05$ 부여.
 - **Repetition Penalty**: 이전 에포크와 응답이 중복될 경우 $-0.05$ 감점.
@@ -43,18 +49,23 @@ $$ \text{Score} = \text{Base Score} + \text{Keyword Bonuses} + \text{Repetition 
 ## 📊 Results
 
 ### 1. 실험 환경
+
 - **Hardware**: NVIDIA DGX Station (4x Tesla V100 32GB), CUDA 12.0.
 - **Software**: Python 3.8.19, PyTorch (Half-precision 계산 적용).
 - **Execution**: 완전 오프라인 모드.
 
 ### 2. 에이전트 성능 진화
+
 100 에포크 동안 에이전트들의 응답 품질이 현저히 향상되었다.
+
 - **CrimeAnalysisAssistant**: 초기에는 단순 요약에 그쳤으나, 후기에는 성별/시간대별 정밀 분석 및 정규화된 히트맵을 생성하는 수준으로 발전하였다.
 - **FeedbackAgent**: 단순한 미적 수정 제안에서 데이터 기반의 구조적 피드백(강점, 약점, 누락 요소 명시)을 제공하는 형태로 진화하였다.
 - **CrimePredictorAgent**: 막연한 예측에서 "급여일 이후 중앙 구역의 차량 절도 증가 예상"과 같이 구체적인 시간/장소 기반의 예측 및 대응책 제안이 가능해졌다.
 
 ### 3. 정량적 결과
+
 에이전트별 초기 점수와 최종 점수의 변화는 다음과 같다.
+
 | Agent | Initial Score | Final Score | Highlighted Improvement |
 | :--- | :---: | :---: | :--- |
 | CrimeAnalysisAssistant | 0.07 | 0.94 | 분석 깊이 및 시각적 다양성 강화 |
@@ -62,17 +73,21 @@ $$ \text{Score} = \text{Base Score} + \text{Keyword Bonuses} + \text{Repetition 
 | CrimePredictorAgent | 0.04 | 0.85 | 패턴 기반 예측 및 개입 전략 포함 |
 
 ### 4. Ablation Study (OptimizerAgent의 영향)
+
 `LearningOptimizerAgent`를 추가한 4-에이전트 프레임워크를 적용했을 때, 3-에이전트 베이스라인 대비 모든 에이전트의 최종 점수가 상승하였으며, 특히 에포크 간 응답 중복률(Redundancy)이 $14.2\%$에서 $6.8\%$로 크게 감소하여 시스템의 안정성과 다양성이 향상됨을 확인하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. 강점 및 창발적 행동 (Emergent Behaviors)
+
 본 연구는 모델의 파라미터를 수정하지 않고도 다중 에이전트의 상호작용만으로 다음과 같은 창발적 지능을 구현하였다.
+
 - **전문화 및 협업**: 복잡한 작업을 분담하여 개별 에이전트가 수행할 수 없는 수준의 다차원적 통찰을 도출하는 '전문성 창발'이 관찰되었다.
 - **자기 수정 루프**: `FeedbackAgent`가 동료 검토(Peer Review)와 유사한 역할을 수행하며 시스템의 견고함을 높였다.
 - **집단 지성(Wisdom of the Crowd)**: 단일 LLM의 내재적 편향을 여러 에이전트의 서로 다른 관점이 상쇄함으로써 더 객관적인 분석 결과를 도출하였다.
 
 ### 2. 한계 및 비판적 해석
+
 - **프롬프트 민감도**: 시스템이 프롬프트 엔지니어링에 크게 의존하고 있어, 지시문의 품질에 따라 결과의 편차가 발생할 수 있다.
 - **검증 메커니즘의 부재**: `CrimePredictorAgent`가 생성한 예측 결과가 실제 정답(Ground Truth)과 얼마나 일치하는지 검증하는 피드백 루프가 부족하다. 즉, "그럴듯한" 예측을 내놓는 것과 "정확한" 예측을 내놓는 것 사이의 간극을 메울 정량적 검증 모듈이 필요하다.
 - **중간 단계의 중복성**: 반복 페널티를 적용했음에도 불구하고 중간 단계에서 응답이 정체되는 현상이 발견되었으며, 이는 반복적 추론 기계에서 나타나는 전형적인 문제로 분석된다.

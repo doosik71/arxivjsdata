@@ -10,32 +10,34 @@ Guanqun Sun, Yizhi Pan, Weikun Kong, Zichang Xu, Jianhua Ma, Teeradaj Racharak, 
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 Transformer 기반의 U-Net 구조에 공간적 및 채널적 주의 집중 메커니즘을 결합한 **Dual Attention Block (DA-Block)**을 전략적으로 배치하는 것이다. 
+본 논문의 핵심 아이디어는 Transformer 기반의 U-Net 구조에 공간적 및 채널적 주의 집중 메커니즘을 결합한 **Dual Attention Block (DA-Block)**을 전략적으로 배치하는 것이다.
 
 단순히 Transformer 층을 늘리는 대신, 정밀하게 설계된 DA-Block을 Transformer 층 이전의 임베딩 단계와 인코더-디코더를 잇는 Skip Connection 층에 배치함으로써, 이미지의 위치 및 채널 특성을 최적화하여 추출한다. 이를 통해 Transformer가 더 정교한 글로벌 특징을 추출할 수 있도록 돕고, Skip Connection을 통해 전달되는 특징 맵에서 불필요한 정보를 필터링하여 디코더의 복원 능력을 향상시키는 구조적 설계를 제안한다.
 
 ## 📎 Related Works
 
-의료 영상 분할 분야에서는 U-Net을 기반으로 한 다양한 연구가 진행되었다. ResUnet은 잔차 연결(Residual connection)을, UNet++는 Skip Connection의 구조적 개선을 통해 성능을 높였으며, Attention U-net은 주의 집중 메커니즘을 도입하여 특정 영역의 국소화 능력을 개선하였다. 
+의료 영상 분할 분야에서는 U-Net을 기반으로 한 다양한 연구가 진행되었다. ResUnet은 잔차 연결(Residual connection)을, UNet++는 Skip Connection의 구조적 개선을 통해 성능을 높였으며, Attention U-net은 주의 집중 메커니즘을 도입하여 특정 영역의 국소화 능력을 개선하였다.
 
 최근에는 Vision Transformer (ViT)를 U-Net에 결합한 TransUNet이나 Swin-Unet과 같은 모델들이 등장하여 글로벌 컨텍스트 추출 능력을 입증하였다. 그러나 이러한 모델들은 여전히 이미지 특유의 위치 및 채널 정보를 충분히 활용하지 못하거나, 과도한 Transformer 블록 사용으로 인한 계산 복잡도 증가라는 한계를 가지고 있다. 본 연구는 이러한 기존 모델들과 달리, DA-Block을 통해 위치와 채널 특징을 명시적으로 추출하고 이를 Transformer 및 Skip Connection과 결합함으로써 차별성을 둔다.
 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 DA-TransUNet은 전형적인 U-자형 인코더-디코더 구조를 따르지만, 인코더 내부에 DA-Block과 Transformer를 통합하고 Skip Connection 경로에 DA-Block을 추가 배치한 형태이다.
 
 ### Dual Attention Block (DA-Block)
+
 DA-Block은 위치 특징을 추출하는 **Position Attention Module (PAM)**과 채널 특징을 추출하는 **Channel Attention Module (CAM)**로 구성된다.
 
-1. **Position Attention Module (PAM)**: 
+1. **Position Attention Module (PAM)**:
 특징 맵 내의 임의의 두 위치 사이의 공간적 의존성을 포착한다. 입력 특징 $A \in \mathbb{R}^{C \times H \times W}$를 컨볼루션 층을 통해 $B, C, D \in \mathbb{R}^{C \times H \times W}$로 변환한 뒤, $B$와 $C$의 행렬 곱과 softmax를 통해 공간 주의 맵 $S \in \mathbb{R}^{N \times N}$ (여기서 $N=H \times W$)를 계산한다.
 $$S_{ji} = \frac{\exp(B_i \cdot C_j)}{\sum_{i=1}^N \exp(B_i \cdot C_j)}$$
 최종 출력 $E_j$는 다음과 같이 계산된다.
 $$E_j = \alpha \sum_{i=1}^N (s_{ji}D_i) + A_j$$
 여기서 $\alpha$는 학습 가능한 파라미터이다.
 
-2. **Channel Attention Module (CAM)**: 
+2. **Channel Attention Module (CAM)**:
 채널 간의 상관관계를 추출한다. 입력 $A$를 $\mathbb{R}^{C \times N}$으로 변형한 후, $A$와 그 전치 행렬의 곱에 softmax를 적용하여 채널 주의 맵 $X \in \mathbb{R}^{C \times C}$를 생성한다.
 $$x_{ji} = \frac{\exp(A_i \cdot A_j)}{\sum_{i=1}^C \exp(A_i \cdot A_j)}$$
 최종 출력 $E_j$는 다음과 같다.
@@ -47,25 +49,30 @@ PAM과 CAM 경로를 병렬로 구성하며, 각 경로의 출력 $\hat{\alpha}_
 $$\text{output} = \text{Conv}(\hat{\alpha}_1 + \hat{\alpha}_2)$$
 
 ### Encoder 및 Skip Connection
+
 - **Encoder**: 3개의 컨볼루션 블록 $\rightarrow$ DA-Block $\rightarrow$ 임베딩 층 $\rightarrow$ Transformer 층 순으로 구성된다. DA-Block이 Transformer 앞에 위치하여 위치 및 채널 정보를 먼저 정제함으로써 Transformer의 글로벌 특징 추출 효율을 극대화한다.
 - **Skip Connection**: 인코더와 디코더 사이의 세 가지 스케일 층에 DA-Block을 배치한다. 이는 인코더에서 전달되는 특징 중 불필요한 정보를 필터링하고 유의미한 특징만을 디코더에 전달하여 세밀한 이미지 복원을 돕는다.
 
 ### Decoder
+
 디코더는 전통적인 CNN 기반의 업샘플링 구조를 사용한다. Skip Connection을 통해 전달된 정제된 특징 맵과 디코더의 특징 맵을 융합(Fusion)하고, 업샘플링 컨볼루션 블록을 거쳐 최종적으로 Segmentation Head를 통해 원본 해상도로 복원한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Synapse (복부 장기), CVC-ClinicDB (폴립), Chest X-ray, Kvasir-SEG (폴립), Kvasir-Instrument (내시경 도구), 2018 ISIC-Task (피부 병변) 등 총 6개의 데이터셋을 사용하였다.
 - **평가 지표**: Dice Coefficient (DSC), Intersection over Union (IoU), Hausdorff Distance (HD)를 사용하였다.
 - **구현 세부사항**: PyTorch 프레임워크와 NVIDIA RTX 3090 GPU를 사용하였으며, Adam 및 SGD 옵티마이저를 채택하였다. 손실 함수로는 $\frac{1}{2} \text{BCE} + \frac{1}{2} \text{DiceLoss}$ (또는 Synapse의 경우 Cross-Entropy)를 사용하였다.
 
 ### 주요 결과
+
 - **Synapse 데이터셋**: DA-TransUNet은 평균 DSC $79.80\%$, HD $23.48 \text{mm}$를 기록하며 비교 모델 중 가장 높은 DSC 성능을 보였다. 특히 TransUNet 대비 DSC가 $2.32\%$ 향상되었으며, 췌장(Pancreas) 분할에서는 $5.73\%$라는 큰 폭의 향상을 보였다.
 - **기타 데이터셋**: CVC-ClinicDB, Chest X-ray, ISIC2018, Kvasir-Instrument, Kvasir-SEG의 5개 데이터셋 모두에서 TransUNet보다 높은 IoU와 Dice 성능을 기록하였으며, 대부분의 데이터셋에서 SOTA(State-of-the-art) 성능을 달성하였다.
 - **추론 속도**: 이미지 한 장당 분할 시간은 $35.98 \text{ms}$로, TransUNet($33.58 \text{ms}$)과 큰 차이가 없으면서 성능은 더 우수함을 입증하였다.
 
 ### 절제 연구 (Ablation Study)
+
 DA-Block의 배치에 따른 성능 변화를 분석한 결과, 인코더에만 추가했을 때보다 Skip Connection에 추가했을 때, 그리고 두 곳 모두에 추가했을 때 성능이 단계적으로 향상됨을 확인하였다. 특히 Skip Connection의 모든 층에 DA-Block을 적용했을 때 DSC $79.80\%$로 최적의 성능이 나타났다.
 
 ## 🧠 Insights & Discussion

@@ -29,33 +29,41 @@ Kaiyuan Gao, Sunan He, Zhenyu He, Jiacheng Lin, QiZhi Pei, Jie Shao, Wei Zhang (
 본 논문은 특정 알고리즘을 제안하는 대신, 기존 모델들의 방법론을 체계적으로 분류하고 분석하는 서베이 형식을 취한다.
 
 ### 1. 데이터 처리 방법론
+
 모델의 성능을 결정짓는 데이터 큐레이션 전략을 다음과 같이 분류한다.
+
 - **Classifier-based Filtering**: 고품질 텍스트로 학습된 분류기를 사용하여 저품질 데이터를 제거하는 방식 (예: GPT-3, PaLM).
 - **Rule-based Filtering**: 단어 수, 기호 비율 등 휴리스틱 규칙을 적용하여 노이즈를 제거하는 방식 (예: Gopher, BLOOM).
 - **Textbook-Quality Curation**: 교과서 수준의 정제된 데이터를 사용하여 학습 효율을 극대화하는 방식 (예: phi-1).
 
 ### 2. 효율적 배포 및 튜닝 기술
+
 저자원 환경에서 모델을 운용하기 위한 핵심 기술을 설명한다.
+
 - **Quantization (양자화)**: FP16/BF16 정밀도를 INT8 또는 INT4로 낮추어 메모리 사용량을 줄이는 기술이다. ZeroQuant, GPTQ, SmoothQuant 등이 언급된다.
 - **PEFT (매개변수 효율적 미세조정)**: 전체 파라미터를 업데이트하는 대신 일부만 학습시키는 방법이다.
-    - **LoRA (Low-Rank Adaptation)**: 사전 학습된 가중치 $W_0$를 고정하고, 두 개의 저차원 행렬 $A, B$의 곱으로 변화량을 학습한다.
+  - **LoRA (Low-Rank Adaptation)**: 사전 학습된 가중치 $W_0$를 고정하고, 두 개의 저차원 행렬 $A, B$의 곱으로 변화량을 학습한다.
     $$ \Delta W = B A $$
     여기서 $B \in \mathbb{R}^{d \times m}, A \in \mathbb{R}^{m \times k}$이며, $m \ll \min(d, k)$ 이다.
 
 ### 3. 평가 방법론
+
 - **Zero-shot & Few-shot**: 추가 학습 없이 혹은 몇 개의 예시만 제공하여 일반적인 QA 데이터셋(BoolQ, Hellaswag 등)에서 성능을 측정한다.
 - **Human Evaluation (Elo Rating)**: 16개 모델 간의 쌍체 비교(Pairwise Comparison)를 수행하고, 체스 등에서 쓰이는 Elo rating 시스템을 적용하여 상대적인 승률과 순위를 산출한다.
 
 ## 📊 Results
 
 ### 1. 일반 언어 모델 평가
+
 - **벤치마크 결과**: LLaMA2-7B, Vicuna-7B, Stanford Alpaca-7B가 전반적인 QA 벤치마크에서 우수한 성적을 거두었다. 특히 생성 작업보다는 선택지 기반의 분류 작업에서 더 높은 정확도를 보였다.
 - **인간 평가 결과**: Elo rating 결과, **Vicuna-7B**가 가장 높은 점수를 기록하며 실제 사용성 측면에서 가장 우수한 모델로 평가되었다. 뒤이어 ChatGLM과 Moss가 상위권을 차지했다.
 
 ### 2. 멀티모달 모델 평가
+
 - **ScienceQA 데이터셋**: 이미지 컨텍스트가 포함된 과학 QA 평가에서 **MiniGPT4-13B**가 가장 높은 정확도를 보였다. 7B 사이즈 모델 중에서는 **VPGTrans**가 가장 우수한 성능을 나타냈다. 이는 더 강력한 LLM(Vicuna)과 큰 비전 인코더를 사용할수록 성능이 향상됨을 시사한다.
 
 ### 3. 과학 특화 모델 평가
+
 - **의료 및 과학 도메인**: **Galactica**가 영어 과학 데이터셋에서 SoTA(State-of-the-art) 성능을 보였다. 의료 도메인의 경우, 중국어 기반 모델인 ChatGLM-6B와 BELLE-7B가 중국어 QA에서 강점을 보였으며, 미국 버전에서는 LLaMA 2-13B가 우수한 성능을 보였다.
 
 ## 🧠 Insights & Discussion
@@ -63,10 +71,12 @@ Kaiyuan Gao, Sunan He, Zhenyu He, Jiacheng Lin, QiZhi Pei, Jie Shao, Wei Zhang (
 본 논문은 오픈 소스 모델들이 거대 모델의 훌륭한 대안이 될 수 있음을 정량적, 정성적 지표로 입증하였다. 특히 모델의 절대적인 크기보다 **튜닝 방법(Tuning methods)과 데이터의 품질**이 최종 성능에 더 결정적인 영향을 미친다는 점을 강조한다.
 
 **강점 및 시사점**:
+
 - 사용자 친화적인 작은 모델(약 7B~13B)로도 특정 태스크에서는 거대 모델에 근접하는 성능을 낼 수 있음을 확인하였다.
 - 인간 평가와 벤치마크 결과 간의 괴리가 존재함을 밝혀, 단순 지표 위주의 평가보다는 인간 정렬(Human Alignment) 평가의 중요성을 시사하였다.
 
 **한계 및 비판적 해석**:
+
 - **수학적 추론 능력의 부족**: 본 논문에서도 언급되었듯, 소형 모델들은 복잡한 수학적 추론이나 다단계 논리 전개에서 여전히 취약함을 보인다.
 - **안전성 및 윤리적 고려 부족**: 모델의 성능 분석에 집중하여, 편향성이나 유해 콘텐츠 생성 방지와 같은 AI Safety 측면의 분석은 충분히 다루지 않았다.
 - **평가 데이터의 편중**: 주로 QA 데이터셋에 의존하여 평가를 진행했으므로, 계획 수립(Planning)이나 도구 활용(Tool use) 능력에 대한 종합적인 검증은 미흡하다.

@@ -12,10 +12,10 @@ Jonathan Lee, Ching-An Cheng, Ken Goldberg, Byron Boots (2019)
 
 본 논문의 핵심 기여는 다음과 같다.
 
-1.  **Continuous Online Learning (COL) 프레임워크 제안**: 손실 함수가 학습자의 현재 결정에 의존하는 bifunction $f$에 의해 결정되는 새로운 설정을 도입하여, 실제 문제에서 나타나는 정규성을 이론적으로 모델링하였다.
-2.  **Dynamic Regret과 Equilibrium Problems (EPs)의 등가성 증명**: COL 설정에서 sublinear dynamic regret을 달성하는 것이 특정 Equilibrium Problem 또는 Variational Inequality (VI)를 해결하는 것과 본질적으로 동일함을 수학적으로 증명하였다.
-3.  **Regret Reduction 방법론 제시**: $(\alpha, \beta)$-regularity 조건을 통해 dynamic regret을 static regret과 평형점(equilibrium point)으로의 수렴 속도로 환원(reduction)시켜 분석할 수 있는 이론적 토대를 마련하였다.
-4.  **Online Imitation Learning에의 적용**: Online IL 문제를 COL 문제로 정식화하여, 특정 조건($\alpha > \beta$) 하에서 유일한 최적 정책의 존재성을 보이고, 결정론적 및 확률적 피드백 환경에서의 수렴성과 dynamic regret bound를 제시하였다.
+1. **Continuous Online Learning (COL) 프레임워크 제안**: 손실 함수가 학습자의 현재 결정에 의존하는 bifunction $f$에 의해 결정되는 새로운 설정을 도입하여, 실제 문제에서 나타나는 정규성을 이론적으로 모델링하였다.
+2. **Dynamic Regret과 Equilibrium Problems (EPs)의 등가성 증명**: COL 설정에서 sublinear dynamic regret을 달성하는 것이 특정 Equilibrium Problem 또는 Variational Inequality (VI)를 해결하는 것과 본질적으로 동일함을 수학적으로 증명하였다.
+3. **Regret Reduction 방법론 제시**: $(\alpha, \beta)$-regularity 조건을 통해 dynamic regret을 static regret과 평형점(equilibrium point)으로의 수렴 속도로 환원(reduction)시켜 분석할 수 있는 이론적 토대를 마련하였다.
+4. **Online Imitation Learning에의 적용**: Online IL 문제를 COL 문제로 정식화하여, 특정 조건($\alpha > \beta$) 하에서 유일한 최적 정책의 존재성을 보이고, 결정론적 및 확률적 피드백 환경에서의 수렴성과 dynamic regret bound를 제시하였다.
 
 ## 📎 Related Works
 
@@ -26,6 +26,7 @@ Online Imitation Learning의 대표적 알고리즘인 DAGGER 등은 Online Lear
 ## 🛠️ Methodology
 
 ### 1. Continuous Online Learning (COL) 정의
+
 COL에서는 상대방(opponent)이 학습자에게 알려지지 않은 bifunction $f: (x, x') \mapsto f_x(x') \in \mathbb{R}$를 가지고 있다고 가정한다. 라운드 $n$에서 학습자가 결정 $x_n$을 내리면, 상대방은 다음과 같은 손실 함수를 제공한다.
 
 $$l_n(x) := f_{x_n}(x)$$
@@ -33,14 +34,16 @@ $$l_n(x) := f_{x_n}(x)$$
 여기서 $x$는 쿼리 인자(query argument)이며, $x'$는 성능을 평가받는 결정 인자(decision argument)이다. COL의 핵심은 $\forall x' \in X$에 대해 $\nabla f_x(x')$가 $x$에 대해 연속적인 맵(continuous map)이라는 점이다. 또한, 피드백 신호에 노이즈나 편향을 추가하여 확률적/적대적 요소를 포함할 수 있도록 설계하였다.
 
 ### 2. $(\alpha, \beta)$-Regularity
+
 효율적인 알고리즘 설계를 위해 본 논문은 COL 문제에 다음과 같은 정규성 조건을 도입한다.
 
--   **$\alpha$-strong convexity**: 모든 $x \in X$에 대해 $f_x(\cdot)$가 $\alpha$-강볼록 함수여야 한다.
--   **$\beta$-Lipschitz continuity**: $\nabla f_\cdot(x)$가 $\beta$-립시츠 연속 맵이어야 한다.
+- **$\alpha$-strong convexity**: 모든 $x \in X$에 대해 $f_x(\cdot)$가 $\alpha$-강볼록 함수여야 한다.
+- **$\beta$-Lipschitz continuity**: $\nabla f_\cdot(x)$가 $\beta$-립시츠 연속 맵이어야 한다.
 
 이 조건이 만족될 때, 맵 $\nabla f_x(x)$는 $(\alpha - \beta)$-strong monotonicity를 가지게 되며, 이는 Variational Inequality (VI) 문제의 유일한 해가 존재함을 보장한다.
 
 ### 3. Dynamic Regret의 환원 (Reduction)
+
 본 논문은 dynamic regret을 다음과 같이 상한(upper bound) 지을 수 있음을 증명하였다.
 
 $$\text{Regret}^d_N \leq \min\left\{G \sum_{n=1}^N \Delta_n, \text{Regret}^s_N(x^*)\right\} + \sum_{n=1}^N \min\left\{\beta D_X \Delta_n, \frac{\beta^2}{2\alpha}\Delta_n^2\right\}$$
@@ -50,12 +53,14 @@ $$\text{Regret}^d_N \leq \min\left\{G \sum_{n=1}^N \Delta_n, \text{Regret}^s_N(x
 ## 📊 Results
 
 ### 1. Online Imitation Learning (IL) 적용
+
 Online IL의 목적 함수 $\min_{\pi \in \Pi} \mathbb{E}_{s \sim d_\pi}[c(s, \pi; \pi^*)]$에서, 라운드 $n$의 손실 함수를 $l_n(\pi) = f_{\pi_n}(\pi) = \mathbb{E}_{s \sim d_{\pi_n}}[c(s, \pi; \pi^*)]$로 정의함으로써 이를 COL 문제로 변환하였다.
 
 ### 2. 이론적 분석 결과
--   **유일 해의 존재성**: $\alpha > \beta$ 조건이 만족되면, 자신의 분포 상에서 최적인 유일한 정책 $\hat{\pi}$가 존재한다.
--   **결정론적 피드백 (Deterministic Feedback)**: Online Gradient Descent (OGD)를 사용할 때, 적절한 stepsize $\eta$를 선택하면 정책 $\pi_n$이 $\hat{\pi}$로 선형 수렴(linear convergence)하며, $\text{Regret}^d_N = O(1)$임을 보였다.
--   **확률적 피드백 (Stochastic Feedback)**: $\eta_n = 1/\sqrt{n}$인 OGD 알고리즘을 사용할 때, 기대 dynamic regret이 다음과 같이 sublinear함을 증명하였다.
+
+- **유일 해의 존재성**: $\alpha > \beta$ 조건이 만족되면, 자신의 분포 상에서 최적인 유일한 정책 $\hat{\pi}$가 존재한다.
+- **결정론적 피드백 (Deterministic Feedback)**: Online Gradient Descent (OGD)를 사용할 때, 적절한 stepsize $\eta$를 선택하면 정책 $\pi_n$이 $\hat{\pi}$로 선형 수렴(linear convergence)하며, $\text{Regret}^d_N = O(1)$임을 보였다.
+- **확률적 피드백 (Stochastic Feedback)**: $\eta_n = 1/\sqrt{n}$인 OGD 알고리즘을 사용할 때, 기대 dynamic regret이 다음과 같이 sublinear함을 증명하였다.
 
 $$\mathbb{E}[\text{Regret}^d_N] = O(\sqrt{N})$$
 

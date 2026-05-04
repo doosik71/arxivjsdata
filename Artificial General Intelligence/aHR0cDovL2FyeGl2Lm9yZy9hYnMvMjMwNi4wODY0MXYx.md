@@ -10,7 +10,7 @@ Lingxi Xie, Longhui Wei, Xiaopeng Zhang, Kaifeng Bi, Xiaotao Gu, Jianlong Chang,
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 기여는 NLP의 성공 사례인 GPT의 메커니즘을 CV에 이식하여 AGI로 나아가기 위한 개념적 파이프라인을 제안한 것이다. 중심 아이디어는 CV 알고리즘을 단순한 인식기가 아닌, 상호작용 가능한 환경 속의 '에이전트(Agent)'로 정의하는 것이다. 
+본 논문의 핵심 기여는 NLP의 성공 사례인 GPT의 메커니즘을 CV에 이식하여 AGI로 나아가기 위한 개념적 파이프라인을 제안한 것이다. 중심 아이디어는 CV 알고리즘을 단순한 인식기가 아닌, 상호작용 가능한 환경 속의 '에이전트(Agent)'로 정의하는 것이다.
 
 구체적으로는 상호작용 가능한 고품질 환경을 구축하고, 에이전트가 자신의 행동에 따른 미래 프레임을 예측하도록 사전 학습(Pre-training)시킨 뒤, 인간의 지시(Instruction)를 통해 다양한 작업을 수행하도록 미세 조정(Fine-tuning)하는 3단계 전략을 제시한다.
 
@@ -18,11 +18,11 @@ Lingxi Xie, Longhui Wei, Xiaopeng Zhang, Kaifeng Bi, Xiaotao Gu, Jianlong Chang,
 
 논문은 CV의 통합을 위한 최근의 시도들을 다섯 가지 범주로 분류하여 설명한다.
 
-1.  **Open-world Visual Recognition**: CLIP과 같은 Vision-Language Alignment 모델을 통해 학습 데이터에 없는 개념도 인식하려는 시도이다. 하지만 이는 주로 사전 학습된 모델의 지식에 의존하는 것이며, 복잡한 장면 내의 세부 의미를 지칭하는 데 한계가 있다.
-2.  **Segment Anything (SAM)**: 다양한 프롬프트를 통해 이미지 픽셀을 그룹화하는 일반화된 모듈을 제안하였다. 많은 작업에 전이 가능하지만, 색상과 같은 픽셀 레벨의 외형에 과적합되어 분류 능력이 약화될 수 있다는 한계가 있다.
-3.  **Generalized Visual Encoding**: $\text{pix2seq}$나 $\text{Painter}$와 같이 다양한 CV 작업을 단일한 출력 형태(예: 토큰 시퀀스 또는 컬러 패치)로 통일하려는 시도이다. $\text{Gato}$와 같은 일반 목적 에이전트가 이에 해당한다.
-4.  **LLM-guided Visual Understanding**: $\text{ViperGPT}$나 $\text{HuggingGPT}$처럼 LLM이 논리적 제어기 역할을 하여 CV 모듈을 호출하는 방식이다. 논리적 추론은 가능하지만, 기초 인식 모듈의 결과가 틀리면 최종 답변도 틀리는 의존성 문제가 존재한다.
-5.  **Multimodal Dialog**: $\text{LLaVA}$나 $\text{MiniGPT-4}$와 같이 Vision-Language 모델을 Instruction Tuning하여 대화형 시스템으로 확장한 연구들이다.
+1. **Open-world Visual Recognition**: CLIP과 같은 Vision-Language Alignment 모델을 통해 학습 데이터에 없는 개념도 인식하려는 시도이다. 하지만 이는 주로 사전 학습된 모델의 지식에 의존하는 것이며, 복잡한 장면 내의 세부 의미를 지칭하는 데 한계가 있다.
+2. **Segment Anything (SAM)**: 다양한 프롬프트를 통해 이미지 픽셀을 그룹화하는 일반화된 모듈을 제안하였다. 많은 작업에 전이 가능하지만, 색상과 같은 픽셀 레벨의 외형에 과적합되어 분류 능력이 약화될 수 있다는 한계가 있다.
+3. **Generalized Visual Encoding**: $\text{pix2seq}$나 $\text{Painter}$와 같이 다양한 CV 작업을 단일한 출력 형태(예: 토큰 시퀀스 또는 컬러 패치)로 통일하려는 시도이다. $\text{Gato}$와 같은 일반 목적 에이전트가 이에 해당한다.
+4. **LLM-guided Visual Understanding**: $\text{ViperGPT}$나 $\text{HuggingGPT}$처럼 LLM이 논리적 제어기 역할을 하여 CV 모듈을 호출하는 방식이다. 논리적 추론은 가능하지만, 기초 인식 모듈의 결과가 틀리면 최종 답변도 틀리는 의존성 문제가 존재한다.
+5. **Multimodal Dialog**: $\text{LLaVA}$나 $\text{MiniGPT-4}$와 같이 Vision-Language 모델을 Instruction Tuning하여 대화형 시스템으로 확장한 연구들이다.
 
 저자들은 이러한 연구들이 통합을 향한 진전이지만, 여전히 실제 환경에서의 상호작용을 통한 일반화라는 AGI의 핵심에는 도달하지 못했다고 분석한다.
 
@@ -45,7 +45,7 @@ $$R = \sum_{t=1}^{T} r(s_t, a_t)$$
 
 ## 📊 Results
 
-본 논문은 특정 알고리즘의 성능을 측정하는 실험 논문이 아니라, 향후 연구 방향을 제시하는 관점(Perspective) 논문이다. 따라서 저자가 직접 수행한 정량적 실험 결과는 제시되지 않았다. 
+본 논문은 특정 알고리즘의 성능을 측정하는 실험 논문이 아니라, 향후 연구 방향을 제시하는 관점(Perspective) 논문이다. 따라서 저자가 직접 수행한 정량적 실험 결과는 제시되지 않았다.
 
 대신, GPT-4의 사례를 통해 텍스트 환경에서의 AGI 가능성을 분석하고, SAM이나 CLIP 등의 기존 모델들이 가진 통합의 한계를 정성적으로 논의한다. 또한, $\text{Habitat}$이나 $\text{ProcTHOR}$와 같은 기존 3D 환경들이 현실 세계의 복잡성을 담아내기에 아직 부족하며, 데이터 양을 늘려도 성능이 빠르게 포화되는 현상이 있음을 지적하며 환경 구축의 중요성을 강조한다.
 
@@ -54,10 +54,12 @@ $$R = \sum_{t=1}^{T} r(s_t, a_t)$$
 저자들은 **"Proxy is Dying!"**이라는 강렬한 메시지를 통해, ImageNet과 같은 고정된 데이터셋에서 정확도를 0.5% 높이려는 기존의 연구 방식이 더 이상 AGI로 가는 길이 아니라고 주장한다. 딥러닝의 발전으로 대리 작업(Proxy Tasks)의 성능은 이미 매우 높아졌으며, 이제는 데이터 샘플링이 아닌 세계 시뮬레이션(World Simulation)으로 패러다임을 전환해야 한다는 것이다.
 
 **강점 및 제안:**
+
 - CV를 NLP의 하위 집합으로 보고, '환경-에이전트-보상'의 프레임워크를 도입하여 CV AGI의 명확한 경로를 제시하였다.
 - 단순한 인식 모델을 넘어 Embodied AI의 관점에서 통합을 논의하였다.
 
 **한계 및 미해결 질문:**
+
 - 제안한 파이프라인을 실제로 구현하기 위해서는 엄청난 규모의 컴퓨팅 자원과 정교한 시뮬레이터가 필요하며, 가상 환경과 실제 환경 사이의 도메인 간극(Domain Gap)을 어떻게 해결할 것인지에 대한 구체적인 방법론은 명시되지 않았다.
 - 시각 데이터의 엄청난 중복성(Redundancy)을 해결하기 위한 데이터 압축(Data Compression)의 중요성을 언급했으나, 이에 대한 구체적인 아키텍처는 제안되지 않았다.
 

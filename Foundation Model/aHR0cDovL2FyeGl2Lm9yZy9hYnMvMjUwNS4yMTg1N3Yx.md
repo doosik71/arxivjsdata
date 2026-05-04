@@ -21,6 +21,7 @@ Mijung Park (2025)
 기존의 모델 병합(Model Merging) 접근 방식은 크게 두 가지로 나뉜다. 첫 번째는 동일한 초기값에서 출발하여 독립적으로 최적화된 모델들의 가중치를 평균 내는 방식(예: Model Soups)이다. 두 번째는 여러 모델의 출력값을 앙상블하는 방식이다.
 
 본 연구의 BMA 및 OMA는 출력값 앙상블의 일종으로 볼 수 있으나, 다음과 같은 차별점을 가진다.
+
 - **비휴리스틱 가중치**: 단순 평균이 아니라 모델의 사후 확률이나 엔트로피 최적화를 통해 가중치를 결정한다.
 - **낮은 비용**: 모델 전체를 Fine-tuning할 필요 없이, Frozen Feature 기반의 선형 헤드만 학습시키거나 가중치만 최적화하므로 훨씬 경제적이다.
 - **아키텍처 유연성**: 가중치 평균 방식과 달리 서로 다른 아키텍처를 가진 모델들 간의 앙상블이 가능하다.
@@ -28,12 +29,15 @@ Mijung Park (2025)
 ## 🛠️ Methodology
 
 ### 1. Bayesian Model Averaging (BMA)
+
 BMA는 새로운 데이터 $x^*$에 대해 여러 후보 모델 $\{M_l\}_{l=1}^L$의 사후 확률을 가중치로 사용하여 예측한다.
 
 $$p(y^*|x^*, D) = \sum_{l=1}^{L} p(y^*|x^*, M_l, D)p(M_l|D)$$
 
 #### 가중치 계산을 위한 근사 (Laplace Approximation)
+
 거대 모델에서 Marginal Likelihood(주변 가능도) $p(D|M_l)$를 계산하는 것은 분석적으로 불가능하다. 이를 해결하기 위해 본 논문은 다음과 같은 전략을 취한다.
+
 - **Frozen Feature**: Foundation Model $\phi_l$은 고정하고, 선형 분류기 $w_l$만 학습 변수로 취급한다.
 - **Laplace Approximation**: 사후 분포를 MAP(Maximum A Posteriori) 추정치 $w_{map}$을 중심으로 하는 다변량 가우시안 분포로 근사한다.
 - **Block Diagonal Hessian**: 전체 Hessian 행렬의 크기가 너무 커서($10^6 \times 10^6$) 메모리에 올릴 수 없으므로, 대각 블록이 지배적이라는 가정을 통해 Block Diagonal Hessian 접근법을 사용한다.
@@ -42,9 +46,11 @@ $$p(y^*|x^*, D) = \sum_{l=1}^{L} p(y^*|x^*, M_l, D)p(M_l|D)$$
 $$\log p(D|M_l) \approx \log p(D|w_{map,l}, M_l) - \frac{1}{2} w_{map,l}^T S_\alpha^{-1} w_{map,l} - \frac{1}{2} \log |HS_\alpha + I|$$
 
 ### 2. Optimizable Model Averaging (OMA)
+
 데이터 분포 변화가 심해 BMA의 사후 확률이 신뢰하기 어렵거나, 레이블이 부족한 경우를 위해 OMA를 제안한다. OMA의 핵심은 앙상블된 모델의 예측 결과에서 발생하는 '기대 엔트로피'를 최소화하는 가중치 $\beta_l$을 찾는 것이다.
 
 #### 목적 함수
+
 검증 데이터셋 $D_v$에 대해 다음의 손실 함수를 최소화한다.
 $$L(\{\beta_l\}) = -\frac{1}{M} \sum_{m=1}^M \sum_{c=1}^C E \left[ \left( \sum_{l=1}^L \beta_l \cdot p(y^*_m=c|x^*_m, M_l) \right) \log \left( \sum_{l=1}^L \beta_l \cdot p(y^*_m=c|x^*_m, M_l) \right) \right]$$
 
@@ -53,11 +59,13 @@ $$L(\{\beta_l\}) = -\frac{1}{M} \sum_{m=1}^M \sum_{c=1}^C E \left[ \left( \sum_{
 ## 📊 Results
 
 ### 실험 설정
+
 - **이미지 분류**: OpenCLIP 모델 8종을 특성 추출기로 사용. ImageNet-1K 및 OOD 데이터셋(Img-V2, Img-R, Img-sketch, Img-A, ObjNet)에서 평가.
 - **텍스트 분류**: BERT-base, BERT-large, Funnel-transformer 모델 사용. GLUE 벤치마크(MRPC, RTE, CoLA, SST-2)에서 평가.
 - **비교 대상**: Simple Output Averaging, Model Soups, CoCa, EVA02-L.
 
 ### 주요 결과
+
 1. **이미지 분류**:
    - BMA는 ImageNet-1K(In-distribution)에서 단순 평균보다 훨씬 높은 성능을 보였다.
    - 분포 변화가 심한 OOD 데이터셋(Img-R, Img-sketch 등)에서는 OMA가 단순 평균보다 최대 2.4% 성능 향상을 보였으며, 일부 지표에서는 전체 Fine-tuning 기반의 Model Soups보다 우수한 성능을 기록했다.

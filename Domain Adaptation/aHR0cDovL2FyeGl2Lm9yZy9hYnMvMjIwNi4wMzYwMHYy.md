@@ -27,6 +27,7 @@ Shiqi Yang, Yaxing Wang, Kai Wang, Shangling Jui, Joost van de Weijer (2023)
 ## 🛠️ Methodology
 
 ### 1. Source Training: One Ring Classifier
+
 소스 학습 단계에서는 $|C_s|$개의 알려진 클래스에 더해, Unknown 클래스를 위한 하나의 차원을 추가한 $(|C_s|+1)$-way 분류기를 학습시킨다. Unknown 클래스의 샘플이 없는 상태에서 이를 학습시키기 위해, 본 논문은 다음과 같은 수정된 Cross Entropy (CE) 손실 함수를 제안한다.
 
 $$L_{source} = \mathbb{E}_{x_i \sim D_s} [L_{ce}(p(x_i), y_i) + L_{ce}(\hat{p}(x_i), \hat{y}_i)]$$
@@ -36,6 +37,7 @@ $$L_{source} = \mathbb{E}_{x_i \sim D_s} [L_{ce}(p(x_i), y_i) + L_{ce}(\hat{p}(x
 이 구조의 목적은 두 가지이다. 첫째, 가장 높은 로짓(logit)은 정답 클래스가 가져가게 한다. 둘째, 정답을 제외한 나머지 클래스들 중에서는 Unknown 클래스가 가장 높은 점수를 갖도록 강제한다. 이를 통해 모델은 학습 데이터에 없는 새로운 클래스가 들어왔을 때, 이를 Unknown 차원으로 분류할 수 있는 능력을 갖게 된다.
 
 ### 2. Target Adaptation: Weighted Entropy Minimization
+
 소스 학습이 완료된 모델을 타겟 도메인에 적응시키기 위해, 본 논문은 소스 데이터 없이 타겟 데이터의 예측 불확실성을 줄이는 Entropy Minimization 방식을 사용한다. 다만, 알려진 클래스와 Unknown 클래스 간의 불균형을 해소하기 위해 다음과 같은 가중치 기반 손실 함수를 제안한다.
 
 $$L_{target} = \frac{bs}{\hat{n}_{all}^k} \mathbb{E}_{\bar{y}_i \in C_s} L_{ent}(p(x_i)) + \frac{bs}{\hat{n}_{all}^u} \mathbb{E}_{\bar{y}_i \in C_u} L_{ent}(p(x_i))$$
@@ -47,6 +49,7 @@ $$L_{target} = \frac{bs}{\hat{n}_{all}^k} \mathbb{E}_{\bar{y}_i \in C_s} L_{ent}
 이 가중치 $\frac{bs}{\hat{n}_{all}^k}$와 $\frac{bs}{\hat{n}_{all}^u}$는 타겟 도메인 내에서 Known/Unknown 클래스의 비율을 고려하여 두 엔트로피 항의 균형을 맞추는 역할을 한다.
 
 ### 3. Augmentation with Attracting-and-Dispersing (AaD)
+
 성능을 더욱 높이기 위해, 본 논문은 Closed-set SFDA의 SOTA 방법론인 AaD를 결합한 $\text{OneRing}^+$ 버전을 제안한다. AaD는 특징 공간에서 동일 클래스는 모으고(Attracting) 서로 다른 클래스는 멀어지게(Dispersing) 하는 $L_{dis}$와 $L_{div}$ 손실 함수를 사용한다.
 
 $$L_{target+} = \frac{bs}{\hat{n}_{all}^k} \mathbb{E}_{\bar{y}_i \in C_s} [L_{ent}(p(x_i)) + L_{dis} + L_{div}] + \frac{bs}{\hat{n}_{all}^u} \mathbb{E}_{\bar{y}_i \in C_u} [L_{ent}(p(x_i)) + L_{dis}]$$
@@ -56,11 +59,13 @@ $$L_{target+} = \frac{bs}{\hat{n}_{all}^k} \mathbb{E}_{\bar{y}_i \in C_s} [L_{en
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Office-31, Office-Home, VisDA, DomainNet을 사용하여 SF-OPDA 설정에서 평가하였다.
 - **지표**: 알려진 클래스의 정확도(OS)와 Unknown 클래스의 정확도(UNK)를 모두 고려한 Harmonic Mean (H-score)을 주요 지표로 사용하였다.
 - **비교 대상**: OVANet, DCC, CMU 등 기존 OPDA 방법론들과 비교하였다.
 
 ### 주요 결과
+
 1. **정량적 성능**: $\text{OneRing}$은 소스 데이터 없이도 기존의 소스 데이터를 사용하는 OPDA 방법론들을 대부분 능가하였다. 특히 AaD를 결합한 $\text{OneRing}^+$는 Office-31, Office-Home, VisDA 데이터셋에서 SOTA인 OVANet보다 각각 2.5%, 7.2%, 13% 더 높은 성능 향상을 보였다.
 2. **Unknown 클래스 수에 대한 강건성**: 타겟 도메인의 Unknown 클래스 개수를 변화시키며 실험한 결과, OneRing은 클래스 수의 변화에도 성능 저하가 적고 매우 강건한 모습을 보였다.
 3. **가중치의 중요성**: 엔트로피 최소화 식에서 가중치를 제거했을 때 성능이 크게 하락하는 것을 확인하여, Known/Unknown 비율을 맞추는 가중치 설계가 필수적임을 입증하였다.
@@ -70,12 +75,14 @@ $$L_{target+} = \frac{bs}{\hat{n}_{all}^k} \mathbb{E}_{\bar{y}_i \in C_s} [L_{en
 
 본 논문은 복잡한 모듈이나 데이터 생성 없이, 손실 함수의 단순한 변경만으로 Source-free 환경에서 Open-partial DA를 수행할 수 있음을 보여주었다. 특히 $(n+1)$-way 분류기 설계는 OSR(Open-set Recognition) 분야의 핵심 난제인 "보지 못한 클래스의 거부" 문제를 매우 효율적으로 해결하였다.
 
-**강점**: 
+**강점**:
+
 - 소스 데이터가 필요 없으므로 프라이버시 문제가 해결된다.
 - 구현이 매우 단순하며 추가적인 하이퍼파라미터 튜닝 부담이 적다.
 - 기존의 Closed-set SFDA 기법(AaD 등)과 쉽게 결합하여 성능을 확장할 수 있다.
 
 **한계 및 논의**:
+
 - 소스 학습 시 두 개의 CE 손실 함수를 사용하는데, DomainNet과 같은 매우 큰 데이터셋에서는 수렴에 어려움이 있어 2단계 학습(Standard CE $\rightarrow$ OneRing CE)이 필요했다는 점이 언급된다. 이는 손실 함수 간의 충돌 가능성을 시사한다.
 - 타겟 적응 단계에서 분류기 헤드를 고정(fixed)하고 특징 추출기만 학습시키는데, 분류기 헤드까지 함께 미세 조정했을 때의 효과에 대해서는 명시적으로 다루지 않았다.
 

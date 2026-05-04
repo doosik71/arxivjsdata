@@ -18,6 +18,7 @@ Iván Vallés-Pérez, Juan Gómez-Sanchis, Marcelino Martínez-Sober, Joan Vila-
 ## 📎 Related Works
 
 기존의 KWS 연구들은 주로 다음과 같은 접근 방식을 취해왔다.
+
 - **순환 신경망 및 어텐션**: Bidirectional recurrent 모델과 Attention 메커니즘을 결합하여 성능을 높이려는 시도가 있었다.
 - **Gated Convolutional LSTM**: LSTM 구조에 게이트 기반의 컨볼루션을 결합한 구조가 유용함이 입증되었다.
 - **CNN 기반 접근**: CNN은 계산 자원을 최적화하는 데 유리하며, 일부 연구에서는 다른 DNN 구조보다 CNN이 KWS 작업에서 더 우수한 성능을 보임을 확인하였다.
@@ -28,7 +29,9 @@ Iván Vallés-Pérez, Juan Gómez-Sanchis, Marcelino Martínez-Sober, Joan Vila-
 ## 🛠️ Methodology
 
 ### 데이터셋 및 전처리
+
 본 연구는 Google Tensorflow speech commands 데이터셋(V1, V2)을 사용하였다. 입력 데이터는 1초 길이의 16kHz 샘플링 레이트, 16비트 해상도의 `.wav` 파일이다. 데이터 증강을 위해 학습 데이터에 대해 다음 다섯 가지 변환을 무작위 강도로 적용하여 데이터를 5배로 확장하였다.
+
 1. **Resampling**: 클립 길이를 늘리거나 줄여 피치(pitch)에 영향을 준다.
 2. **Saturation**: 무작위 증폭을 적용한다.
 3. **Time offset**: 오디오 클립을 시간축으로 이동시킨다.
@@ -36,7 +39,9 @@ Iván Vallés-Pérez, Juan Gómez-Sanchis, Marcelino Martínez-Sober, Joan Vila-
 5. **Pitch shift**: 피치 왜곡을 적용한다.
 
 ### Xception-1d 아키텍처
+
 Xception-1d는 기존 Xception의 2D 컨볼루션을 1D 컨볼루션으로 변경하고, 각 컨볼루션 출력에 Instance Normalization을 적용한 구조이다. 모델은 크게 세 가지 모듈로 구성된다.
+
 - **Entry Module**: 입력 파형(wave)을 압축된 표현으로 변환한다.
 - **Middle Module**: 추상적인 특징 표현을 학습한다.
 - **Classification Module**: 추출된 특징을 최종 클래스로 매핑한다.
@@ -46,6 +51,7 @@ $$\text{Computational Cost} \approx \frac{1}{N} \cdot \frac{1}{S}$$
 여기서 $S$는 Depthwise Convolution 필터의 크기이고, $N$은 Pointwise Convolution 이후의 출력 채널 수이다.
 
 ### 학습 절차 및 최적화
+
 - **정규화**: 마지막 Dense 레이어의 파라미터 수가 많아($\sim 65,000$) 오버피팅 가능성이 높으므로, 마지막 컨볼루션 이후에 강한 Dropout($p=0.75$)을 적용하였다. 또한 전체 네트워크에 Weight decay ($\lambda=10^{-3}$)를 적용하였다.
 - **최적화**: Adam 옵티마이저를 사용하였으며, 초기 학습률 $\eta=10^{-4}$에서 시작하여 4 에포크 동안 성능 향상이 없을 경우 학습률을 $\frac{1}{2}$배로 감소시켰다.
 - **입력**: 시간 도메인의 오디오 클립을 그대로 입력으로 사용한다.
@@ -53,11 +59,13 @@ $$\text{Computational Cost} \approx \frac{1}{N} \cdot \frac{1}{S}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: V1(30개 단어), V2(35개 단어)를 사용하였다.
 - **평가 작업**: (1) 35-단어 인식, (2) 20-명령어 인식, (3) 10-명령어 인식, (4) Left-Right 인식의 네 가지 태스크로 나누어 벤치마크를 수행하였다.
 - **평가 지표**: 정확도(Accuracy)의 평균과 표준편차를 측정하였으며, 인간의 성능과 비교하기 위해 Student's t-test를 통한 p-value를 산출하였다.
 
 ### 주요 결과
+
 - **종합 성능**: Xception-1d는 4가지 태스크 중 3가지에서 기존 문헌의 방법론보다 우수한 성능을 보였다. Left-Right 인식 작업에서는 Andrade et al.의 방법이 근소하게($0.5\%$ 미만 차이) 앞섰다.
 - **인간 성능 추월**: 가장 어려운 작업인 35-단어 인식과 20-명령어 인식 작업에서 통계적으로 유의미하게 인간의 인식 정확도를 넘어섰다. 35-단어 인식의 경우 약 $96\%$의 정확도를 달성하였다.
 - **오류 분석**: 정밀도(Precision)와 재현율(Recall) 분석 결과, 발음이 유사한 단어 쌍(예: "three"와 "tree", "follow"와 "four", "bed"와 "bird") 사이에서 구별에 어려움을 겪는 경향이 확인되었다.
@@ -65,9 +73,11 @@ $$\text{Computational Cost} \approx \frac{1}{N} \cdot \frac{1}{S}$$
 ## 🧠 Insights & Discussion
 
 ### 보조 작업(Auxiliary Tasks)의 효과
+
 연구진은 Left-Right 인식 작업(이진 분류에 가까운 단순 작업)만 수행했을 때보다, 35-단어 인식과 같은 복잡한 다중 클래스 분류 작업에 포함시켜 학습했을 때 Left-Right 클래스의 성능이 더 높게 나타나는 현상을 발견하였다. 이는 복잡한 보조 작업을 통해 더 풍부한 특징(features)이 추출되어 주 작업의 성능을 향상시킨다는 가설을 뒷받침하며, 이는 강화 학습 분야에서 증명된 바 있는 원리가 딥러닝 기반 KWS에도 적용될 수 있음을 시사한다.
 
 ### 한계점
+
 모델이 음향적으로 매우 유사한 단어들을 구분하는 데 어려움을 겪는다는 점은 향후 개선해야 할 과제이다. 또한, 본 논문에서는 다른 모델들의 클래스별 정밀도/재현율 데이터를 확보하지 못해 상세한 비교 분석을 수행하지 못한 한계가 있다.
 
 ## 📌 TL;DR

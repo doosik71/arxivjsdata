@@ -10,9 +10,9 @@ Wenzhang Zhou, Longyin Wen, Libo Zhang, Dawei Du, Tiejian Luo, Yanjun Wu (2020)
 
 본 논문의 핵심 아이디어는 타겟의 정밀한 바운딩 박스 회귀를 돕기 위해 '거친 위치 추정(Coarse Localization)' 단계를 추가하는 것이다. 주요 기여 사항은 다음과 같다.
 
-1.  **삼중 병렬 브랜치 구조**: 기존의 분류(Classification) 및 회귀(Regression) 브랜치 외에, 타겟의 중심 위치를 대략적으로 찾아내는 Localization 브랜치를 추가하여 전체 시스템을 구성하였다.
-2.  **Global Context Module 도입**: Localization 브랜치 내에 Global Context Module을 통합하여 장거리 의존성(Long-range dependency)을 캡처함으로써, 타겟의 변위(Displacement)가 큰 상황에서도 강건한 추적이 가능하게 하였다.
-3.  **Multi-scale Learnable Attention Module 설계**: 서로 다른 레이어에서 추출된 다중 스케일 특징들을 효과적으로 활용하기 위해, 학습 가능한 가중치를 가진 어텐션 모듈을 설계하여 각 브랜치가 변별력 있는 특징을 추출하도록 유도하였다.
+1. **삼중 병렬 브랜치 구조**: 기존의 분류(Classification) 및 회귀(Regression) 브랜치 외에, 타겟의 중심 위치를 대략적으로 찾아내는 Localization 브랜치를 추가하여 전체 시스템을 구성하였다.
+2. **Global Context Module 도입**: Localization 브랜치 내에 Global Context Module을 통합하여 장거리 의존성(Long-range dependency)을 캡처함으로써, 타겟의 변위(Displacement)가 큰 상황에서도 강건한 추적이 가능하게 하였다.
+3. **Multi-scale Learnable Attention Module 설계**: 서로 다른 레이어에서 추출된 다중 스케일 특징들을 효과적으로 활용하기 위해, 학습 가능한 가중치를 가진 어텐션 모듈을 설계하여 각 브랜치가 변별력 있는 특징을 추출하도록 유도하였다.
 
 ## 📎 Related Works
 
@@ -23,30 +23,34 @@ SiamRPN 및 SiamRPN++와 같은 최신 모델들은 RPN(Region Proposal Network)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 SiamMan은 Siamese 특징 추출 서브네트워크(Backbone)와 그 뒤에 병렬로 연결된 세 개의 브랜치(Classification, Regression, Localization)로 구성된다. Backbone으로는 ResNet-50을 사용하며, 템플릿(Template) 모듈과 검출(Detection) 모듈이 파라미터를 공유하는 구조이다.
 
 ### 주요 구성 요소 및 역할
 
-1.  **Classification Branch**: 타겟의 전경(Foreground)과 배경(Background)을 구분한다. 템플릿 특징 $\phi_{cls}^m(\alpha)$와 검출 특징 $\phi_{cls}^m(\beta)$ 간의 depth-wise convolution을 통해 상관 특징 맵(Correlation feature map)을 생성한다.
+1. **Classification Branch**: 타겟의 전경(Foreground)과 배경(Background)을 구분한다. 템플릿 특징 $\phi_{cls}^m(\alpha)$와 검출 특징 $\phi_{cls}^m(\beta)$ 간의 depth-wise convolution을 통해 상관 특징 맵(Correlation feature map)을 생성한다.
     $$F_{cls}^{w \times h \times 2k}(m) = \phi_{cls}^m(\alpha) * \phi_{cls}^m(\beta)$$
     이후 Multi-scale Attention 모듈을 통해 최종 예측값 $O_{cls}$를 산출한다.
 
-2.  **Regression Branch**: 앵커 박스를 기반으로 타겟의 정밀한 바운딩 박스를 회귀한다. 작동 방식은 분류 브랜치와 유사하며, 최종적으로 각 앵커와 정답 박스 간의 정규화된 거리 값을 출력한다.
+2. **Regression Branch**: 앵커 박스를 기반으로 타겟의 정밀한 바운딩 박스를 회귀한다. 작동 방식은 분류 브랜치와 유사하며, 최종적으로 각 앵커와 정답 박스 간의 정규화된 거리 값을 출력한다.
     $$O_{reg}^{w \times h \times 4k} = \sum_{m=1}^{L} \gamma_{reg}^m \cdot F_{reg}^{w \times h \times 4k}(m)$$
 
-3.  **Localization Branch**: 타겟의 중심 위치를 거칠게 추정하여 회귀 브랜치를 보조한다. 특징 맵 간의 요소별 곱셈(Element-wise multiplication)을 사용하며, Global Context Module과 Atrous Spatial Pyramid Module을 통해 광범위한 문맥 정보를 통합한다.
+3. **Localization Branch**: 타겟의 중심 위치를 거칠게 추정하여 회귀 브랜치를 보조한다. 특징 맵 간의 요소별 곱셈(Element-wise multiplication)을 사용하며, Global Context Module과 Atrous Spatial Pyramid Module을 통해 광범위한 문맥 정보를 통합한다.
     $$F_{loc}^{w \times h \times 2}(m) = E[\phi_{loc}^m(\alpha)] \odot \phi_{loc}^m(\beta)$$
     여기서 $E[\cdot]$는 크기 조정(Resize) 연산이며, $\odot$는 요소별 곱셈이다.
 
-4.  **Multi-scale Learnable Attention Module**: 각 브랜치는 여러 레이어($m=1, \dots, L$)의 특징 맵을 사용한다. 각 스케일의 중요도를 나타내는 학습 가능한 가중치 $\gamma$를 통해 가중 합(Weighted sum)을 구함으로써 최적의 특징 조합을 생성한다.
+4. **Multi-scale Learnable Attention Module**: 각 브랜치는 여러 레이어($m=1, \dots, L$)의 특징 맵을 사용한다. 각 스케일의 중요도를 나타내는 학습 가능한 가중치 $\gamma$를 통해 가중 합(Weighted sum)을 구함으로써 최적의 특징 조합을 생성한다.
 
 ### 손실 함수 (Loss Function)
+
 전체 손실 함수는 세 브랜치의 손실 합으로 정의된다.
 $$L = \lambda_{cls}L_{cls}(u, u^*) + \lambda_{reg}L_{reg}(p, p^*) + \lambda_{loc}L_{loc}(c, c^*)$$
+
 - **$L_{cls}, L_{loc}$**: 타겟 유무 및 중심 위치 예측을 위해 Cross-entropy loss를 사용한다. 특히 $L_{loc}$의 정답 레이블 $c^*$는 Gaussian 커널을 이용하여 생성한다.
 - **$L_{reg}$**: 바운딩 박스 좌표의 정밀한 회귀를 위해 $L1$ loss를 사용한다.
 
 ### 추론 절차 (Inference)
+
 최종 예측 점수 $\Theta$는 다음과 같은 가중치 조합으로 결정된다.
 $$\Theta^{w \times h \times k} = \omega_2 \cdot \rho \cdot (\omega_1 \cdot u + (1 - \omega_1) \cdot c) + (1 - \omega_2) \cdot \xi$$
 여기서 $u$는 분류 결과, $c$는 위치 추정 결과, $\xi$는 경계 외부 이상치를 억제하기 위한 코사인 윈도우(Cosine window), $\rho$는 급격한 스케일 변화를 억제하는 페널티 항이다.
@@ -54,16 +58,19 @@ $$\Theta^{w \times h \times k} = \omega_2 \cdot \rho \cdot (\omega_1 \cdot u + (
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: VOT2016, VOT2018, OTB100, UAV123, LTB35 총 5개의 벤치마크를 사용하였다.
 - **평가 지표**: EAO(Expected Average Overlap), Accuracy(A), Robustness(R), Success score, Precision score, F-score 등을 사용하여 성능을 측정하였다.
 - **구현 환경**: PySOT 플랫폼 기반, NVIDIA RTX 2080 GPU 사용, 평균 추적 속도는 45fps이다.
 
 ### 정량적 결과
+
 - **VOT2016 & VOT2018**: VOT2016에서 EAO 0.513, VOT2018에서 EAO 0.462를 기록하며 SOTA(State-of-the-art)를 달성하였다. 특히 SiamRPN++ 대비 EAO가 크게 향상되어 Localization 브랜치의 효과를 입증하였다.
 - **OTB100 & UAV123**: OTB100에서 Success score 0.705, Precision score 0.919로 최상위 성능을 보였으며, UAV123에서는 DiMP-50과 대등한 성능을 기록하였다.
 - **LTB35 (Long-term)**: 별도의 재검출(Re-detection) 모듈 없이도 F-score 64.1%를 달성하며 장기 추적 성능이 우수함을 보였다.
 
 ### 소거 연구 (Ablation Study)
+
 Localization 브랜치, Global Context Module, Multi-scale Attention 각각의 제거 시 EAO가 유의미하게 하락함을 확인하였다. 특히 Localization 브랜치가 없을 때 성능 저하가 가장 컸으며, 이는 제안 방법의 핵심 기여분이 타겟의 거친 위치 추정에 있음을 시사한다.
 
 ## 🧠 Insights & Discussion

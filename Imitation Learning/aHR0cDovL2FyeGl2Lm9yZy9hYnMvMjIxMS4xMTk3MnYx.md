@@ -32,21 +32,24 @@ Adam Gleave et al. (2022)
 `imitation` 라이브러리는 확장성과 재사용성을 극대화하기 위해 다음과 같은 구조로 설계되었다.
 
 ### 1. 전체 시스템 구조 및 파이프라인
+
 라이브러리는 PyTorch를 백엔드로 하며, RL 에이전트의 학습 부분은 Stable Baselines3와 통합되어 있다. 전체적인 흐름은 `BaseImitationAlgorithm` $\rightarrow$ 구체적인 알고리즘 클래스 $\rightarrow$ 학습 및 평가 스크립트로 이어진다.
 
 ### 2. 구현된 주요 알고리즘
+
 - **Inverse Reinforcement Learning (IRL)**:
-    - **MCE IRL**: Maximum Causal Entropy IRL을 구현하여 tabular 방식의 보상 학습을 지원한다.
-    - **Density Estimation baseline**: 밀도 추정 기반의 보상 학습을 제공한다.
-    - **AIRL**: Adversarial IRL을 통해 최신 적대적 보상 학습 기능을 제공한다.
+  - **MCE IRL**: Maximum Causal Entropy IRL을 구현하여 tabular 방식의 보상 학습을 지원한다.
+  - **Density Estimation baseline**: 밀도 추정 기반의 보상 학습을 제공한다.
+  - **AIRL**: Adversarial IRL을 통해 최신 적대적 보상 학습 기능을 제공한다.
 - **Imitation Learning (IL)**:
-    - **BC (Behavioral Cloning)**: 전문가 데이터를 이용한 단순 지도 학습 기반 모방을 수행한다.
-    - **DAgger**: 전문가의 상호작용 피드백을 통해 정책을 개선하는 인터랙티브 학습을 지원한다.
-    - **GAIL**: Generative Adversarial Imitation Learning을 통해 전문가의 상태-행동 분포를 모방한다.
+  - **BC (Behavioral Cloning)**: 전문가 데이터를 이용한 단순 지도 학습 기반 모방을 수행한다.
+  - **DAgger**: 전문가의 상호작용 피드백을 통해 정책을 개선하는 인터랙티브 학습을 지원한다.
+  - **GAIL**: Generative Adversarial Imitation Learning을 통해 전문가의 상태-행동 분포를 모방한다.
 - **Preference Learning**:
-    - **DRLHP**: Deep RL from Human Preferences를 통해 궤적 조각 간의 비교 데이터를 기반으로 보상 함수를 추론한다.
+  - **DRLHP**: Deep RL from Human Preferences를 통해 궤적 조각 간의 비교 데이터를 기반으로 보상 함수를 추론한다.
 
 ### 3. 모듈화 및 확장 메커니즘
+
 - **상속 구조**: `AdversarialTrainer` 클래스를 통해 GAIL과 AIRL의 공통 학습 로직을 캡슐화하고, 각 알고리즘은 판별자(Discriminator)의 정의 부분만 오버라이딩하여 구현한다.
 - **구성 가능성**: 사용자는 `imitation` 내부에서 Stable Baselines3가 제공하는 7가지 RL 알고리즘 중 하나를 선택하거나, 동일한 인터페이스를 가진 커스텀 알고리즘을 연결할 수 있다.
 - **실험 관리**: `Sacred` 라이브러리를 도입하여 설정(Configuration)과 로깅을 체계화함으로써 실험의 재현성을 보장한다.
@@ -54,17 +57,20 @@ Adam Gleave et al. (2022)
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋 및 환경**: MuJoCo 기반의 표준 Gym 환경인 Ant, Half Cheetah, Hopper, Swimmer, Walker를 사용하였다.
 - **측정 지표**: 전문가 정책의 리턴(Return) 값을 1, 무작위 정책의 리턴 값을 0으로 정규화한 normalized return을 지표로 사용하였다.
 - **비교 대상**: 구현된 7가지 알고리즘의 성능을 전문가(Expert) 및 무작위(Random) 정책과 비교하였다.
 
 ### 2. 정량적 결과
-- **알고리즘 성능**: 대부분의 환경에서 GAIL, BC, DAgger 등이 전문가 수준에 근접한 성능을 보였다. 
-- **특이 사항**: 
-    - AIRL은 Ant와 Walker 환경에서 성능이 낮게 나타났으며, DAgger는 Hopper 환경에서 낮은 성능을 보였다.
-    - 특히 AIRL의 경우 원본 논문에서는 Ant 환경에서 긍정적인 결과가 보고되었으나, 본 구현에서는 무작위 수준에 가깝게 나타났다. 저자들은 이를 원본 논문이 표준 Gym 환경이 아닌 커스텀 환경을 사용했기 때문인 것으로 분석하였다.
+
+- **알고리즘 성능**: 대부분의 환경에서 GAIL, BC, DAgger 등이 전문가 수준에 근접한 성능을 보였다.
+- **특이 사항**:
+  - AIRL은 Ant와 Walker 환경에서 성능이 낮게 나타났으며, DAgger는 Hopper 환경에서 낮은 성능을 보였다.
+  - 특히 AIRL의 경우 원본 논문에서는 Ant 환경에서 긍정적인 결과가 보고되었으나, 본 구현에서는 무작위 수준에 가깝게 나타났다. 저자들은 이를 원본 논문이 표준 Gym 환경이 아닌 커스텀 환경을 사용했기 때문인 것으로 분석하였다.
 
 ### 3. 소프트웨어 비교 결과 (Table 1 기반)
+
 - **알고리즘 수**: `imitation`은 7종의 알고리즘을 지원하여, 1~2종만 지원하는 다른 라이브러리(APReL, Stable Baselines2 등)보다 압도적으로 넓은 범위를 커버한다.
 - **품질 지표**: 테스트 커버리지(98%), 타입 어노테이션 적용 여부, 최신 백엔드(PyTorch) 사용 여부 등 모든 소프트웨어 공학적 지표에서 기존 라이브러리를 능가하거나 대등한 수준임을 확인하였다.
 

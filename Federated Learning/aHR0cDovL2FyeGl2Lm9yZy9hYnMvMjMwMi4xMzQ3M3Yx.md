@@ -28,26 +28,34 @@ Anran Li, Rui Liu, Ming Hu, Luu Anh Tuan, and Han Yu (2023)
 본 논문은 IFL의 전체 파이프라인을 5가지 핵심 단계로 나누어 분석한다.
 
 ### 1. 해석 가능한 클라이언트 선택 (Interpretable Client Selection)
+
 전역 모델의 성능은 로컬 데이터의 품질에 의존하므로, 고품질 데이터를 보유한 클라이언트를 식별하는 것이 중요하다.
+
 - **중요도 기반(Importance-based)**: 모델 업데이트의 편차(Model Deviation), 로컬 손실(Loss), 그래디언트 노름(Gradient Norm), 또는 어텐션 메커니즘(Attention)을 통해 클라이언트의 중요도를 정량화한다.
 - **영향력 기반(Influence-based)**: 특정 클라이언트를 제거하고 모델을 재학습시켜 성능 변화를 측정하거나, 영향력 함수(Influence Function)를 사용한다. 특히 Hessian 행렬 계산의 비용을 줄이기 위해 Hessian-Vector Product (HVP) 근사치를 사용하여 계산 복잡도를 $O(p^3n)$에서 $O(np)$로 낮추는 방식이 제안되었다. (여기서 $p$는 파라미터 수, $n$은 샘플 수이다.)
 
 ### 2. 해석 가능한 샘플 선택 (Interpretable Sample Selection)
+
 모든 로컬 샘플이 학습에 유용한 것은 아니므로, 유효한 샘플만을 선택하여 효율성을 높인다.
+
 - **관련성 기반(Relevance-based)**: 벤치마크 모델을 통해 작업과 관련성이 높은 샘플을 사전에 선택한다.
 - **중요도 기반(Importance-based)**: 손실 값이 임계치를 넘는 샘플이나 그래디언트 노름 상한선이 높은 샘플을 우선적으로 선택한다.
 - **영향력 기반(Influence-based)**: HVP 근사를 통해 개별 샘플이 예측 결과에 미치는 영향을 분석하여 선택한다.
 
 ### 3. 해석 가능한 특징 선택 (Interpretable Feature Selection)
+
 불필요하거나 노이즈가 섞인 특징(Feature)을 제거하여 모델의 복잡도를 낮추고 해석력을 높인다.
+
 - **모델 불가지론적(Model-Agnostic)**: 모델 내부 구조를 보지 않고 상호 정보량(Mutual Information), Gini 불순도, F-통계량 등을 활용해 특징의 관련성을 측정한다.
 - **모델 특화적(Model-Specific)**: LASSO와 같은 $l_1$ 제약 조건이나, 확률적 이중 게이트(Stochastic Dual-Gate) 기반의 $l_0$ 제약 조건을 활용하여 중요한 특징을 직접 선택한다.
 
 ### 4. 해석 가능한 모델 최적화 (Interpretable Model Optimization)
+
 - **내재적 해석 가능 모델**: 의사결정 나무(Decision Tree)나 선형 모델과 같이 구조적으로 해석이 쉬운 모델을 사용하거나, 희소성(Sparsity) 제약 조건을 추가하여 학습한다.
 - **강건한 집계(Robust Aggregation)**: 비잔틴(Byzantine) 클라이언트의 영향을 줄이기 위해 영향력 값을 기반으로 가중치를 조절하는 집계 방식을 사용한다.
 
 ### 5. 해석 가능한 기여도 평가 (Interpretable Contribution Evaluation)
+
 - **클라이언트 기여도**: 협력 게임 이론의 샤플리 값(Shapley Value, SV)을 주로 사용한다. SV의 지수적 계산 복잡도 $O(2^K)$를 해결하기 위해 Monte Carlo 샘플링이나 Truncated MR(TMR) 방식을 통해 계산 효율을 $O(m \log m)$ 수준으로 낮춘다.
 - **특징 기여도**: 어텐션 메커니즘을 통해 모델이 어떤 입력 특징에 집중하는지 시각화하거나, 뉴런을 강하게 활성화하는 입력 서브시퀀스를 추출하는 활성화 기반(Activation-based) 방식을 사용한다.
 
@@ -56,10 +64,12 @@ Anran Li, Rui Liu, Ming Hu, Luu Anh Tuan, and Han Yu (2023)
 본 논문은 서베이 논문이므로 새로운 실험 결과보다는 기존 IFL 연구들에서 사용되는 평가 지표를 분석하여 제시한다.
 
 ### 효과성 지표 (Effectiveness Metrics)
+
 - **해석 후 성능 (Post-Interpretation Performance)**: IFL을 통해 식별된 중요한 클라이언트/샘플/특징만을 사용하여 모델을 조정했을 때, 정확도나 에러율이 얼마나 개선되었는지를 측정한다.
 - **신뢰성 (Faithfulness)**: 'Leave-some-out' 재학습 방식을 사용한다. 즉, 해석 결과에서 중요하다고 판단된 요소를 제거했을 때 모델 성능이 유의미하게 하락한다면, 해당 해석이 신뢰할 수 있다고 판단한다.
 
 ### 효율성 지표 (Efficiency Metrics)
+
 - **계산 비용 (Computation Cost)**: 해석을 생성하는 데 필요한 연산 시간(Elementary operations)과 메모리 사용량을 측정한다.
 - **통신 비용 (Communication Cost)**: IFL 모델 학습 및 해석 과정에서 전송되는 모델 파라미터의 바이트(Bytes) 수를 측정한다.
 

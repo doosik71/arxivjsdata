@@ -10,10 +10,10 @@ Bradley Butcher, Michael O’Keefe, James Titchener (2024)
 
 본 논문의 핵심 아이디어는 모델이 생성할 토큰의 '남은 예산(token budget)'을 인지할 수 있도록 하는 **역방향 위치 인코딩(Reverse Positional Encoding)** 메커니즘을 도입하는 것이다. 구체적인 기여 사항은 다음과 같다.
 
-1.  **LDPE의 decoder-only 구조 적응**: 기존 encoder-decoder 모델에서 제안된 Length-Difference Positional Encoding (LDPE)을 최신 decoder-only LLM에 맞게 변형하여 적용하였다.
-2.  **ORPE 제안**: 프롬프트와 응답의 구분이 모호한 decoder-only 모델의 특성을 고려하여, 프롬프트 부분을 제외하고 응답 부분에만 카운트다운을 적용하는 Offset Reverse Positional Encoding (ORPE) 방식을 제안하였다.
-3.  **Max New Tokens++**: 정확한 목표 길이가 아닌, 상한선(upper-bound)을 설정하여 모델이 내용에 따라 유연하게 종료 시점을 결정하게 하는 상한선 제어 기법을 제안하였다.
-4.  **정밀도 검증**: 질의응답 및 요약 작업에서 평균 토큰 오차를 3개 미만으로 줄이면서도 응답 품질을 유지함을 입증하였다.
+1. **LDPE의 decoder-only 구조 적응**: 기존 encoder-decoder 모델에서 제안된 Length-Difference Positional Encoding (LDPE)을 최신 decoder-only LLM에 맞게 변형하여 적용하였다.
+2. **ORPE 제안**: 프롬프트와 응답의 구분이 모호한 decoder-only 모델의 특성을 고려하여, 프롬프트 부분을 제외하고 응답 부분에만 카운트다운을 적용하는 Offset Reverse Positional Encoding (ORPE) 방식을 제안하였다.
+3. **Max New Tokens++**: 정확한 목표 길이가 아닌, 상한선(upper-bound)을 설정하여 모델이 내용에 따라 유연하게 종료 시점을 결정하게 하는 상한선 제어 기법을 제안하였다.
+4. **정밀도 검증**: 질의응답 및 요약 작업에서 평균 토큰 오차를 3개 미만으로 줄이면서도 응답 품질을 유지함을 입증하였다.
 
 ## 📎 Related Works
 
@@ -25,6 +25,7 @@ Bradley Butcher, Michael O’Keefe, James Titchener (2024)
 ## 🛠️ Methodology
 
 ### 1. 역방향 위치 인코딩 (LDPE & ORPE)
+
 본 방법론은 모델이 현재 생성 위치가 아닌, 종료 지점까지 얼마나 남았는지를 알려주는 보조 위치 인코딩을 입력 임베딩에 추가한다. 사용되는 기본 수식은 표준 sinusoidal positional encoding을 따른다.
 
 $$PE(i, 2k) = \sin\left(\frac{i}{10000^{2k/d}}\right)$$
@@ -32,10 +33,11 @@ $$PE(i, 2k+1) = \cos\left(\frac{i}{10000^{2k/d}}\right)$$
 
 여기서 $i$는 위치 인덱스, $k$는 임베딩 차원의 인덱스, $d$는 전체 임베딩 차원이다.
 
-*   **LDPE (Length-Difference Positional Encoding)**: 전체 시퀀스(프롬프트 + 응답)의 총 길이 $L$에 대해, $i$번째 토큰의 인덱스를 $i^{LDPE} = (L+1) - i$로 설정하여 1을 향해 카운트다운 하도록 한다.
-*   **ORPE (Offset Reverse Positional Encoding)**: 프롬프트 길이 $n$을 제외하고 응답 부분에만 카운트다운을 적용한다. 즉, $i \le n$인 프롬프트 영역에는 인코딩을 더하지 않고, 응답 영역에서만 $(L+1)-i$의 인덱스를 적용하여 카운트다운이 응답 시작점부터 시작되게 한다.
+* **LDPE (Length-Difference Positional Encoding)**: 전체 시퀀스(프롬프트 + 응답)의 총 길이 $L$에 대해, $i$번째 토큰의 인덱스를 $i^{LDPE} = (L+1) - i$로 설정하여 1을 향해 카운트다운 하도록 한다.
+* **ORPE (Offset Reverse Positional Encoding)**: 프롬프트 길이 $n$을 제외하고 응답 부분에만 카운트다운을 적용한다. 즉, $i \le n$인 프롬프트 영역에는 인코딩을 더하지 않고, 응답 영역에서만 $(L+1)-i$의 인덱스를 적용하여 카운트다운이 응답 시작점부터 시작되게 한다.
 
 ### 2. 임베딩 스케일링 및 결합
+
 사전 학습된 LLM의 학습된 임베딩과 새로 추가된 PE 간의 스케일 차이로 인한 성능 저하를 막기 위해, **Frobenius norm**을 이용한 스케일링을 적용한다.
 
 $$R' = R \cdot \frac{\|E\|_F}{\|R\|_F}$$
@@ -45,10 +47,12 @@ $$\hat{E} = E + R'$$
 여기서 $E$는 토큰 임베딩, $R$은 역방향 위치 임베딩, $R'$는 스케일링 된 역방향 위치 임베딩이다.
 
 ### 3. 학습 및 추론 절차
-*   **학습**: 프롬프트-응답 쌍 데이터셋을 사용하여, LDPE/ORPE가 추가된 상태에서 다음 토큰을 예측하는 negative log-likelihood 손실 함수를 최소화하도록 미세 조정(Fine-tuning)한다. 이때 효율적인 학습을 위해 LoRA(Low-Rank Adaptation)를 사용하였다.
-*   **추론**: 사용자가 원하는 목표 길이 $L$을 설정하면, 그에 맞는 역방향 위치 인코딩 $R$을 생성하여 입력에 더해준다. 모델은 학습된 카운트다운 신호를 바탕으로 목표 길이에 도달했을 때 EOS 토큰을 생성하도록 유도된다.
+
+* **학습**: 프롬프트-응답 쌍 데이터셋을 사용하여, LDPE/ORPE가 추가된 상태에서 다음 토큰을 예측하는 negative log-likelihood 손실 함수를 최소화하도록 미세 조정(Fine-tuning)한다. 이때 효율적인 학습을 위해 LoRA(Low-Rank Adaptation)를 사용하였다.
+* **추론**: 사용자가 원하는 목표 길이 $L$을 설정하면, 그에 맞는 역방향 위치 인코딩 $R$을 생성하여 입력에 더해준다. 모델은 학습된 카운트다운 신호를 바탕으로 목표 길이에 도달했을 때 EOS 토큰을 생성하도록 유도된다.
 
 ### 4. Max New Tokens++
+
 정확한 길이가 아닌 상한선을 제어하기 위해, 학습 단계에서 LDPE 시퀀스의 길이에 랜덤한 양의 오프셋(shift)을 추가한다.
 
 $$i^{shift} = (L+1) - i + \text{HalfNormal}(\sigma)$$
@@ -58,18 +62,21 @@ $$i^{shift} = (L+1) - i + \text{HalfNormal}(\sigma)$$
 ## 📊 Results
 
 ### 1. 실험 설정
-*   **데이터셋**: OpenOrca (100,000개) 및 MMLU (10,000개) 샘플을 조합하여 학습하였다.
-*   **모델**: Mistral 7B Instruct, Llama3 8B Instruct.
-*   **기준선(Baseline)**: 길이 제어 없는 기본 모델, 프롬프트에 목표 길이를 명시하여 미세 조정한 모델.
+
+* **데이터셋**: OpenOrca (100,000개) 및 MMLU (10,000개) 샘플을 조합하여 학습하였다.
+* **모델**: Mistral 7B Instruct, Llama3 8B Instruct.
+* **기준선(Baseline)**: 길이 제어 없는 기본 모델, 프롬프트에 목표 길이를 명시하여 미세 조정한 모델.
 
 ### 2. 정량적 결과
-*   **질의응답 (Q&A)**: LDPE 적용 모델은 목표 길이와 실제 생성 길이 사이의 정렬이 거의 완벽하게 이루어졌다.
-*   **요약 (Summarization)**: CNN/DailyMail 데이터셋을 사용하여 GPT-3.5 생성 요약본과 비교하였다.
-    *   **BERT Score**: Mistral-LDPE(0.698), Llama-LDPE(0.699), Mistral-Prompted(0.698)로 세 모델 간 품질 차이는 거의 없었다.
-    *   **길이 오차 (MAE)**: Mistral-LDPE는 2.8토큰, Llama-LDPE는 2.4토큰의 오차를 보인 반면, 프롬프트 기반 방식은 24.8토큰으로 오차가 훨씬 컸다.
-*   **일반 벤치마크**: ARC, HellaSwag, PIQA, Winogrande 테스트 결과, LDPE 미세 조정 후에도 모델의 전반적인 추론 성능이 잘 보존됨을 확인하였다.
+
+* **질의응답 (Q&A)**: LDPE 적용 모델은 목표 길이와 실제 생성 길이 사이의 정렬이 거의 완벽하게 이루어졌다.
+* **요약 (Summarization)**: CNN/DailyMail 데이터셋을 사용하여 GPT-3.5 생성 요약본과 비교하였다.
+  * **BERT Score**: Mistral-LDPE(0.698), Llama-LDPE(0.699), Mistral-Prompted(0.698)로 세 모델 간 품질 차이는 거의 없었다.
+  * **길이 오차 (MAE)**: Mistral-LDPE는 2.8토큰, Llama-LDPE는 2.4토큰의 오차를 보인 반면, 프롬프트 기반 방식은 24.8토큰으로 오차가 훨씬 컸다.
+* **일반 벤치마크**: ARC, HellaSwag, PIQA, Winogrande 테스트 결과, LDPE 미세 조정 후에도 모델의 전반적인 추론 성능이 잘 보존됨을 확인하였다.
 
 ### 3. Max New Tokens++ 결과
+
 토큰 제한(Token Limit)과 실제 응답 길이 간의 상관관계를 분석한 결과, 짧은 제한에서는 목표 길이를 엄격히 따르고, 긴 제한에서는 내용에 따라 적절히 일찍 종료하는 경향을 보였다. 이는 모델이 단순한 절단이 아니라 '토큰 예산'을 인지하고 내용 기반으로 종료 시점을 결정함을 시사한다.
 
 ## 🧠 Insights & Discussion

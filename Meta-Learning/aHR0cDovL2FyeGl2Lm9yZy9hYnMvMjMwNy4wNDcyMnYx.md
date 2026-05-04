@@ -31,6 +31,7 @@ Anna Vettoruzzo, Mohamed-Rafik Bouguelia, Joaquin Vanschoren, Thorsteinn Rögval
 본 논문은 Meta-Learning을 통합적인 관점에서 정의하며, 이를 위해 메타 학습자(Meta-learner) $f_\theta$와 베이스 모델(Base model) $h_\phi$의 구조로 설명한다.
 
 ### 1. Unified View of Meta-Learning
+
 Meta-Learning의 목표는 메타 파라미터 $\theta$를 학습하여, 적은 양의 훈련 데이터 $D_{tr}^i$가 주어졌을 때 작업별 최적 파라미터 $\phi_i$를 빠르게 도출하는 것이다.
 
 $$f_\theta : X^K \rightarrow \Phi, \quad D_{tr}^i \mapsto \phi_i = f_\theta(D_{tr}^i)$$
@@ -41,24 +42,31 @@ $$h_{\phi_i} : X \rightarrow Y, \quad x \mapsto y = h_{\phi_i}(x)$$
 ### 2. Meta-Learning 방법론 분류
 
 #### (1) Black-box Meta-learning
+
 메타 학습자 $f_\theta$를 블랙박스 신경망(예: LSTM, Attention)으로 설계하여 $D_{tr}^i$를 입력받아 직접 $\phi_i$를 예측한다.
+
 - **목적 함수:** $\min_\theta \sum_{T_i} L(f_\theta(D_{tr}^i), D_{ts}^i)$
 - **특징:** 모든 파라미터를 출력하는 것은 비효율적이므로, 최근에는 저차원 컨텍스트 벡터 $z_i$를 출력하여 모델을 변조(Modulation)하는 방식을 사용한다.
 
 #### (2) Optimization-based Meta-learning
+
 메타 학습자를 경사 하강법(Gradient Descent)과 같은 최적화 절차로 정의한다. 대표적으로 MAML(Model-Agnostic Meta-Learning)이 있으며, 적은 단계의 그래디언트 업데이트만으로도 빠르게 적응할 수 있는 초기 파라미터 $\theta$를 찾는 것이 목표이다.
+
 - **핵심 메커니즘 (Bi-level Optimization):**
-    - **Inner-loop:** 각 작업 $T_i$에 대해 $\phi_i = \theta - \alpha \nabla_\theta L(\theta, D_{tr}^i)$를 통해 임시 파라미터를 계산한다.
-    - **Outer-loop:** 테스트 세트 $D_{ts}^i$에서의 손실을 최소화하도록 $\theta$를 업데이트한다.
+  - **Inner-loop:** 각 작업 $T_i$에 대해 $\phi_i = \theta - \alpha \nabla_\theta L(\theta, D_{tr}^i)$를 통해 임시 파라미터를 계산한다.
+  - **Outer-loop:** 테스트 세트 $D_{ts}^i$에서의 손실을 최소화하도록 $\theta$를 업데이트한다.
     $$\min_\theta \sum_{T_i} L(\theta - \alpha \nabla_\theta L(\theta, D_{tr}^i), D_{ts}^i)$$
 
 #### (3) Distance Metric-based Meta-learning
+
 파라미터를 직접 최적화하는 대신, 데이터를 효율적으로 비교할 수 있는 임베딩 공간을 학습한다.
+
 - **Matching Networks:** 학습된 임베딩 공간에서 Nearest Neighbor 방식을 사용하여 분류한다.
 - **Prototypical Networks:** 각 클래스의 평균 임베딩인 '프로토타입' $c_l$을 계산하고, 쿼리 데이터와의 거리를 측정하여 분류한다.
     $$p_\theta(y=l|x) = \frac{\exp(-\|f_\theta(x) - c_l\|)}{\sum_{l'} \exp(-\|f_\theta(x) - c_{l'}\|)}$$
 
 #### (4) Hybrid Approaches
+
 위 방법론들을 결합한 형태이다. 예를 들어 Proto-MAML은 ProtoNet의 단순한 귀납적 편향(Inductive Bias)으로 초기값을 설정하고, MAML의 유연한 적응 능력을 통해 파인튜닝을 수행한다.
 
 ## 📊 Results
@@ -72,9 +80,11 @@ $$h_{\phi_i} : X \rightarrow Y, \quad x \mapsto y = h_{\phi_i}(x)$$
 ## 🧠 Insights & Discussion
 
 ### 강점 및 기회
+
 Meta-Learning은 데이터가 극도로 부족한 환경에서 강력한 도구가 될 수 있으며, 특히 전이 학습의 한계를 극복하고 '학습 효율성' 자체를 최적화한다는 점에서 가치가 크다. 또한 연합 학습(FL)과 결합하여 개인화된 모델을 구축하거나, 연속 학습(CL)과 결합하여 치명적 망각(Catastrophic Forgetting)을 방지하는 등의 확장 가능성이 매우 높다.
 
 ### 한계 및 비판적 해석
+
 1. **계산 복잡도:** MAML과 같은 방식은 그래디언트의 그래디언트를 계산하는 2차 미분(Higher-order derivative)이 필요하여 메모리와 계산 비용이 매우 크다.
 2. **가정의 취약성:** 대부분의 알고리즘이 훈련 작업과 테스트 작업이 동일한 분포 $p(T)$에서 샘플링되었다고 가정하지만, 실제 환경에서는 Out-of-Distribution(OOD) 작업이 빈번하게 발생하며 이에 대한 대응책이 여전히 부족하다.
 3. **벤치마크의 부족:** 이미지/텍스트 중심의 데이터셋 외에 의료, 금융, 시계열 데이터 등 실세계의 복잡성을 반영한 표준 벤치마크가 부족하여 알고리즘의 실질적 효용성 검증이 어렵다.

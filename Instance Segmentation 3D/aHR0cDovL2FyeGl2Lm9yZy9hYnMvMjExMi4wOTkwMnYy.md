@@ -4,7 +4,7 @@ Jiazhou Chen, Yanghui Xu, Shufang Lu, Ronghua Liang, and Liangliang Nan (2021)
 
 ## 🧩 Problem to Solve
 
-본 논문이 해결하고자 하는 핵심 문제는 대규모 도시 장면의 Multi-View Stereo (MVS) 기반 3D 메쉬 모델에서 **개별 건물 인스턴스를 정밀하게 분할(Instance Segmentation)**하는 것이다. 
+본 논문이 해결하고자 하는 핵심 문제는 대규모 도시 장면의 Multi-View Stereo (MVS) 기반 3D 메쉬 모델에서 **개별 건물 인스턴스를 정밀하게 분할(Instance Segmentation)**하는 것이다.
 
 기존의 도시 장면 분석 연구들은 주로 시맨틱 분할(Semantic Segmentation)에 집중하여 '건물'이라는 클래스를 구분하는 데 그쳤다. 그러나 실제 도시 계획, 시뮬레이션, 태양광 잠재량 추정 등의 응용 분야에서는 서로 인접해 있거나 물리적으로 붙어 있는 개별 건물들을 각각의 독립된 객체로 구분해내는 인스턴스 분할 능력이 필수적이다. 특히 MVS로 재구성된 3D 모델은 표면이 불분명하거나 노이즈가 포함된 경우가 많아, 붙어 있는 건물들을 개별적으로 분리하는 것은 매우 도전적인 과제이다.
 
@@ -15,6 +15,7 @@ Jiazhou Chen, Yanghui Xu, Shufang Lu, Ronghua Liang, and Liangliang Nan (2021)
 본 논문의 중심적인 설계 아이디어는 **"2D 이미지의 강력한 인스턴스 분할 능력을 3D 공간으로 확장하되, 다중 뷰(Multi-view) 간의 일관성을 통해 모호성을 제거하는 것"**이다.
 
 핵심 기여 사항은 다음과 같다:
+
 1. **다중 뷰 인스턴스 분할 프레임워크**: 2D 지붕 분할 $\rightarrow$ 마스크 클러스터링 $\rightarrow$ 3D 건물 확장으로 이어지는 효율적인 파이프라인을 제안한다.
 2. **폐색 인식 마스크 클러스터링(Occlusion-aware Clustering)**: 서로 다른 뷰에서 얻은 2D 인스턴스 마스크들 사이의 대응 관계를 구축하여, 폐색(Occlusion)이나 중첩으로 인한 분할 모호성을 효과적으로 제거한다.
 3. **InstanceBuilding 데이터셋 제공**: UAV 이미지(지붕 레벨)와 3D 도시 모델(지붕 및 건물 레벨) 모두에 대해 픽셀 단위의 인스턴스 어노테이션을 포함하는 벤치마크 데이터셋을 구축하였다. 특히 기존 데이터셋보다 서로 붙어 있는 건물(Attached buildings)의 비중이 높아 실제 도시 환경을 더 잘 반영한다.
@@ -23,11 +24,13 @@ Jiazhou Chen, Yanghui Xu, Shufang Lu, Ronghua Liang, and Liangliang Nan (2021)
 ## 📎 Related Works
 
 ### 기존 연구 및 한계
+
 - **일반 이미지 인스턴스 분할**: Mask R-CNN, Swin Transformer 등 Top-down 방식과 Metric Learning 기반의 Bottom-up 방식이 발전했으나, 이를 3D 메쉬 모델에 직접 적용하는 것은 데이터 구조의 불규칙성으로 인해 어렵다.
 - **항공 이미지 분할**: 건물 윤곽선 예측이나 GNN 기반의 재구성 연구가 있었으나, 주로 2D 평면 분석에 치중되어 있으며 3D 인스턴스 분할로의 확장이 부족했다.
 - **3D 인스턴스 분할**: Volumetric 방법이나 Point Cloud 기반 방법(PointNet, PointNet++ 등)이 존재한다. 하지만 이들은 메모리 및 연산 비용 문제로 인해 주로 소규모 실내 장면에 국한되었으며, 대규모 실외 도시 장면을 위한 정밀한 어노테이션 데이터셋이 부족한 상황이다.
 
 ### 차별점
+
 본 연구는 3D 모델을 직접 처리하는 대신, **2D 이미지에서 먼저 분할을 수행하고 이를 3D로 투영**하는 방식을 취한다. 특히 기존의 정사영 이미지(Orthophoto) 기반 방식은 벽면의 자가 폐색(Self-occlusion) 문제가 심각하여 정확도가 떨어지지만, 본 논문은 **다중 뷰(Multi-view) 이미지**를 활용하고 **마스크 클러스터링** 과정을 통해 이를 보완함으로써 더 높은 정밀도를 달성한다.
 
 ## 🛠️ Methodology
@@ -35,12 +38,16 @@ Jiazhou Chen, Yanghui Xu, Shufang Lu, Ronghua Liang, and Liangliang Nan (2021)
 전체 시스템은 크게 세 단계로 구성된다: **2D 지붕 인스턴스 분할 $\rightarrow$ 인스턴스 마스크 클러스터링 $\rightarrow$ 3D 건물 인스턴스 분할**.
 
 ### 1. 2D Roof Instance Segmentation
+
 건물 전체보다 지붕이 항공 촬영 시 가시성이 더 좋다는 점에 착안하여 지붕을 먼저 분할한다.
+
 - **RGBH 이미지 생성**: RGB 이미지에 3D 모델로부터 렌더링한 높이 맵(Heightmap)을 추가하여 4채널 RGBH 이미지를 생성한다.
 - **분할 모델**: Swin Transformer를 사용하여 지붕 인스턴스를 추출하며, 예측 신뢰도가 70% 이상인 마스크만 사용한다.
 
 ### 2. Instance Mask Clustering
+
 여러 뷰에서 독립적으로 추출된 로컬 마스크(Local masks)들을 하나의 글로벌 마스크(Global masks)로 묶어 대응 관계를 형성하는 과정이다.
+
 - **폐색 인식 유사도 측정**: 3D 메쉬 삼각형들을 이미지 평면으로 투영하고 깊이 테스트(Depth test)를 수행하여 가시성을 확인한다. 두 마스크 $i$와 $j$ 사이의 유사도는 투영된 3D 삼각형 집합 $S$의 IoU(Intersection over Union)로 계산한다.
   $$m_{ij} = \frac{A(S_i \cap S_j)}{A(S_i \cup S_j)}$$
 - **마스크 신뢰도($C^*$) 계산**: 단순히 면적이 넓은 마스크가 선택되는 것을 방지하기 위해 임계값 $\beta$를 도입한 이진 항 $\Delta_{ij}$를 사용한다.
@@ -50,6 +57,7 @@ Jiazhou Chen, Yanghui Xu, Shufang Lu, Ronghua Liang, and Liangliang Nan (2021)
 - **클러스터링 절차**: $C^*$ 값에 따라 마스크를 내림차순으로 정렬한 후, 순차적으로 탐색하며 유사도가 $\beta$보다 큰 로컬 마스크들을 하나의 글로벌 마스크 그룹으로 묶는다.
 
 ### 3. 3D Building Instance Segmentation
+
 - **3D 지붕 분할**: 각 3D 정점($v$)을 모든 이미지로 투영하여, 해당 위치에서 가장 많이 나타나는 글로벌 마스크 ID(GMI)를 부여한다.
   $$\text{RID}_v = \text{maxCount}(\{\text{GMI}_p | p \in \text{MVI}_v\})$$
 - **MRF 기반 건물 확장**: 지붕에서 건물 전체로 영역을 확장하기 위해 Horizontal Oriented Bounding Box (HOBB)를 생성하고, 마르코프 랜덤 필드(MRF) 최적화를 통해 최종 레이블을 결정한다.
@@ -61,11 +69,13 @@ Jiazhou Chen, Yanghui Xu, Shufang Lu, Ronghua Liang, and Liangliang Nan (2021)
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 자체 구축한 `InstanceBuilding` 데이터셋 (4개 장면, 총 892개 건물 중 602개가 붙어 있는 형태).
 - **지표**: Average Precision (AP), $AP_{50}$, $AP_{75}$를 사용하여 정량 평가를 수행하였다.
 - **비교 대상**: 정사영 이미지 기반 방법(Orthophoto-based), Spectral Clustering 방법, RGB 전용 모델 등.
 
 ### 주요 결과
+
 1. **높이 정보의 효과**: RGBH 이미지를 사용했을 때 2D 지붕 분할의 AP가 0.563에서 0.582로 상승하였으며, 이는 3D 최종 결과의 정확도 향상으로 이어졌다.
 2. **다중 뷰 프레임워크의 우위**: 정사영 이미지 기반 방법보다 다중 뷰 방법이 더 높은 AP를 기록했다. 이는 다중 뷰 간의 상호 보정(Cross-correction) 과정이 오검출을 제거하고, 벽면 정보를 통해 붙어 있는 건물을 더 잘 구분하기 때문이다.
 3. **클러스터링 알고리즘 비교**: 제안한 Order-based 클러스터링이 Spectral Clustering보다 우수했다. Spectral Clustering은 타겟 클러스터 수($K$) 설정에 따라 과소 분할(Under-segmentation) 또는 과다 분할(Over-segmentation) 문제가 발생했으나, 제안 방법은 $K$를 명시하지 않고도 정밀하게 분할했다.
@@ -74,9 +84,11 @@ Jiazhou Chen, Yanghui Xu, Shufang Lu, Ronghua Liang, and Liangliang Nan (2021)
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 논문은 2D의 강력한 인스턴스 분할 성능을 3D로 전이시키면서 발생하는 '대응 관계 모호성' 문제를 **폐색 인식 클러스터링**이라는 기하학적 접근법으로 영리하게 해결하였다. 또한, 단순한 세그멘테이션을 넘어 MRF를 통해 3D 구조적 특징(거리, 방향)을 반영함으로써, 2D 투영의 한계를 극복하고 완전한 3D 건물 형태를 복원해낸 점이 우수하다.
 
 ### 한계 및 비판적 해석
+
 1. **2D 분할 의존성**: 전체 파이프라인이 2D 인스턴스 분할 결과에 크게 의존한다. 학습 데이터셋에 없는 특이한 형태의 지붕이나, 지붕과 질감이 매우 유사한 높은 나무(Tree)가 있을 경우 이를 건물로 오인하는 사례가 발생한다(Fig. 12).
 2. **데이터셋 규모**: 4개의 장면으로 구성된 데이터셋은 방법론을 검증하기에는 충분할 수 있으나, 딥러닝 기반의 일반화 성능을 완전히 입증하기에는 규모가 다소 작다.
 3. **가정 사항**: 지붕이 항상 건물 전체의 인스턴스 정보를 대표한다는 가정을 하고 있으나, 복잡한 구조의 건물(예: 지붕이 없는 개방형 구조물)에서는 성능 저하가 예상된다.

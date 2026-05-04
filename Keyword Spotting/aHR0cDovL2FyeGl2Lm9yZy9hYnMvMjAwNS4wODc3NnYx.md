@@ -45,26 +45,28 @@ $$L = -\frac{1}{N} \sum_{j=1}^{N} \log \frac{e^{S_{j,j}}}{\sum_{k=1}^{N} e^{S_{j
 
 본 논문은 세 가지 전략을 비교 분석한다.
 
-*   **Metric Learning with an unknown cluster**: 타겟과 비타겟 모두를 각각의 클러스터로 묶는 기본 방식이다. 추론 시에는 각 클래스의 Centroid와 테스트 샘플 간의 유사도를 측정하여 분류한다.
-*   **Metric Learning without an unknown cluster**: 비타겟 소리들의 변동성이 매우 크다는 점에 착안하여, 비타겟 샘플들을 하나의 점으로 모으지 않는다. 즉, 타겟 클래스에 대해서만 내적 변동성을 최소화하도록 손실 함수를 수정한다. 추론 시에는 Centroid를 사용할 수 없으므로, 학습된 임베딩을 이용하여 **One-vs-Rest RBF 커널 SVM**을 학습시켜 최종 판단을 내린다.
-*   **AP-FC (Angular Prototypical with Fixed Classes)**: 타겟 클래스가 고정되어 있다는 점을 활용해, Centroid $c_k$를 매번 계산하는 대신 학습 가능한 가중치 $W_k$로 대체한다.
+* **Metric Learning with an unknown cluster**: 타겟과 비타겟 모두를 각각의 클러스터로 묶는 기본 방식이다. 추론 시에는 각 클래스의 Centroid와 테스트 샘플 간의 유사도를 측정하여 분류한다.
+* **Metric Learning without an unknown cluster**: 비타겟 소리들의 변동성이 매우 크다는 점에 착안하여, 비타겟 샘플들을 하나의 점으로 모으지 않는다. 즉, 타겟 클래스에 대해서만 내적 변동성을 최소화하도록 손실 함수를 수정한다. 추론 시에는 Centroid를 사용할 수 없으므로, 학습된 임베딩을 이용하여 **One-vs-Rest RBF 커널 SVM**을 학습시켜 최종 판단을 내린다.
+* **AP-FC (Angular Prototypical with Fixed Classes)**: 타겟 클래스가 고정되어 있다는 점을 활용해, Centroid $c_k$를 매번 계산하는 대신 학습 가능한 가중치 $W_k$로 대체한다.
     $$S_{j,i,k} = w \cdot \cos(e_{j,i}, W_k) + b, \quad k \in \{\text{target}\}$$
     이를 통해 분류기의 높은 타겟 정확도와 Metric Learning의 비타겟 거부 능력을 동시에 확보한다.
 
 ### 3. 시스템 아키텍처 및 학습 설정
 
-*   **입력 데이터**: 16kHz 오디오 신호를 40차원 MFCC(Mel-Frequency Cepstrum Coefficient)로 변환하여 사용하며, 모든 데이터는 1초 길이로 고정한다.
-*   **백본 네트워크**: `res15` 아키텍처를 사용한다. 이는 Residual Connection과 Dilated Convolution을 포함하여 수용 영역(receptive field)을 넓힌 구조이다. 최종 층은 $D$차원(예: 32)의 임베딩 벡터를 출력하는 FC 레이어로 구성된다.
-*   **데이터 증강**: 학습 시 20%의 입력 피처를 시간 축으로 $\pm 200\text{ms}$ 범위 내에서 랜덤하게 시프트(shift)하고 제로 패딩을 적용한다.
+* **입력 데이터**: 16kHz 오디오 신호를 40차원 MFCC(Mel-Frequency Cepstrum Coefficient)로 변환하여 사용하며, 모든 데이터는 1초 길이로 고정한다.
+* **백본 네트워크**: `res15` 아키텍처를 사용한다. 이는 Residual Connection과 Dilated Convolution을 포함하여 수용 영역(receptive field)을 넓힌 구조이다. 최종 층은 $D$차원(예: 32)의 임베딩 벡터를 출력하는 FC 레이어로 구성된다.
+* **데이터 증강**: 학습 시 20%의 입력 피처를 시간 축으로 $\pm 200\text{ms}$ 범위 내에서 랜덤하게 시프트(shift)하고 제로 패딩을 적용한다.
 
 ## 📊 Results
 
 ### 실험 설정
-*   **데이터셋**: Google Speech Commands v0.01을 사용한다.
-*   **데이터 분할 (Custom Split)**: 실제 환경을 모사하기 위해 20개의 비타겟 키워드 중 10개는 학습에 사용(seen-unknown)하고, 나머지 10개는 테스트에만 사용(unseen-unknown)하도록 분리하였다.
-*   **평가 지표**: 전체 정확도(Total Acc), 타겟 정확도(Target Acc), 비타겟 정확도(Non-tgt Acc), AUC, mAP를 측정하였다. 특히 타겟과 비타겟의 비율을 11:1과 1:1(실제 환경과 유사) 두 가지 설정에서 평가하였다.
+
+* **데이터셋**: Google Speech Commands v0.01을 사용한다.
+* **데이터 분할 (Custom Split)**: 실제 환경을 모사하기 위해 20개의 비타겟 키워드 중 10개는 학습에 사용(seen-unknown)하고, 나머지 10개는 테스트에만 사용(unseen-unknown)하도록 분리하였다.
+* **평가 지표**: 전체 정확도(Total Acc), 타겟 정확도(Target Acc), 비타겟 정확도(Non-tgt Acc), AUC, mAP를 측정하였다. 특히 타겟과 비타겟의 비율을 11:1과 1:1(실제 환경과 유사) 두 가지 설정에서 평가하였다.
 
 ### 정량적 결과
+
 | 방법론 | Back-end | Total Acc (1:1) | Target Acc | Non-tgt Acc | mAP |
 | :--- | :--- | :---: | :---: | :---: | :---: |
 | Baseline (CE) | Softmax | 73.81% | 95.52% | 52.11% | 94.84% |
@@ -75,21 +77,24 @@ $$L = -\frac{1}{N} \sum_{j=1}^{N} \log \frac{e^{S_{j,j}}}{\sum_{k=1}^{N} e^{S_{j
 | **AP-FC** | **SVM** | **83.82%** | **94.26%** | **73.37%** | **95.42%** |
 
 ### 결과 분석
+
 1. **비타겟 거부 능력 향상**: 모든 Metric Learning 기반 방법이 Baseline(Cross Entropy)보다 비타겟 정확도(Non-tgt Acc)가 월등히 높다. 이는 학습되지 않은 소리를 거르는 능력이 향상되었음을 의미한다.
 2. **전략의 유효성**: 비타겟을 클러스터링하지 않고 SVM을 사용하는 방식이 일반적인 Metric Learning보다 성능이 좋았다.
 3. **AP-FC의 우수성**: AP-FC SVM 조합이 전체 정확도, 비타겟 정확도, mAP 모든 지표에서 가장 우수한 성능을 보였으며, 특히 실제 환경과 유사한 1:1 비율 설정에서 매우 강력한 성능을 입증하였다.
 
 ## 🧠 Insights & Discussion
 
-본 논문은 KWS 시스템의 고질적인 문제인 '알 수 없는 소리에 대한 오작동'을 Metric Learning의 관점에서 효과적으로 해결하였다. 
+본 논문은 KWS 시스템의 고질적인 문제인 '알 수 없는 소리에 대한 오작동'을 Metric Learning의 관점에서 효과적으로 해결하였다.
 
 **강점 및 시사점**
-*   비타겟 데이터를 하나의 클래스로 묶어 강제로 수렴시키려는 기존의 분류 방식이 오히려 일반화 성능을 해친다는 점을 밝혀냈다.
-*   타겟 클래스의 고정된 특성을 활용한 AP-FC 구조는 분류기의 정밀함과 Metric Learning의 유연성을 동시에 잡은 효율적인 설계이다.
+
+* 비타겟 데이터를 하나의 클래스로 묶어 강제로 수렴시키려는 기존의 분류 방식이 오히려 일반화 성능을 해친다는 점을 밝혀냈다.
+* 타겟 클래스의 고정된 특성을 활용한 AP-FC 구조는 분류기의 정밀함과 Metric Learning의 유연성을 동시에 잡은 효율적인 설계이다.
 
 **한계 및 논의사항**
-*   Metric Learning 방법론 중 일부(예: Triplet)는 타겟 키워드 자체의 정확도가 Baseline보다 약간 낮아지는 경향이 있는데, 이는 타겟 내 응집도보다 클래스 간 거리 확보에 더 치중하기 때문으로 분석된다.
-*   SVM 백엔드를 사용할 경우, 추론 단계에서 추가적인 계산 비용이나 메모리 사용량이 발생할 수 있으며 이에 대한 실시간 최적화 논의는 본문에서 구체적으로 다루어지지 않았다.
+
+* Metric Learning 방법론 중 일부(예: Triplet)는 타겟 키워드 자체의 정확도가 Baseline보다 약간 낮아지는 경향이 있는데, 이는 타겟 내 응집도보다 클래스 간 거리 확보에 더 치중하기 때문으로 분석된다.
+* SVM 백엔드를 사용할 경우, 추론 단계에서 추가적인 계산 비용이나 메모리 사용량이 발생할 수 있으며 이에 대한 실시간 최적화 논의는 본문에서 구체적으로 다루어지지 않았다.
 
 ## 📌 TL;DR
 

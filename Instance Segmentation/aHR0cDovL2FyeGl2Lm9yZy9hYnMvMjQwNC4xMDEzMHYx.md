@@ -17,6 +17,7 @@ Sai Kumar Reddy Manne et al. (2024)
 ## 📎 Related Works
 
 기존의 파골세포 분석 알고리즘들은 다음과 같은 한계점을 보였다.
+
 - **Emmanuel et al. [10]**: 상용 소프트웨어를 사용했으나 중간 단계에서 수동 선택 과정이 포함되어 완전 자동화되었다고 보기 어렵다.
 - **Cohen-Karlik et al. [6]**: VGG16 기반의 객체 검출을 수행했으나, 세포 면적의 대리 지표로 바운딩 박스 면적을 사용하여 실제 면적을 과다 추정하는 경향이 있다.
 - **Wang et al. [25]**: 이미지 처리와 크기 필터링을 거친 후 분류기를 적용하는 2단계 방식을 사용했으나, 첫 단계에서 수동 튜닝이 필요하다.
@@ -28,9 +29,11 @@ Sai Kumar Reddy Manne et al. (2024)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 아키텍처
+
 본 모델의 기본 뼈대는 **YOLOv8** 모델을 사용한다. YOLOv8은 CSPDarknet53 백본(Backbone)을 기반으로 하며, 바운딩 박스 회귀(Bounding box regression), 클래스 예측(Class prediction), 그리고 인스턴스 분할을 위한 두 개의 세그멘테이션 헤드(Segmentation heads)로 구성된다. 세그멘테이션 헤드 중 하나는 32개의 마스크 프로토타입(Mask prototypes)을 예측하고, 다른 하나는 32개의 마스크 계수(Mask coefficients)를 예측한다. 최종 결과물은 이들의 선형 결합을 통해 생성되며, NMS(Non-Maximum Suppression)를 통해 최종 인스턴스를 확정한다.
 
 ### 손실 함수 (Loss Function)
+
 모델은 다음 네 가지 손실 함수의 가중치 합으로 학습된다.
 
 $$L = \lambda_{box} L_{box} + \lambda_{cls} L_{cls} + \lambda_{dfl} L_{dfl} + \lambda_{seg} L_{seg}$$
@@ -41,6 +44,7 @@ $$L = \lambda_{box} L_{box} + \lambda_{cls} L_{cls} + \lambda_{dfl} L_{dfl} + \l
 - $L_{seg}$: YOLACT와 유사한 픽셀 단위의 BCE 손실이다.
 
 ### NOISe 학습 전략 (Nuclei-Aware Training Strategy)
+
 본 연구의 핵심인 NOISe는 전이 학습(Transfer Learning)의 효율을 높이기 위해 다음과 같은 2단계 파이프라인을 따른다.
 
 1. **Pretraining (다중 클래스 검출 단계)**:
@@ -54,12 +58,14 @@ $$L = \lambda_{box} L_{box} + \lambda_{cls} L_{cls} + \lambda_{dfl} L_{dfl} + \l
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 마우스 파골세포(M1~M5 배치) 및 인간 파골세포(H1~H2 배치) 이미지.
 - **모델**: YOLOv8l-seg (약 45.9M 파라미터).
 - **평가 지표**: Precision, Recall, 및 IoU 임계값($t$)에 따른 mAP($\text{mAP}_t$).
 - **전처리**: 기가픽셀 해상도의 이미지를 $832 \times 832$ 패치로 추출하고 $416 \times 416$으로 다운샘플링하여 학습 및 추론을 진행하였다.
 
 ### 주요 결과
+
 - **마우스 데이터 (Cross-Validation)**: 5-fold 교차 검증 결과, $\text{mAP}_{0.5}$ 기준으로 평균 $0.82$의 높은 성능을 보였다. 일부 이미지 블러(Blur) 현상으로 인해 $M5$ 배치에서 성능이 하락하는 경향이 관찰되었다.
 - **도메인 전이 (Mouse $\rightarrow$ Human)**:
   - **Baseline YOLOv8 (M$\rightarrow$H)**: 마우스 데이터로만 학습하고 인간 데이터에 적용했을 때 $\text{mAP}_{0.5}$는 $0.60$에 그쳤다.

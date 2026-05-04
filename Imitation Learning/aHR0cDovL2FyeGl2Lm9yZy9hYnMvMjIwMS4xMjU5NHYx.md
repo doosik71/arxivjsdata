@@ -4,7 +4,7 @@ Liu Liu, Ziyang Tang, Lanqing Li, and Dijun Luo (2022)
 
 ## 🧩 Problem to Solve
 
-본 논문은 오프라인 모방 학습(Offline Imitation Learning, IL)에서 전문가의 시연 데이터(demonstrations)가 오염되었을 때 발생하는 성능 저하 문제를 해결하고자 한다. 
+본 논문은 오프라인 모방 학습(Offline Imitation Learning, IL)에서 전문가의 시연 데이터(demonstrations)가 오염되었을 때 발생하는 성능 저하 문제를 해결하고자 한다.
 
 일반적인 Behavior Cloning(BC)과 같은 기존 접근 방식은 시연 데이터가 항상 최적의 전문가에 의해 수집되었다고 가정한다. 하지만 실제 환경에서 수집된 데이터는 인간의 실수, 기록 시스템의 오류, 혹은 의도적인 공격으로 인해 일부 데이터가 노이즈이거나 임의의 이상치(arbitrary outliers)일 가능성이 높다. 이러한 상황에서 표준 BC는 모든 데이터를 평균적으로 학습하려 하기 때문에, 소수의 심각한 이상치만으로도 학습된 정책이 완전히 망가지는 취약성을 보인다.
 
@@ -12,13 +12,14 @@ Liu Liu, Ziyang Tang, Lanqing Li, and Dijun Luo (2022)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 통계학의 **Median-of-Means (MOM)** 추정량을 모방 학습의 목적 함수에 도입하는 것이다. 
+본 논문의 핵심 아이디어는 통계학의 **Median-of-Means (MOM)** 추정량을 모방 학습의 목적 함수에 도입하는 것이다.
 
 기본적인 BC는 모든 데이터의 Negative Log-Likelihood(NLL)의 산술 평균을 최소화한다. 하지만 평균(Mean) 연산은 이상치에 매우 민감하다는 단점이 있다. 이를 해결하기 위해 본 논문은 데이터를 여러 배치(batch)로 나누어 각 배치의 평균을 구한 뒤, 그 값들의 중앙값(Median)을 취하는 MOM 방식을 제안한다. 이를 통해 데이터 세트에 상수가 되는 비율의 이상치가 포함되어 있더라도, 대다수의 배치가 오염되지 않았다면 중앙값을 통해 전문가의 행동을 안정적으로 복원할 수 있다는 직관을 이용한다.
 
 ## 📎 Related Works
 
 기존의 모방 학습 연구들은 주로 다음과 같은 방향으로 진행되었다:
+
 - **표준 모방 학습:** BC나 GAIL과 같은 방법론은 데이터가 최적이라는 가정을 전제로 하며, 오염된 데이터에 대해 매우 취약하다.
 - **노이즈 대응 연구:** 일부 연구들([6, 59, 65, 66, 71])은 불완전한 시연 데이터를 다루려 했으나, 대부분 온라인 상호작용(online interaction)이 필요하거나, 각 데이터에 대한 인간의 추가적인 주석(annotation)이 필요하다는 한계가 있다.
 - **강건한 통계학:** Huber의 오염 모델(Huber’s contamination model)과 같은 강건한 통계 기법들이 존재하지만, 이를 오프라인 모방 학습의 순차적 의사결정 구조에 적용하여 이론적 보장을 제공한 사례는 드물다.
@@ -28,9 +29,11 @@ Liu Liu, Ziyang Tang, Lanqing Li, and Dijun Luo (2022)
 ## 🛠️ Methodology
 
 ### 1. 오염된 시연 데이터의 정의 (Definition 2.1)
+
 전체 데이터 세트 $N$개 중 임의의 $\epsilon$-분율($\epsilon < 0.5$)에 해당하는 샘플들이 공격자에 의해 임의의 값으로 수정될 수 있다고 가정한다. 여기서 $\epsilon$은 문제의 차원과 무관한 상수이다.
 
 ### 2. Robust Behavior Cloning (RBC) 목적 함수
+
 제안된 RBC는 데이터 세트 $D$를 $M$개의 배치 $\{B_j\}_{j=1}^M$로 무작위로 분할한다. 각 배치의 평균 NLL을 $\ell_j(\pi)$라고 할 때, 다음과 같은 Min-Max 형태의 목적 함수를 최적화한다:
 
 $$\hat{\pi}_{RBC} = \arg \min_{\pi \in \Pi} \max_{\pi' \in \Pi} \text{median}_{1 \le j \le M} (\ell_j(\pi) - \ell_j(\pi'))$$
@@ -41,7 +44,9 @@ $$\ell_j(\pi) = \frac{1}{b} \sum_{(s,a) \in B_j} -\log(\pi(a|s))$$
 이 구조의 직관은 $\pi'$가 전문가 정책 $\pi_E$에 가까워져 내부의 $\max$ 항을 최대화하려 하고, 동시에 $\pi$가 $\pi_E$에 가까워져 전체 값을 최소화하려 함으로써, 최종적으로 $\hat{\pi}_{RBC}$가 전문가 정책에 수렴하게 만드는 것이다.
 
 ### 3. 학습 절차 (Algorithm 1)
+
 목적 함수가 일반적으로 비볼록(non-convex)하므로, 저자들은 다음과 같은 경사 하강법 기반의 휴리스틱 알고리즘을 제안한다:
+
 1. 정책 $\pi$와 $\pi'$를 무작위로 초기화한다.
 2. 매 반복(iteration)마다 데이터를 $M$개의 배치로 무작위 분할한다.
 3. 모든 배치에 대해 $\ell_j(\pi) - \ell_j(\pi')$를 계산하고, 이 값이 **중앙값(median)**이 되는 배치 $B_{Med}$를 선택한다.
@@ -53,12 +58,14 @@ $$\ell_j(\pi) = \frac{1}{b} \sum_{(s,a) \in B_j} -\log(\pi(a|s))$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **환경:** PyBullet 시뮬레이터의 continuous control 벤치마크(Hopper, Walker2D, HalfCheetah, Ant) 사용.
 - **오염 방식:** 데이터의 $0\% \sim 20\%$를 오염시켰으며, 이상치 액션(action)을 경계값($-1$ 또는 $1$)으로 설정하거나 균등 분포(uniform distribution)에서 무작위로 추출하여 설정함.
 - **비교 대상:** Vanilla BC, Oracle BC(오염되지 않은 전문가 데이터로 학습한 BC), Noisy BC(최신 강건한 IL 기법).
 - **지표:** 누적 보상(Cumulative Reward).
 
 ### 주요 결과
+
 - **강건성 검증:** Vanilla BC는 오염 비율 $\epsilon$이 증가함에 따라 성능이 급격히 하락하지만, RBC는 $\epsilon=20\%$까지도 Oracle BC와 거의 동일한 수준의 성능을 유지한다.
 - **표본 복잡도:** 데이터 세트의 크기가 커질수록 RBC의 성능이 Oracle BC에 수렴함을 확인하였으며, 이는 이론적 예측과 일치한다.
 - **SOTA 비교:** Noisy BC와 비교했을 때, RBC가 더 우수한 성능을 보였다. 특히 Noisy BC는 가중치 재설정(re-weighting) 과정에서 이상치가 가중치를 잘못 유도할 수 있는 반면, RBC는 MOM 목적 함수를 통해 이상치를 구조적으로 배제하기 때문에 더 효율적이다.
@@ -67,9 +74,11 @@ $$\ell_j(\pi) = \frac{1}{b} \sum_{(s,a) \in B_j} -\log(\pi(a|s))$$
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 논문의 가장 큰 강점은 **이론적 보장과 실용적 성능의 결합**이다. 특히 오프라인 설정에서 임의의 상숫값 $\epsilon$만큼의 이상치가 존재하더라도, 통계적 오차 범위가 일반 BC(전문가 데이터 사용 시)와 거의 동일한 수준의 에러 스케일링($O(\sqrt{\log(|\Pi|/\delta)/N})$)을 가진다는 점을 수학적으로 증명하였다.
 
 ### 한계 및 논의사항
+
 - **정책 클래스의 가정:** 이론적 분석(Theorem 4.1, 4.2)을 위해 정책 클래스 $\Pi$가 이산적(discrete)이라는 가정을 사용하였다. 실제 구현에서는 신경망(continuous)을 사용하므로, 이 간극에 대한 추가적인 분석이 필요할 수 있다.
 - **최적화 문제:** 제안된 목적 함수가 비볼록 함수이므로, 알고리즘 1의 경사 하강법 기반 휴리스틱이 항상 전역 최적해(global optimum)를 찾으리라는 보장은 없다. 다만, 실험적으로는 충분한 수렴 성능을 보였다.
 

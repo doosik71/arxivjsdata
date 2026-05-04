@@ -4,7 +4,7 @@ Daniel Pfrommer, Thomas T.C.K. Zhang, Stephen Tu, and Nikolai Matni (2023)
 
 ## 🧩 Problem to Solve
 
-본 논문은 연속 제어(Continuous Control) 환경에서 모방 학습(Imitation Learning, IL)의 고질적인 문제인 **분포 변화(Distribution Shift)** 문제를 해결하고자 한다. 
+본 논문은 연속 제어(Continuous Control) 환경에서 모방 학습(Imitation Learning, IL)의 고질적인 문제인 **분포 변화(Distribution Shift)** 문제를 해결하고자 한다.
 
 일반적으로 Behavior Cloning(BC)과 같은 오프라인 모방 학습 방식은 전문가의 데이터셋만을 사용하여 정책을 학습한다. 그러나 학습된 정책 $\hat{\pi}$가 전문가 정책 $\pi^*$와 아주 작은 차이라도 보일 경우, 이 오차가 시간이 지남에 따라 누적되는 **복합 오차(Compounding Errors)** 현상이 발생한다. 결과적으로 에이전트는 전문가가 방문하지 않은 상태 공간으로 진입하게 되며, 이는 시스템의 치명적인 실패로 이어진다.
 
@@ -28,17 +28,21 @@ Daniel Pfrommer, Thomas T.C.K. Zhang, Stephen Tu, and Nikolai Matni (2023)
 ## 🛠️ Methodology
 
 ### 전체 시스템 모델
+
 비선형 이산 시간 동적 시스템을 다음과 같이 정의한다.
 $$x_{t+1} = f(x_t, u_t)$$
 여기서 $x_t$는 상태, $u_t$는 제어 입력이다. 모방 학습의 목표는 전문가 정책 $\pi^*$와 유사한 궤적을 생성하는 정책 $\hat{\pi}$를 찾는 것이다.
 
 ### 핵심 이론: $\delta$-ISS (incremental Input-to-State Stability)
+
 본 논문은 전문가 시스템이 $\delta$-ISS 속성을 가진다고 가정한다. $\delta$-ISS란 서로 다른 초기 조건에서 시작하거나 입력 섭동(Perturbation) $\Delta_t$가 있을 때, 두 궤적 사이의 차이가 유계(Bounded)됨을 의미한다.
 $$\|x^\pi_t(\xi_1; \{\Delta_s\}) - x^\pi_t(\xi_2; \{0\})\| \le \beta(\|\xi_1 - \xi_2\|, t) + \gamma(\max_{0 \le k \le t-1} \|\Delta_k\|)$$
 여기서 $\gamma$는 Class $\mathcal{K}$ 함수로, 전문가의 강건성을 결정한다.
 
 ### $p$-TaSIL 손실 함수
+
 전문가의 강건성 $\gamma$의 감쇄 속도에 따라 필요한 테일러 전개 차수 $p$가 결정된다.
+
 - **빠르게 감쇄하는 경우 ($\gamma(x) \le O(x^{1+r})$)**: 일반적인 BC(0차 일치)만으로도 충분하다.
 - **느리게 감쇄하는 경우 ($\gamma(x) \le O(x^{1/r})$)**: $p$차 도함수까지 일치시켜야 한다.
 
@@ -50,6 +54,7 @@ $$\ell_{\pi^*, p}(\xi; \pi) := \frac{1}{p+1} \sum_{j=0}^{p} \max_{0 \le t \le T-
 $$\hat{\pi}_{TaSIL, p} \in \arg\min_{\pi \in \Pi} \frac{1}{n} \sum_{i=1}^{n} \ell_{\pi^*, p}(\xi_i; \pi)$$
 
 ### 추론 및 구현 절차
+
 1. 전문가의 궤적 데이터를 수집한다.
 2. 자동 미분(Automatic Differentiation)을 통해 $\pi$와 $\pi^*$의 $j$차 도함수를 계산한다.
 3. 위 $p$-TaSIL 손실 함수를 사용하여 정책 $\pi$를 최적화한다.
@@ -58,11 +63,13 @@ $$\hat{\pi}_{TaSIL, p} \in \arg\min_{\pi \in \Pi} \frac{1}{n} \sum_{i=1}^{n} \el
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋 및 환경**: OpenAI Gym MuJoCo (Walker2d, HalfCheetah, Humanoid, Ant)
 - **비교 대상**: Standard BC, DAgger, DART 및 각각에 TaSIL 손실을 추가한 변형 버전
 - **평가 지표**: 전문가 대비 정규화된 보상(Expert-normalized reward) 및 모방 갭(Imitation Gap)
 
 ### 주요 결과
+
 1. **강건성-차수 관계 검증**: $\gamma$ 함수를 조절하여 전문가의 강건성을 변경하며 실험한 결과, 전문가가 덜 강건할수록(느리게 감쇄할수록) 더 높은 차수 $p$의 TaSIL 손실을 사용했을 때 모방 갭이 유의미하게 줄어듦을 확인하였다.
 2. **샘플 효율성 향상**: MuJoCo 환경에서 1-TaSIL(1차 도함수 일치)을 추가했을 때 모든 알고리즘(BC, DAgger, DART)의 성능이 크게 향상되었다.
 3. **오프라인 학습의 가능성**: 특히 TaSIL-BC는 데이터 증강 없이도 시뮬레이터나 전문가의 상호작용이 필요한 DAgger나 DART의 성능과 비슷하거나 이를 능가하는 결과를 보였다. 이는 고차 도함수 일치가 분포 변화 문제를 효과적으로 억제함을 시사한다.
@@ -70,13 +77,15 @@ $$\hat{\pi}_{TaSIL, p} \in \arg\min_{\pi \in \Pi} \frac{1}{n} \sum_{i=1}^{n} \el
 
 ## 🧠 Insights & Discussion
 
-본 논문은 모방 학습의 고질적인 문제인 분포 변화를 제어 이론의 $\delta$-ISS 관점에서 해석하여, 정책의 '값'뿐만 아니라 '기울기(및 고차 도함수)'를 맞추는 것이 왜 중요한지를 이론적으로 규명하였다. 
+본 논문은 모방 학습의 고질적인 문제인 분포 변화를 제어 이론의 $\delta$-ISS 관점에서 해석하여, 정책의 '값'뿐만 아니라 '기울기(및 고차 도함수)'를 맞추는 것이 왜 중요한지를 이론적으로 규명하였다.
 
 **강점**:
+
 - 단순히 "도함수를 맞추면 성능이 좋다"는 식의 경험적 접근이 아니라, 전문가의 강건성 $\gamma$와 필요한 전개 차수 $p$ 사이의 수학적 관계를 제시하였다.
 - 데이터 증강이라는 무거운 비용 대신, 손실 함수 수정이라는 가벼운 방법으로 강건성을 확보할 수 있음을 보였다.
 
 **한계 및 논의**:
+
 - 고차 도함수 계산은 계산 복잡도를 증가시키며, 특히 상태 공간의 차원이 매우 높은 경우 유한 차분법을 위한 샘플 수가 급격히 늘어날 수 있다.
 - 본 연구는 실현 가능(Realizable) 설정, 즉 전문가 정책이 모델 클래스 $\Pi$ 내에 존재한다는 가정을 바탕으로 많은 분석을 수행하였다. 실제 복잡한 환경에서 전문가 정책을 완벽히 모사하는 모델을 찾는 것은 어려울 수 있다.
 

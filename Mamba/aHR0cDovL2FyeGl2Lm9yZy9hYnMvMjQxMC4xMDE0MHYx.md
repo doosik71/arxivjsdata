@@ -24,15 +24,19 @@ Mamba와 같은 SSM은 선형 복잡도로 장거리 의존성(long-range depend
 ## 📎 Related Works
 
 ### 1. Efficient CNNs and Transformers for SR
+
 CNN 기반 SR 모델들은 효율성을 높이기 위해 cascading mechanism(CARN)이나 feature splitting(IMDN) 등을 도입했으나, 커널 크기의 제한으로 인해 장거리 의존성 모델링에 한계가 있다. Transformer 기반 모델들은 Self-Attention을 통해 이를 해결했지만, 시퀀스 길이에 따른 이차 복잡도(quadratic complexity) 문제로 인해 Window-based attention이나 channel-wise attention 등을 사용한다. 그러나 이러한 방식은 여전히 추론 시 계산 비용이 높고 수용 영역(receptive field)이 제한되는 문제가 있다.
 
 ### 2. Mamba and Applications for SR
+
 최근 Mamba 아키텍처는 선형 복잡도로 긴 시퀀스를 처리할 수 있어 주목받고 있다. MambaIR과 같은 초기 SR 적용 사례들은 2D 특성을 잡기 위해 multi-sequence scanning 전략을 사용했다. 하지만 이는 계산 비용을 대폭 증가시킨다. Hi-Mamba는 이러한 기존 Mamba 기반 SR 모델들과 달리 **단일 시퀀스 스캔**만을 사용하여 효율성을 극대화하고, 계층적 구조와 방향 교차 전략으로 공간 모델링 능력을 보완한다는 점에서 차별화된다.
 
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 Hi-Mamba는 크게 세 단계의 파이프라인으로 구성된다.
+
 - **Shallow Feature Extraction**: 단순한 convolution 레이어를 통해 입력 LR 이미지 $I^{LR}$로부터 로컬 특징 $F^l$을 추출한다.
 - **Deep Feature Extraction**: $N_2$개의 DA-HMG 그룹을 통해 심층 특징 $F^d$를 추출하며, 각 그룹 내에는 $N_1$개의 HMB가 포함된다.
 - **Image Reconstruction**: 추출된 $F^l$과 $F^d$를 합산한 후, $3 \times 3$ convolution과 Pixel Shuffle 연산을 통해 최종 고해상도 이미지 $I^r$을 생성한다.
@@ -40,7 +44,9 @@ Hi-Mamba는 크게 세 단계의 파이프라인으로 구성된다.
 학습은 정답 이미지 $I^{gt}$와 예측 이미지 $I^r$ 사이의 픽셀 단위 $L1$ 손실 함수를 사용하여 최적화한다.
 
 ### 2. Hierarchical Mamba Block (HMB)
+
 HMB는 단일 방향 스캔을 수행하며, 두 개의 브랜치로 구성된다.
+
 - **Local SSM (L-SSM)**: 입력 특징의 원본 해상도에서 로컬 의존성을 학습한다.
 - **Region SSM (R-SSM)**: 입력 특징을 $n \times n$ 크기로 투영(projection)하여 저해상도 영역에서 전역적인 문맥을 학습한다.
 
@@ -52,11 +58,13 @@ $$F^{out} = S_f \cdot X^l_{out} + (1 - S_f) \cdot f_{re}(X^r_{out})$$
 $$\text{G-FFN}(F^i) = w_2 * (\hat{F}_1 \odot \hat{F}_2)$$
 
 ### 3. Direction Alternation Hierarchical Mamba Group (DA-HMG)
+
 DA-HMG는 계산 비용을 늘리지 않고 공간 모델링 능력을 높이기 위한 전략이다. 단일 방향 스캔만 사용하는 HMB를 다음과 같은 순서로 배치한다:
 $$\text{HMB-H} \rightarrow \text{HMB-V} \rightarrow \text{HMB-RH} \rightarrow \text{HMB-RV}$$
 각 블록은 오직 한 가지 방향으로만 스캔하지만, 레이어를 거치며 방향이 바뀌므로 결과적으로 전체 네트워크는 4방향의 공간 정보를 모두 통합하게 된다.
 
 ### 4. SSM 기초 이론 (Preliminaries)
+
 본 논문에서 사용된 SSM은 연속 상태 공간 방정식 $\mathbf{h}'(t) = \mathbf{A}\mathbf{h}(t) + \mathbf{B}x(t), y(t) = \mathbf{C}\mathbf{h}(t) + \mathbf{D}x(t)$에서 시작하여, Zero-Order Hold (ZOH) 규칙을 통해 이산화(discretization)된 형태를 사용한다.
 $$\mathbf{A} = \exp(\Delta \mathbf{A}), \mathbf{B} = (\Delta \mathbf{A})^{-1}(\exp(\mathbf{A}) - \mathbf{I}) \cdot \Delta \mathbf{B}$$
 이를 통해 입력 시퀀스 $x$를 출력 $y$로 매핑하는 선형 연산으로 변환하여 계산 효율성을 확보한다.
@@ -64,26 +72,31 @@ $$\mathbf{A} = \exp(\Delta \mathbf{A}), \mathbf{B} = (\Delta \mathbf{A})^{-1}(\e
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: DIV2K, Flicker2K로 학습하고 Set5, Set14, BSD100, Urban100, Manga109 벤치마크에서 평가하였다.
 - **지표**: PSNR, SSIM, 파라미터 수, FLOPs, 추론 시간(GPU Latency)을 측정하였다.
 - **비교 대상**: CARN, IMDN, SwinIR-Light, SRFormer-Light, MambaIR 등 경량화 SR 모델들과 비교하였다.
 
 ### 2. 정량적 결과
+
 - **경량 모델 비교 (Table 2)**: Hi-Mamba-S는 MambaIR 대비 FLOPs를 294G 줄이면서도 Urban100 ($\times 2$ SR)에서 PSNR을 0.21dB 향상시켰다. 또한 SRFormer-Light보다도 우수한 성능을 보였다.
 - **고성능 모델 비교 (Table 3)**: 대규모 모델인 Hi-Mamba-L은 기존 SOTA 모델들을 능가하였으며, 특히 self-ensemble 전략을 적용한 Hi-Mamba-L+는 Manga109 ($\times 2$ SR)에서 SRFormer 대비 0.42dB, MambaIR 대비 0.21dB 높은 PSNR을 기록했다.
 - **복잡도 및 효율성 (Table 4 & Fig 5)**: Hi-Mamba-L은 GRL-B 및 MambaIR보다 GFLOPs를 크게 낮추면서도 더 높은 PSNR을 달성하여, Latency-PSNR trade-off 관점에서 최적의 효율성을 보였다.
 
 ### 3. 정성적 결과
+
 - 시각적 비교 결과, CNN이나 Transformer 기반 모델에서 나타나는 블러(blurry) 현상이나 왜곡이 줄어들었으며, 특히 건물 텍스처와 같은 세밀한 구조 복원 능력이 뛰어나다.
 - Local Attribution Map (LAM) 시각화를 통해 Hi-Mamba가 다른 모델보다 더 넓은 범위의 정보를 활용하여 복원을 수행함을 확인하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. 강점 및 분석
+
 - **효율적인 공간 모델링**: Multi-direction scanning을 단순 반복하는 대신, 방향을 교차 배치하는 DA-HMG 전략이 연산량 증가 없이 성능을 높일 수 있음을 입증하였다.
 - **계층적 구조의 이점**: L-SSM과 R-SSM을 결합한 구조가 단일 스케일 모델보다 훨씬 높은 PSNR 향상을 가져왔으며, 이는 다양한 수용 영역의 정보를 통합하는 것이 SR 작업에 필수적임을 시사한다.
 
 ### 2. 한계 및 논의사항
+
 - **하이퍼파라미터 민감도**: R-SSM의 채널 수나 영역 크기($n \times n$)에 따라 성능과 속도가 달라지는데, 본 논문에서는 $4 \times 4$ 크기가 최적의 trade-off를 보인다고 명시하였다. 하지만 이는 데이터셋이나 배율에 따라 달라질 가능성이 있다.
 - **가정**: 본 연구는 주로 PSNR 기반의 복원 성능에 집중하고 있으며, 지각적 품질(perceptual quality)에 대한 상세한 분석은 상대적으로 부족하다.
 

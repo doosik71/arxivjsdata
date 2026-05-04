@@ -18,19 +18,21 @@ Qingyu Li, Lichao Mou, Yuansheng Hua, Yao Sun, Pu Jin, Yilei Shi, Xiao Xiang Zhu
 
 논문에서는 Keypoints를 사용하여 건물 분할을 수행하는 기존 연구로 **PolyMapper**를 언급한다. PolyMapper는 CNN-RNN 구조를 통해 Keypoints를 예측하고 그룹화하는 방식을 취한다. 하지만 본 논문은 다음과 같은 두 가지 측면에서 PolyMapper와 차별점을 가진다.
 
-1.  **Keypoint Detection 방식**: PolyMapper는 먼저 건물 경계의 Heatmap mask를 생성한 뒤 추가적인 Convolutional layer를 통해 후보 Keypoints를 얻는 중간 단계가 존재한다. 반면, 제안 방법은 이러한 중간 학습 과정 없이 입력 이미지에서 직접적으로 Keypoints를 검출한다.
-2.  **Grouping 방식**: PolyMapper가 딥러닝 기반의 특징 학습을 통해 점들을 그룹화하는 것과 달리, 본 논문의 방법은 딥러닝을 배제하고 순수하게 기하학적 거리 기반의 Grouping 방식을 채택하여 효율성을 높였다.
+1. **Keypoint Detection 방식**: PolyMapper는 먼저 건물 경계의 Heatmap mask를 생성한 뒤 추가적인 Convolutional layer를 통해 후보 Keypoints를 얻는 중간 단계가 존재한다. 반면, 제안 방법은 이러한 중간 학습 과정 없이 입력 이미지에서 직접적으로 Keypoints를 검출한다.
+2. **Grouping 방식**: PolyMapper가 딥러닝 기반의 특징 학습을 통해 점들을 그룹화하는 것과 달리, 본 논문의 방법은 딥러닝을 배제하고 순수하게 기하학적 거리 기반의 Grouping 방식을 채택하여 효율성을 높였다.
 
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 제안된 시스템은 **CNN $\rightarrow$ Region Proposal Network (RPN) $\rightarrow$ Fully Convolutional Network (FCN)** 순으로 구성된 2단계(Two-stage) 구조를 가진다.
 
-1.  **특징 추출 및 제안**: 먼저 CNN을 통해 특징 맵(Feature maps)을 추출하고, RPN이 특징 맵 위를 슬라이딩하며 건물이 존재할 가능성이 높은 후보 영역(Candidate bounding boxes)을 생성한다.
-2.  **RoI 정렬 및 Keypoint 예측**: 생성된 각 Proposal에 대해 RoIAlign을 통해 지역 특징을 획득하고, FCN을 적용하여 해당 영역 내 Keypoints의 Heatmap을 예측한다.
-3.  **다각형 재구성**: 예측된 Heatmap에서 Keypoints를 추출하고, 이를 기하학적으로 연결하여 건물의 최종 세그멘테이션 마스크(Polygon map)를 생성한다.
+1. **특징 추출 및 제안**: 먼저 CNN을 통해 특징 맵(Feature maps)을 추출하고, RPN이 특징 맵 위를 슬라이딩하며 건물이 존재할 가능성이 높은 후보 영역(Candidate bounding boxes)을 생성한다.
+2. **RoI 정렬 및 Keypoint 예측**: 생성된 각 Proposal에 대해 RoIAlign을 통해 지역 특징을 획득하고, FCN을 적용하여 해당 영역 내 Keypoints의 Heatmap을 예측한다.
+3. **다각형 재구성**: 예측된 Heatmap에서 Keypoints를 추출하고, 이를 기하학적으로 연결하여 건물의 최종 세그멘테이션 마스크(Polygon map)를 생성한다.
 
 ### Keypoints Detection 및 학습 목표
+
 네트워크는 입력 패치에 대해 Keypoints의 위치를 나타내는 Heatmap $Y \in (0,1)^{H \times W}$를 예측한다. 학습을 위한 Ground Truth는 각 Keypoint를 가우시안 커널의 중심으로 하는 Gaussian heatmap $P \in (0,1)^{H \times W}$를 사용하여 생성한다.
 
 Keypoint 추정을 위해 긍정(positive) 위치와 부정(negative) 위치 사이의 불균형을 해소할 수 있는 **Modified Focal Loss**를 사용하며, 그 식은 다음과 같다.
@@ -42,22 +44,25 @@ $$L_{polygon} = -\frac{1}{N} \sum_{i=1}^{H} \sum_{j=1}^{W} \begin{cases} (1-P_{i
 $$L = L_{cls} + L_{box} + L_{polygon}$$
 
 ### Keypoint 추출 및 Grouping 알고리즘
-1.  **ExtractPeak**: 예측된 Heatmap에서 임계값 $\tau=0.1$보다 큰 픽셀들을 선택하고, $3 \times 3$ 윈도우 내에서 지역 최댓값(locally maximum)인 지점을 최종 Keypoint로 추출한다.
-2.  **Geometric Grouping**: 추출된 점들을 다음과 같은 순서로 연결하여 다각형을 형성한다.
-    -   가장 왼쪽, 오른쪽, 위, 아래 중 하나인 극단적 Keypoint(extreme keypoint)를 시작점으로 선택한다.
-    -   현재 점과 가장 가까운 이웃 점(nearest neighbour)을 찾아 엣지를 생성하고, 해당 점을 다시 시작점으로 설정한다.
-    -   이 과정을 반복하여 마지막 점이 처음 시작점과 만날 때까지 연결함으로써 폐곡선 다각형을 완성한다.
+
+1. **ExtractPeak**: 예측된 Heatmap에서 임계값 $\tau=0.1$보다 큰 픽셀들을 선택하고, $3 \times 3$ 윈도우 내에서 지역 최댓값(locally maximum)인 지점을 최종 Keypoint로 추출한다.
+2. **Geometric Grouping**: 추출된 점들을 다음과 같은 순서로 연결하여 다각형을 형성한다.
+    - 가장 왼쪽, 오른쪽, 위, 아래 중 하나인 극단적 Keypoint(extreme keypoint)를 시작점으로 선택한다.
+    - 현재 점과 가장 가까운 이웃 점(nearest neighbour)을 찾아 엣지를 생성하고, 해당 점을 다시 시작점으로 설정한다.
+    - 이 과정을 반복하여 마지막 점이 처음 시작점과 만날 때까지 연결함으로써 폐곡선 다각형을 완성한다.
 
 ## 📊 Results
 
 ### 실험 설정
--   **데이터셋**: AIRS (Aerial Imagery for Roof Segmentation) 데이터셋에서 개별 건물이 중앙에 위치한 $512 \times 512$ 크기의 패치 1,680개를 추출하여 사용하였다. (Train: 1400, Val: 140, Test: 140)
--   **구현 환경**: Keras 프레임워크, NVIDIA Tesla P100 GPU 사용. SGD 옵티마이저(Momentum 0.9)로 40 에포크(epochs) 동안 학습하였다.
--   **평가 지표**: 
-    -   마스크 정확도: F1-Score, Intersection Over Union (IoU)
-    -   경계선 정확도: Structural Similarity Index (SSIM), F-Measure
+
+- **데이터셋**: AIRS (Aerial Imagery for Roof Segmentation) 데이터셋에서 개별 건물이 중앙에 위치한 $512 \times 512$ 크기의 패치 1,680개를 추출하여 사용하였다. (Train: 1400, Val: 140, Test: 140)
+- **구현 환경**: Keras 프레임워크, NVIDIA Tesla P100 GPU 사용. SGD 옵티마이저(Momentum 0.9)로 40 에포크(epochs) 동안 학습하였다.
+- **평가 지표**:
+  - 마스크 정확도: F1-Score, Intersection Over Union (IoU)
+  - 경계선 정확도: Structural Similarity Index (SSIM), F-Measure
 
 ### 정량적 결과
+
 제안 방법은 기존의 Semantic Segmentation 모델인 FCN-8s와 Instance Segmentation 모델인 Mask R-CNN보다 우수한 성능을 보였다.
 
 | Method | F1-Score | IoU | SSIM | F-Measure |

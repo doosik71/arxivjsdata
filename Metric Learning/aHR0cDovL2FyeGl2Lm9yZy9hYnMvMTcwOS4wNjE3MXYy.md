@@ -7,6 +7,7 @@ Lalit Jain, Blake Mason, Robert Nowak (2017)
 본 논문은 비교 판단(comparative judgments)을 통해 저차원 유클리드 메트릭(low-dimensional Euclidean metric)을 학습하는 문제의 이론적 토대를 연구한다. 구체적으로, 고차원 특징 벡터 $x_i \in \mathbb{R}^p$를 가진 $n$개의 항목이 있을 때, 세 개의 항목으로 구성된 트리플렛(triplet) 형태의 거리 비교 정보, 즉 $\text{sign}(\text{dist}(x_i, x_j) - \text{dist}(x_i, x_k))$를 이용하여 대칭 양정치 행렬(symmetric positive semi-definite matrix) $K$를 학습하는 것을 목표로 한다.
 
 이 연구가 해결하고자 하는 핵심 문제는 다음과 같다.
+
 1. 일반적인 저차원(low-rank) 메트릭뿐만 아니라 희소(sparse) 메트릭을 학습하는 이론적 분석이 부족했다는 점이다.
 2. 일반화 오차(generalization error)에 대한 상한(upper bound)과 하한(minimax lower bound)이 명확히 제시되지 않았다.
 3. 특징 공간의 차원 $p$와 메트릭의 랭크(rank) $d$에 따른 샘플 복잡도(sample complexity)를 정량화할 필요가 있다.
@@ -33,6 +34,7 @@ Lalit Jain, Blake Mason, Robert Nowak (2017)
 ## 🛠️ Methodology
 
 ### 1. 시스템 구조 및 정의
+
 학습 목표는 다음과 같은 제곱 거리 함수를 정의하는 대칭 양정치(PSD) 행렬 $K$를 찾는 것이다.
 $$d_K(x_i, x_j) = (x_i - x_j)^T K (x_i - x_j)$$
 
@@ -42,12 +44,15 @@ $$M_t(K) = d_K(x_i, x_j) - d_K(x_i, x_k) = \langle M_t, K \rangle$$
 $$M_t = x_i x_k^T + x_k x_i^T - x_i x_j^T - x_j x_i^T + x_j x_j^T - x_k x_k^T$$
 
 ### 2. 학습 목표 및 손실 함수
+
 관측값 $y_t \in \{\pm 1\}$는 $\text{sign}(\langle M_t, K \rangle)$에 대한 노이즈 섞인 측정치이다. 목적 함수는 경험적 위험(empirical risk) $\hat{R}_S(K)$를 최소화하는 것이다.
 $$\hat{R}_S(K) = \frac{1}{|S|} \sum_{t \in S} \ell(y_t \langle M_t, K \rangle)$$
 사용 가능한 손실 함수 $\ell$로는 0-1 loss, hinge-loss, logistic loss 등이 있으며, 이들은 모두 트리플렛 거리 차이 $\langle M_t, K \rangle$의 함수여야 한다.
 
 ### 3. 정규화 및 제약 조건
+
 저차원 및 희소 메트릭을 유도하기 위해 다음과 같은 제약 집합 $\mathcal{K}_{\lambda, \gamma}$를 도입한다.
+
 - **저차원(Low-rank) 유도**: 핵 노름(nuclear norm) 제약을 사용한다.
   $$\|K\|_* \le \lambda$$
 - **희소성(Sparsity) 유도**: Mixed $\ell_{1,2}$ 노름 제약을 사용한다.
@@ -55,22 +60,25 @@ $$\hat{R}_S(K) = \frac{1}{|S|} \sum_{t \in S} \ell(y_t \langle M_t, K \rangle)$$
 여기서 $\|K\|_{1,2}$는 행(row)별 $\ell_2$ 노름의 합을 의미하며, 이는 특정 특징(feature)들만이 메트릭 결정에 중요하게 작용하도록 강제한다.
 
 ### 4. 복원 절차 (Model Identification)
+
 모델 식별 오차를 분석하기 위해, 그람 행렬(Gram matrix) $G = X^T K X$와 연산자 $L$을 도입한다. $L$은 중심화된(centered) 대칭 행렬 공간에서 가역적(invertible)인 성질을 가지며, 이를 통해 $M(\hat{K})$로부터 $\hat{G}$를, 그리고 최종적으로 $\hat{K}$를 복원하는 과정을 이론적으로 정의한다.
 
 ## 📊 Results
 
 ### 1. 이론적 결과
+
 - **샘플 복잡도**: 등방성(isotropic) 가우시안 분포를 따르는 데이터의 경우, 일반화 오차는 다음과 같은 비율로 감소한다.
   $$R(\hat{K}) - R(K^*) = O\left(\sqrt{\frac{dp(\log p + \log^2 n)}{|S|}}\right)$$
   이는 샘플 복잡도가 메트릭의 자유도인 $dp$에 비례한다는 직관과 일치한다.
 - **최적성**: Minimax 하한 분석을 통해, 희소 메트릭 학습의 난이도가 일반 저차원 메트릭 학습의 난이도와 본질적으로 동일함을 보였다.
 
 ### 2. 실험 결과
+
 - **설정**: $n=200$개의 샘플, $p=100$차원 특징 공간에서 핵 노름 정규화, $\ell_{1,2}$ 정규화, 제약 없는 베이스라인을 비교하였다.
-- **정량적 성능**: 
-    - $K^*$가 희소한 경우 $\ell_{1,2}$ 정규화가 가장 우수한 성능을 보였다.
-    - $K^*$가 밀집된 저차원 행렬인 경우 핵 노름 정규화가 더 우수하였다.
-    - 두 정규화 방법 모두 제약 없는 베이스라인보다 월등히 뛰어난 성능을 보였으며, 특히 $K^*$가 저차원 및 희소 구조를 가질 때 효과가 극대화되었다.
+- **정량적 성능**:
+  - $K^*$가 희소한 경우 $\ell_{1,2}$ 정규화가 가장 우수한 성능을 보였다.
+  - $K^*$가 밀집된 저차원 행렬인 경우 핵 노름 정규화가 더 우수하였다.
+  - 두 정규화 방법 모두 제약 없는 베이스라인보다 월등히 뛰어난 성능을 보였으며, 특히 $K^*$가 저차원 및 희소 구조를 가질 때 효과가 극대화되었다.
 - **샘플 복잡도 검증**: 상대적 과잉 위험(relative excess risk)이 0.1 미만이 되기 위해 필요한 샘플 수를 측정한 결과, $d$와 $p$의 증가에 따라 선형적으로 증가하는 양상이 확인되어 이론적 예측(Corollary 2.1.1)이 유효함을 입증하였다.
 
 ## 🧠 Insights & Discussion

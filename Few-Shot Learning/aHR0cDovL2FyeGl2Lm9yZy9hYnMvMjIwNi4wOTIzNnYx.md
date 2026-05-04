@@ -17,20 +17,25 @@ Malik Boudiaf, Etienne Bennequin, Myriam Tami, Celine Hudelot, Antoine Toubhans,
 ## 📎 Related Works
 
 ### Few-Shot Classification (FSC)
+
 기존의 FSC 연구들은 주로 Episodic training을 통해 새로운 클래스에 대한 강건한 표현력을 학습시키려 했다. 그러나 최근 연구들은 단순한 Fine-tuning 기반의 Baseline이 복잡한 Episodic 방법들과 경쟁 가능한 수준임을 보여주었으며, 이는 모델 아키텍처에 구애받지 않는 Model-agnostic 방법론의 필요성을 시사한다.
 
 ### Transductive FSC
+
 전이 학습(Transduction) 방식은 레이블이 없는 쿼리 집합을 함께 활용하여 분류 성능을 높인다. Laplacian regularization, Clustering, Mutual Information Maximization 등이 사용되었으나, 이들은 기본적으로 모든 쿼리 샘플이 지원 집합의 클래스 내에 존재한다는 Closed-set 가정을 전제로 하므로 Outlier 탐지 성능이 현저히 떨어진다는 한계가 있다.
 
 ### Open-Set Recognition (OSR)
+
 OSR은 대규모 데이터셋 환경에서 미지의 클래스를 탐지하는 것을 목표로 한다. OpenMax나 PROSER 같은 방법들이 제안되었으나, 이들은 특정 클래스 집합에 대해 심층 신경망을 직접 훈련시켜야 하므로 샘플 수가 극도로 적은 Few-shot 환경에 직접 적용하기 어렵다.
 
 ### Few-Shot Open-Set Recognition (FSOSR)
+
 최근 FSOSR을 해결하기 위해 Meta-learning이나 Transformation consistency를 이용한 방법들이 제안되었다. 하지만 이러한 방법들은 여전히 특수한 Episodic training 전략을 요구하며, 새로운 아키텍처에 적용할 때마다 번거로운 하이퍼파라미터 최적화 과정이 필요하다는 단점이 있다.
 
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 OSTIM은 사전 학습된 모델 $\phi_\theta$를 고정(frozen)한 상태에서 특징 공간(Feature space) 상의 연산을 통해 작동하는 추론 전용(Inference-only) 방법이다. 전체 흐름은 다음과 같다: 특징 추출 $\rightarrow$ 중심 정규화(Center-normalization) $\rightarrow$ 프로토타입 생성 및 임시 할당 $\rightarrow$ InfoMax 기반의 프로토타입 최적화 $\rightarrow$ 최종 분류 및 Outlier score 산출.
 
 ### 주요 구성 요소 및 수식 설명
@@ -50,17 +55,20 @@ $$l_{i, K+1} = -\frac{1}{K} \sum_{k=1}^K l_{ik} = \left\langle \psi_\mu(z_i), -\
 $$\min_{w} CE - \hat{I}_\alpha$$
 여기서 $CE$는 지원 집합에 대한 교차 엔트로피 손실이며, $\hat{I}_\alpha$는 정보 최대화 항으로 다음과 같이 구성된다.
 $$-\hat{I}_\alpha = \sum_{k=1}^{K+1} \hat{p}_k \log \hat{p}_k - \alpha \frac{1}{|Q|} \sum_{i=1}^{|Q|} \sum_{k=1}^{K+1} p_{ik} \log p_{ik}$$
+
 - **Marginal Entropy (첫 번째 항):** 모든 클래스에 샘플이 균등하게 배분되도록 하여 특정 클래스로 쏠리는 Trivial solution을 방지한다.
 - **Conditional Entropy (두 번째 항):** 각 쿼리 샘플이 $K+1$개의 카테고리 중 하나에 매우 높은 확신을 가지고 할당되도록 강제한다. 이를 통해 Inlier는 해당 클래스로, Outlier는 $K+1$번째 카테고리로 명확히 구분되게 한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** mini-ImageNet, tiered-ImageNet (표준 FSC), CUB, Aircraft, Fungi (Cross-domain).
 - **측정 지표:** Closed-set 분류 정확도(Acc), Outlier 탐지 성능(AUROC, AUPR), 그리고 90% Recall에서의 정밀도(Prec@0.9).
 - **기준선(Baselines):** k-NN 기반 OOD 탐지, SimpleShot (Inductive), OpenMax, SnatcherF, TIM-GD (Transductive) 등.
 
 ### 주요 결과
+
 1. **정량적 성능:** mini-ImageNet과 tiered-ImageNet 실험에서 OSTIM은 Outlier 탐지 지표(AUROC, AUPR)에서 기존의 Inductive 및 Transductive 방법들을 압도하였다. 특히 5-shot 설정에서도 Inductive 방법들보다 6-7% 높은 AUROC/AUPR를 기록하며 강력한 성능을 보였다.
 2. **Trade-off 해결:** 기존 Transductive 방법(예: TIM)은 Closed-set 정확도는 높였으나 Outlier 탐지 성능을 크게 떨어뜨렸으나, OSTIM은 두 지표 모두에서 최상위권의 성능을 유지하며 최적의 균형점을 찾았다.
 3. **Cross-domain 강건성:** tiered-ImageNet으로 학습된 모델을 CUB, Aircraft, Fungi 데이터셋에 적용한 결과, 도메인 시프트가 발생한 상황에서도 OSTIM은 Strong Baseline(SimpleShot + k-NN) 대비 일관된 성능 향상을 보였다.
@@ -69,12 +77,15 @@ $$-\hat{I}_\alpha = \sum_{k=1}^{K+1} \hat{p}_k \log \hat{p}_k - \alpha \frac{1}{
 ## 🧠 Insights & Discussion
 
 ### 강점 및 해석
+
 본 논문은 FSOSR 문제의 핵심 어려움이 특징 공간에서 Novel class들의 분포가 Base class들에 비해 훨씬 흩어져 있고 불분명하다는 점(MIF 지표로 증명)에 있음을 밝혀냈다. OSTIM은 이러한 불확실성을 해결하기 위해 '전이 학습'과 '가상 Outlier 프로토타입'이라는 두 가지 장치를 결합하였다. 특히 모델의 파라미터를 직접 수정하지 않고 특징 공간에서의 프로토타입만을 최적화함으로써, 향후 더 강력한 백본 모델이 등장하더라도 그 혜택을 그대로 누릴 수 있는 구조적 유연성을 갖추었다.
 
 ### 한계 및 미해결 질문
+
 전이 학습의 특성상, OSTIM은 쿼리 집합의 통계적 특성(예: 클래스 불균형, 샘플 수)에 민감할 가능성이 있다. 논문에서는 이를 언급하며, 실제 적용 시 전이 학습 기반 방법과 유도 학습(Inductive) 기반 방법 중 어느 것을 선택해야 할지에 대한 심도 있는 분석이 추가로 필요함을 시사하였다.
 
 ### 비판적 해석
+
 Implicit prototype을 정의하는 방식($-\text{average of inliers}$)이 매우 단순하지만 효과적이라는 점이 인상적이다. 이는 고차원 특징 공간에서 Inlier들이 특정 방향으로 군집화되어 있다면, 그 반대 방향이 가장 가능성 높은 Outlier 영역이라는 직관에 근거한다. 다만, Outlier들의 분포가 단일한 방향이 아닌 다방향으로 퍼져 있는 복잡한 Open-set 환경에서도 이 단순한 가정이 유효할지는 추가적인 검증이 필요해 보인다.
 
 ## 📌 TL;DR

@@ -13,6 +13,7 @@ Alican Gok, Oguzhan Buyuksolak, Osman Erman Okman, Murat Saraclar (2025)
 본 논문의 핵심 아이디어는 사전 학습된 자기지도학습(Self-supervised Learning, SSL) 모델의 풍부한 표현력을 활용하여, 이를 엣지 디바이스에 적합한 경량 모델로 전이시키는 Teacher-Student 구조의 학습 프레임워크를 구축하는 것이다.
 
 주요 기여 사항은 다음과 같다.
+
 1. **SCAF (Sub-center ArcFace) 손실 함수의 도입**: 오디오 판별 및 FS-KWS 분야에 SCAF를 최초로 적용하여, 클래스 간 분리도(inter-class separability)를 높이고 클래스 내 응집도(intra-class compactness)를 강화함으로써 고차원 임베딩의 차원을 효율적으로 축소했다.
 2. **Teacher-Student 지식 증류(Knowledge Distillation) 구조**: 고성능 SSL 모델 기반의 Teacher 모델이 생성한 최적의 임베딩을 경량화된 ResNet-15 Student 모델이 학습하도록 하여 엣지 디바이스에서의 성능을 극대화했다.
 3. **효율적인 차원 축소(DR) 모델 제안**: Attention 기반의 차원 축소 구조를 통해 SSL 모델의 고차원 특징에서 핵심적인 시간적 정보를 보존하며 64차원의 컴팩트한 임베딩을 생성하는 방법을 제시했다.
@@ -26,6 +27,7 @@ Alican Gok, Oguzhan Buyuksolak, Osman Erman Okman, Murat Saraclar (2025)
 ## 🛠️ Methodology
 
 ### 1. Teacher Representation Model
+
 Teacher 모델은 Wav2Vec 2.0의 16번째 트랜스포머 레이어에서 추출된 고차원 임베딩을 입력으로 받는다. 1초 길이의 음성 데이터는 $49 \times 1024$ 차원의 특징으로 표현되는데, 이를 엣지 디바이스에서 처리 가능한 64차원으로 축소하기 위해 두 가지 DR(Dimensionality Reduction) 구조를 검토하였다.
 
 - **Linear Projection**: 시간 축에 대해 평균 풀링(average pooling)을 수행한 후 선형 투영을 통해 차원을 축소한다.
@@ -34,14 +36,17 @@ Teacher 모델은 Wav2Vec 2.0의 16번째 트랜스포머 레이어에서 추출
 학습 시에는 **Sub-center ArcFace (SCAF)** 손실 함수를 사용한다. SCAF는 클래스당 하나의 중심이 아닌 여러 개의 서브 센터(sub-centers)를 두어 클래스 내의 변동성을 더 효과적으로 수용하며, 각 샘플을 가장 가까운 서브 센터에 할당하여 클래스 간 거리와 클래스 내 응집력을 최적화한다.
 
 ### 2. Edge-friendly Student Representation Model
+
 Student 모델은 메모리 및 계산 효율성을 위해 **ResNet-15** 아키텍처를 사용하며, 입력값으로는 오디오에서 추출한 10개의 MFCC(Mel-frequency cepstral coefficients) 특징 맵($49 \times 10$)을 사용한다.
 
 ### 3. Knowledge Distillation (KD) 및 학습 절차
+
 Teacher 모델의 지식을 Student 모델로 전이하기 위해 지식 증류 기법을 적용한다. Student 모델의 최종 손실 함수 $L$은 다음과 같이 정의된다.
 
 $$L = L_{KD} + \lambda L_T$$
 
 여기서 각 항의 의미는 다음과 같다.
+
 - $L_{KD}$: 지식 증류 손실로, Teacher 모델과 Student 모델이 생성한 임베딩 간의 차이를 줄이기 위해 **Mean Squared Error (MSE)**를 사용한다.
 - $L_T$: 특정 작업 수행을 위한 Task-specific loss로, Triplet loss 또는 SCAF loss가 사용된다.
 - $\lambda$: 두 손실 함수의 균형을 조절하는 하이퍼파라미터이다.
@@ -49,11 +54,13 @@ $$L = L_{KD} + \lambda L_T$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: MSWC(Multilingual Spoken Words Corpus) 영어 부분 및 Google Speech Commands (GSC) 데이터셋을 사용하였다.
 - **평가 지표**: 1-shot, 5-shot, 10-shot 설정에서 정확도(Accuracy), 오인식률(FAR), AUC, DET(Detection Error Trade-off) 등을 측정하였다.
 - **추론 방식**: 등록 단계에서 $K$개의 샘플로 프로토타입(평균 임베딩)을 생성하고, 테스트 단계에서 코사인 거리(cosine distance)를 측정하여 임계값 $T$보다 작으면 해당 클래스로 분류하고, 그렇지 않으면 "others" 클래스로 분류한다.
 
 ### 주요 결과
+
 - **DR 모델 선택**: Attention 기반 DR 모델이 Linear Projection보다 월등한 성능을 보였으며, 특히 SCAF 손실 함수와 결합했을 때 가장 높은 성능을 나타냈다.
 - **GSC 데이터셋 성능 (10-shot)**: 제안된 KD 기반 학습 방법은 1% FAR 기준에서 분류 정확도를 기존 baseline(Triplet loss 사용)의 **33.4%에서 74.1%로 대폭 향상**시켰다.
 - **MSWC 데이터셋 성능**: $L_{KD}$와 Triplet loss를 결합한 방식($KD + Triplet$)이 일부 지표에서 우수했으나, 전반적으로 KD 단독 사용 또는 결합 방식이 baseline보다 높은 성능을 보였다.

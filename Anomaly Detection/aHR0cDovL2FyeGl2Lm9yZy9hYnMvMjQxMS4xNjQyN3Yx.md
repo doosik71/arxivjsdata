@@ -25,25 +25,33 @@ Somjit Nath, Yik Chau Lui, Siqi Liu (2024)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 시스템은 크게 Encoder, Generator (RL Agent), 그리고 Discriminator의 세 가지 구성 요소로 이루어져 있으며, 이들은 GAN의 구조 내에서 상호작용한다.
 
 ### 1. Encoder
+
 이벤트 시퀀스는 발생 시간이 불규칙하고 연속적이므로, 이를 효율적으로 처리하기 위해 continuous-time LSTMs (cLSTM) 아키텍처를 사용한다. cLSTM의 출력값에 Causal Mask가 적용된 Attention 메커니즘과 Layer Normalization을 추가하여, 과거의 모든 이벤트 정보를 요약한 잠재 표현(latent representation)을 생성한다. 이는 미래 정보의 유출을 방지하여 온라인 환경에서도 적용 가능하도록 설계되었다.
 
 ### 2. Generator (RL Agent)
-생성자는 각 이벤트 포인트를 유지할지 제거할지를 결정하는 RL 에이전트로 모델링된다. 
+
+생성자는 각 이벤트 포인트를 유지할지 제거할지를 결정하는 RL 에이전트로 모델링된다.
+
 - **상태(State):** Encoder가 생성한 시퀀스의 잠재 표현 $\phi_{jn}$이 환경의 상태가 된다.
 - **행동(Action):** 각 이벤트 $t_n$에 대해 행동 $a_n \in \{0, 1\}$을 취한다. 여기서 $a_n=0$은 유지(keep), $a_n=1$은 제거(remove)를 의미한다.
 - **정책(Policy):** PPO (Proximal Policy Optimization) 알고리즘을 사용하여 최적의 정책 $\pi$를 학습한다.
 - **출력:** RL 에이전트가 제거 행동을 취한 포인트들을 제외하고 남은 포인트들로 구성된 '정제된 시퀀스' $S^g_j$를 생성한다.
 
 ### 3. Discriminator
+
 판별자는 입력된 시퀀스가 실제 데이터 $S_i$인지, 생성자가 정제한 시퀀스 $S^g_j$인지를 구분하는 이진 분류기이다.
+
 - **구조:** Generator의 Encoder와 유사하게 cLSTM을 사용하지만, Self-attention과 Layer Normalization은 제외된 단순한 구조이며, 각 층에 Spectral Normalization을 적용하여 학습의 안정성을 높였다.
 - **목표:** 실제 시퀀스에는 1, 생성된 시퀀스에는 0의 레이블을 부여하여 Cross Entropy Loss를 통해 학습한다.
 
 ### 훈련 절차 및 손실 함수
+
 학습은 Generator와 Discriminator가 번갈아 업데이트되는 반복적 훈련 체계(iterative training regime)를 따른다.
+
 - **Discriminator 업데이트:** 다음과 같은 표준적인 분류 손실 함수를 최소화한다.
 $$ \mathcal{L}_{disc} = -\mathbb{E}_{S_i \sim D} [\log p_{\theta_d}(S_i)] - \mathbb{E}_{S^g_j} [\log(1 - p_{\theta_d}(S^g_j))] $$
 - **Generator 업데이트:** 판별자가 생성된 시퀀스 $S^g_j$를 실제 시퀀스로 판단할 확률 $p_{\theta_d}(S^g_j)$를 보상(Reward)으로 사용하여 RL Loss를 통해 정책을 업데이트한다. 즉, 판별자를 속여 실제 데이터처럼 보이게 만드는 방향으로 학습하며, 이는 곧 이상치를 정확히 제거하는 방향과 일치한다.
@@ -51,12 +59,14 @@ $$ \mathcal{L}_{disc} = -\mathbb{E}_{S_i \sim D} [\log p_{\theta_d}(S_i)] - \mat
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** 합성 데이터(Poisson process, Hawkes process) 2종과 실제 데이터(MIMIC-III 환자 입원 기록, NYC Taxi 픽업/드롭오프 기록) 2종을 사용하였다.
 - **이상치 생성:** 깨끗한 시퀀스에 일정한 강도(intensity)를 가진 Poisson process를 통해 생성된 가짜 이벤트를 추가하여 오염된 데이터를 구축하였다.
 - **비교 대상:** 준지도 학습 기반의 최신 기법인 PPOD, 그리고 무작위 점수를 부여하는 RND, 이벤트 간 간격 길이를 사용하는 LEN을 baseline으로 설정하였다.
 - **평가 지표:** AUROC (Area Under the Receiver Operating Characteristic Curve)를 사용하여 이상치 탐지 성능을 측정하였다.
 
 ### 주요 결과
+
 실험 결과, 제안된 GAN-RL 방법론이 모든 데이터셋에서 baseline보다 우수한 성능을 보였다. 특히 테스트 데이터셋에 대한 AUROC 결과는 다음과 같다.
 
 | Dataset | RND | LEN | PPOD | GAN-RL |
@@ -71,11 +81,13 @@ $$ \mathcal{L}_{disc} = -\mathbb{E}_{S_i \sim D} [\log p_{\theta_d}(S_i)] - \mat
 ## 🧠 Insights & Discussion
 
 ### 강점 및 분석
+
 1. **Attention의 중요성:** Ablation study를 통해 Attention 레이어가 제거되었을 때 성능이 크게 하락함을 확인하였다. 이는 생성자가 이상치 여부를 결정하기 위해 과거의 특정 시점에 집중하는 능력이 필수적임을 시사한다.
 2. **학습 가능한 판별자의 필요성:** 고정된 거리 함수(Wasserstein Distance)를 보상으로 사용했을 때보다 학습 가능한 판별자를 사용했을 때 성능이 월등히 높았다. 이는 데이터의 복잡한 분포를 적응적으로 학습하는 판별자가 더 정교한 보상 신호를 제공하기 때문이다.
 3. **데이터 오염도에 대한 내성:** 데이터 중 깨끗한 시퀀스의 비율 $\beta$를 조절한 실험에서, $\beta$가 0.6(즉, 40%가 오염됨)까지 낮아져도 준수한 성능을 유지함을 확인하였다. 다만, 모든 데이터가 오염된 $\beta=0$인 경우에는 무작위 수준(AUROC $\approx 0.5$)으로 성능이 떨어진다. 이는 판별자가 '정상'의 기준을 잡기 위해 최소한의 정상 데이터 샘플이 필요함을 의미한다.
 
 ### 한계 및 비판적 해석
+
 본 논문은 비지도 학습의 가능성을 보여주었으나, 몇 가지 한계점이 존재한다. 첫째, 이상치의 정의를 단순한 Poisson process 기반의 추가 포인트로 설정하였다는 점이다. 실제 세계의 이상치는 훨씬 더 복잡한 패턴을 가질 수 있다. 둘째, RL 기반의 학습 특성상 하이퍼파라미터(학습률, 업데이트 빈도 등)에 민감하게 반응하며, 수렴 속도가 느릴 수 있다. 셋째, $\beta=0$인 상황에서의 무력함은 완전한 비지도 학습이라기보다 '대부분의 데이터가 정상'이라는 통계적 가정에 의존하고 있음을 보여준다.
 
 ## 📌 TL;DR

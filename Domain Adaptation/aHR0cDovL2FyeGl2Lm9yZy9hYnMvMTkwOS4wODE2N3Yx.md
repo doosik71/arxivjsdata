@@ -4,7 +4,7 @@ Minlong Peng, Qi Zhang, Xuanjing Huang (2019)
 
 ## 🧩 Problem to Solve
 
-본 논문은 교차 도메인 감성 분석(Cross-domain Sentiment Analysis)에서 널리 사용되는 Domain-Invariant Representation Learning (DIRL) 프레임워크가 가진 근본적인 한계를 해결하고자 한다. 
+본 논문은 교차 도메인 감성 분석(Cross-domain Sentiment Analysis)에서 널리 사용되는 Domain-Invariant Representation Learning (DIRL) 프레임워크가 가진 근본적인 한계를 해결하고자 한다.
 
 DIRL의 핵심 목표는 소스 도메인($S$)과 타겟 도메인($T$) 사이에서 분포 불변한 특징 표현(distribution-invariant feature representation)을 학습하여 도메인 간의 차이를 줄이는 것이다. 하지만 저자들은 두 도메인 간의 레이블 분포 $P(Y)$가 서로 다를 때, 즉 Label Shift가 발생할 때 DIRL을 그대로 적용하면 오히려 도메인 적응(Domain Adaptation) 성능이 저하된다는 점을 발견하였다.
 
@@ -20,8 +20,8 @@ WDIRL은 단순한 특징 정렬을 넘어, 소스 도메인의 각 클래스에
 
 본 논문은 Ben-David 등이 제시한 도메인 적응 이론을 기반으로 한다. 기존의 DIRL 방법론들은 특징 맵 $G$를 통해 소스 도메인 $P_S(G(X))$와 타겟 도메인 $P_T(G(X))$ 사이의 거리(divergence)를 최소화함으로써 타겟 도메인의 오차 상한선을 낮추려 한다. 기존 연구는 크게 두 가지 방향으로 나뉜다.
 
-1.  **Metric-based DIRL**: 두 분포 사이의 차이를 명시적으로 계산하는 미분 가능한 지표를 설계한다. 대표적으로 Central Moment Discrepancy (CMD) 모델이 있으며, 이는 두 분포의 평균과 고차 모멘트(moment)의 차이를 측정하여 정렬한다.
-2.  **Adversarial-learning-based DIRL**: 특징 생성기 $G$와 도메인 판별기 $D$ 사이의 적대적 학습을 통해 $D$가 도메인을 구분하지 못하도록 만든다. 대표적으로 Domain-Adversarial Neural Networks (DANN)가 있으며, 이는 Jensen-Shannon Divergence (JSD)를 최소화하는 것과 수학적으로 동일하다.
+1. **Metric-based DIRL**: 두 분포 사이의 차이를 명시적으로 계산하는 미분 가능한 지표를 설계한다. 대표적으로 Central Moment Discrepancy (CMD) 모델이 있으며, 이는 두 분포의 평균과 고차 모멘트(moment)의 차이를 측정하여 정렬한다.
+2. **Adversarial-learning-based DIRL**: 특징 생성기 $G$와 도메인 판별기 $D$ 사이의 적대적 학습을 통해 $D$가 도메인을 구분하지 못하도록 만든다. 대표적으로 Domain-Adversarial Neural Networks (DANN)가 있으며, 이는 Jensen-Shannon Divergence (JSD)를 최소화하는 것과 수학적으로 동일하다.
 
 기존 방법론들의 한계는 이러한 정렬 과정이 $P(Y)$의 변화를 고려하지 않고 오직 전체 특징 분포 $P(X)$의 정렬에만 집중한다는 점이다.
 
@@ -30,6 +30,7 @@ WDIRL은 단순한 특징 정렬을 넘어, 소스 도메인의 각 클래스에
 WDIRL은 도메인 시프트를 해결하기 위해 다음의 두 단계 절차를 거친다.
 
 ### 1단계: 클래스 가중치를 이용한 $P(X|Y)$ 정렬
+
 소스 도메인의 데이터 분포를 조정하여 $P(Y)$의 시프트를 완화하는 단계이다. 학습 가능한 클래스 가중치 $w_i$를 도입하여, 가중치가 적용된 소스 도메인의 레이블 분포가 타겟 도메인의 분포와 일치하도록 설계한다.
 
 $$w_i P_S(Y=i) = P_T(Y=i)$$
@@ -40,6 +41,7 @@ $$\hat{P}_S(X) = \sum_{i=1}^{L} w_i P_S(Y=i) S(P_S(X|Y=i))$$
 (단, $w_i > 0$ 이며 $\sum_{i=1}^{L} w_i P_S(Y=i) = 1$ 을 만족해야 한다.)
 
 **구체적인 적용 사례:**
+
 - **WCMD**: CMD 손실 함수 내의 기대값 $E(X_S)$와 $k$차 모멘트 $C_k(X_S)$를 각 클래스별 통계량의 가중 합으로 대체하여 계산한다.
 - **WDANN**: 판별기 $D$의 손실 함수 $\hat{L}_d$에서 소스 도메인 데이터에 대한 기대값을 계산할 때, 클래스별 가중치 $w_i$를 적용하여 가중 평균을 구한다.
 
@@ -47,6 +49,7 @@ $$\hat{P}_S(X) = \sum_{i=1}^{L} w_i P_S(Y=i) S(P_S(X|Y=i))$$
 $$\hat{L} = L_{sup}(D_S) + \alpha \hat{L}_{inv}(D_S, D_T)$$
 
 ### 2단계: 클래스 가중치를 이용한 $P(Y|X)$ 정렬
+
 특징 공간에서 $P(X|Y)$가 정렬되었다 하더라도, 실제 타겟 도메인의 레이블 예측 시에는 여전히 $P(Y)$의 시프트가 존재한다. 이를 해결하기 위해 1단계에서 학습된 가중치 $w$를 사용하여 소스 도메인에서 학습된 분류기 $P_S(Y|X)$를 다음과 같이 조정하여 타겟 도메인의 예측값 $P_T(Y|X)$를 도출한다.
 
 $$P_T(Y = i|G(X)) \leftarrow \frac{w_i P_S(Y=i|G(X))}{\sum_{j=1}^{L} w_j P_S(Y=j|G(X))}$$
@@ -56,20 +59,22 @@ $$P_T(Y = i|G(X)) \leftarrow \frac{w_i P_S(Y=i|G(X))}{\sum_{j=1}^{L} w_j P_S(Y=j
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Amazon Reviews 데이터셋 (Books, DVD, Electronics, Kitchen).
 - **작업**: 12개의 이진 분류(Binary-class) 및 다중 분류(Multi-class) 교차 도메인 작업.
 - **지표**: 정확도(Accuracy).
 - **비교 대상**: Source-Only(SO), CMD, DANN, 그리고 제안 방법의 변형 모델들($\dagger$: 1단계만 적용, $\dagger\dagger$: 1, 2단계 모두 적용, $*$: 타겟 레이블로 $w$를 고정한 상한선 모델).
 
 ### 주요 결과
-1.  **DIRL의 성능 저하 확인**: 이진 분류 실험 결과, 기존의 CMD와 DANN 모델이 오히려 Source-Only(SO) 모델보다 낮은 성능을 보이는 경우가 많았다. 이는 레이블 분포 시프트가 존재할 때 단순한 DIRL이 성능을 저하시킨다는 저자들의 이론적 분석을 실증적으로 뒷받침한다.
-2.  **WDIRL의 효과**: 제안된 $CMD^{\dagger\dagger}$와 $DANN^{\dagger\dagger}$ 모델은 SO 및 기존 DIRL 모델보다 일관되게 높은 성능을 기록하였다.
-3.  **단계별 기여도**: 1단계(가중치 기반 특징 정렬)만 적용한 모델($\dagger$)도 기존 DIRL보다는 우수했으나, 2단계(예측 시 가중치 조정)까지 적용한 모델($\dagger\dagger$)이 가장 좋은 성능을 보였다.
-4.  **Label Shift에 대한 강건성**: $P(Y)$의 시프트 정도($\max P_S(Y=i)/P_T(Y=i)$)가 커질수록 기존 CMD의 성능은 급격히 하락하는 반면, $CMD^{\dagger\dagger}$는 매우 강건하게 성능을 유지하며 상한선 모델인 $CMD^*$에 근접하는 결과를 보였다.
+
+1. **DIRL의 성능 저하 확인**: 이진 분류 실험 결과, 기존의 CMD와 DANN 모델이 오히려 Source-Only(SO) 모델보다 낮은 성능을 보이는 경우가 많았다. 이는 레이블 분포 시프트가 존재할 때 단순한 DIRL이 성능을 저하시킨다는 저자들의 이론적 분석을 실증적으로 뒷받침한다.
+2. **WDIRL의 효과**: 제안된 $CMD^{\dagger\dagger}$와 $DANN^{\dagger\dagger}$ 모델은 SO 및 기존 DIRL 모델보다 일관되게 높은 성능을 기록하였다.
+3. **단계별 기여도**: 1단계(가중치 기반 특징 정렬)만 적용한 모델($\dagger$)도 기존 DIRL보다는 우수했으나, 2단계(예측 시 가중치 조정)까지 적용한 모델($\dagger\dagger$)이 가장 좋은 성능을 보였다.
+4. **Label Shift에 대한 강건성**: $P(Y)$의 시프트 정도($\max P_S(Y=i)/P_T(Y=i)$)가 커질수록 기존 CMD의 성능은 급격히 하락하는 반면, $CMD^{\dagger\dagger}$는 매우 강건하게 성능을 유지하며 상한선 모델인 $CMD^*$에 근접하는 결과를 보였다.
 
 ## 🧠 Insights & Discussion
 
-본 논문은 도메인 적응 연구에서 간과되기 쉬운 '레이블 분포의 불일치' 문제를 이론적으로 분석하고 실용적인 해결책을 제시하였다. 
+본 논문은 도메인 적응 연구에서 간과되기 쉬운 '레이블 분포의 불일치' 문제를 이론적으로 분석하고 실용적인 해결책을 제시하였다.
 
 가장 중요한 통찰은 **"특징의 도메인 불변성(Domain-Invariance)과 클래스 분별성(Class-Separability) 사이의 충돌"**이다. 레이블 분포가 다를 때 강제로 특징 분포를 맞추려 하면, 서로 다른 클래스의 데이터들이 특징 공간에서 겹치게 되어 분류기가 클래스를 구분할 수 없게 된다. WDIRL은 가중치를 통해 이 충돌을 완화함으로써, 도메인 불변성을 유지하면서도 클래스 간의 분별력을 보존할 수 있음을 보여주었다.
 

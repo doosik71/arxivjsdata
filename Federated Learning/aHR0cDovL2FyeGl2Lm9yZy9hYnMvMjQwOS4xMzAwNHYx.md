@@ -14,40 +14,44 @@ Wenqi Wei, Tiansheng Huang, Zachary Yahn, Anoop Singhal, Margaret Loper, and Lin
 
 본 논문의 핵심적인 기여는 연합 학습의 보안 및 프라이버시 위협에 대한 심층적인 분석과 이를 해결하기 위한 **동적 모델 섭동(Dynamic Model Perturbation)** 아이디어를 제시한 점이다.
 
-1.  **데이터 유출 및 오염 메커니즘의 정식화**: 학습 예제와 그래디언트 사이의 내재적 관계를 분석하여 데이터 재구성 공격과 데이터 오염 공격의 수식적 모델을 정의하였다.
-2.  **공격 타이밍 및 조건에 대한 통찰 제시**: 학습 초기 단계의 그래디언트가 더 많은 정보를 담고 있어 유출에 취약하며, 반대로 오염 공격은 딥러닝의 **치명적 망각(Catastrophic Forgetting)** 특성으로 인해 학습 후반부에 수행될 때 더 효과적이라는 사실을 실험적으로 입증하였다.
-3.  **동적 차분 프라이버시(Dynamic Differential Privacy) 제안**: 기존의 고정된 노이즈 추가 방식이 모델 성능을 저하시키거나 방어력이 부족하다는 점을 지적하고, 그래디언트의 노름(norm) 변화에 따라 섭동 양을 조절하는 동적 민감도(Dynamic Sensitivity) 및 감쇠하는 노이즈 스케일(Decaying Noise Scale) 전략을 제시하였다.
+1. **데이터 유출 및 오염 메커니즘의 정식화**: 학습 예제와 그래디언트 사이의 내재적 관계를 분석하여 데이터 재구성 공격과 데이터 오염 공격의 수식적 모델을 정의하였다.
+2. **공격 타이밍 및 조건에 대한 통찰 제시**: 학습 초기 단계의 그래디언트가 더 많은 정보를 담고 있어 유출에 취약하며, 반대로 오염 공격은 딥러닝의 **치명적 망각(Catastrophic Forgetting)** 특성으로 인해 학습 후반부에 수행될 때 더 효과적이라는 사실을 실험적으로 입증하였다.
+3. **동적 차분 프라이버시(Dynamic Differential Privacy) 제안**: 기존의 고정된 노이즈 추가 방식이 모델 성능을 저하시키거나 방어력이 부족하다는 점을 지적하고, 그래디언트의 노름(norm) 변화에 따라 섭동 양을 조절하는 동적 민감도(Dynamic Sensitivity) 및 감쇠하는 노이즈 스케일(Decaying Noise Scale) 전략을 제시하였다.
 
 ## 📎 Related Works
 
 논문에서는 다음과 같은 관련 연구들과 그 한계를 언급한다.
 
--   **프라이버시 보호 기술**: Gradient Compression, Gaussian Noise Injection, Differential Privacy(DP) 등이 사용된다. 하지만 고정된 임계값이나 노이즈 양을 사용하는 방식은 유출 방지와 모델 정확도 유지라는 상충하는 목표를 동시에 달성하기 어렵다.
--   **데이터 오염 공격**: Clean-label, Dirty-label, Backdoor 공격 등이 연구되었다. 특히 백도어 공격은 트리거(Trigger)를 삽입하여 특정 조건에서만 오작동하게 만든다.
--   **기존 방어 기법**: 
-    -   **서버 측 방어**: PCA 기반의 공간적 시그니처 분석, STDLens와 같은 시공간적 시그니처 분석, 메타 학습 기반 탐지 등이 있다.
-    -   **신뢰 실행 환경**: SMPC(Secure Multi-Party Computation), HE(Homomorphic Encryption), TEE(Trusted Execution Environment) 등이 제안되었으나, 높은 통신 비용과 하드웨어 제약으로 인해 엣지 클라이언트 적용에 한계가 있다.
-    -   **모델 정화**: 뉴런 가지치기(Pruning) 등의 기법이 있으나, 연합 학습 환경에서는 중앙 집중식 학습보다 오염된 파라미터를 식별하기 더 어렵다는 특성이 있다.
+- **프라이버시 보호 기술**: Gradient Compression, Gaussian Noise Injection, Differential Privacy(DP) 등이 사용된다. 하지만 고정된 임계값이나 노이즈 양을 사용하는 방식은 유출 방지와 모델 정확도 유지라는 상충하는 목표를 동시에 달성하기 어렵다.
+- **데이터 오염 공격**: Clean-label, Dirty-label, Backdoor 공격 등이 연구되었다. 특히 백도어 공격은 트리거(Trigger)를 삽입하여 특정 조건에서만 오작동하게 만든다.
+- **기존 방어 기법**:
+  - **서버 측 방어**: PCA 기반의 공간적 시그니처 분석, STDLens와 같은 시공간적 시그니처 분석, 메타 학습 기반 탐지 등이 있다.
+  - **신뢰 실행 환경**: SMPC(Secure Multi-Party Computation), HE(Homomorphic Encryption), TEE(Trusted Execution Environment) 등이 제안되었으나, 높은 통신 비용과 하드웨어 제약으로 인해 엣지 클라이언트 적용에 한계가 있다.
+  - **모델 정화**: 뉴런 가지치기(Pruning) 등의 기법이 있으나, 연합 학습 환경에서는 중앙 집중식 학습보다 오염된 파라미터를 식별하기 더 어렵다는 특성이 있다.
 
 ## 🛠️ Methodology
 
 ### 1. 학습 데이터 유출 공격 (Training Data Leakage)
+
 공격자는 훔친 그래디언트 $\nabla f$와 더미 데이터 $\text{x}_{rec}$로부터 계산된 그래디언트 $\nabla f_{rec}$ 사이의 거리(Distance)를 최소화함으로써 원본 데이터를 재구성한다.
 
 **공격 목표 함수:**
 $$\arg \min_{x_{rec}} ||\nabla_{x_{rec}} f - Z_x||^2$$
 여기서 $Z_x$는 유출된 그래디언트 값이다. 공격 과정은 다음과 같다.
-1.  더미 시드 $x^0_{rec}$를 설정한다.
-2.  더미 데이터의 그래디언트 $\nabla_{x_{rec}} f$를 계산한다.
-3.  실제 그래디언트 $Z_x$와의 $L_2$ 거리 손실 함수 $D_{\tau} = ||\nabla_{x_{\tau}_{rec}} f - \nabla_{x} f||^2$를 정의한다.
-4.  최적화 알고리즘을 통해 $D_{\tau}$가 최소화될 때까지 $x_{rec}$를 반복적으로 업데이트한다.
+
+1. 더미 시드 $x^0_{rec}$를 설정한다.
+2. 더미 데이터의 그래디언트 $\nabla_{x_{rec}} f$를 계산한다.
+3. 실제 그래디언트 $Z_x$와의 $L_2$ 거리 손실 함수 $D_{\tau} = ||\nabla_{x_{\tau}_{rec}} f - \nabla_{x} f||^2$를 정의한다.
+4. 최적화 알고리즘을 통해 $D_{\tau}$가 최소화될 때까지 $x_{rec}$를 반복적으로 업데이트한다.
 
 ### 2. 데이터 오염 공격 (Data Poisoning)
--   **Targeted Dirty-Label Poisoning**: 타겟 클래스 $y'$로 라벨을 변경하여 $\rho(x, y) = (x, y')$가 되도록 조작한다.
--   **Backdoor Poisoning**: 입력에 트리거 $\delta x$를 추가하여 $x' = x + \delta x$일 때 모델이 $y'$로 예측하도록 유도한다.
--   **Clean-Label Poisoning**: 타겟 클래스의 특징을 미세하게 섞어 겉으로는 정상 라벨 $y$처럼 보이지만 모델이 $y'$로 판단하게 만든다.
+
+- **Targeted Dirty-Label Poisoning**: 타겟 클래스 $y'$로 라벨을 변경하여 $\rho(x, y) = (x, y')$가 되도록 조작한다.
+- **Backdoor Poisoning**: 입력에 트리거 $\delta x$를 추가하여 $x' = x + \delta x$일 때 모델이 $y'$로 예측하도록 유도한다.
+- **Clean-Label Poisoning**: 타겟 클래스의 특징을 미세하게 섞어 겉으로는 정상 라벨 $y$처럼 보이지만 모델이 $y'$로 판단하게 만든다.
 
 ### 3. 동적 차분 프라이버시(Dynamic DP) 방어
+
 기존의 고정된 Clipping bound $C$ 대신, 매 라운드 그래디언트의 실제 분포를 반영하는 **동적 민감도(Dynamic Sensitivity)**를 도입한다.
 
 **동적 민감도 $S$ 정의:**
@@ -61,15 +65,18 @@ $$\mathcal{N}(0, \sigma^2 S^2 I)$$
 ## 📊 Results
 
 ### 1. 실험 설정
--   **데이터셋**: MNIST, Fashion-MNIST, CIFAR10, LFW.
--   **측정 지표**: 모델 정확도(Accuracy), 재구성 이미지와 원본 이미지 간의 평균 제곱 오차(MSE). MSE가 클수록 재구성이 어려워 방어 성능이 높음을 의미한다 (임계값 0.4).
+
+- **데이터셋**: MNIST, Fashion-MNIST, CIFAR10, LFW.
+- **측정 지표**: 모델 정확도(Accuracy), 재구성 이미지와 원본 이미지 간의 평균 제곱 오차(MSE). MSE가 클수록 재구성이 어려워 방어 성능이 높음을 의미한다 (임계값 0.4).
 
 ### 2. 정량적 결과 (Table 1 기준)
--   **No Perturbation**: 정확도는 가장 높으나 MSE가 매우 낮아(0.014~0.174) 프라이버시 유출에 매우 취약하다.
--   **Fixed Perturbation**: MSE를 높여 유출을 막을 수 있으나, 정확도가 상당히 하락한다 (예: CIFAR10 0.674 $\rightarrow$ 0.633).
--   **Dynamic Perturbation**: 고정 섭동보다 높은 정확도를 유지하면서도, MSE를 높게 유지하여(CIFAR10 2.89) 유출 방지 성능을 확보하였다.
+
+- **No Perturbation**: 정확도는 가장 높으나 MSE가 매우 낮아(0.014~0.174) 프라이버시 유출에 매우 취약하다.
+- **Fixed Perturbation**: MSE를 높여 유출을 막을 수 있으나, 정확도가 상당히 하락한다 (예: CIFAR10 0.674 $\rightarrow$ 0.633).
+- **Dynamic Perturbation**: 고정 섭동보다 높은 정확도를 유지하면서도, MSE를 높게 유지하여(CIFAR10 2.89) 유출 방지 성능을 확보하였다.
 
 ### 3. 데이터 오염 복원력
+
 동적 DP 노이즈는 적절한 초기 분산을 가졌을 때 오염된 그래디언트의 영향을 일부 상쇄하는 효과를 보였다. 특히 PCA 기반의 이상치 제거(Outlier Removal) 기법과 결합했을 때, 모든 데이터셋에서 오염 복원력이 5~10% 추가 향상됨을 확인하였다.
 
 ## 🧠 Insights & Discussion

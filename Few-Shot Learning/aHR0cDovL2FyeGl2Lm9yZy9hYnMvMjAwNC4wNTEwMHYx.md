@@ -4,13 +4,13 @@ Rohit Jena, Shirsendu Sukanta Halder, Katia Sycara (2020)
 
 ## 🧩 Problem to Solve
 
-본 논문은 딥러닝 모델이 학습 데이터에 없는 새로운 예시(unseen examples)에 대해 일반화 성능을 높이는 문제, 특히 데이터가 극소수인 Few-Shot Learning (FSL) 환경에서의 일반화 성능 향상을 해결하고자 한다. 
+본 논문은 딥러닝 모델이 학습 데이터에 없는 새로운 예시(unseen examples)에 대해 일반화 성능을 높이는 문제, 특히 데이터가 극소수인 Few-Shot Learning (FSL) 환경에서의 일반화 성능 향상을 해결하고자 한다.
 
 일반적인 지도 학습과 달리 FSL은 매우 적은 수의 레이블된 데이터만으로 새로운 클래스를 인식해야 하므로, 모델이 주어진 소수의 데이터에 과적합(overfitting)되기 쉽다는 치명적인 문제가 있다. 기존의 데이터 증강(Data Augmentation) 방식이나 생성적 적대 신경망(GAN) 기반의 증강 기법들은 이미지 자체의 분포를 학습해야 하므로 학습 속도가 느리고 복잡하며, 때로는 불안정한 결과를 초래한다. 따라서 본 연구의 목표는 네트워크 구조의 변경 없이도 적용 가능하며, 학습이 빠르고 효율적인 새로운 적대적 데이터 증강 기법을 제안하여 FSL의 일반화 성능을 높이는 것이다.
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 이미지 전체의 픽셀 분포를 생성하는 대신, 이미지를 변형시키는 **변환 파라미터(transformation parameters)의 확률 분포를 학습**하는 것이다. 
+본 논문의 핵심 아이디어는 이미지 전체의 픽셀 분포를 생성하는 대신, 이미지를 변형시키는 **변환 파라미터(transformation parameters)의 확률 분포를 학습**하는 것이다.
 
 연구진은 인간이 새로운 물체를 인식할 때 단일한 스냅샷이 아니라 다양한 관점에서 관찰하며 일반화하는 방식에서 영감을 얻었다. 이를 구현하기 위해 3D 카메라 핀홀 모델의 투영 변환(projective transformation) 이론을 바탕으로, 원거리 물체의 관점 변화를 2D Affine Transform으로 근사화하였다. 이렇게 도출된 변환 파라미터를 Spatial Transformer Networks (STN)를 통해 예측하고, 이를 적대적(adversarial) 방식으로 학습시켜 분류기가 가장 취약한 변형 예시를 생성하게 함으로써 모델의 강건성을 강제로 높이는 전략을 취한다.
 
@@ -23,9 +23,11 @@ Rohit Jena, Shirsendu Sukanta Halder, Katia Sycara (2020)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 작동 원리
+
 본 모델은 적대적 관계에 있는 두 네트워크, 즉 Few-Shot Learner ($g_\theta$)와 Adversarial Transformer ($f_\phi$)로 구성된다. Transformer는 입력 이미지에 적용할 Affine 변환 파라미터를 생성하여 이미지를 변형시키고, Learner는 변형된 이미지를 통해 분류를 수행한다.
 
 ### 수학적 근거 및 Affine Transform 근사
+
 연구진은 3D 공간의 점 $(x, y, z, 1)^T$가 이미지 평면 $(u, v, 1)^T$로 투영될 때, 약간의 회전(roll, yaw, pitch)과 이동(translation)이 발생한다고 가정한다. 물체가 카메라에서 충분히 멀리 떨어져 있다는 가정($z \approx z_0 \gg 1$) 하에 테일러 전개(Taylor expansion)와 이항 전개(binomial expansion)를 적용하면, 투영 변환은 다음과 같은 Affine 변환 형태로 근사될 수 있다.
 
 $$
@@ -35,6 +37,7 @@ $$
 여기서 $\delta_i$는 작은 변위 값들을 의미하며, 이는 이미지가 정체성 변환(identity transform)에서 크게 벗어나지 않도록 유도한다.
 
 ### 학습 목표 및 손실 함수
+
 본 모델은 Min-Max 게임 형태의 최적화 문제를 해결한다. Transformer는 분류기의 손실을 최대화하는 방향으로 파라미터를 학습하고, 분류기는 이를 최소화하는 방향으로 학습한다.
 
 $$
@@ -58,11 +61,13 @@ $$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Omniglot, miniImageNet
 - **베이스 모델**: Prototypical Networks, Matching Networks, MAML (Model-Agnostic 특성 검증)
 - **평가 방법**: 학습 시에는 support set에만 증강을 적용하고 query set은 그대로 유지하며, 테스트 시에는 STN을 비활성화한다.
 
 ### 주요 결과
+
 1. **Omniglot**: 데이터셋 자체가 비교적 단순하여 베이스라인의 정확도가 이미 매우 높았기에, $MA^3$ 적용 시 성능 향상은 미미한 수준이었다.
 2. **miniImageNet**: 데이터의 변동성이 커서 효과가 뚜렷하게 나타났다. 베이스 모델의 구조 변경 없이 증강 모듈만 추가했을 때, 최대 **3.8%의 성능 향상**을 보였다.
 3. **정규화의 중요성**: 정규화 계수 $\lambda=0$일 때 성능이 급격히 하락하는 것이 관찰되었다. 이는 STN이 분류기를 방해하기 위해 이미지를 알아볼 수 없게 변형시키는 '취약점 공격'에 치중하게 되어, 결과적으로 분류기가 유용한 특징을 학습하지 못하게 만들기 때문이다.

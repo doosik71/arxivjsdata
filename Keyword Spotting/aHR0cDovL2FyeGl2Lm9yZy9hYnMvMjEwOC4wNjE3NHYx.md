@@ -15,6 +15,7 @@ Ewald van der Westhuizen, Herman Kamper, Raghav Menon, John Quinn, Thomas Niesle
 구체적으로는, 소량의 키워드 템플릿을 사용하여 대규모의 전사되지 않은 데이터에 대해 DTW 정렬 점수를 계산하고, 이 점수를 소프트 라벨(soft label)로 활용하여 CNN을 학습시킨다. 이를 통해 CNN이 DTW의 스코어링 동작을 모사하도록 하여, 실제 적용 단계에서는 무거운 DTW 정렬 과정 없이 CNN만으로 빠르게 키워드를 탐지할 수 있게 한다.
 
 또한, 성능 극대화를 위해 다음과 같은 계층적 특징 학습 파이프라인을 제안한다:
+
 1. **Multilingual Bottleneck Features (BNF)**: 자원이 풍부한 타 언어들로부터 일반적인 음성 특징을 추출한다.
 2. **Autoencoder (AE)**: 도메인 내 전사되지 않은 데이터를 통해 비지도 학습 방식으로 특징을 정제한다.
 3. **Correspondence Autoencoder (CAE)**: 소량의 레이블된 키워드 데이터를 활용하여, 동일 키워드의 서로 다른 발화 간의 공통점을 학습함으로써 화자나 채널의 영향을 제거하고 단어의 정체성(identity)을 강화한다.
@@ -46,6 +47,7 @@ $$\ell = -\sum_{k=1}^{K} \{ \hat{J}_k \log g_k(Y) + (1 - \hat{J}_k) \log(1 - g_k
 ### 2. Feature Extractors
 
 **A. MFCC & BNF**
+
 - **MFCC**: 13차원 MFCC에 $\Delta, \Delta\Delta$를 추가한 39차원 특징을 기본선으로 사용한다.
 - **BNF**: 10개의 풍부한 언어 데이터로 학습된 TDNN(Time-Delay Neural Network)의 bottleneck layer에서 추출한 특징이다.
 
@@ -57,16 +59,19 @@ AE를 사전 학습한 후, 동일한 키워드의 서로 다른 두 발화 $x^{
 $$\text{loss} = \|\hat{x} - x^{(b)}\|^2$$
 
 ### 3. Overall Pipeline
+
 최종적으로 $\text{BNF} \rightarrow \text{AE} \rightarrow \text{CAE}$ 순으로 특징을 정제하여 $\text{CAE}_{\text{BNF}}$ 특징을 생성하고, 이를 CNN-DTW 모델의 입력으로 사용하여 학습 및 추론을 수행한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: South African English (SABN) 및 Luganda (우간다 언어).
 - **지표**: AUC (Area Under the ROC Curve), EER (Equal Error Rate), P@10, P@N.
 - **비교 대상**: MFCC, BNF, $\text{CAE}_{\text{MFCC}}$, $\text{CAE}_{\text{BNF}}$ 특징 조합과 CNN, DTW, CNN-DTW 모델.
 
 ### 주요 결과
+
 1. **특징 학습의 효과**:
    - $\text{CAE}_{\text{BNF}}$ 특징이 모든 모델에서 가장 우수한 성능을 보였다.
    - 영어 개발 세트에서 $\text{CAE}_{\text{BNF}}$는 MFCC 대비 AUC가 약 18.9% 개선되었으며, P@10 및 P@N 지표에서 가장 가까운 경쟁자보다 최소 1.65배 높은 정밀도를 기록했다.

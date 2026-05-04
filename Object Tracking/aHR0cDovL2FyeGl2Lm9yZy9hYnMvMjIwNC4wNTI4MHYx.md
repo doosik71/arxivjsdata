@@ -10,7 +10,7 @@ Kenneth Rapko, Wanlin Xie, and Andrew Walsh (2022)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 기여는 추적 성능 평가를 세 가지 계층(Top, Mid, Low level)으로 구조화하여, 단순한 성능 수치 제시를 넘어 모델의 내부 동작을 분석할 수 있는 진단 프레임워크를 설계했다는 점이다. 
+본 논문의 핵심 기여는 추적 성능 평가를 세 가지 계층(Top, Mid, Low level)으로 구조화하여, 단순한 성능 수치 제시를 넘어 모델의 내부 동작을 분석할 수 있는 진단 프레임워크를 설계했다는 점이다.
 
 단일 수치로 표현되는 요약 지표(Top-level)부터 시퀀스 길이에 따른 성능 변화를 보여주는 그래프(Mid-level), 그리고 구체적인 실패 모드를 격리하여 분석하는 세부 지표(Low-level)까지 단계적으로 구성함으로써, 사용자는 "모델이 얼마나 잘 작동하는가"뿐만 아니라 "어느 지점에서, 왜 실패하는가"를 정밀하게 파악할 수 있다. 특히 Re-Identification(REID) 능력과 Absence Prediction(부재 예측) 능력을 분리하여 측정함으로써 장기 추적 모델의 핵심 성능 요소를 정량화하였다.
 
@@ -25,19 +25,25 @@ Kenneth Rapko, Wanlin Xie, and Andrew Walsh (2022)
 MONCE 메트릭 세트는 분석의 정밀도에 따라 세 가지 레벨로 구성된다. 분석에 앞서 $\text{entity-frame}$은 단일 프레임 내 객체의 인스턴스를, $\text{UID}$는 객체 고유 식별자를, $\text{sequence}$는 객체의 첫 등장부터 비디오 종료 시점까지의 모든 프레임을 의미한다.
 
 ### 1. Top-Level Metrics (요약 지표)
+
 모델의 전반적인 성능을 단일 수치로 평가하며, 모델 간 비교 및 학습 추세 확인에 사용된다.
+
 - **EAO (Expected Average Overlap):** VOT 챌린지에서 채택된 지표로, Ground Truth(GT) 엔티티 프레임에 대한 예상 중첩도를 측정한다.
 - **$\text{EAO}_P$ (Expected Average Overlap Precision):** 저자들이 확장 제안한 지표로, Tracking Precision의 평균을 계산하여 False Positive(FP) 관점의 localization 성능을 분석한다.
 - **Longevity Statistics:** 특정 비율의 유니크 엔티티가 성공적으로(FP/FN 없이) 추적된 시퀀스 길이를 측정한다.
 - **Short/Long Term REID:** 객체가 프레임을 벗어났다가 재진입했을 때, 원래의 UID를 얼마나 정확하게 다시 할당하는지를 측정한다. 부재 기간을 사용자 정의 임계값으로 단기/장기로 나누어 각각의 성공률을 계산한다.
 
 ### 2. Mid-Level Metrics (경향성 분석)
+
 시퀀스 길이에 따른 성능 변화를 플롯으로 나타내어 데이터셋 의존성을 줄이고 데이터 품질(밝기, 해상도 등)의 영향을 분석한다.
+
 - **Tracking Recall Plot:** 시퀀스 길이에 따른 GT 엔티티 프레임의 평균 중첩도를 측정하며, Localization 성능과 False Negative(FN)를 평가한다.
 - **Tracking Precision Plot:** 시퀀스 길이에 따른 예측 엔티티 프레임의 평균 중첩도를 측정하며, Localization 성능과 False Positive(FP)를 평가한다.
 
 ### 3. Low-Level Metrics (정밀 진단 지표)
+
 구체적인 실패 모드를 격리하여 분석한다.
+
 - **Tracking Longevity:** Localization 성능을 배제하고, 오직 TP/TN의 일치 여부만을 평가한다. $\text{IoU} = 0$ 임계값을 사용하여, 주어진 길이 $T$까지 FP나 FN이 전혀 없는 트랙의 비율을 측정한다.
 - **Tracking Localization:** Longevity 분석에서 성공한 트랙들만을 대상으로, 예측 박스가 GT 박스와 얼마나 잘 일치하는지를 $\text{IoU}$ 임계값(0~1)에 따라 측정한다.
 - **Absence Prediction Rate:** 객체가 부재한 상황에서 모델이 정확하게 예측하지 않음(True Negative)을 출력하는 능력을 평가한다. 부재 길이 $T_a$에 대해 모든 부재 프레임에서 예측값이 없는 비율을 계산한다.

@@ -4,9 +4,10 @@ Amaia Salvador, Míriam Bellver, Víctor Campos, Manel Baradad, Ferran Marques, 
 
 ## 🧩 Problem to Solve
 
-본 논문이 해결하고자 하는 문제는 **Semantic Instance Segmentation**이다. 이는 이미지 내의 각 객체에 대해 이진 마스크(Binary Mask)와 범주형 레이블(Categorical Label)을 동시에 할당하는 작업이다. 
+본 논문이 해결하고자 하는 문제는 **Semantic Instance Segmentation**이다. 이는 이미지 내의 각 객체에 대해 이진 마스크(Binary Mask)와 범주형 레이블(Categorical Label)을 동시에 할당하는 작업이다.
 
 기존의 최신 방법론들은 대부분 객체 제안(Object Proposals) 방식의 파이프라인을 확장하여, 제안된 영역에 대해 추가적인 모듈을 통해 마스크를 생성하는 2단계(Two-stage) 절차를 따른다. 이러한 방식은 다음과 같은 문제점을 가진다.
+
 1. **사후 처리의 필요성**: 실제 객체 수보다 훨씬 많은 제안 영역이 생성되므로, 이를 필터링하기 위한 Non-Maximum Suppression(NMS)과 같은 복잡한 사후 처리 단계가 필수적이다.
 2. **간접적인 최적화**: 목적 함수가 최종 목표 작업인 인스턴스 분할을 직접 모델링하는 것이 아니라, 처리하기 쉬운 대리 작업(Surrogate task)을 최적화하는 형태를 띤다.
 
@@ -17,6 +18,7 @@ Amaia Salvador, Míriam Bellver, Víctor Campos, Manel Baradad, Ferran Marques, 
 본 연구의 핵심 아이디어는 인간이 정적인 이미지를 볼 때 객체 간의 관계를 추론하며 순차적으로 탐색하는 행위에서 영감을 얻어, **Semantic Instance Segmentation을 시퀀스 예측 문제로 정의**한 것이다.
 
 주요 기여 사항은 다음과 같다.
+
 - **최초의 엔드투엔드 재귀 모델 제안**: 이미지 픽셀로부터 가변 길이의 객체 시퀀스(마스크 및 레이블)를 직접 생성하는 재귀적 아키텍처를 제시하였다.
 - **사후 처리 제거**: 객체 제안 방식과 달리, 모델이 스스로 정지 조건(Stopping criterion)을 학습하여 예측을 멈추므로 별도의 필터링 단계가 필요 없다.
 - **객체 발견 패턴 분석**: 모델이 이미지를 탐색하는 일관된 패턴(Sorting patterns)을 학습하며, 이것이 인코더의 활성화 상태와 상관관계가 있음을 분석하였다.
@@ -24,8 +26,9 @@ Amaia Salvador, Míriam Bellver, Víctor Campos, Manel Baradad, Ferran Marques, 
 ## 📎 Related Works
 
 기존의 인스턴스 분할 연구는 크게 두 가지 방향으로 나뉜다.
+
 1. **제안 기반 방법론 (Proposal-based methods)**: Faster R-CNN과 같은 객체 검출기를 기반으로 마스크 생성 모듈을 추가한 형태이다. Mask R-CNN 등이 대표적이며 성능은 뛰어나지만, 앞서 언급한 사후 처리 의존성 문제가 있다.
-2. **순차적 방법론 (Sequential methods)**: 객체를 하나씩 순차적으로 예측하는 방식이다. 
+2. **순차적 방법론 (Sequential methods)**: 객체를 하나씩 순차적으로 예측하는 방식이다.
     - Ren & Zemel [17]은 재귀적 어텐션을 사용하여 박스 좌표를 먼저 예측하고 마스크를 생성하지만, 입력으로 전처리된 캔버스를 사용하며 마스크 생성 모듈이 분리되어 있다.
     - Romera-Paredes & Torr [16]는 Convolutional LSTM을 사용하여 객체를 분리하지만, 클래스 구분 능력이 없는 Class-agnostic 방식이며 사전 학습된 세그멘테이션 모델의 특징을 입력으로 사용한다.
 
@@ -34,14 +37,18 @@ Amaia Salvador, Míriam Bellver, Víctor Campos, Manel Baradad, Ferran Marques, 
 ## 🛠️ Methodology
 
 ### 전체 아키텍처
+
 본 모델은 인코더-디코더(Encoder-Decoder) 구조를 가지며, 디코더가 재귀적으로 동작하여 한 번에 하나의 인스턴스를 예측한다.
 
 #### 1. Encoder
+
 - **구조**: ImageNet으로 사전 학습된 **ResNet-101**을 사용한다.
 - **특징**: 마지막 풀링 층과 분류 층을 제거하고, 5개의 합성곱 블록에서 나오는 특징 맵 $F = [f_0, f_1, f_2, f_3, f_4]$를 추출한다. 여기서 $f_0$는 가장 깊은 층의 출력이고, $f_4$는 입력 이미지에 가장 가까운 층의 출력이다.
 
 #### 2. Decoder (Recurrent Decoder)
+
 디코더는 **Convolutional LSTM(ConvLSTM)**을 기본 블록으로 사용하여 공간 정보를 유지하면서 시퀀스를 생성한다.
+
 - **계층적 구조**: 여러 층의 ConvLSTM 레이어가 쌓여 있으며, 각 레이어는 인코더의 출력 $F$와 이전 레이어의 출력을 결합하는 스킵 연결(Skip connection)을 가진다.
 - **수식**: $i$번째 ConvLSTM 레이어의 $t$ 시점 은닉 상태 $h_{i,t}$는 다음과 같이 계산된다.
   $$h_{i,t} = \text{ConvLSTM}_i([B_2(h_{i-1,t}) | S_i], h_{i,t-1})$$
@@ -53,6 +60,7 @@ Amaia Salvador, Míriam Bellver, Víctor Campos, Manel Baradad, Ferran Marques, 
   - $\hat{y}_s$: 객체 존재 여부 점수 (Objectness score, 정지 조건으로 활용)
 
 ### 학습 절차 및 손실 함수
+
 모델은 네 가지 손실 함수의 가중 합 $\mathcal{L} = L_m + \alpha L_b + \lambda L_c + \gamma L_s$를 통해 최적화된다.
 
 1. **Segmentation Loss ($L_m$)**: 예측 마스크와 정답 마스크 사이의 **soft Intersection over Union (sIoU)**를 사용한다.
@@ -67,10 +75,12 @@ Amaia Salvador, Míriam Bellver, Víctor Campos, Manel Baradad, Ferran Marques, 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Pascal VOC 2012 (평균 2.3개 객체), CVPPP Plant Leaf Segmentation (평균 16.2개 객체), Cityscapes (평균 17.5개 객체).
 - **지표**: Average Precision (AP), Symmetric Best Dice (SBD), Difference in Count (DiC).
 
 ### 주요 결과
+
 - **Pascal VOC**: 기존의 재귀 모델 [16]보다 월등히 높은 성능을 보였다 ($\text{AP}_{50}$ 기준 60.7% vs 50.1%). 최신 비순차적 방법론들과 비교했을 때 낮은 IoU 임계값에서는 뒤처지지만, 높은 임계값에서는 경쟁력 있는 성능을 보였다.
 - **CVPPP**: [16]보다는 우수했으나, 전처리가 포함된 [17]보다는 다소 낮은 성능을 보였다. 하지만 픽셀에서 직접 마스크를 생성하는 방식만으로도 충분히 정교한 분리가 가능함을 입증하였다.
 - **Cityscapes**: 이전의 순차적 방법론 [17]과 유사하거나 일부 클래스(자동차 등)에서는 더 나은 성능을 보였다. 다만, 오토바이와 같은 작은 객체에 대해서는 성능이 낮게 나타났다.
@@ -78,11 +88,14 @@ Amaia Salvador, Míriam Bellver, Víctor Campos, Manel Baradad, Ferran Marques, 
 ## 🧠 Insights & Discussion
 
 ### 객체 정렬 패턴 (Object Sorting Patterns)
+
 모델이 객체를 예측하는 순서를 분석한 결과, 무작위가 아닌 일관된 패턴을 학습했음을 발견하였다.
+
 - **패턴 종류**: Pascal VOC에서는 주로 우 $\rightarrow$ 좌(right to left), Cityscapes에서는 좌 $\rightarrow$ 우(left to right) 패턴이 강하게 나타났다. 또한 위 $\rightarrow$ 아래 또는 큰 객체 $\rightarrow$ 작은 객체 순으로 예측하는 경향이 있었다.
 - **인코더와의 관계**: 이러한 정렬 패턴은 인코더의 마지막 블록 활성화 상태와 높은 상관관계를 보였다. 이는 모델이 인코더 특징을 통해 이미지 전체의 레이아웃을 파악하고 탐색 경로를 결정함을 시사한다.
 
 ### 한계점 및 분석
+
 1. **작은 객체 인식 취약**: 모델이 이미지 전체 스케일에서 마스크를 하나씩 생성하므로, 국소적 특징을 추출하여 마스크를 만드는 방식([17])보다 작은 객체 포착에 어려움을 겪는다. 이는 입력 해상도를 높임으로써 개선 가능하지만 메모리 비용이 증가한다.
 2. **시퀀스 길이의 병목**: 시퀀스가 길어질수록(예측 객체 수가 많아질수록) 마스크의 품질이 저하되는 경향이 있다. 이는 고정된 크기의 은닉 상태에 너무 많은 정보를 담아야 하는 재귀 모델의 전형적인 병목 현상으로 해석된다.
 

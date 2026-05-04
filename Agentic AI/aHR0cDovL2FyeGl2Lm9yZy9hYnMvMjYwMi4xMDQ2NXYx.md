@@ -12,35 +12,39 @@ Mohan Rajagopalan, Vinay Rao (2026)
 
 본 논문의 핵심 아이디어는 Agentic AI 시스템을 바이트린트(Byzantine) 분산 시스템으로 추상화하고, 모든 상호작용이 일어나는 네 가지 핵심 경계(Boundary)를 암호학적으로 보호하는 것이다.
 
-1.  **Authenticated Workflows**: 프롬프트, 도구, 데이터, 컨텍스트라는 네 가지 제어 표면(Control Surfaces)에서 의도(Intent)와 무결성(Integrity)을 강제하는 프로토콜 수준의 프리미티브를 제안한다.
-2.  **MAPL (Agentic Policy Language)**: AI 에이전트의 동적인 특성과 확장성을 반영한 새로운 정책 언어를 도입한다. 계층적 구성(Hierarchical Composition)과 암호학적 증명(Attestation)을 통해 정책 관리의 복잡도를 $O(M \times N)$에서 $O(\log M + N)$으로 획기적으로 줄였다.
-3.  **Universal Security Runtime**: MCP, LangChain, OpenAI, Claude 등 9가지의 서로 다른 프레임워크에 적용 가능한 얇은 어댑터(Thin Adapters)를 통해 프레임워크에 구애받지 않는 보안 계층을 구현하였다.
-4.  **결정론적 보안 보장**: 확률적인 탐지가 아닌, 유효한 암호학적 증명이 없는 모든 요청을 즉각 거부하는 방식을 통해 100%의 재현율(Recall)과 0%의 오탐률(False Positive)을 달성하였다.
+1. **Authenticated Workflows**: 프롬프트, 도구, 데이터, 컨텍스트라는 네 가지 제어 표면(Control Surfaces)에서 의도(Intent)와 무결성(Integrity)을 강제하는 프로토콜 수준의 프리미티브를 제안한다.
+2. **MAPL (Agentic Policy Language)**: AI 에이전트의 동적인 특성과 확장성을 반영한 새로운 정책 언어를 도입한다. 계층적 구성(Hierarchical Composition)과 암호학적 증명(Attestation)을 통해 정책 관리의 복잡도를 $O(M \times N)$에서 $O(\log M + N)$으로 획기적으로 줄였다.
+3. **Universal Security Runtime**: MCP, LangChain, OpenAI, Claude 등 9가지의 서로 다른 프레임워크에 적용 가능한 얇은 어댑터(Thin Adapters)를 통해 프레임워크에 구애받지 않는 보안 계층을 구현하였다.
+4. **결정론적 보안 보장**: 확률적인 탐지가 아닌, 유효한 암호학적 증명이 없는 모든 요청을 즉각 거부하는 방식을 통해 100%의 재현율(Recall)과 0%의 오탐률(False Positive)을 달성하였다.
 
 ## 📎 Related Works
 
 기존의 보안 접근 방식은 크게 두 가지 방향으로 나뉘지만, 모두 한계가 명확하다.
 
-1.  **애플리케이션 계층 방어 (Application-Layer Defenses)**: NeMo Guardrails와 같은 시맨틱 필터나 프롬프트 검사 도구들이 이에 해당한다. 이들은 정밀도(Precision)는 높을 수 있으나, 새로운 공격 패턴에 취약하여 재현율(Recall)이 낮다. 특히 여러 프레임워크가 조합된 복잡한 워크플로우에서는 각 프레임워크의 개별 검사가 전체 시스템의 보안 결함을 메우지 못하는 '구성 갭(Composition Gaps)'이 발생한다.
-2.  **인프라 프리미티브 (Infrastructure Primitives)**: AWS IAM이나 OPA(Open Policy Agent)와 같은 전통적인 정책 엔진 및 신원 관리 시스템이다. 이들은 강력한 보안을 제공하지만, 에이전트의 워크플로우 시맨틱(예: "작업 A가 완료된 후에만 작업 B를 수행하라"는 시간적 의존성)을 표현할 수 없다는 한계가 있다.
+1. **애플리케이션 계층 방어 (Application-Layer Defenses)**: NeMo Guardrails와 같은 시맨틱 필터나 프롬프트 검사 도구들이 이에 해당한다. 이들은 정밀도(Precision)는 높을 수 있으나, 새로운 공격 패턴에 취약하여 재현율(Recall)이 낮다. 특히 여러 프레임워크가 조합된 복잡한 워크플로우에서는 각 프레임워크의 개별 검사가 전체 시스템의 보안 결함을 메우지 못하는 '구성 갭(Composition Gaps)'이 발생한다.
+2. **인프라 프리미티브 (Infrastructure Primitives)**: AWS IAM이나 OPA(Open Policy Agent)와 같은 전통적인 정책 엔진 및 신원 관리 시스템이다. 이들은 강력한 보안을 제공하지만, 에이전트의 워크플로우 시맨틱(예: "작업 A가 완료된 후에만 작업 B를 수행하라"는 시간적 의존성)을 표현할 수 없다는 한계가 있다.
 
 본 논문은 이 두 계층 사이의 '신뢰 계층(Trust Layer)'을 구축하여, 인프라 수준의 강력한 암호학적 보장과 애플리케이션 수준의 워크플로우 이해를 결합함으로써 차별점을 갖는다.
 
 ## 🛠️ Methodology
 
 ### 1. 네 가지 제어 표면 (Four Control Surfaces)
+
 논문은 모든 에이전트 리소스 접근이 다음 네 가지 경계를 통과한다는 것을 증명하고, 이를 집중적으로 보호한다.
+
 - $S_1$ **Prompts**: LLM으로 들어가는 명령어로, 추론 및 도구 선택을 제어한다.
 - $S_2$ **Tools**: 파일 시스템 접근, API 호출 등 권한이 필요한 실제 작업을 수행한다.
 - $S_3$ **Data**: RAG 코퍼스, 웹 스크레이핑 등 외부 소스에서 LLM으로 유입되는 데이터이다.
 - $S_4$ **Context**: 다회차 상호작용(Multi-turn) 간에 유지되는 대화 상태이다.
 
 ### 2. MAPL 정책 언어 및 대수 (Policy Algebra)
+
 MAPL은 에이전트의 의도를 명시하는 언어로, 다음과 같은 구조와 성질을 가진다.
 
 **정책 구조**: 정책 $P$는 허용 리소스($R$), 거부 리소스($D$), 제약 조건($C$)으로 정의된다. $P = (R, D, C)$.
 **정책 교집합 (Intersection)**: 여러 정책이 중첩될 때, 가장 엄격한 제약이 적용되는 교집합 연산을 사용한다.
 $$P_{eff} = P_1 \cap P_2 \cap \dots \cap P_n$$
+
 - $R_{eff} = R_1 \cap R_2 \dots$ (모든 정책이 허용해야 함)
 - $D_{eff} = D_1 \cup D_2 \dots$ (하나라도 거부하면 거부됨)
 - $C_{eff} = \text{MostRestrictive}(C_1, C_2, \dots)$ (가장 좁은 제약 적용)
@@ -48,17 +52,20 @@ $$P_{eff} = P_1 \cap P_2 \cap \dots \cap P_n$$
 이러한 교집합 구조 덕분에 정책이 추가될수록 권한은 좁아지기만 하며 절대 확장되지 않는 **단조 감소 제약(Monotonic Restriction)** 특성을 갖는다.
 
 ### 3. 인증된 워크플로우 (Authenticated Workflows) 프로토콜
+
 모든 경계 교차 시 다음과 같은 4단계 프로토콜을 수행한다.
-1.  **Registration**: 각 엔티티(에이전트, 도구 등)는 고유한 암호학적 신원(키 쌍)을 등록한다.
-2.  **Invocation**: 호출자는 작업 내용, 인자, 정책 ID, 세션 컨텍스트를 묶어 디지털 서명을 생성한다.
+
+1. **Registration**: 각 엔티티(에이전트, 도구 등)는 고유한 암호학적 신원(키 쌍)을 등록한다.
+2. **Invocation**: 호출자는 작업 내용, 인자, 정책 ID, 세션 컨텍스트를 묶어 디지털 서명을 생성한다.
     $$\text{MAC} = \text{Sign}(K, \text{Args} \parallel \text{Policy})$$
-3.  **Verification**: 수신 측의 **PEP (Policy Enforcement Point)**가 다음 3단계를 거쳐 검증한다.
+3. **Verification**: 수신 측의 **PEP (Policy Enforcement Point)**가 다음 3단계를 거쳐 검증한다.
     - **1단계 (서명 검증)**: 호출자의 신원과 데이터 무결성을 확인한다.
     - **2단계 (정책 바인딩 검증)**: 요청된 정책이 변조되지 않았는지 확인한다.
     - **3단계 (정책 평가)**: MAPL 기반으로 실제 리소스 접근 권한 및 제약 조건(Attestation 등)을 확인한다.
-4.  **Attestation**: 작업이 완료되면 결과에 서명하여 '작업 완료 증명'을 생성하고, 이를 컨텍스트에 저장하여 후속 작업의 전제 조건으로 사용한다.
+4. **Attestation**: 작업이 완료되면 결과에 서명하여 '작업 완료 증명'을 생성하고, 이를 컨텍스트에 저장하여 후속 작업의 전제 조건으로 사용한다.
 
 ### 4. 시스템 아키텍처: Trust Layer
+
 - **Control Plane**: 에이전트 레지스트리, 정책 저장소, 라우팅, 로깅 서비스를 제공한다.
 - **PEP (Policy Enforcement Point)**: 각 프레임워크 경계에 내장된 라이브러리 또는 사이드카 형태로 존재하며, 중앙 서버의 병목 없이 로컬에서 서브 밀리초($< 1\text{ms}$) 단위로 검증을 수행한다.
 - **Custom Verifiers**: 결정론적 검증 이후에 PII 탐지나 SQL Injection 방지와 같은 도메인 특화 검사를 추가할 수 있는 확장 지점을 제공한다.
@@ -66,30 +73,36 @@ $$P_{eff} = P_1 \cap P_2 \cap \dots \cap P_n$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **대상 프레임워크**: MCP, A2A, OpenAI, Claude, LangChain, CrewAI, AutoGen, LlamaIndex, Haystack (총 9종).
 - **테스트 케이스**: 174개의 테스트 케이스와 11가지 공격 패턴을 포함한다.
 - **평가 지표**: 재현율(Recall), 오탐률(False Positive), 오버헤드(Latency).
 
 ### 2. 정량적 결과
+
 - **보안 성능**: 모든 테스트 케이스에서 **100% 재현율**과 **0% 오탐률**을 기록하였다. 이는 확률적 탐지가 아닌 암호학적 강제 방식의 결과이다.
 - **OWASP 커버리지**: OWASP Top 10 for LLM Applications 2025의 위험 요소 중 10개 중 9개를 완전히 방어함을 확인하였다.
 - **성능 오버헤드**: ECDSA-256 서명 및 SHA-256 해싱 기반으로, 암호학적 연산 오버헤드는 약 $0.2\text{ms}$ 수준으로 매우 낮아 네트워크 지연 시간에 비해 무시할 수 있는 수준이다.
 
 ### 3. 실전 CVE 검증
+
 - **OpenAI Atlas 브라우저 공격**: 데이터 내에 숨겨진 명령어로 자격 증명을 탈취하는 공격을 시뮬레이션했을 때, 파일 시스템 정책($S_2$)과 네트워크 정책이 이를 결정론적으로 차단하였다.
 - **GitHub MCP Prompt Injection**: 악성 프롬프트를 통해 파일 시스템 도구를 호출하는 공격을 수행했으나, 도구 권한 검증과 독립적인 PEP 검증 단계에서 차단되었다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 논문은 AI 보안의 패러다임을 '탐지(Detection)'에서 '강제(Enforcement)'로 전환하였다. 특히 프레임워크에 종속되지 않는 프로토콜 수준의 추상화를 통해, 서로 다른 프레임워크가 조합된 복잡한 환경에서도 보안 일관성을 유지할 수 있다는 점이 매우 강력하다. 또한, MAPL을 통해 정책 관리 복잡도를 로그 스케일로 줄인 것은 엔터프라이즈급 확장성을 고려한 실용적인 설계이다.
 
 ### 한계 및 가정
+
 - **신뢰 기반 (Assumption L3)**: PEP의 검증 로직 자체가 올바르게 실행된다는 가정을 전제로 한다. 만약 커널 수준의 공격으로 PEP 메모리가 오염된다면 시스템이 무너질 수 있으나, 이는 OS 커널 보안의 영역으로 간주하여 범위 외로 설정하였다.
 - **훈련 단계의 안전성**: 본 연구는 런타임 강제(Runtime Enforcement)에 집중하고 있으며, 모델 자체의 안전한 훈련(Alignment)이나 학습 데이터 오염 문제는 다루지 않는다.
 - **커스텀 검증기의 오탐**: 결정론적 단계 이후의 Custom Verifiers(ML 기반 PII 탐지 등)는 여전히 오탐을 발생시킬 수 있으나, 이는 핵심 보안 보장(Stages 1-3)을 약화시키지 않고 제약만 추가하는 구조이다.
 
 ### 비판적 해석
+
 논문은 100% 재현율을 주장하지만, 이는 '정의된 정책 범위 내에서의 차단'을 의미한다. 즉, 관리자가 정책을 너무 느슨하게 설정했다면 암호학적으로 유효한 서명이 있더라도 공격이 성공할 수 있다. 결국 시스템의 최종 보안성은 '암호학적 메커니즘'과 '정책 설계자의 역량'이라는 두 가지 요소에 의존하게 된다.
 
 ## 📌 TL;DR

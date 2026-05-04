@@ -17,6 +17,7 @@ Petar Jakuš, Hrvoje Džapo (2025)
 ## 🛠️ Methodology
 
 ### 1. 전처리 (Feature Extraction)
+
 원시 오디오 신호를 신경망이 처리하기 적합한 형태로 변환하기 위해 다음과 같은 MFCC 파이프라인을 사용한다.
 
 - **Framing 및 Windowing**: 오디오 신호를 25ms 길이의 프레임으로 나누며, 프레임 간 겹침(Hop size)은 10ms로 설정한다. 스펙트럼 누설을 줄이기 위해 각 프레임에 Hamming window를 적용하며, 수식은 다음과 같다.
@@ -28,22 +29,26 @@ $$P[k] = \frac{1}{N}|X[k]|^2$$
 - **MFCC Computation**: 로그 멜 스펙트럼에 이산 코사인 변환(DCT)을 적용하여 최종적으로 프레임당 20개의 MFCC 특징을 생성한다.
 
 ### 2. 모델 아키텍처 및 양자화
+
 본 연구에서는 엣지 디바이스에 최적화된 소형 CNN 구조를 설계하였다.
 
 - **네트워크 구조**: 2개의 Convolutional Layer(각 층은 2D Convolution, Batch Normalization, Max Pooling으로 구성)와 2개의 Dense Layer(Fully Connected Layer)로 이루어져 있다. 최종 출력층은 "Marvin"이라는 특정 키워드의 존재 여부를 판단하는 이진 분류기 형태이다.
 - **Quantization Aware Training (QAT)**: 32비트 부동 소수점 가중치를 8비트 고정 소수점으로 변환하기 위해 QAT를 적용하였다. 이는 순전파(Forward pass) 시에는 8비트 연산을 시뮬레이션하고, 역전파(Backward propagation) 시에는 전체 정밀도를 유지하여 학습하는 방식이다. 이를 통해 단순 사후 양자화(Post-Training Quantization)보다 정확도 저하를 효과적으로 막을 수 있다.
 
 ### 3. 모델 배포
+
 학습된 TensorFlow Lite 모델은 NXP의 eIQ Toolkit을 통해 NPU 호환 포맷으로 변환되었다. 변환 과정에서 NPU의 전용 하드웨어 가속 기능을 최대한 활용할 수 있도록 일부 레이어 구조가 재구성되었으며, 최종 모델은 MCU의 플래시 메모리에 정적 배열 형태로 저장된다.
 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: Google Speech Commands 데이터셋을 사용하였으며, 16kHz 샘플링 레이트의 1초 길이 음성 데이터를 활용하였다.
 - **비교 대상**: 정밀도 모델(Regular), 양자화 모델(Quantized), NPU 가속 모델(NPU) 세 가지 버전을 비교하였다.
 - **측정 지표**: 정확도(Accuracy), 모델 크기(Size), 추론 시간(Inference Time)을 측정하였다.
 
 ### 2. 주요 결과
+
 실험 결과, NPU를 활용한 구현이 CPU 단독 실행 대비 압도적인 성능 향상을 보였다.
 
 - **정확도**: Regular 모델은 $99.14\%$의 정확도를 보였으며, 양자화 및 NPU 모델은 $97.06\%$로 약간의 하락이 있었으나 매우 높은 수준을 유지하였다.

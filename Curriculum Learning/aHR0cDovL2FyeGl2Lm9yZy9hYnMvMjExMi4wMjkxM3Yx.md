@@ -17,6 +17,7 @@ Emmanouil Stergiadis, Priyanka Agrawal, Oliver Squire (2021)
 ## 📎 Related Works
 
 논문에서는 Few-shot Classification을 위한 메타 학습 연구를 다음과 같이 세 가지 범주로 분류한다.
+
 1. **Metric-based methods**: 두 샘플 간의 유사도를 학습하여 비교하는 방식 (예: Prototypical Networks).
 2. **Model-based methods**: 소수의 파라미터 업데이트만으로 새로운 클래스에 적응할 수 있는 모델 초기화를 학습하는 방식.
 3. **Gradient-based methods**: 모델이 빠르게 적응할 수 있도록 최적화 알고리즘 자체를 학습하는 방식 (예: MAML).
@@ -26,9 +27,11 @@ Emmanouil Stergiadis, Priyanka Agrawal, Oliver Squire (2021)
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인 및 구조
+
 본 연구는 기본적으로 MAML(Model-Agnostic Meta-Learning) 알고리즘을 기반으로 하며, 메타 트레이닝 단계에서 가중치 초기값 $\theta$를 최적화한다. 제안된 방법의 핵심은 학습 단계에 따라 Support set의 크기 $K$를 동적으로 변경하는 것이다.
 
 ### 2. 커리큘럼 스케줄 (Curriculum Schedule)
+
 하이퍼파라미터 $M$(Multiplier)을 설정하여 총 $M$개의 커리큘럼 단계(Stage)를 둔다. 각 단계 $i$에서의 Support set 크기 $K_i$는 다음과 같이 정의된다.
 
 $$K_i = (M - i) \times \text{shot}, \quad \forall i \in [0, M)$$
@@ -36,11 +39,14 @@ $$K_i = (M - i) \times \text{shot}, \quad \forall i \in [0, M)$$
 학습 초기($i=0$)에는 $K$가 $M \times \text{shot}$으로 가장 크며, 단계가 진행될수록 감소하여 최종 단계에서는 $K = \text{shot}$이 되어 테스트 환경과 완전히 일치하게 된다.
 
 ### 3. 학습 절차 및 반복 횟수 할당
+
 총 학습 단계 $N$을 다음과 같이 배분한다.
+
 - $i < M$인 단계: 각 단계마다 $n_i = \frac{N}{2(M-1)}$ 회의 반복 학습을 수행한다.
 - $i = M$인 최종 단계: 전체 학습의 절반인 $n_M = \frac{N}{2}$ 회의 반복 학습을 수행하여 메타 러너를 안정화하고 트레이닝-테스트 간의 괴리를 제거한다.
 
 ### 4. 학습률 어닐링 (Learning Rate Annealing)
+
 Support set의 크기가 클수록 그래디언트의 분산이 낮아져 더 큰 학습률을 사용할 수 있다는 점에 착안하여, 학습률 $\alpha$를 $K$의 크기에 비례하여 조정하는 스케줄을 제안한다.
 
 $$\alpha_i = \sqrt{M - i} \times \alpha_0, \quad \forall i \in [0, M)$$
@@ -48,19 +54,23 @@ $$\alpha_i = \sqrt{M - i} \times \alpha_0, \quad \forall i \in [0, M)$$
 여기서 $\alpha_0$는 기본 학습률이다.
 
 ### 5. Query set 크기의 적응적 설정
+
 메타 업데이트에 사용되는 Query set의 크기 $L$에 대해 두 가지 설정을 비교한다.
+
 - **Static**: $L = \text{shot}$으로 고정.
 - **Adaptive**: $L = K$로 설정하여 Support set의 크기 변화에 따라 함께 변경.
 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: Omniglot, miniImagenet.
 - **베이스 모델**: 4-layer CNN 및 Feed Forward Network (FFN).
 - **지표**: Meta-test Accuracy.
 - **비교 대상**: Baseline MAML ($M=1$, 즉 커리큘럼 없음), Static Support Size ($K$를 $M \times \text{shot}$으로 고정).
 
 ### 2. 주요 결과
+
 - **커리큘럼의 효과**: $M=5$일 때 가장 우수한 성능을 보였으며, $M=1$(Baseline) 대비 유의미한 성능 향상이 관찰되었다. 반면 $M$이 너무 클 경우($M=10, 20$) 오히려 성능이 하락했는데, 이는 과도하게 많은 데이터에 노출되어 테스트 환경으로의 일반화 능력이 떨어졌기 때문으로 분석된다.
 - **일반성 검증**: CNN과 FFN 모두에서, 그리고 Omniglot과 miniImagenet 두 데이터셋 모두에서 일관된 성능 향상이 나타났다. 또한 1-shot과 5-shot 설정 모두에서 효과적임이 입증되었다.
 - **하이퍼파라미터 영향**: 학습률 어닐링을 적용했을 때 성능이 추가적으로 향상되었으며, Query set의 크기를 $L=K$로 적응적으로 설정한 경우가 $L=\text{shot}$인 경우보다 성능이 더 좋았다.
@@ -69,13 +79,16 @@ $$\alpha_i = \sqrt{M - i} \times \alpha_0, \quad \forall i \in [0, M)$$
 ## 🧠 Insights & Discussion
 
 ### 1. 강점 및 해석
+
 본 논문은 단순한 하이퍼파라미터 조절만으로 메타 학습의 고질적인 문제인 '베이스 러너 최적화'와 '일반화' 사이의 충돌을 효과적으로 해결했다. 특히, 학습 초기에는 높은 Training Accuracy를 달성하고, 후기 단계에서 Validation Accuracy가 상승하는 경향을 통해, 커리큘럼이 베이스 러너에게 기초 체력을 제공한 뒤 이를 테스트 환경에 맞게 정교하게 튜닝하는 역할을 수행함을 알 수 있다.
 
 ### 2. 한계 및 고려사항
+
 - **데이터 요구량**: 커리큘럼 학습을 위해서는 초기 단계에서 각 클래스당 최소 $M \times \text{shot}$만큼의 레이블된 데이터가 필요하다. 예를 들어 5-shot 설정에서 $M=5$라면 클래스당 25개의 샘플이 필요한데, Omniglot과 같이 데이터가 제한적인 경우(클래스당 20개) $M$의 선택에 제약이 생긴다.
 - **최적 $M$ 값의 탐색**: $M$이 너무 크면 일반화 능력이 떨어진다는 결과가 있으므로, 각 데이터셋과 태스크에 맞는 최적의 $M$ 값을 찾는 추가적인 실험적 탐색이 필요하다.
 
 ### 3. 비판적 논의
+
 본 연구는 MAML 기반의 gradient-based method에 집중하여 검증하였으나, 저자들은 이 방식이 metric-based나 model-based 방법론에도 적용 가능하다고 주장한다. 다만, Support set의 크기가 학습 프로세스에 직접적으로 영향을 주는 방식이 다른 아키텍처에서도 동일한 메커니즘으로 작동할지에 대해서는 추가적인 증명이 필요해 보인다.
 
 ## 📌 TL;DR

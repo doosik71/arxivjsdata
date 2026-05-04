@@ -4,7 +4,7 @@ Ilchae Jung, Kihyun You, Hyeonwoo Noh, Minsu Cho, Bohyung Han (2020)
 
 ## 🧩 Problem to Solve
 
-본 논문은 실시간 객체 추적(Real-Time Object Tracking)에서 발생하는 두 가지 주요 문제인 **모델 적응(Model Adaptation)의 효율성**과 **연산 비용의 최적화**를 해결하고자 한다. 
+본 논문은 실시간 객체 추적(Real-Time Object Tracking)에서 발생하는 두 가지 주요 문제인 **모델 적응(Model Adaptation)의 효율성**과 **연산 비용의 최적화**를 해결하고자 한다.
 
 깊은 신경망 기반의 추적기는 각 비디오 시퀀스마다 대상 객체의 외형이 다르기 때문에, 추적 과정에서 모델 파라미터를 대상에 맞게 최적화하는 온라인 학습(Online Learning) 과정이 필수적이다. 그러나 기존의 수동적인 하이퍼파라미터 설계는 최적의 해를 찾기 어려우며, 학습 속도가 느려 실시간 성능을 저해한다. 또한, 네트워크의 채널 프루닝(Channel Pruning)을 통해 연산량을 줄이려는 시도가 있었으나, 이는 통상적으로 복잡한 최적화나 시간이 많이 소요되는 미세 조정(Fine-tuning) 과정을 필요로 하여 실시간 추적 시스템에 적용하기 어렵다.
 
@@ -38,11 +38,13 @@ $$L(D; \theta) = -\mathbb{E}_{p_D(x, y)} [y^\top \log(\text{Softmax}(f(x; \theta
 
 **추적 시뮬레이션(Tracking Simulation)**
 현실적인 시뮬레이션을 위해 적응 과정을 두 단계로 나눈다.
+
 1. **Initial Adaptation**: 첫 프레임의 Ground-truth($D_{\text{init}}$)를 사용하여 모델을 최적화한다.
 2. **Online Adaptation**: 이전 프레임에서 추정된 대상(Estimated targets)을 통해 구축된 $D_{\text{on}}$을 사용하여 모델을 업데이트한다. 이는 실제 추적 시 발생할 수 있는 노이즈 섞인 라벨 상황을 모사한다.
 
 **Meta-parameters ($M$)**
 학습 대상이 되는 메타 파라미터 $M$은 다음과 같이 구성된다.
+
 - 초기 가중치 $\theta^0_{\text{init}}$
 - 초기 적응을 위한 파라미터별 학습률 벡터 $A_{\text{init}} = \{\alpha^k_{\text{init}} \in \mathbb{R}^d\}_{k=1}^{K_{\text{init}}}$
 - 온라인 적응을 위한 파라미터별 학습률 벡터 $A_{\text{on}} = \{\alpha^k_{\text{on}} \in \mathbb{R}^d\}_{k=1}^{K_{\text{on}}}$
@@ -69,11 +71,13 @@ $$\psi_l(D_{\text{init}}; \theta, \phi) = \frac{1}{N} \sum_{i=1}^N \text{MLP}(\t
 ## 📊 Results
 
 ### 실험 설정
+
 - **Base Model**: RT-MDNet을 기반으로 MetaRTT, MetaRTT+Prune, MetaRTT+COCO 세 버전을 구현하였다.
 - **데이터셋**: OTB2015, TempleColor, VOT2016, UAV123.
 - **학습**: ImageNet-Vid 데이터셋을 사용하여 40K 에피소드 동안 메타 파라미터를 최적화하였다.
 
 ### 주요 결과
+
 1. **Ablation Study (OTB2015)**:
    - $D_{\text{on}}$(온라인 적응), $D_{\text{hard}}^{\text{test}}$(Hard example), $\theta^0_{\text{init}}$ 및 파라미터별 학습률을 모두 사용했을 때 가장 높은 성능(Success 65.5%, Precision 89.0%)을 보였다.
    - 특히 파라미터별 학습률을 사용하지 않고 스칼라 학습률을 사용했을 때 성능이 크게 저하됨을 확인하였다.
@@ -89,14 +93,16 @@ $$\psi_l(D_{\text{init}}; \theta, \phi) = \frac{1}{N} \sum_{i=1}^N \text{MLP}(\t
 
 ## 🧠 Insights & Discussion
 
-본 논문은 Meta-learning을 객체 추적의 모델 적응과 모델 압축에 성공적으로 통합하였다. 
+본 논문은 Meta-learning을 객체 추적의 모델 적응과 모델 압축에 성공적으로 통합하였다.
 
 **강점 및 시사점**
+
 - **효율적인 적응**: 단순히 초기값을 잘 잡는 것을 넘어, 학습 과정(Learning rate) 자체를 메타 학습함으로써 극소수의 반복 횟수만으로도 최적의 모델 상태에 도달할 수 있음을 보여주었다.
 - **현실적인 시뮬레이션**: $D_{\text{on}}$을 통한 노이즈 라벨 모사와 $D_{\text{hard}}$를 통한 오탐지 방지 전략은 실제 추적 환경에서 발생할 수 있는 문제들을 Meta-training 단계에서 미리 학습하게 함으로써 일반화 성능을 높였다.
 - **동적 프루닝**: 정적인 프루닝이 아니라 입력 이미지(첫 프레임)에 따라 채널을 선택하는 적응형 프루닝을 One-shot으로 구현하여, 실시간성 확보와 정확도 유지라는 두 마리 토끼를 잡았다.
 
 **한계 및 논의사항**
+
 - **데이터 의존성**: Meta-learning 특성상 대규모의 사전 학습 데이터(ImageNet-Vid, COCO)가 필요하며, 데이터셋의 구성이 메타 파라미터의 성능에 큰 영향을 미칠 수 있다.
 - **계산 복잡도**: 추론 단계에서는 빠르지만, 메타 학습 과정(Meta-training)은 매우 많은 에피소드 시뮬레이션과 고차 미분(Hessian-vector product 등) 계산이 필요하여 학습 비용이 매우 높다.
 

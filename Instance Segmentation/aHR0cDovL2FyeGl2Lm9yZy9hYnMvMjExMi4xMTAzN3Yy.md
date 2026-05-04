@@ -19,6 +19,7 @@ Xiaodong Yu, Dahu Shi, Xing Wei, Ye Ren, Tingqun Ye, Wenming Tan (2022)
 ## 📎 Related Works
 
 기존의 인스턴스 분할 연구는 크게 세 가지로 나뉜다.
+
 1. **Top-down 방식**: Mask R-CNN 계열로, 객체 검출 후 해당 영역을 분할하는 'detect-then-segment' 방식을 따른다. 하지만 앞서 언급한 RoI 기반의 한계가 명확하다.
 2. **Bottom-up 방식**: 픽셀 단위의 임베딩을 먼저 학습한 후 이를 클러스터링하여 인스턴스를 구분하는 'label-then-cluster' 방식을 사용한다.
 3. **Single-stage 방식**: YOLACT, CondInst, SOLO 등이 있으며, 단일 단계 검출기 위에서 동작하여 속도를 높였으나, 여전히 NMS나 복잡한 라벨 할당 전략에 의존하는 경우가 많다.
@@ -28,12 +29,15 @@ Xiaodong Yu, Dahu Shi, Xing Wei, Ye Ren, Tingqun Ye, Wenming Tan (2022)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 SOIT의 전체 파이프라인은 세 가지 주요 구성 요소로 이루어져 있다.
+
 1. **Backbone Network**: ResNet-50/101 또는 Swin Transformer를 사용하여 다중 스케일 이미지 특징 맵 $F = \{F^3, F^4, F^5, F^6\}$을 추출한다.
 2. **Transformer Encoder-Decoder**: Deformable Transformer Encoder를 통해 정제된 특징 메모리 $P$를 생성하고, 이후 Deformable Transformer Decoder가 학습 가능한 $N$개의 객체 쿼리를 사용하여 각 객체의 임베딩을 추론한다.
 3. **Multi-task Prediction Network**: 추출된 쿼리 임베딩을 바탕으로 클래스, 바운딩 박스, 마스크 파라미터를 동시에 예측한다.
 
 ### 인스턴스 인식 트랜스포머 (Instance-aware Transformer)
+
 마스크를 생성하기 위해, 본 논문은 각 인스턴스마다 동적으로 생성되는 트랜스포머를 사용한다. 마스크 브랜치에서 예측된 $D$-차원 벡터는 인스턴스 인식 트랜스포머의 선형 투영 층(linear projection layers)의 가중치로 변환된다.
 
 입력 특징 맵 $x$에 대해, $n$번째 객체 쿼리의 디포머블 멀티 헤드 어텐션 특징 $H_m^n$은 다음과 같이 계산된다.
@@ -43,12 +47,14 @@ $$\text{Mask}^n = W^n [\text{Concat}(H_1^n, H_2^n, \dots, H_M^n)]$$
 이때 $W^n$ 역시 해당 인스턴스에 특화된 동적 파라미터이며, 결과값에 시그모이드(sigmoid) 함수를 적용하여 이진 마스크를 얻는다.
 
 ### 상대적 위치 인코딩 (Relative Positional Encoding)
+
 기존의 절대적 위치 인코딩 대신, 객체 쿼리가 예측한 바운딩 박스의 중심 좌표 $pos^q$를 반영한 상대적 위치 인코딩을 제안한다.
 $$\text{PE}(\text{pos}, 2i) = \sin((\text{pos} - \text{pos}^q) / 10000^{2i/d_{model}})$$
 $$\text{PE}(\text{pos}, 2i+1) = \cos((\text{pos} - \text{pos}^q) / 10000^{2i/d_{model}})$$
 이 방식은 각 쿼리가 자신의 예측 위치를 기준으로 특징 맵을 바라보게 함으로써, 외형이 유사한 객체들이 서로 다른 위치에 있을 때 이를 효과적으로 구분할 수 있게 한다.
 
 ### 학습 절차 및 손실 함수
+
 모델은 클래스 분류, 위치 추정, 마스크 분할의 세 가지 태스크를 동시에 학습한다. 전체 손실 함수 $\mathcal{L}$은 다음과 같다.
 $$\mathcal{L} = \lambda_{cls}\mathcal{L}_{cls} + \lambda_{L1}\mathcal{L}_{L1} + \lambda_{iou}\mathcal{L}_{iou} + \lambda_{dice}\mathcal{L}_{dice} + \lambda_{bce}\mathcal{L}_{bce}$$
 분할 작업에는 Dice Loss와 Binary Cross-Entropy(BCE) Loss를 사용하였으며, 모든 디코더 스테이지에서 마스크 손실을 적용하여 학습함으로써 검출 성능까지 동시에 향상시키는 공동 학습(joint learning) 전략을 취했다.
@@ -56,14 +62,17 @@ $$\mathcal{L} = \lambda_{cls}\mathcal{L}_{cls} + \lambda_{L1}\mathcal{L}_{L1} + 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: MS COCO 2017 데이터셋을 사용하여 검증하였다.
 - **지표**: Mask AP(분할 성능)와 Box AP(검출 성능)를 측정하였다.
 - **구현**: ResNet-50, ResNet-101 및 Swin-L 백본을 사용하였으며, Adam 옵티마이저로 50 에포크 동안 학습하였다.
 
 ### 정량적 결과
+
 ResNet-50 백본 기준, SOIT는 **Mask AP 42.5%**, **Box AP 49.1%**를 달성하였다. 이는 기존의 복잡한 튜닝이 적용된 HTC(Hybrid Task Cascade)보다 Mask AP에서 2.8%, Box AP에서 4.2% 높은 수치이다. 또한, 동적 컨볼루션을 사용하는 CondInst보다 Mask AP 기준 4.7% 더 높은 성능을 보였다. Swin-L 백본을 적용했을 때는 Mask AP 49.2%, Box AP 56.9%라는 매우 높은 성능을 기록하며 최신 모델들과 경쟁 가능한 수준임을 입증하였다.
 
 ### 주요 분석 (Ablation Study)
+
 1. **어텐션 헤드 수**: 헤드 수를 4개로 설정했을 때 최적의 성능을 보였으며, 8개 이상에서는 파라미터 증가로 인해 최적화가 어려워지며 성능이 포화되는 경향을 보였다.
 2. **상대적 위치 인코딩**: 절대적 위치 인코딩 대비 상대적 위치 인코딩을 사용했을 때 Mask AP가 0.8% 향상되어, 위치 큐(location cue)의 중요성이 확인되었다.
 3. **마스크 손실 적용 단계**: 모든 디코더 스테이지에서 마스크 손실을 적용했을 때, 순수 객체 검출 모델보다 Box AP가 2.1% 향상되었다. 이는 분할 작업의 학습이 검출 작업에 긍정적인 영향을 주는 상호 보완적 관계임을 시사한다.

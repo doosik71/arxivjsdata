@@ -10,9 +10,10 @@ Iván López-Espejo, Ram C. M. C. Shekar, Zheng-Hua Tan, Jesper Jensen, John H. 
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 필터뱅크 채널 수 $K$를 매우 낮게 설정했을 때, 학습 가능한 필터뱅크가 수작업 특징량(log-Mel)보다 더 우수한 성능을 낼 수 있다는 점을 증명한 것이다. 
+본 논문의 핵심 아이디어는 필터뱅크 채널 수 $K$를 매우 낮게 설정했을 때, 학습 가능한 필터뱅크가 수작업 특징량(log-Mel)보다 더 우수한 성능을 낼 수 있다는 점을 증명한 것이다.
 
 주요 기여 사항은 다음과 같다.
+
 1. 필터뱅크 학습이 소음의 스펙트럼 특성에 적응하여 소음에 대한 강건성을 높인다는 것을 보여주었다.
 2. 학습 과정에 Dropout을 적용함으로써 학습된 필터뱅크의 일반화 성능과 소음 강건성을 더욱 향상시켰다.
 3. 채널 수를 40개에서 8개로 대폭 줄였음에도 불구하고, 학습 가능한 필터뱅크를 사용하면 상대적으로 적은 정확도 손실(3.5%)만으로 에너지 소비를 약 6.3배 절감할 수 있음을 입증하였다.
@@ -26,9 +27,11 @@ Iván López-Espejo, Ram C. M. C. Shekar, Zheng-Hua Tan, Jesper Jensen, John H. 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 KWS 시스템은 전단(Front-end)의 필터뱅크 층과 후단(Back-end)의 음향 모델로 구성된다. 전체 파이프라인은 입력 음성 신호 $\rightarrow$ STFT $\rightarrow$ 학습 가능한 필터뱅크 $\rightarrow$ 로그 압축 및 배치 정규화 $\rightarrow$ Deep Residual CNN $\rightarrow$ 단어 수준의 사후 확률(posterior) 출력 순으로 진행된다.
 
 ### 전단(Front-end): 학습 가능한 필터뱅크
+
 입력 음성 신호 $x(m)$에 대해 단시간 푸리에 변환(STFT)을 수행하여 선형 전력 스펙트럼 도메인의 행렬 $X$를 생성한다. 여기서 $T$는 시간 프레임 수, $F$는 선형 주파수 빈(bin) 수이다.
 $$X = \begin{bmatrix} |X(1,1)|^2 & \cdots & |X(1,F)|^2 \\ \vdots & \ddots & \vdots \\ |X(T,1)|^2 & \cdots & |X(T,F)|^2 \end{bmatrix}$$
 
@@ -41,17 +44,20 @@ $$\log(\max(Y, \eta)) \quad (\text{단, } \eta = e^{-50})$$
 이 과정에서 학습 시 Dropout(비율 0.4)을 선택적으로 적용하여 각 채널의 강건성을 높인다.
 
 ### 후단(Back-end): 음향 모델
+
 음향 모델로는 Dilated Convolution과 Residual Connection이 통합된 Deep Residual CNN을 사용한다. 이 모델은 1초 길이의 입력 세그먼트로부터 11개 클래스(10개의 키워드 및 1개의 filler 클래스)에 대한 사후 확률을 출력하며, 가장 높은 확률을 가진 클래스를 최종 키워드로 판정한다. 학습은 Adam 옵티마이저를 사용하여 Cross-Entropy 손실 함수를 최소화하는 방향으로 진행된다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 소음이 추가된 Google Speech Commands Dataset (GSCD). NOISEX-92 및 CHiME-3 데이터셋의 소음을 섞어 사용하였다.
 - **평가 조건**: 학습/검증 세트와 테스트 세트에서 서로 다른 소음 유형(seen vs unseen noises)과 다양한 SNR $\{-10, -5, 0, 5, 10, 15, 20\}\text{dB}$ 환경에서 테스트하였다.
 - **비교 대상**: log-Mel 특징량, 학습된 필터뱅크(Learned), Dropout이 적용된 학습된 필터뱅크(Learned+D).
 - **평가 지표**: KWS 정확도(%) 및 연산량(Multiplications, 에너지 소비의 대리 지표).
 
 ### 주요 결과
+
 1. **채널 수($K$)에 따른 성능**:
    - $K=40$일 때는 log-Mel과 학습된 특징량 사이에 유의미한 차이가 없었다.
    - $K < 10$인 경우, 학습된 필터뱅크(특히 Learned+D)가 log-Mel보다 우수한 성능을 보였으며, 특히 학습 시 보지 못한 소음(unseen noises) 환경에서 효과적이었다.

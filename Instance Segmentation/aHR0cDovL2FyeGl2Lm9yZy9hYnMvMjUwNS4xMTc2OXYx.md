@@ -21,15 +21,19 @@ Wonjune Kim, Lae-Kyoung Lee and Su-Yong An (2025)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 시스템은 FlashInternImage-B 백본과 UPerNet 디코더로 구성된 고용량 세그멘테이션 파이프라인을 따른다. 백본에서 추출된 $\frac{1}{4}, \frac{1}{8}, \frac{1}{16}, \frac{1}{32}$ 해상도의 특징 맵(Feature maps)이 UPerNet 디코더로 전달되며, 최종적으로 9개의 클래스에 대한 로짓(Logits)을 생성한 후 bilinear upsampling을 통해 원본 이미지 크기로 복원한다.
 
 ### 학습 절차 및 최적화
+
 학습은 AdamW 옵티마이저(초기 학습률 $6 \times 10^{-5}$)와 Poly learning-rate schedule을 사용하여 총 96k iteration 동안 진행되었다. 입력 이미지는 $[0.5, 2.0]$ 범위 내에서 무작위로 스케일링된 후 $2048 \times 2048$ 크기로 크롭 또는 패딩되었다. 손실 함수로는 픽셀 단위의 Softmax Cross-Entropy를 사용하였다.
 
 ### Photometric Distortion
+
 오프로드 씬의 다양한 조명 조건을 극복하기 위해 학습 과정에서 밝기(Brightness), 대비(Contrast), 채도(Saturation), 색조(Hue)를 각각 0.5의 확률로 독립적으로 변형시키는 Photometric Distortion을 적용하였다. 이는 네트워크가 단순한 색상 정보보다는 형태(Shape)와 질감(Texture)에 더 의존하도록 유도하여, 다양한 조명 환경에서의 강건성을 높이는 역할을 한다.
 
 ### Exponential Moving Average (EMA)
+
 최적화 과정을 안정화하고 라벨 노이즈의 영향을 줄이기 위해 네트워크 파라미터의 EMA를 유지하였다. EMA 가중치 $\theta_{EMA}^{(t)}$는 다음과 같은 방정식에 의해 매 iteration마다 업데이트된다.
 
 $$\theta_{EMA}^{(t)} = \alpha \theta_{EMA}^{(t-1)} + (1-\alpha)\theta_{CURRENT}^{(t)}$$
@@ -39,11 +43,13 @@ $$\theta_{EMA}^{(t)} = \alpha \theta_{EMA}^{(t-1)} + (1-\alpha)\theta_{CURRENT}^
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: GOOSE 훈련 세트(약 8k 장)와 GOOSE-EX 훈련 세트(약 4k 장)를 통합하여 학습하였으며, 공식 검증 세트(약 1.4k 장)를 통해 평가하였다.
 - **하드웨어**: NVIDIA RTX 3090 GPU 4대를 사용하였으며, GPU당 배치 사이즈는 2로 설정하고 Mixed precision 학습을 수행하였다.
 - **평가 지표**: 평균 교차 합집합(mean Intersection-over-Union, mIoU)을 사용하였다.
 
 ### 정량적 결과
+
 FlashInternImage-B baseline 모델에서 시작하여 각 기법을 추가했을 때의 mIoU 결과는 다음과 같다.
 
 - **Baseline (FlashInternImage-B)**: $87.2\%$ mIoU
@@ -53,6 +59,7 @@ FlashInternImage-B baseline 모델에서 시작하여 각 기법을 추가했을
 최종적으로 검증 세트에서 $88.88\%$ mIoU를 달성하였으며, 공식 테스트 서버 제출 결과 $84.5\%$ mIoU로 퍼블릭 리더보드 2위를 기록하였다. 특히 EMA는 데이터 수가 적은 obstacle과 human 클래스의 성능 향상에 크게 기여하였고, Photometric Distortion은 sky와 other 클래스에서 효과가 두드러졌다.
 
 ### 정성적 결과
+
 정성적 분석 결과, Photometric Distortion을 적용한 모델은 베이스라인이 인공 지면(artificial ground)과 자연 지면(natural ground)을 혼동하는 문제를 해결하고 이를 명확히 구분해냈다. 또한 EMA를 추가했을 때 대규모 균질 영역에서 발생하는 스펙클 아티팩트(Speckle artifacts)가 억제되고 클래스 경계가 더욱 날카롭게 형성되는 것을 확인하였다.
 
 ## 🧠 Insights & Discussion

@@ -7,6 +7,7 @@ Pavan Reddy and Aditya Singh (2024)
 본 논문은 고차원 정형 데이터(Tabular Data)에서 발생하는 이상치 탐지(Anomaly Detection)의 복잡성을 해결하고자 한다. 이상치 탐지는 사이버 보안, 헬스케어, 금융, 감시 시스템 등 다양한 분야에서 위협이나 중요한 정보를 식별하는 데 필수적이다.
 
 특히 정형 데이터의 이상치 탐지에서는 다음과 같은 문제들이 존재한다.
+
 - **정상 행동의 동적 변화:** '정상'으로 정의되는 기준이 시간이 지남에 따라 변하므로, 이에 적응 가능한 모델이 필요하다.
 - **컨텍스트 의존성:** 데이터의 이상 여부가 특정 상황이나 문맥에 따라 달라지는 특성이 있다.
 - **데이터 불균형 및 노이즈:** 정상 데이터에 비해 이상치 데이터의 양이 현저히 적은 데이터 불균형 문제와 데이터 내 포함된 노이즈가 탐지 성능을 저하시킨다.
@@ -24,6 +25,7 @@ Pavan Reddy and Aditya Singh (2024)
 ## 📎 Related Works
 
 논문에서는 딥러닝 기반의 이상치 탐지 기법들을 다음과 같이 소개한다.
+
 - **Autoencoders:** 입력 데이터를 재구성하고, 재구성 오차가 임계값을 넘을 경우 이상치로 판단하는 방식이다. 비선형 변환을 캡처하는 데 효과적이다.
 - **Deep One-Class Classification:** 정상 데이터의 복잡한 패턴을 학습하여 정상 분포에서 벗어난 샘플을 격리하는 방식이다.
 - **Adversarially-trained One-Class Classifier:** 적대적 학습 요소를 도입하여 정상과 이상 샘플을 구분하는 분류기의 강건성(Robustness)을 높인 연구이다.
@@ -34,15 +36,18 @@ Pavan Reddy and Aditya Singh (2024)
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인
+
 본 시스템은 데이터 전처리, CT-GAN 학습, 노이즈 벡터 최적화, 이상치 점수 계산의 단계로 구성된다.
 
 ### 2. 데이터 전처리 및 GMM 변환
+
 - **전처리:** 불필요한 특성(`dow`, `hod`)을 제거하고, Min-Max Scaling을 통해 모든 피처 값을 $-1$에서 $1$ 사이의 범위로 정규화한다.
 - **GMM Transformation:** 다중 모드(Multimodal) 입력을 가진 정형 데이터의 안정적인 학습을 위해 Gaussian Mixture Model(GMM)을 사용하여 여러 개의 단일 모드(Unimodal) 표현으로 변환한다.
   $$p(x) = \sum_{i=1}^{M} \pi_i \mathcal{N}(x|\mu_i, \Sigma_i)$$
   여기서 $p(x)$는 데이터 $x$의 확률 밀도 함수이며, $\pi_i$는 혼합 계수, $\mu_i$와 $\Sigma_i$는 각각 $i$번째 가우시안 성분의 평균과 공분산이다.
 
 ### 3. CT-GAN 구현 및 Hard Gumbel Softmax
+
 정형 데이터 생성을 위해 CT-GAN을 사용한다. 하지만 기존 CT-GAN의 Gumbel Softmax 활성화 함수는 테스트 단계에서 예측의 무작위성을 유발한다. 이를 해결하기 위해 **Hard Gumbel Softmax**를 적용한다.
 
 - **Hard Gumbel Softmax 과정:**
@@ -51,7 +56,9 @@ Pavan Reddy and Aditya Singh (2024)
   3. **Straight-through Estimator**를 사용하여 역전파 시에는 소프트맥스의 기울기를 그대로 사용함으로써 미분 가능성을 유지하면서도 출력은 결정론적으로 만든다: $y = \text{stop\_gradient}(y_{hard} - y) + y$
 
 ### 4. 노이즈 벡터 최적화 및 이상치 점수 산출
+
 학습된 생성기 $G$를 사용하여 입력 샘플 $x$와 가장 유사한 합성 샘플 $G(z)$를 생성하기 위해 잠재 벡터 $z$를 최적화한다.
+
 - **손실 함수:** Mean Squared Error (MSE)를 사용하여 $x$와 $G(z)$ 사이의 차이를 최소화하도록 $z$를 역전파(Backpropagation)를 통해 업데이트한다.
 - **이상치 점수(Anomaly Score):** 최적화된 $z$를 통해 생성된 샘플과 원본 샘플 간의 $\text{MSE}$ 값이 곧 이상치 점수가 된다.
 - **임계값 설정:** AUC-ROC 분석을 통해 정상과 이상치를 가장 잘 구분하는 최적의 임계값(Threshold)을 결정한다.
@@ -59,11 +66,13 @@ Pavan Reddy and Aditya Singh (2024)
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋:** Smart Buildings Anomaly Detection 데이터셋 (Google 캠퍼스의 VAV 장치 데이터, 총 60,425개 관측치, 이상치 비율 3.2%).
 - **비교 대상 (Baselines):** One-Class SVM (OCSVM), k-Nearest Neighbors (KNN).
 - **평가 지표:** AUC-ROC.
 
 ### 2. 정량적 결과
+
 실험 결과, AnoGAN 기반 방식이 기존 전통적 방법론보다 월등한 성능을 보였다.
 
 | Methods | AUC-ROC |
@@ -78,10 +87,12 @@ Pavan Reddy and Aditya Singh (2024)
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 - 본 논문은 GAN의 생성 능력을 이상치 탐지에 성공적으로 접목하였으며, 특히 CT-GAN과 Hard Gumbel Softmax의 조합을 통해 정형 데이터 특유의 불확실성을 효과적으로 제어하였다.
 - 전통적인 머신러닝 기반 방법론(KNN, OCSVM)이 거의 무작위 추측 수준(50% 내외)의 성능을 보인 반면, AnoGAN은 유의미한 탐지 성능을 입증하였다.
 
 ### 한계 및 미해결 과제
+
 - **데이터 의존성:** 이상치의 개수에 따라 성능 편차가 크게 나타나며, 이는 이상치의 생성 함수를 파악하는 난이도가 데이터셋 규모에 따라 달라짐을 시사한다.
 - **범용성:** 본 논문에서는 주로 수치형 데이터에 집중하였으며, 범주형 변수(Categorical variables)를 처리하는 구체적인 메커니즘에 대한 심층적인 논의는 부족하다.
 - **비교 대상의 설정:** 비교군으로 설정된 OCSVM과 KNN의 성능이 지나치게 낮게 측정되었다. 이는 하이퍼파라미터 튜닝의 부족일 가능성이 있으며, 최신 딥러닝 기반 이상치 탐지 모델(예: Deep SVDD 등)과의 비교가 추가되었다면 더 설득력 있었을 것이다.

@@ -10,7 +10,7 @@ Runqing Wu, Kaihui Huang, Hanyi Zhang, Fei Ye (2025)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 단일 백본의 한계를 극복하기 위해 서로 다른 데이터 소스로 사전 학습된 여러 개의 ViT 백본을 동시에 운용하는 **Self-Controlled Dynamic Expansion Model (SCDEM)** 아키텍처를 설계한 것이다. 
+본 논문의 핵심 아이디어는 단일 백본의 한계를 극복하기 위해 서로 다른 데이터 소스로 사전 학습된 여러 개의 ViT 백본을 동시에 운용하는 **Self-Controlled Dynamic Expansion Model (SCDEM)** 아키텍처를 설계한 것이다.
 
 중심적인 설계 방향은 다중 백본을 공유 모듈로 활용하여 풍부한 시맨틱 표현(semantic representation)을 얻고, 새로운 태스크가 등장할 때마다 최소한의 파라미터만을 가진 새로운 전문가(Expert) 모듈을 동적으로 생성하여 확장하는 것이다. 또한, 백본의 일부 레이어를 미세 조정함으로써 가소성을 확보하되, 이 과정에서 발생하는 망각을 방지하기 위해 협력적 최적화(COM), 특성 분포 일관성(FDC), 그리고 동적 레이어별 특성 어텐션(DLWFAM)이라는 세 가지 메커니즘을 제안하여 안정성과 적응성을 동시에 달성하고자 한다.
 
@@ -23,26 +23,32 @@ Runqing Wu, Kaihui Huang, Hanyi Zhang, Fei Ye (2025)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조 및 다중 백본
+
 SCDEM은 $t'$개의 서로 다른 사전 학습된 ViT 백본 $\{f_{\theta_1}, \dots, f_{\theta_{t'}}\}$을 사용한다. 입력 이미지 $x$가 주어지면 각 백본은 클래스 토큰(class token)을 추출하며, 이들을 모두 연결(concatenation)하여 확장된 특성 벡터 $z_f$를 생성한다.
 $$z_f = z_1 \otimes z_2 \otimes \dots \otimes z_{t'}$$
 여기서 $\otimes$는 벡터의 연결을 의미하며, 이를 통해 다양한 도메인의 지식이 융합된 풍부한 표현력을 확보한다.
 
 ### 2. 전문가 모듈 (Expert Module)
-새로운 태스크 $T_j$가 주어지면, 이에 대응하는 전문가 모듈 $E_j = \{f_{\xi j}, f_{\omega j}\}$가 생성된다. 
+
+새로운 태스크 $T_j$가 주어지면, 이에 대응하는 전문가 모듈 $E_j = \{f_{\xi j}, f_{\omega j}\}$가 생성된다.
+
 - **적응 모듈 $f_{\xi j}$**: 확장된 특성 벡터 $z_f$를 입력받아 태스크 특화 표현 $\bar{z}_j$로 변환한다.
 - **선형 분류기 $f_{\omega j}$**: $\bar{z}_j$를 바탕으로 최종 클래스 라벨을 예측한다.
 최종 예측값 $y'$는 다음과 같이 결정된다.
 $$y' = \arg \max (\text{Softmax}(W_{\omega j}^T \bar{z}_j))$$
 
 ### 3. 협력적 최적화 메커니즘 (Collaborative Optimization Mechanism, COM)
+
 백본의 가소성을 높이기 위해 마지막 $L$개의 레이어만 학습 가능하게 설정한다. 이때 발생하는 망각을 막기 위해, 학습 전 백본의 복사본(Frozen Backbone) $\{\hat{f}_{\theta_1}, \dots, \hat{f}_{\theta_{t'}}\}$을 만들어 고정한다. COM은 현재 학습 중인 백본으로 생성한 예측 분포와 고정된 백본으로 생성한 예측 분포 사이의 KL 발산(Kullback-Leibler Divergence)을 최소화하여, 과거 전문가들의 예측 패턴이 유지되도록 강제한다.
 $$L_{COM} = \sum_{i=1}^{j-1} KL(p(y|\bar{z}_i, E_i) \parallel p(y|\hat{z}_i, E_i))$$
 
 ### 4. 특성 분포 일관성 (Feature Distribution Consistency, FDC)
+
 단순히 출력값만 맞추는 것이 아니라, 백본 내부의 특성 표현 자체가 급격히 변하는 것을 막기 위해 Wasserstein 거리(Optimal Transport distance)를 사용한다. 각 레이어 $k$에서 추출된 특성 분포 $P_{Z_{j,k}}$와 고정된 백본의 분포 $P_{\hat{Z}_{j,k}}$ 사이의 거리를 최소화하여 시맨틱 일관성을 유지하고 부정적 지식 전이(Negative Knowledge Transfer)를 억제한다.
 $$L_{FDC} = \sum_{j=1}^{t'} \sum_{k=1}^{L} W(P_{Z_{j,k}}, P_{\hat{Z}_{j,k}})$$
 
 ### 5. 동적 레이어별 특성 어텐션 메커니즘 (DLWFAM)
+
 모든 레이어가 동일하게 중요하지 않다는 점에 착안하여, 학습 가능한 셀렉터 $\mathcal{S}_{\phi_t}$를 통해 각 레이어의 중요도 $\alpha_j$를 동적으로 계산한다. 이를 통해 가중치가 적용된 융합 특성 $Z_{fused, j}$를 생성하고, 이 융합된 분포 간의 Wasserstein 거리를 측정함으로써 과도한 정규화(Over-regularization)를 방지하고 효율적으로 파라미터를 업데이트한다.
 $$Z_{fused, j} = \sum_{k=1}^{L} \alpha_{j[k]} \cdot z_{j,k}$$
 $$L_{Fused} = \sum_{j=1}^{t'} W(P_{Z_{fused, j}}, P_{\hat{Z}_{fused, j}})$$
@@ -50,11 +56,13 @@ $$L_{Fused} = \sum_{j=1}^{t'} W(P_{Z_{fused, j}}, P_{\hat{Z}_{fused, j}})$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: CIFAR-10, TinyImageNet, CIFAR-100, Birds 525 Species를 사용하여 교차 도메인 지속 학습 환경을 구축하였다.
 - **지표**: 모든 태스크의 평균 정확도(Average)와 마지막 태스크의 정확도(Last)를 측정하였다.
 - **비교 대상**: DER 및 그 변형들(DER++, DER+++), MoE-2E/1R, iCaRL, StarPrompt, RanPac, Dap 등 최신 SOTA 모델들과 비교하였다.
 
 ### 2. 주요 결과
+
 - **정량적 성과**: SCDEM은 거의 모든 태스크 구성에서 SOTA 성능을 달성하였다. 특히 3개 이상의 도메인이 섞인 복잡한 환경에서 SCDEM(백본 3개 사용 시)은 StarPrompt 대비 평균 정확도에서 큰 폭의 향상을 보였다.
 - **Class-IL 확장**: 태스크 식별자 없이 추론해야 하는 Class-Incremental Learning 상황에서도, 예측 엔트로피와 KL 발산을 이용한 '신뢰도 점수(Confidence Score)' 기반의 전문가 선택 메커니즘을 통해 매우 높은 성능을 기록하였다.
 - **효율성**: StarPrompt와 비교했을 때 학습 파라미터 수는 51.08% 감소, GPU 메모리 사용량은 47.29% 감소, 학습 시간은 83.21% 단축되어 매우 효율적인 모델임을 입증하였다.

@@ -14,63 +14,71 @@ Dongho Yoon, Gungyu Lee, Jaewon Chang, Yunjae Lee, Dongjae Lee, Minsoo Rhu (2025
 
 Mamba-X의 중심 설계 아이디어는 **하드웨어-알고리즘 공동 설계(Hardware-Algorithm Co-design)**를 통해 Selective Scan의 순차적 의존성을 극복하고 메모리 효율을 극대화하는 것이다.
 
-1.  **Systolic Scan Array (SSA) 설계**: 병렬 prefix sum 알고리즘인 Kogge-Stone 알고리즘을 시스톨릭 어레이(Systolic Array) 구조로 재구성하였다. 이를 통해 인접한 처리 요소(PE) 간의 직접적인 데이터 전달을 가능하게 하여 온칩 버퍼 의존도를 낮추고 병렬성을 극대화하였다.
-2.  **Hybrid, Hardware-friendly (H2) 양자화**: Vision Mamba의 데이터 분포 특성을 분석하여, 분산이 적은 가중치에는 Tensor-granularity 양자화를, 변동성이 큰 활성화 함수(activation)에는 Channel-granularity 양자화를 적용하는 하이브리드 방식을 도입하였다. 또한, 스케일링 인자를 2의 거듭제곱 형태로 근사하여 복잡한 곱셈 연산을 단순한 시프트(shift) 연산으로 대체하였다.
+1. **Systolic Scan Array (SSA) 설계**: 병렬 prefix sum 알고리즘인 Kogge-Stone 알고리즘을 시스톨릭 어레이(Systolic Array) 구조로 재구성하였다. 이를 통해 인접한 처리 요소(PE) 간의 직접적인 데이터 전달을 가능하게 하여 온칩 버퍼 의존도를 낮추고 병렬성을 극대화하였다.
+2. **Hybrid, Hardware-friendly (H2) 양자화**: Vision Mamba의 데이터 분포 특성을 분석하여, 분산이 적은 가중치에는 Tensor-granularity 양자화를, 변동성이 큰 활성화 함수(activation)에는 Channel-granularity 양자화를 적용하는 하이브리드 방식을 도입하였다. 또한, 스케일링 인자를 2의 거듭제곱 형태로 근사하여 복잡한 곱셈 연산을 단순한 시프트(shift) 연산으로 대체하였다.
 
 ## 📎 Related Works
 
 논문에서는 SSM 및 ViT 가속기와 관련된 기존 연구들을 다음과 같이 설명한다.
 
--   **SSM 가속기**: VGA는 H3 모델의 FFT 연산을 가속하며, MARCA는 대규모 데이터센터 배포를 위해 HBM과 대용량 SRAM을 사용하는 Mamba 기반 LLM 가속기를 제안하였다. 반면, Mamba-X는 데이터센터가 아닌 **자원이 극도로 제한된 엣지 환경**과 **비전 모델**의 특성에 집중한다는 점에서 차별화된다.
--   **ViT 가속기**: ViTCoD나 ViTALiTy 등은 Attention 메커니즘의 병목을 줄이기 위해 가지치기(pruning)나 저차원 근사(low-rank approximation)를 사용하였다. 하지만 Vision Mamba는 Attention 대신 Selective SSM을 사용하므로, 기존 ViT 가속 방식으로는 해결할 수 없는 새로운 형태의 순차적 의존성 문제가 존재한다.
--   **양자화 연구**: 기존 PTQ(Post-Training Quantization) 기법들은 주로 ViT의 Attention 메커니즘에 집중해 왔다. Mamba-X는 Selective SSM 블록 내의 활성화 텐서가 갖는 높은 분산과 아웃라이어(outlier) 문제를 해결하기 위한 전용 하이브리드 양자화 전략을 제시한다.
+- **SSM 가속기**: VGA는 H3 모델의 FFT 연산을 가속하며, MARCA는 대규모 데이터센터 배포를 위해 HBM과 대용량 SRAM을 사용하는 Mamba 기반 LLM 가속기를 제안하였다. 반면, Mamba-X는 데이터센터가 아닌 **자원이 극도로 제한된 엣지 환경**과 **비전 모델**의 특성에 집중한다는 점에서 차별화된다.
+- **ViT 가속기**: ViTCoD나 ViTALiTy 등은 Attention 메커니즘의 병목을 줄이기 위해 가지치기(pruning)나 저차원 근사(low-rank approximation)를 사용하였다. 하지만 Vision Mamba는 Attention 대신 Selective SSM을 사용하므로, 기존 ViT 가속 방식으로는 해결할 수 없는 새로운 형태의 순차적 의존성 문제가 존재한다.
+- **양자화 연구**: 기존 PTQ(Post-Training Quantization) 기법들은 주로 ViT의 Attention 메커니즘에 집중해 왔다. Mamba-X는 Selective SSM 블록 내의 활성화 텐서가 갖는 높은 분산과 아웃라이어(outlier) 문제를 해결하기 위한 전용 하이브리드 양자화 전략을 제시한다.
 
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 아키텍처
+
 Mamba-X는 Vision Mamba의 전체 파이프라인을 처리하기 위한 전용 하드웨어 유닛들로 구성된다.
--   **DMA**: 온칩/오프칩 데이터 이동을 제어한다.
--   **GEMM Engine**: Output-stationary 시스톨릭 어레이 기반으로 모든 선형 투영(linear projection) 연산을 수행한다.
--   **VPU (Vector Processing Unit)**: LayerNorm, Conv1D, element-wise 연산을 처리한다.
--   **SFU (Special Function Unit)**: SiLU, exponential, softplus와 같은 비선형 함수를 처리한다.
--   **SSA (Systolic Scan Array)**: 본 논문의 핵심으로, Selective Scan 연산을 수행한다.
--   **PPU (Post Processing Unit)**: Scan 이후의 MAC 연산 및 최종 출력을 처리하며, 청크 간 의존성을 해결하는 **LISU (Long Input Support Unit)**를 포함한다.
+
+- **DMA**: 온칩/오프칩 데이터 이동을 제어한다.
+- **GEMM Engine**: Output-stationary 시스톨릭 어레이 기반으로 모든 선형 투영(linear projection) 연산을 수행한다.
+- **VPU (Vector Processing Unit)**: LayerNorm, Conv1D, element-wise 연산을 처리한다.
+- **SFU (Special Function Unit)**: SiLU, exponential, softplus와 같은 비선형 함수를 처리한다.
+- **SSA (Systolic Scan Array)**: 본 논문의 핵심으로, Selective Scan 연산을 수행한다.
+- **PPU (Post Processing Unit)**: Scan 이후의 MAC 연산 및 최종 출력을 처리하며, 청크 간 의존성을 해결하는 **LISU (Long Input Support Unit)**를 포함한다.
 
 ### 2. Systolic Scan Array (SSA) 및 데이터플로우
+
 SSA는 Kogge-Stone 알고리즘의 데이터흐름을 시스톨릭 구조로 변환하여 구현되었다.
 
--   **Chunk-wise Parallel Scan**: 입력 시퀀스를 $L$ 차원을 따라 여러 청크(chunk)로 나누어 병렬 처리한다.
--   **SPE (Scan Processing Element)**: 각 SPE는 두 개의 곱셈기와 하나의 덧셈기를 포함하며, $\Delta A$와 $\Delta B \cdot u$ 데이터를 입력받아 상태 변수를 업데이트하고 이를 인접 SPE로 즉시 전달한다.
--   **LISU (Long Input Support Unit)**: 청크 기반 처리 시 발생하는 청크 간 의존성(inter-chunk dependency)을 해결한다. 이전 청크의 최종 상태 변수를 저장하고 다음 청크의 계산에 즉시 제공하여 오프칩 메모리 접근 없이 연속적인 스캔을 가능하게 한다.
+- **Chunk-wise Parallel Scan**: 입력 시퀀스를 $L$ 차원을 따라 여러 청크(chunk)로 나누어 병렬 처리한다.
+- **SPE (Scan Processing Element)**: 각 SPE는 두 개의 곱셈기와 하나의 덧셈기를 포함하며, $\Delta A$와 $\Delta B \cdot u$ 데이터를 입력받아 상태 변수를 업데이트하고 이를 인접 SPE로 즉시 전달한다.
+- **LISU (Long Input Support Unit)**: 청크 기반 처리 시 발생하는 청크 간 의존성(inter-chunk dependency)을 해결한다. 이전 청크의 최종 상태 변수를 저장하고 다음 청크의 계산에 즉시 제공하여 오프칩 메모리 접근 없이 연속적인 스캔을 가능하게 한다.
 
 ### 3. Special Function Unit (SFU)
+
 비선형 함수를 효율적으로 계산하기 위해 **LUT(Look-Up Table) 기반의 piecewise linear interpolation** 방식을 사용한다.
--   입력 분포를 분석하여 99.9%의 데이터가 집중되는 구간을 설정하고, 해당 구간을 16~32개의 세그먼트로 나누어 선형 함수 $y = ax + b$로 근사한다.
--   **ADU (Address Decoding Unit)** $\rightarrow$ **LUT** $\rightarrow$ **CU (Compute Unit)** 순으로 데이터를 처리하여 연산 비용을 획기적으로 줄였다.
+
+- 입력 분포를 분석하여 99.9%의 데이터가 집중되는 구간을 설정하고, 해당 구간을 16~32개의 세그먼트로 나누어 선형 함수 $y = ax + b$로 근사한다.
+- **ADU (Address Decoding Unit)** $\rightarrow$ **LUT** $\rightarrow$ **CU (Compute Unit)** 순으로 데이터를 처리하여 연산 비용을 획기적으로 줄였다.
 
 ### 4. Hybrid, Hardware-friendly (H2) Quantization
+
 메모리 사용량을 줄이고 연산 효율을 높이기 위해 INT8 양자화를 적용한다.
 
--   **Hybrid Strategy**:
-    -   **Weights**: 분포가 균일하므로 Tensor-granularity 양자화 적용.
-    -   **Activations**: 채널 간 편차가 크므로 Channel-granularity 양자화 적용.
--   **Scaling Factor Approximation**: 
+- **Hybrid Strategy**:
+  - **Weights**: 분포가 균일하므로 Tensor-granularity 양자화 적용.
+  - **Activations**: 채널 간 편차가 크므로 Channel-granularity 양자화 적용.
+- **Scaling Factor Approximation**:
     양자화된 값들의 연산 과정에서 발생하는 리스케일링(rescaling) 곱셈 연산을 줄이기 위해, 스케일링 인자를 가장 가까운 2의 거듭제곱($2^n$)으로 반올림한다. 이를 통해 하드웨어에서 곱셈기 대신 **시프트(shift) 연산**만으로 리스케일링을 수행할 수 있어 면적과 에너지를 절감한다.
 
 ## 📊 Results
 
 ### 1. 실험 설정
--   **비교 대상**: NVIDIA Jetson AGX Xavier (Edge GPU).
--   **대상 모델**: Vision Mamba Tiny, Small, Base.
--   **측정 지표**: 처리량(Throughput), 지연 시간(Latency), 에너지 효율, 면적 효율, ImageNet-1K Top-1/5 정확도.
+
+- **비교 대상**: NVIDIA Jetson AGX Xavier (Edge GPU).
+- **대상 모델**: Vision Mamba Tiny, Small, Base.
+- **측정 지표**: 처리량(Throughput), 지연 시간(Latency), 에너지 효율, 면적 효율, ImageNet-1K Top-1/5 정확도.
 
 ### 2. 주요 결과
--   **Selective Scan 성능**: Mamba-X는 baseline GPU 대비 Selective Scan 처리량에서 평균 **$11.6\times$ 향상**을 보였다.
--   **에너지 및 면적 효율**: 
-    -   Selective Scan 실행 시 에너지 효율이 평균 **$11.5\times$ 향상**되었다.
-    -   단위 면적당 성능(Performance/Area)은 **$601\times$ 증가**하였다. 이는 Mamba-X의 전체 면적($1.34\text{ mm}^2$ at 12nm)이 Jetson AGX Xavier($350\text{ mm}^2$)에 비해 매우 작기 때문이다.
--   **End-to-End 성능**: Selective Scan의 병목을 해결함으로써 전체 추론 지연 시간을 평균 **$2.3\times$ 단축**시켰다.
--   **정확도**: FP16 baseline 대비 Top-1 정확도 손실이 **1%p 미만**으로 유지되어, 양자화 및 근사 기법이 모델 성능에 미치는 영향이 매우 적음을 입증하였다.
+
+- **Selective Scan 성능**: Mamba-X는 baseline GPU 대비 Selective Scan 처리량에서 평균 **$11.6\times$ 향상**을 보였다.
+- **에너지 및 면적 효율**:
+  - Selective Scan 실행 시 에너지 효율이 평균 **$11.5\times$ 향상**되었다.
+  - 단위 면적당 성능(Performance/Area)은 **$601\times$ 증가**하였다. 이는 Mamba-X의 전체 면적($1.34\text{ mm}^2$ at 12nm)이 Jetson AGX Xavier($350\text{ mm}^2$)에 비해 매우 작기 때문이다.
+- **End-to-End 성능**: Selective Scan의 병목을 해결함으로써 전체 추론 지연 시간을 평균 **$2.3\times$ 단축**시켰다.
+- **정확도**: FP16 baseline 대비 Top-1 정확도 손실이 **1%p 미만**으로 유지되어, 양자화 및 근사 기법이 모델 성능에 미치는 영향이 매우 적음을 입증하였다.
 
 ## 🧠 Insights & Discussion
 

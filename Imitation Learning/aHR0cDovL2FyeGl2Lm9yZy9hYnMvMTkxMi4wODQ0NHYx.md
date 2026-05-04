@@ -18,16 +18,18 @@ Lionel Blondé, Yichuan Charlie Tang, Jian Zhang, Russ Webb (2019)
 
 본 논문은 다음과 같은 관련 연구들을 배경으로 한다.
 
-1.  **Self-Attention & Non-local Networks**: Transformer의 Self-attention과 이미지 처리의 Non-local mean 연산은 데이터의 전역적인 관계를 캡처하는 데 탁월하다. 기존 연구들은 이를 주로 영상 예측(video prediction)이나 이미지 생성에 사용했으나, 본 논문은 이를 RL의 제어 정책(control policy)에 적용했다.
-2.  **Adversarial Imitation**: GAIL은 전문가의 상태-행동 분포와 에이전트의 분포를 구분하는 판별자(Discriminator)를 통해 보상을 생성한다. 최근 연구에서는 행동 정보가 없는 state-only 데모네스트레이션에서 학습하는 시도가 있었으나, 픽셀 입력을 사용하는 설정에서의 성능 최적화는 미흡했다.
-3.  **Relational Learning**: Graph Neural Networks(GNN)는 신체 구조를 그래프로 모델링하여 locomotion 성능을 높였으나, 이는 명시적인 신체 구조(proprioceptive state)가 주어졌을 때만 가능하다. 본 논문은 GNN과 달리 픽셀 입력에서 직접 관계를 발견하는 방식을 취함으로써 차별점을 가진다.
+1. **Self-Attention & Non-local Networks**: Transformer의 Self-attention과 이미지 처리의 Non-local mean 연산은 데이터의 전역적인 관계를 캡처하는 데 탁월하다. 기존 연구들은 이를 주로 영상 예측(video prediction)이나 이미지 생성에 사용했으나, 본 논문은 이를 RL의 제어 정책(control policy)에 적용했다.
+2. **Adversarial Imitation**: GAIL은 전문가의 상태-행동 분포와 에이전트의 분포를 구분하는 판별자(Discriminator)를 통해 보상을 생성한다. 최근 연구에서는 행동 정보가 없는 state-only 데모네스트레이션에서 학습하는 시도가 있었으나, 픽셀 입력을 사용하는 설정에서의 성능 최적화는 미흡했다.
+3. **Relational Learning**: Graph Neural Networks(GNN)는 신체 구조를 그래프로 모델링하여 locomotion 성능을 높였으나, 이는 명시적인 신체 구조(proprioceptive state)가 주어졌을 때만 가능하다. 본 논문은 GNN과 달리 픽셀 입력에서 직접 관계를 발견하는 방식을 취함으로써 차별점을 가진다.
 
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 RM은 기본적으로 GAIL 프레임워크를 따르며, 정책 네트워크($\pi_\theta$), 가치 네트워크($V_\phi$), 그리고 보상을 생성하는 판별자 네트워크($D_\omega$)로 구성된다. 픽셀 입력의 부분 관측성(partial observability) 문제를 해결하기 위해 $k$개의 프레임을 쌓는 **Frame-stacking** 방식을 사용하며, 입력 데이터는 $84 \times 84 \times (colors \times k)$ 크기의 텐서가 된다.
 
 ### 2. Relational Block (Non-local Agent)
+
 에이전트의 인지 능력 향상을 위해 도입된 Relational Block은 다음과 같은 Self-attention 메커니즘을 기반으로 한다. 입력 특징 맵 $u$에 대해, 쿼리(query) $q(u_i)$와 키(key) $k(u_j)$의 내적을 통해 유사도를 계산하고, 이를 softmax로 정규화하여 밸류(value) $v(u_j)$의 가중합을 구한다.
 
 $$u_i \to \sum_{j=0}^{m} \text{softmax}(q(u_i)^T k(u_j)) v(u_j)$$
@@ -37,6 +39,7 @@ $$u_i \to \sum_{j=0}^{m} \text{softmax}(q(u_i)^T k(u_j)) v(u_j)$$
 $$u_i \to e\left( \sum_{j=0}^{m} \text{softmax}(q(u_i)^T k(u_j)) v(u_j) \right) + u_i$$
 
 ### 3. 보상 학습 (Reward Learning)
+
 판별자 $D_\omega$는 전문가의 궤적과 에이전트의 궤적을 구분하는 이진 분류기로 동작한다. GAIL의 목적 함수는 다음과 같은 minimax 문제로 정의된다.
 
 $$\min_{\theta} \max_{\omega} [V(\theta, \omega)], \quad V(\theta, \omega) = \mathbb{E}_{\pi_\theta}[\log(1 - D_\omega(s, a))] + \mathbb{E}_{\pi_e}[\log D_\omega(s, a)]$$
@@ -48,18 +51,21 @@ $$r_\omega(s^k_{t+1}) = -\log(1 - D_\omega(s^k_{t+1}))$$
 학습의 안정성을 위해 판별자 네트워크에는 **Spectral Normalization**과 **Gradient Penalty**를 동시에 적용하였다.
 
 ### 4. 학습 절차
-1.  정책 $\pi_\theta$를 통해 환경과 상호작용하며 데이터를 수집하고 저장한다.
-2.  수집된 데이터와 전문가 데모네스트레이션을 사용하여 판별자 $D_\omega$를 업데이트한다.
-3.  업데이트된 $D_\omega$가 제공하는 보상 $r_\omega$를 사용하여 PPO(Proximal Policy Optimization) 알고리즘으로 정책 $\pi_\theta$와 가치 네트워크 $V_\phi$를 업데이트한다.
+
+1. 정책 $\pi_\theta$를 통해 환경과 상호작용하며 데이터를 수집하고 저장한다.
+2. 수집된 데이터와 전문가 데모네스트레이션을 사용하여 판별자 $D_\omega$를 업데이트한다.
+3. 업데이트된 $D_\omega$가 제공하는 보상 $r_\omega$를 사용하여 PPO(Proximal Policy Optimization) 알고리즘으로 정책 $\pi_\theta$와 가치 네트워크 $V_\phi$를 업데이트한다.
 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **환경**: MuJoCo 기반의 `Hopper-v3`, `Walker2d-v3` (픽셀 입력 설정).
 - **데이터**: 각 환경당 8개의 전문가 비디오 데모네스트레이션 사용.
 - **지표**: Mean Episodic Return 및 CCDF(Complementary Cumulative Distribution Function)를 통해 성능과 안정성을 측정하였다.
 
 ### 2. 주요 결과
+
 - **관계형 모듈의 효과**: RM-NL-NL(정책, 가치, 보상 네트워크 모두에 non-local block 적용) 모델이 baseline(관계형 모듈 없음)보다 월등한 성능을 보였다. 특히 복잡한 `Walker2d-v3` 환경에서 baseline은 거의 학습되지 않은 반면, RM은 성공적으로 수렴하였다.
 - **모듈별 영향력**: ablation study 결과, non-local block을 **보상 네트워크(Reward module)**에 적용했을 때 성능 향상 폭이 가장 컸다. 이는 정확한 보상 신호를 생성하는 것이 모방 학습의 성패를 결정짓는 핵심임을 시사한다.
 - **프레임 스택($k$)의 영향**: $k=4$에서 $k=8$로 늘렸을 때, RM 모델들은 전반적으로 성능이 향상되었다(Hopper의 경우 약 21% 증가). 반면, baseline은 오히려 성능이 하락하는 모습을 보였으며, 이는 관계형 추론 능력이 더 긴 시퀀스의 데이터를 효율적으로 처리하는 데 도움을 준다는 것을 의미한다.

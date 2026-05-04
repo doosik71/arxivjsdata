@@ -19,16 +19,20 @@ Jeong-Hoe Ku, JiHun Oh, YoungYoon Lee, Gaurav Pooniwala, SangJeong Lee (2020)
 본 논문은 KD의 내부 작동 원리를 세 가지 관점에서 상세히 설명한다.
 
 ### 1. 증류될 지식과 손실 함수 (Distilled Knowledge and Loss)
+
 지식은 네트워크 내 어디에 존재하는가에 따라 두 가지 방식으로 정의된다.
+
 - **응답 증류 (Response Distillation):** 교사 모델의 최종 출력값(logits)만을 사용한다. 특히 Hinton et al.은 온도 파라미터 $T$를 도입하여 Softmax 출력을 부드럽게 만든 'Soft Label'을 사용함으로써, 정답 외의 클래스 간 관계 정보인 'Dark Knowledge'를 전달하도록 했다. 이때 손실 함수로는 주로 KL Divergence를 사용한다.
 - **표현 공간 증류 (Representation Space Distillation):** 교사 모델의 중간 층(hidden layers)에서 추출된 특징 맵(feature maps)이나 힌트(hints)를 모방하게 한다. 이는 모델의 구조적 차이로 인해 정보 손실이 발생할 수 있으므로, 이를 보완하기 위한 적응 층(adaptation layers) 설계가 중요하다.
 
 ### 2. 교사-학생 아키텍처 (Teacher-Student Architecture)
+
 - **Single Teacher-Single Student:** 가장 기본적인 형태로, 하나의 큰 모델이 작은 모델을 지도한다. 다만, 두 모델 간의 용량 격차(capacity gap)가 너무 크면 성능이 오히려 저하되는 문제가 발생한다.
 - **다단계 학습 (Multi-Step Learning):** 위 문제를 해결하기 위해 교사와 학생 사이에 중간 크기의 '교사 보조 모델(Teacher Assistant, TA)'을 두어 지식을 단계적으로 전달하는 TAKD 방식이 제안되었다.
 - **다중 교사 학습 (Multiple-Teacher Learning):** 여러 교사 모델의 출력을 평균 내거나, 중간 층의 상대적 유사성을 제약 조건으로 부여하여 더 풍부한 지식을 전달한다.
 
 ### 3. 증류 과정 (Distillation Process)
+
 - **오프라인 증류 (Off-line Distillation):** 미리 학습된 정적인 교사 모델로부터 학생 모델이 일방향으로 지식을 전달받는 방식이다.
 - **온라인 증류 (On-line Distillation):** 교사와 학생 모델이 동시에 학습하며 서로가 서로를 가르치는 상호 학습(Mutual Learning) 방식이다. 대표적으로 Deep Mutual Learning(DML)은 여러 학생 모델이 협력하여 함께 정답을 찾아가도록 설계되었다.
 
@@ -42,7 +46,7 @@ Jeong-Hoe Ku, JiHun Oh, YoungYoon Lee, Gaurav Pooniwala, SangJeong Lee (2020)
 
 ## 🧠 Insights & Discussion
 
-본 논문은 KD가 경험적으로는 매우 성공적이지만, 이론적 배경은 여전히 부족하다는 점을 지적한다. 예를 들어, Teacher Assistant(TA) 모델을 도입했을 때 성능이 향상되는 현상은 관찰되었으나, 최적의 TA 크기가 무엇인지, 혹은 TA를 여러 층으로 쌓는 것이 효과적인지에 대한 수학적 근거는 명확하지 않다. 
+본 논문은 KD가 경험적으로는 매우 성공적이지만, 이론적 배경은 여전히 부족하다는 점을 지적한다. 예를 들어, Teacher Assistant(TA) 모델을 도입했을 때 성능이 향상되는 현상은 관찰되었으나, 최적의 TA 크기가 무엇인지, 혹은 TA를 여러 층으로 쌓는 것이 효과적인지에 대한 수학적 근거는 명확하지 않다.
 
 또한, KD가 단순히 모델 압축을 넘어 약지도 학습(Weakly-supervised learning)에서 교차 작업 증류(cross-task distillation)로 활용되거나, 준지도 학습에서 비지도 사전 학습(unsupervised pre-training) 후 지식을 정제하는 용도로 확장되고 있다는 점은 매우 고무적이다. 이는 KD가 단순한 '모방'을 넘어 데이터 효율성을 극대화하는 '학습 가이드'로서의 역할을 수행하고 있음을 시사한다.
 

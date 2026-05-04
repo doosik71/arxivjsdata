@@ -10,7 +10,7 @@ Jiancheng Lyu and Spencer Sheen (2019)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 기여는 채널 수 감소를 위한 **RGSM(Relaxed Group-wise Splitting Method)**과 가중치의 정밀도를 1비트로 낮추는 **Weight Binarization**을 통합한 3단계 훈련 절차를 제안한 것이다. 
+본 논문의 핵심 기여는 채널 수 감소를 위한 **RGSM(Relaxed Group-wise Splitting Method)**과 가중치의 정밀도를 1비트로 낮추는 **Weight Binarization**을 통합한 3단계 훈련 절차를 제안한 것이다.
 
 단순히 가중치에 페널티를 부여하는 방식보다 효율적인 변수 분할 방식(Variable Splitting Method)을 그룹 희소성(Group Sparsity) 문제에 적용하여, 모델 성능의 하락을 $0.25\%$ 이내로 억제하면서도 $50\%$ 이상의 채널 희소성(Channel Sparsity)을 달성하였다.
 
@@ -23,17 +23,20 @@ Jiancheng Lyu and Spencer Sheen (2019)
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인 (Three-Stage Procedure)
+
 모델 최적화는 다음의 세 단계로 진행된다.
+
 - **Stage I (Channel Pruning):** RGSM을 사용하여 적절한 채널 희소성을 확보한다. 이 과정에서 정확도가 다소 하락할 수 있다.
 - **Stage II (Float Weight Retraining):** Stage I에서 제거된 채널을 제외하고, 남은 채널의 가중치(32-bit float)를 재학습시켜 손실된 정확도를 회복한다.
 - **Stage III (Weight Binarization):** Stage II의 가중치를 초기값(Warm start)으로 사용하여 가중치를 1비트 이진 값으로 변환하고 최적화한다.
 
 ### 2. RGSM (Relaxed Group-wise Splitting Method)
+
 채널 가지치기를 위해 Group Lasso 페널티를 사용하며, 이를 효율적으로 풀기 위해 다음의 라그랑지안 함수(Lagrangian function)를 교대로 최소화한다.
 
 $$L_{\beta}(u, w) = \ell(w) + \mu P(u) + \frac{\beta}{2} \|w - u\|_2^2$$
 
-여기서 $\ell(w)$는 손실 함수, $P(u)$는 Group Lasso 페널티, $\beta$는 정규화 파라미터이다. 
+여기서 $\ell(w)$는 손실 함수, $P(u)$는 Group Lasso 페널티, $\beta$는 정규화 파라미터이다.
 
 - **$u$-업데이트:** Group Lasso의 근접 연산자(Proximal Operator)를 사용하여 닫힌 형태(Closed form)로 계산한다.
 $$\text{Prox}_{\text{GL}, \lambda}(w_g) := w_g \frac{\max(\|w_g\| - \lambda, 0)}{\|w_g\|}$$
@@ -41,6 +44,7 @@ $$\text{Prox}_{\text{GL}, \lambda}(w_g) := w_g \frac{\max(\|w_g\| - \lambda, 0)}
 $$w_{t+1} = w_t - \eta \nabla \ell(w_t) - \eta \beta(w_t - u_t)$$
 
 ### 3. Weight Binarization
+
 가중치를 $\pm 1$로 투영하기 위해 다음과 같은 투영 연산자 $\text{proj}_{Q, a}(w)$를 정의한다.
 
 $$\text{proj}_{Q, a}(w) = \frac{\sum_{j=1}^D |w_j|}{D} \text{sgn}(w)$$
@@ -48,16 +52,19 @@ $$\text{proj}_{Q, a}(w) = \frac{\sum_{j=1}^D |w_j|}{D} \text{sgn}(w)$$
 여기서 $\text{sgn}(w)$는 각 원소의 부호를 결정하며, 앞의 계수는 가중치들의 절대값 평균을 곱해 크기를 조정하는 역할이다. 학습 시에는 가중치 정체(Weight stagnation) 현상을 막기 위해 Floating weight와 Binary weight를 섞어서 업데이트하는 Blended version의 BinaryConnect 알고리즘을 사용한다.
 
 ### 4. 네트워크 구조
+
 대상 모델은 2개의 Convolution layer와 1개의 Fully Connected layer로 구성된다. 입력은 윈도우 푸리에 변환을 거친 스펙트로그램(Spectrogram) 이미지이며, 두 번째 Conv layer의 64개 채널을 대상으로 가지치기를 수행한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋 및 작업:** 12개 클래스(silence, unknown, yes, no, up, down, left, right, on, off, stop, go)의 키워드 분류.
 - **지표:** 검증 정확도(Validation Accuracy) 및 채널 희소성(Channel Sparsity).
 - **비교 대상:** Original Audio-CNN, GL 기반 가지치기, RGSM 기반 가지치기, GSBC 기반 가지치기.
 
 ### 주요 결과
+
 1. **Stage I (가지치기 효율):** RGSM은 GL이나 GSBC보다 훨씬 효율적으로 희소성을 생성하였다. $\lambda=0.05$일 때 $56.3\%$의 희소성을 보였으며, $\lambda=0.04$일 때 $51.6\%$의 희소성과 $76.6\%$의 정확도를 기록하였다 (Table 1).
 2. **Stage II (정확도 회복):** 마스킹 레이어를 통해 가지치기된 채널을 고정한 후 재학습한 결과, 정확도가 원래 모델 수준인 $87.9\% \sim 89.2\%$까지 회복되었다 (Table 2).
 3. **Stage III (이진화 결과):** 최종적으로 가중치를 이진화했을 때, 원래 모델($88.5\%$)과 비교하여 매우 적은 차이인 $87\% \sim 88.3\%$의 정확도를 유지하였다 (Table 3).

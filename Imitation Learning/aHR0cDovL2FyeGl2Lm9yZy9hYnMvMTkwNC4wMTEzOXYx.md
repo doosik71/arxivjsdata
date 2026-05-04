@@ -28,7 +28,9 @@ GPRIL은 GAIL처럼 분포 매칭을 지향하면서도, 적대적 학습 대신
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 파이프라인
+
 GPRIL의 학습 루프는 다음과 같은 세 단계로 구성된다.
+
 1. **환경 상호작용:** 현재 정책으로 환경과 상호작용하며 $(s, a, s_{future})$ 데이터를 수집하고 리플레이 버퍼에 저장한다.
 2. **전구체 모델 학습:** 수집된 데이터를 사용하여, 미래 상태 $\bar{s}$가 주어졌을 때 과거의 $(s, a)$를 생성하는 조건부 생성 모델(Conditional Generative Model)을 학습시킨다.
 3. **정책 업데이트:** 전문가 시연 데이터와 더불어, 전구체 모델이 생성한 '전문가 상태로 되돌아오는 경로' 데이터를 사용하여 정책 $\pi_\theta$를 지도 학습 방식으로 업데이트한다.
@@ -36,6 +38,7 @@ GPRIL의 학습 루프는 다음과 같은 세 단계로 구성된다.
 ### 상세 방법론 및 수식 설명
 
 #### 1. 상태 분포의 그래디언트 추정
+
 에이전트의 정상 상태 분포(Stationary State Distribution) $d^\pi_\theta(\bar{s})$의 로그 그래디언트는 다음과 같이 Long-term Predecessor Distribution $B^\pi_\theta$에 대한 기대값으로 근사할 수 있다.
 
 $$\nabla_\theta \log d^\pi_\theta(\bar{s}) \propto \mathbb{E}_{s, a \sim B^\pi_\theta(\cdot, \cdot | \bar{s})} [\nabla_\theta \log \pi_\theta(a|s)]$$
@@ -47,6 +50,7 @@ $$B^\pi_\theta(s, a | \bar{s}) := (1-\gamma) \sum_{j=0}^{\infty} \gamma^j q^\pi_
 $\gamma$는 할인 인자(Discount factor)로, 미래 상태와 현재 상태 사이의 시간적 거리가 가까울수록 더 큰 가중치를 부여하여 분산을 줄이는 역할을 한다.
 
 #### 2. 생성 모델: Masked Autoregressive Flows (MAF)
+
 본 논문은 전구체 분포 $B^\pi_\theta$를 모델링하기 위해 **Masked Autoregressive Flows (MAF)**를 사용한다. MAF는 복잡한 분포를 가우시안 분포의 가역적 변환(Invertible Transformation)으로 표현하여 정확한 밀도 추정(Density Estimation)이 가능하다.
 
 모델은 다음과 같이 요인화(Factored)된 구조를 가진다.
@@ -54,6 +58,7 @@ $$B^\pi_\omega(s, a | \bar{s}) := B^s_{\omega_s}(s | \bar{s}) B^a_{\omega_a}(a |
 즉, 먼저 미래 상태 $\bar{s}$로부터 과거 상태 $s$를 생성하고, 다시 $\bar{s}$와 $s$를 조건으로 행동 $a$를 생성한다.
 
 #### 3. 정책 학습 및 손실 함수
+
 최종적으로 에이전트는 상태-행동 분포 $\rho^\pi_\theta(\bar{s}, \bar{a})$를 전문가의 분포와 매칭시키기 위해 다음의 그래디언트를 따라 업데이트한다.
 
 $$\nabla_\theta \log \rho^\pi_\theta(\bar{s}, \bar{a}) \approx \beta^\pi \nabla_\theta \log \pi_\theta(\bar{a}|\bar{s}) + \beta^d \mathbb{E}_{s, a \sim B^\pi_\omega(\cdot, \cdot | \bar{s})} [\nabla_\theta \log \pi_\theta(a|s)]$$
@@ -64,13 +69,15 @@ $$\nabla_\theta \log \rho^\pi_\theta(\bar{s}, \bar{a}) \approx \beta^\pi \nabla_
 ## 📊 Results
 
 ### 실험 설정
-- **태스크:** 
+
+- **태스크:**
     1. **Clip Insertion:** 탄성 클립을 플러그에 삽입하는 작업 (정밀한 조작 필요).
     2. **Peg Insertion:** 시뮬레이션 및 실제 로봇을 이용한 핀 삽입 작업.
 - **비교 대상:** Behavioral Cloning (BC), GAIL.
 - **측정 지표:** 성공률(Success Rate), 샘플 효율성(환경 상호작용 횟수), 전문가 데이터의 양.
 
 ### 주요 결과
+
 1. **성능 및 강건성:** Clip Insertion 태스크에서 GPRIL은 BC보다 훨씬 높고, GAIL과 비슷하거나 더 높은 성공률을 기록했다. 특히 경로를 이탈했을 때 다시 시도하는 복구 능력이 뛰어났다.
 2. **샘플 효율성:** GPRIL은 GAIL보다 수 차례의 **Order of Magnitude(수십~수백 배)** 적은 환경 상호작용만으로도 태스크를 해결했다 (그림 1c).
 3. **데이터 효율성:** 전문가의 행동(Action) 데이터 없이 **상태(State) 데이터만으로도** 학습이 가능함을 보였다. 이는 Kinesthetic Teaching(직접 로봇을 움직여 가르치는 방식)과 같이 상태만 기록되는 환경에서 매우 유용하다.
@@ -79,13 +86,16 @@ $$\nabla_\theta \log \rho^\pi_\theta(\bar{s}, \bar{a}) \approx \beta^\pi \nabla_
 ## 🧠 Insights & Discussion
 
 ### 강점 및 기여
+
 GPRIL은 전구체 모델이라는 개념을 통해 "어떻게 돌아오는가"에 대한 정답지를 생성 모델로 만들어 낸 점이 매우 혁신적이다. 특히 MAF를 사용하여 적대적 학습의 불안정성을 제거하고, 안정적인 Maximum Likelihood 학습을 통해 샘플 효율성을 극대화한 점이 돋보인다.
 
 ### 한계 및 논의사항
+
 - **생성 모델의 의존성:** 전구체 모델 $B^\pi_\omega$가 실제 분포를 얼마나 정확하게 근사하느냐가 전체 성능을 결정한다. 만약 생성 모델이 잘못된 경로를 생성한다면 정책 학습에 악영향을 줄 수 있다.
 - **$\gamma$의 영향:** 논문의 부록에서 언급되었듯 $\gamma$ 값은 정확한 분포 매칭과 분산 감소 사이의 트레이드-오프를 결정한다. $\gamma$가 낮을수록 더 빠르게 복귀하는 정책을 학습하지만, 장기적인 분포 매칭 정확도는 떨어질 수 있다.
 
 ### 비판적 해석
+
 본 논문은 GAIL과의 비교를 통해 우수성을 입증했으나, 최신 Diffusion-based imitation learning 모델들과 비교했을 때 생성 모델의 표현력이 충분한지에 대한 추가 검증이 필요해 보인다. 하지만 2019년 당시 기준으로는 매우 효율적인 분포 매칭 프레임워크를 제시했다고 평가할 수 있다.
 
 ## 📌 TL;DR

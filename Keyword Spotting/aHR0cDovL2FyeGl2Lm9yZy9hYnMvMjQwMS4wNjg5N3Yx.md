@@ -23,9 +23,11 @@ Adversarial Training 분야에서는 모델을 공격하여 취약점을 찾고 
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 ATE의 기본 흐름은 입력 데이터 $x$를 네트워크에 통과시켜 얻은 Softmax 출력의 Entropy를 계산하고, 이 Entropy를 최대화하는 방향으로 입력 $x$를 미세하게 조정하여 증강 데이터 $x^{aug}$를 생성하는 것이다.
 
 ### 상세 구성 요소 및 절차
+
 1. **Entropy 계산**:
    네트워크의 최종 출력층에서 Softmax를 통해 클래스 확률 분포 $p$를 얻는다. 이 때, 이진 분류(Binary Classification)의 경우 Entropy $E$는 다음과 같이 정의된다.
    $$E = -[p \log p + (1-p) \log(1-p)]$$
@@ -48,14 +50,16 @@ ATE의 기본 흐름은 입력 데이터 $x$를 네트워크에 통과시켜 얻
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**:
-    - Amazon 내부 데이터: "Computer", "Amazon", "Echo" 키워드 (인도 지역, 각각 10k 및 100k 샘플).
-    - 공개 데이터셋: ESC-50 (2,000개), UrbanSound8K (8,000개), Speech Commands v2 (105,000개).
+  - Amazon 내부 데이터: "Computer", "Amazon", "Echo" 키워드 (인도 지역, 각각 10k 및 100k 샘플).
+  - 공개 데이터셋: ESC-50 (2,000개), UrbanSound8K (8,000개), Speech Commands v2 (105,000개).
 - **전처리**: 64차원 log Mel-filterbank energy (LFBE) 특징 추출.
 - **모델**: 5개의 Convolutional layer와 3개의 Fully Connected layer로 구성된 CNN (약 2M 파라미터).
 - **지표**: Amazon 데이터는 고정된 FRR(False Reject Rate)에서의 FAR(False Accept Rate)을 측정하였고, 공개 데이터셋은 Accuracy를 측정하였다.
 
 ### 주요 결과
+
 1. **Amazon 데이터셋 (Table 1)**:
    - ATE를 단독으로 사용하는 것보다, ATE를 먼저 적용하고 그 결과물에 SpecAugment를 적용하는 **A+S** 조합이 모든 데이터셋에서 가장 우수한 성능을 보였다.
    - 특히 데이터 양이 적은 10k 데이터셋에서 효과가 극대화되었으며, NoAug 대비 최대 47.2% (Computer 키워드)의 상대적 성능 향상을 달성하였다.

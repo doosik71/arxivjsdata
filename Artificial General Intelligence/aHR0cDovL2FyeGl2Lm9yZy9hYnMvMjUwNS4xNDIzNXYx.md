@@ -4,7 +4,7 @@ Yequan Wang, Aixin Sun (2025)
 
 ## 🧩 Problem to Solve
 
-본 논문은 현재의 Embodied AI가 가진 한계를 분석하고, 궁극적인 목표인 Embodied AGI(Embodied Artificial General Intelligence)에 도달하기 위한 체계적인 경로를 제시하는 것을 목표로 한다. 
+본 논문은 현재의 Embodied AI가 가진 한계를 분석하고, 궁극적인 목표인 Embodied AGI(Embodied Artificial General Intelligence)에 도달하기 위한 체계적인 경로를 제시하는 것을 목표로 한다.
 
 일반적으로 AGI는 신체적 구현(Embodiment)이 필수적이라고 여겨지지만, 현재의 로봇 시스템 및 AI 모델들은 특정 작업에 국한되거나 환경 변화에 취약하며, 인간 수준의 일반화 능력을 갖추지 못하고 있다. 특히 기존의 모델들은 시각과 언어라는 제한된 모달리티에 의존하며, 실시간 응답성과 고차원적인 인간 인지 능력이 부족한 상태이다. 따라서 본 연구는 Embodied AGI를 정의하고, 현재의 기술 수준을 객관적으로 평가할 수 있는 척도를 제공하며, 이를 달성하기 위한 기술적 요구사항과 개념적 프레임워크를 제안하고자 한다.
 

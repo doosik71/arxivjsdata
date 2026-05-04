@@ -29,6 +29,7 @@ Jiashu Xu (2024)
 ## 🛠️ Methodology
 
 ### 1. Vision-TTT Layer
+
 Vision-TTT 레이어는 시퀀스 모델링의 hidden state를 학습 가능한 가중치 $W$를 가진 모델 $f$로 간주한다. 추론 과정에서 입력 $x_t$가 들어올 때마다 다음과 같이 가중치를 동적으로 업데이트한다.
 
 $$W_t = W_{t-1} - \eta \nabla L(W_{t-1}, x_t)$$
@@ -44,15 +45,18 @@ $$z_t = f(\theta_q x_t; W_t)$$
 이때 $f$는 MLP(Multi-Layer Perceptron)로 구현되며, $\theta_q$는 추론 시 가장 정보량이 많은 특징을 강조하는 역할을 수행한다.
 
 ### 2. Linear Complexity Implementation
+
 TTT 레이어의 병렬 처리를 위해 입력을 $K \times K$ 크기의 미니 배치로 나누어 그래디언트를 계산한다. 단일 미니 배치의 복잡도는 $O(K^2)$이며, 전체 픽셀 수 $N = H \times W$에 대해 총 복잡도는 다음과 같이 선형적으로 감소한다.
 
 $$O\left(\frac{H}{K} \times \frac{W}{K} \times K^2\right) = O(H \times W) = O(N)$$
 
 ### 3. Multi-Resolution Fusion & Frequency Domain Integration
+
 - **Multi-Resolution Fusion**: 입력 영상을 고해상도(세부 특징), 중해상도(심층 특징), 저해상도(전역 문맥)의 세 가지 브랜치로 나누어 처리한다. 저해상도에서 고해상도 방향으로 정보를 융합하여 작은 병변부터 거대 구조까지 모두 포착한다.
 - **Frequency Domain Enhancement**: 2D 푸리에 변환(Fourier Transform)을 통해 영상을 주파수 도메인으로 변환한 후, **고주파 통과 필터(High-pass filter)**를 적용한다. 이를 통해 저주파 배경 소음을 제거하고 에지(Edge)와 텍스처 등 세밀한 디테일을 강화하여 분할 정밀도를 높인다.
 
 ### 4. Loss Function
+
 학습의 안정성을 위해 Cross-Entropy(CE) 손실과 Dice Loss를 결합한 하이브리드 손실 함수를 사용하며, 배치 수준에서 계산하여 샘플 간의 변동성을 완화한다.
 
 $$\text{Loss}_B = (1-\alpha) \times \text{CE}_B + \alpha \times \text{Dice Loss}_B$$
@@ -65,14 +69,17 @@ $$\text{Dice loss}_B = 1 - \frac{2 \sum_{b=1}^{B} \text{Input}_b \times \text{Ta
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 피부 병변 분할 데이터셋인 ISIC2017 및 ISIC2018을 사용하였다.
 - **비교 지표**: mIoU, Dice Similarity Coefficient(DSC), Accuracy(Acc), Specificity(Spe), Sensitivity(Sen)를 측정하였다.
 - **비교 모델**: UNet, TransFuse, VM-UNet, HC-Mamba 등 최신 SOTA 모델 및 Mamba 기반 모델과 비교하였다.
 
 ### 정량적 결과
+
 ISIC17 데이터셋에서 Med-TTT는 **mIoU 78.83%, DSC 88.16%, Acc 96.07%**를 기록하며 모든 지표에서 가장 우수한 성능을 보였다. 특히 최근의 강자인 HC-Mamba 대비 mIoU에서 1.01%, DSC에서 0.78%의 우위를 보였으며, 기본 UNet보다는 mIoU 1.85%, DSC 2.17% 더 높은 성능을 나타냈다. ISIC18 데이터셋에서도 유사하게 경쟁 모델들을 상회하는 결과를 얻었다.
 
 ### Ablation Study
+
 각 구성 요소의 기여도를 분석한 결과, Multi-resolution block(MR-block)이 제거되었을 때 성능 저하가 가장 뚜렷했으며(Setting I, III), 주파수 정보(FFF)를 제외했을 때(Setting II) 전역 정보 및 주파수 도메인의 핵심 특징 활용 능력이 떨어져 성능이 하락함을 확인하였다. 이는 제안한 세 가지 핵심 요소(TTT, MR-block, FFF)가 상호 보완적으로 작용하고 있음을 입증한다.
 
 ## 🧠 Insights & Discussion

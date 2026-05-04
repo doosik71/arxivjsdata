@@ -12,9 +12,9 @@ Zuhaib Akhtar, Mohammad Omar Khursheed, Dongsu Du, Yuzong Liu (2023)
 
 본 논문의 핵심 아이디어는 weight-sharing(가중치 공유)과 switchable normalization을 통해 단일 모델 내에서 가변적인 너비(width)를 가질 수 있는 Slimmable 구조를 설계하는 것이다. 주요 기여 사항은 다음과 같다.
 
-1.  **소형 풋프린트 KWS를 위한 Slimmable CNN 설계**: 파라미터 수를 250k 개 미만으로 제한한 초경량 CNN 구조에 slimmable 아키텍처를 적용하였다.
-2.  **Slimmable Transformer 확장**: 기존의 CNN 기반 slimmable 네트워크를 넘어, Transformer 아키텍처의 self-attention 모듈을 너비에 따라 조절할 수 있도록 확장 설계하였다.
-3.  **실용성 검증**: 대규모 내부 음성 비서 데이터셋과 공개 데이터셋인 Google Speech Commands를 통해, 제안 방법이 매우 제한적인 자원 환경(10k-250k 파라미터)에서도 효과적임을 입증하였다.
+1. **소형 풋프린트 KWS를 위한 Slimmable CNN 설계**: 파라미터 수를 250k 개 미만으로 제한한 초경량 CNN 구조에 slimmable 아키텍처를 적용하였다.
+2. **Slimmable Transformer 확장**: 기존의 CNN 기반 slimmable 네트워크를 넘어, Transformer 아키텍처의 self-attention 모듈을 너비에 따라 조절할 수 있도록 확장 설계하였다.
+3. **실용성 검증**: 대규모 내부 음성 비서 데이터셋과 공개 데이터셋인 Google Speech Commands를 통해, 제안 방법이 매우 제한적인 자원 환경(10k-250k 파라미터)에서도 효과적임을 입증하였다.
 
 ## 📎 Related Works
 
@@ -28,20 +28,22 @@ KWS 모델들은 일반적으로 지연 시간을 최소화하기 위해 소형 
 
 본 논문에서 제안하는 학습 과정은 특정 너비 목록(`widthlist`, 예: $[1.0, 0.75, 0.5, 0.25]$)을 정의하고, 학습 단계에서 이 목록에 포함된 각 너비의 모델을 순차적으로 실행하는 방식을 따른다.
 
-1.  데이터 배치를 가져와 정의된 `widthlist`의 각 너비별로 모델을 실행하여 예측값을 얻는다.
-2.  각 너비별로 손실 함수(loss function)를 계산하고 그에 따른 그래디언트(gradient)를 구한다.
-3.  이때 가중치는 즉시 업데이트하지 않고 모든 너비에 대한 그래디언트를 먼저 저장한다.
-4.  모든 너비에 대해 계산된 그래디언트의 합($\sum \text{gradient}$)을 구하여 전체 네트워크의 가중치를 한 번에 업데이트한다.
+1. 데이터 배치를 가져와 정의된 `widthlist`의 각 너비별로 모델을 실행하여 예측값을 얻는다.
+2. 각 너비별로 손실 함수(loss function)를 계산하고 그에 따른 그래디언트(gradient)를 구한다.
+3. 이때 가중치는 즉시 업데이트하지 않고 모든 너비에 대한 그래디언트를 먼저 저장한다.
+4. 모든 너비에 대해 계산된 그래디언트의 합($\sum \text{gradient}$)을 구하여 전체 네트워크의 가중치를 한 번에 업데이트한다.
 
 ### Slimming CNNs
 
-CNN의 slimming은 서로 다른 너비 간에 가중치를 공유하는 방식으로 이루어진다. 
+CNN의 slimming은 서로 다른 너비 간에 가중치를 공유하는 방식으로 이루어진다.
+
 - **커널 조절**: 네트워크 너비가 변경될 때, 설정된 너비에 따라 적절한 수의 커널을 드롭(drop)하거나 커널의 너비를 줄여 모델의 크기를 조절한다.
 - **Switchable BatchNorm**: 너비마다 서로 다른 통계적 특성을 가질 수 있으므로, 각 너비별로 별도의 BatchNorm 레이어를 할당하여 런타임에 선택적으로 사용한다.
 
 ### Slimming Transformers
 
 Transformer의 경우 모든 Dense 레이어를 slimmable하게 설계하여 각 Transformer 블록 내에서 차원을 조절한다.
+
 - **Dense 레이어 조절**: 입력 차원을 너비에 따라 결정된 하위 차원으로 투영(project)한다. 하위 네트워크의 너비에 따라 가중치의 일부를 끄는(switch off) 방식을 사용한다.
 - **Slimmable Attention**: Query($Q$), Key($K$), Value($V$) 텐서의 크기를 너비에 따라 조절한다. 이를 통해 하위 네트워크는 더 낮은 차원에서 dot-product 연산을 수행하게 되어 계산 및 메모리 효율성을 높인다.
 - **수식 표현**: Slimmable Attention의 동작은 다음과 같이 정의된다.
@@ -54,19 +56,21 @@ $$ \text{width} \in [1, (n-1)/n, (n-2)/n, \dots, (1/n)], n > 1 (\text{integer}) 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 내부 음성 비서 데이터셋(단일 키워드 검출) 및 Google Speech Commands(35개 클래스 분류).
 - **입력 데이터**: Log Mel Filter Bank Energies (LFBEs)를 사용하였다.
 - **모델 규모**: CNN은 최대 199k 파라미터, Transformer는 67k~120k 파라미터 수준의 소형 모델을 사용하였다.
 - **평가 지표**: 내부 데이터셋은 고정된 Miss Rate에서의 Relative False Accepts를, Google 데이터셋은 Accuracy를 측정하였다.
 
 ### 주요 결과
-1.  **성능 비교**: 
+
+1. **성능 비교**:
     - 내부 데이터셋에서는 Slimmable 모델이 동일 크기의 Scratch 모델(처음부터 따로 학습한 모델)보다 약간 낮은 성능을 보였으나, 가장 작은 너비(0.25)에서는 오히려 Scratch 모델을 능가하는 모습을 보였다.
     - Google Speech Commands 데이터셋에서는 대부분의 경우 Slimmable 모델이 Scratch 모델보다 높은 정확도를 기록하였다. 이는 가중치 공유를 통한 일종의 내재적 증류(inherent distillation) 효과 때문으로 분석된다.
-2.  **학습 효율성**:
+2. **학습 효율성**:
     - 단일 너비 모델을 여러 개 학습시키는 것보다 super-network 하나를 학습시키는 것이 훨씬 효율적이다.
     - 너비의 수를 1개에서 40개로 늘렸을 때, 학습 시간은 단지 3.72배 증가하는 데 그쳤다. 이는 개별 모델을 모두 학습시키는 것보다 10배 이상 빠른 속도이다.
-3.  **자원 효율성**: 너비가 줄어듦에 따라 파라미터 수와 연산량(Multiplies)이 선형적으로 감소함을 확인하였다.
+3. **자원 효율성**: 너비가 줄어듦에 따라 파라미터 수와 연산량(Multiplies)이 선형적으로 감소함을 확인하였다.
 
 ## 🧠 Insights & Discussion
 
@@ -75,6 +79,7 @@ $$ \text{width} \in [1, (n-1)/n, (n-2)/n, \dots, (1/n)], n > 1 (\text{integer}) 
 또한, 학습 시간의 비선형적 증가 특성은 실제 산업 현장에서 매우 중요한 이점을 제공한다. 다양한 하드웨어 타겟(스마트폰, 이어버드, TV 등)에 맞춰 여러 버전의 모델을 배포해야 하는 상황에서, 하나의 super-network만 학습시키면 다양한 예산의 sub-networks를 즉시 추출할 수 있기 때문이다.
 
 **한계 및 향후 과제**:
+
 - 본 논문은 주로 네트워크의 '너비(width)' 조절에 집중하였으며, '깊이(depth)'를 조절하는 slimming에 대해서는 다루지 않았다.
 - 다양한 엣지 컴퓨팅 칩셋에서의 실제 메모리 점유율과 연산 속도에 대한 프로파일링 데이터가 부족하여, 이론적인 파라미터 수 감소가 실제 하드웨어 성능 향상으로 얼마나 직결되는지에 대한 추가 분석이 필요하다.
 - RNN과 같은 다른 아키텍처로의 확장 가능성이 언급되었으나 실제 구현 결과는 제시되지 않았다.

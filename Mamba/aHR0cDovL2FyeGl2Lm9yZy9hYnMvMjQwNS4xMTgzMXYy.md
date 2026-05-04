@@ -24,20 +24,23 @@ Siavash Shams, Sukru Samet Dindar, Xilin Jiang, Nima Mesgarani (2025)
 ## 🛠️ Methodology
 
 ### 1. Mamba의 수학적 기초
+
 Mamba는 연속적인 상태 공간 모델(State Space Model)을 기반으로 한다. 기본적으로 입력 $x(t)$를 은닉 상태 $h(t)$를 통해 출력 $y(t)$로 매핑하며, 다음과 같은 미분 방정식으로 정의된다.
 $$h'(t) = Ah(t) + Bx(t)$$
 $$y(t) = Ch(t)$$
 디지털 시스템 구현을 위해 Zero-Order Hold(ZOH) 방법을 사용하여 이산화(Discretization)하며, 이 과정에서 timescale 파라미터 $\Delta$가 도입되어 $A^d$와 $B^d$가 결정된다. Mamba의 핵심은 $\Delta, A, B, C$ 파라미터를 입력 $x_t$에 따라 동적으로 변화시키는 Selective Scan 알고리즘을 통해 입력 내용에 따라 선택적으로 정보를 처리하는 능력을 갖춘 것이다.
 
 ### 2. SSAMBA 아키텍처
+
 전체 시스템은 오디오 신호를 입력받아 고차원 표현을 추출하는 파이프라인으로 구성된다.
 
 - **입력 표현 및 패칭**: 오디오 파형을 STFT를 통해 128차원 Log Mel Filterbank 특징으로 변환하여 스펙트로그램을 생성한다. 이를 $16 \times 16$ 크기의 패치(Patch)로 나누고, Linear Projection을 통해 $D$차원의 임베딩으로 변환한다. 이후 학습 가능한 Positional Encoding을 더해 위치 정보를 부여한다.
-- **Bidirectional Mamba Encoder**: 단방향 SSM의 한계를 극복하기 위해 전방향(Forward)과 후방향(Backward) SSM을 병렬로 배치한다. 
-    - 각 방향의 SSM은 $\text{SiLU} \to \text{Conv1D} \to \text{Linear}$ 과정을 거쳐 $A, B, C, \Delta$ 파라미터를 생성하고 SSM 연산을 수행한다.
-    - 양방향의 결과물 $y_{\text{forward}}$와 $y_{\text{backward}}$는 게이팅 메커니즘인 $\text{SiLU}(z)$와 원소별 곱셈($\odot$)을 통해 조절된 후, 합산되어 최종 출력 $H_i$가 된다.
+- **Bidirectional Mamba Encoder**: 단방향 SSM의 한계를 극복하기 위해 전방향(Forward)과 후방향(Backward) SSM을 병렬로 배치한다.
+  - 각 방향의 SSM은 $\text{SiLU} \to \text{Conv1D} \to \text{Linear}$ 과정을 거쳐 $A, B, C, \Delta$ 파라미터를 생성하고 SSM 연산을 수행한다.
+  - 양방향의 결과물 $y_{\text{forward}}$와 $y_{\text{backward}}$는 게이팅 메커니즘인 $\text{SiLU}(z)$와 원소별 곱셈($\odot$)을 통해 조절된 후, 합산되어 최종 출력 $H_i$가 된다.
 
 ### 3. 자가 지도 학습 프레임워크 (Pretraining)
+
 라벨 없는 데이터셋(AudioSet-2M, LibriSpeech)을 활용하여 Masked Spectrogram Patch Modeling(MSPM)을 수행한다. 일부 패치를 마스킹하고 이를 예측하는 두 가지 손실 함수를 동시에 사용한다.
 
 - **판별적 목표(Discriminative Objective)**: 마스킹된 패치가 무엇인지 식별하는 작업으로, InfoNCE loss를 사용하여 실제 임베딩과 예측값 사이의 대조 학습을 수행한다.
@@ -50,13 +53,16 @@ $$L = L_d + \lambda L_g$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: 사전 학습에는 AudioSet-2M과 LibriSpeech를 사용하였으며, 다운스트림 평가에는 AudioSet-20K(AS), ESC-50(ESC), Speech Commands V1/V2(KS1, KS2), VoxCeleb 1(SID), IEMOCAP(ER), Urban8K(DASL) 등 총 7개의 다양한 데이터셋을 활용하였다.
 - **비교 대상**: 동일한 사전 학습 방식을 공유하는 Transformer 기반의 SSAST 모델(Tiny, Small, Base 사이즈)과 비교하였다.
 
 ### 2. 성능 분석
+
 정량적 결과(Table 2)에 따르면, SSAMBA는 대부분의 작업에서 SSAST와 비슷하거나 더 높은 정확도를 보였다. 특히 모델 크기가 커질수록(Base 모델) 성능 향상 폭이 뚜렷했으며, AudioSet-20K 및 환경음 분류(ESC) 작업에서 강점을 보였다. 또한, 사전 학습을 거치지 않은 경우 DASL과 같은 복잡한 작업에서 수렴하지 못하는 모습을 보여, 제안된 자가 지도 학습 프레임워크의 중요성이 입증되었다.
 
 ### 3. 효율성 분석
+
 가장 주목할 만한 결과는 계산 효율성이다. 입력 패치 수가 22k인 경우, **SSAMBA Tiny 모델은 SSAST Tiny 대비 추론 속도가 약 92.7% 빠르며, GPU 메모리 사용량은 약 95.4% 절감**되었다. 이는 입력 시퀀스 길이에 따라 복잡도가 선형적으로 증가하는 Mamba의 특성이 오디오 데이터 처리에서 매우 효과적임을 보여준다.
 
 ## 🧠 Insights & Discussion
@@ -64,6 +70,7 @@ $$L = L_d + \lambda L_g$$
 본 연구는 오디오 표현 학습에서 Transformer의 지배적인 구조를 SSM으로 대체할 수 있음을 성공적으로 입증하였다. 특히 bidirectional 구조를 통해 시퀀스의 양방향 문맥을 모두 포착함으로써, Attention 메커니즘 없이도 경쟁력 있는 성능을 낼 수 있음을 보여주었다.
 
 **비판적 해석 및 한계점**:
+
 - **음성 작업의 최적화**: 실험 결과, 화자 식별(SID)이나 감정 인식(ER)과 같은 음성 특화 작업에서는 성능 향상 폭이 상대적으로 작았다. 저자들은 이것이 패치 기반 마스킹(Patch-based masking) 때문이라고 분석하며, 음성의 시간적 역동성을 더 잘 포착할 수 있는 프레임 기반 마스킹(Frame-based masking)을 적용한다면 성능을 더 높일 수 있을 것이라고 제언한다.
 - **범용성 vs 특수성**: 일반적인 오디오 이벤트 분류에서는 매우 강력하지만, 매우 정밀한 음성 분석 작업에서는 여전히 Wav2Vec 2.0나 HuBERT 같은 음성 전용 모델보다 낮은 성능을 보였다(Table 3 참조). 이는 범용 오디오 모델로서의 가치는 높으나, 특정 도메인 최적화에는 추가적인 전략이 필요함을 의미한다.
 

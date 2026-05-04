@@ -21,21 +21,27 @@ Ozan Ciga, Jianan Chen and Anne Martel (2019)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 제안된 방법론은 기존의 FCN(Fully Convolutional Network) 구조에 각 계층별로 도메인 분류기를 부착하여, 특징 추출 과정 전반에 걸쳐 도메인 적응을 수행한다. 이 방식은 크게 두 가지 접근법인 **L-DANN**과 **L-WASS**로 구현된다.
 
 ### Squeeze Operation
+
 각 계층의 특징 맵 $X \in \mathbb{R}^{H' \times W' \times C'}$이 주어졌을 때, 이를 벡터 $z \in \mathbb{R}^{C'}$로 변환하기 위해 Global Average Pooling(GAP)을 수행한다. 이 연산은 다음과 같이 정의된다.
 $$z_k = \frac{1}{H' \times W'} \sum_{i=1}^{H'} \sum_{j=1}^{W'} u_k(i,j)$$
 여기서 $u_k(i,j)$는 $X$의 $k$번째 커널에 대한 $(i,j)$ 위치의 응답 값이다. 이 'Squeeze' 연산을 통해 얻은 $z$는 해당 계층의 요약 통계량을 담고 있으며, 도메인 분류기의 입력으로 사용된다.
 
 ### L-DANN (Layer-wise Domain-Adversarial Neural Network)
+
 L-DANN은 DANN의 구조를 각 계층으로 확장한 것이다.
+
 - **구조**: 각 특징 맵 $X_i$의 끝에 소형 도메인 분류기 $D_i$를 부착한다. 분류기의 복잡도는 네트워크의 깊이에 비례하여 점진적으로 증가시킨다.
 - **학습 목표**: 도메인 분류기는 $N$개 도메인에 대한 Cross-Entropy Loss($L_d$)를 최소화하려 하지만, GRL(Gradient Reversal Layer)을 통해 특징 추출기 $\theta_f$로 전달되는 그래디언트는 부호를 반전시켜 $L_d$를 최대화하도록 한다.
 - **효과**: 이를 통해 각 계층의 특징 추출기가 도메인 식별 정보를 제거하고 도메인 불변 특징을 학습하게 된다.
 
 ### L-WASS (Layer-wise Wasserstein Domain Adaptation)
+
 L-WASS는 레이블 기반의 분류 대신 두 도메인 간의 분포 거리를 직접 최소화하는 방식이다.
+
 - **목표 함수**: 소스 도메인 $z_s$와 타겟 도메인 $z_t$ 사이의 Wasserstein-1 거리(Earth Mover's Distance)를 최소화한다.
 - **학습 절차**: 'Critic'이라 불리는 네트워크를 사용하여 두 분포의 차이를 측정하며, 학습의 안정성을 위해 Gradient Penalty를 적용하여 Lipschitz 연속성 제약 조건을 충족시킨다.
 - **수식적 접근**: Critic $D_j$에 대해 다음과 같은 손실 함수를 최적화한다.
@@ -45,11 +51,13 @@ $$L^{(i)} = D_j(z_s^j) - D_j(z_t^j) - \lambda(||\nabla_{\hat{z}_j} D_j(\hat{z}_j
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: MNIST, MNIST-M, SVHN (단순 네트워크 테스트), 흉부 X-ray (심층 네트워크 테스트), BACH (유방암 조직 병리 영상)
 - **네트워크**: SE-ResNet-101, SENet 154, SE-ResNet-50
 - **지표**: Accuracy, Precision, Recall, F1-score 및 BACH 챌린지 전용 스코어
 
 ### 주요 결과
+
 1. **소규모 네트워크 (MNIST 등)**:
    - L-DANN은 기존 DANN과 유사한 성능을 보였다.
    - 반면 L-WASS는 수렴에 실패하거나 낮은 성능을 보여, 단순한 분포에서는 Layer-wise Wasserstein 매칭이 부적합할 수 있음을 시사한다.

@@ -12,9 +12,9 @@ Hao Du, Qihua Dong, Yan Xu, Jing Liao (2023)
 
 본 논문의 핵심 아이디어는 정밀한 기하학적 구조를 학습하기 위해 **포인트 클라우드(Point Cloud) 기반의 기하학적 사전 정보**를 도입하고, 영상 아티팩트 문제를 해결하기 위해 **고차원 임베딩 공간에서의 대조적 유사성**을 활용하는 것이다.
 
-1.  **포인트 클라우드 기반 Geometric Prior**: 볼륨 표현(Volume representation)의 격자 제약에서 벗어나, 포인트 클라우드 공간에서 템플릿 장기와 예측된 결과 사이의 거리를 최소화함으로써 복잡한 장기 구조를 정밀하게 학습한다.
-2.  **Contrastive Similarity**: 픽셀들을 고차원 임베딩 공간으로 투영하고, 동일한 라벨을 가진 픽셀들이 서로 가깝게 모이도록 유도함으로써 저대조도 조직의 판별력을 높인다.
-3.  **범용 프레임워크 설계**: 제안된 방법론은 손실 함수 기반으로 설계되어 BoxInst나 Ai+L과 같은 기존의 Bounding-box 기반 약지도 분할 모델에 쉽게 통합되어 성능을 향상시킬 수 있다.
+1. **포인트 클라우드 기반 Geometric Prior**: 볼륨 표현(Volume representation)의 격자 제약에서 벗어나, 포인트 클라우드 공간에서 템플릿 장기와 예측된 결과 사이의 거리를 최소화함으로써 복잡한 장기 구조를 정밀하게 학습한다.
+2. **Contrastive Similarity**: 픽셀들을 고차원 임베딩 공간으로 투영하고, 동일한 라벨을 가진 픽셀들이 서로 가깝게 모이도록 유도함으로써 저대조도 조직의 판별력을 높인다.
+3. **범용 프레임워크 설계**: 제안된 방법론은 손실 함수 기반으로 설계되어 BoxInst나 Ai+L과 같은 기존의 Bounding-box 기반 약지도 분할 모델에 쉽게 통합되어 성능을 향상시킬 수 있다.
 
 ## 📎 Related Works
 
@@ -27,6 +27,7 @@ Hao Du, Qihua Dong, Yan Xu, Jing Liao (2023)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 본 프레임워크는 입력 영상 $I$와 Bounding-box 주석 $B$를 통해 분할 마스크 $M$을 생성한다. 전체 학습 목표는 다음의 통합 손실 함수 $L_{frame}$을 최소화하는 것이다.
 
 $$L_{frame} = L_{ori} + L_{mask}$$
@@ -36,40 +37,46 @@ $$L_{frame} = L_{ori} + L_{mask}$$
 $$L_{mask} = L_{geo} + L_{cons}$$
 
 ### 2. Geometric Prior ($L_{geo}$)
+
 복잡한 장기 형태를 학습하기 위해 볼륨 표현을 포인트 클라우드로 변환하여 처리한다.
 
--   **변환 및 등록 (Conversion & Registration)**: 'Gridding Reverse' 기법을 사용하여 복셀 격자를 포인트 클라우드로 변환한다. 이는 고정된 격자 중심점이 아닌 유연한 좌표를 가짐으로써 세밀한 구조 표현을 가능하게 한다. 이후, ICP(Iterative Closest Point) 등록 도구를 사용하여 템플릿 장기 $T$를 예측된 제안 영역 $S$에 정렬시킨다.
--   **Chamfer Distance Loss**: 등록된 템플릿 $T$와 예측된 포인트 클라우드 $S$ 사이의 거리를 최소화하기 위해 Chamfer Distance를 사용한다.
+- **변환 및 등록 (Conversion & Registration)**: 'Gridding Reverse' 기법을 사용하여 복셀 격자를 포인트 클라우드로 변환한다. 이는 고정된 격자 중심점이 아닌 유연한 좌표를 가짐으로써 세밀한 구조 표현을 가능하게 한다. 이후, ICP(Iterative Closest Point) 등록 도구를 사용하여 템플릿 장기 $T$를 예측된 제안 영역 $S$에 정렬시킨다.
+- **Chamfer Distance Loss**: 등록된 템플릿 $T$와 예측된 포인트 클라우드 $S$ 사이의 거리를 최소화하기 위해 Chamfer Distance를 사용한다.
 
 $$L_{geo} = \frac{1}{|S|} \sum_{x \in S} \min_{y \in T} ||x-y||^2 + \frac{1}{|T|} \sum_{y \in T} \min_{x \in S} ||y-x||^2$$
 
 또한, 패치 기반 처리 시 장기가 잘려 나가는 문제를 방지하기 위해 **Completeness Head**를 도입하여, 제안 영역이 완전하게 포함된 경우에만 $L_{geo}$를 적용한다.
 
 ### 3. Contrastive Similarity ($L_{cons}$)
+
 저대조도 조직의 구분을 위해 픽셀을 고차원 임베딩 공간으로 매핑하는 대조적 헤드(Contrastive Head)를 구축한다.
 
--   **사전 학습 (Pre-training)**: Bounding-box 주석만을 이용하여 두 단계(Coarse $\to$ Refine)로 사전 학습을 진행한다. Coarse 단계에서는 박스 내부/외부를 단순 구분하고, Refine 단계에서는 참조 픽셀과의 거리를 계산하여 라벨을 정교화한다.
--   **손실 함수**: 이미지 내 픽셀들을 정점으로 하는 무방향 그래프 $G=(V, E)$를 구성한다. 인접한 두 픽셀이 동일한 라벨을 가질 확률을 $\text{Prob}(y_e=1)$이라 할 때, 임베딩 공간에서의 유사도가 임계값 $\tau$ 이상인 엣지들에 대해 다음의 손실 함수를 적용한다.
+- **사전 학습 (Pre-training)**: Bounding-box 주석만을 이용하여 두 단계(Coarse $\to$ Refine)로 사전 학습을 진행한다. Coarse 단계에서는 박스 내부/외부를 단순 구분하고, Refine 단계에서는 참조 픽셀과의 거리를 계산하여 라벨을 정교화한다.
+- **손실 함수**: 이미지 내 픽셀들을 정점으로 하는 무방향 그래프 $G=(V, E)$를 구성한다. 인접한 두 픽셀이 동일한 라벨을 가질 확률을 $\text{Prob}(y_e=1)$이라 할 때, 임베딩 공간에서의 유사도가 임계값 $\tau$ 이상인 엣지들에 대해 다음의 손실 함수를 적용한다.
 
 $$L_{cons} = -\frac{1}{N} \sum_{e \in E} \mathbb{1}_{\{C_{e_{start}} \cdot C_{e_{end}} \geq \tau\}} \log \text{Prob}(y_e=1)$$
 
 ## 📊 Results
 
 ### 1. 실험 설정
--   **데이터셋**: LiTS 2017 (간), KiTS 2021 (신장), LPBA40 (해마)
--   **비교 대상**: BoxInst (Baseline), Ai+L, MIL, GMIL 및 Fully Supervised (Upper bound)
--   **평가 지표**: Dice Score (DSC, $\uparrow$), Hausdorff Distance (HD95, $\downarrow$)
+
+- **데이터셋**: LiTS 2017 (간), KiTS 2021 (신장), LPBA40 (해마)
+- **비교 대상**: BoxInst (Baseline), Ai+L, MIL, GMIL 및 Fully Supervised (Upper bound)
+- **평가 지표**: Dice Score (DSC, $\uparrow$), Hausdorff Distance (HD95, $\downarrow$)
 
 ### 2. 정량적 결과
+
 실험 결과, 제안된 방법은 모든 데이터셋에서 Baseline인 BoxInst 및 최신 MIL 기반 방법들보다 월등한 성능을 보였다. 특히 KiTS21 데이터셋에서 BoxInst의 DSC가 $48.4\%$인 반면, 제안 방법은 $80.2\%$라는 비약적인 성능 향상을 기록하였다.
 
 ### 3. 정성적 결과 및 분석
+
 정성적 비교 결과, 기존 MIL 기반 방식들이 주로 장기의 외부 윤곽선에만 집중하여 내부의 빈 공간이나 세부 구조를 무시하는 것과 달리, 제안 방법은 기하학적 사전 정보를 통해 내부 구조와 외부 형태를 모두 정밀하게 복원해냄을 확인하였다.
 
 ### 4. 절제 연구 (Ablation Study)
--   **포인트 클라우드 vs 볼륨**: 포인트 클라우드 표현이 볼륨 표현보다 DSC 기준 약 $4.3\%$ 높은 성능을 보여, 세밀한 구조 학습에 더 유리함을 입증하였다.
--   **내부 구조의 중요성**: 템플릿에서 내부 구조를 제거하고 외부 형태만 남겼을 때 성능이 $3.9\%$ 하락하여, 내부 기하학적 사전 정보의 중요성을 확인하였다.
--   **임베딩 공간 vs 그레이 스페이스**: MSE나 SSIM 같은 전통적인 그레이 스페이스 기반 유사도 측정 방식보다 대조적 임베딩 공간에서의 유사도 측정이 저대조도 조직 구분 성능을 크게 향상시켰다.
+
+- **포인트 클라우드 vs 볼륨**: 포인트 클라우드 표현이 볼륨 표현보다 DSC 기준 약 $4.3\%$ 높은 성능을 보여, 세밀한 구조 학습에 더 유리함을 입증하였다.
+- **내부 구조의 중요성**: 템플릿에서 내부 구조를 제거하고 외부 형태만 남겼을 때 성능이 $3.9\%$ 하락하여, 내부 기하학적 사전 정보의 중요성을 확인하였다.
+- **임베딩 공간 vs 그레이 스페이스**: MSE나 SSIM 같은 전통적인 그레이 스페이스 기반 유사도 측정 방식보다 대조적 임베딩 공간에서의 유사도 측정이 저대조도 조직 구분 성능을 크게 향상시켰다.
 
 ## 🧠 Insights & Discussion
 

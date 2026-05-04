@@ -17,13 +17,14 @@ Ning Wang, Yibing Song, Chao Ma, Wengang Zhou, Wei Liu, Houqiang Li (2019)
 
 본 논문의 핵심 아이디어는 **"강건한 트래커라면 순방향(forward) 예측과 역방향(backward) 예측 모두에서 효과적이어야 한다"**는 직관에 기반한다.
 
-1.  **Forward-Backward Consistency Training**: 첫 번째 프레임에서 임의의 영역을 설정해 순방향으로 추적하고, 마지막 프레임의 예측 위치를 시작점으로 하여 다시 역방향으로 추적했을 때, 최종 위치가 초기 위치와 일치해야 한다는 '궤적 일관성(trajectory consistency)'을 학습 목표로 설정하였다.
-2.  **Multiple-frame Validation**: 단일 프레임 검증 시 발생할 수 있는 우연한 일치(coincidental success) 문제를 해결하기 위해, 더 많은 프레임을 추적 과정에 포함시켜 오차를 누적시킴으로써 검증의 신뢰도를 높였다.
-3.  **Cost-sensitive Loss**: 무작위로 샘플링된 패치 중 포함된 정보가 없거나 노이즈가 심한 샘플(예: 가려짐, 정적인 배경)이 학습을 방해하는 것을 막기 위해, 손실 값이 너무 큰 샘플을 제외하고 타겟의 움직임(motion)이 큰 샘플에 더 높은 가중치를 부여하는 손실 함수를 제안하였다.
+1. **Forward-Backward Consistency Training**: 첫 번째 프레임에서 임의의 영역을 설정해 순방향으로 추적하고, 마지막 프레임의 예측 위치를 시작점으로 하여 다시 역방향으로 추적했을 때, 최종 위치가 초기 위치와 일치해야 한다는 '궤적 일관성(trajectory consistency)'을 학습 목표로 설정하였다.
+2. **Multiple-frame Validation**: 단일 프레임 검증 시 발생할 수 있는 우연한 일치(coincidental success) 문제를 해결하기 위해, 더 많은 프레임을 추적 과정에 포함시켜 오차를 누적시킴으로써 검증의 신뢰도를 높였다.
+3. **Cost-sensitive Loss**: 무작위로 샘플링된 패치 중 포함된 정보가 없거나 노이즈가 심한 샘플(예: 가려짐, 정적인 배경)이 학습을 방해하는 것을 막기 위해, 손실 값이 너무 큰 샘플을 제외하고 타겟의 움직임(motion)이 큰 샘플에 더 높은 가중치를 부여하는 손실 함수를 제안하였다.
 
 ## 📎 Related Works
 
 **관련 연구 및 한계**
+
 - **Deep Visual Tracking**: 기존의 Siamese 트래커나 DCF(Discriminative Correlation Filter) 기반 트래커들은 사전 학습된 CNN 모델을 특성 추출기로 사용하거나, 대량의 정답 라벨을 통해 지도 학습(supervised learning) 방식으로 학습되었다. 이는 높은 정확도를 보이지만 라벨링 비용이 매우 크다는 한계가 있다.
 - **Forward-Backward Analysis**: TLD(Tracking-Learning-Detection)와 같은 기존 연구에서도 순방향-역방향 매칭을 통해 추적 실패를 감지하는 방식이 사용되었다. 하지만 이는 주로 온라인 단계에서 실패를 감지하기 위한 경험적 지표로 사용되었을 뿐, 네트워크의 가중치를 학습시키기 위한 목적 함수로 사용되지는 않았다.
 - **Unsupervised Representation Learning**: 비지도 방식으로 특징 표현을 학습하려는 시도(예: Auto-encoder)가 있었으나, 이는 일반적인 프레임워크일 뿐 트래킹이라는 특정 태스크에 최적화된 설계는 아니었다.
@@ -34,6 +35,7 @@ Ning Wang, Yibing Song, Chao Ma, Wengang Zhou, Wei Liu, Houqiang Li (2019)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 모델은 **Siamese correlation filter network**를 기본 뼈대로 한다. 네트워크는 공유 가중치를 가진 두 개의 브랜치(Template branch, Search branch)로 구성되며, 이를 통해 템플릿 패치와 검색 패치의 유사도를 계산하여 타겟의 위치를 예측한다.
 
 ### 상세 방법론 및 학습 절차
@@ -45,21 +47,24 @@ $$\min_{W} \|W * X - Y\|^2_2 + \lambda\|W\|^2_2$$
 
 **2. Unsupervised Learning Prototype (핵심 루프)**
 라벨이 없는 비디오에서 다음과 같은 절차로 학습을 진행한다.
+
 - **Forward Tracking**: 첫 프레임 $P_1$에서 임의의 바운딩 박스를 설정하고 템플릿 $T$와 라벨 $Y_T$를 생성한다. 이를 이용해 다음 프레임 $P_2$의 응답 맵 $R_S$를 계산한다.
 - **Backward Tracking**: $R_S$의 최대값 지점을 가짜 라벨(pseudo label) $Y_S$로 설정한다. 이제 $P_2$를 템플릿으로, $P_1$을 검색 패치로 설정하여 다시 역방향으로 추적하여 응답 맵 $R_T$를 생성한다.
 - **Consistency Loss**: 역방향 추적 결과인 $R_T$가 초기 라벨 $Y_T$와 일치해야 한다는 조건에서 다음과 같은 손실 함수를 정의한다.
 $$L_{un} = \|R_T - Y_T\|^2_2$$
 
 **3. Unsupervised Learning Improvements**
+
 - **Multiple Frames Validation**: $P_1 \to P_2 \to P_3$와 같이 더 많은 프레임을 거쳐 역추적하게 함으로써, 단일 프레임에서 우연히 맞춘 경우를 배제하고 누적된 오차를 통해 더 정확한 학습 신호를 생성한다.
-- **Cost-sensitive Loss**: 
-    - **Binary Weight ($A_{drop}$)**: 배치 내에서 손실 값이 상위 10%인 샘플은 노이즈일 가능성이 높으므로 가중치를 0으로 설정하여 제외한다.
-    - **Motion Weight ($A_{motion}$)**: 타겟의 움직임이 클수록 학습에 더 유용한 'Hard sample'이라고 판단하여 가중치를 높인다.
-    - **최종 손실 함수**:
+- **Cost-sensitive Loss**:
+  - **Binary Weight ($A_{drop}$)**: 배치 내에서 손실 값이 상위 10%인 샘플은 노이즈일 가능성이 높으므로 가중치를 0으로 설정하여 제외한다.
+  - **Motion Weight ($A_{motion}$)**: 타겟의 움직임이 클수록 학습에 더 유용한 'Hard sample'이라고 판단하여 가중치를 높인다.
+  - **최종 손실 함수**:
     $$L_{un} = \frac{1}{n} \sum_{i=1}^{n} A_{norm}^i \cdot \|\tilde{R}_T^i - Y_T^i\|^2_2$$
     여기서 $A_{norm}$은 $A_{drop}$과 $A_{motion}$을 결합하여 정규화한 가중치이다.
 
 ### 훈련 및 추론 절차
+
 - **네트워크 구조**: 두 개의 컨볼루션 레이어와 LRN(Local Response Normalization) 레이어로 구성된 경량 Siamese 네트워크를 사용한다.
 - **데이터 전처리**: ILSVRC 2015 데이터셋의 비디오에서 중앙 영역을 무작위로 크롭하여 사용하며, 별도의 정답 라벨링 과정 없이 템플릿과 검색 패치를 구성한다.
 - **온라인 추적**: 학습된 모델을 사용하여 순방향 추적만을 수행하며, 외관 변화에 대응하기 위해 DCF 파라미터를 선형 보간법으로 업데이트한다.
@@ -67,12 +72,14 @@ $$L_{un} = \|R_T - Y_T\|^2_2$$
 ## 📊 Results
 
 **실험 설정**
+
 - **데이터셋**: OTB-2015, Temple-Color, VOT2016
 - **지표**: Precision (DP), Success (AUC), Expected Average Overlap (EAO)
 - **비교 대상**: SiamFC, CFNet (지도 학습 기반 베이스라인), 그리고 최신 SOTA 트래커들
 
 **주요 결과**
-- **정량적 결과**: 제안된 **UDT**는 정답 라벨 없이 학습되었음에도 불구하고, 지도 학습 기반의 베이스라인인 SiamFC 및 CFNet과 대등한 성능을 보였다. 
+
+- **정량적 결과**: 제안된 **UDT**는 정답 라벨 없이 학습되었음에도 불구하고, 지도 학습 기반의 베이스라인인 SiamFC 및 CFNet과 대등한 성능을 보였다.
 - **UDT+ 성능**: 온라인 업데이트 기법을 추가한 **UDT+**는 최신 지도 학습 기반 SOTA 트래커들과 비교해도 경쟁력 있는 성능(OTB-2015 AUC 기준 63.2%)을 기록하였다.
 - **데이터 영향**: 학습 데이터의 양을 늘렸을 때(UDT-MoreData) 성능이 향상됨을 확인하여, 비지도 학습 프레임워크가 대규모 unlabeled 데이터를 효과적으로 활용할 수 있음을 입증하였다.
 - **속도**: 경량 네트워크 구조 덕분에 매우 빠른 추론 속도(FPS)를 유지하였다.
@@ -83,6 +90,7 @@ $$L_{un} = \|R_T - Y_T\|^2_2$$
 본 논문은 비주얼 트래킹 분야에서 거의 다루어지지 않았던 '비지도 학습'의 가능성을 성공적으로 증명하였다. 특히, 정답 라벨 없이도 궤적 일관성(trajectory consistency)이라는 제약 조건을 통해 유의미한 특징 표현(feature representation)을 학습할 수 있음을 보여주었다.
 
 **한계 및 비판적 해석**
+
 - **Objectness의 부재**: 속성 분석(Attribute Analysis) 결과, 조명 변화(IV), 가려짐(OCC), 빠른 움직임(FM) 시나리오에서 지도 학습 모델보다 성능이 낮게 나타났다. 이는 정답 라벨을 통한 강력한 감독 없이는 타겟의 본질적인 '객체성(objectness)'을 완벽하게 학습하기 어렵다는 점을 시사한다.
 - **계산 비용**: 학습 과정에서 순방향과 역방향 추적을 모두 수행해야 하므로, 지도 학습 대비 학습 단계에서의 계산 부하가 증가한다.
 - **가정의 단순함**: 중앙 크롭 패치를 사용하는데, 타겟이 중앙에서 벗어나거나 매우 빠르게 이동하는 경우 샘플링 효율이 떨어질 수 있다.

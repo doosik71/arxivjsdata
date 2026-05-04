@@ -25,6 +25,7 @@ Dianwen Ng, Jin Hui Pang, Yang Xiao, Biao Tian, Qiang Fu, Eng Siong Chng (2022)
 ## 🛠️ Methodology
 
 ### 1. Multi-channel ConvMixer 구조
+
 제안된 모델은 여러 개의 독립적인 단일 채널 형태의 ConvMixer로 구성되며, 전체 파이프라인은 'Convolutional Encoder $\rightarrow$ Multi-channel ConvMixer Block $\rightarrow$ Post-convolutional Block' 순으로 이어진다. raw 마이크로폰 배열 입력은 먼저 스펙트로그램으로 변환되어 인코더로 전달된다.
 
 핵심인 ConvMixer 블록은 시간, 주파수, 그리고 오디오 채널의 세 가지 차원에서 순차적으로 믹싱을 수행한다. 각 단계의 연산은 다음과 같은 잔차 연결(residual connection) 구조를 가진다.
@@ -39,6 +40,7 @@ Dianwen Ng, Jin Hui Pang, Yang Xiao, Biao Tian, Qiang Fu, Eng Siong Chng (2022)
 여기서 $\delta$는 GELU 활성화 함수를 의미하며, $W_1 \sim W_6$는 학습 가능한 선형 층의 가중치이다. 이 과정을 $N=4$회 반복하여 특징을 더욱 정교화한 뒤, 최종적으로 모든 채널의 특징을 통합하여 $D$-차원의 잠재 벡터 $X_{feat}$를 생성한다.
 
 ### 2. Centroid Based Awareness
+
 모델이 학습한 잠재 공간에서 각 키워드 클래스의 중심점(centroid)과 입력 벡터 사이의 거리를 측정하여 예측기에 추가 정보로 제공하는 방식이다.
 
 - **수학적 근거**: 교차 엔트로피 손실 함수 $H(q, \hat{q})$를 Bregman divergence 기반으로 분해하면 Bias와 Variance 항으로 나눌 수 있다. 본 연구에서는 $L_2$-norm 거리를 통해 공간적 유도 편향을 추가함으로써 $\bar{q}$와 $\hat{q}$ 사이의 발산을 줄여 모델의 추정 편향과 분산을 감소시키고자 한다.
@@ -50,26 +52,30 @@ Dianwen Ng, Jin Hui Pang, Yang Xiao, Biao Tian, Qiang Fu, Eng Siong Chng (2022)
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: MISP Challenge 2021 (Task 1)을 사용하였다. 3-5m 거리의 원거리 환경에서 6채널 마이크로폰 배열을 통해 "Xiao T Xiao T"라는 키워드를 검출하는 작업이다.
 - **비교 대상**: 공식 Baseline(CNN-LSTM, 2.68M 파라미터), 단일 채널 ConvMixer(124K), MVDR 빔포머 적용 모델 등을 비교하였다.
 - **평가 지표**: Accuracy와 함께 오경보율(FAR)과 오거부율(FRR)의 합인 $\text{Score} = \text{FAR} + \text{FRR}$를 사용하였다. (Score가 낮을수록 우수)
 
 ### 주요 결과
-- **정량적 성능**: 
-    - 공식 Baseline(Score 0.344) 대비 제안 모델(Centroid Awareness ConvMixer, Score 0.152)은 약 **55%의 Score 개선**과 **10%의 정확도 향상**을 달성하였다.
-    - 특히, 단일 채널 ConvMixer(Score 0.177)보다 다채널 ConvMixer(Score 0.161)가 우수했으며, 여기에 Centroid Awareness를 추가했을 때 가장 좋은 성능을 보였다.
-    - 파라미터 수 측면에서도 Baseline(2.68M)보다 훨씬 작은 622K 수준에서 더 높은 성능을 기록하였다.
+
+- **정량적 성능**:
+  - 공식 Baseline(Score 0.344) 대비 제안 모델(Centroid Awareness ConvMixer, Score 0.152)은 약 **55%의 Score 개선**과 **10%의 정확도 향상**을 달성하였다.
+  - 특히, 단일 채널 ConvMixer(Score 0.177)보다 다채널 ConvMixer(Score 0.161)가 우수했으며, 여기에 Centroid Awareness를 추가했을 때 가장 좋은 성능을 보였다.
+  - 파라미터 수 측면에서도 Baseline(2.68M)보다 훨씬 작은 622K 수준에서 더 높은 성능을 기록하였다.
 - **전처리 결합 효과**: 전단에 WPE(Weighted Prediction Error) 역잔향 처리와 3-look MVDR 빔포머를 결합했을 때, Score가 0.126까지 낮아지며 Baseline 대비 **63%의 개선**을 보였다.
 
 ## 🧠 Insights & Discussion
 
-본 논문은 소형 모델이 원거리 다채널 데이터에서 겪는 가장 큰 어려움이 '효율적인 공간 필터링'과 '강건한 특징 추출'의 부재라는 점을 정확히 짚어냈다. 
+본 논문은 소형 모델이 원거리 다채널 데이터에서 겪는 가장 큰 어려움이 '효율적인 공간 필터링'과 '강건한 특징 추출'의 부재라는 점을 정확히 짚어냈다.
 
-**강점 및 해석**: 
+**강점 및 해석**:
+
 - ConvMixer를 통해 Attention의 무거운 연산을 대체하면서도 채널 간 상호작용을 구현함으로써, 연산 효율성과 다채널 활용 능력을 동시에 잡았다.
 - 특히 Centroid Based Awareness는 단순히 신경망의 깊이를 늘리는 것이 아니라, 거리 기반의 기하학적 정보를 명시적으로 주입함으로써 클래스 간 분별력을 높였다. 이는 시각화된 잠재 표현 분포에서도 클래스 간 겹침(overlapping)이 줄어드는 것으로 확인되었다.
 
 **한계 및 논의**:
+
 - 본 연구에서 사용한 MVDR 빔포머는 선형적인 처리 방식이므로, 향후 비선형 신경망 기반의 enhancement 기법을 통합한다면 더 큰 성능 향상이 있을 것으로 기대된다.
 - WPE 단독 적용 시에는 오히려 성능이 저하되는 모습이 관찰되었는데, 이는 맹목적인 역잔향 처리가 신호에 왜곡을 일으킬 수 있음을 시사한다.
 

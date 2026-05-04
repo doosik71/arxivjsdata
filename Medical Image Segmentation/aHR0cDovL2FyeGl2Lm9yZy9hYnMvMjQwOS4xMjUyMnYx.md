@@ -4,7 +4,7 @@ Zhikai Wei, Wenhui Dong, Peilin Zhou, Yuliang Gu, Zhou Zhao, and Yongchao Xu (20
 
 ## 🧩 Problem to Solve
 
-본 논문은 의료 영상 분할(Medical Image Segmentation) 분야에서 발생하는 **단일 소스 도메인 일반화(Single-source Domain Generalization, SDG)** 문제를 해결하고자 한다. 
+본 논문은 의료 영상 분할(Medical Image Segmentation) 분야에서 발생하는 **단일 소스 도메인 일반화(Single-source Domain Generalization, SDG)** 문제를 해결하고자 한다.
 
 의료 영상 데이터는 촬영 장비의 특성, 운영자의 숙련도, 환자의 방사선 노출량 및 촬영 시간 등 다양한 요인으로 인해 데이터 분포의 차이, 즉 **도메인 시프트(Domain Shift)**가 빈번하게 발생한다. 이러한 분포 변화는 모델의 성능 저하를 야기하며, 특히 단 하나의 소스 도메인 데이터만으로 학습하여 본 적 없는 타겟 도메인(Unseen target domains)에서도 높은 성능을 유지해야 하는 SDG 설정은 매우 도전적인 과제이다.
 
@@ -14,9 +14,9 @@ Zhikai Wei, Wenhui Dong, Peilin Zhou, Yuliang Gu, Zhou Zhao, and Yongchao Xu (20
 
 본 논문의 핵심 아이디어는 SAM의 수동적인 프롬프트 입력 방식에서 벗어나, 소스 도메인에서 학습된 지식을 저장하는 **메모리 뱅크(Memory Bank)**를 통해 인스턴스별 최적의 프롬프트를 자동으로 생성하는 것이다. 주요 기여 사항은 다음과 같다.
 
-1.  **Prototype-based Prompt Generator (PPG) 제안**: 소스 도메인 이미지들로부터 학습된 프로토타입을 저장하는 파라미터화된 메모리 뱅크를 도입하였다. 이를 통해 타겟 이미지에 대해 도메인-약결합(domain-weakly-correlated) 및 인스턴스-강결합(instance-strongly-correlated) 특성을 가진 적응형 프롬프트를 생성하여 일반화 성능을 높였다.
-2.  **Generalized Adapter 설계**: SAM의 인코더를 효율적으로 튜닝하기 위해, 저수준 특징(Low-level features)을 중간 특징에 통합하고 채널 어텐션 필터(Channel Attention Filter)를 통해 불필요한 정보를 제거하는 새로운 어댑터 구조를 제안하였다.
-3.  **SOTA 성능 입증**: 서로 다른 모달리티를 가진 두 가지 SDG 의료 영상 분할 벤치마크에서 기존의 CNN 기반 및 SAM 기반 방법론들을 뛰어넘는 성능을 달성하였다.
+1. **Prototype-based Prompt Generator (PPG) 제안**: 소스 도메인 이미지들로부터 학습된 프로토타입을 저장하는 파라미터화된 메모리 뱅크를 도입하였다. 이를 통해 타겟 이미지에 대해 도메인-약결합(domain-weakly-correlated) 및 인스턴스-강결합(instance-strongly-correlated) 특성을 가진 적응형 프롬프트를 생성하여 일반화 성능을 높였다.
+2. **Generalized Adapter 설계**: SAM의 인코더를 효율적으로 튜닝하기 위해, 저수준 특징(Low-level features)을 중간 특징에 통합하고 채널 어텐션 필터(Channel Attention Filter)를 통해 불필요한 정보를 제거하는 새로운 어댑터 구조를 제안하였다.
+3. **SOTA 성능 입증**: 서로 다른 모달리티를 가진 두 가지 SDG 의료 영상 분할 벤치마크에서 기존의 CNN 기반 및 SAM 기반 방법론들을 뛰어넘는 성능을 달성하였다.
 
 ## 📎 Related Works
 
@@ -27,9 +27,11 @@ Zhikai Wei, Wenhui Dong, Peilin Zhou, Yuliang Gu, Zhou Zhao, and Yongchao Xu (20
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 DAPSAM은 고정된(Frozen) SAM 인코더에 **Generalized Adapter**를 추가하여 특징 추출 능력을 강화하고, 추출된 임베딩을 기반으로 **Prototype-based Prompt Generator (PPG)**를 통해 프롬프트를 생성하여 마스크 디코더(Mask Decoder)에 전달하는 구조를 가진다. 디코더는 전체 학습 가능(Fully trainable) 상태로 설정된다.
 
 ### 2. Generalized Adapter
+
 의료 영상에서는 장기의 경계나 병변 부위와 같은 저수준 특징(Low-level features)이 매우 중요하다. 이를 위해 다음과 같은 절차를 거친다.
 
 - **특징 융합**: ViT의 Patch Embedding 층에서 나온 초기 임베딩 $e_0$로부터 선형 층을 통해 저수준 특징 $F_{low}$를 추출하고, 이를 각 레이어의 중간 특징 $F$와 더해 융합 특징 $F_{fuse}$를 생성한다.
@@ -40,6 +42,7 @@ $$F_{filtered} = F_{fuse} \otimes \sigma(GAP(F_{fuse}) + GMP(F_{fuse}))$$
 $$F' = F + \text{MLP}_{up}(\text{GELU}(\text{MLP}_{down}(F_{filtered})))$$
 
 ### 3. Prototype-based Prompt Generator (PPG)
+
 학습된 지식을 저장하고 활용하기 위해 파라미터화된 메모리 뱅크 $M \in \mathbb{R}^{N \times C}$를 도입한다.
 
 - **인스턴스 프로토타입 추출**: 이미지 임베딩 $e_i$로부터 GAP와 GMP를 통해 인스턴스 수준의 프로토타입 $p_i$를 생성한다.
@@ -50,6 +53,7 @@ $$bp_i = \sum_{j=1}^{N} w_{i,j} m_j, \quad w_{i,j} = \frac{\exp(\text{Sim}(p_i, 
 $$\text{Prompt}_i = \text{Conv}_{1 \times 1}([bp_i, A_i, e_i])$$
 
 ### 4. 학습 목표 (Training Objective)
+
 소스 도메인에서 모델을 학습시키기 위해 Cross Entropy Loss($L_{CE}$)와 Dice Loss($L_{Dice}$)를 결합한 손실 함수를 사용한다.
 $$L = (1-\lambda)L_{CE} + \lambda L_{Dice}$$
 여기서 $\lambda$는 두 손실의 균형을 맞추는 가중치(본 논문에서는 0.8로 설정)이다.
@@ -57,17 +61,20 @@ $$L = (1-\lambda)L_{CE} + \lambda L_{Dice}$$
 ## 📊 Results
 
 ### 1. 실험 설정
-- **데이터셋**: 
-    - **Prostate dataset**: 6개 도메인(A~F)의 MRI 영상. Leave-one-out 방식으로 평가.
-    - **RIGA+ dataset**: 5개 도메인의 안저(Fundus) 영상. 2개 도메인(BinRushed, Magrabia)을 소스로 사용하고 나머지 3개를 타겟으로 평가.
+
+- **데이터셋**:
+  - **Prostate dataset**: 6개 도메인(A~F)의 MRI 영상. Leave-one-out 방식으로 평가.
+  - **RIGA+ dataset**: 5개 도메인의 안저(Fundus) 영상. 2개 도메인(BinRushed, Magrabia)을 소스로 사용하고 나머지 3개를 타겟으로 평가.
 - **평가 지표**: Dice Similarity Coefficient (DSC).
 - **구현 세부사항**: SAM의 ViT-B 버전 사용, Adapter Rank = 4, Optimizer = AdamW, Learning Rate = $5 \times 10^{-4}$.
 
 ### 2. 정량적 결과
+
 - **Prostate 데이터셋**: DAPSAM은 평균 DSC **81.31%**를 기록하여, Baseline(78.87%) 및 DeSAM [grid](79.02%)보다 우수한 성능을 보였다. 특히 기존 CNN 기반 SOTA 모델들보다 유의미하게 높은 성능을 달성하였다.
 - **RIGA+ 데이터셋**: 소스 도메인이 BinRushed일 때 **87.87%**, Magrabia일 때 **88.15%**의 평균 DSC를 기록하며, SAMed나 CCSDG 등 기존 방법론들을 앞질렀다.
 
 ### 3. 소거 연구 (Ablation Study)
+
 - **구성 요소의 영향**: 저수준 특징 통합(LLFI) $\rightarrow$ 필터링(Filter) $\rightarrow$ PPG 순으로 추가할 때 성능이 단계적으로 향상됨을 확인하였다. 특히 PPG 모듈은 Baseline 대비 약 1.44%의 성능 향상을 가져왔다.
 - **메모리 뱅크 크기 ($N$)**: $N=256$일 때 최적의 성능을 보였다. $N$이 너무 작으면 정보를 충분히 학습하지 못하고, 너무 크면 소스 도메인에 과적합(Overfitting)되어 일반화 성능이 떨어진다.
 

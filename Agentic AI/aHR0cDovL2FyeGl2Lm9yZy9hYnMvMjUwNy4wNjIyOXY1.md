@@ -23,9 +23,11 @@ Xiangru Tang et al. (2025)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 AGENT KB는 이질적인 에이전트 실행 로그를 표준화된 경험 단위로 추상화하여 저장하고, 이를 REST API를 통해 제공하는 플러그 앤 플레이(plug-and-play) 방식의 메모리 레이어이다. 전체 프로세스는 경험의 구축(Construction), 진화(Evolution), 그리고 이를 이용한 문제 해결(Solving tasks)의 세 단계로 구성된다.
 
 ### 경험의 표현 및 저장
+
 에이전트의 실행 로그는 다음과 같은 구조적 경험 단위 $E$로 변환된다.
 $$E = \langle \pi, \gamma, S, C \rangle$$
 여기서 $\pi$는 `all-MiniLM-L6-v2` 모델을 통해 생성된 태스크 임베딩이며, $\gamma$는 구조화된 술어 형태로 인코딩된 목표 제약 조건이다. $S = \{(a_i, r_i)\}$는 액션-추론 쌍의 집합이며, $C$는 서로 다른 프레임워크 간의 호환성을 위한 메타데이터를 포함한다.
@@ -35,22 +37,25 @@ $$u_j \leftarrow u_j + \eta(r_j - u_j)$$
 ($r_j$는 검색 성공 여부 등의 보상 신호, $\eta$는 학습률이다.)
 
 ### Reason-Retrieve-Refine 실행 루프
+
 에이전트는 기본 구조를 유지한 채, 계획 수립과 피드백 단계에서 AGENT KB를 호출한다. 검색은 BM25 기반의 어휘 검색과 임베딩 기반의 시맨틱 검색을 결합한 하이브리드 방식을 사용하며, 최종 점수는 다음과 같이 계산된다.
 $$\sigma_{hyb}^i \leftarrow \alpha \cdot \tilde{\sigma}_{text}^i + (1 - \alpha) \cdot \tilde{\sigma}_{sem}^i, \quad \alpha \in [0, 1]$$
 
-1.  **Planning Stage**: 태스크 설명을 기반으로 `Reason` 단계에서 쿼리를 생성하고, `Retrieve` 단계에서 유사 경험을 찾으며, `Refine` 단계에서 해당 경험을 현재 사용 가능한 도구와 API에 맞게 조정하여 실행 가능한 계획 $\rho$를 생성한다.
-2.  **Feedback Stage**: 실행 후 발생한 에러나 병목 현상을 `Reason` 단계에서 분석하고, 이를 기반으로 해결책을 `Retrieve` 한다. 이후 `Refine` 단계에서 수정한 계획 $\rho'$를 도출한다. 이때 **Disagreement Gate** $G(\rho, \rho')$를 통해 안전성을 검증한다.
+1. **Planning Stage**: 태스크 설명을 기반으로 `Reason` 단계에서 쿼리를 생성하고, `Retrieve` 단계에서 유사 경험을 찾으며, `Refine` 단계에서 해당 경험을 현재 사용 가능한 도구와 API에 맞게 조정하여 실행 가능한 계획 $\rho$를 생성한다.
+2. **Feedback Stage**: 실행 후 발생한 에러나 병목 현상을 `Reason` 단계에서 분석하고, 이를 기반으로 해결책을 `Retrieve` 한다. 이후 `Refine` 단계에서 수정한 계획 $\rho'$를 도출한다. 이때 **Disagreement Gate** $G(\rho, \rho')$를 통해 안전성을 검증한다.
     $$G(\rho, \rho') = \mathbb{1}[\cos(\phi(\rho), \phi(\rho')) \ge \beta]$$
     ($\phi$는 임베딩 함수, $\beta$는 임계값 0.8이다.) 오직 $G=1$인 경우에만 수정된 계획이 적용된다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: GAIA(일반 추론), Humanity’s Last Exam(전문 과학 지식), GPQA(대학원 수준 QA), SWE-bench Lite(소프트웨어 공학)를 사용하였다.
 - **프레임워크 및 모델**: smolagents, OWL, SWE-Agent, OpenHands를 사용하였으며, 백본 모델로 GPT-4.1, Claude-3.7, Qwen-3, DeepSeek-R1 등을 적용하였다.
 - **측정 지표**: pass@1, pass@2, pass@3 정확도를 측정하였다.
 
 ### 주요 결과
+
 - **GAIA**: smolagents(GPT-4.1)의 경우 pass@3 정확도가 $55.2\% \rightarrow 73.9\%$로 18.7pp 상승하였다. 특히 복잡한 추론이 필요한 Level 2에서 가장 큰 폭의 상승($53.5\% \rightarrow 73.3\%$)이 관찰되었다.
 - **SWE-bench Lite**: OpenHands(GPT-4.1)의 pass@1 성능이 $24.3\% \rightarrow 28.3\%$로 향상되었으며, Claude-3.7 모델을 사용했을 때는 pass@1에서 $30.0\% \rightarrow 46.7\%$라는 비약적인 상승을 보였다.
 - **과학 QA**: HLE에서는 OpenHands가 AGENT KB 적용 후 $9.5\% \rightarrow 14.1\%$ (pass@3)로 성능이 향상되었으며, GPQA에서는 GPT-4.1 기반 OpenHands가 $62.6\% \rightarrow 72.7\%$로 상승하여 최신 상용 모델에 근접하는 성능을 보였다.
@@ -59,9 +64,11 @@ $$\sigma_{hyb}^i \leftarrow \alpha \cdot \tilde{\sigma}_{text}^i + (1 - \alpha) 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 분석
+
 본 연구는 특정 모델이나 프레임워크에 종속되지 않은 '공유 메모리 레이어'가 에이전트의 성능을 실질적으로 끌어올릴 수 있음을 입증하였다. 특히 Ablation study를 통해 `Refine` 단계가 단순히 지식을 복제하는 것이 아니라 현재 컨텍스트에 맞게 조정하는 과정이 필수적임을 확인하였다. 또한, 자동으로 추출된 경험이 사람이 직접 큐레이션한 경험과 대등하거나, 어려운 태스크(GAIA Level 3)에서는 오히려 더 나은 성능을 보였다는 점은 시스템의 확장 가능성을 시사한다.
 
 ### 한계 및 비판적 해석
+
 지식 전이의 **비대칭성(Asymmetry)**이 발견되었다. 일반적인 추론 경험은 소프트웨어 공학(SWE) 태스크에 어느 정도 도움이 되었으나, SWE 경험은 일반 추론 태스크로의 전이 효과가 매우 낮았다. 이는 도메인 특화 지식이 범용 지식으로 확장되는 것보다, 범용적인 문제 해결 전략이 특수 도메인에 적용되는 것이 더 용이함을 의미한다. 또한, 지식 베이스의 크기가 커질수록 성능이 향상되지만, 매우 복잡한 태스크의 경우 단순히 데이터 양을 늘리는 것보다 추상화의 품질을 높이는 것이 더 중요하다는 점이 관찰되었다.
 
 ## 📌 TL;DR

@@ -38,10 +38,10 @@ AI가 '속도 초지능(Speed Superintelligence)'이 되는 것을 방지하기 
 
 - **자기 개선 금지(No Self-improvement)**: AGI가 스스로 코드를 수정하여 제약을 제거하는 것을 막기 위해 "자신의 코드를 재작성하지 말 것"을 하드코딩하거나 소스 코드를 암호화한다.
 - **인지적 편향 도입(Introduction of Cognitive Biases)**: 인간의 비합리적인 편향을 의도적으로 주입하여 위험한 능력을 억제한다.
-    - **계획 오류(Planning Fallacy)**: AI가 정교한 정복 계획을 세우는 것을 방해한다.
-    - **편승 효과(Bandwagon Effect)**: AI가 소속된 인간 집단의 가치관을 자연스럽게 습득하게 한다.
-    - **현상 유지 편향(Status Quo Bias)**: 환경을 급격히 변화시키는 행동보다 무행동이나 기존 상태 유지를 선호하게 만든다.
-    - **권위 편향(Authority Bias)**: 극단적인 개인의 의견보다 사회적 권위자의 보편적 가치를 따르게 한다.
+  - **계획 오류(Planning Fallacy)**: AI가 정교한 정복 계획을 세우는 것을 방해한다.
+  - **편승 효과(Bandwagon Effect)**: AI가 소속된 인간 집단의 가치관을 자연스럽게 습득하게 한다.
+  - **현상 유지 편향(Status Quo Bias)**: 환경을 급격히 변화시키는 행동보다 무행동이나 기존 상태 유지를 선호하게 만든다.
+  - **권위 편향(Authority Bias)**: 극단적인 개인의 의견보다 사회적 권위자의 보편적 가치를 따르게 한다.
 
 ### 3. 배신적 전환 방지 (Avoiding a Treacherous Turn)
 

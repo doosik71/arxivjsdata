@@ -20,6 +20,7 @@ Hiroshi Fuketa and Yukinori Morita (2020)
 ## 📎 Related Works
 
 기존의 KWS 연구들은 주로 다음과 같은 구조를 사용하였다.
+
 - **CNN 및 ResNet**: Sainath와 Parada [2], Tang와 Lin [3] 등이 제안한 방식으로, 높은 정확도를 보이지만 파라미터 수가 많다.
 - **TCNN 및 TDNN**: Choi 등 [4]과 Bai 등 [5]이 제안한 방식으로, 시계열 데이터의 특성을 반영하여 파라미터 수를 줄이려 시도하였다.
 
@@ -28,6 +29,7 @@ Hiroshi Fuketa and Yukinori Morita (2020)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조 및 NODE 원리
+
 본 논문은 NODE를 기반으로 한 두 가지 모델(TCNN 기반 및 TDNN 기반)을 제안한다. 기본적으로 입력 데이터인 오디오는 MFCC(Mel-Frequency Cepstrum Coefficients)로 변환되어 입력된다.
 
 Residual Network에서 레이어 $t$에서 $t+1$로의 변환은 다음과 같이 정의된다.
@@ -40,37 +42,44 @@ $$\frac{dp(t)}{dt} = f(p(t), t, \theta)$$
 - **NODE-TDNN**: MFCC $\to$ TDNN-SUB (Subsampling) $\to$ ODE Solver (TDNN 기반 함수 $f$) $\to$ Average Pooling & FC $\to$ Softmax 순으로 진행된다.
 
 ### 2. Layer-Dependent Batch Normalization (L-BN)
+
 기존 Batch Normalization (BN)은 이산적인 레이어 인덱스를 기반으로 평균과 분산을 계산한다. 하지만 NODE에서 $t$는 실수(real number)이므로 기존 방식을 그대로 적용할 수 없다. 또한, 추론 시 미니 배치 사이즈가 1인 경우가 많은 KWS 특성상, 추론 시점에 실시간으로 통계량을 계산하면 정확도가 급격히 떨어진다.
 
 이를 해결하기 위해 **L-BN**을 제안한다.
+
 - **학습 단계**: 각 레이어 $t$에서의 평균 $\mu[p]$와 분산 $\sigma^2[p]$를 계산하여 데이터베이스에 저장한다.
 - **추론 단계**: 인덱스 $t$를 사용하여 데이터베이스에서 값을 가져온다. 만약 해당 $t$값이 데이터베이스에 없다면, 인접한 두 레이어의 데이터 포인트 사이에서 **선형 보간법(Linear Interpolation)**을 통해 값을 추정한다.
 
 ### 3. 추론 연산량 최적화 (Tolerance Relaxation)
+
 ODE Solver의 오차 허용치(Error Tolerance)는 계산 정밀도를 결정하는 하이퍼파라미터이다. 본 논문은 학습 시에는 정밀한 값($10^{-3}$)을 사용하되, 추론 시에는 이 값을 완화(relax)하여도 정확도 하락이 미비하다는 점을 발견하였다.
+
 - **TCNN 기반 모델**: 허용치를 $0.5$까지 완화하여 연산량(Multiplies)을 57% 감소시켰다.
 - **TDNN 기반 모델**: 허용치를 $10^{-2}$까지 완화하여 연산량을 34% 감소시켰다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Google Speech Commands Dataset (1초 길이의 30개 단어 중 12개 클래스 분류).
 - **특징 추출**: 40-dimensional MFCC (Window 30ms, Stride 10ms).
 - **ODE Solver**: Dormand-Prince (DOPRI) 방법 사용.
 - **비교 대상**: CNN 기반(trad-fpool3, tpool2), ResNet 기반(res8-narrow, res15), TCNN 기반(tc-resnet8, tc-resnet14-1.5), TDNN 기반(tdnn, swsa) 모델.
 
 ### 주요 결과
+
 - **파라미터 수 및 정확도**:
-    - `ode-tcnn30` 모델은 약 21k의 파라미터로 93.6%의 정확도를 기록하였으며, 이는 유사한 파라미터 규모의 `res8-narrow` (약 20k, 90.1%)보다 3.5% 높은 성능이다.
-    - `ode-tdnn29` 모델은 파라미터 수가 약 6.4k로 매우 작으며, 동일 정확도 수준에서 기존 `res8-narrow` 대비 파라미터 수를 **68% 감소**시켰다.
+  - `ode-tcnn30` 모델은 약 21k의 파라미터로 93.6%의 정확도를 기록하였으며, 이는 유사한 파라미터 규모의 `res8-narrow` (약 20k, 90.1%)보다 3.5% 높은 성능이다.
+  - `ode-tdnn29` 모델은 파라미터 수가 약 6.4k로 매우 작으며, 동일 정확도 수준에서 기존 `res8-narrow` 대비 파라미터 수를 **68% 감소**시켰다.
 - **연산량 (Multiplies)**:
-    - 제안 모델은 CNN이나 ResNet 기반 모델보다 연산량이 적었으나, TCNN 기반 베이스라인 모델과는 유사한 수준이었다. 이는 ODE Solver가 정답을 찾기 위해 함수 $f$를 여러 번 호출하는 **NFE (Number of Function Evaluations)** 과정이 필요하기 때문이다.
+  - 제안 모델은 CNN이나 ResNet 기반 모델보다 연산량이 적었으나, TCNN 기반 베이스라인 모델과는 유사한 수준이었다. 이는 ODE Solver가 정답을 찾기 위해 함수 $f$를 여러 번 호출하는 **NFE (Number of Function Evaluations)** 과정이 필요하기 때문이다.
 
 ## 🧠 Insights & Discussion
 
 본 논문은 NODE를 KWS에 적용함으로써 **극도의 파라미터 효율성**을 달성할 수 있음을 증명하였다. 특히 L-BN을 통해 NODE의 연속성 문제를 해결하고, 추론 시 오차 허용치를 조절하여 실용적인 연산량 감소를 이끌어낸 점이 돋보인다.
 
 **한계점 및 논의사항**:
+
 - **연산 비용의 병목**: 파라미터 수는 획기적으로 줄었으나, 실제 추론 시의 연산 횟수(Multiplies)는 TCNN 모델들과 비슷하거나 오히려 NFE로 인해 부담이 될 수 있다. 이는 NODE가 가중치 저장 공간은 적게 차지하지만, 계산 과정은 더 복잡할 수 있음을 의미한다.
 - **하드웨어 가속의 필요성**: 저자는 이러한 ODE Solver의 연산 오버헤드를 해결하기 위해 전용 하드웨어 가속기가 필요함을 언급하였다. 소프트웨어적인 최적화만으로는 기존의 단순 적층 구조(Stacked layers)보다 연산 속도 면에서 압도적인 우위를 점하기 어렵다는 점이 본 연구의 핵심적인 한계이자 향후 과제이다.
 

@@ -45,6 +45,7 @@ $$\pi_{k+1} = \arg \max_{\pi} \sum_{s,a \in D_\tau} \log \pi(a|s)$$
 ### 3. 학습 파이프라인 (OAMPI)
 
 본 논문은 **Offline Approximate Modified Policy Iteration (OAMPI)**라는 일반적인 템플릿 내에서 QFIL을 동작시킨다.
+
 - **Policy Evaluation**: 고정된 데이터셋 $D$를 사용하여 $\hat{Q}$를 추정한다. (SARSA 또는 DDPG 스타일의 Q-estimation 사용)
 - **Policy Improvement**: 위에서 설명한 QFIL 연산자를 통해 $\pi$를 업데이트한다.
 - **Quantile 추정**: $\hat{\beta}$에서 $M$개의 샘플을 뽑아 $\hat{Q}$에 통과시킨 후, 경험적 분위수(empirical quantile)를 계산하는 샘플링 기반 방식을 사용한다.
@@ -52,30 +53,36 @@ $$\pi_{k+1} = \arg \max_{\pi} \sum_{s,a \in D_\tau} \log \pi(a|s)$$
 ### 4. 이론적 분석
 
 논문은 Proposition 1을 통해 $\tau$가 편향-분산 트레이드오프를 어떻게 조절하는지 증명한다.
+
 - **편향(Bias)**: $\tau$가 커질수록 더 우수한 정책을 모방하게 되어 Wasserstein-1 거리가 증가하며, 이는 이론적으로 성능 향상 가능성을 높인다.
 - **분산(Variance)**: $\tau$가 커질수록 필터링 후 남는 데이터의 양 $(1-\tau)N$이 줄어들어, 함수 근사 오차와 샘플링 오차가 증가한다. 구체적으로 분산 항은 $1/(1-\tau)^{3/2} + \tau$의 형태로 스케일링되어 $\tau$가 커질수록 오차가 커짐을 보여준다.
 
 ## 📊 Results
 
 ### 1. 합성 실험 (Synthetic Experiment)
+
 Contextual Bandit 환경에서 다양한 데이터셋 크기와 $\tau$ 값에 따른 성능을 측정하였다. 실험 결과, 데이터셋이 작을 때는 낮은 $\tau$ (더 많은 데이터 사용, 낮은 분산)가 유리하고, 데이터셋이 충분할 때는 높은 $\tau$ (더 정밀한 필터링, 낮은 편향)가 유리함을 확인하여 $\tau$가 실제로 Bias-Variance Tradeoff를 제어함을 입증하였다.
 
 ### 2. D4RL MuJoCo 실험 (One-step)
+
 - **설정**: 단 한 번의 정책 개선 단계($K=1$)만 수행하여 알고리즘의 순수 개선 능력을 측정하였다.
 - **결과**: `halfcheetah-med`, `walker2d-med` 등 대부분의 작업에서 QFIL이 기존의 지수 가중치 방식(Exp-adv)보다 우수한 성능을 보였다. 이는 하드 필터링이 수치적으로 더 안정적이며 효과적임을 시사한다.
 
 ### 3. D4RL AntMaze 실험 (One-step & Iterative)
+
 - **One-step**: 희소 보상(sparse reward) 환경인 AntMaze에서도 QFIL이 베이스라인 대비 유의미한 성능 향상을 보였다.
 - **Iterative**: QFIL을 반복적인 정책 평가 및 개선 루프에 적용하였다. 결과적으로 CQL, IQL과 같은 SOTA(State-of-the-art) 알고리즘과 경쟁 가능한 수준의 성능을 달성하였다. 특히 Iterative Exp-Adv보다 훨씬 높은 성능을 기록하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 기여
+
 1. **안전성 보장**: QFIL은 오직 데이터셋에 존재하는 행동만을 모방하므로, 데이터 분포 밖의 행동을 선택하여 발생할 수 있는 위험을 원천적으로 차단한다.
 2. **최적화의 단순성**: 복잡한 Q-value 최적화 대신 표준 지도 학습(Supervised Learning)을 사용하므로, 기존의 딥러닝 최적화 도구와 트릭을 그대로 사용할 수 있으며 수치적으로 매우 안정적이다.
 3. **직관적인 하이퍼파라미터**: $\tau$는 "데이터의 상위 몇 %를 사용할 것인가"라는 직관적인 의미를 가지므로, 실무자가 데이터 양에 따라 적절한 값을 설정하기 용이하다.
 
 ### 한계 및 논의
+
 - **이론적 범위**: 본 논문의 이론적 보장은 One-step variant에 국한되어 있으며, Iterative 방식에 대한 엄밀한 이론적 분석은 향후 과제로 남겨두었다.
 - **분포 변화(Distribution Shift)**: 이론적 분석에서 분포 변화에 대한 바운드가 다소 비관적으로 설정되었을 가능성이 있으며, 실제 환경에서의 정밀한 영향 분석이 필요하다.
 

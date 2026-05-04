@@ -6,7 +6,7 @@ Deepak K. Gupta, Devanshu Arya, and Efstratios Gavves (2020)
 
 본 논문이 해결하고자 하는 핵심 문제는 시각적 객체 추적(Visual Object Tracking)에서 발생하는 **평면 내 회전(In-plane rotation)** 문제이다.
 
-기존의 딥러닝 기반 추적 알고리즘들은 일반적인 CNN을 사용하며, 이는 기본적으로 평행 이동 등가성(Translation Equivariance)을 가지지만 회전 변환에 대해서는 등가성을 보장하지 않는다. 이로 인해 추적 대상이 회전할 경우, 네트워크가 학습 단계에서 보지 못한 방향의 특징을 추출하게 되어 성능이 급격히 저하된다. 
+기존의 딥러닝 기반 추적 알고리즘들은 일반적인 CNN을 사용하며, 이는 기본적으로 평행 이동 등가성(Translation Equivariance)을 가지지만 회전 변환에 대해서는 등가성을 보장하지 않는다. 이로 인해 추적 대상이 회전할 경우, 네트워크가 학습 단계에서 보지 못한 방향의 특징을 추출하게 되어 성능이 급격히 저하된다.
 
 특히 드론 촬영 영상이나 Top-view 영상, 또는 에고센트릭(Egocentric) 비디오와 같이 카메라나 객체가 빈번하게 회전하는 환경에서 이 문제는 매우 중요하다. 기존의 데이터 증강(Data Augmentation) 방식은 모든 회전 변형에 대해 별도의 표현을 학습해야 하므로 계산 비용이 증가하고, 모델이 회전 불변성(Rotation Invariance)을 갖게 될 경우 주변에 유사한 객체가 많을 때(예: 물고기 떼 속의 물고기 추적) 변별력이 떨어지는 한계가 있다. 따라서 본 논문의 목표는 아키텍처 수준에서 **회전 등가성(Rotation Equivariance)**을 내장하여 추가적인 데이터 증강 없이도 회전 변화에 강건한 Siamese 네트워크(RE-SiamNet)를 설계하는 것이다.
 
@@ -22,17 +22,21 @@ Deepak K. Gupta, Devanshu Arya, and Efstratios Gavves (2020)
 ## 📎 Related Works
 
 ### 기존 Siamese 추적기
+
 SiamFC, SiamRPN++와 같은 기존 Siamese 추적기들은 템플릿 이미지와 검색 영역 간의 유사도를 측정하여 객체를 위치시킨다. 이들은 강력한 변별력을 가지지만, 부분 폐색(Partial Occlusion), 스케일 변화, 그리고 특히 객체의 회전 상황에서 취약함을 보인다.
 
 ### 등가성 CNN (Equivariant CNNs)
+
 최근 이미지 분류 및 세그멘테이션 분야에서 변환 등가성을 네트워크 구조에 직접 반영하려는 연구가 진행되었다. Cohen과 Welling의 Group-Convolutional layers가 대표적이며, 이후 계산 효율성을 높이기 위해 Steerable filters가 도입되었다. 본 논문은 이러한 이론을 객체 추적이라는 로컬라이제이션 작업에 처음으로 적용하였다.
 
 ### 기존 접근 방식과의 차별점
+
 기존의 회전 대응 방식이 주로 데이터 증강을 통한 '학습'에 의존했다면, RE-SiamNet은 **가중치 공유(Weight Sharing)**를 통해 수학적으로 회전 등가성을 보장하는 '구조'를 채택함으로써 학습 효율성을 높이고 모델의 일반화 성능을 개선하였다.
 
 ## 🛠️ Methodology
 
 ### 1. 회전 등가성 및 Steerable Filters
+
 함수 $f$가 변환 그룹 $G$에 대해 등가성을 갖는다는 것은 다음과 같이 정의된다.
 $$f(\psi^Y_g(x)) = \psi^Y_g(f(x)), \quad g \in G, x \in X$$
 여기서 $\psi$는 해당 공간에서의 그룹 작용(Group Action)을 의미한다. 본 논문은 **Circular Harmonics** $\psi_{jk}$를 기본 함수로 사용하는 Steerable filters를 도입한다.
@@ -41,6 +45,7 @@ $$\psi_{jk}(r, \phi) = \tau_j(r)e^{ik\phi}$$
 $$\rho_\theta \Psi(x) = \sum_{j=1}^J \sum_{k=0}^K w_{jk} e^{-ik\theta} \psi_{jk}(x)$$
 
 ### 2. RE-SiamNet 아키텍처
+
 전체 파이프라인은 기존 SiamFC 구조를 기반으로 하되, 모든 일반 컨볼루션 층을 회전 등가 모듈로 교체한다.
 
 - **Rotation Equivariant Input**: 템플릿 헤드는 단일 이미지가 아니라, $\Lambda$개의 이산적인 회전 변형 세트 $Z = \{z_1, z_2, \dots, z_\Lambda\}$를 입력으로 받는다. 이는 추론 단계에서 미리 계산 가능하다.
@@ -49,6 +54,7 @@ $$\rho_\theta \Psi(x) = \sum_{j=1}^J \sum_{k=0}^K w_{jk} e^{-ik\theta} \psi_{jk}
 - **Group Max Pooling**: 생성된 $\Lambda$개의 히트맵 중 최댓값을 가진 맵을 선택하는 Global Max Pooling을 수행하여 최종 히트맵 $h(Z, x)$를 도출한다.
 
 ### 3. 비지도 상대 회전 추정 및 운동 제약
+
 RE-SiamNet은 Group Max Pooling 단계에서 어떤 인덱스 $i$의 히트맵이 선택되었는지를 통해 상대적 포즈 변화를 추정한다.
 $$h(Z, x) = \hat{h}(z_i, x) = \text{group-maxpool}(\{h(z, x)\})$$
 이때 상대 회전 각도는 $\theta_{\text{diff}} = i \cdot 360 / \Lambda$로 계산된다.
@@ -58,12 +64,14 @@ $$h(Z, x) = \hat{h}(z_i, x) = \text{group-maxpool}(\{h(z, x)\})$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: ROB(신규), Rot-OTB100, Rot-MNIST, OTB100, GOT-10k.
 - **비교 대상**: SiamFC, SiamFCv2, SiamRPN++, DiMP(SOTA).
 - **지표**: Precision(정밀도), Success Rate(성공률).
 - **구현**: $\Lambda \in \{4, 8, 16\}$의 회전 그룹을 사용하였으며, `e2cnn` 라이브러리를 통해 구현하였다.
 
 ### 주요 결과
+
 1. **회전 추적 성능**: Rot-OTB100 실험에서 일반 SiamFC는 회전이 추가되었을 때 정밀도가 24.2%, 성공률이 26.3% 하락하였다. 반면, RE-SiamNet은 $\Lambda=4$만으로도 기존 모델을 크게 상회하였으며, $\Lambda=8$ 이상에서는 SOTA 모델인 DiMP와 경쟁 가능한 수준의 성능을 보였다.
 2. **상대 포즈 추정**: ROB와 Rot-OTB100 데이터셋에서 실제 회전 각도와 예측 각도 사이의 오차가 $\pm \pi/4$ 범위 내에 있을 확률(SR)이 평균 60% 이상으로 나타나, 비지도 방식으로도 유의미한 포즈 추정이 가능함을 입증하였다.
 3. **일반 성능 유지**: 회전이 없는 일반 OTB100 및 GOT-10k 데이터셋에서도 성능 하락이 2% 이내로 매우 적어, 회전 등가성 도입이 일반적인 추적 성능을 저해하지 않음을 확인하였다.

@@ -25,6 +25,7 @@ Chuan Wen, Jieruiui Lin, Jianing Qian, Yang Gao, Dinesh Jayaraman (2021)
 ## 🛠️ Methodology
 
 ### 1. Copycat Problem의 분석
+
 저자들은 Copycat problem이 발생하는 조건을 수식으로 분석한다. 보상 최적 정책(Reward-optimal policy)의 학습 오차를 $MSE_D(\theta^{R*})$라고 하고, 최적의 Copycat 정책(이전 행동만으로 현재 행동을 예측하는 정책)이 틀리는 Changepoint의 비율을 $\epsilon_{CP}$라고 할 때, 다음과 같은 조건에서 Copycat problem이 발생한다.
 
 $$MSE_D(\theta^{R*}) > \epsilon_{CP}$$
@@ -32,6 +33,7 @@ $$MSE_D(\theta^{R*}) > \epsilon_{CP}$$
 즉, 정답을 맞히기 위한 최적 정책의 오차보다 Copycat 정책의 오차가 더 작을 때, 학습기는 더 쉬운 길인 Copycat 솔루션을 선택하게 된다.
 
 ### 2. Action Prediction Error (APE)
+
 Changepoint를 자동으로 식별하기 위해 저자들은 **Action Prediction Error (APE)**라는 지표를 제안한다.
 
 먼저, 오직 과거의 행동들 $[a_{t-1}, a_{t-2}, \dots]$만을 입력으로 받아 현재 행동 $a_t$를 예측하는 작은 MLP 네트워크인 Copycat 정책 $\psi^*$를 학습시킨다. 학습 목표는 다음과 같다.
@@ -45,6 +47,7 @@ $$APE_t = (\psi^*(a_{t-1}, a_{t-2}, \dots) - a_t)^2$$
 $APE_t$ 값이 높다는 것은 이전 행동만으로는 현재 행동을 예측할 수 없는 지점, 즉 전문가가 환경의 변화에 반응하여 행동을 바꾼 Changepoint임을 의미한다.
 
 ### 3. 재가중치 부여된 BC 목적 함수 (Reweighted BC Objective)
+
 계산된 $APE_t$를 기반으로 각 샘플에 가중치 $w_t = f(APE_t)$를 부여하여 정책 $\pi_\theta$를 학습시킨다. 최종 목적 함수는 다음과 같다.
 
 $$\theta^* = \arg \min_{\theta} \sum_{t=0}^{N} f(APE_t)(\pi_\theta(\tilde{o}_t) - a_t)^2$$
@@ -57,15 +60,18 @@ $$\theta^* = \arg \min_{\theta} \sum_{t=0}^{N} f(APE_t)(\pi_\theta(\tilde{o}_t) 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **CARLA**: 실사 도시 주행 시뮬레이터. `%success`, `#collision`, `%progress`, `avg. speed`를 측정한다.
 - **MuJoCo-Image**: Hopper, HalfCheetah, Walker2D 환경에서 RGB 이미지를 입력으로 하여 Reward를 측정한다.
 - **Baselines**: BC-SO, BC-OH, HistoryDropout, FCA, DAGGER 등과 비교하였다.
 
 ### 2. 주요 결과
+
 - **CARLA**: BC-OH는 BC-SO보다 성능이 낮게 나타나 Copycat problem이 명확히 확인되었다. 제안 방법(Ours)은 모든 이력 기반 베이스라인을 압도하며 BC-SO와 대등하거나 더 나은 성능을 보였다. 특히-속도 정보가 제거된 **CARLA-w/o-speed** 설정에서 BC-OH 대비 비약적인 성능 향상을 보여, 관측 이력을 효과적으로 활용하고 있음을 증명하였다.
 - **MuJoCo-Image**: 세 가지 로봇 제어 환경 모두에서 제안 방법(특히 Softmax 가중치 적용 시)이 모든 오프라인 베이스라인보다 높은 보상을 획득하였다. 온라인 상호작용을 사용하는 DAGGER(1k queries)와 비교했을 때도 경쟁력 있는 성능을 보였다.
 
 ### 3. 분석 및 검증
+
 - **Changepoint 성능**: 검증 데이터셋에서 $APE$가 높은 샘플(Changepoint)에 대해 제안 방법이 BC-OH보다 훨씬 낮은 오차를 보였다. 이는 모델이 핵심 프레임에서 더 정확하게 동작함을 의미한다.
 - **분포 변화(Distribution Shift)**: 정책을 실제 환경에서 실행하여 생성한 데이터와 전문가 데이터 사이의 오차(Rollout imitation error)를 측정했을 때, 제안 방법이 BC-OH보다 낮은 수치를 기록하여 분포 변화 문제도 어느 정도 완화됨을 확인하였다.
 - **Copycat 경향성**: 정책 $\pi$가 생성한 행동 시퀀스의 $APE$를 측정하는 $\text{avgAPE}(\pi)$ 지표를 통해, 제안 방법이 BC-OH보다 덜 'Copycat'스럽게(즉, 더 역동적으로) 행동함을 확인하였다.

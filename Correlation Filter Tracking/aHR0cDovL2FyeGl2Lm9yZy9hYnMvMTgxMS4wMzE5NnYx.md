@@ -13,6 +13,7 @@ Yanchun Xie, Jimin Xiao, Kaizhu Huang, Jeyarajan Thiyagalingam, Yao Zhao (2018)
 본 논문의 핵심 아이디어는 **여러 개의 CF 모델을 병렬로 유지하고, 딥 강화학습(Deep Reinforcement Learning)을 통해 현재 상황에 가장 적합한 모델을 동적으로 선택**하는 것이다.
 
 주요 기여 사항은 다음과 같다.
+
 1. 단일 모델 사용 시 발생하는 드리프트 문제를 해결하기 위해, 병렬로 업데이트 및 유지되는 여러 CF 모델 중 최적의 모델을 선택하는 새로운 접근 방식을 제안하였다.
 2. 모델 선택 과정을 마르코프 결정 과정(Markov Decision Process)으로 정의하고, 이를 최적화하기 위해 Proximal Policy Optimization (PPO) 알고리즘을 도입하였다.
 3. 실시간 적용이 가능하도록 경량화된 특징 추출기(Feature Extractor)와 작은 규모의 Decision Network를 설계하였다.
@@ -21,14 +22,17 @@ Yanchun Xie, Jimin Xiao, Kaizhu Huang, Jeyarajan Thiyagalingam, Yao Zhao (2018)
 ## 📎 Related Works
 
 ### Correlation Filter Based Tracker
+
 CF 기반 추적기들은 푸리에 도메인(Fourier Frequency Domain)에서 릿지 회귀(Ridge Regression) 문제를 효율적으로 해결함으로써 빠른 속도와 높은 정확도를 달성해 왔다. KCF, DSST, SRDCF 등이 대표적이며, 최근에는 VGG와 같은 사전 학습된 심층 신경망의 Convolutional Feature를 결합하여 성능을 높이는 추세이다. 하지만 이러한 모델들도 여전히 온라인 업데이트 과정에서 발생하는 노이즈와 드리프트 문제에서 자유롭지 못하다.
 
 ### Deep Reinforcement Learning
+
 강화학습은 최근 시각적 추적 분야에서 특징 선택(Feature Selection)이나 하이퍼파라미터 최적화 등에 적용되기 시작했다. 특히 TRPO나 PPO와 같은 정책 경사(Policy Gradient) 방법론은 고차원 입력 공간에서도 안정적인 학습 성능을 보여준다. 본 논문은 강화학습을 '특징 선택'이 아닌 '모델 업데이트 및 선택'이라는 관점에서 적용했다는 점에서 기존 연구들과 차별화된다.
 
 ## 🛠️ Methodology
 
 ### 1. Correlation Filter 모델링
+
 표준 CF는 다음과 같은 목적 함수를 통해 학습된다.
 $$\arg \min_{f} ||\psi(x) * f - g||^2 + \lambda ||f||^2$$
 여기서 $f$는 CF, $*$는 순환 상관(Circular Correlation) 연산, $\psi$는 특징 추출기, $x$는 타겟 중심의 이미지 패치, $g$는 가우시안 형태의 응답 맵(Response Map) 레이블이다.
@@ -40,6 +44,7 @@ $$P = F \cdot \bar{Z}$$
 응답 맵 $P$에서 최대값을 가진 좌표가 타겟의 위치가 된다.
 
 ### 2. 강화학습 기반 모델 선택
+
 본 연구는 추적 과정을 이산 제어 문제로 정의하고, PPO 알고리즘을 사용하여 최적의 CF 모델을 선택한다.
 
 - **상태(State, $s_t$):** 현재 유지되고 있는 모든 CF 모델들에 의해 생성된 응답 맵(Response Maps)의 집합이다.
@@ -48,14 +53,18 @@ $$P = F \cdot \bar{Z}$$
 $$g(s_t, a_t) = \begin{cases} \text{IOU} + 1 & \text{if IOU} > 0.7 \\ -1 & \text{if IOU} < 0.2 \\ -0.1 & \text{otherwise} \end{cases}$$
 
 ### 3. PPO 기반 학습 및 Decision Network
+
 학습은 Actor-Critic 구조의 Decision Network를 통해 이루어진다.
+
 - **구조:** Policy Net과 Value Net 두 개의 브랜치로 구성되며, 각각 3개의 Convolutional Layer와 Fully Connected Layer를 가진다. 응답 맵은 $64 \times 64 \times 3$ 크기로 리사이징되어 입력된다.
 - **손실 함수:** PPO의 Clipped Surrogate Objective를 사용하여 정책의 급격한 변화를 방지하고 학습 안정성을 높인다.
 $$L_t(\theta) = \min(\text{Ratio} * A_t, \text{clip}(\text{Ratio}, 1-\epsilon, 1+\epsilon) A_t)$$
 여기서 $\text{Ratio} = \frac{\pi(a_t|s_t;\theta)}{\pi(a_t|s_t;\theta_{old})}$이며, $A_t$는 어드밴티지 추정치(Advantage Estimation)이다.
 
 ### 4. CF 모델 풀 및 업데이트 전략
+
 총 $k$개의 CF 모델을 유지한다.
+
 - **Initial Model:** 첫 프레임의 타겟 특징으로 초기화되며, 업데이트 없이 유지된다. (원래 타겟의 기억 유지)
 - **Accumulated Model:** 매 프레임마다 항상 업데이트된다. (외형 변화 및 변형에 적응)
 - **Dynamic Model ($k-2$개):** Decision Net에 의해 선택되었을 때만 업데이트된다.
@@ -63,18 +72,22 @@ $$L_t(\theta) = \min(\text{Ratio} * A_t, \text{clip}(\text{Ratio}, 1-\epsilon, 1
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** OTB100, OTB2013 벤치마크 사용.
 - **비교 대상:** KCF, DSST, SRDCF, DCFnet, HP 등 기존 CF 기반 추적기.
 - **평가 지표:** 거리 정밀도(Distance Precision, DP)와 겹침 성공률(Overlap Success rate, OS).
 
 ### 정량적 결과
+
 OTB100 데이터셋 기준, 제안 방법은 **OS 68.89%, DP 81.19%**를 기록하여 비교 대상 중 가장 높은 성능을 보였다. 특히 모델 선택 과정이 없는 `dcfnetpy`보다 OS 기준 1.82%p, DP 기준 1.06%p 높은 수치를 기록하였다.
 
 ### 정성적 및 속성별 분석
+
 - **가려짐(Occlusion):** 다중 모델 선택 전략 덕분에 가려짐이 발생하는 시퀀스에서 성공률이 3.7%p, 정밀도가 3.1%p 향상되었다.
 - **복구 능력:** 타겟을 한 번 놓치더라도 Initial Model이나 이전의 Dynamic Model을 선택함으로써 다시 타겟을 찾을 수 있는 복구 능력이 뛰어남을 확인하였다.
 
 ### Ablation Study
+
 - **학습 횟수:** 학습 반복 횟수가 증가함에 따라 정밀도와 성공률이 점진적으로 상승하여 RL 학습이 유효함을 보였다.
 - **업데이트 전략:** '항상 업데이트' 또는 '랜덤 업데이트' 전략보다 'Decision Net 기반 선택 업데이트' 전략이 월등히 높은 성능을 보였다.
 - **RL 알고리즘 비교:** PPO가 A2C보다 더 높은 보상을 얻고 추적 성능이 좋았으며, DQN은 본 과제에서 제대로 작동하지 않았다.

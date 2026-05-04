@@ -10,7 +10,7 @@ Wieland Brendel, Jonas Rauber, Alexey Kurakin, Nicolas Papernot, Behar Veliqi, M
 
 ## ✨ Key Contributions
 
-본 연구의 중심적인 설계 아이디어는 모델과 공격 간의 '공진화(co-evolution)'를 유도하는 2인 게임(two-player game) 형태의 경쟁 프레임워크를 제안하는 것이다. 
+본 연구의 중심적인 설계 아이디어는 모델과 공격 간의 '공진화(co-evolution)'를 유도하는 2인 게임(two-player game) 형태의 경쟁 프레임워크를 제안하는 것이다.
 
 단순히 고정된 공격 세트로 모델을 평가하는 것이 아니라, 모델과 공격자가 서로를 지속적으로 상대하게 함으로써 공격자는 모델의 방어 전략에 적응하고, 모델은 더 강력해진 공격에 대응하여 진화하도록 설계하였다. 특히, 내부 정보(gradient, confidence score 등)를 사용하지 않고 오직 최종 결정(final decision)만을 이용하는 decision-based attacks에 집중함으로써, 실제 보안 시나리오에 더 가까운 극한의 강건성 평가 환경을 제공한다.
 
@@ -26,6 +26,7 @@ Wieland Brendel, Jonas Rauber, Alexey Kurakin, Nicolas Papernot, Behar Veliqi, M
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 작업 정의
+
 본 챌린지는 TINYIMAGENET 데이터셋(64x64 픽셀, 200 클래스, 100,000 이미지)을 기반으로 하며, 세 가지 주요 태스크로 구성된다.
 
 1. **Minimum Untargeted Adversarial Examples 생성**: 주어진 이미지 $s$와 모델 $m$에 대해, 모델이 잘못 분류하게 만들면서 $s$와 가장 유사한(최소 $L_2$ 거리) adversarial image $\hat{s}$를 생성하는 작업이다.
@@ -33,6 +34,7 @@ Wieland Brendel, Jonas Rauber, Alexey Kurakin, Nicolas Papernot, Behar Veliqi, M
 3. **Minimum Adversarial Examples 크기 확대**: 모델 설계자가 공격자가 찾을 수 있는 최소 섭동의 크기($L_2$ 거리)를 최대한 크게 만들어 모델의 강건성을 높이는 작업이다.
 
 ### 평가 지표 및 방정식
+
 두 이미지 $s_1$과 $s_2$ 사이의 거리 측정 방식으로는 $L_2$ 거리를 사용한다.
 $$d(s_1, s_2) = \|s_1 - s_2\|_2$$
 
@@ -48,7 +50,9 @@ $$\text{AttackScore}_a = \text{median}(\{d_a(s, m) \mid s \in S, m \in M_5\})$$
 모델은 점수가 높을수록, 공격은 점수가 낮을수록 우수한 것으로 평가한다.
 
 ### 학습 및 추론 절차 (제한 사항)
+
 실제 구현 및 운영을 위해 다음과 같은 엄격한 제약 조건을 둔다.
+
 - **쿼리 제한**: 공격자는 샘플당 최대 1,000번까지만 모델에 쿼리를 보낼 수 있다.
 - **시간 제한**: 모델은 K80 GPU 기준 이미지당 40ms 이내에 처리해야 하며, 공격자는 이미지 10개 배치당 900s 이내에 처리해야 한다.
 - **상태 비저장(Stateless)**: 모델은 과거 입력에 의존하지 않고 독립적으로 결정해야 하며, 결정론적(deterministic)이어야 한다.
@@ -58,9 +62,9 @@ $$\text{AttackScore}_a = \text{median}(\{d_a(s, m) \mid s \in S, m \in M_5\})$$
 본 문서는 챌린지의 제안서 및 운영 가이드라인이므로, 실험을 통한 정량적 결과 값보다는 평가를 위한 baseline 설정 내용을 다룬다.
 
 - **모델 Baseline**: ResNet-50을 기반으로 (1) Vanilla 모델, (2) Adversarially trained 모델, (3) Intrinsic frozen noise가 추가된 모델의 세 가지 버전을 제공한다.
-- **공격 Baseline**: 
-    - **Untargeted**: Gaussian noise, Salt and pepper noise, Boundary Attack, Single-step transfer attack, Iterative transfer attack.
-    - **Targeted**: Interpolation-based attack, Pointwise attack, Boundary attack, Iterative transfer attack.
+- **공격 Baseline**:
+  - **Untargeted**: Gaussian noise, Salt and pepper noise, Boundary Attack, Single-step transfer attack, Iterative transfer attack.
+  - **Targeted**: Interpolation-based attack, Pointwise attack, Boundary attack, Iterative transfer attack.
 
 최종 평가는 공개되지 않은 500장의 secret test images를 사용하여 수행하며, 모든 참가자는 코드의 오픈소스 공개를 전제로 최종 순위에 오를 수 있다.
 

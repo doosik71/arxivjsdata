@@ -18,9 +18,9 @@ Jilai Zheng, Chao Ma, Houwen Peng, Xiaokang Yang (2021)
 
 본 논문의 핵심 아이디어는 비디오에서 움직이는 객체를 스스로 발견하고, 이를 단계적으로 확장하여 학습시키는 3단계 학습 파이프라인을 설계한 것이다.
 
-1.  **움직이는 객체의 정교한 발견**: 단순 무작위 크롭 대신, 비지도 광학 흐름(unsupervised optical flow)과 동적 계획법(Dynamic Programming, DP)을 결합하여 움직이는 객체의 부드러운 바운딩 박스 시퀀스를 생성한다.
-2.  **단계적 학습 전략**: 먼저 단일 프레임 쌍을 이용해 Naive Siamese Tracker를 학습시켜 기초적인 초기값을 확보한 후, 이를 더 긴 시간 범위로 확장하여 학습시킨다.
-3.  **Cycle Memory Learning**: 전방 추적 결과들을 메모리 큐(memory queue)에 저장하고 다시 역방향으로 추적하여 일관성을 맞추는 사이클 메모리 학습 방식을 제안한다. 이를 통해 긴 시간 동안의 외형 변화를 학습함과 동시에 온라인 업데이트 기능을 구현한다.
+1. **움직이는 객체의 정교한 발견**: 단순 무작위 크롭 대신, 비지도 광학 흐름(unsupervised optical flow)과 동적 계획법(Dynamic Programming, DP)을 결합하여 움직이는 객체의 부드러운 바운딩 박스 시퀀스를 생성한다.
+2. **단계적 학습 전략**: 먼저 단일 프레임 쌍을 이용해 Naive Siamese Tracker를 학습시켜 기초적인 초기값을 확보한 후, 이를 더 긴 시간 범위로 확장하여 학습시킨다.
+3. **Cycle Memory Learning**: 전방 추적 결과들을 메모리 큐(memory queue)에 저장하고 다시 역방향으로 추적하여 일관성을 맞추는 사이클 메모리 학습 방식을 제안한다. 이를 통해 긴 시간 동안의 외형 변화를 학습함과 동시에 온라인 업데이트 기능을 구현한다.
 
 ## 📎 Related Works
 
@@ -35,30 +35,33 @@ Jilai Zheng, Chao Ma, Houwen Peng, Xiaokang Yang (2021)
 본 논문이 제안하는 비지도 학습 체계는 총 3단계로 구성된다.
 
 ### 3.1 Moving Object Discovery
+
 무작위 크롭의 문제를 해결하기 위해, 비지도 광학 흐름과 DP를 사용하여 움직이는 객체의 궤적을 생성한다.
 
-1.  **Candidate Box Generation**: 비지도 알고리즘인 ARFlow를 사용하여 프레임 $I_t$와 $I_{t+T_f}$ 사이의 광학 흐름 맵 $F_t$를 계산한다. 이후 거리 맵 $D_t$를 생성하고 다음과 같은 식을 통해 이진 마스크 $M_t$를 얻는다.
+1. **Candidate Box Generation**: 비지도 알고리즘인 ARFlow를 사용하여 프레임 $I_t$와 $I_{t+T_f}$ 사이의 광학 흐름 맵 $F_t$를 계산한다. 이후 거리 맵 $D_t$를 생성하고 다음과 같은 식을 통해 이진 마스크 $M_t$를 얻는다.
     $$M^i_t = \begin{cases} 1 & \text{if } D^i_t \geq \alpha \cdot \max_j(D^j_t) + (1-\alpha) \cdot \text{mean}_j(D^j_t) \\ 0 & \text{o.w.} \end{cases}$$
     여기서 $D^i_t = \| F^i_t - \text{mean}_j(F^j_t) \|^2$ 이다. 마스크에서 연결된 영역을 기반으로 후보 박스를 생성하며, 이미지 중앙 편향을 고려한 품질 점수 $S_c$가 가장 높은 박스를 최종 후보 박스 $B_t$로 선택한다.
 
-2.  **Box Sequence Generation**: 후보 박스들의 노이즈를 제거하기 위해 DP를 적용한다. 궤적의 부드러움을 보장하기 위해 DIoU 메트릭을 수정한 보상 함수 $R_{dp}$를 사용한다.
+2. **Box Sequence Generation**: 후보 박스들의 노이즈를 제거하기 위해 DP를 적용한다. 궤적의 부드러움을 보장하기 위해 DIoU 메트릭을 수정한 보상 함수 $R_{dp}$를 사용한다.
     $$R_{dp}(B_t, B_{t'}) = \text{IoU}(B_t, B_{t'}) - \gamma \cdot R_{DIoU}(B_t, B_{t'})$$
     $\gamma > 1$로 설정하여 거리 패널티를 강화함으로써 최적의 부드러운 경로를 찾는다. 선택되지 않은 프레임은 선형 보간법(linear interpolation)으로 채운다.
 
 ### 3.2 Naive Siamese Tracker
+
 생성된 박스 시퀀스 $B'$를 사용하여 처음부터 Siamese 추적기를 학습시킨다.
 
-1.  **데이터 필터링**: 비디오 수준 점수 $Q_v$ (DP에 의해 선택된 프레임 비율)와 프레임 수준 점수 $Q_f$ (인접 프레임 중 DP 선택 비율)를 사용하여 저품질 박스를 제거한다.
-2.  **아키텍처 및 손실 함수**: ResNet-50을 백본으로 사용하며, PrPool로 템플릿 특징을 풀링한 후 multi-scale correlation을 계산한다. 출력은 전경/배경 분류를 위한 $R_{cls}$와 바운딩 박스 회귀를 위한 $R_{reg}$이다. 손실 함수는 다음과 같다.
+1. **데이터 필터링**: 비디오 수준 점수 $Q_v$ (DP에 의해 선택된 프레임 비율)와 프레임 수준 점수 $Q_f$ (인접 프레임 중 DP 선택 비율)를 사용하여 저품질 박스를 제거한다.
+2. **아키텍처 및 손실 함수**: ResNet-50을 백본으로 사용하며, PrPool로 템플릿 특징을 풀링한 후 multi-scale correlation을 계산한다. 출력은 전경/배경 분류를 위한 $R_{cls}$와 바운딩 박스 회귀를 위한 $R_{reg}$이다. 손실 함수는 다음과 같다.
     $$L_{naive} = L_{reg} + \lambda_1 L_{cls}$$
     여기서 $L_{reg}$는 IoU loss, $L_{cls}$는 Binary Cross-Entropy (BCE) loss이다.
 
 ### 3.3 Cycle Memory Training
+
 Naive 추적기의 한계(시간적 변화 학습 부족, 온라인 업데이트 불가)를 극복하기 위한 단계이다.
 
-1.  **학습 절차**: 템플릿 $z_t$로부터 $N_{mem}$개의 인접 프레임으로 전방 추적을 수행하고, 그 결과들을 메모리 큐에 저장한다. 이후 다시 원래의 탐색 영역 $x_t$로 역방향 추적을 수행하여 일관성 손실 $L_{mem}$을 계산한다.
-2.  **프레임 범위 설정**: 객체가 사라지지 않으면서도 충분한 변화를 학습할 수 있도록, DP 궤적의 연속성과 프레임 품질 점수 $Q_f$를 기준으로 동적으로 시간 범위 $[T_l, T_u]$를 설정한다.
-3.  **특징 통합 (Confidence-Value Strategy)**: 메모리 큐의 각 상관 맵 $\{C^u_{corr}\}$를 통합하기 위해, 신뢰도 맵 $C^u_{conf}$와 값 맵 $C^u_{val}$을 생성하고 다음과 같이 통합 상관 맵 $C$를 구한다.
+1. **학습 절차**: 템플릿 $z_t$로부터 $N_{mem}$개의 인접 프레임으로 전방 추적을 수행하고, 그 결과들을 메모리 큐에 저장한다. 이후 다시 원래의 탐색 영역 $x_t$로 역방향 추적을 수행하여 일관성 손실 $L_{mem}$을 계산한다.
+2. **프레임 범위 설정**: 객체가 사라지지 않으면서도 충분한 변화를 학습할 수 있도록, DP 궤적의 연속성과 프레임 품질 점수 $Q_f$를 기준으로 동적으로 시간 범위 $[T_l, T_u]$를 설정한다.
+3. **특징 통합 (Confidence-Value Strategy)**: 메모리 큐의 각 상관 맵 $\{C^u_{corr}\}$를 통합하기 위해, 신뢰도 맵 $C^u_{conf}$와 값 맵 $C^u_{val}$을 생성하고 다음과 같이 통합 상관 맵 $C$를 구한다.
     $$C = \sum_{1 \le u \le N_{mem}} \text{softmax}(C^u_{conf}) \odot C^u_{val}$$
     최종 손실 함수는 다음과 같다.
     $$L = L_{reg} + \lambda_1 L_{cls} + \lambda_2 L_{mem}$$
@@ -66,16 +69,19 @@ Naive 추적기의 한계(시간적 변화 학습 부족, 온라인 업데이트
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: GOT-10k, ImageNet VID, LaSOT, YouTube-VOS의 레이블 없는 학습 데이터를 사용하였다.
 - **비교 대상**: 비지도 추적기(LUDT, LUDT+, $S^2SiamFC$ 등) 및 지도 학습 추적기(SiamFC, ATOM, DiMP 등).
 - **평가 지표**: Accuracy (A), Robustness (R), Expected Average Overlap (EAO), Success rate, Precision.
 
 ### 주요 결과
+
 - **VOT 벤치마크**: VOT2016, 2017/18, 2020 모두에서 기존 최신 비지도 추적기인 LUDT+를 큰 차이로 능가하였다. 특히 VOT2017/18에서 USOT*는 EAO 기준 LUDT+보다 11.4포인트 높은 성능을 보였다.
 - **TrackingNet**: USOT*는 LUDT+ 대비 Success 5.2, Precision 7.1 포인트 상승을 기록하며 지도 학습 모델에 근접한 성능을 보였다.
 - **LaSOT (장기 추적)**: 평균 길이가 2000프레임이 넘는 LaSOT에서 USOT*가 LUDT+를 크게 앞질렀으며, 이는 제안된 Cycle Memory 학습이 장기적인 외형 변화를 효과적으로 학습했음을 증명한다.
 
 ### 절제 연구 (Ablation Study)
+
 - **학습 단계의 필수성**: 무작위 박스를 사용하거나 Naive Siamese 학습 단계 없이 바로 Cycle Memory 학습을 진행했을 때 성능이 급격히 하락함을 확인하여, 제안한 3단계 파이프라인의 정당성을 입증하였다.
 - **시간 범위**: 기존 방식($<10$ 프레임)과 달리 본 방법은 평균 41.1~64.6 프레임의 긴 간격에서 학습이 가능함을 확인하였다.
 

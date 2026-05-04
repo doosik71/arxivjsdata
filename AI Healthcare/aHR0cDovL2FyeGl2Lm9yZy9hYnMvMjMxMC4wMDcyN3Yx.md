@@ -12,9 +12,9 @@ Hasan Hejbari Zargar, Saha Hejbari Zargar, Raziye Mehri (2023)
 
 본 논문의 핵심 기여는 헬스케어 시스템에 적용되는 딥러닝 아키텍처를 체계적으로 분류하고, 이를 실제 의료 현장에 적용할 때 발생하는 제약 사항을 심층적으로 분석한 점이다. 주요 설계 아이디어는 다음과 같다.
 
-1.  **DL 아키텍처의 의료적 활용 체계화**: Fully Connected Neural Networks (FCNN), Convolutional Neural Networks (CNN), Recurrent Neural Networks (RNN)의 구조적 특징과 의료 데이터(이미지, 시계열 데이터 등) 간의 적합성을 설명한다.
-2.  **임상 적용의 장애물 정의**: 단순히 성능 향상을 논하는 것이 아니라, 데이터의 양(Volume), 품질(Quality), 시간적 특성(Temporality), 도메인 복잡성, 그리고 모델의 해석 가능성(Interpretability)이라는 다섯 가지 핵심 도전 과제를 제시한다.
-3.  **실무 응용 사례 제시**: 의료 영상 해석(Image Interpretation) 및 실시간 건강 모니터링(Real-time Health Monitoring) 분야에서 DL이 어떻게 구체적으로 적용되는지 분석한다.
+1. **DL 아키텍처의 의료적 활용 체계화**: Fully Connected Neural Networks (FCNN), Convolutional Neural Networks (CNN), Recurrent Neural Networks (RNN)의 구조적 특징과 의료 데이터(이미지, 시계열 데이터 등) 간의 적합성을 설명한다.
+2. **임상 적용의 장애물 정의**: 단순히 성능 향상을 논하는 것이 아니라, 데이터의 양(Volume), 품질(Quality), 시간적 특성(Temporality), 도메인 복잡성, 그리고 모델의 해석 가능성(Interpretability)이라는 다섯 가지 핵심 도전 과제를 제시한다.
+3. **실무 응용 사례 제시**: 의료 영상 해석(Image Interpretation) 및 실시간 건강 모니터링(Real-time Health Monitoring) 분야에서 DL이 어떻게 구체적으로 적용되는지 분석한다.
 
 ## 📎 Related Works
 
@@ -27,31 +27,36 @@ Hasan Hejbari Zargar, Saha Hejbari Zargar, Raziye Mehri (2023)
 본 논문은 새로운 알고리즘을 제안하는 연구가 아닌 리뷰 논문이므로, 헬스케어에 적용되는 주요 딥러닝 아키텍처의 작동 원리와 파이프라인을 분석하는 방식을 취한다.
 
 ### 1. 주요 네트워크 아키텍처 분석
--   **Fully Connected Neural Networks (FCNN)**: 모든 층의 뉴런이 다음 층의 모든 뉴런과 연결된 구조이다. 각 뉴런은 입력 데이터 $x$, 가중치 $w$, 편향 $b$를 사용하여 출력을 생성하며, 활성화 함수(Activation Function)를 통해 비선형성을 추가한다. 예를 들어, Sigmoid 함수는 출력을 0과 1 사이의 S-자 곡선으로 변환하며, ReLU 함수는 0 이하의 값은 0으로, 0 초과의 값은 그대로 유지한다.
--   **Convolutional Neural Networks (CNN)**: 의료 이미지 데이터 처리에 최적화된 구조이다. 필터(Filter)를 슬라이딩 윈도우 방식으로 사용하여 입력 이미지에서 특성 맵(Feature Map)을 추출하며, 풀링 층(Pooling Layer)을 통해 데이터의 차원을 축소하고 계산 효율성을 높인다. LeNet, ResNet, VGGNet, EfficientNet 등이 대표적인 구조로 언급된다.
--   **Recurrent Neural Networks (RNN)**: 비디오, 오디오, 시계열 데이터와 같은 순차 데이터 학습에 사용된다. 순환 연결(Recurrent cycle)을 통해 과거의 정보를 유지하는 메모리 셀을 가지며, 이를 통해 미래 사건을 예측한다. 다만, 시퀀스가 길어질 때 발생하는 기울기 소실(Vanishing Gradient) 문제를 해결하기 위해 LSTM(Long Short-Term Memory) 구조가 권장된다.
+
+- **Fully Connected Neural Networks (FCNN)**: 모든 층의 뉴런이 다음 층의 모든 뉴런과 연결된 구조이다. 각 뉴런은 입력 데이터 $x$, 가중치 $w$, 편향 $b$를 사용하여 출력을 생성하며, 활성화 함수(Activation Function)를 통해 비선형성을 추가한다. 예를 들어, Sigmoid 함수는 출력을 0과 1 사이의 S-자 곡선으로 변환하며, ReLU 함수는 0 이하의 값은 0으로, 0 초과의 값은 그대로 유지한다.
+- **Convolutional Neural Networks (CNN)**: 의료 이미지 데이터 처리에 최적화된 구조이다. 필터(Filter)를 슬라이딩 윈도우 방식으로 사용하여 입력 이미지에서 특성 맵(Feature Map)을 추출하며, 풀링 층(Pooling Layer)을 통해 데이터의 차원을 축소하고 계산 효율성을 높인다. LeNet, ResNet, VGGNet, EfficientNet 등이 대표적인 구조로 언급된다.
+- **Recurrent Neural Networks (RNN)**: 비디오, 오디오, 시계열 데이터와 같은 순차 데이터 학습에 사용된다. 순환 연결(Recurrent cycle)을 통해 과거의 정보를 유지하는 메모리 셀을 가지며, 이를 통해 미래 사건을 예측한다. 다만, 시퀀스가 길어질 때 발생하는 기울기 소실(Vanishing Gradient) 문제를 해결하기 위해 LSTM(Long Short-Term Memory) 구조가 권장된다.
 
 ### 2. 의료 데이터 처리 파이프라인
+
 일반적인 머신러닝 파이프라인은 데이터 조화(Data harmonization) $\rightarrow$ 표현 학습(Representation learning) $\rightarrow$ 모델 피팅(Model fitting) $\rightarrow$ 평가(Assessment)의 순서로 진행된다. 딥러닝은 이 과정에서 사람이 직접 특징을 설계해야 하는 Feature Engineering 단계를 통합하여, 엔드투엔드(End-to-End) 학습을 통해 자동으로 유용한 특징을 추출한다.
 
 ## 📊 Results
 
 본 논문은 특정 실험의 결과값을 제시하는 것이 아니라, 기존 문헌들의 결과를 종합하여 다음과 같은 정성적 결론을 도출한다.
 
-1.  **이미지 해석 분야**: CNN과 RNN/LSTM을 결합한 멀티모달 모델이 흉부 X-ray의 질병 분류 및 자동 보고서 생성에서 유의미한 성과를 거두고 있다.
-2.  **실시간 모니터링 분야**: 스마트폰, IoT 센서, 웨어러블 기기를 통해 수집된 PPG(광전용적맥파) 신호를 클라우드 기반의 ML/DL 모델로 분석하여 심박수 모니터링 및 인간 활동 인식을 수행하는 시스템이 구축되고 있다.
-3.  **정량적 경향**: 다층 신경망을 사용한 의료 데이터 처리가 기존의 전통적인 머신러닝보다 예측 능력을 향상시켰으며, 특히 계층적 학습 구조(Hierarchical learning structure) 덕분에 다양한 데이터 세트를 통합하여 더 높은 일반화 성능을 보였다.
+1. **이미지 해석 분야**: CNN과 RNN/LSTM을 결합한 멀티모달 모델이 흉부 X-ray의 질병 분류 및 자동 보고서 생성에서 유의미한 성과를 거두고 있다.
+2. **실시간 모니터링 분야**: 스마트폰, IoT 센서, 웨어러블 기기를 통해 수집된 PPG(광전용적맥파) 신호를 클라우드 기반의 ML/DL 모델로 분석하여 심박수 모니터링 및 인간 활동 인식을 수행하는 시스템이 구축되고 있다.
+3. **정량적 경향**: 다층 신경망을 사용한 의료 데이터 처리가 기존의 전통적인 머신러닝보다 예측 능력을 향상시켰으며, 특히 계층적 학습 구조(Hierarchical learning structure) 덕분에 다양한 데이터 세트를 통합하여 더 높은 일반화 성능을 보였다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 기회
+
 딥러닝은 복잡하고 다중 모달(Multi-modality)인 의료 데이터를 처리하는 데 탁월한 성능을 보이며, 특히 이미지 인식과 자연어 처리(NLP) 분야에서 임상적 보조 도구로서의 가능성을 입증하였다.
 
 ### 한계 및 비판적 해석
+
 논문은 딥러닝의 임상 적용을 위해 반드시 해결되어야 할 치명적인 한계점들을 지적한다.
--   **데이터의 양과 질**: 딥러닝은 방대한 데이터를 요구하지만, 의료 데이터는 수집이 어렵고 희소하며 노이즈가 많다. 특히 질병의 변동성이 커서 일반적인 이미지 인식보다 훨씬 더 많은 데이터가 필요함에도 불구하고, 실제 환자 수의 제한으로 인해 모델 구축에 어려움이 있다.
--   **시간적 특성(Temporality)**: 대부분의 모델이 정적 벡터(Static vector) 입력을 가정하지만, 질병은 시간에 따라 비결정론적으로 변화한다. 따라서 시계열적 특성을 반영한 특화된 모델 설계가 필요하다.
--   **블랙박스 문제(Interpretability)**: 의료 분야에서 '왜' 그런 결과가 나왔는지는 '정확도'만큼 중요하다. 특정 표현형(Phenotype)이 예측에 어떤 영향을 주었는지 설명할 수 없는 블랙박스 구조는 의료진의 신뢰를 얻기 어렵게 하며, 이는 실제 처방으로 이어지는 데 큰 장애물이 된다.
+
+- **데이터의 양과 질**: 딥러닝은 방대한 데이터를 요구하지만, 의료 데이터는 수집이 어렵고 희소하며 노이즈가 많다. 특히 질병의 변동성이 커서 일반적인 이미지 인식보다 훨씬 더 많은 데이터가 필요함에도 불구하고, 실제 환자 수의 제한으로 인해 모델 구축에 어려움이 있다.
+- **시간적 특성(Temporality)**: 대부분의 모델이 정적 벡터(Static vector) 입력을 가정하지만, 질병은 시간에 따라 비결정론적으로 변화한다. 따라서 시계열적 특성을 반영한 특화된 모델 설계가 필요하다.
+- **블랙박스 문제(Interpretability)**: 의료 분야에서 '왜' 그런 결과가 나왔는지는 '정확도'만큼 중요하다. 특정 표현형(Phenotype)이 예측에 어떤 영향을 주었는지 설명할 수 없는 블랙박스 구조는 의료진의 신뢰를 얻기 어렵게 하며, 이는 실제 처방으로 이어지는 데 큰 장애물이 된다.
 
 ## 📌 TL;DR
 

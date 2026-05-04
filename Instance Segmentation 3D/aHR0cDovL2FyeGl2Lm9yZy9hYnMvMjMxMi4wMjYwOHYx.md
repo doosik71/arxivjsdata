@@ -7,6 +7,7 @@ Florian Kofler et al. (2023)
 생물 의학 영상 분석(Biomedical Image Analysis)에서 분할(Segmentation) 작업은 주로 모든 픽셀/복셀을 클래스별로 구분하는 Semantic Segmentation(SemS)과 개별 객체(Instance)를 구분하는 Instance Segmentation(InS)으로 나뉜다. 많은 임상 상황, 예를 들어 다발성 경화증(Multiple Sclerosis)의 뇌 병변 분석에서는 개별 병변의 개수와 위치를 정확히 파악하는 Instance-wise evaluation이 과학적 연구와 진단 및 모니터링 측면에서 매우 중요하다.
 
 그러나 실제 연구 현장에서는 다음과 같은 문제로 인해 Instance-wise 분석이 충분히 이루어지지 않고 있다.
+
 - 적절한 Instance Label의 부족으로 인해 많은 문제가 SemS 형태로 다루어지고 있다.
 - 기존의 Panoptic Quality(PQ) 측정 도구들(MONAI, torchmetrics 등)은 대부분 2D 데이터만을 지원하거나, 3D 구현체라 하더라도 계산 효율성이 떨어지고 Instance Matching 기능이 부족하여 대규모 데이터셋 평가에 부적합하다.
 - Semantic Segmentation 결과물을 Instance 수준에서 평가하고 싶어도 이를 위한 체계적인 파이프라인이 부족하다.
@@ -28,9 +29,9 @@ Florian Kofler et al. (2023)
 
 - **Panoptic Quality (PQ)**: Semantic Segmentation과 Instance Segmentation을 통합하여 평가하는 지표로, 탐지 품질(Detection Quality)과 분할 품질(Segmentation Quality)을 동시에 측정할 수 있다.
 - **기존 구현체의 한계**:
-    - **MONAI & torchmetrics**: 주로 2D 데이터만 지원하며, 특히 `torchmetrics`는 인스턴스 매칭 기능이 없어 이미 매칭된 맵에만 적용 가능하다.
-    - **Metrics Reloaded (MONAI side package)**: 3D를 지원하지만, 한 번의 호출에 하나의 지표만 반환하므로 여러 지표를 구할 때 계산 오버헤드가 매우 크며, TP/FP/FN과 같은 세부 정보를 반환하지 않는다.
-    - **pymia**: 다양한 지표를 제공하지만, 이미지 전체 단위로 작동하며 인스턴스 근사(Approximation)나 매칭 기능을 제공하지 않는다.
+  - **MONAI & torchmetrics**: 주로 2D 데이터만 지원하며, 특히 `torchmetrics`는 인스턴스 매칭 기능이 없어 이미 매칭된 맵에만 적용 가능하다.
+  - **Metrics Reloaded (MONAI side package)**: 3D를 지원하지만, 한 번의 호출에 하나의 지표만 반환하므로 여러 지표를 구할 때 계산 오버헤드가 매우 크며, TP/FP/FN과 같은 세부 정보를 반환하지 않는다.
+  - **pymia**: 다양한 지표를 제공하지만, 이미지 전체 단위로 작동하며 인스턴스 근사(Approximation)나 매칭 기능을 제공하지 않는다.
 
 `panoptica`는 이러한 한계를 극복하여 3D 지원, 빠른 계산 속도, 모듈형 매칭 및 근사 기능을 모두 제공함으로써 차별점을 갖는다.
 
@@ -39,16 +40,21 @@ Florian Kofler et al. (2023)
 `panoptica`는 다음과 같은 3단계 파이프라인을 통해 지표를 계산한다.
 
 ### 1. Instance Approximation (인스턴스 근사)
+
 Semantic Segmentation 맵(클래스 정보만 있는 맵)을 인스턴스 맵으로 변환하는 단계이다.
+
 - **방법**: Connected Component Analysis(CCA)를 사용한다.
 - **백엔드**: 2D 데이터에는 `scipy`가, 3D 데이터에는 `cc3d`가 더 효율적이므로 입력 데이터의 차원에 따라 자동으로 백엔드를 선택한다.
 
 ### 2. Instance Matching (인스턴스 매칭)
+
 예측된 인스턴스를 참조(Reference) 인스턴스와 연결하는 단계이다. IOU 또는 DSC를 Matching Metric(MM)으로 사용한다.
+
 - **Naive Threshold Matcher**: 사용자가 설정한 임계값(Threshold)을 넘는 인스턴스 중 MS(Matching Score)가 가장 높은 것을 매칭한다.
 - **Maximize Many-to-One Matcher**: 여러 개의 예측 인스턴스가 하나의 참조 인스턴스에 매칭될 때, 그 합집합의 MS가 개별 인스턴스보다 높다면 이를 허용하여 전체적인 매칭 점수를 최대화한다.
 
 ### 3. Instance Evaluation (인스턴스 평가)
+
 매칭된 결과를 바탕으로 최종 지표를 산출한다. 핵심 지표인 Panoptic Quality(PQ)는 다음과 같이 정의된다.
 
 $$PQ = \frac{\sum_{(R,P) \in TP} f(R,P)}{|TP| + 0.5|FP| + 0.5|FN|}$$
@@ -65,23 +71,28 @@ $$PQ = \underbrace{\frac{\sum_{(R,P) \in TP} f(R,P)}{|TP|}}_{\text{Segmentation 
 본 연구에서는 세 가지 생물 의학 데이터셋을 통해 `panoptica`의 유효성을 검증하였다.
 
 ### 1. VerSe (척추 분할 실험)
+
 - **목적**: 다중 클래스 인스턴스 분할 성능 평가.
 - **결과**: gvDSC(Global volumetric Dice)만으로는 알 수 없는 세부 성능을 발견하였다. 예를 들어, 특정 모델은 gvDSC는 가장 높았으나 SQ, PQ, SQASSD에서는 다른 모델보다 낮게 나타났다. 이는 해당 모델이 인스턴스 탐지(RQ)는 뛰어나지만, 탐지된 인스턴스의 경계 분할(SQ) 능력은 상대적으로 낮음을 의미한다.
 
 ### 2. ISLES (뇌졸중 병변 분할 실험)
+
 - **목적**: Semantic Segmentation 맵을 Instance-wise로 평가하는 사례 제시.
 - **결과**: 기존 챌린지에서는 gvDSC 위주로 평가했으나, `panoptica`를 통해 분석한 결과 gvDSC 성능이 가장 좋은 모델이 반드시 인스턴스 수준(PQ, SQ)에서 최선의 성능을 보이는 것은 아님을 확인하였다.
 
 ### 3. BraTS Mets (전이성 뇌종양 분할 실험)
+
 - **목적**: Glioma(교종) 전용 알고리즘이 Metastasis(전이암) 분할에 얼마나 일반화되는지 평가.
 - **결과**: 모든 알고리즘에서 RQ가 매우 낮게 나타났으며, 이는 모델들이 수많은 작은 전이성 병변들을 제대로 탐지하지 못하고 있음을 보여준다. gvDSC 수치보다 PQ 수치가 훨씬 낮게 나타나, 단순 부피 기반 지표가 실제 임상적 탐지 실패를 은폐할 수 있음을 시사한다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 의의
+
 `panoptica`는 단순한 지표 계산기를 넘어, 생물 의학 영상 분석에서 간과되었던 **'인스턴스 수준의 분석'**을 표준화된 파이프라인으로 제공한다. 특히 Semantic 맵을 Instance 맵으로 변환하여 평가할 수 있게 함으로써, 기존의 수많은 SemS 모델들을 재평가할 수 있는 도구를 제공했다는 점이 높게 평가된다.
 
 ### 한계 및 향후 과제
+
 - **CCA의 한계**: Semantic 맵을 인스턴스화할 때 CCA를 사용하면 픽셀 단위의 클래스 확률(Soft-score) 정보가 소실되고 정수 레이블만 남게 된다.
 - **지표 확장 필요성**: 현재는 IoU, DSC, ASSD 위주이나, 향후 clDice, NSD, Hausdorff Distance 등 경계 기반 지표 및 Average Precision(AP)과 같은 다중 임계값 지표의 추가가 필요하다.
 - **매칭 알고리즘 고도화**: 현재의 단순 매칭 외에 Hungarian Matching과 같은 최적 매칭 알고리즘이나 위상적 특징(Topological features) 기반의 매칭 전략 도입이 논의된다.

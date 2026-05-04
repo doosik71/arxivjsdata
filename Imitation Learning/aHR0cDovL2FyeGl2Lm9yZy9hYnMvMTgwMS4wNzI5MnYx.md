@@ -10,7 +10,7 @@ Ching-An Cheng, Byron Boots (2018)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심적인 기여는 Value Aggregation 알고리즘의 수렴 여부를 결정짓는 임계 안정성 상수(critical stability constant) $\theta$를 정의하고 분석한 점이다. 
+본 논문의 핵심적인 기여는 Value Aggregation 알고리즘의 수렴 여부를 결정짓는 임계 안정성 상수(critical stability constant) $\theta$를 정의하고 분석한 점이다.
 
 저자들은 상태 분포의 변화에 대한 민감도를 나타내는 $\beta$와 목적 함수의 강볼록성(strong convexity)을 나타내는 $\alpha$의 비율인 $\theta = \beta / \alpha$가 정책 시퀀스의 수렴성을 결정한다는 것을 증명하였다. 구체적으로 $\theta < 1$인 경우 마지막 정책 $\pi_N$이 수렴하며, $\theta > 1$인 경우 정책 시퀀스가 발산할 수 있음을 보였다. 또한, 정규화(regularization)를 통해 $\theta$ 값을 강제로 낮춤으로써 불안정한 문제를 안정화하고 마지막 정책의 성능을 보장할 수 있는 이론적 토대를 마련하였다.
 
@@ -58,6 +58,7 @@ $$\pi_{n+1} = \arg \min_{\pi \in \Pi} \sum_{k=1}^n f_k(\pi)$$
 ### 결정론적 사례 분석 (Motivating Example)
 
 저자들은 $\theta$의 영향력을 보여주기 위해 간단한 2단계 제어 문제를 설계하였다.
+
 - 상태 전이: $s_1=0, s_2=\theta(s_1+a_1)$
 - 비용 함수: $c_1=0, c_2=(s_2-a_2)^2$
 
@@ -84,6 +85,7 @@ $$F(x_N, x_N) \le \tilde{\epsilon}_{\Pi, \pi^*} + \left( \frac{\theta e^{1-\thet
 ### 정규화를 통한 안정화 (Regularization)
 
 불안정한 문제($\theta > 1$)를 해결하기 위해 두 가지 정규화 방법을 제시한다.
+
 1. **Mixing Policies:** 전문가 분포와 학습자 분포를 섞어서 샘플링함으로써 유효 $\beta$를 낮추는 방법이다.
 2. **Weighted Regularization:** 목적 함수에 강볼록성 정규화 항 $\lambda R(x)$를 추가하는 방법이다. $\lambda > \theta - 1$이 되도록 설정하면 새로운 안정성 상수 $\tilde{\theta} = \beta / ((1+\lambda)\alpha) < 1$이 되어 수렴성이 보장된다.
 

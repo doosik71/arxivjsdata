@@ -25,11 +25,13 @@ CNN과 Transformer를 결합한 하이브리드 구조(예: TransUnet, Swin-Unet
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 MobileUtr은 전형적인 U-shape 아키텍처를 따른다. Encoder는 **ConvUtr $\rightarrow$ Adaptive LGL $\rightarrow$ Transformer** 순으로 구성되어 있으며, Decoder는 Progressive Cascade Upsampling과 Skip-connection을 통해 특징을 융합한다.
 
 ### 2. 주요 구성 요소 및 상세 설명
 
 #### (1) ConvUtr (Transformer-like CNN)
+
 ViT의 Patch Embedding을 대체하기 위해 설계되었으며, Transformer의 연산 흐름을 CNN으로 모방한다. 구체적인 연산 과정은 다음과 같다.
 
 $$Y^l = \text{BN}(\sigma\{\text{DepthwiseConv}(X^l)\}) + X^l$$
@@ -39,6 +41,7 @@ $$X^{l+1} = \text{BN}(\sigma\{\text{PointwiseConv}(Z^l)\}) + Y^l$$
 여기서 $\sigma$는 GELU 활성화 함수이며, BN은 Batch Normalization이다. Depthwise Convolution은 MHSA의 공간적 정보 추출을 대체하고, 두 번의 Pointwise Convolution(Inverted Bottleneck)은 FFN의 채널 간 정보 통합을 수행한다.
 
 #### (2) Adaptive LGL Bottleneck
+
 CNN의 Local 특징에서 Transformer의 Global 특징으로 넘어가는 과도기적 단계에서 정보 손실을 막기 위해 도입되었다. Local Aggregation $\rightarrow$ Global Sparse Attention $\rightarrow$ Local Propagation 순으로 동작한다.
 
 본 논문에서는 수용 영역 $K$를 데이터셋의 특성에 맞게 사전 계산하여 적용하는 **Adaptive** 방식을 제안한다. 수용 영역 $K$는 다음과 같이 계산된다.
@@ -48,36 +51,43 @@ $$K = \frac{\bar{D}}{2^{n+1}}$$
 여기서 $\bar{D}$는 데이터셋 $D$ 내 분할 대상 영역의 평균 직경이며, $2^n$은 ViT 층에 도달하기까지 수행된 다운샘플링 횟수이다. 이를 통해 관심 영역을 더 효과적으로 커버할 수 있다.
 
 #### (3) Decoder 및 Skip-connection
+
 Encoder의 저수준 특징(Low-level features)은 노이즈가 많으므로, 이를 Decoder에 직접 연결하지 않고 다운샘플링 연산을 거쳐 노이즈를 제거하고 수용 영역을 맞춘 뒤 융합한다. 업샘플링 과정에서는 Bilinear Interpolation과 $3 \times 3$ Convolution을 반복 사용하는 Progressive Cascade 방식을 채택하여 세밀한 디테일을 보존한다.
 
 #### (4) 학습 절차 및 손실 함수
+
 모델은 Binary Cross Entropy (BCE) 손실과 Dice Loss의 조합으로 학습된다.
 $$\mathcal{L} = 0.5 \times \text{BCE}(\hat{y}, y) + \text{Dice}(\hat{y}, y)$$
 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: CT(Synapse), Ultrasound(BUS, BUSI, TNSCUI), Dermoscopy(ISIC 2018) 등 3가지 모달리티의 5개 공공 데이터셋을 사용하였다.
 - **비교 대상**: U-Net, nnUNet, TransUnet, Swin-Unet(무거운 모델), MobileViT, EdgeViT, RepViT(경량 자연영상 모델), UNeXt, MedT(경량 의료모델) 등 총 12개 모델과 비교하였다.
 - **지표**: mIoU, Dice, F1 score, HD95(Hausdorff Distance)를 사용하였다.
 
 ### 2. 주요 결과
+
 - **정량적 성과**: MobileUtr은 매우 적은 파라미터 수($1.39\text{M}$)로도 많은 경우 SOTA 수준의 성능을 보였다. 특히 TransUnet($105.32\text{M}$) 대비 파라미터를 약 10배 이상 줄이면서도 유사하거나 더 높은 성능을 달성하였다.
 - **모달리티별 성능**:
-    - **Ultrasound/Dermoscopy**: MobileUtr-L 모델이 nnUNet과 비교해 mIoU 기준 소폭 향상된 결과를 보였으며, 특히 경량 모델들 중에서는 압도적인 성능을 기록하였다.
-    - **CT (Synapse)**: mIoU $69.09\%$, Dice $79.90\%$를 기록하며 TransUnet과 대등한 성능을 보였으나, 계산 비용은 극적으로 낮췄다.
+  - **Ultrasound/Dermoscopy**: MobileUtr-L 모델이 nnUNet과 비교해 mIoU 기준 소폭 향상된 결과를 보였으며, 특히 경량 모델들 중에서는 압도적인 성능을 기록하였다.
+  - **CT (Synapse)**: mIoU $69.09\%$, Dice $79.90\%$를 기록하며 TransUnet과 대등한 성능을 보였으나, 계산 비용은 극적으로 낮췄다.
 - **효율성**: MobileUtr은 높은 FPS(Frames Per Second)와 낮은 GFLOPs를 기록하여 에지 디바이스 배포 가능성을 입증하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. 강점 및 분석
+
 본 논문은 단순히 두 구조를 섞은 것이 아니라, CNN의 구조를 Transformer의 설계 철학(Spatial-Channel mixing)으로 재해석하여 **ConvUtr**을 만든 점이 매우 영리한 접근이다. 또한, 의료 영상의 특성(노이즈 및 저해상도)을 고려하여 Convolutional Downsampling 대신 **Max-pooling**을 선택한 점이 실제 성능 향상에 기여했음을 Ablation Study를 통해 입증하였다.
 
 ### 2. 한계 및 비판적 해석
+
 - **Adaptive LGL의 일반성**: 수용 영역 $K$를 계산할 때 데이터셋의 평균 직경 $\bar{D}$라는 사전 지식을 사용한다. 이는 데이터셋의 특성을 미리 알아야 한다는 전제가 필요하므로, 완전히 새로운 도메인의 데이터에 적용할 때 $\bar{D}$를 어떻게 설정할 것인지에 대한 자동화된 방법론이 부족하다.
 - **범용성 주장**: 3가지 모달리티에서 좋은 성적을 거두었으나, 'Universal'이라는 표현을 쓰기에는 테스트 된 데이터셋의 범위가 제한적일 수 있다.
 
 ### 3. 결론적 논의
+
 MobileUtr은 ViT의 전역 문맥 파악 능력을 유지하면서도 CNN의 효율성을 극대화한 성공적인 사례이다. 특히 경량화된 Patch Embedding(ConvUtr)이 Transformer 뒷단으로 전달되는 정보의 밀도를 높여, Transformer 자체를 가볍게 만들어도 성능이 유지될 수 있음을 보여주었다.
 
 ## 📌 TL;DR

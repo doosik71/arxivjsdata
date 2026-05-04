@@ -12,7 +12,7 @@ Daniil Pakhomov, Sanchit Hira, Narayani Wagle, Kemar E. Green, Nassir Navab (202
 
 본 논문의 핵심 아이디어는 사전 학습된 StyleGAN2의 생성 네트워크 내부의 특성 공간(Feature Space)을 활용하여 시맨틱 클래스를 발견하고, 이를 CLIP과 결합하여 텍스트 기반으로 정교화하는 것이다. 구체적인 기여 사항은 다음과 같다.
 
-첫째, StyleGAN2의 중간 특성 맵(Feature Maps)에 대해 클러스터링을 수행함으로써 이미지 전반에 걸쳐 일관된 시맨틱 영역을 비지도 방식으로 추출한다. 
+첫째, StyleGAN2의 중간 특성 맵(Feature Maps)에 대해 클러스터링을 수행함으로써 이미지 전반에 걸쳐 일관된 시맨틱 영역을 비지도 방식으로 추출한다.
 
 둘째, CLIP의 텍스트-이미지 정렬 능력을 이용하여, 일반적인 클러스터링만으로는 찾기 어려운 희귀한 시맨틱 클래스(예: 수염, 안경, 모자)를 자연어 프롬프트를 통해 발견하고 생성하는 기법을 제안한다.
 
@@ -27,9 +27,11 @@ Daniil Pakhomov, Sanchit Hira, Narayani Wagle, Kemar E. Green, Nassir Navab (202
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인
+
 본 방법론은 **StyleGAN2 특성 추출 $\rightarrow$ K-means 클러스터링 $\rightarrow$ CLIP 기반 클래스 정교화 및 분류 $\rightarrow$ 세그멘테이션 모델 학습(지식 증류)**의 단계로 구성된다.
 
 ### 2. 시맨틱 영역 발견을 위한 클러스터링
+
 StyleGAN2 생성기(Generator)의 특정 레이어(주로 7번째 또는 9번째 레이어)에서 추출한 특성 맵을 활용한다. 앞쪽 레이어일수록 coarse하지만 시맨틱한 의미가 강하고, 뒤쪽 레이어일수록 fine한 디테일이 살아난다. 생성된 $N$개의 샘플에 대해 특성 맵을 평탄화(flatten)한 후, 다음의 손실 함수를 최소화하는 K-means 클러스터링을 수행한다.
 
 $$J = \sum_{n=1}^{\bar{N}} \sum_{k=1}^{K} r_{nk} \|x_n - \mu_k\|^2$$
@@ -37,22 +39,27 @@ $$J = \sum_{n=1}^{\bar{N}} \sum_{k=1}^{K} r_{nk} \|x_n - \mu_k\|^2$$
 여기서 $x_n$은 특성 공간의 데이터 포인트, $\mu_k$는 $k$번째 클러스터의 중심, $r_{nk}$는 데이터 포인트 $x_n$이 클러스터 $k$에 할당되었는지를 나타내는 이진 지표 변수이다. $\bar{N}$은 전체 샘플 수와 공간 해상도의 곱이다. 이 과정을 통해 각 픽셀이 어떤 시맨틱 클러스터에 속하는지를 정의하는 마스크를 생성할 수 있다.
 
 ### 3. 희귀 클래스 발견 및 이미지 조작
+
 수염이나 안경처럼 빈도가 낮은 클래스는 일반적인 클러스터링으로 발견되지 않을 수 있다. 이를 위해 CLIP을 사용하여 StyleGAN2의 잠재 공간(Latent Space)에서 특정 속성을 강화하는 방향 벡터 $G$를 학습한다. 잠재 벡터 $w$를 $w + \alpha G$로 변형하여 생성된 이미지 $F(w + \alpha G)$에서는 해당 속성이 강하게 나타나게 되며, 이를 통해 해당 클래스가 클러스터링 과정에서 명확하게 구분될 수 있도록 유도한다.
 
 ### 4. 클러스터 분류 (Cluster Classification)
+
 발견된 각 클러스터가 실제로 어떤 시맨틱 클래스(예: '머리카락', '이마')에 해당하는지 할당하기 위해 CLIP의 텍스트 인코더와 이미지 인코더를 사용한다. 이미지 인코더의 경우, 더 세밀한 영역 분석을 위해 다운샘플링 레이어를 제거하고 Dilated Convolution을 추가하여 공간 해상도를 높였다. 각 클러스터 영역의 임베딩을 평균 내어 계산하고, 텍스트 프롬프트 임베딩과의 내적(Dot Product)을 통해 가장 유사도가 높은 클래스 명칭을 할당한다.
 
 ### 5. 지식 증류 및 실 이미지 적용
+
 StyleGAN2를 통해 생성된 합성 이미지와 앞서 구한 시맨틱 마스크 쌍으로 구성된 데이터셋을 구축한다. 이 합성 데이터셋을 사용하여 ResNet-18 기반의 Dilated Convolution 세그멘테이션 모델을 학습시킨다. 학습된 모델은 합성 이미지뿐만 아니라 실제 이미지에서도 해당 시맨틱 영역을 분할할 수 있는 능력을 갖추게 된다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: CelebA-Mask8 (8개 클래스), CelebAMask-HQ (19개 클래스), OpenEDS (안구 세그멘테이션), 그리고 수염(Beard) 전용 커스텀 데이터셋을 사용하였다.
 - **비교 대상**: DatasetGAN, semanticGAN (SSL 방식), DRN, SegNet (Fully Supervised 방식).
 - **평가 지표**: Mean IoU (Intersection over Union).
 
 ### 주요 결과
+
 1. **CelebA-Mask8**: 수동 레이블을 전혀 사용하지 않았음에도 불구하고, 소량의 레이블을 사용한 준지도 학습 모델(DatasetGAN, semanticGAN)보다 높은 Mean IoU (73.1)를 달성하여 SOTA 성능을 보였다.
 2. **CelebAMask-HQ**: Fully Supervised 모델(DRN)보다는 성능이 낮았으나, 비지도 학습임에도 불구하고 전반적으로 우수한 결과를 보여주었다.
 3. **OpenEDS (안구)**: StyleGAN2를 처음부터 학습시켜 적용한 결과, 홍채(Iris), 동공(Pupil), 공막(Sclera) 영역을 정확히 발견하였으며, Fully Supervised 모델(SegNet)과 매우 유사한 성능(82.39 vs 84.1)을 보였다.

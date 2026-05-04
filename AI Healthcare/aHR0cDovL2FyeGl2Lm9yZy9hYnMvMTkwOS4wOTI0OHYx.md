@@ -7,6 +7,7 @@ Wei-Hung Weng, Peter Szolovits (2019)
 전자 건강 기록(Electronic Health Records, EHR)은 임상 서술(clinical narratives), 검사 보고서, 실험실 측정값, 인구통계학적 정보 등 매우 다양하고 이질적인(heterogeneous) 데이터 소스로 구성되어 있다. 이러한 데이터는 본질적으로 비정형적이고 희소(sparse)하며, 시간적 불규칙성을 띠는 특성이 있다.
 
 전통적으로는 도메인 전문가가 직접 특징을 추출하는 Expert-curated 방식(예: APACHE, SOFA score 등)을 사용해 왔으나, 이는 다음과 같은 한계가 있다:
+
 1. **확장성 부족**: 수동으로 특징을 설계하므로 대규모 데이터셋으로 확장하기 어렵고 일반화 능력이 떨어진다.
 2. **숨겨진 패턴 간과**: 복잡하고 이질적인 데이터 내부에 존재하는 잠재적인 패턴이나 새로운 지식을 포착하는 데 한계가 있다.
 
@@ -38,19 +39,22 @@ Wei-Hung Weng, Peter Szolovits (2019)
 본 논문은 특정 하나의 알고리즘이 아니라 EHR Representation Learning의 전반적인 방법론을 다룬다.
 
 ### 1. Deep Learning 기반 기본 메커니즘
+
 - **Encoder-Decoder 구조**: 입력을 잠재 공간(latent space)으로 매핑하는 Encoder와 이를 다시 타겟 공간으로 복원/변환하는 Decoder로 구성된다. Autoencoder의 경우, 입력 $x$와 출력 $\hat{x}$ 사이의 재구성 손실(reconstruction loss)을 최소화하여 핵심 특징을 추출한다.
 - **시퀀스 학습**: Word2vec의 Skip-gram(중심 단어로 주변 단어 예측)과 CBOW(주변 단어로 중심 단어 예측)와 같은 메커니즘을 통해 임상 토큰 간의 의미적 관계를 학습한다.
 
 ### 2. 환자 상태 표현 학습 (Patient State Representation)
-- **시간적 특성 처리**: 
+
+- **시간적 특성 처리**:
   - **RNN/LSTM/GRU**: 환자의 방문 기록을 시퀀스로 처리한다.
   - **T-LSTM**: 시간 간격의 불규칙성을 해결하기 위해 Time-decay 메커니즘을 forget gate에 도입하여, 오래된 기억의 영향력을 감소시킨다.
-- **계층 및 구조 학습**: 
+- **계층 및 구조 학습**:
   - **MiME**: 진단-처방 간의 다층적 구조와 상호작용을 반영하여 임베딩을 생성한다.
   - **GRAM**: ICD-9 온톨로지를 Graph-based attention 모델로 구현하여 계층적 관계를 벡터화한다.
 - **도메인 지식 주입**: Graph Laplacian Regularization 등을 통해 온톨로지의 관계 정보를 모델의 가중치 학습 시 제약 조건으로 사용한다.
 
 ### 3. 임상 언어 표현 학습 (Clinical Language Representation)
+
 - **토큰 및 개념 표현**:
   - **CUI(Concept Unique Identifier) 추출**: cTAKES나 MetaMap을 사용하여 비정형 텍스트에서 표준화된 개념(CUI)을 추출하고, 이를 기반으로 `cui2vec`와 같은 개념 레벨 임베딩을 학습한다.
 - **Pre-training 및 Transfer Learning**:
@@ -65,21 +69,24 @@ Wei-Hung Weng, Peter Szolovits (2019)
   - **Doctor AI**: GRU 기반의 환자 방문 표현 학습이 Logistic Regression 및 MLP보다 다중 레이블 진단 예측(recall@30 지표)에서 우수한 성능을 기록하였다.
   - **Clinical BERT**: 일반 도메인 모델보다 임상 노트 기반으로 추가 학습된 모델이 임상 NLP 벤치마크 테스트에서 더 높은 성능을 나타냈다.
 
-- **평가 지표**: 
+- **평가 지표**:
   - 예측 과업에서는 AUROC, PR-AUC, F1-score 등을 사용하며, 정보 검색 과업에서는 MRR, MAP, nDCG 등을 활용한다.
   - 정성적 평가는 t-SNE나 UMAP과 같은 차원 축소 시각화 및 유사 사례 검색(similar case retrieval)을 통해 수행한다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 가치
+
 본 논문은 EHR 데이터의 특수성(희소성, 불규칙한 시간성, 전문 용어)을 정확히 짚어내고, 이를 해결하기 위한 딥러닝 기법들을 체계적으로 정리하였다. 특히 단순한 성능 향상을 넘어, 의료 현장에서 필수적인 **해석 가능성(Interpretability)**을 위해 Attention mechanism, LIME, SHAP 등의 기법을 결합해야 함을 강조한 점이 고무적이다.
 
 ### 한계 및 미해결 과제
+
 - **데이터 부족 및 편향**: 의료 데이터는 수집이 어렵고, 학습 데이터 자체에 내재된 모델 편향(bias)과 공정성(fairness) 문제가 존재한다.
 - **프라이버시**: 적대적 공격(adversarial attack)이나 모델 스틸링으로 인한 환자 정보 유출 위험이 상존한다.
 - **인과관계 결여**: 대부분의 Representation Learning은 상관관계(correlation)에 기반하며, 실제 임상 의사결정에 핵심적인 인과관계(causality) 추론은 충분히 다뤄지지 않았다.
 
 ### 비판적 해석
+
 논문에서 제시된 수많은 모델이 높은 성능을 보였으나, 실제 임상 현장(Clinical Deployment)에 적용되기 위해서는 단순한 AUROC 수치보다 '왜 이런 예측이 나왔는가'에 대한 임상적 근거가 더 중요하다. 따라서 앞으로의 연구는 단순한 임베딩 성능 향상보다는, 전문가의 판단 과정과 유사한 Representation을 어떻게 구축할 것인가에 집중해야 할 것이다.
 
 ## 📌 TL;DR

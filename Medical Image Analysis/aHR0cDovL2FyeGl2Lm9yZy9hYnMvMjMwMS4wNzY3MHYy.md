@@ -12,9 +12,10 @@ Mélanie Gaillochet, Christian Desrosiers, Hervé Lombaert (2023)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 샘플 수준(Sample-level)이 아닌 **배치 수준(Batch-level)에서 불확실성을 계산**하는 **Stochastic Batches (SB)** 쿼리 전략이다. 
+본 논문의 핵심 아이디어는 샘플 수준(Sample-level)이 아닌 **배치 수준(Batch-level)에서 불확실성을 계산**하는 **Stochastic Batches (SB)** 쿼리 전략이다.
 
 중심적인 직관은 무작위로 구성된 여러 배치 후보군을 먼저 생성하고, 그 배치들의 평균 불확실성을 측정하여 가장 불확실성이 높은 '배치' 전체를 선택하는 것이다. 이를 통해 다음과 같은 효과를 얻을 수 있다.
+
 1. **중복 제거**: 개별 샘플의 불확실성만 따지면 매우 유사한 샘플들이 상위권을 차지하지만, 무작위 배치를 통해 샘플링하면 배치 내에 자연스럽게 다양성이 확보되어 중복 정보 선택 가능성을 낮춘다.
 2. **계산 효율성**: 복잡한 잠재 표현(Latent representation) 학습이나 쌍별 거리 계산 없이, 단순한 무작위 샘플링만으로 다양성을 확보할 수 있다.
 3. **범용성**: 특정 불확실성 측정 지표에 종속되지 않고, 어떠한 불확실성 기반 메트릭 위에도 추가할 수 있는 'Add-on' 형태로 작동한다.
@@ -32,9 +33,11 @@ Mélanie Gaillochet, Christian Desrosiers, Hervé Lombaert (2023)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 본 제안 방법은 학습된 세그멘테이션 모델 $f_{\theta}$를 사용하여 레이블이 없는 데이터셋 $D_U$에서 가장 정보 가치가 높은 $B$개의 샘플을 선택하는 반복적인 프로세스를 가진다.
 
 ### Stochastic Batch Selection 절차
+
 SB 전략은 다음의 단계로 진행된다.
 
 1. **불확실성 계산**: 우선 $D_U$에 속한 모든 개별 샘플 $x_u$에 대해 현재 모델 $f_{\hat{\theta}}$와 선택한 불확실성 메트릭(Uncert)을 사용하여 점수를 매긴다.
@@ -50,6 +53,7 @@ SB 전략은 다음의 단계로 진행된다.
    $$X_{\text{candidate}} \leftarrow \text{argmax}_{\text{Batch}^{(i)}} (u\text{-Batch}^{(i)}\text{score})$$
 
 ### 구현 세부 사항
+
 - **모델 아키텍처**: 표준 4-layer UNet을 사용하며, Dropout($p=0.5$), Batch Normalization, Leaky ReLU를 적용하였다.
 - **학습 설정**: Adam 옵티마이저, Cosine annealing 스케줄러를 사용하였으며, CE(Cross-Entropy) 손실 함수를 최적화한다.
 - **비교 대상 불확실성 메트릭**: Entropy, Dropout-based, TTA-based, Learning Loss 4가지를 사용하였다.
@@ -57,17 +61,20 @@ SB 전략은 다음의 단계로 진행된다.
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: PROMISE12(전립선 MRI), Medical Segmentation Decathlon(해마 MRI) 두 가지를 사용하였다.
 - **측정 지표**: Dice Similarity Coefficient (DSC, 높을수록 좋음)와 95% Hausdorff Distance (HD95, 낮을수록 좋음)를 사용하였다.
 - **비교군**: Random Sampling(RS), Core-set, 그리고 SB가 적용되지 않은(w/o SB) 4가지 불확실성 기반 방법론들과 비교하였다.
 
 ### 주요 결과
+
 1. **정량적 성능 향상**: 표 1에 따르면, 거의 모든 케이스에서 SB를 적용했을 때 단순 불확실성 기반 방법보다 DSC는 상승하고 HD95는 하락하였다. 특히 Dropout 기반 방식에 SB를 결합했을 때 가장 높은 성능 향상이 관찰되었다.
 2. **기준선 대비 우위**: SB 전략은 단순 무작위 샘플링(RS) 및 다양성 기반의 Core-set보다 우수한 성능을 보였다.
 3. **계산 효율성**: 표 2에서 확인되듯, SB를 추가해도 샘플링 시간은 거의 증가하지 않았으며, Core-set과 같은 거리 기반 방법보다 압도적으로 빨랐다.
 4. **중복성 감소 확인**: 정성적 분석(그림 5) 결과, 단순 불확실성 기반 샘플링은 동일 환자의 서로 다른 슬라이스(매우 유사한 이미지)를 중복 선택하는 경향이 있었으나, SB는 훨씬 더 다양하고 서로 다른 특성을 가진 샘플들을 선택함을 확인하였다.
 
 ### 강건성(Robustness) 분석 (Ablation Study)
+
 - **초기 레이블 수**: 초기 레이블 데이터의 크기를 5개에서 25개까지 변화시켜도 SB의 성능 향상 효과는 일관되게 유지되었다.
 - **하이퍼파라미터**: 다양한 학습 설정(Augmentation, Scheduler 등)에서도 SB는 단순 불확실성 기반 방법보다 안정적이고 높은 성능을 보였다.
 - **샘플링 예산($B$)**: 예산 $B$가 커질수록 SB의 이점이 더 명확해졌으며, 이는 다양성 확보의 효과가 더 커지기 때문으로 분석된다.

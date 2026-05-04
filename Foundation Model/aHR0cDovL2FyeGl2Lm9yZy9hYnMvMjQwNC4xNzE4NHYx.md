@@ -23,36 +23,43 @@ LoRKD의 중심 설계는 크게 두 가지이다. 첫째, LoRA(Low-Rank Adaptat
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 LoRKD는 학습 단계에서 하나의 공유 백본 $F_s$와 $T$개의 전문가 모듈 $\{E_1, ..., E_T\}$로 구성된다. 학습이 완료된 후에는 공유 백본의 파라미터와 특정 전문가 모듈의 파라미터를 융합하여, 원래의 파운데이션 모델과 동일한 크기를 가지면서도 특정 작업에 특화된 경량 전문가 모델을 생성하여 배포한다.
 
 ### Low-Rank Expert Modules
+
 각 컨볼루션 층의 공유 가중치를 $W_0 \in \mathbb{R}^{C_{out} \times C_{in} \times k \times k}$라고 할 때, $t$번째 작업에 대한 저차원 팩터 $B_t \in \mathbb{R}^{C_{out} \times r \times k \times k}$와 $A_t \in \mathbb{R}^{r \times C_{in} \times k \times k}$를 도입한다. 여기서 $r$은 rank를 의미한다.
 특정 작업 $t$에 대한 컨볼루션 연산 $g_t$는 다음과 같이 정의된다:
 $$g_t = (W_0 + B_t A_t)h_t$$
 여기서 $h_t$는 입력 특징 맵이다. 기존 LoRA와 달리, 공통 지식을 담고 있는 $W_0$ 역시 저차원 팩터들과 함께 업데이트된다.
 
 ### Efficient Knowledge Separation (EKS) Convolution
-미니배치 내에 $T$개의 서로 다른 작업이 섞여 있을 때, 각 작업마다 별도의 순전파를 수행하는 것은 매우 비효율적이다. 이를 해결하기 위해 EKS Convolution은 파라미터 집계(parameter aggregation) 방식을 사용한다. 
+
+미니배치 내에 $T$개의 서로 다른 작업이 섞여 있을 때, 각 작업마다 별도의 순전파를 수행하는 것은 매우 비효율적이다. 이를 해결하기 위해 EKS Convolution은 파라미터 집계(parameter aggregation) 방식을 사용한다.
 입력 특징 맵 $h$와 작업 라벨 $M \in \mathbb{R}^{B \times T}$ (one-hot vector)가 주어졌을 때, 현재 반복 회차에서 사용할 가중치 $W'$를 다음과 같이 계산한다:
 $$g = (W_0 + \sum_{i=1}^{T} (g_{BA} \odot M)_i)h = W'h$$
 여기서 $g_{BA}$는 모든 전문가 모듈의 가중치를 포함하는 텐서이며, $\odot$는 아다마르 곱(Hadamard product)이다. 이 연산을 위해 저자들은 Group Convolution (GConv) 개념을 도입하여, $W'$를 $B$개의 그룹으로 리셰이프(reshape)함으로써 기존 딥러닝 라이브러리에서 효율적으로 구현하였다.
 
 ### 학습 목표 및 손실 함수
+
 파운데이션 모델 $F_p$로부터 지식을 전이하기 위해 Task Knowledge Transfer Loss ($\mathcal{L}_{transfer}$)를 도입하며, 이는 파운데이션 모델의 특징 $f^b_i$와 분해 모델의 특징 $f^d_i$ 사이의 KL 발산(Kullback-Leibler divergence)으로 계산된다. 또한, 작업별 분류 헤드를 통해 작업 수준의 감독(supervision)을 위한 교차 엔트로피 손실 $\mathcal{L}_{CE}$를 추가한다. 전체 손실 함수는 다음과 같다:
 $$\mathcal{L}_{total} = \frac{1}{B} \sum_{t=1}^{T} \sum_{i=1}^{B_t} \left( \mathcal{L}_{CE}(y^t_i, p^d_i) + \beta \alpha^2 \mathcal{L}_{KL}(f^b_i, f^d_i) \right)$$
 여기서 $\beta$는 하이퍼파라미터이며 $\alpha$는 온도(temperature) 파라미터이다.
 
 ### Task Knowledge Switch
+
 배포 시에는 $W_t = W_0 + B_t A_t$와 같이 파라미터를 융합하여 사용한다. 만약 다른 작업 $t'$로 지식을 전환해야 한다면, $W_0 = W_t - B_t A_t$를 통해 공유 가중치를 복구한 후 다시 $W_{t'} = W_0 + B_{t'} A_{t'}$를 계산하여 간단히 전환할 수 있다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Radimagenet (1.35M 이미지, 11개 작업), MedMnist (705K 이미지, 10개 작업), Med-MT (119K 이미지, 8개 작업)를 사용하여 사전 학습 및 분해를 수행하였다.
 - **전이 가능성 평가**: 분해된 전문가 모델들을 COVID, BTC, AD, Mura, AUITD, HAM10000, DET10 등 7개의 다운스트림 데이터셋에서 평가하였다.
 - **비교 대상**: Baseline, STL, MTL, STL-KD, MTL-KD, MoCo-MTL, Aligned-MTL, 그리고 KF를 비교군으로 설정하였다.
 
 ### 주요 결과
+
 - **분해 성능**: 세 가지 사전 학습 데이터셋 모두에서 LoRKD는 KF보다 우수한 평균 정확도를 보였으며, 특히 파라미터 수는 KF의 절반 이하로 유지하면서도 가장 높은 성능을 기록하였다.
 - **전이 가능성**: 다운스트림 데이터셋 실험 결과, LoRKD로 분해된 전문가 모델들이 Baseline 및 기존 MTL/STL 기반 방법들보다 훨씬 높은 성능을 보였다. 이는 공통 지식과 특화 지식을 모두 보유했기 때문으로 분석된다.
 - **비용 효율성**: 파운데이션 모델 대비 파라미터 수와 FLOPs를 획기적으로 줄였으며, 배포 시에는 파라미터 융합을 통해 Baseline과 동일한 수준의 비용으로 운영 가능하다.

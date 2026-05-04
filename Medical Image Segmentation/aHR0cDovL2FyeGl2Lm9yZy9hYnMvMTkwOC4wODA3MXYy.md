@@ -28,13 +28,15 @@ Ali Hatamizadeh, Demetri Terzopoulos, and Andriy Myronenko (2019)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
-제안된 네트워크는 세그멘테이션을 담당하는 **Main Encoder-Decoder Stream**과 경계 정보를 처리하는 **Shape Stream**으로 구성된다. 
+
+제안된 네트워크는 세그멘테이션을 담당하는 **Main Encoder-Decoder Stream**과 경계 정보를 처리하는 **Shape Stream**으로 구성된다.
 
 1. **Encoder 단계:** 메인 스트림의 각 해상도 레벨에는 두 개의 Residual Block이 있으며, 이들의 출력값은 Shape Stream의 대응하는 해상도 레벨로 전달된다.
 2. **Shape Stream:** $1 \times 1$ Convolution을 거친 후 Attention Layer를 통과한다. 이후 Connection Residual Block을 거쳐 최종적으로 Dilated Spatial Pyramid Pooling(DSPP) 레이어로 전달된다.
 3. **Fusion:** Shape Stream의 출력과 메인 스트림 인코더의 출력이 결합되어 최종 세그멘테이션 맵을 생성한다.
 
 ### Attention Layer
+
 Attention Layer는 메인 스트림의 특징 맵($m^l$)과 이전 Shape Stream의 출력($s^l$)을 결합하여 경계 정보를 정제한다.
 
 먼저, 두 입력을 Concatenation 한 후 $1 \times 1$ Convolution($C_{1\times1}$)과 시그모이드 함수($\sigma$)를 적용하여 Attention Map $\alpha^l$을 생성한다.
@@ -44,6 +46,7 @@ $$\alpha^l = \sigma(C_{1\times1}(s^l \parallel m^l))$$
 $$o^l = s^l \cdot \alpha^l$$
 
 ### 학습 목표 및 손실 함수
+
 본 모델은 세그멘테이션 결과와 경계 예측 결과를 동시에 감독하는 Joint Learning 방식을 사용한다. 전체 손실 함수 $L_{total}$은 다음과 같이 세 가지 항의 합으로 정의된다.
 $$L_{total} = \lambda_1 L_{Dice}(y_{pred}, y_{true}) + \lambda_2 L_{Dice}(s_{pred}, s_{true}) + \lambda_3 L_{Edge}(s_{pred}, s_{true})$$
 
@@ -59,12 +62,14 @@ $$L_{Edge} = -\beta \sum_{j \in y^+} \log P(y_{pred,j}=1|x;\theta) - (1-\beta) \
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** BraTS 2018 데이터셋을 사용하였으며, 다중 모달리티 중 T1c 모달리티만을 입력으로 사용하였다.
 - **분할 대상:** Tumor Core (TC) 영역을 대상으로 하였으며, 3D 볼륨에서 추출한 2D axial slice를 사용하였다.
 - **비교 모델:** U-Net, V-Net.
 - **평가 지표:** Dice Score, Jaccard Index, Hausdorff Distance.
 
 ### 정량적 결과
+
 실험 결과, 제안된 모델이 모든 지표에서 기존 모델들을 상회하였다.
 
 | Model | Dice Score | Jaccard Index | Hausdorff Distance |
@@ -75,6 +80,7 @@ $$L_{Edge} = -\beta \sum_{j \in y^+} \log P(y_{pred,j}=1|x;\theta) - (1-\beta) \
 | **Ours** | $\mathbf{0.822 \pm 0.176}$ | $\mathbf{0.861 \pm 0.112}$ | $\mathbf{3.406 \pm 1.196}$ |
 
 ### 분석 및 고찰
+
 - **Edge Loss의 영향:** Edge loss 없이 동일한 아키텍처로 학습했을 때의 성능은 V-Net과 유사한 수준으로 떨어진다. 이는 단순히 브랜치를 추가하는 것보다, 경계 정보를 강제하는 손실 함수를 통해 인코더를 정규화하는 것이 핵심임을 시사한다.
 - **정성적 결과:** U-Net은 위양성(False Positive)이 많고 경계가 부정확한 반면, 제안 모델은 세밀한 경계선을 생성하며 종양의 작은 구조적 디테일을 효과적으로 포착하였다.
 

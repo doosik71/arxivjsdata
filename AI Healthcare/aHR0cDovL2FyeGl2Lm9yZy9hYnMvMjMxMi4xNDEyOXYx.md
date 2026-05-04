@@ -13,6 +13,7 @@ Dongjin Choi, Andy Xiang, Ozgur Ozturk, Deep Shrestha, Barry Drake, Hamid Haidar
 WellFactor의 핵심 아이디어는 **제약 조건이 있는 저차원 근사(Constrained Low-Rank Approximation, CLRA)**, 특히 **비음수 행렬 분해(Nonnegative Matrix Factorization, NMF)**를 활용하여 여러 데이터 소스를 하나의 통합된 목적 함수 내에서 융합하는 것이다.
 
 주요 기여 사항은 다음과 같다.
+
 1. **데이터 통합 목적 함수 설계**: 서로 다른 도메인(검색, 브라우징, 진단)의 데이터를 개별적으로 처리한 뒤 나중에 합치는 방식(Late fusion)이나 원시 데이터를 단순히 합치는 방식(Early fusion)이 아니라, 목적 함수 수준에서 통합하여 공통의 저차원 임베딩 $H$를 학습한다.
 2. **희소성 및 미관찰 데이터 처리**: 진단 데이터와 같이 관찰되지 않은 값의 의미가 다른 경우(Open-world assumption)를 처리하기 위해 마스킹 행렬(Masking matrix)을 도입하여 학습의 정확도를 높였다.
 3. **반지도 학습(Semi-supervision) 도입**: 일부 알려진 레이블 정보를 목적 함수에 추가하여 특정 작업에 최적화된 고품질의 임베딩을 생성한다.
@@ -21,6 +22,7 @@ WellFactor의 핵심 아이디어는 **제약 조건이 있는 저차원 근사(
 ## 📎 Related Works
 
 논문에서는 다음과 같은 관련 연구들을 소개한다.
+
 - **콘텐츠 기반 추천(Content-based Recommendation)**: 사용자 선호도를 벡터로 표현하여 추천하는 방식으로, 주로 검색 및 브라우징 히스토리를 활용한다. 하지만 의료 도메인에서는 단순한 선호도를 넘어 건강상의 이점을 함께 고려해야 한다는 차이점이 있다.
 - **문맥 임베딩 및 의료 특화 임베딩**: GPT-2, SentenceBERT와 같은 범용 모델과 의료 텍스트에 특화된 BioSentVec 등이 존재한다. WellFactor는 이러한 모델들을 특징 추출 단계에서 활용하지만, 최종적으로는 이를 통합하는 저차원 표현 학습에 집중한다.
 - **클러스터링 및 CLRA**: 비음수 제약 조건을 가진 저차원 근사는 결과의 해석력이 뛰어나며, 이를 통해 환자군을 소프트 클러스터링(Soft clustering)할 수 있다.
@@ -30,9 +32,11 @@ WellFactor의 핵심 아이디어는 **제약 조건이 있는 저차원 근사(
 ## 🛠️ Methodology
 
 ### 1. 특징 처리 (Feature Processing)
+
 데이터는 TF(Term Frequency) 인코딩, GPT-2, SentenceBERT, 그리고 의료 특화 모델인 BioSentVec를 통해 벡터화된다. 서로 다른 모델에서 나온 값들의 범위가 다르므로 Min-Max scaling을 적용하여 정규화한다.
 
 ### 2. 통합 임베딩 학습
+
 검색($X_s$), 브라우징($X_b$), 진단($X_d$) 데이터에 대해 다음과 같은 통합 목적 함수를 최소화하는 $W_s, W_b, W_d, H$를 찾는다.
 
 $$ \min_{(W_s, W_b, W_d, H) \ge 0} \alpha_s \|X_s - W_s H\|_F^2 + \alpha_b \|X_b - W_b H\|_F^2 + \alpha_d \|X_d - W_d H\|_F^2 $$
@@ -40,10 +44,12 @@ $$ \min_{(W_s, W_b, W_d, H) \ge 0} \alpha_s \|X_s - W_s H\|_F^2 + \alpha_b \|X_b
 여기서 $H$는 모든 도메인에서 공통으로 사용되는 환자 임베딩 행렬이며, $W_i$는 각 도메인의 기저 행렬이다. $\alpha_i$는 각 도메인의 중요도를 조절하는 균형 계수이다.
 
 ### 3. 학습 절차 및 최적화
+
 - **알고리즘**: Block Coordinate Descent (BCD) 방식을 사용하여 $W_i$들과 $H$를 번갈아 가며 업데이트한다.
 - **최적화 기법**: 각 하위 문제는 비음수 제약 최소제곱법(Nonnegativity-constrained Least Squares) 문제이며, 이를 해결하기 위해 BPP(Block Principal Pivoting) 방법을 사용한다.
 
 ### 4. 미관찰 데이터 처리 (Matrix Masking)
+
 진단 데이터의 경우, 값이 없다는 것이 '관계가 없음'이 아니라 '진단을 받지 않음(알 수 없음)'을 의미하므로 마스킹 행렬 $M$을 도입한다.
 
 $$ \min_{(W_s, W_b, W_d, H) \ge 0} \alpha_s \|X_s - W_s H\|_F^2 + \alpha_b \|X_b - W_b H\|_F^2 + \alpha_d \|M \circ (X_d - W_d H)\|_F^2 $$
@@ -51,6 +57,7 @@ $$ \min_{(W_s, W_b, W_d, H) \ge 0} \alpha_s \|X_s - W_s H\|_F^2 + \alpha_b \|X_b
 여기서 $\circ$는 요소별 곱(Hadamard product)을 의미하며, 관찰된 데이터에 대해서만 오차를 계산하도록 강제한다.
 
 ### 5. 반지도 학습 및 신규 데이터 처리
+
 - **반지도 학습**: 레이블 행렬 $X_l$을 도입하여 $\alpha_l \|M_l \circ (X_l - W_l H)\|_F^2$ 항을 목적 함수에 추가함으로써 임베딩의 품질을 정밀하게 조정한다.
 - **신규 데이터 임베딩**: 새로운 환자 $q$가 유입되면, 이미 학습된 $W_i$들을 고정한 채 $H_q$만을 최적화하는 다음 문제를 푼다.
 
@@ -59,11 +66,13 @@ $$ \min_{H_q \ge 0} \alpha_s \|X_q^s - W_s H_q\|_F^2 + \alpha_b \|X_q^b - W_b H_
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: Kaiser Permanente의 실제 헬스케어 웹 포털 데이터 (약 110만 명의 환자 데이터).
 - **비교 대상 (Baselines)**: HashGNN, GPT-2(PCA), SentenceBERT(PCA), BioSentVec(PCA).
 - **평가 지표**: ROC-AUC, Accuracy, Recall, Precision, F1-score.
 
 ### 2. 주요 결과
+
 - **분류 성능**: 정신 건강 앱 배너 클릭 여부를 예측하는 작업에서 WellFactor-S(반지도 학습 적용)가 ROC-AUC $81.65\%$, F1-score $74.57\%$로 가장 높은 성능을 기록하였다. 이는 단순 텍스트 임베딩이나 GNN 기반 방식보다 우수함을 보여준다.
 - **클러스터 분석**: 비음수 제약 덕분에 임베딩 차원의 해석이 가능했다. 예를 들어, 특정 클러스터에서 검색, 브라우징, 진단 도메인 모두 'sleep', 'apnea'와 같은 키워드가 공통적으로 나타나, 방법론이 도메인을 가로지르는 강건한 특징을 포착했음을 입증하였다.
 - **질병 예측 및 유사도 검색**: 과거 데이터(Q1~Q3)로 생성한 임베딩을 통해 Q4에 발생한 주요 질병(고혈압, 당뇨 등)을 예측했다. Precision@k 지표에서 모든 질병에 대해 무작위 선택(Random Precision)보다 높은 성능을 보였으며, 특히 당뇨와 만성 신장 질환에서 유의미한 예측력을 보였다.

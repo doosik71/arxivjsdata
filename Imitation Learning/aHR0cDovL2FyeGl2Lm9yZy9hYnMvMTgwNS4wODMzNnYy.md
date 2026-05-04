@@ -62,12 +62,16 @@ $$W(\pi) = \frac{1}{2} \sum_s \rho_\pi(s) \left( 1 - \sum_{i,j} w_i(s) w_j(s) \m
 ## 📊 Results
 
 ### 1. Multi-Goal Environment 실험
+
 네 개의 attractor(목표 지점)와 네 개의 repulsor(장애물)가 존재하는 환경에서 다중 모드 행동 학습 능력을 검증하였다.
+
 - **측정 지표**: 평균 리턴(Average Return) 및 도달 가능성(Reachability, 얼마나 많은 목표 지점에 도달했는가).
 - **결과**: MCTEIL은 Soft GAIL보다 훨씬 높은 도달 가능성을 보였다. 이는 Soft GAIL이 모드 붕괴로 인해 일부 목표만 학습하는 반면, MCTEIL은 Tsallis entropy의 특성 덕분에 전문가의 모든 모드를 성공적으로 학습했음을 의미한다.
 
 ### 2. MuJoCo Continuous Control 실험
+
 Halfcheetah, Walker2d, Reacher, Ant의 네 가지 환경에서 BC, GAIL, Soft GAIL과 성능을 비교하였다.
+
 - **설정**: 전문가 궤적 데이터를 4, 11, 18, 25개로 다양하게 설정하여 실험하였다.
 - **결과**: Walker2d를 제외한 대부분의 환경에서 MCTEIL이 가장 높은 평균 리턴을 기록하였다. 특히 Reacher 환경에서는 기존 GAIL이 실패하거나 BC보다 성능이 낮았던 것과 달리, MCTEIL이 모든 데이터 수량 조건에서 최적의 성능을 보였다. 이는 MDN이 다양한 방향으로 탐색을 수행하고, Sparsemax가 불필요한 성분을 제거함으로써 학습 효율을 극대화했기 때문이다.
 

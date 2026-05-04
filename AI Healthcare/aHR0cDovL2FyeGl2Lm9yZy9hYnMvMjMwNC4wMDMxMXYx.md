@@ -30,25 +30,35 @@ Chaimae Taoussi, Imad Hafidi, and Abdelmoutalib Metrane (2022)
 저자들은 문헌 분석 결과를 토대로 다음과 같은 5단계의 병리 예측 시스템 구조를 제안한다.
 
 ### 1. 데이터 수집 (Collecting Data)
+
 다양한 형식(PDF, RTF, HTML, XML 등)의 의료 데이터를 수집한다.
+
 - **Data Analyzer:** 수집된 파일을 비구조화 데이터(Text: RTF, PDF)와 반구조화 데이터(Relational DB: .csv, .db)로 분리한다.
 - **Wrapper 및 Parser:** 각 데이터 소스에서 쿼리를 실행하여 결과를 JSON 문서로 변환하고, 최종적으로 메타데이터와 분석에 필요한 필드만 추출한 새로운 EMR 데이터셋을 생성한다.
 
 ### 2. 데이터 전처리 (Preprocessing Data)
+
 수집된 DME(Data Medical Electronic) 데이터셋에 대해 데이터 정제, 통합, 축소 및 변환을 수행한다.
+
 - **NLTK (Natural Language Toolkit):** Python 기반의 NLTK 라이브러리를 사용하여 Treebank word tokenizer와 POS tagger를 적용함으로써, 텍스트 데이터를 구조화된 SDME 데이터셋으로 변환한다.
 
 ### 3. 의료 데이터 매핑 (Mapping Medical Data)
+
 전처리된 SDME 데이터셋의 생물 의학 용어를 표준화한다.
+
 - **UMLS API 및 GATE (Bio-YODIE) API:** 이 도구들을 사용하여 텍스트 내의 용어를 UMLS 메타테사우러스(metathesaurus)에 매핑한다.
 - **추출 항목:** 매핑 결과로 필수 용어(Mandatory terms), 개념(Concept), 의미론적 유형(Semantic Type), 엔티티 유형(Entity type)을 추출하여 'Mapped SDME' 데이터셋을 구축한다.
 
 ### 4. 분류 및 클러스터링 (Classification and Clustering)
+
 환자들의 프로필을 유사한 특성별로 그룹화한다.
+
 - **$k$-means Clustering:** 의료 전문가가 사전에 정의한 규칙을 기반으로 $k$-means 알고리즘을 적용하여 환자들을 $k$개의 클러스터로 분류한다. 이를 통해 환자별 특성이 반영된 'Clustered Mapped SDME' 데이터셋이 생성된다.
 
 ### 5. 병리 예측 (Pathology Prediction)
+
 최종적으로 AI 모델을 통해 질병을 예측한다.
+
 - **Recurrent Neural Networks (RNN):** 의료 데이터의 시계열적 특성과 순차적 정보를 처리하기 위해 RNN 알고리즘을 사용한다. RNN은 내부 루프와 메모리를 통해 이전 계산 값을 유지하므로 순차 데이터 분석에 적합하다.
 - **출력 변수:** 모델은 최종적으로 예측된 병리(Pathologies), 최적 예측 결과(Best Prediction), 예측 정밀도(Best Precision)를 포함하는 데이터셋을 출력한다.
 

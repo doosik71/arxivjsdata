@@ -4,7 +4,7 @@ Alon Gonen, Sivan Sabato, Shai Shalev-Shwartz (2013)
 
 ## 🧩 Problem to Solve
 
-본 논문은 유클리드 공간에서의 **Half-spaces(반공간)** 학습을 위한 **Pool-based Active Learning** 문제를 다룬다. 
+본 논문은 유클리드 공간에서의 **Half-spaces(반공간)** 학습을 위한 **Pool-based Active Learning** 문제를 다룬다.
 
 일반적인 Active Learning의 목표는 레이블이 없는 데이터 풀(pool)에서 가장 정보량이 많은 데이터를 선택적으로 쿼리하여, 최소한의 레이블 사용량(Label Complexity)으로 낮은 오차를 가진 예측 규칙을 학습하는 것이다. 특히 레이블링 비용이 매우 높은 실제 응용 분야에서 이 문제는 매우 중요하다.
 
@@ -31,12 +31,14 @@ Alon Gonen, Sivan Sabato, Shai Shalev-Shwartz (2013)
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인 및 Greedy 전략
+
 학습자는 현재까지 쿼리한 레이블과 일치하는 모든 가설의 집합인 **Version Space** $V^t$를 유지한다. 새로운 쿼리 $x$를 선택할 때, $x$의 레이블이 $+1$일 때의 버전 공간 $V_{+1}$와 $-1$일 때의 버전 공간 $V_{-1}$의 확률 질량(부피)을 최대한 균등하게 나누는 데이터를 선택한다.
 
 목표 함수는 다음과 같다:
 $$\text{argmax}_{x \in X} P(V_{+1}^{t,x}) \cdot P(V_{-1}^{t,x})$$
 
 ### 2. ALuMA 알고리즘의 핵심 구성 요소
+
 부피 계산의 계산 복잡도를 해결하기 위해 다음과 같은 기법을 사용한다.
 
 - **Volume Estimation**: Kannan et al. (1997)의 무작위 알고리즘을 사용하여 convex body의 부피를 근사한다. 이를 통해 $\alpha$-approximately greedy한 선택을 수행한다.
@@ -44,12 +46,15 @@ $$\text{argmax}_{x \in X} P(V_{+1}^{t,x}) \cdot P(V_{-1}^{t,x})$$
 - **Hit-and-Run Sampling**: 버전 공간 내에서 가설 $w$를 균등하게 샘플링하기 위해 사용된다.
 
 ### 3. 이론적 레이블 복잡도
+
 타겟 가설 $h$가 마진 $\gamma$를 가지고 데이터를 분리할 때, ALuMA의 레이블 복잡도는 다음과 같은 상한을 가진다:
 $$\text{Label Complexity} = O(d \log(1/\gamma) \cdot \text{OPT}_{\max})$$
 여기서 $d$는 공간의 차원이며, $\text{OPT}_{\max}$는 해당 풀에 대한 최적의 레이블 복잡도이다.
 
 ### 4. 비분리 데이터 처리 (Preprocessing)
+
 데이터가 분리 가능하지 않을 때, 다음과 같은 변환을 거쳐 ALuMA를 적용한다:
+
 1. **고차원 매핑**: $x_i \in \mathbb{R}^d$를 $x'_i = (ax_i; \sqrt{1-a^2}e_i) \in \mathbb{R}^{d+m}$으로 매핑하여 강제로 분리 가능하게 만든다. 이때 $a$는 힌지 손실(Hinge loss)의 상한 $H$에 따라 결정된다.
 2. **Random Projection**: Johnson-Lindenstrauss 정리를 이용하여 차원을 $k$로 축소하면서도 마진 특성을 유지한다.
 3. **ALuMA 적용**: 변환된 데이터 $\bar{X}$에 대해 ALuMA를 수행하여 레이블을 얻은 후, 원래 공간에서 SVM 등을 통해 최종 분류기를 학습한다.
@@ -57,11 +62,13 @@ $$\text{Label Complexity} = O(d \log(1/\gamma) \cdot \text{OPT}_{\max})$$
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: MNIST (숫자 3 vs 5, 4 vs 7), PCMAC (웹 포스트 분류), 합성 데이터 (Uniform distribution, Octahedron 구조).
 - **비교 대상**: CAL (Mellow), QBC (Middle-ground), TK (Tong & Koller 휴리스틱), ERM (Passive learning).
 - **지표**: 레이블 예산(Label Budget)에 따른 Train/Test Error.
 
 ### 2. 주요 결과
+
 - **실용적 성능**: MNIST와 PCMAC 데이터셋에서 ALuMA와 TK(공격적 방식)가 CAL(완만한 방식)보다 훨씬 빠르게 에러를 감소시켰다. 특히 CAL은 초기 레이블 예산 구간에서 Passive ERM과 거의 차이가 없는 모습을 보였다.
 - **고차원에서의 효율성**: Uniform distribution 실험에서 차원 $d$가 10에서 100으로 증가할 때, 공격적 방식의 우위가 더 뚜렷하게 나타났다.
 - **특수 구조(Octahedron)**: 특정 합성 데이터셋에서 ALuMA는 매우 적은 쿼리로 정답을 찾은 반면, CAL과 QBC는 지수적으로 많은 쿼리가 필요함을 확인하였다.
@@ -70,14 +77,17 @@ $$\text{Label Complexity} = O(d \log(1/\gamma) \cdot \text{OPT}_{\max})$$
 ## 🧠 Insights & Discussion
 
 ### 1. 강점 및 통찰
+
 - **공격적 전략의 재발견**: 그동안 계산 복잡성 때문에 외면받았던 Greedy 부피 분할 전략이 Randomized 알고리즘을 통해 실용적으로 구현 가능함을 보였으며, 많은 경우 Mellow 방식보다 훨씬 효율적임을 증명하였다.
 - **마진의 역할**: 본 연구에서 마진 $\gamma$는 단순히 일반화 성능을 위한 것이 아니라, 계산 가능한 범위 내에서 최적의 쿼리를 찾기 위한 이론적 도구로 사용되었다.
 
 ### 2. 한계 및 가정
+
 - **마진 의존성**: ALuMA의 성능 보장은 마진 $\gamma$가 존재한다는 가정에 기반한다. 만약 마진이 극도로 작다면 레이블 복잡도가 증가한다.
 - **계산 비용**: 무작위 부피 추정과 Hit-and-Run 샘플링을 사용함에도 불구하고, 차원이 매우 높고 쿼리 횟수가 많아지면 여전히 계산 비용이 발생한다.
 
 ### 3. 비판적 해석
+
 논문은 공격적 방식이 일반적으로 우수함을 주장하지만, 동시에 Mellow 방식(CAL)이 에러 레벨이 매우 높은 Agnostic setting에서는 더 안정적일 수 있음을 인정한다. 따라서 모든 상황에서 ALuMA가 정답이 아니라, 데이터의 노이즈 수준(Error level)에 따라 알고리즘을 선택하는 전략이 필요하다는 점이 향후 연구의 핵심이 될 것으로 보인다.
 
 ## 📌 TL;DR

@@ -10,7 +10,7 @@ Pankaj Malhotra, Anusha Ramakrishnan, Gaurangi Anand, Lovekesh Vig, Puneet Agarw
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 '예측(Prediction)'이 아닌 '재구성(Reconstruction)' 개념을 도입하는 것이다. 
+본 논문의 핵심 아이디어는 '예측(Prediction)'이 아닌 '재구성(Reconstruction)' 개념을 도입하는 것이다.
 
 정상 데이터만을 사용하여 시계열의 특징을 학습하는 LSTM Encoder-Decoder 모델을 구축하면, 모델은 정상적인 패턴을 재구성하는 법을 배우게 된다. 이때, 학습 과정에서 보지 못한 이상치(anomalous) 데이터가 입력되면 모델은 이를 정상 패턴으로 재구성하려 시도하지만, 결과적으로 재구성 오차(reconstruction error)가 정상 데이터에 비해 훨씬 크게 발생한다는 점을 이용한다. 즉, 재구성 오차의 크기를 통해 해당 시점의 이상치 가능성을 판단한다.
 
@@ -23,12 +23,15 @@ Pankaj Malhotra, Anusha Ramakrishnan, Gaurangi Anand, Lovekesh Vig, Puneet Agarw
 ## 🛠️ Methodology
 
 ### 전체 구조 및 파이프라인
+
 본 모델인 EncDec-AD는 LSTM 기반의 Encoder와 Decoder로 구성된 구조이다. 전체적인 흐름은 다음과 같다:
+
 1. **학습 단계**: 정상 시계열 데이터($s_N$)만을 사용하여 Encoder-Decoder 모델을 학습시킨다.
 2. **재구성 단계**: 입력 시퀀스를 고정된 길이의 벡터로 압축(Encoding)한 후, 이를 다시 원래의 시퀀스로 복원(Decoding)한다.
 3. **이상치 판단**: 테스트 데이터의 재구성 오차를 계산하고, 이를 기반으로 산출된 이상치 점수(anomaly score)가 임계값을 넘으면 이상치로 판정한다.
 
 ### 주요 구성 요소 및 학습 절차
+
 - **LSTM Encoder**: 입력 시계열 $X = \{x^{(1)}, x^{(2)}, \dots, x^{(L)}\}$를 입력받아 최종 은닉 상태(hidden state) $h^{(L)}_E$를 생성한다. 이 벡터는 입력 시퀀스의 전체적인 정보를 담고 있는 고정 길이의 표현(representation)이 된다.
 - **LSTM Decoder**: Encoder의 최종 상태 $h^{(L)}_E$를 초기 상태로 설정하고, 시퀀스를 역순으로 재구성한다. 즉, 타겟 시퀀스는 $\{x^{(L)}, x^{(L-1)}, \dots, x^{(1)}\}$이 된다.
 - **추론 절차**: 추론 시에는 Decoder가 이전 단계에서 예측한 값 $x'^{(i)}$를 다음 단계의 입력으로 사용하여 순차적으로 재구성 값을 생성한다.
@@ -36,7 +39,9 @@ Pankaj Malhotra, Anusha Ramakrishnan, Gaurangi Anand, Lovekesh Vig, Puneet Agarw
 $$\sum_{X \in s_N} \sum_{i=1}^{L} \|x^{(i)} - x'^{(i)}\|^2$$
 
 ### 이상치 점수 계산 방법
+
 재구성 오차 벡터 $e^{(i)} = |x^{(i)} - x'^{(i)}|$를 기반으로 이상치 가능성을 계산한다.
+
 1. 검증 데이터셋($v_{N1}$)을 통해 재구성 오차의 평균 $\mu$와 공분산 $\Sigma$를 최대우도추정법(MLE)으로 구하여 정규분포 $N(\mu, \Sigma)$를 정의한다.
 2. 임의의 시점 $x^{(i)}$에 대한 이상치 점수 $a^{(i)}$는 다음과 같이 마할라노비스 거리(Mahalanobis distance) 형태로 계산된다.
 $$a^{(i)} = (e^{(i)} - \mu)^T \Sigma^{-1} (e^{(i)} - \mu)$$
@@ -45,12 +50,15 @@ $$a^{(i)} = (e^{(i)} - \mu)^T \Sigma^{-1} (e^{(i)} - \mu)$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Power Demand(주기적), Space Shuttle(주기적), Engine-P(준-예측 가능), Engine-NP(예측 불가능), ECG(준-주기적) 총 5종의 데이터셋을 사용하였다.
 - **지표**: $F_\beta$-score 및 Positive Likelihood Ratio (TPR/FPR)를 측정하였다. 특히 $\beta < 1$로 설정하여 정밀도(Precision)에 더 가중치를 두었다.
 - **모델 구성**: Encoder와 Decoder 모두 단일 은닉층을 가지며, Adam Optimizer를 사용하여 학습하였다.
 
 ### 정량적 결과
+
 실험 결과, 모든 데이터셋에서 Positive Likelihood Ratio가 1.0보다 훨씬 높게 나타나, 정상 포인트보다 이상 포인트에서 유의미하게 높은 이상치 점수가 부여됨을 확인하였다. 구체적인 $F_\beta$-score는 다음과 같다:
+
 - **Power Demand**: 0.77
 - **Space Shuttle**: 0.81
 - **Engine-P**: 0.82
@@ -58,14 +66,17 @@ $$a^{(i)} = (e^{(i)} - \mu)^T \Sigma^{-1} (e^{(i)} - \mu)$$
 - **ECG**: 0.65
 
 ### 주요 관찰 사항
+
 가장 주목할 만한 결과는 예측 불가능한 시계열인 **Engine-NP** 데이터셋에서의 성능이다. 기존의 예측 기반 모델인 LSTM-AD는 이 데이터셋에서 $F_{0.05}$ score가 0.03에 불과할 정도로 매우 저조한 성능을 보였으나, EncDec-AD는 0.93(P=0.96, R=0.18)이라는 높은 성적을 거두었다. 이는 시계열의 예측 가능성 여부가 재구성 기반 모델의 성능에는 큰 영향을 주지 않음을 시사한다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 의의
+
 본 논문은 시계열 데이터의 '예측 불가능성'이라는 현실적인 제약을 '재구성'이라는 접근법으로 해결하였다. 특히 데이터의 주기성(Periodic, Aperiodic, Quasi-periodic)이나 시퀀스의 길이(30에서 500까지)에 관계없이 강건한 탐지 성능을 보였다는 점이 고무적이다. 또한, 정상 데이터만을 사용하여 학습하므로 이상치 데이터가 희소한 실제 산업 현장에서 적용 가능성이 매우 높다.
 
 ### 한계 및 해석
+
 - **재구성 오차의 분포 가정**: 이상치 점수를 계산할 때 재구성 오차가 정규분포를 따른다고 가정하고 $\mu$와 $\Sigma$를 산출한다. 만약 실제 오차 분포가 정규분포와 크게 다를 경우, 이상치 점수의 신뢰도가 떨어질 수 있다.
 - **임계값 설정**: $\tau$ 값의 설정에 따라 정밀도와 재현율이 크게 달라지며, 이는 충분한 검증 데이터셋이 확보되어야 함을 의미한다.
 - **차원 축소**: Engine 데이터셋의 경우 PCA를 통해 1차원으로 축소하여 사용하였는데, 다변량 시계열의 복잡한 상호작용을 충분히 반영했는지에 대한 추가 논의가 필요하다.

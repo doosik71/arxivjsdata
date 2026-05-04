@@ -10,7 +10,7 @@ Sara Maalal, Malika Addou (2011)
 
 ## ✨ Key Contributions
 
-본 연구의 핵심 아이디어는 AUML을 기반으로 한 범용 클래스 메타 모델(Generic Class Meta-model)을 설계하고, 이를 MDA 접근 방식을 통해 실제 구현 코드로 변환하는 파이프라인을 구축하는 것이다. 
+본 연구의 핵심 아이디어는 AUML을 기반으로 한 범용 클래스 메타 모델(Generic Class Meta-model)을 설계하고, 이를 MDA 접근 방식을 통해 실제 구현 코드로 변환하는 파이프라인을 구축하는 것이다.
 
 가장 중점적인 기여는 에이전트의 유형(Reactive, Cognitive, Intentional 등)과 환경(Environment) 간의 관계를 체계화한 계층적 클래스 다이어그램을 제안한 점이다. 이를 통해 설계자는 세부적인 기술적 구현에 매몰되지 않고 고수준의 모델링에 집중할 수 있으며, AndroMDA와 같은 도구를 사용하여 UML 모델을 Java 소스 코드로 자동 변환함으로써 개발 시간과 비용을 획기적으로 줄이고 모듈성과 재사용성을 높일 수 있다.
 
@@ -32,30 +32,37 @@ Sara Maalal, Malika Addou (2011)
 본 논문에서 제안하는 방법론은 MDA의 프레임워크를 따르며, AUML을 통해 설계된 메타 모델을 UML로 변환하고 최종적으로 소스 코드를 생성하는 흐름을 가진다.
 
 ### 1. MDA (Model Driven Architecture) 접근 방식
+
 MDA는 기술적 세부 사항에 구애받지 않고 기능과 동작에 집중하는 세 단계의 모델 변환 과정을 거친다.
+
 - **CIM (Computation Independent Model):** 자동화와 독립적인 비즈니스 프로세스를 기술한다.
 - **PIM (Platform Independent Model):** 기술 아키텍처와 독립적인 세부 기능 분석 모델이다.
 - **PSM (Platform Specific Model):** PIM을 특정 타겟 플랫폼(예: Java)에 투영하여 얻은 설계 모델이며, 이를 통해 코드가 생성된다.
 
 ### 2. AUML 기반 범용 클래스 다이어그램 구조
+
 제안된 메타 모델은 크게 세 가지 계층의 관계 모델로 구성된다.
 
 **첫 번째 계층: 에이전트와 환경의 상호작용**
+
 - **Environment:** 시스템 전체에 영향을 미치며, 속성(Deterministic/Non-deterministic, Static/Dynamic, Continuous/Discrete)과 인지(Perception) 섹션으로 구성된다. 주요 함수로 $\text{Run}()$, $\text{Perceive}()$, $\text{ModifState}()$를 가진다.
 - **Agent:** 역할(Roles), 속성(Attributes), 인지(Perception)를 가지며, $\text{Run}()$, $\text{Perceive}()$, $\text{Act}()$ 함수를 수행한다.
 - **관계 클래스:** 에이전트와 환경 사이의 $\text{Action}$, 에이전트 간의 $\text{Interaction}$ 클래스를 정의하여 $\text{getInformation}()$ 및 $\text{inform}()$ 등의 상호작용을 처리한다.
 
 **두 번째 계층: 에이전트의 전문화 (Specialization)**
+
 - **Reactive Agent:** 단순한 자극-반응 구조를 가지며 환경을 인지하고 행동한다.
 - **Cognitive Agent:** 지식의 상징적 표현을 가지며, 목표에 따라 행동 여부를 결정하는 $\text{Decide}()$ 함수를 포함한다.
 - **Communicative Agent:** 정보를 전달하는 데 특화되어 있으며 $\text{Communicate}()$ 함수를 사용한다.
 
 **세 번째 계층: 인지 에이전트의 세부 전문화**
+
 - **Adaptive Agent:** 환경 변화에 따라 목표와 지식 베이스를 변경하는 $\text{Change\_information}()$ 함수를 가진다.
 - **Intentional Agent (BDI):** 신념(Beliefs), 욕구(Desires), 의도(Intentions) 모델을 따른다. $\text{Revise\_beliefs}() \rightarrow \text{Generate\_desires}() \rightarrow \text{Filter}() \rightarrow \text{Actions\_selection}()$ 의 과정을 통해 행동을 결정한다.
 - **Rational Agent:** 성능 측정 함수 $\text{Mesure\_performance}(\text{Percept, Belief})$를 통해 가장 효율적인 행동을 선택한다.
 
 ### 3. 구현 파이프라인
+
 AUML 다이어그램 $\rightarrow$ UML 클래스 다이어그램 $\rightarrow$ AndroMDA $\rightarrow$ Java 코드 생성의 순서로 진행된다. AndroMDA는 UML 모델을 입력받아 Spring Framework 기반의 비즈니스 레이어, Hibernate 기반의 데이터 액세스 레이어 등을 자동으로 생성한다.
 
 ## 📊 Results
@@ -67,9 +74,9 @@ AUML 다이어그램 $\rightarrow$ UML 클래스 다이어그램 $\rightarrow$ A
     1. MagicDraw 17을 사용하여 제안된 메타 모델 기반의 UML 클래스 다이어그램을 작성한다.
     2. 작성된 모델을 EMF-UML2 형식으로 내보낸다.
     3. AndroMDA 및 Maven 플러그인을 사용하여 코드를 생성한다. (`mvn org.andromda.maven.plugins:andromdaapp-maven-plugin:generate` 명령 실행)
-- **결과물:** 
-    - `ChatAgents`라는 마스터 프로젝트 아래에 `mda` (UML 모델 및 설정), `common` (공유 리소스), `core` (Spring/Hibernate 기반 서비스), `web` (프레젠테이션 레이어), `app` (.ear 번들) 등의 서브 프로젝트가 자동으로 생성되었다.
-    - 특히 `Chat.java`와 같은 핵심 클래스 파일이 생성되어, 개발자가 생성된 코드 내에서 세부 비즈니스 로직을 쉽게 구현할 수 있음을 확인하였다.
+- **결과물:**
+  - `ChatAgents`라는 마스터 프로젝트 아래에 `mda` (UML 모델 및 설정), `common` (공유 리소스), `core` (Spring/Hibernate 기반 서비스), `web` (프레젠테이션 레이어), `app` (.ear 번들) 등의 서브 프로젝트가 자동으로 생성되었다.
+  - 특히 `Chat.java`와 같은 핵심 클래스 파일이 생성되어, 개발자가 생성된 코드 내에서 세부 비즈니스 로직을 쉽게 구현할 수 있음을 확인하였다.
 
 ## 🧠 Insights & Discussion
 

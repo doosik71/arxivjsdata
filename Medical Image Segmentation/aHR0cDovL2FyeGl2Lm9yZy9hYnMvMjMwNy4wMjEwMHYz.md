@@ -12,13 +12,14 @@ Siyi Du, Nourhan Bayasi, Ghassan Hamarneh, and Rafeef Garbi (2024)
 
 본 논문의 중심 아이디어는 **멀티 도메인 학습(Multi-domain Learning)**을 ViT에 도입하여 데이터 부족 문제를 해결하고, 도메인별 적응 기제를 통해 NKT를 방지하는 것이다. 주요 기여 사항은 다음과 같다.
 
-1.  **Domain Adapter (DA) 도입**: ViT의 Multi-Head Self-Attention(MHSA) 구조 내에 도메인 어댑터를 삽입하여, 입력 데이터의 도메인에 따라 서로 다른 헤드의 특성을 적응적으로 선택하게 함으로써 NKT를 완화한다.
-2.  **Mutual Knowledge Distillation (MKD) 전략**: 모든 도메인을 아우르는 보편적 네트워크(Universal Network)와 각 도메인에 특화된 보조 네트워크(Auxiliary Peer) 간에 지식을 상호 전이함으로써, 도메인 공통 지식과 특화 지식을 동시에 학습하여 표현력을 강화한다.
-3.  **고정된 모델 크기 유지**: 학습 단계에서는 보조 네트워크를 사용하지만, 추론 단계에서는 보편적 네트워크만 사용하므로 도메인 수가 증가하더라도 추론 시의 모델 크기와 연산량이 일정하게 유지된다.
+1. **Domain Adapter (DA) 도입**: ViT의 Multi-Head Self-Attention(MHSA) 구조 내에 도메인 어댑터를 삽입하여, 입력 데이터의 도메인에 따라 서로 다른 헤드의 특성을 적응적으로 선택하게 함으로써 NKT를 완화한다.
+2. **Mutual Knowledge Distillation (MKD) 전략**: 모든 도메인을 아우르는 보편적 네트워크(Universal Network)와 각 도메인에 특화된 보조 네트워크(Auxiliary Peer) 간에 지식을 상호 전이함으로써, 도메인 공통 지식과 특화 지식을 동시에 학습하여 표현력을 강화한다.
+3. **고정된 모델 크기 유지**: 학습 단계에서는 보조 네트워크를 사용하지만, 추론 단계에서는 보편적 네트워크만 사용하므로 도메인 수가 증가하더라도 추론 시의 모델 크기와 연산량이 일정하게 유지된다.
 
 ## 📎 Related Works
 
 기존의 ViT 데이터 효율성 향상 연구들은 주로 다음과 같은 방식을 사용하였다:
+
 - **귀납적 편향 추가**: CNN과 ViT를 결합한 하이브리드 네트워크를 구축하거나, CNN의 필터 연산을 모방하는 방식이다.
 - **지식 공유 및 전이**: CNN에서 학습된 지식을 전이하거나, 관련 태스크에서 사전 학습 후 미세 조정(fine-tuning)하는 방식이다.
 - **데이터 증강 및 비지도 사전 학습**: 데이터 양을 인위적으로 늘리거나 대규모 데이터로 사전 학습을 진행하는 방식이다.
@@ -28,9 +29,11 @@ Siyi Du, Nourhan Bayasi, Ghassan Hamarneh, and Rafeef Garbi (2024)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 MDViT는 기본적으로 U-Net 구조를 따르는 hierarchical ViT인 **BASE** 모델을 기반으로 하며, 여기에 **Domain Adapter (DA)**와 **Mutual Knowledge Distillation (MKD)** 메커니즘을 추가하였다. 전체 파이프라인은 $M$개의 도메인 데이터를 입력받아 하나의 보편적 네트워크(Universal Network)와 $M$개의 보조 네트워크(Auxiliary Peers)를 동시에 학습시킨다.
 
 ### 2. Domain Adapter (DA)
+
 DA는 MHSA의 병렬 헤드 구조를 활용하여 도메인별로 서로 다른 관점에서 특징을 추출하도록 돕는다. 과정은 다음과 같다.
 
 - **Attention Generation**: 도메인 레이블 벡터 $m$ (one-hot encoding)을 선형 층과 ReLU 활성화 함수에 통과시켜 도메인 인식 벡터 $d \in \mathbb{R}^{K/r}$를 생성한다. 이후 각 헤드 $h$에 대해 다음과 같이 어텐션 가중치 $a_h$를 계산한다.
@@ -40,6 +43,7 @@ DA는 MHSA의 병렬 헤드 구조를 활용하여 도메인별로 서로 다른
   $$\tilde{u}_{hk} = a_{hk} \cdot u_{hk}$$
 
 ### 3. Mutual Knowledge Distillation (MKD)
+
 보편적 네트워크 $\hat{Y}$와 $m$번째 도메인 전용 보조 네트워크 $\hat{Y}_m$ 사이의 지식을 상호 전이한다. 보조 네트워크는 해당 도메인의 전문가 역할을 하여 보편적 네트워크에 도메인 특화 정보를 제공하고, 보편적 네트워크는 모든 도메인을 경험하며 얻은 공통 지식을 보조 네트워크에 전달한다.
 이를 위해 대칭적 Dice Loss를 사용하여 다음과 같은 지식 증류 손실을 정의한다.
 $$L_{mkd}^{a,m} = \text{Dice}(\hat{Y}, \hat{Y}_m)$$
@@ -47,6 +51,7 @@ $$L_{mkd}^{a,m} = \text{Dice}(\hat{Y}, \hat{Y}_m)$$
 보조 네트워크의 효율성을 위해 무거운 디코더 대신 경량 MLP 디코더를 사용하며, 보편적 네트워크의 마지막 블록에서 나온 특징을 결합하여 최종 맵을 생성한다.
 
 ### 4. 학습 목표 및 손실 함수
+
 학습 시에는 분할 손실 $L_{seg} = L_{Dice} + L_{bce}$와 MKD 손실을 모두 최적화한다. 전체 손실 함수 $L_{total}$은 다음과 같다.
 $$L_{total} = L_{u}^{seg}(Y, \hat{Y}) + \alpha \sum_{m=1}^{M} L_{a,m}^{seg}(Y, \hat{Y}_m) + \beta \sum_{m=1}^{M} L_{a,m}^{mkd}(\hat{Y}, \hat{Y}_m)$$
 여기서 $\alpha = \beta = 0.5$로 설정된다. 학습이 완료되면 보조 네트워크는 폐기하고 보편적 네트워크만 추론에 사용한다.
@@ -54,11 +59,13 @@ $$L_{total} = L_{u}^{seg}(Y, \hat{Y}) + \alpha \sum_{m=1}^{M} L_{a,m}^{seg}(Y, \
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 4개의 피부 병변 분할 데이터셋(ISIC 2018, DMF, SCD, PH2)을 사용하였다. 데이터 규모는 200장에서 2,594장으로 매우 상이하며 전반적으로 소규모이다.
 - **평가 지표**: Dice coefficient와 IOU(Intersection over Union)를 사용하였다.
 - **비교 대상**: 개별 학습(ST), 공동 학습(JT), 그리고 SOTA 데이터 효율적 ViT들(SwinUnet, UTNet, BAT, TransFuse, Swin UNETR) 및 기존 멀티 도메인 학습 방법들과 비교하였다.
 
 ### 주요 결과
+
 - **NKT 억제 및 성능 향상**: BASE 모델의 경우 JT를 수행하면 소규모 데이터셋(SCD, PH2) 성능은 오르지만 대규모 데이터셋(ISIC, DMF) 성능이 떨어지는 NKT 현상이 관찰되었다. 반면 MDViT는 모든 도메인에서 성능을 유지하거나 향상시켰으며, 특히 SCD 데이터셋에서는 ST 대비 IOU가 10.16% 향상되는 괄목할 성과를 보였다.
 - **SOTA 모델 대비 우위**: 데이터 효율적 ViT 모델들 역시 JT 시 NKT 문제를 겪었으나, MDViT는 이를 극복하고 평균 Dice 및 IOU에서 가장 우수한 성능을 기록하였다.
 - **추론 효율성**: MDViT는 추론 시 모델 크기가 고정되어 있어, 도메인별로 모델을 따로 두는 ST 방식보다 메모리 및 계산 자원 면에서 훨씬 효율적이다.

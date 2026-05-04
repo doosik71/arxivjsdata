@@ -23,6 +23,7 @@ Weakly Supervised 접근 방식으로는 Sparse point annotation이나 2D 이미
 ## 🛠️ Methodology
 
 ### 1. Sketchy Bounding Box 설정
+
 실제의 부정확한 주석을 모사하기 위해, Ground Truth(GT) 박스 $B = [B_{min}, B_{max}]$에 다음과 같은 섭동(perturbation)을 가하여 Sketchy Bounding Box를 생성한다.
 
 - **Scaling**: $\alpha$ 비율만큼 확장/축소 $\rightarrow B^{scaled} = [B_{min} - \alpha E, B_{max} + \alpha E]$
@@ -32,6 +33,7 @@ Weakly Supervised 접근 방식으로는 Sparse point annotation이나 2D 이미
 여기서 $E = B_{max} - B_{min}$이며, $M_E$는 박스의 중심점이다. 이러한 연산들을 조합하여 $S_1$부터 $S_4$까지 불완전함의 정도가 높아지는 네 단계의 설정으로 실험을 진행한다.
 
 ### 2. Adaptive Box-to-Point Pseudo Labeler
+
 불완전한 박스 정보를 정교한 포인트 수준의 Pseudo Label로 변환하는 모듈이다.
 
 - **Point Partition**: 포인트들을 박스 외부에 있는 배경 포인트, 단일 박스 내 포인트, 다중 박스 중첩 영역 포인트의 세 그룹으로 나눈다.
@@ -43,6 +45,7 @@ Weakly Supervised 접근 방식으로는 Sparse point annotation이나 2D 이미
 - **Loss**: 신뢰할 수 있는 포인트의 라벨 $Y$를 이용해 Cross-Entropy Loss $L_{pl} = L_{CE}(A, Y)$를 통해 학습한다.
 
 ### 3. Coarse-to-Fine Instance Segmentator
+
 예측된 거친(coarse) 결과로부터 세밀한(fine) 결과를 도출하는 구조이다.
 
 - **Coarse Segmentation**: Query 벡터들이 전체 포인트 클라우드 특징과 상호작용하여 초기 거친 마스크와 박스를 예측한다.
@@ -54,6 +57,7 @@ Weakly Supervised 접근 방식으로는 Sparse point annotation이나 2D 이미
      $$F_{un} = \sigma(F, M \odot (B_{core} \cap B_{mask}))$$
 
 ### 4. 학습 절차 및 손실 함수
+
 Pseudo Label과 예측된 인스턴스 간의 최적 매칭을 위해 Hungarian Method를 사용한 Bilateral Matching을 수행한다. 전체 손실 함수 $L$은 다음과 같다.
 $$L = L_{pl} + L_{seg}$$
 여기서 $L_{seg}$는 클래스 분류($L_{CE}$), 마스크 예측($L_{BCE}, L_{dice}$), 그리고 박스 및 코어-박스 회귀($L_{L1}, L_{MSE}$) 손실의 합으로 구성된다.
@@ -61,11 +65,13 @@ $$L = L_{pl} + L_{seg}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: ScanNetV2, S3DIS Area 5.
 - **지표**: mAP, $AP_{50}, AP_{25}$.
 - **비교 대상**: Fully Supervised 방법론(Mask3D, SPFormer 등) 및 Weakly Supervised 방법론(Box2Mask, GaPro, BSNet 등).
 
 ### 주요 결과
+
 - **성능**: ScanNetV2에서 기존의 Weakly Supervised 방법론들보다 우수한 성능을 보였으며, 특히 $AP_{25}$ 지표에서 강점을 나타냈다. S3DIS에서는 Fully Supervised Baseline인 ISBNet보다 $AP_{50}$ 기준 +3.3 높게 측정되어, 불완전한 박스 정보만으로도 매우 강력한 성능을 낼 수 있음을 입증하였다.
 - **Robustness**: 박스의 불완전함 정도($S_0 \to S_4$)가 증가함에 따라 성능이 소폭 하락하지만, 급격한 붕괴 없이 견고하게 유지됨을 확인하였다.
 - **Pseudo Label 품질**: 정성적 분석 결과, GaPro 등의 기존 방법론보다 객체 간 경계를 더 명확히 구분하고 배경 포인트를 효과적으로 제거하는 Pseudo Label을 생성하였다.
@@ -73,9 +79,11 @@ $$L = L_{pl} + L_{seg}$$
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 연구는 실제 데이터 수집 과정에서 발생할 수 있는 Bounding Box의 부정확성 문제를 정면으로 다루었다. 특히 Pseudo Labeler와 Segmentator를 동시에 학습시키는 전략을 통해, 불완전한 주석 $\to$ 정교한 Pseudo Label $\to$ 정교한 예측 $\to$ 더 나은 Pseudo Label로 이어지는 선순환 구조를 구축한 점이 돋보인다. 또한, 전역-지역-핵심 영역으로 이어지는 계층적 Attention 구조가 3D 객체의 기하학적 특성을 잘 포착함을 확인하였다.
 
 ### 한계 및 논의
+
 저자들은 실험을 통해 Bounding Box가 '심각하게' 부정확한 경우(immensely inaccurate)에는 성능이 크게 저하됨을 언급하였다. 이는 현재의 유사도 기반 할당 방식이나 Multi-level Attention만으로는 극심한 노이즈를 극복하는 데 한계가 있음을 시사한다. 향후 연구에서는 더 넓은 범위의 오차를 허용할 수 있는 강건한 매칭 알고리즘이나 추가적인 기하학적 제약 조건의 도입이 필요할 것으로 보인다.
 
 ## 📌 TL;DR

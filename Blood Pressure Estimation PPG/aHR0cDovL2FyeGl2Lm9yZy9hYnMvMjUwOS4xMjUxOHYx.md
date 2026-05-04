@@ -28,15 +28,19 @@ Zequan Liang, Ruoyu Zhang, Wei Shao, Mahdi Pirayesh Shirazi Nejad, Ehsan Kourkch
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인 및 데이터 전처리
+
 본 시스템은 4가지 파장(660nm, 730nm, 850nm, 940nm)의 PPG 신호를 입력으로 받는다. 각 신호는 다음과 같은 전처리 과정을 거친다.
+
 - 0.5~8Hz 대역의 Band-pass filter 적용 및 Z-score 정규화.
 - 시간적 동역학을 포착하기 위해 1차 및 2차 미분값(Derivatives) 계산.
 - 각 신호와 미분값에서 피크(Peak) 정보를 추출하기 위해 상단 포락선(Upper Envelope)을 계산.
 
 ### 2. 아키텍처 및 특징 추출
+
 각 PPG 채널은 두 개의 병렬 CNN을 통과한다. 하나는 정규화된 PPG와 그 미분값들을 처리하고, 다른 하나는 포락선 신호를 처리한다. 결과적으로 채널당 6개의 입력 스트림이 구성되며, 최종적으로 FC 레이어를 통해 각 채널의 특징 벡터 $Z_i$가 생성된다.
 
 이후 **Multi-Channel Attention Fusion** 레이어를 통해 각 채널에 소프트 웨이트 $w_i$를 할당하고 가중 합(Weighted sum)을 구하여 융합된 특징을 생성한다. 이 융합 특징은 다음 세 가지 헤드로 전달된다.
+
 - **Regressor**: 수축기 혈압(SBP)과 이완기 혈압(DBP) 수치를 추정.
 - **Classifier**: 고혈압 여부(Binary)를 예측.
 - **Adversarial Discriminator**: 해당 신호가 어떤 피험자의 것인지(Subject ID)를 식별.
@@ -44,28 +48,34 @@ Zequan Liang, Ruoyu Zhang, Wei Shao, Mahdi Pirayesh Shirazi Nejad, Ehsan Kourkch
 ### 3. 학습 전략 및 손실 함수
 
 #### Domain-Adversarial Training
+
 피험자 간의 변동성을 줄이기 위해 Gradient Reversal Layer(GRL)를 사용한다. 판별기(Discriminator)는 피험자를 구분하려 하지만, GRL은 역전파 과정에서 그래디언트를 반전시켜 특징 추출기가 피험자를 구분할 수 없는 '피험자 불변 특징(Subject-invariant features)'을 학습하게 만든다. 이때 손실 함수는 Categorical Cross-Entropy(CE)를 사용한다.
 $$L_{adv} = CE(\hat{y}_{sbj}, y_{sbj})$$
 
 #### Curriculum Learning
+
 학습은 '고혈압 분류 $\rightarrow$ 혈압 회귀' 순서로 진행된다.
+
 - **1단계 (분류)**: Binary Cross-Entropy(BCE) 손실 함수를 사용하여 고혈압 여부를 먼저 학습한다.
 $$L_{cls} = -[c \cdot \log(\hat{c}) + (1-c) \cdot \log(1-\hat{c})]$$
 - **2단계 (회귀)**: 분류 성능이 안정화되면 Mean Squared Error(MSE)를 통해 정밀한 SBP, DBP 값을 추정한다.
 $$L_{reg} = \frac{1}{2} [(\hat{y}_{sbp} - y_{sbp})^2 + (\hat{y}_{dbp} - y_{dbp})^2]$$
 
 #### 최종 통합 손실 함수
+
 최종 손실 함수는 다음과 같이 정의되며, $\lambda_1$은 학습 에폭에 따라 0에서 1로 점진적으로 증가하여 학습의 중심을 분류에서 회귀로 이동시킨다.
 $$L = \lambda_1 L_{reg} + (1 - \lambda_1) L_{cls} - \lambda_2 L_{adv}$$
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 180명의 피험자가 포함된 공개 다파장 PPG 데이터셋을 사용하였다.
 - **데이터 분할**: 피험자 단위로 학습/테스트 세트를 4:1 비율로 엄격히 분리하여 데이터 누수를 방지하였다.
 - **평가 지표**: Mean Absolute Error(MAE)와 British Hypertension Society(BHS) 프로토콜에 따른 BHS-5, 10, 15(오차 범위 내 샘플 비율)를 사용하였다.
 
 ### 주요 결과
+
 - **다파장 융합의 효과**: 단일 파장 모델(예: 660nm 또는 940nm)보다 모든 채널을 융합한 모델이 가장 낮은 MAE와 높은 BHS 점수를 기록하였다. 이는 다양한 파장의 신호가 상호 보완적인 정보를 제공함을 입증한다.
 - **기존 방법론과의 비교**: 제안된 방법은 A-BiLSTM, MLP, CNN1D, Multi-CNN 등의 베이스라인 모델보다 우수한 성능을 보였다.
   - **SBP MAE**: $14.2\text{ mmHg}$
@@ -74,7 +84,7 @@ $$L = \lambda_1 L_{reg} + (1 - \lambda_1) L_{cls} - \lambda_2 L_{adv}$$
 
 ## 🧠 Insights & Discussion
 
-본 논문은 엄격한 피험자 단위 분할을 적용함으로써 기존 연구들보다 수치상의 에러는 높게 나타날 수 있으나, 이는 오히려 실제 환경에서의 성능을 더 정확하게 반영한 현실적인 평가라고 주장한다. 
+본 논문은 엄격한 피험자 단위 분할을 적용함으로써 기존 연구들보다 수치상의 에러는 높게 나타날 수 있으나, 이는 오히려 실제 환경에서의 성능을 더 정확하게 반영한 현실적인 평가라고 주장한다.
 
 특히 고혈압 분류라는 '쉬운 문제'에서 혈압 회귀라는 '어려운 문제'로 단계적으로 접근하는 커리큘럼 학습과, 개인의 고유 특성을 제거하는 적대적 학습의 결합이 PPG 기반 혈압 추정의 고질적인 문제인 '개인차(Inter-subject variability)' 문제를 효과적으로 완화했음을 알 수 있다. 다만, 매우 극단적인 혈압 범위나 신호 품질이 낮은 상황에서의 정확도 개선은 여전히 해결해야 할 과제로 남아 있다.
 

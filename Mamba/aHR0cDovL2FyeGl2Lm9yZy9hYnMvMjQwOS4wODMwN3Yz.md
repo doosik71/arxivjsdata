@@ -17,6 +17,7 @@ Aaron Cao, Zongyu Li, Jordan Jomsky, Andrew F. Laine, and Jia Guo (2024)
 ## 📎 Related Works
 
 기존의 뇌 분할 연구는 크게 세 가지 방향으로 진행되었다.
+
 1. **전통적/2.5D 방식**: FreeSurfer는 표준적이지만 매우 느리며, FastSurfer는 2D CNN을 활용해 속도를 높였으나 3D 공간 정보 손실이라는 한계가 있다.
 2. **3D CNN 및 Transformer**: 3D U-Net 등은 기하학적 구조 파악에 유리하지만 전역 문맥 파악이 어렵다. 이를 해결하기 위해 제안된 TABSurfer와 같은 Transformer 하이브리드 모델은 전역 수용역을 갖지만, 연산 복잡도가 시퀀스 길이의 제곱에 비례하여 고해상도 영상 처리에 메모리 제약이 크다.
 3. **State Space Models (Mamba)**: Mamba는 선택적 스캔(selective scan) 메커니즘을 통해 시퀀스 길이에 대해 선형적인 복잡도를 가지면서도 Transformer 수준의 성능을 낸다. Vision Mamba(Vim)나 VMamba 등이 2D 영상에 적용되었고, U-Mamba나 SegMamba가 3D 의료 영상에 적용되었으나, 이들은 스캔 방향이 제한적(1~3방향)이어서 3D 문맥을 충분히 활용하지 못한다는 한계가 있다.
@@ -24,13 +25,15 @@ Aaron Cao, Zongyu Li, Jordan Jomsky, Andrew F. Laine, and Jia Guo (2024)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 본 모델은 3D 패치 기반(patch-based) 접근 방식을 사용한다. 입력 MRI 스캔은 $256 \times 256 \times 256$ 크기로 정규화되며, 여기서 $96 \times 96 \times 96$ 크기의 패치를 16복셀 간격으로 추출하여 모델에 입력한다. 추론 단계에서는 각 패치의 예측 확률을 투표 메커니즘(voting mechanism)을 통해 결합하여 최종 라벨 맵을 재구성한다.
 
 ### 모델 아키텍처
+
 전체 구조는 3D CNN Encoder, VSS3D Bottleneck, 3D CNN Decoder로 구성된 U-Net 형태의 하이브리드 구조이다.
 
 1. **3D CNN Encoder & Decoder**: 4개 층의 residual block과 3회의 max pooling을 통해 다운샘플링을 수행한다. 각 residual block은 `3D Conv $\rightarrow$ Group Norm $\rightarrow$ ReLU` 순서로 구성되며, skip connection을 통해 디코더에 저차원 특징을 전달한다.
-2. **SS3D (3D Selective Scan) Module**: 본 논문의 핵심 구성 요소로, 3D 볼륨을 48가지의 서로 다른 경로로 펼친다. 
+2. **SS3D (3D Selective Scan) Module**: 본 논문의 핵심 구성 요소로, 3D 볼륨을 48가지의 서로 다른 경로로 펼친다.
     - 입력 볼륨의 축을 6가지 가능한 조합($o_0 \sim o_5$)으로 전치(transpose)한다.
     - 각 조합당 8개의 시퀀스(회전 및 역방향 포함)를 추출하여 총 48개의 경로를 생성한다.
     - 각 시퀀스는 독립적인 S6 블록에 의해 병렬 처리된 후 다시 병합되어 원래의 볼륨 형태로 복원된다.
@@ -41,6 +44,7 @@ Aaron Cao, Zongyu Li, Jordan Jomsky, Andrew F. Laine, and Jia Guo (2024)
 4. **Bottleneck**: 총 9개의 VSS3D 블록이 배치되어 전역적인 문맥 정보를 학습한다.
 
 ### 학습 절차
+
 - **손실 함수**: 첫 번째 에포크에서는 Dice Loss와 Weighted Cross Entropy를 결합하여 사용하고, 이후 에포크부터는 Dice Loss만을 사용하여 최적화한다.
 - **최적화**: AdamW 옵티마이저와 Cosine Annealing Warm Restarts 스케줄러를 사용한다.
 - **학습 설정**: 하피질 분할은 15 에포크, 해마 하분야(hippocampal subfield) 분할은 63 에포크 동안 학습되었다.
@@ -48,11 +52,13 @@ Aaron Cao, Zongyu Li, Jordan Jomsky, Andrew F. Laine, and Jia Guo (2024)
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: 다양한 소스에서 수집된 1,784개의 T1-weighted MRI 스캔(하피질 분할)과 1,221개의 스캔(해마 하분야 분할)을 사용하였다.
 - **비교 대상**: FastSurferVINN (2.5D CNN), TABSurfer (Transformer 하이브리드), SegMambaBot (Tri-oriented Mamba 기반)과 비교하였다.
 - **평가 지표**: Dice Similarity Coefficient (DSC $\uparrow$), Volume Similarity (VS $\uparrow$), Average Symmetric Surface Distance (ASSD $\downarrow$)를 사용하였다.
 
 ### 주요 결과
+
 1. **하피질 분할 (Subcortical Segmentation)**:
     - MedSegMamba는 DSC $0.88383$, VS $0.97076$, ASSD $0.33604$로 모든 지표에서 최고 성능을 달성하였다.
     - 비-Mamba 기반 모델(FastSurfer, TABSurfer) 대비 통계적으로 유의미한 성능 향상을 보였다 ($P < 0.001$).
@@ -69,7 +75,7 @@ Aaron Cao, Zongyu Li, Jordan Jomsky, Andrew F. Laine, and Jia Guo (2024)
 
 또한, 2.5D 방식인 FastSurfer보다 3D 패치 기반 방식이 해부학적 연속성을 더 잘 보존하며, 겹치는 패치를 이용한 재구성 과정이 Ground Truth의 노이즈를 완화하여 더 매끄러운 분할 결과를 생성한다는 점을 확인하였다.
 
-**한계점 및 비판적 해석**: 
+**한계점 및 비판적 해석**:
 파라미터 수가 적음에도 불구하고, SS3D의 다양한 스캔 경로 처리로 인해 SegMambaBot보다 추론 속도가 다소 느리다는 점이 한계로 지적되었다. 그러나 이는 패치 추출 시 step size를 조정함으로써 실용적인 수준(스캔당 약 22초)으로 단축할 수 있다. 향후 연구에서는 SS3D 모듈을 봇틀넥뿐만 아니라 인코더의 다양한 단계에 통합하는 실험이나, 최적의 스캔 방향 개수를 결정하는 절제 연구(ablation study)가 필요할 것으로 보인다.
 
 ## 📌 TL;DR

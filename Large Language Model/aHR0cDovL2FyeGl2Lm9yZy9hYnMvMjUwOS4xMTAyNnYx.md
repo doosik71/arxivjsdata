@@ -27,7 +27,9 @@ Ziang Li, Manasi Ganti, Zixian Ma, Helena Vasconcelos, Qijia He, Ranjay Krishna 
 ## 🛠️ Methodology
 
 ### 1. Rationale 속성 정의 및 측정
+
 연구진은 고품질 rationale을 정의하기 위해 12가지 속성을 선정하였다. 주요 속성은 다음과 같다.
+
 - **Faithfulness**: rationale이 모델의 실제 계산 과정이나 제공된 증거에 기반하는가.
 - **Plausibility**: 진위 여부와 관계없이 논리적으로 그럴듯하게 들리는가.
 - **Correctness**: 모든 단계와 최종 답변이 객관적으로 정확한가.
@@ -35,39 +37,49 @@ Ziang Li, Manasi Ganti, Zixian Ma, Helena Vasconcelos, Qijia He, Ranjay Krishna 
 - 기타 속성으로 Hallucination, Repetition, Informativeness, Source Consistency, Grammar, Arithmetic Accuracy, Conciseness, Completeness 등이 포함된다.
 
 이 속성들은 세 가지 방식으로 측정된다.
+
 - **Automated Heuristics**: ROSCOE 지표를 사용하여 정량적으로 측정한다.
 - **LLM Judges**: GPT-4o, Gemini 2.5-Flash (0~1 척도) 및 OLMo 32B (0~10 척도)를 사용하여 평가한다.
 - **Human Annotations**: 전문가 3인이 직접 샘플을 주석 처리한다.
 
 ### 2. 인간 선호도 설명 모델링 (SHAP 분석)
+
 인간의 선호도가 어떤 속성에 의해 결정되는지 분석하기 위해 다음과 같은 절차를 거친다.
+
 1. **데이터셋**: MT-Bench 및 Chatbot Arena에서 수학적/논리적 질문을 필터링하여 사용한다.
 2. **예측 모델 학습**: 입력 변수 $X$를 12가지 세부 속성 점수로, 타겟 변수 $y$를 인간의 선호도 결과(chosen/rejected)로 설정하여 LightGBM 모델을 학습시킨다.
 3. **SHAP 분석**: 학습된 모델에 SHAP를 적용하여 각 속성이 예측 결과에 기여하는 정도를 산출함으로써, 인간의 선호도를 결정짓는 지배적인 속성을 식별한다.
 
 ### 3. 속성별 ELO rating 산출
+
 전통적인 ELO rating은 두 모델의 승패 기록을 바탕으로 단일 점수를 부여한다. 본 연구에서는 이를 확장하여 **속성별 ELO 점수**를 계산한다.
+
 - 각 속성에 대해 LLM 판별자들이 부여한 점수를 바탕으로 승패를 결정한다.
 - 이 승패 기록을 사용하여 속성별 ELO 점수를 독립적으로 계산하고, 이를 통해 모델별 '능력 프로필(Capability Profile)'을 구성한다.
 
 ## 📊 Results
 
 ### 1. 인간 선호도의 결정 요인 (Q2 결과)
+
 SHAP 분석 결과, 모델과 데이터셋에 관계없이 인간의 선호도에 가장 큰 영향을 미치는 핵심 속성은 **Correctness(정확성), Plausibility(그럴듯함), Completeness(완전성)** 순으로 나타났다. 이는 인간 평가자가 rationale을 평가할 때 사실적 정확성과 논리적 완결성을 가장 중요하게 고려함을 시사한다.
 
 ### 2. 모델별 세부 성능 비교 (Q3 결과)
+
 속성별 ELO rating을 통해 모델을 재평가한 결과, 통합 선호도 순위에서는 보이지 않던 세밀한 차이가 드러났다.
+
 - **전반적 상위 모델**: GPT-4, GPT-3.5-Turbo, Claude-v1이 최상위권을 유지했다.
 - **모델별 특이점**:
-    - **Claude-v1**: 전반적인 성능은 높으나, Repetition(반복성) 속성에서 낮은 점수를 기록하며 동일한 내용을 반복하는 경향이 확인되었다.
-    - **GPT-3.5-Turbo**: 놀랍게도 Arithmetic Accuracy(산술 정확도)와 Self-Consistency(자기 일관성) 항목에서는 GPT-4보다 더 높은 성능을 보이는 경우가 발견되었다.
+  - **Claude-v1**: 전반적인 성능은 높으나, Repetition(반복성) 속성에서 낮은 점수를 기록하며 동일한 내용을 반복하는 경향이 확인되었다.
+  - **GPT-3.5-Turbo**: 놀랍게도 Arithmetic Accuracy(산술 정확도)와 Self-Consistency(자기 일관성) 항목에서는 GPT-4보다 더 높은 성능을 보이는 경우가 발견되었다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 기여
+
 본 연구는 모호한 '선호도'라는 개념을 분해 가능한 '속성'의 집합으로 치환함으로써, LLM 평가의 해석 가능성을 획기적으로 높였다. 특히 통합 점수로는 알 수 없었던 모델 간의 trade-off(예: GPT-4의 종합 성능 vs GPT-3.5의 특정 산술 능력)를 밝혀낸 점이 고무적이다.
 
 ### 한계 및 비판적 해석
+
 1. **LLM 판별자의 신뢰성**: 평가 과정에서 LLM-as-a-judge 방식에 의존했다. 논문에서도 언급되었듯이, GPT-4o가 정답이 틀린 rationale에 만점(1.0)을 주는 사례가 발견되는 등 판별 모델 자체의 factual error와 편향 문제가 존재한다.
 2. **데이터의 범위**: 분석 대상이 수학 및 논리 추론 작업에 국한되어 있다. 창의적 글쓰기나 상식 추론과 같은 다른 도메인에서도 동일한 속성 중요도가 나타날지는 미지수이다.
 3. **인간 주석의 규모**: 인간 주석 작업이 논문의 공저자 3인에 의해 수행되었다. 전문가 수준의 평가라는 장점은 있으나, 더 다양하고 많은 수의 일반 사용자 데이터를 통해 검증할 필요가 있다.

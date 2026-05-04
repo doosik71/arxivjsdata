@@ -4,7 +4,7 @@ Siyuan Liang, Xingxing Wei, Siyuan Yao, and Xiaochun Cao (2020)
 
 ## 🧩 Problem to Solve
 
-본 논문은 딥러닝, 특히 Siamese network 기반의 Visual Object Tracking (VOT) 모델들이 가진 취약성을 분석하고 이를 공격하는 효율적인 방법을 제안하는 것을 목표로 한다. 
+본 논문은 딥러닝, 특히 Siamese network 기반의 Visual Object Tracking (VOT) 모델들이 가진 취약성을 분석하고 이를 공격하는 효율적인 방법을 제안하는 것을 목표로 한다.
 
 최근의 객체 추적기들은 DNN을 사용하여 높은 정확도를 달성하였으나, 이미지 분류(Image Classification)나 객체 검출(Object Detection) 분야와 달리 추적 모델의 강건성(Robustness)에 대한 연구는 거의 이루어지지 않았다. 특히 VOT는 기준 패치(Reference patch)와 후보 프레임 간의 유사도 측정(Similarity metric) 문제로 귀결되므로, 기존의 이미지 인식 작업 기반 공격 방법들을 그대로 적용하는 것은 한계가 있다. 따라서 본 연구는 VOT 작업에 특화된 Targeted attack과 Untargeted attack을 정의하고, 이를 실시간으로 수행할 수 있는 효율적인 공격 네트워크를 구축하고자 한다.
 
@@ -17,19 +17,24 @@ Siyuan Liang, Xingxing Wei, Siyuan Yao, and Xiaochun Cao (2020)
 ## 📎 Related Works
 
 ### 딥러닝 기반 객체 추적
+
 현대적인 추적 시스템은 크게 Tracking-by-detection 프레임워크와 SiamFC 및 SiamRPN 기반의 Siamese 네트워크 구조로 나뉜다. 특히 Siamese 추적기들은 높은 국지화 정확도와 효율성을 보여주지만, 입력 데이터의 적대적 섭동에 매우 민감하다는 잠재적 취약점을 가지고 있다.
 
 ### 적대적 공격 방법론
+
 기존의 적대적 공격은 크게 최적화 기반(Optimization-based) 방식과 생성 기반(Generator-based) 방식으로 구분된다. FGSM이나 PGD와 같은 최적화 방식은 그래디언트를 이용해 반복적으로 섭동을 생성하므로 연산 시간이 오래 걸린다. 반면 GAP나 UEA와 같은 생성 모델 기반 방식은 학습 후 추론 단계에서 빠르게 섭동을 생성할 수 있다. 저자들은 반복적 최적화 방식이 VOT와 같은 실시간 작업에는 속도 제한으로 인해 부적합하다고 지적하며, 생성 모델 기반의 접근 방식을 채택한다.
 
 ## 🛠️ Methodology
 
 ### 1. 문제 정의 (Problem Definition)
+
 논문에서는 VOT에서의 공격을 다음과 같이 정의한다.
+
 - **Targeted Attack**: 적대적 비디오 $\hat{V}$가 추적기로 하여금 객체를 미리 지정된 특정 궤적 $C_{spec}$을 따라 추적하도록 유도하는 것이다. 예측 중심점 $\hat{c}_i$와 목표 중심점 $c_{spec}^i$ 사이의 유클리드 거리가 임계값 $\epsilon$ (20 픽셀) 이내여야 한다.
 - **Untargeted Attack**: 적대적 비디오 $\hat{V}$가 추적 결과 $B_{attack}$을 원래의 정답 궤적 $B_{gt}$로부터 완전히 벗어나게 하여, 예측 박스와 정답 박스의 IOU가 0이 되게 만드는 것이다.
 
 ### 2. Drift Loss Attack (Untargeted Attack용)
+
 Siamese 추적기는 Fully-convolutional network를 통해 생성된 응답 맵 $S$의 최대 활성화 지점을 기반으로 객체 위치를 예측한다. 이를 이용해 응답 맵의 활성화 중심을 의도적으로 이동(Drift)시키는 전략을 사용한다.
 
 - **Score Loss**: 응답 맵의 중심 영역(정답 영역)의 점수는 낮추고, 나머지 영역의 점수를 높여 활성화 중심을 이동시킨다.
@@ -40,11 +45,13 @@ $$L_{dist}(G) = \frac{\beta_1}{\delta + \|p_{+1}^{max} - p_{-1}^{max}\|^2} - \xi
 - **최종 Drift Loss**: $$L_{drift} = L_{dist} + \beta_2 L_{score}$$
 
 ### 3. Embedded Feature Loss Attack (Targeted Attack용)
+
 특정 궤적을 따라가게 하려면 응답 값 자체를 높여야 한다. 이를 위해 적대적 예제의 특징(Feature)이 타겟 이미지 $e$의 특징과 유사해지도록 강제한다.
 $$L_{embed}(G) = \|\phi(q + G(q)) - \phi(e)\|^2$$
 여기서 $q$는 입력 이미지, $G(q)$는 생성된 섭동, $\phi$는 특징 추출 함수이다. 타겟 특징 $e$를 위해 가우시안 노이즈를 사용하여 최적화를 진행함으로써 섭동의 가시성을 낮추었다.
 
 ### 4. FAN (Fast Attack Network) 구조 및 통합 학습
+
 FAN은 CycleGAN의 구조를 참고한 생성기(Generator)와 PatchGAN 기반의 판별기(Discriminator)로 구성된다.
 
 - **판별기 손실 함수**: 생성된 이미지가 실제 이미지인지 구분하도록 학습한다.
@@ -56,11 +63,13 @@ $$L = L_G + \alpha_1 L_{sim} + \alpha_2 L_{embed} + \alpha_3 L_{drift}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: OTB2013, OTB2015, VOT2014, VOT2018.
 - **모델**: White-box 공격 대상으로는 SiamFC(Alexnet 기반)를, Black-box 공격 대상으로는 SiamRPN, SiamRPN+CIR, SiamRPN++를 사용하였다.
 - **지표**: Success score, Precision score, Success rate, Mean-Failures, Mean-SSIM.
 
 ### 주요 결과
+
 1. **Untargeted Attack**: OTB 데이터셋에서 Success score, Precision score 등이 최소 72% 이상 하락하는 높은 공격 성공률을 보였다. 특히 VOT2018 데이터셋에서는 Mean-Failures가 413%나 증가하여 추적기가 객체를 매우 빈번하게 놓치게 만들었다.
 2. **Targeted Attack**: 자동으로 생성된 가장 어려운 궤적(정답과 완전히 반대되는 방향)에 대해서도 추적기가 해당 궤적을 따라가게 만드는 데 성공하였다.
 3. **실시간성 및 가시성**: 적대적 예제 생성 시간이 샘플당 약 10ms에 불과하여 실시간 공격이 가능하며, Mean-SSIM 수치가 1에 가까워(최대 7% 하락) 인간의 눈으로는 섭동을 거의 감지할 수 없음을 확인하였다.

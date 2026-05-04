@@ -23,7 +23,9 @@ Wanru Zhao, Vidit Khazanchi, Haodi Xing, Xuanli He, Qiongkai Xu, Nicholas Donald
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 시스템 구조
+
 시스템의 기본 워크플로우는 다음과 같다:
+
 1. **사용자 요청**: 사용자가 자연어로 질문을 입력한다.
 2. **쿼리 생성**: LLM이 질문을 분석하고 해당 API를 호출하기 위한 API 형식의 쿼리를 생성한다.
 3. **API 호출 및 응답**: 제3자 API 서버가 쿼리를 처리하여 JSON 형식의 데이터를 반환한다.
@@ -32,6 +34,7 @@ Wanru Zhao, Vidit Khazanchi, Haodi Xing, Xuanli He, Qiongkai Xu, Nicholas Donald
 공격자는 이 과정 중 **3단계(API 응답)**에서 JSON 데이터를 조작하여 LLM에게 오염된 정보를 전달한다.
 
 ### 공격 방법론 (Threat Model)
+
 본 논문은 API 콘텐츠를 조작하는 세 가지 구체적인 방법론을 제안한다.
 
 - **삽입 기반 공격 (Insertion-based Attack)**: API 응답에 적대적인 콘텐츠를 추가하여 LLM이 부정확하거나 편향된, 혹은 해로운 출력을 생성하게 만든다.
@@ -39,12 +42,15 @@ Wanru Zhao, Vidit Khazanchi, Haodi Xing, Xuanli He, Qiongkai Xu, Nicholas Donald
 - **치환 기반 공격 (Substitution-based Attack)**: 핵심 데이터를 삭제한 후 거짓된 내용으로 교체하는 방식으로, 삭제와 삽입의 결합 형태이다. 이는 LLM의 신뢰성을 가장 심각하게 훼손한다.
 
 ### 대상 API 및 조작 규칙
+
 실험을 위해 WeatherAPI, MediaWiki API, NewsAPI 세 가지를 사용하였으며, 각 API별 타겟 엔티티는 다음과 같다.
+
 - **WeatherAPI**: `location`(위치) 및 `temperature`(온도) 필드를 조작한다.
 - **MediaWiki API**: `DATE`(날짜) 엔티티를 타겟으로 하며, spaCy를 통해 날짜를 식별 후 조작한다.
 - **NewsAPI**: `PERSON`(인물), `ORG`(조직), `GPE`(지정학적 엔티티)를 타겟으로 조작한다.
 
 ### 평가 지표 (Attack Success Rate, ASR)
+
 공격의 성공률을 측정하기 위해 다음과 같은 ASR 수식을 사용한다.
 
 - **삽입 ASR**:
@@ -57,11 +63,13 @@ $$\text{ASR}_{\text{Substitution}} = \frac{2 \times \text{InsertASR} \times \tex
 ## 📊 Results
 
 ### 실험 설정
+
 - **대상 모델**: GPT-3.5-turbo (v0125), Gemini
 - **데이터셋**: WikiQA (MediaWiki, WeatherAPI용), NewsQA (NewsAPI용)
 - **측정 지표**: 각 공격 유형별 ASR
 
 ### 주요 결과
+
 1. **공격 유형별 효과**: 전반적으로 **치환 공격(Substitution)**이 가장 높은 성공률을 보였으며, 그 다음으로 삭제 공격, 삽입 공격 순으로 효과적이었다. 이는 LLM이 정보의 부재보다 잘못된 정보가 포함된 데이터를 처리할 때 더 취약함을 시사한다.
 2. **모델별 취약성**: WeatherAPI 실험 결과, Gemini가 GPT-3.5-turbo보다 모든 공격 유형에서 더 높은 ASR을 보여 상대적으로 더 취약한 것으로 나타났다.
 3. **API별 결과**: NewsAPI의 경우 삽입 공격의 효율이 매우 낮았으나, 삭제 및 치환 공격은 여전히 높은 성공률을 유지했다. MediaWiki API에서는 치환 공격이 가장 위협적인 것으로 분석되었다.

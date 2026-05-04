@@ -36,11 +36,11 @@ Jannik Peters, Constantin Waubert de Puiseau, Hasan Tercan, Arya Gopikrishnan, G
 
 - **Setting Space ($\Omega$)**: 환경 $E$, 액션 $A$, 상태 $S$ 등을 포함하며, 에이전트 $\xi_i$가 관측값 $o_\xi$를 통해 환경과 상호작용하는 단계이다.
 - **Meaning Space ($\Phi$)**: 원시 데이터 $\chi$를 의미 벡터 $\phi$로 변환하는 단계이다.
-    - Conceptualization: $\Psi^{con} : \chi \to \Phi$
-    - Interpretation: $\Psi^{int} : \Phi \to \chi$
+  - Conceptualization: $\Psi^{con} : \chi \to \Phi$
+  - Interpretation: $\Psi^{int} : \Phi \to \chi$
 - **Language Space ($L$)**: 메시지 $m \in M$을 생성하고 이해하는 단계이다.
-    - Production: $L^{prod} : \chi \to M$
-    - Comprehension: $L^{comp} : M \to \chi$
+  - Production: $L^{prod} : \chi \to M$
+  - Comprehension: $L^{comp} : M \to \chi$
 
 ### 2. EL Taxonomy 구성
 
@@ -48,12 +48,12 @@ Jannik Peters, Constantin Waubert de Puiseau, Hasan Tercan, Arya Gopikrishnan, G
 - **Language Games**: Referential Game(참조), Reconstruction Game(재구성), Question-Answer Game(문답), Grid World Game, Continuous World Game 등으로 분류한다.
 - **Language Prior**: 사전 지식 없이 자발적으로 발생하는 Evolution-based 접근법과 NL의 구조를 모방하는 Acquisition-based 접근법으로 나눈다.
 - **Language Characteristics**: 언어학의 6단계 구조를 따른다.
-    - **Phonetics**: 통신 채널의 특성 (Discrete vs Continuous).
-    - **Phonology**: 사용되는 어휘의 종류 (Binary, Token, NL, Sound, Picture).
-    - **Morphology**: 단어 및 문장 구성 규칙 (Message Length, Compression, Redundancy).
-    - **Syntax**: 문법적 구조 및 규칙.
-    - **Semantics**: 문자 그대로의 의미 (Grounding, Compositionality, Consistency, Generalization).
-    - **Pragmatics**: 맥락에 따른 언어 사용 (Predictability, Efficiency, Positive Signaling/Listening, Symmetry).
+  - **Phonetics**: 통신 채널의 특성 (Discrete vs Continuous).
+  - **Phonology**: 사용되는 어휘의 종류 (Binary, Token, NL, Sound, Picture).
+  - **Morphology**: 단어 및 문장 구성 규칙 (Message Length, Compression, Redundancy).
+  - **Syntax**: 문법적 구조 및 규칙.
+  - **Semantics**: 문자 그대로의 의미 (Grounding, Compositionality, Consistency, Generalization).
+  - **Pragmatics**: 맥락에 따른 언어 사용 (Predictability, Efficiency, Positive Signaling/Listening, Symmetry).
 
 ### 3. 주요 측정 지표 및 방정식
 
@@ -70,21 +70,24 @@ Jannik Peters, Constantin Waubert de Puiseau, Hasan Tercan, Arya Gopikrishnan, G
 본 논문은 181편의 논문을 분석한 결과 다음과 같은 정량적/정성적 경향성을 발견하였다.
 
 - **게임 유형의 분포**: Referential Game이 가장 압도적으로 많이 사용되며, 그 뒤를 Reconstruction과 Grid World Game이 잇고 있다.
-- **언어 특성별 연구 집중도**: 
-    - **Semantics**: 가장 활발하게 연구되는 분야이며, 특히 Compositionality와 Generalization에 대한 관심이 높다.
-    - **Morphology & Pragmatics**: 중간 수준의 연구가 진행되고 있으며, 주로 메시지 길이 및 효율성 분석에 치중되어 있다.
-    - **Syntax**: 가장 소외된 분야로, 단 2편의 논문만이 구체적인 구문 분석 방법을 제시하였다.
+- **언어 특성별 연구 집중도**:
+  - **Semantics**: 가장 활발하게 연구되는 분야이며, 특히 Compositionality와 Generalization에 대한 관심이 높다.
+  - **Morphology & Pragmatics**: 중간 수준의 연구가 진행되고 있으며, 주로 메시지 길이 및 효율성 분석에 치중되어 있다.
+  - **Syntax**: 가장 소외된 분야로, 단 2편의 논문만이 구체적인 구문 분석 방법을 제시하였다.
 - **출판 경향**: 2020년까지는 지속적으로 증가 추세였으나, 최근에는 LLM(Large Language Models)으로의 연구 관심 이동으로 인해 EL 전용 연구의 출판 수가 다소 감소하는 경향을 보인다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. Evolution-Acquisition Dilemma
+
 연구진은 EL 연구의 근본적인 딜레마를 제시한다. 에이전트가 자신의 환경에 최적화된 언어를 자발적으로 개발하게 하는 '진화(Evolution)' 과정과, 인간과의 상호작용을 위해 NL의 구조를 강제하는 '습득(Acquisition)' 과정 사이에는 강한 트레이드-오프가 존재한다는 것이다.
 
 ### 2. EL vs LLM: Grounding의 관점
+
 현재의 LLM은 방대한 텍스트 데이터를 통한 통계적 모방에 의존하지만, EL은 구체적인 목표(Goal)와 환경적 경험(Experience)을 통해 언어를 형성한다. 이는 LLM이 겪고 있는 '깊은 이해의 부재'와 'Grounding 문제'를 해결할 수 있는 실마리가 될 수 있으며, LLM의 표현력과 EL의 경험적 학습을 결합한 'Agentic LLM' 또는 'Cognitive Language Agents'의 필요성을 시사한다.
 
 ### 3. 비판적 해석
+
 본 논문은 EL의 정량적 평가 체계를 잘 정리하였으나, 정작 '무엇이 좋은 EL인가'에 대한 절대적인 기준은 여전히 부재함을 인정한다. 지표의 최댓값이나 최솟값이 항상 최적의 언어를 의미하는 것은 아니며, 시스템의 목적에 따른 적절한 균형점(Balance point)을 찾는 연구가 추가적으로 필요하다.
 
 ## 📌 TL;DR

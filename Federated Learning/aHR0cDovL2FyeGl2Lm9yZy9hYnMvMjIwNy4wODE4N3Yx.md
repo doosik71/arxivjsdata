@@ -12,7 +12,7 @@ Sannara Ek, Romain Rombourg, François Portet, and Philippe Lalanda (2022)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 기여는 실제와 유사한 이질적 환경(Heterogeneous setting)에서 연합 반지도 학습(Federated Semi-Supervised Learning)의 기준점(Reference)이 되는 평가 체계를 구축하고, 기본 접근 방식의 한계를 분석한 것이다. 
+본 논문의 핵심 기여는 실제와 유사한 이질적 환경(Heterogeneous setting)에서 연합 반지도 학습(Federated Semi-Supervised Learning)의 기준점(Reference)이 되는 평가 체계를 구축하고, 기본 접근 방식의 한계를 분석한 것이다.
 
 구체적으로는 가벼운 구조의 오토인코더(Autoencoder, AE)와 표준 연합 평균(Federated Averaging, FedAvg) 알고리즘을 결합하여 HAR 태스크에 적용하였으며, 이를 통해 단순한 AE 기반의 특징 학습이 이질적인 데이터셋 환경에서 강건한 표현을 학습하는 데 한계가 있음을 정량적으로 증명하였다.
 
@@ -29,11 +29,14 @@ Sannara Ek, Romain Rombourg, François Portet, and Philippe Lalanda (2022)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 시스템 구조
+
 본 연구는 다음과 같은 2단계 학습 절차를 따른다.
+
 1. **연합 특징 학습 단계 (Unsupervised Feature Learning)**: 80명의 클라이언트가 각자 보유한 라벨 없는 데이터를 사용하여 AE를 연합 학습 방식으로 학습시킨다.
 2. **서버 측 미세 조정 단계 (Supervised Fine-tuning)**: 학습된 AE의 인코더(Encoder) 부분만을 추출하여 분류기(Classifier)를 부착한 뒤, 서버가 보유한 소량의 라벨링된 데이터를 사용하여 지도 학습 방식으로 미세 조정을 수행한다.
 
 ### 데이터 구성 및 전처리
+
 - **데이터셋**: UCI, HHAR, REALWORLD, SHL 총 4개의 공개 데이터셋을 결합하여 80명의 가상 클라이언트를 생성하였다.
 - **대상 활동**: Walk, Upstairs, Downstairs, Sit, Stand, Lay, Jump, Run, Bike, Car, Bus, Train, Subway 등 총 13가지 활동을 정의하였다.
 - **입력 데이터**: 3축 가속도계 및 3축 자이로스코프 데이터를 사용하며, $50\text{Hz}$로 리샘플링하였다.
@@ -41,21 +44,23 @@ Sannara Ek, Romain Rombourg, François Portet, and Philippe Lalanda (2022)
 - **데이터 분할**: 각 데이터셋의 $20\%$는 테스트셋으로, $80\%$는 훈련셋으로 사용한다. 훈련셋 중 다시 $80\%$는 라벨을 제거하여 클라이언트의 무감독 학습에 사용하고, 나머지 $20\%$의 라벨링 데이터는 서버의 미세 조정에 사용한다.
 
 ### 모델 아키텍처 및 학습 절차
-- **Autoencoder (AE)**: 
-    - **Encoder**: 4개의 1D Convolution 레이어로 구성되며, 각 레이어는 32개의 필터와 커널 크기 5를 가진다. 최종 잠재 공간(Latent Space)의 크기는 $128$이다.
-    - **Decoder**: 인코더와 대칭되는 구조를 가지며, Transposed Convolution 레이어를 사용한다.
-- **연합 학습 설정**: 
-    - 알고리즘: $\text{FedAvg}$
-    - 통신 라운드: $200$회 / 클라이언트 로컬 에포크: $5$회
-    - 최적화 도구: $\text{SGD}$, 학습률(Learning Rate) $\text{LR} = 0.01$
+
+- **Autoencoder (AE)**:
+  - **Encoder**: 4개의 1D Convolution 레이어로 구성되며, 각 레이어는 32개의 필터와 커널 크기 5를 가진다. 최종 잠재 공간(Latent Space)의 크기는 $128$이다.
+  - **Decoder**: 인코더와 대칭되는 구조를 가지며, Transposed Convolution 레이어를 사용한다.
+- **연합 학습 설정**:
+  - 알고리즘: $\text{FedAvg}$
+  - 통신 라운드: $200$회 / 클라이언트 로컬 에포크: $5$회
+  - 최적화 도구: $\text{SGD}$, 학습률(Learning Rate) $\text{LR} = 0.01$
 - **분류기 및 미세 조정**:
-    - 구조: $\text{Encoder} \rightarrow \text{Dense layer (32)} \rightarrow \text{Softmax (13)}$
-    - 최적화 도구: $\text{ADAM}$, $\text{LR} = 0.00005$, 에포크 $200$회
-    - 클래스 불균형 문제를 해결하기 위해 Class-weighted learning을 적용하였다.
+  - 구조: $\text{Encoder} \rightarrow \text{Dense layer (32)} \rightarrow \text{Softmax (13)}$
+  - 최적화 도구: $\text{ADAM}$, $\text{LR} = 0.00005$, 에포크 $200$회
+  - 클래스 불균형 문제를 해결하기 위해 Class-weighted learning을 적용하였다.
 
 ## 📊 Results
 
 ### 실험 결과 비교
+
 주요 지표로 Macro F-score를 사용하였으며, 결과는 다음과 같다.
 
 | 학습 방법 | 전체 합산(Combined) | UCI | HHAR | REALWORLD | SHL |
@@ -65,6 +70,7 @@ Sannara Ek, Romain Rombourg, François Portet, and Philippe Lalanda (2022)
 | **Conventional + AE** | $69.04\%$ | $73.06\%$ | $78.58\%$ | $75.48\%$ | $66.52\%$ |
 
 ### 분석 결과
+
 1. **AE의 효과 부재**: 연합 학습(FL + AE)을 적용했음에도 불구하고, 단순히 라벨링된 데이터만 사용한 전통적인 지도 학습(Conventional) 방식보다 성능이 높지 않았다. 특히 중앙 집중식으로 AE를 사전 학습시킨 경우(Conventional + AE) 오히려 성능이 하락하는 결과가 나타났다.
 2. **데이터 이질성의 영향**: FedAvg의 가중 평균 방식 특성상, 데이터 양이 많은 클라이언트(SHL, REALWORLD)의 영향력이 커져 데이터 양이 적은 클라이언트(UCI, HHAR)의 성능이 상대적으로 낮게 측정되었다.
 3. **분류 오류 분석**: Confusion Matrix 분석 결과, 'Bus', 'Train', 'Subway'와 같은 이동 수단 클래스들이 서로 빈번하게 혼동되었으며, 특히 대중교통 이용 시 서 있는 상태가 많아 'Stand' 활동과도 자주 혼동되는 양상을 보였다.

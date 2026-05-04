@@ -18,16 +18,18 @@ Jialei Huang, Zhaoheng Yin, Yingdong Hu, Yang Gao (2023)
 
 본 논문은 다음과 같은 기존 연구들의 한계를 지적한다.
 
-1.  **Adversarial Imitation Learning (AIL/GAIL):** GAIL과 같은 방식은 전문가와 에이전트의 분포를 일치시키려 하지만, Discriminator의 학습이 불안정하고 하이퍼파라미터 튜닝에 매우 민감하다. 특히 Discriminator가 학습하는 latent space의 구조적 제약이 없어 보상 신호가 부정확할 수 있다.
-2.  **Trajectory-matching IRL (PWIL, SIL):** Wasserstein 거리나 Sinkhorn 거리 등을 사용하여 분포 일치 문제를 해결하려 했으나, 여전히 표현 학습(Representation Learning)의 관점보다는 거리 측정 방식의 개선에 치중해 있다.
-3.  **기존의 Contrastive Learning 적용 시도:** 일부 연구에서 self-supervised representation learning을 AIL에 접목했으나 큰 효과를 거두지 못했다. 저자들은 그 이유가 데이터 증강(Augmentation) 기반의 일반적인 대조 학습은 '좋은 행동'과 '나쁜 행동' 사이의 미세한 차이를 구분해내지 못하기 때문이라고 분석한다.
+1. **Adversarial Imitation Learning (AIL/GAIL):** GAIL과 같은 방식은 전문가와 에이전트의 분포를 일치시키려 하지만, Discriminator의 학습이 불안정하고 하이퍼파라미터 튜닝에 매우 민감하다. 특히 Discriminator가 학습하는 latent space의 구조적 제약이 없어 보상 신호가 부정확할 수 있다.
+2. **Trajectory-matching IRL (PWIL, SIL):** Wasserstein 거리나 Sinkhorn 거리 등을 사용하여 분포 일치 문제를 해결하려 했으나, 여전히 표현 학습(Representation Learning)의 관점보다는 거리 측정 방식의 개선에 치중해 있다.
+3. **기존의 Contrastive Learning 적용 시도:** 일부 연구에서 self-supervised representation learning을 AIL에 접목했으나 큰 효과를 거두지 못했다. 저자들은 그 이유가 데이터 증강(Augmentation) 기반의 일반적인 대조 학습은 '좋은 행동'과 '나쁜 행동' 사이의 미세한 차이를 구분해내지 못하기 때문이라고 분석한다.
 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 PCIL의 전체 파이프라인은 **Contrastive Encoder $\Phi$ 학습 $\to$ 유사도 기반 보상 생성 $\to$ RL 알고리즘을 통한 정책 $\pi$ 최적화** 순으로 진행된다. 에이전트는 학습 과정에서 생성한 궤적을 리플레이 버퍼에 저장하며, 이를 기반으로 인코더와 정책을 동시에 업데이트한다.
 
 ### Contrastive Policy Representation (인코더 학습)
+
 인코더 $\Phi: S \to S$는 상태-행동 쌍을 고차원 구(Sphere) 공간의 벡터로 매핑한다. 본 논문에서는 전문가 샘플을 긍정 샘플(Positive)로, 에이전트 샘플을 부정 샘플(Negative)로 정의하는 InfoNCE 손실 함수를 사용한다.
 
 $$L = \mathbb{E} \left[ \Phi(x^0)^T \Phi(x^p) + \log \left( \exp \Phi(x^0)^T \Phi(x^p) + \sum_{i=1}^n \exp \Phi(x^0)^T \Phi(\tilde{x}_i) \right) \right]$$
@@ -35,6 +37,7 @@ $$L = \mathbb{E} \left[ \Phi(x^0)^T \Phi(x^p) + \log \left( \exp \Phi(x^0)^T \Ph
 여기서 $x^0$는 앵커(Anchor)가 되는 전문가 샘플, $x^p$는 다른 전문가 샘플(Positive), $\tilde{x}_i$는 에이전트의 샘플(Negative)이다. 이 목적 함수는 전문가 데이터들끼리는 서로 당기고, 에이전트 데이터는 전문가로부터 밀어내어 전문가의 특성을 응축한 표현 공간을 만든다.
 
 ### Similarity-Based Imitation Reward (보상 설계)
+
 학습된 표현 공간의 메트릭 특성을 활용하여, 코사인 유사도(Cosine Similarity) 기반의 보상을 정의한다.
 
 $$r(x) = \Phi(x)^T \mathbb{E}_{x_E \sim D} [\Phi(x_E)]$$
@@ -42,6 +45,7 @@ $$r(x) = \Phi(x)^T \mathbb{E}_{x_E \sim D} [\Phi(x_E)]$$
 에이전트의 현재 상태-행동 표현 $\Phi(x)$가 전문가 샘플들의 평균 표현 $\mathbb{E}[\Phi(x_E)]$와 유사할수록 더 높은 보상을 받게 된다. 실제 구현에서는 계산 효율을 위해 전문가 샘플 하나를 무작위로 추출하여 유사도를 계산한다.
 
 ### 이론적 분석 및 학습 절차
+
 저자들은 PCIL의 목적 함수가 Taylor 전개를 통해 Apprenticeship Learning (AL)의 형태로 환원될 수 있음을 수학적으로 증명하였다. 또한, PCIL의 목적 함수가 전문가 분포 $\rho_E$와 에이전트 분포 $\rho_\pi$ 사이의 **Total Variation (TV) Divergence**를 최소화하는 것과 이론적으로 등가임을 Theorem 1을 통해 제시하였다.
 
 학습 시에는 RL 알고리즘으로 DrQ-v2를 사용하며, 학습 안정성을 위해 Wasserstein-GAN에서 사용되는 Gradient Penalty 기법을 보상 함수에 적용하였다.
@@ -49,19 +53,22 @@ $$r(x) = \Phi(x)^T \mathbb{E}_{x_E \sim D} [\Phi(x_E)]$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** DeepMind Control Suite의 10가지 MuJoCo 작업 (단순한 Cart-pole부터 복잡한 Quadruped Run까지 포함).
 - **기준선(Baselines):** Behavioral Cloning (BC), DAC (최신 AIL 방식), PWIL 및 SIL (Trajectory-matching 방식).
 - **지표:** Episode Return (에피소드당 총 보상).
 - **환경 상호작용 제한:** 모든 실험은 $2 \times 10^6$ steps 이내에서 수행되었다.
 
 ### 주요 결과
+
 - **성능 향상:** PCIL은 거의 모든 작업에서 기존 baseline들을 압도하는 성능을 보였다. 특히 Cheetah Run, Quadruped Run과 같은 복잡한 작업에서 성능 향상 폭이 매우 컸다.
 - **샘플 효율성:** 동일한 환경 상호작용 횟수 대비 PCIL이 전문가 수준의 성능에 더 빠르게 도달함을 확인하였다.
 - **표현 공간 분석:** t-SNE 시각화 결과, DAC와 달리 PCIL은 전문가 샘플들이 하나의 조밀한 클러스터를 형성하고 있었다. 또한, 에이전트 샘플과 전문가 클러스터 사이의 거리가 실제 환경 보상(Ground truth reward)과 높은 상관관계를 보임을 확인하여, 학습된 표현 공간이 의미 있게 구조화되었음을 입증하였다.
 
 ### Ablation Study
-1.  **TCN 표현 학습 vs PCIL:** 시간적 연속성을 이용하는 TCN 방식은 전문가와 비전문가를 구분하는 목적이 없으므로 PCIL보다 성능이 현저히 낮았다.
-2.  **GAIL-like 보상 vs 유사도 보상:** PCIL 표현 공간을 사용하더라도 이진 분류기 기반의 GAIL 보상을 사용하면 성능이 급격히 하락했다. 이는 PCIL이 구축한 메트릭 공간의 특성상 거리 기반의 유사도 보상이 필수적임을 시사한다.
+
+1. **TCN 표현 학습 vs PCIL:** 시간적 연속성을 이용하는 TCN 방식은 전문가와 비전문가를 구분하는 목적이 없으므로 PCIL보다 성능이 현저히 낮았다.
+2. **GAIL-like 보상 vs 유사도 보상:** PCIL 표현 공간을 사용하더라도 이진 분류기 기반의 GAIL 보상을 사용하면 성능이 급격히 하락했다. 이는 PCIL이 구축한 메트릭 공간의 특성상 거리 기반의 유사도 보상이 필수적임을 시사한다.
 
 ## 🧠 Insights & Discussion
 

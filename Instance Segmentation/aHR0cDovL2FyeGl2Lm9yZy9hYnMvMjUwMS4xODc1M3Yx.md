@@ -70,33 +70,37 @@ $$D(y^k_{i+1}) = D(y^k_{i+1}) \cdot D^{norm}(y^k_i)$$
 ## 📊 Results
 
 ### 실험 설정
-- **데이터셋 및 작업:** 
-    - Camouflaged Object Detection (COD): CHAMELEON, CAMO, COD10K
-    - Medical Image Segmentation (MIS): CVC-ColonDB, Kvasir (폴립), ISIC (피부 병변)
-- **비교 대상:** 
-    - 약지도 학습 방법 (Scribble, Point supervision)
-    - VLM+SAM 조합 (GPT4V+SAM, LLaVA1.5+SAM)
-    - 최신 프롬프트 기반 세그멘테이션 (GenSAM, ProMaC, GroundingSAM 등)
+
+- **데이터셋 및 작업:**
+  - Camouflaged Object Detection (COD): CHAMELEON, CAMO, COD10K
+  - Medical Image Segmentation (MIS): CVC-ColonDB, Kvasir (폴립), ISIC (피부 병변)
+- **비교 대상:**
+  - 약지도 학습 방법 (Scribble, Point supervision)
+  - VLM+SAM 조합 (GPT4V+SAM, LLaVA1.5+SAM)
+  - 최신 프롬프트 기반 세그멘테이션 (GenSAM, ProMaC, GroundingSAM 등)
 - **지표:** Mean Absolute Error ($M$), adaptive F-measure ($F_\beta$), mean E-measure ($E_\phi$), structure measure ($S_\alpha$).
 
 ### 주요 결과
+
 - **COD 작업:** INT는 단 하나의 일반 프롬프트만 사용함에도 불구하고, 포인트 기반 및 스크리블 기반의 약지도 학습 방법들보다 모든 데이터셋에서 우수한 성능을 보였다. 특히 ProMaC보다 높은 수치를 기록하며 state-of-the-art 성능을 달성하였다.
 - **MIS 작업:** VLM이 의료 영상에 특화되어 학습되지 않았음에도 불구하고, INT의 네거티브 마이닝과 후보군 탐색 과정을 통해 폴립 및 피부 병변 세그멘테이션에서 기존 VLM+SAM 조합보다 월등한 성능 향상을 보였다.
-- **Ablation Study:** 
-    - **반복 횟수:** 약 5회 반복 이후 성능이 수렴하고 안정화됨을 확인하였다.
-    - **이미지 전처리:** 원본, 절반, 4등분 패치를 모두 사용하는 전략이 전역 및 지역 정보를 모두 포착하여 가장 성능이 좋았다.
-    - **모듈 기여도:** 특히 Progressive Negative Mining(PNM)을 제거했을 때 성능이 크게 하락하여, 초기 오류를 교정하는 PNM의 중요성이 입증되었다.
+- **Ablation Study:**
+  - **반복 횟수:** 약 5회 반복 이후 성능이 수렴하고 안정화됨을 확인하였다.
+  - **이미지 전처리:** 원본, 절반, 4등분 패치를 모두 사용하는 전략이 전역 및 지역 정보를 모두 포착하여 가장 성능이 좋았다.
+  - **모듈 기여도:** 특히 Progressive Negative Mining(PNM)을 제거했을 때 성능이 크게 하락하여, 초기 오류를 교정하는 PNM의 중요성이 입증되었다.
 
 ## 🧠 Insights & Discussion
 
-본 논문은 VLM이 가진 '특징 소멸 시 예측값 급변'이라는 특성을 이용하여, 정답 라벨 없이도 프롬프트의 품질을 스스로 검증하는 메커니즘을 설계했다는 점에서 매우 영리한 접근을 보여준다. 
+본 논문은 VLM이 가진 '특징 소멸 시 예측값 급변'이라는 특성을 이용하여, 정답 라벨 없이도 프롬프트의 품질을 스스로 검증하는 메커니즘을 설계했다는 점에서 매우 영리한 접근을 보여준다.
 
 **강점:**
+
 - **학습 불필요 (Training-free):** 추가적인 파라미터 업데이트 없이 테스트 단계에서 적응하므로 확장성이 매우 높다.
 - **오류 교정 능력:** 단순히 프롬프트를 생성하는 것에 그치지 않고, 반복적인 네거티브 마이닝을 통해 잘못된 프롬프트를 걸러내는 자가 수정(self-correcting) 능력을 갖추었다.
 - **범용성:** 자연 이미지(COD)뿐만 아니라 전문 지식이 필요한 의료 영상(MIS)에서도 효과적임을 증명하였다.
 
 **한계 및 논의사항:**
+
 - **연산 비용:** 여러 번의 반복 회차(epoch) 동안 VLM 추론, 인페인팅, SAM-CLIP 과정을 거쳐야 하므로 추론 시간이 상당히 소요될 것으로 예상된다.
 - **하이퍼파라미터 의존성:** 이미지 업데이트 가중치 $w$나 반복 횟수 $I$와 같은 설정값이 성능에 영향을 줄 수 있다.
 - **VLM 의존성:** 기본적으로 LLaVA-1.5와 같은 강력한 VLM의 성능에 기반하고 있으므로, VLM 자체가 완전히 인식하지 못하는 객체에 대해서는 한계가 있을 수 있다.

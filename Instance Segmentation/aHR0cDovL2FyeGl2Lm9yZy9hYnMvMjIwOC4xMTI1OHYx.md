@@ -10,7 +10,7 @@ Wonhui Park, Dongkwon Jin, Chang-Su Kim (2022)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 특이값 분해(Singular Value Decomposition, SVD)를 통해 학습 데이터셋의 모든 객체 경계에서 공통적으로 나타나는 주성분을 추출하고, 이를 기반으로 한 저차원 표현법인 Eigencontours를 사용하는 것이다. 
+본 논문의 핵심 아이디어는 특이값 분해(Singular Value Decomposition, SVD)를 통해 학습 데이터셋의 모든 객체 경계에서 공통적으로 나타나는 주성분을 추출하고, 이를 기반으로 한 저차원 표현법인 Eigencontours를 사용하는 것이다.
 
 기존 PolarMask가 경계를 표현하기 위해 다수의 방사형 좌표값($N$개의 변수)을 직접 예측해야 했다면, 제안 방법은 미리 정의된 $M$개의 Eigencontours의 선형 결합으로 경계를 표현한다. 결과적으로 네트워크는 $N$이 아닌 훨씬 작은 차원인 $M$개의 계수(coefficient)만을 예측하면 되므로, 모델의 효율성을 높이는 동시에 데이터에 내재된 기하학적 특성을 반영하여 더 정확한 경계를 생성할 수 있다.
 
@@ -45,19 +45,21 @@ $$\tilde{r} = U_M c = [u_1, \dots, u_M]c$$
 
 - **Encoder**: ResNet50 백본과 Feature Pyramid Network(FPN)를 사용하여 이미지로부터 $H \times W \times C$ 크기의 특징 맵을 추출한다.
 - **Decoders**:
-    - **Classification Decoder**: 각 픽셀이 $K$개의 카테고리 중 어디에 속하는지 예측하는 맵 $P \in \mathbb{R}^{H \times W \times K}$를 생성한다.
-    - **Centerness Decoder**: 픽셀이 객체의 중심점일 확률을 나타내는 맵 $O \in \mathbb{R}^{H \times W \times 1}$를 생성한다.
-    - **Coefficient Decoder**: 해당 픽셀을 중심으로 하는 객체의 경계 계수를 예측하는 맵 $R \in \mathbb{R}^{H \times W \times M}$를 생성한다.
+  - **Classification Decoder**: 각 픽셀이 $K$개의 카테고리 중 어디에 속하는지 예측하는 맵 $P \in \mathbb{R}^{H \times W \times K}$를 생성한다.
+  - **Centerness Decoder**: 픽셀이 객체의 중심점일 확률을 나타내는 맵 $O \in \mathbb{R}^{H \times W \times 1}$를 생성한다.
+  - **Coefficient Decoder**: 해당 픽셀을 중심으로 하는 객체의 경계 계수를 예측하는 맵 $R \in \mathbb{R}^{H \times W \times M}$를 생성한다.
 
 ### 3. Learning & Inference
 
 **손실 함수(Loss Function)**: 전체 손실 함수 $L$은 다음과 같이 세 가지 손실의 합으로 정의된다.
 $$L = L_{cls} + L_{cen} + L_{coeff}$$
+
 - $L_{cls}$: 예측 맵 $P$와 정답 간의 Focal Loss.
 - $L_{cen}$: 예측 맵 $O$와 정답 간의 Binary Cross-Entropy Loss.
 - $L_{coeff}$: 예측 맵 $R$과 정답 간의 Polar IoU Loss.
 
 **추론 및 후처리**:
+
 1. 각 픽셀 $i$에 대해 중심점 점수 $O_i$와 클래스 최대 확률 $P_i$를 곱하여 신뢰도 점수를 계산한다.
 2. 신뢰도가 0.05 미만인 픽셀은 제거한다.
 3. Non-Maximum Suppression(NMS)을 수행하여 중복되는 마스크를 제거한다.
@@ -66,29 +68,33 @@ $$L = L_{cls} + L_{cen} + L_{coeff}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: COCO2017 (80개 클래스), SBD (20개 클래스)
 - **비교 대상**: PolarMask (동일한 수 $M$의 파라미터를 사용하도록 설정)
 - **평가 지표**: $AP$, $AP_{50}$, $AP_{75}$
 
 ### 정량적 결과
+
 실험 결과, 제안 방법이 모든 지표에서 PolarMask보다 우수한 성능을 보였다. 특히 SBD 데이터셋에서 성능 향상 폭이 뚜렷하게 나타났다.
 
 - **COCO2017 ($M=36$ 기준)**:
-    - PolarMask: $AP=29.0, AP_{50}=48.9, AP_{75}=29.8$
-    - Proposed: $AP=29.6, AP_{50}=49.9, AP_{75}=30.4$
+  - PolarMask: $AP=29.0, AP_{50}=48.9, AP_{75}=29.8$
+  - Proposed: $AP=29.6, AP_{50}=49.9, AP_{75}=30.4$
 - **SBD**:
-    - PolarMask: $AP=27.7, AP_{50}=50.6, AP_{75}=25.7$
-    - Proposed: $AP=30.7, AP_{50}=54.9, AP_{75}=29.6$
+  - PolarMask: $AP=27.7, AP_{50}=50.6, AP_{75}=25.7$
+  - Proposed: $AP=30.7, AP_{50}=54.9, AP_{75}=29.6$
 
 ### 정성적 결과
+
 제안 방법은 특히 객체의 굴곡진 부분(예: 자동차 범퍼, 동물의 머리 부분)을 PolarMask보다 더 정확하게 복원하는 경향을 보였다. 이는 Eigencontours가 데이터로부터 추출된 곡선 성분들의 집합이기 때문이다.
 
 ## 🧠 Insights & Discussion
 
-**강점**: 
+**강점**:
 Eigencontours는 데이터 기반으로 구축되었기 때문에, 일반적인 객체 경계의 기하학적 특성을 잘 포착한다. 이를 통해 단순한 방사형 좌표 예측보다 더 매끄럽고 정확한 곡선 복원이 가능하다.
 
 **한계 및 비판적 해석**:
+
 1. **노이즈 발생**: Eigencontours의 선형 결합 과정에서 일부 경계가 불필요하게 떨리는(wiggling) 현상이 발생할 수 있다.
 2. **Star-convexity 가정**: 본 연구는 PolarMask의 프레임워크를 그대로 사용하므로, 객체가 중심점으로부터 모든 방향으로 단조 증가하는 'Star-convex' 형태라는 가정을 전제로 한다. 따라서 말의 다리와 같이 가늘고 오목한(hollow) 부분은 제대로 복원하지 못하는 근본적인 한계가 있다.
 3. **데이터셋별 성능 차이**: COCO2017보다 SBD에서 성능 향상이 더 컸는데, 이는 COCO의 경우 객체의 다양성이 너무 높고 폐색(occlusion)이 심해 전형적인 경계 패턴(typical contour patterns)을 추출하기 어려웠기 때문으로 분석된다.

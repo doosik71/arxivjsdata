@@ -15,6 +15,7 @@ Yanis Labrak, Adrien Bazoge, Béatrice Daille, Mickael Rouvier, Richard Dufour (
 본 논문의 핵심 기여는 통계적 토큰화 알고리즘에 언어학적 지식인 형태소(Morpheme)를 명시적으로 통합하여 의료 용어의 분절 정확도를 높이고, 이것이 실제 모델 성능으로 이어지는지 분석한 점이다.
 
 주요 기여 사항은 다음과 같다:
+
 - **Morpheme-enriched Tokenization 제안**: 수동으로 정의된 의료 분야의 주요 형태소 리스트를 통계적 토큰화 알고리즘(BPE, SentencePiece)에 통합하는 전략을 제안하였다.
 - **토큰화 입도와 성능의 상관관계 분석**: 토큰화 결과로 생성되는 단어당 평균 서브워드 수(granularity)와 다양한 NLP 태스크 성능 간의 피어슨 상관계수($\rho$)를 계산하여, 분절 입도가 성능에 미치는 영향을 정량적으로 분석하였다.
 - **토크나이저 학습 데이터 소스의 영향 평가**: NACHOS(의료 프랑스어), PubMed Central(의료 영어), CC100(다국어 일반), Wikipedia(일반 프랑스어) 등 다양한 데이터 소스로 토크나이저를 학습시켜, 언어 및 도메인 적합성이 성능에 미치는 영향을 비교하였다.
@@ -29,18 +30,21 @@ Yanis Labrak, Adrien Bazoge, Béatrice Daille, Mickael Rouvier, Richard Dufour (
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 본 연구의 실험 구조는 **[토크나이저 학습 데이터 선정] $\rightarrow$ [토크나이저 구축(통계적 vs 형태소 보강)] $\rightarrow$ [RoBERTa 모델 사전 학습] $\rightarrow$ [다운스트림 태스크 파인튜닝 및 평가]** 순으로 진행된다.
 
 ### 토큰화 전략
+
 1. **통계적 토큰화 (Statistical Tokenization)**:
    - **BPE**: 개별 문자에서 시작하여 빈도수가 높은 문자 쌍을 반복적으로 병합한다.
    - **SentencePiece**: Unigram 및 BPE 알고리즘을 사용하며, 더 유연한 분절 입도를 제공한다.
 2. **형태소 보강 토큰화 (Morpheme-enriched Tokenization)**:
    - 프랑스어 의료 분야에서 자주 사용되는 약 600개의 어휘 형태소(lexical morphemes, 예: *céphal-*, *-thérapie*) 리스트를 구축하였다.
-   - BPE 및 SentencePiece 알고리즘을 수정하여, 학습 과정에서 이 형태소 리스트를 **강제 토큰(enforced selections)**으로 지정하였다. 
+   - BPE 및 SentencePiece 알고리즘을 수정하여, 학습 과정에서 이 형태소 리스트를 **강제 토큰(enforced selections)**으로 지정하였다.
    - 즉, 텍스트 내에서 해당 형태소가 발견되면 통계적 빈도와 상관없이 우선적으로 해당 단위로 분절하고, 나머지 부분에 대해서만 표준 통계적 토큰화 절차를 적용한다.
 
 ### 모델 학습 및 데이터
+
 - **사전 학습 모델**: RoBERTa 아키텍처를 사용하며, Masked Language Modeling(MLM) 목적 함수를 통해 학습하였다.
 - **사전 학습 데이터**: NACHOS 코퍼스(약 11억 단어, 7.4GB raw text)를 사용하였다.
 - **토크나이저 데이터**: 1GB 규모의 하위 집합을 네 가지 소스(NACHOS, PubMed Central, CC100, Wikipedia)에서 추출하여 사용하였다.
@@ -49,11 +53,13 @@ Yanis Labrak, Adrien Bazoge, Béatrice Daille, Mickael Rouvier, Richard Dufour (
 ## 📊 Results
 
 ### 실험 설정
+
 - **태스크**: NER, POS Tagging, Semantic Textual Similarity(STS), Classification 등 총 23개 태스크.
 - **지표**: SeqEval(NER, POS), MSE(STS), F1-score(Classification).
 - **비교군**: 형태소 보강 여부(w/ vs w/o) 및 학습 데이터 소스별 모델 성능 비교.
 
 ### 주요 결과
+
 1. **분절 입도와 성능의 상관관계**:
    - 단어당 평균 서브워드 수와 성능 간의 상관계수를 분석한 결과, 평균 $\rho = -0.48$로 나타났다. 이는 **서브워드 수가 적을수록(즉, 더 큼직하게 분절될수록) 전반적인 성능이 향상되는 경향**이 있음을 의미한다.
    - 특히 NER과 STS 같은 태스크는 문맥 의존도가 높아 입도 변화에 민감하게 반응하였다.

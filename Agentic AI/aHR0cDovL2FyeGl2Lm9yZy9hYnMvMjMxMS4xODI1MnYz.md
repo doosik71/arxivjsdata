@@ -10,9 +10,10 @@ Dawen Zhang et al. (2024)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심적인 설계 아이디어는 프라이버시와 저작권 보호를 특정 단계의 기술적 수정으로 보는 것이 아니라, 데이터의 생성부터 배포까지 이어지는 **전체 생애주기(Lifecycle Perspective)** 관점에서 접근해야 한다는 점이다. 
+본 논문의 핵심적인 설계 아이디어는 프라이버시와 저작권 보호를 특정 단계의 기술적 수정으로 보는 것이 아니라, 데이터의 생성부터 배포까지 이어지는 **전체 생애주기(Lifecycle Perspective)** 관점에서 접근해야 한다는 점이다.
 
 주요 기여 사항은 다음과 같다:
+
 - GenAI의 데이터 생애주기 각 단계에서 발생하는 프라이버시 및 저작권 관련 핵심 챌린지들을 정의하고 이를 매핑하였다.
 - EU의 GDPR(General Data Protection Regulation)과 미국의 저작권법(US Copyright Law)이라는 법적 근거를 바탕으로 AI 엔지니어링 차원에서 해결해야 할 요구사항을 구체화하였다.
 - 단편적인 솔루션을 넘어, 생애주기 전반을 아우르는 통합적 접근 방식(Consent management, AIBOM 등)의 연구 방향을 제시하였다.
@@ -20,6 +21,7 @@ Dawen Zhang et al. (2024)
 ## 📎 Related Works
 
 논문에서는 프라이버시 및 저작권 보호를 위해 제안된 기존의 기술적 접근 방식들을 언급한다:
+
 - **Differential Privacy**: 학습 데이터의 개별 레코드가 모델 출력에 과도하게 영향을 주지 않도록 노이즈를 추가하는 방식이다.
 - **Machine Unlearning**: 특정 데이터를 모델의 가중치에서 제거하여 해당 데이터의 영향을 삭제하는 방식이다.
 - **Data Poisoning**: 데이터에 특정 패턴을 삽입하여 무단 학습을 방지하거나 모델의 성능을 제어하는 방식이다.
@@ -32,11 +34,14 @@ Dawen Zhang et al. (2024)
 본 논문은 특정 알고리즘을 제안하기보다, GenAI 시스템의 데이터 생애주기를 정의하고 각 단계별 챌린지를 분석하는 프레임워크 중심의 방법론을 제시한다.
 
 ### 1. 데이터 생애주기 단계 정의
+
 본 논문은 데이터셋 개발 과정을 다음의 8단계로 정의한다:
 $\text{Problem Formulation} \rightarrow \text{Data Collection} \rightarrow \text{Data Cleaning} \rightarrow \text{Data Annotation} \rightarrow \text{Model Training} \rightarrow \text{Model Evaluation} \rightarrow \text{Model Deployment \& Inference} \rightarrow \text{Downstream Distribution}$
 
 ### 2. 생애주기별 핵심 챌린지 매핑
+
 각 단계에서 발생하는 주요 문제는 다음과 같다:
+
 - **Consent and License Acquisition**: 방대한 데이터 규모로 인해 개별 데이터 주체로부터 동의를 얻는 것이 현실적으로 어려우며, 이는 문제 정의 및 데이터 수집 단계와 밀접하다.
 - **Transparency and Data Access**: 자신의 데이터가 학습에 사용되었는지 알기 어렵고, 데이터셋 공개 시 프라이버시 노출과 투명성 사이의 역설적 상황이 발생한다. (수집 및 배포/추론 단계)
 - **Consent Modification and Withdrawal**: GDPR의 '잊혀질 권리(Right to be Forgotten)'에 따라 데이터 삭제 요청이 올 수 있으나, 이미 가중치에 내재된 데이터를 제거하는 것은 기술적으로 매우 어렵다. (수집 및 학습 단계)
@@ -46,6 +51,7 @@ $\text{Problem Formulation} \rightarrow \text{Data Collection} \rightarrow \text
 - **Downstream Distribution**: 생성된 결과물이 다시 다른 모델의 학습 데이터로 사용되는 재귀적 사이클로 인해 법적 책임 소재가 불분명해진다. (데이터 배포 단계)
 
 ### 3. 제안하는 라이프사이클 접근법 (Research Directions)
+
 - **Lifecycle-wide Consent**: HTTP 요청이나 HTML DOM 요소에 암호화 태그를 사용하는 Consent Tagging 등을 확장하여 생애주기 전반의 동의 관리 체계를 구축해야 한다.
 - **Reliable Guardrails**: 단순한 입출력 필터를 넘어, Differential Privacy 학습과 같은 다층적 방어 체계를 아키텍처 수준에서 통합해야 한다.
 - **AI Bill of Materials (AIBOM)**: 소프트웨어의 SBOM처럼, AI 모델이 사용한 데이터의 라이선스와 암호화된 동의 정보를 명시한 명세서를 도입하여 법적 준수성을 확보해야 한다.
@@ -60,6 +66,7 @@ $\text{Problem Formulation} \rightarrow \text{Data Collection} \rightarrow \text
 본 논문은 프라이버시와 저작권 문제를 단순한 '데이터 삭제'나 '필터링'의 문제가 아니라, 소프트웨어 공학적 관점에서 데이터의 생애주기 전체로 확장하여 해석하였다는 점에서 매우 높은 통찰력을 제공한다. 특히 AIBOM과 같은 개념을 도입하여 AI 엔지니어링의 표준화 가능성을 제시한 점이 돋보인다.
 
 **한계 및 논의사항**:
+
 - **실행 가능성의 모호함**: 생애주기 전반의 통합적 접근이 필요하다고 주장하지만, 실제로 이를 구현하기 위한 구체적인 아키텍처 설계도나 프로토콜에 대한 상세 설명은 부족하다.
 - **상충 관계(Trade-off) 해결책 미비**: 데이터 삭제(Unlearning)와 모델 성능(Utility) 사이의 상충 관계에 대해 'Human-in-the-loop' 전략을 언급하였으나, 이를 자동화하거나 최적화할 수 있는 구체적인 방법론은 제시되지 않았다.
 - **현실적 제약**: AIBOM의 도입은 모델 제공자의 자발적인 협조와 산업 표준 합의가 전제되어야 하므로, 기술적 해결책보다 정책적 합의가 더 큰 난관이 될 가능성이 크다.

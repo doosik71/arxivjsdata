@@ -13,6 +13,7 @@ Fan Sun, Zhiming Luo, and Shaozi Li (2023)
 ## 📎 Related Works
 
 논문에서는 의료 영상 분할에 사용되는 손실 함수를 세 가지 범주로 분류하여 설명한다.
+
 1. **Cross-Entropy 기반:** 예측 확률 분포와 정답 간의 차이를 계산하는 방식으로, Focal Loss 등이 하드 샘플 문제를 해결하기 위해 제안되었다.
 2. **Dice 기반:** 정답과 예측의 교집합과 합집합을 이용하는 Dice Loss와, 정밀도(Precision)와 재현율(Recall)의 균형을 맞춘 Tversky Loss, 다중 클래스 분할로 확장한 Generalized Dice Loss 등이 있다.
 3. **경계 집중 기반:** Hausdorff Distance Loss나 Boundary Loss 등이 있으며, 특히 Boundary Loss는 윤곽선 상의 점들 사이의 거리를 가중치로 사용하여 계산한다.
@@ -22,6 +23,7 @@ Fan Sun, Zhiming Luo, and Shaozi Li (2023)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 Boundary DoU Loss
+
 본 논문은 미분 불가능한 Boundary IoU 메트릭을 학습 가능한 형태의 손실 함수로 변환하기 위해, 영역 계산 방식을 도입하였다. 제안된 Boundary DoU Loss는 다음과 같은 방정식으로 정의된다.
 
 $$L_{DoU} = \frac{G \cup P - G \cap P}{G \cup P - \alpha * G \cap P}$$
@@ -29,15 +31,18 @@ $$L_{DoU} = \frac{G \cup P - G \cap P}{G \cup P - \alpha * G \cap P}$$
 여기서 $G$는 Ground Truth, $P$는 예측 결과(Prediction)를 의미한다. 분자 부분인 $G \cup P - G \cap P$는 두 집합의 대칭 차집합(Symmetric Difference)으로, 정답과 예측이 일치하지 않는 '미스매치' 영역을 나타낸다. 분모 부분은 전체 합집합에서 교집합의 일부($\alpha * G \cap P$)를 제외한 부분 합집합(Partial Union)이다. $\alpha$는 부분 합집합 영역의 영향력을 조절하는 하이퍼파라미터이다.
 
 ### 적응적 $\alpha$ 조절 전략 (Adaptive Size Strategy)
+
 타겟 객체의 크기에 따라 경계 영역이 차지하는 비중이 다르므로, $\alpha$ 값을 고정하지 않고 객체의 크기에 따라 적응적으로 계산한다.
 
 $$\alpha = 1 - 2 \times \frac{C}{S}, \quad \alpha \in [0, 1)$$
 
-여기서 $C$는 타겟의 경계 길이(Boundary Length)이고, $S$는 타겟의 전체 크기(Size)이다. 
+여기서 $C$는 타겟의 경계 길이(Boundary Length)이고, $S$는 타겟의 전체 크기(Size)이다.
+
 - **타겟이 큰 경우:** 내부 영역은 비교적 쉽게 분할되므로, $\alpha$ 값을 크게 설정하여 경계 영역에 더 집중하도록 유도한다.
 - **타겟이 작은 경우:** 내부와 경계를 명확히 구분하기 어려우므로, $\alpha$ 값을 작게 설정하여 내부와 경계 영역 모두를 동시에 고려하도록 한다.
 
 ### Dice Loss와의 관계
+
 본 논문은 Boundary DoU Loss를 다음과 같이 재작성하여 Dice Loss와의 수학적 유사성을 논의한다.
 
 $$L_{DoU} = 1 - \frac{\alpha' * S_I}{S_D + \alpha' * S_I}$$
@@ -53,17 +58,20 @@ $$L_{Dice} = 1 - \frac{2 * S_I}{S_D + 2 * S_I}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** Synapse(복부 CT 스캔 30개), ACDC(심장 MRI 150명 데이터)
 - **사용 모델:** UNet, TransUNet, Swin-UNet
 - **비교 대상:** Dice Loss, CE Loss, Dice + CE, Tversky Loss, Boundary Loss
 - **평가 지표:** Dice Similarity Coefficient (DSC $\uparrow$), Hausdorff Distance (HD $\downarrow$), Boundary IoU (B-IoU $\uparrow$)
 
 ### 정량적 결과
+
 - **Synapse 데이터셋:** 모든 모델에서 제안된 Loss가 Dice Loss보다 우수한 성능을 보였다. 특히 UNet에서 DSC가 2.30% 향상되었으며, B-IoU에서 가장 높은 성능을 기록하여 경계 영역 분할 능력이 입증되었다.
 - **ACDC 데이터셋:** DSC 수치에서 소폭의 향상이 있었으며, 특히 Boundary IoU 지표에서 다른 모든 손실 함수를 압도하는 결과를 보였다. 이는 제안 방법이 임상적으로 중요한 정밀한 경계 식별에 유리함을 시사한다.
 - **객체 크기별 성능:** 타겟 크기를 Large($C/S < 0.2$)와 Small로 나누어 실험한 결과, 두 경우 모두에서 기존 방식보다 높은 DSC를 달성하여 적응적 $\alpha$ 전략의 유효성을 확인하였다.
 
 ### 정성적 결과
+
 시각화 결과, 제안 방법은 위, 췌장과 같이 형태가 복잡하고 크기가 작은 장기들에 대해 더 정확한 국소화(Localization) 및 분할 성능을 보였다. 또한, ACDC 데이터셋의 RV(우심실) 영역처럼 형태 변화가 심한 부위에서도 과소 분할(Under-segmentation) 문제를 효과적으로 해결하고 완전성을 유지하는 모습이 관찰되었다.
 
 ## 🧠 Insights & Discussion

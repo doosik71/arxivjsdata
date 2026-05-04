@@ -13,6 +13,7 @@ Alex Zihao Zhu, Vincent Casser, Reza Mahjourian, Henrik Kretzschmar, and Sören 
 본 논문의 핵심 아이디어는 **Cross-Modal Contrastive Loss**를 도입하여 서로 다른 센서 모달리티와 연속된 프레임 사이에서 동일한 객체에 대해 일관된 임베딩(Embedding)을 학습하도록 강제하는 것이다.
 
 주요 기여 사항은 다음과 같다:
+
 1. **교차 모달리티 대조 학습**: RGB 이미지와 LiDAR 포인트 클라우드 간의 일관된 인스턴스 임베딩을 얻기 위한 새로운 대조 손실 함수를 제안하였다.
 2. **시간적 안정성 확보**: 제안한 손실 함수를 시퀀스 데이터에 적용하여, 객체가 이동하더라도 시간에 따라 변하지 않는 안정적인 임베딩을 학습하였다.
 3. **Pseudo-Ground-Truth 생성**: 레이블이 없는 시간적 시퀀스 데이터에 대해 Optical Flow를 이용하여 가상 레이블(Pseudo-ground-truth)을 생성하는 방법을 제안하여, 부분적으로 레이블링된 데이터셋에서도 학습이 가능하게 하였다.
@@ -27,9 +28,11 @@ Alex Zihao Zhu, Vincent Casser, Reza Mahjourian, Henrik Kretzschmar, and Sören 
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 모델은 Panoptic DeepLab 아키텍처를 기반으로 하며, Xception-71 백본 네트워크와 ASPP(Atrous Spatial Pyramid Pooling), 그리고 인스턴스 임베딩을 예측하는 디코더로 구성된다. RGB 이미지와 LiDAR range image를 입력으로 받아 각 픽셀 또는 포인트마다 $c=32$ 차원의 dense embedding을 생성한다.
 
 ### Cross-Modal Contrastive Loss
+
 학습의 핵심은 동일한 인스턴스에 속한 임베딩들은 서로 가깝게, 서로 다른 인스턴스의 임베딩들은 멀게 만드는 것이다. 이를 위해 NT-XENT(Normalized Temperature-scaled Cross Entropy) 손실 함수를 사용한다.
 
 1. **유사도 측정**: 두 임베딩 벡터 $x$와 $y$ 사이의 코사인 유사도를 다음과 같이 정의한다.
@@ -44,22 +47,26 @@ Alex Zihao Zhu, Vincent Casser, Reza Mahjourian, Henrik Kretzschmar, and Sören 
    $$l = l_c + \lambda l_r \quad (\lambda = 0.01)$$
 
 ### 모달리티 및 시간적 일관성 (Consistency)
+
 - **Cross-Modal**: RGB와 LiDAR 데이터에 동일한 인스턴스 ID가 부여된 경우, 두 모달리티의 임베딩을 동시에 샘플링하여 대조 학습을 수행함으로써 센서 간 일관성을 학습한다.
 - **Temporal**: 연속된 프레임 사이에서도 동일 ID를 가진 픽셀들을 양성 쌍으로 묶어 학습함으로써 시간적 안정성을 확보한다.
 - **Pseudo-GT 생성**: 레이블이 없는 프레임의 경우, 사전 학습된 Optical Flow 네트워크를 사용하여 레이블이 있는 프레임의 마스크를 다음 프레임으로 워핑(Warping)하여 가상 레이블을 생성하고 이를 학습에 활용한다.
 
 ### 추론 및 마스크 생성 (Inference)
+
 학습된 임베딩을 사용하여 실제 인스턴스 마스크를 생성하기 위해 **Mean Shift Clustering** 알고리즘을 적용한다. 임베딩 공간에서 코사인 거리 임계값 $m=0.1$을 기준으로 클러스터링을 수행하며, 생성된 마스크 중 면적 대비 둘레 비율이 $r=4$보다 작은 얇은 아티팩트(artifact)는 필터링하여 제거한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: KITTI-360 (교차 모달리티 및 시간적 일관성 평가), Cityscapes (단일 모달리티 및 시간적 일관성 평가)
 - **지표**: mAP (mean Average Precision) 및 시간적 안정성(Cosine Distance)
 
 ### 주요 결과
-1. **KITTI-360 Ablation Study**: 
-   - 단일 카메라 모델보다 시간적 데이터 및 LiDAR 데이터를 추가로 활용했을 때 mAP가 크게 향상되었다. 
+
+1. **KITTI-360 Ablation Study**:
+   - 단일 카메라 모델보다 시간적 데이터 및 LiDAR 데이터를 추가로 활용했을 때 mAP가 크게 향상되었다.
    - 특히 Bicycle, Motorcycle, Rider, Truck과 같이 희소한 클래스에서 성능 향상이 뚜렷하게 나타났다.
    - 최종 모델은 Mask R-CNN (ResNet-50)보다 높은 성능을 보였으며, ResNet-101 성능에 근접하였다.
 
@@ -67,7 +74,7 @@ Alex Zihao Zhu, Vincent Casser, Reza Mahjourian, Henrik Kretzschmar, and Sören 
    - Bottom-up 방식의 기존 방법론(Brabandere et al., Neven et al.)보다 월등한 성능을 보였다.
    - 시간적 대조 학습을 적용한 'Ours temporal' 모델이 기본 모델(Ours base)보다 AP가 약 2% 향상되었으며, 임베딩의 시간적 안정성(Accuracy)이 $75.1\% \rightarrow 83.4\%$로 증가하였다.
 
-3. **시간적 안정성**: 
+3. **시간적 안정성**:
    - 시간적 일관성 손실을 적용했을 때, 연속 프레임 간 인스턴스 임베딩의 평균 코사인 거리가 $0.087$에서 $0.062$로 감소하여 더 안정적인 임베딩이 학습되었음을 확인하였다.
 
 ## 🧠 Insights & Discussion
@@ -75,6 +82,7 @@ Alex Zihao Zhu, Vincent Casser, Reza Mahjourian, Henrik Kretzschmar, and Sören 
 본 논문은 단순한 데이터 융합이 아니라, 대조 학습을 통해 **임베딩 공간 자체의 일관성**을 강제함으로써 센서 독립적이고 시간적으로 안정적인 인스턴스 표현을 학습할 수 있음을 보여주었다. 특히 Optical Flow를 통한 Pseudo-GT 생성 방식은 레이블 부족 문제를 완화하며 시간적 제약 조건을 효율적으로 학습시키는 실용적인 방법이다.
 
 **한계점 및 논의사항**:
+
 - **후처리 의존성**: 성능 평가를 위해 비교적 단순한 Mean Shift 클러스터링을 사용하였다. 저자들은 Graph Cut이나 Transformer head와 같은 더 복잡한 후처리 기법을 도입한다면 AP 점수를 더 높일 수 있을 것이라고 언급한다.
 - **3D 성능의 정체**: LiDAR 3D mAP에서는 교차 모달리티 학습이 큰 효과를 내지 못했는데, 이는 2D 레이블이 3D 레이블을 투영하여 생성되었기에 노이즈가 많아 3D 모델에 유용한 신호를 주지 못했기 때문으로 분석된다. 이는 2D-3D 간 레이블 정밀도 문제에 대한 추가 연구가 필요함을 시사한다.
 

@@ -10,9 +10,10 @@ Yuan Wang, Yang Yu, Ming Liu (2019)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 3D 포인트 클라우드를 2D 구면 이미지(Spherical Image)로 투영하여 연산 효율성을 높이고, 가벼운 네트워크 구조를 통해 실시간 3D 인스턴스 세그멘테이션을 수행하는 것이다. 
+본 논문의 핵심 아이디어는 3D 포인트 클라우드를 2D 구면 이미지(Spherical Image)로 투영하여 연산 효율성을 높이고, 가벼운 네트워크 구조를 통해 실시간 3D 인스턴스 세그멘테이션을 수행하는 것이다.
 
 중심적인 기여 사항은 다음과 같다.
+
 1. **효율적인 데이터 표현**: 3D 포인트 클라우드를 $64 \times 512 \times 4$ 크기의 구면 이미지로 변환하여 2D 컨볼루션 신경망을 적용할 수 있게 함으로써 연산 속도를 향상시켰다.
 2. **경량화된 인스턴스 세그멘테이션**: Mask R-CNN 구조를 채택하되, 무거운 ResNet 대신 MobileNet을 Backbone으로 사용하여 계산 복잡도를 줄였다.
 3. **Extended SORT 알고리즘**: 기존 SORT의 IoU 기반 매칭 방식에 3D 공간상의 정규화된 거리(Normalized Distance) 정보를 추가한 비용 함수를 도입하여, 객체 간의 가려짐이나 교차 상황에서도 안정적인 추적이 가능하도록 개선하였다.
@@ -28,6 +29,7 @@ Yuan Wang, Yang Yu, Ming Liu (2019)
 ## 🛠️ Methodology
 
 ### 1. Network Input: 3D to Spherical Projection
+
 3D LiDAR 데이터를 처리하기 위해, 본 연구는 데이터를 구면 좌표계로 투영하여 이미지 형태로 변환한다. 입력 데이터는 각 포인트의 데카르트 좌표 $(x, y, z)$와 반사도(Reflectivity)를 포함하는 4개 채널로 구성된다. 투영 과정은 다음과 같은 방정식으로 정의된다.
 
 방위각(Azimuth angle) $\alpha$와 천정각(Zenith angle) $\beta$는 다음과 같이 계산된다.
@@ -37,12 +39,15 @@ $$\beta = \arcsin\left(\frac{y}{\sqrt{x^2+y^2}}\right), \quad \bar{\beta} = \lfl
 여기서 $\Delta\alpha$와 $\Delta\beta$는 생성할 구면 이미지의 크기를 결정하며, 본 논문에서는 $64 \times 512$로 설정하였다. 결과적으로 3D 포인트 클라우드는 $64 \times 512 \times 4$ 형태의 텐서로 변환되어 모델의 입력으로 사용된다.
 
 ### 2. Instance Segmentation Network
+
 실시간 성능을 위해 MobileNet을 Backbone으로 사용하는 Mask R-CNN 구조를 설계하였다.
+
 - **Encoder**: MobileNet의 핵심인 Depthwise Separable Convolution 블록을 사용하여 파라미터 수를 줄였다. 총 4번의 다운샘플링을 거쳐 최종 특징 맵의 크기는 $H/16 \times W/16 \times 512$가 된다.
 - **FPN & RPN**: Feature Pyramid Networks (FPN)를 통해 다양한 스케일의 특징을 추출하고, Region Proposal Network (RPN)가 객체의 후보 영역(ROI)을 생성한다.
 - **Heads**: 생성된 ROI를 바탕으로 객체의 클래스를 분류하고 Bounding Box를 예측하는 Classifier graph와, $28 \times 28$ 크기의 픽셀 단위 마스크를 생성하는 Mask graph가 병렬적으로 작동한다.
 
 ### 3. Extended SORT
+
 추적 단계에서는 기존 SORT 알고리즘을 3D 공간 정보가 반영되도록 확장하였다.
 
 **상태 추정(State Estimation)**:
@@ -58,10 +63,12 @@ $\alpha$와 $\beta$는 각 지표의 가중치를 조절하며, 본 논문에서
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: KITTI 3D Object Track 데이터셋을 구면 이미지로 변환하여 사용하였다.
 - **평가 지표**: MOTA (Accuracy), MOTP (Precision), MT (Mostly Tracked), ML (Mostly Lost), IDsw (ID Switches), FM (False Negatives), FP (False Positives) 등을 사용하였다.
 
 ### 주요 결과
+
 1. **인스턴스 세그멘테이션 성능**: MobileNet 기반 모델은 $AP_{0.5} = 0.617$을 달성하였다. ResNet50 기반 모델과 비교했을 때 AP는 약 4% 낮았으나(ResNet의 경우 0.66), 런타임은 0.091초에서 0.061초로 크게 단축되어 효율성을 입증하였다.
 2. **추적 성능 (PointIT vs. SORT)**:
    - MOTA: SORT(0.451) $\rightarrow$ PointIT(0.457)로 소폭 상승하였다.

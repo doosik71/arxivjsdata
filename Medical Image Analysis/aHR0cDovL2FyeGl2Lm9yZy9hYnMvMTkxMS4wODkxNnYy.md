@@ -29,25 +29,28 @@ HEp-2 세포 분류는 류마티스 관절염, 폐섬유증, 쇼그렌 증후군
 본 논문은 리뷰 논문이므로 새로운 알고리즘을 제안하는 대신, 기존 연구들을 분석하기 위한 분석 프레임워크(Taxonomy)를 방법론으로 채택하였다.
 
 ### 1. Cell-level HEP2IC (CL-HEP2IC) 분류 체계
+
 세포 수준 분류는 단일 세포 이미지를 입력으로 하여 클래스 레이블을 예측하며, DNN의 사용 목적에 따라 다음과 같이 구분한다.
 
 - **DNN as a Feature Extractor**: DNN을 특징 추출기로만 사용하고, 이후 SVM이나 k-NN과 같은 별도의 분류기를 사용한다.
-    - **Pre-trained 모델**: ImageNet 등으로 사전 학습된 모델의 특징을 그대로 사용한다.
-    - **Fine-tuned 모델**: 타겟 데이터셋에 맞춰 미세 조정된 모델의 특징을 추출한다.
+  - **Pre-trained 모델**: ImageNet 등으로 사전 학습된 모델의 특징을 그대로 사용한다.
+  - **Fine-tuned 모델**: 타겟 데이터셋에 맞춰 미세 조정된 모델의 특징을 추출한다.
 - **DNN as a Classifier**: 특징 추출과 분류를 하나의 네트워크에서 수행하는 End-to-End 방식이다.
-    - **Pure Generic DNN**: VGG, ResNet 등 기존의 범용 아키텍처를 그대로 사용한다.
-    - **Generic DNN with Partial Changes**: 범용 구조에 일부 레이어를 추가하거나 학습 스킴을 변경한 방식이다.
-    - **Customized DNN**: HEp-2 분류를 위해 완전히 새롭게 설계된 아키텍처이다.
+  - **Pure Generic DNN**: VGG, ResNet 등 기존의 범용 아키텍처를 그대로 사용한다.
+  - **Generic DNN with Partial Changes**: 범용 구조에 일부 레이어를 추가하거나 학습 스킴을 변경한 방식이다.
+  - **Customized DNN**: HEp-2 분류를 위해 완전히 새롭게 설계된 아키텍처이다.
 
 ### 2. Specimen-level HEP2IC (SL-HEP2IC) 분류 체계
+
 검체 수준 분류는 여러 세포가 포함된 전체 이미지를 처리하며, 처리 방식에 따라 구분한다.
 
 - **Single-cell processing (SCP-SL-HEP2IC)**: 검체 이미지에서 개별 세포를 먼저 분리(Segmentation)하고, 각 세포를 분류한 뒤 다수결(Majority Voting)이나 인구 히스토그램(Population Histogram) 방식을 통해 검체 레이블을 결정한다.
 - **Multi-cell processing (MCP-SL-HEP2IC)**: 검체 전체를 한 번에 처리한다.
-    - **Pixel-wise prediction**: FCN(Fully Convolutional Network) 등을 사용하여 픽셀 단위로 레이블을 예측하고 이를 통해 검체 클래스를 결정한다.
-    - **Image-wise prediction**: 이미지 전체를 입력받아 단일 레이블을 출력한다.
+  - **Pixel-wise prediction**: FCN(Fully Convolutional Network) 등을 사용하여 픽셀 단위로 레이블을 예측하고 이를 통해 검체 클래스를 결정한다.
+  - **Image-wise prediction**: 이미지 전체를 입력받아 단일 레이블을 출력한다.
 
 ### 3. 주요 방정식 및 평가 지표
+
 논문에서 언급된 데이터셋별 주요 평가 지표는 다음과 같다.
 
 - **Average Classification Accuracy (ACA)**: 전체 샘플 중 정확히 예측된 샘플의 비율이다.
@@ -62,12 +65,14 @@ $$\text{MCA} = \frac{1}{C} \sum_{i=1}^{C} \text{CA}_i$$
 본 논문은 다양한 데이터셋과 방법론의 성능을 분석하였으며, 주요 결과는 다음과 같다.
 
 ### 1. 분석 대상 데이터셋
+
 - **ICPR 2012**: 1,455개의 단일 세포 이미지, 6개 클래스.
 - **SNPHEp-2**: 1,884개의 단일 세포 이미지, 흑백 이미지.
 - **I3A (Task-1 & Task-2)**: Task-1은 세포 수준(약 14k 샘플), Task-2는 검체 수준(252개 검체) 분류를 위해 설계되었다.
 - **AIDA**: 2,080개의 검체 이미지, 22개 패턴 포함. 음성(Negative) 샘플이 포함된 것이 특징이다.
 
 ### 2. 주요 정량적 및 정성적 분석 결과
+
 - **네트워크 깊이의 영향**: 초기에는 LeNet-5, AlexNet과 같은 얕은 모델이 사용되었으나, 최근에는 VGG-16, ResNet-50 등 깊은 모델이 훨씬 더 강건(Robust)한 특징을 추출하며 높은 성능을 보이고 있다.
 - **데이터 증강(Data Augmentation, DA)의 중요성**: 의료 영상 특성상 데이터셋 규모가 작기 때문에 Rotation, Flipping, Cropping 등의 DA가 필수적이며, 특히 클래스 불균형을 해소하기 위한 Class-balanced DA가 성능 향상에 크게 기여한다.
 - **Customized vs Generic**: 범용 모델(Generic DNN)만으로도 높은 성능을 낼 수 있으나, HEp-2의 특성을 반영하여 설계된 Customized DNN(예: HEp-Net, DCR-Net)들이 파라미터 수를 줄이면서도 효율적인 성능을 달성하는 경향이 있다.
@@ -75,14 +80,17 @@ $$\text{MCA} = \frac{1}{C} \sum_{i=1}^{C} \text{CA}_i$$
 ## 🧠 Insights & Discussion
 
 ### 1. 강점 및 성과
+
 딥러닝의 도입으로 수작업 특징 추출 단계가 사라졌으며, 특히 End-to-End 학습 방식이 표준으로 자리 잡았다. 또한, FCN을 이용한 검체 수준 분류는 세그멘테이션과 분류를 동시에 수행할 수 있어 실무적 가치가 높다.
 
 ### 2. 한계 및 도전 과제
+
 - **이미지 획득 조건의 가변성**: 단순한 데이터 부족보다 더 큰 문제는 조명 조건, 염색 강도 등 이미지 획득 환경에 따른 변동성이 크다는 점이다.
 - **레이블링 비용**: 전문가의 정밀한 레이블링이 필요하여 데이터셋 구축에 2~3년의 시간이 소요되는 등 데이터 확보가 매우 어렵다.
 - **블랙박스 문제**: 의료 분야에서는 결과의 정확도뿐만 아니라 '왜 그렇게 판단했는가'에 대한 설명 가능성(Explainability)이 중요하지만, 현재의 DL 모델들은 이를 제공하지 못한다.
 
 ### 3. 비판적 해석
+
 본 논문은 매우 방대한 양의 문헌을 체계적으로 정리하였으나, 방법론들 간의 직접적인 벤치마크 비교보다는 개별 논문의 수치를 인용하는 수준에 그친 점이 아쉽다. 데이터셋마다 평가 프로토콜(Split ratio, LOSO 등)이 달라 절대적인 성능 비교가 어렵다는 점이 HEP2IC 분야의 고질적인 문제임을 시사한다.
 
 ## 📌 TL;DR

@@ -10,7 +10,7 @@ John Chidiac, Danielle Azar (2025)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 ReLU를 기반으로 하되, $\tanh$와 $\sigma(\text{sigmoid})$ 함수의 특성을 합성하여 입력 값 $x > 0$ 영역에서의 선형성 정도를 동적으로 제어하는 것이다. 
+본 논문의 핵심 아이디어는 ReLU를 기반으로 하되, $\tanh$와 $\sigma(\text{sigmoid})$ 함수의 특성을 합성하여 입력 값 $x > 0$ 영역에서의 선형성 정도를 동적으로 제어하는 것이다.
 
 ReCA는 $\alpha, \beta, \delta$라는 세 가지 학습 가능한 파라미터를 도입하여, 네트워크가 주어진 태스크에 최적화된 활성화 함수 형태를 스스로 학습하게 한다. 특히 $\beta$는 $\tanh$를 통해 작은 $x$ 값 영역에서의 미세한 형태 조정을 담당하고, $\delta$는 $\sigma$를 통해 더 넓은 범위의 곡률 조정을 담당하도록 설계되었다. 이를 통해 ReLU의 급격한 전이(Sharp transition)를 완화하고 더 부드럽고 적응적인 특징 공간(Feature space)을 형성한다.
 

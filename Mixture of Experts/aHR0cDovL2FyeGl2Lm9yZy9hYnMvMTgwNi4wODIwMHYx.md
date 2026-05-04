@@ -4,7 +4,7 @@ Isobel Claire Gormley and Sylvia Frühwirth-Schnatter (2018)
 
 ## 🧩 Problem to Solve
 
-본 논문은 공변량(covariates) 또는 수반 변수(concomitant variables)를 혼합 모델(mixture models)에 통합하는 프레임워크인 Mixtures of Experts(ME) 모델을 체계적으로 다룬다. 일반적인 혼합 모델은 데이터가 여러 개의 잠재적 그룹(cluster)에서 생성되었다고 가정하지만, 각 그룹의 가중치나 파라미터가 관측된 외부 변수(공변량)에 의해 어떻게 변화하는지는 설명하지 못한다. 
+본 논문은 공변량(covariates) 또는 수반 변수(concomitant variables)를 혼합 모델(mixture models)에 통합하는 프레임워크인 Mixtures of Experts(ME) 모델을 체계적으로 다룬다. 일반적인 혼합 모델은 데이터가 여러 개의 잠재적 그룹(cluster)에서 생성되었다고 가정하지만, 각 그룹의 가중치나 파라미터가 관측된 외부 변수(공변량)에 의해 어떻게 변화하는지는 설명하지 못한다.
 
 연구의 주요 목표는 공변량에 따라 혼합 모델의 파라미터를 함수화함으로써, 데이터의 군집화(clustering)뿐만 아니라 교차 단면 데이터(cross-sectional data)에서 나타나는 파라미터의 이질성(heterogeneity)을 포착하는 유연한 분석 도구를 제시하는 것이다. 이는 단순한 군집 분석을 넘어, 어떤 특성을 가진 개체가 특정 군집에 속할 확률이 높은지, 그리고 공변량이 각 군집 내의 결과 변수에 어떤 영향을 미치는지를 정밀하게 분석하기 위함이다.
 
@@ -23,21 +23,25 @@ ME 모델은 머신러닝 문헌(Jacobs et al., 1991)에서 기원하였으나, 
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조 및 수식
+
 ME 모델의 일반적인 확률 밀도 함수는 다음과 같이 정의된다:
 $$p(y_i|x_i) = \sum_{g=1}^G \eta_g(x_i)f_g(y_i|\theta_g(x_i))$$
 여기서 $y_i$는 결과 변수, $x_i$는 공변량, $G$는 성분의 개수이다. $\eta_g(x_i)$는 $g$번째 성분에 속할 확률인 성분 가중치(component weight)이며, $f_g(\cdot|\theta_g(x_i))$는 $g$번째 성분의 확률 밀도 함수(pdf)이다.
 
 ### 2. ME 모델의 네 가지 유형
+
 논문은 공변량 $x$와 잠재 변수 $z$(군집 소속)의 관계에 따라 모델을 다음과 같이 구분한다:
+
 - **Mixture models**: 결과 변수 $y$가 $z$에만 의존하며, $x$와는 독립적이다.
 - **Mixtures of regression models**: $y$가 $z$와 $x$ 모두에 의존하지만, $z$의 분포는 $x$와 독립적이다.
 - **Simple mixtures of experts models**: $y$가 $z$에만 의존하고, $z$의 분포(가중치)가 $x$에 의존한다.
 - **Standard mixtures of experts regression models**: $y$와 $z$ 모두가 $x$에 의존한다. 즉, 가중치 $\eta_g(x)$와 파라미터 $\theta_g(x)$가 모두 공변량의 함수가 된다.
 
 ### 3. 추론 절차 및 알고리즘
+
 - **최대 우도 추정 (MLE)**: EM(Expectation-Maximization) 알고리즘을 사용한다.
-    - **E-step**: 현재 파라미터 값을 이용하여 잠재 변수 $z_i$의 조건부 기대값(posterior probability)을 계산한다.
-    - **M-step**: 계산된 기대값을 바탕으로 완전 데이터 로그 우도(complete data log-likelihood)를 최대화하는 $\gamma$(가중치 파라미터)와 $\theta$(성분 파라미터)를 업데이트한다. 가중치 업데이트에는 주로 다항 로짓(Multinomial Logit, MNL) 모델이 사용되며, 뉴턴-랩슨(Newton-Raphson)과 같은 수치 최적화 기법이 동반된다.
+  - **E-step**: 현재 파라미터 값을 이용하여 잠재 변수 $z_i$의 조건부 기대값(posterior probability)을 계산한다.
+  - **M-step**: 계산된 기대값을 바탕으로 완전 데이터 로그 우도(complete data log-likelihood)를 최대화하는 $\gamma$(가중치 파라미터)와 $\theta$(성분 파라미터)를 업데이트한다. 가중치 업데이트에는 주로 다항 로짓(Multinomial Logit, MNL) 모델이 사용되며, 뉴턴-랩슨(Newton-Raphson)과 같은 수치 최적화 기법이 동반된다.
 - **베이지안 추정**: Gibbs sampler와 Metropolis-Hastings(MH) 알고리즘을 결합한 MCMC 방식을 사용한다. 특히 MNL 모델의 비공액성(non-conjugacy) 문제를 해결하기 위해 데이터 증강(data augmentation) 기법을 도입하여 조건부 가우시안 분포로 근사하는 방식을 제안한다.
 - **모델 선택**: BIC(Bayesian Information Criterion) 또는 주변 우도(marginal likelihood)를 계산하여 최적의 성분 개수 $G$와 유의미한 공변량을 선택한다.
 
@@ -46,14 +50,17 @@ $$p(y_i|x_i) = \sum_{g=1}^G \eta_g(x_i)f_g(y_i|\theta_g(x_i))$$
 논문은 세 가지 서로 다른 데이터셋을 통해 ME 모델의 유용성을 입증하였다.
 
 ### 1. 청소년 마리화나 사용 분석 (범주형 시계열 데이터)
+
 - **설계**: 시간-불균질 마르코프 체인(time-inhomogeneous Markov chain) 모델을 사용하여 $G=2$ 또는 $3$의 군집을 분석하였다.
 - **결과**: 성별 공변량을 포함한 ME 모델보다 단순 혼합 모델의 주변 우도가 더 높게 나타났다. 이는 마리화나 사용 패턴의 군집화가 성별보다는 관찰되지 않은 다른 요인에 의해 결정됨을 시사한다.
 
 ### 2. 아일랜드 대통령 선거 분석 (순위 데이터)
+
 - **설계**: Plackett-Luce 모델을 기반으로 유권자의 순위 데이터를 분석하였으며, 나이와 정부 만족도를 공변량으로 사용하였다.
 - **결과**: BIC 기준으로 $G=4$인 'Simple ME 모델'이 가장 적합한 것으로 나타났다. 분석 결과, 나이가 많을수록 보수적 군집에 속할 확률이 높았으며, 정부에 불만족한 유권자는 야당 지지 후보를 선호하는 군집에 속할 확률이 높음이 정량적으로 확인되었다.
 
 ### 3. 변호사 자문 네트워크 분석 (네트워크 데이터)
+
 - **설계**: 잠재 위치 군집 모델(latent position cluster model)에 ME 프레임워크를 적용하여 변호사들 간의 자문 관계를 분석하였다.
 - **결과**: AICM 지표 기준, 링크 확률(link probabilities)과 성분 가중치 모두에 공변량을 포함한 'Standard ME regression model'이 가장 우수한 성능을 보였다. 이는 변호사의 직급, 성별, 사무실 위치 등이 네트워크 형성뿐만 아니라 잠재적 군집 소속에도 영향을 미친다는 것을 의미한다.
 

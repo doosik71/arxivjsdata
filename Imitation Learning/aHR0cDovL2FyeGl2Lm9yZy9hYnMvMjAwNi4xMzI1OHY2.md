@@ -23,24 +23,28 @@ Paul Barde, Julien Roy, Wonseok Jeon, Joelle Pineau, Christopher Pal, Derek Nowr
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
-ASAF(Adversarial Soft Advantage Fitting)는 RL 최적화 단계 없이 Discriminator 학습과 정책 업데이트를 교대로 수행한다. 
 
-1.  현재 정책 $\pi_G$를 사용하여 궤적(Trajectory) 데이터를 수집한다.
-2.  수집된 데이터와 전문가 데이터를 사용하여 structured discriminator $D_{\tilde{\pi}, \pi_G}$를 학습시킨다.
-3.  학습된 Discriminator의 파라미터 $\tilde{\pi}$를 그대로 다음 세대의 Generator 정책 $\pi_G$로 업데이트한다 ($\pi_G \leftarrow \tilde{\pi}$).
+ASAF(Adversarial Soft Advantage Fitting)는 RL 최적화 단계 없이 Discriminator 학습과 정책 업데이트를 교대로 수행한다.
+
+1. 현재 정책 $\pi_G$를 사용하여 궤적(Trajectory) 데이터를 수집한다.
+2. 수집된 데이터와 전문가 데이터를 사용하여 structured discriminator $D_{\tilde{\pi}, \pi_G}$를 학습시킨다.
+3. 학습된 Discriminator의 파라미터 $\tilde{\pi}$를 그대로 다음 세대의 Generator 정책 $\pi_G$로 업데이트한다 ($\pi_G \leftarrow \tilde{\pi}$).
 
 ### Structured Discriminator 및 주요 방정식
+
 본 논문은 Discriminator를 다음과 같은 형태로 정의한다:
 $$D_{\tilde{\pi}, \pi_G}(\tau) = \frac{P_{\tilde{\pi}}(\tau)}{P_{\tilde{\pi}}(\tau) + P_{\pi_G}(\tau)}$$
 여기서 $P_{\pi}(\tau)$는 정책 $\pi$ 하에서 궤적 $\tau$가 생성될 확률이다. 궤적 확률은 환경의 전이 확률 $\xi(\tau)$와 정책 확률 $q_\pi(\tau)$의 곱으로 분해되며, Discriminator 식의 분자와 분모에서 $\xi(\tau)$가 상쇄되므로 결과적으로 정책 확률의 곱만으로 계산이 가능하다:
 $$D_{\tilde{\pi}, \pi_G}(\tau) = \frac{\prod_{t=0}^{T-1} \tilde{\pi}(a_t|s_t)}{\prod_{t=0}^{T-1} \tilde{\pi}(a_t|s_t) + \prod_{t=0}^{T-1} \pi_G(a_t|s_t)}$$
 
 ### 학습 절차 및 손실 함수
+
 Discriminator $\tilde{\pi}$는 전문가 궤적 $\tau^{(E)}$와 생성된 궤적 $\tau^{(G)}$를 구분하기 위해 Binary Cross Entropy(BCE) 손실 함수를 최소화하도록 학습된다:
 $$L_{BCE} \approx -\frac{1}{n_E} \sum_{i=1}^{n_E} \log D_{\tilde{\pi}, \pi_G}(\tau^{(E)}_i) - \frac{1}{n_G} \sum_{i=1}^{n_G} \log(1 - D_{\tilde{\pi}, \pi_G}(\tau^{(G)}_i))$$
 이 최적화가 완료되면 $\tilde{\pi}$는 전문가의 궤적 분포와 일치하게 되며, 이를 통해 RL 과정 없이도 정책이 업데이트된다.
 
 ### 정책 클래스 및 변형 (ASAF-w, ASAF-1)
+
 - **정책 파라미터화**: 이산 동작 공간에서는 Categorical 분포를, 연속 동작 공간에서는 정규 분포(Normal distribution)를 사용하여 밀도 함수를 평가하고 샘플링할 수 있도록 한다.
 - **ASAF-w**: 전체 궤적 대신 크기가 $w$인 윈도우(sub-trajectories) 단위로 학습하여 궤적 길이가 매우 길거나 가변적인 환경에 대응한다.
 - **ASAF-1**: 윈도우 크기를 1로 설정한 경우로, 궤적이 아닌 개별 전이(transition) 단위로 학습하는 방식이다.
@@ -48,24 +52,28 @@ $$L_{BCE} \approx -\frac{1}{n_E} \sum_{i=1}^{n_E} \log D_{\tilde{\pi}, \pi_G}(\t
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋 및 환경**: Classic Control, Box2D, MuJoCo(연속 제어), Pommerman(이산 제어) 등 다양한 환경에서 평가하였다.
 - **비교 대상**: GAIL+PPO, AIRL+PPO, SQIL 등 기존의 대표적인 IL 알고리즘과 비교하였다.
 - **평가 지표**: Evaluation Return(평가 보상)을 통해 전문가의 성능에 얼마나 빠르게, 그리고 안정적으로 도달하는지 측정하였다.
 
 ### 주요 결과
+
 - **안정성**: ASAF 계열 알고리즘은 GAIL, AIRL, SQIL과 달리 학습 도중 성능이 급격히 떨어지는 현상이 거의 없었으며, 전문가 성능에 도달한 후 이를 안정적으로 유지하는 모습을 보였다.
 - **효율성**: RL 루프가 없기 때문에 학습 속도가 매우 빠르며, 하이퍼파라미터 변화에 대해서도 훨씬 강건(robust)하였다.
 - **환경별 특성**:
-    - Classic Control 및 Box2D에서는 ASAF, ASAF-w, ASAF-1 모두 우수한 성능을 보였다.
-    - MuJoCo와 같이 궤적이 긴 환경에서는 전체 궤적을 사용하는 ASAF보다 ASAF-w나 ASAF-1이 훨씬 더 샘플 효율적이고 성능이 좋았다.
-    - Pommerman과 같은 고차원 이산 제어 환경에서도 BC를 포함한 ASAF 계열이 다른 베이스라인보다 높은 승률을 기록하였다.
+  - Classic Control 및 Box2D에서는 ASAF, ASAF-w, ASAF-1 모두 우수한 성능을 보였다.
+  - MuJoCo와 같이 궤적이 긴 환경에서는 전체 궤적을 사용하는 ASAF보다 ASAF-w나 ASAF-1이 훨씬 더 샘플 효율적이고 성능이 좋았다.
+  - Pommerman과 같은 고차원 이산 제어 환경에서도 BC를 포함한 ASAF 계열이 다른 베이스라인보다 높은 승률을 기록하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 이론적 근거
+
 본 논문은 structured discriminator를 도입함으로써 "Discriminator 학습 = 정책 학습"이라는 등식을 성립시켰다. 이론적으로 최적의 Discriminator 파라미터가 곧 전문가의 정책 분포와 일치함을 증명함으로써, RL이라는 복잡한 최적화 과정을 생략하고도 동일한 목적 함수를 달성할 수 있음을 보여주었다.
 
 ### 한계 및 비판적 해석
+
 ASAF-1(전이 단위 학습)의 경우, 이론적으로는 전문가와 생성기의 상태 방문 분포(state occupancy measure)가 동일하다고 가정한다. 하지만 실제 학습 초기에는 이 가정이 성립하지 않으므로 이론과 실제 사이에 간극이 존재한다. 그럼에도 불구하고 실험적으로 ASAF-1이 매우 잘 작동한다는 점은, 상태 분포의 불일치보다 정책 자체의 유사성을 학습하는 것이 더 중요할 수 있음을 시사한다.
 
 또한, 연속 동작 공간에서 $\tilde{\pi}$를 정규 분포로 근사하는 과정에서 발생하는 오차가 성능에 영향을 줄 수 있다. 하지만 이는 기존의 MaxEnt RL 프레임워크에서도 공통적으로 나타나는 한계이다.

@@ -4,7 +4,7 @@ Tongzhou Wu, Yuhao Wang, Xinyu Ma, Xiuqiang He, Shuaiqiang Wang, Dawei Yin, Xian
 
 ## 🧩 Problem to Solve
 
-본 논문은 Deep-Research Agent가 직면한 두 가지 핵심적인 병목 현상을 해결하고자 한다. 첫째는 실제 세계의 난이도를 반영한 대규모의 도전적인 데이터셋이 부족하다는 점이며, 둘째는 데이터 합성 및 에이전트 학습을 위한 접근 가능한 오픈소스 프레임워크가 부재하다는 점이다. 
+본 논문은 Deep-Research Agent가 직면한 두 가지 핵심적인 병목 현상을 해결하고자 한다. 첫째는 실제 세계의 난이도를 반영한 대규모의 도전적인 데이터셋이 부족하다는 점이며, 둘째는 데이터 합성 및 에이전트 학습을 위한 접근 가능한 오픈소스 프레임워크가 부재하다는 점이다.
 
 기존의 Multi-hop QA 데이터셋(예: HotpotQA, MuSiQue)은 정보 통합 능력을 평가하지만, 실제 연구 과정에서 필요한 자율적인 탐색 능력을 측정하기에는 부족하다. 특히, 기존 벤치마크들은 검색 도구 호출 횟수와 난이도 간의 체계적인 상관관계를 제시하지 못하며, 정적인 폐쇄형 코퍼스에 의존하여 동적인 웹 환경에서의 전략적 계획 및 반복적 검증 능력을 평가하는 데 한계가 있다. 따라서 본 연구의 목표는 난이도별로 설계된 대규모 벤치마크 데이터셋인 DeepResearch-9K를 구축하고, 이를 학습시킬 수 있는 오픈소스 프레임워크인 DeepResearch-R1을 제안하는 것이다.
 
@@ -26,23 +26,27 @@ Tongzhou Wu, Yuhao Wang, Xinyu Ma, Xiuqiang He, Shuaiqiang Wang, Dawei Yin, Xian
 ## 🛠️ Methodology
 
 ### 1. DeepResearch-9K 데이터셋 구축
+
 데이터셋은 $L_1$부터 $L_3$까지 난이도를 점진적으로 높이는 계층적 구성 전략을 따른다.
 
 - **$L_1$ (Direct Attribute Mapping)**: 시드 엔티티의 특정 속성을 찾는 단계이다. 단순한 유의어 대체(Light Obfuscation)를 적용하며, 1~2회의 검색으로 해결 가능하다.
 - **$L_2$ (Multi-hop Relational Bridging)**: $A \rightarrow B \rightarrow C$ 형태의 관계 체인을 구축한다. 고유 명사, 날짜, 위치 등을 제거하는 중간 단계의 모호화(Moderate Obfuscation)를 적용하여 단일 검색으로는 해결할 수 없게 설계하였다.
-- **$L_3$ (Deep-Research / Long-Chain Reasoning)**: $A \rightarrow B \rightarrow \dots \rightarrow \text{Target}$ 형태의 긴 순차적 체인을 구축한다. 
-    - **Hard Link Rule**: 각 홉(hop)은 새로운 독립적인 검색 쿼리를 필요로 해야 한다.
-    - **Verification Constraint**: 단일 웹페이지나 문서가 체인 내 연속된 두 개 이상의 엔티티를 포함해서는 안 된다.
-    - **High Obfuscation**: 모든 고유 식별자를 제거하고 기능적 역할이나 역사적 시대적 배경으로 대체하며, 복잡한 중첩 문장 구조(Nested sentence structures)를 사용하여 최소 15회 이상의 검색이 필요하도록 설계하였다.
+- **$L_3$ (Deep-Research / Long-Chain Reasoning)**: $A \rightarrow B \rightarrow \dots \rightarrow \text{Target}$ 형태의 긴 순차적 체인을 구축한다.
+  - **Hard Link Rule**: 각 홉(hop)은 새로운 독립적인 검색 쿼리를 필요로 해야 한다.
+  - **Verification Constraint**: 단일 웹페이지나 문서가 체인 내 연속된 두 개 이상의 엔티티를 포함해서는 안 된다.
+  - **High Obfuscation**: 모든 고유 식별자를 제거하고 기능적 역할이나 역사적 시대적 배경으로 대체하며, 복잡한 중첩 문장 구조(Nested sentence structures)를 사용하여 최소 15회 이상의 검색이 필요하도록 설계하였다.
 
 ### 2. 데이터 합성 파이프라인
+
 전체 과정은 다음의 4단계로 진행된다.
+
 1. **시드 엔티티 식별**: HotpotQA, 2WikiMultihopQA, MuSiQue에서 샘플을 추출하고 DeepSeek-V3를 통해 핵심 엔티티를 추출한다.
 2. **추론 체인 구축**: 추출된 엔티티를 기반으로 관계 그래프를 생성하고 선택적 경로 추출을 통해 추론 깊이를 제어한다.
 3. **엔티티 모호화**: 난이도 설정에 따라 단계적으로 식별자를 마스킹한다.
 4. **규칙 기반 품질 보증**: LLM 기반 분석을 통해 도출된 가이드라인에 따라 논리적 엄밀성을 검증한다.
 
 ### 3. 학습 절차 및 프레임워크 (DeepResearch-R1)
+
 본 연구는 통계적으로 검증된 궤적을 생성하기 위해 교사 모델로 Tongyi-DeepResearch-30B-A3B를 사용하여 정답 궤적을 수집하였다. 학습은 다음 두 가지 패러다임으로 진행된다.
 
 - **Zero-RL**: 지시어 튜닝이 되지 않은 베이스 모델에 직접 강화학습을 적용하여 기초적인 추론 및 도구 사용 능력을 부트스트랩(Bootstrap)한다.
@@ -53,7 +57,9 @@ Tongzhou Wu, Yuhao Wang, Xinyu Ma, Xiuqiang He, Shuaiqiang Wang, Dawei Yin, Xian
 ## 📊 Results
 
 ### 1. 직접 평가 및 난이도 검증
+
 교사 모델인 Tongyi-DeepResearch-30B-A3B를 DeepResearch-9K에 적용한 결과, 난이도에 따른 정확도 차이가 뚜렷하게 나타났다.
+
 - $L_1$: 72.47%
 - $L_2$: 71.33%
 - $L_3$: 23.73%
@@ -61,7 +67,9 @@ Tongzhou Wu, Yuhao Wang, Xinyu Ma, Xiuqiang He, Shuaiqiang Wang, Dawei Yin, Xian
 특히 $L_3$의 정확도가 기존의 고난도 벤치마크인 BrowseComp-Plus에서의 성능(24.94%)과 매우 유사하게 나타남으로써, $L_3$가 실제 세계의 복잡한 연구 수준의 난이도를 정확히 반영하고 있음을 입증하였다.
 
 ### 2. 학습 패러다임 분석
+
 Qwen2.5-3B와 Llama3.2-3B 모델을 대상으로 실험한 결과는 다음과 같다.
+
 - **Qwen 모델의 SFT 의존성**: Qwen2.5-3B는 Zero-RL 시 정확도가 약 12%에 불과했으나, SFT+RL 적용 시 20% 이상으로 크게 상승하였다. 이는 해당 아키텍처에서 도구 사용 능력을 갖추기 위해 SFT를 통한 '웜 스타트(Warm start)'가 필수적임을 시사한다.
 - **소형 특화 모델의 가능성**: Llama3.2-3B 모델에 PPO(Zero-RL)를 적용한 결과, **22.50%**라는 가장 높은 정확도를 기록하였다. 이는 적절한 보상 신호와 RL이 결합되었을 때, 소형 모델이 DeepSeek V3(20.18%)와 같은 거대 모델보다 더 나은 성능을 낼 수 있음을 보여준다.
 - **전반적 한계**: 모든 모델의 성능이 20% 부근에서 정체되는 양상을 보였는데, 이는 본 데이터셋이 현재 에이전트 기술의 한계를 엄격하게 측정하고 있음을 의미한다.

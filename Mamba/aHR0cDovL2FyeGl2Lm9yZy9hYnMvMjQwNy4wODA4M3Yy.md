@@ -25,13 +25,15 @@ Ali Hatamizadeh, Jan Kautz (2024)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 (Macro Architecture)
-MambaVision은 4단계의 계층적 구조로 이루어져 있다. 
+
+MambaVision은 4단계의 계층적 구조로 이루어져 있다.
 
 1. **Stem 및 Stage 1, 2**: 입력 이미지를 처리하는 초기 단계에서는 CNN 기반의 residual block을 사용한다. 이는 고해상도 특징 맵에서 빠르게 기초적인 특징을 추출하기 위함이다.
 2. **Stage 3, 4**: 이 단계에서는 제안된 MambaVision Mixer와 Transformer 블록이 혼합되어 배치된다.
 3. **Downsampling**: 각 스테이지 사이에는 $3 \times 3$ 컨볼루션(stride 2)을 사용하여 해상도를 절반으로 줄인다.
 
 ### MambaVision Mixer (Micro Architecture)
+
 본 논문은 기존 Mamba 블록을 비전 작업에 맞게 다음과 같이 재설계하였다.
 
 1. **Causal Conv 대체**: 단방향으로만 영향을 주는 causal convolution을 일반 1D convolution으로 교체하여 공간적 제약을 없앴다.
@@ -45,31 +47,40 @@ $$X_{out} = \text{Linear}(\frac{C}{2}, C)(\text{Concat}(X_1, X_2)),$$
 여기서 $\text{Scan}$은 Mamba의 selective scan 연산이며, $\sigma$는 SiLU 활성화 함수이다. 각 브랜치의 차원을 $C/2$로 설정하여 전체 파라미터 수를 기존 Mamba 블록과 유사하게 유지했다.
 
 ### 하이브리드 통합 패턴 (Hybrid Pattern)
+
 Stage 3와 4에서 MambaVision Mixer와 Self-attention 블록을 어떻게 배치할 것인지에 대한 실험을 진행하였다. 분석 결과, 전체 레이어 수 $N$ 중 앞부분의 $N/2$는 MambaVision Mixer를 배치하고, 나머지 뒷부분의 $N/2$에 Self-attention 블록을 배치하는 구조가 가장 높은 성능을 보였다. 이는 모델의 후반부에서 전역 문맥을 복구하고 장거리 공간 의존성을 캡처하는 것이 성능 향상에 핵심적임을 시사한다.
 
 ## 📊 Results
 
 ### 이미지 분류 (ImageNet-1K)
+
 MambaVision은 정확도(Top-1 Accuracy)와 처리량(Throughput) 사이의 새로운 Pareto front를 형성하였다.
+
 - **MambaVision-B**는 $84.2\%$의 정확도를 기록하며, ConvNeXt-B($83.8\%$) 및 Swin-B($83.5\%$)보다 높은 성능을 보이면서도 이미지 처리 속도는 훨씬 빠르다.
 - 특히 기존 Mamba 기반 모델인 VMamba-B($83.9\%$)보다 정확도가 높으면서 처리량 면에서 압도적인 우위를 점했다.
 - 계산 효율성 측면에서도 MambaVision-B는 MaxViT-B 대비 GFLOPs가 $56\%$ 더 낮다.
 
 ### 다운스트림 작업 (Object Detection & Segmentation)
+
 MS COCO 및 ADE20K 데이터셋을 통해 범용성을 검증하였다.
+
 - **Object Detection & Instance Segmentation (MS COCO)**: Cascade Mask R-CNN 헤드를 사용한 결과, MambaVision-T/S/B 모델이 ConvNeXt 및 Swin의 대응 모델보다 box AP 및 mask AP에서 일관되게 우수한 성능을 보였다.
 - **Semantic Segmentation (ADE20K)**: UperNet 헤드를 사용했을 때, MambaVision-T/S/B가 Swin-T/S/B보다 mIoU 기준 각각 $+1.5, +0.6, +1.0$ 포인트 높은 성능을 기록하였다.
 
 ### 확장성 실험 (Scalability)
+
 Mamba 기반 모델 최초로 ImageNet-21K 데이터셋으로 사전 학습을 진행하였다.
+
 - MambaVision-B의 정확도가 $84.2\% \rightarrow 84.9\%$로 향상되었으며, 더 큰 모델인 MambaVision-L3는 해상도 $512$에서 $88.1\%$의 Top-1 정확도를 달성하여 대규모 데이터셋과 모델 크기에 대한 확장성을 입증하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 분석
+
 본 논문의 가장 큰 성과는 Mamba의 선형 복잡도라는 효율성을 유지하면서도, Transformer의 전역 모델링 능력을 전략적으로 결합하여 비전 작업의 고질적인 문제(공간적 이해 부족)를 해결한 점이다. 특히, Self-attention을 모델의 후반부에 배치하는 설계가 실질적인 성능 향상을 이끌어냈음을 ablation study를 통해 정밀하게 증명하였다.
 
 ### 한계 및 논의사항
+
 논문에서는 window-based attention을 사용하여 효율성을 높였으나, 윈도우 크기에 따른 성능 변화가 존재함을 언급하였다. 또한, 하이브리드 구조의 최적 비율($N/2$ 분할)이 실험적으로 도출되었으나, 이는 특정 모델 크기에 기반한 결과일 수 있으며 다른 규모의 모델에서도 동일하게 적용될지는 추가 연구가 필요하다. 다만, ImageNet-21K 실험을 통해 어느 정도의 일반적인 확장성을 보여주었다는 점에서 긍정적이다.
 
 ## 📌 TL;DR

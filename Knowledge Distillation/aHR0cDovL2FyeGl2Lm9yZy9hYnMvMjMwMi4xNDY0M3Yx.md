@@ -4,7 +4,7 @@ Jing Liu, Tongya Zheng, Guanzheng Zhang, Qinfen Hao (2023)
 
 ## 🧩 Problem to Solve
 
-본 논문은 그래프 신경망(Graph Neural Networks, GNNs)의 효율성과 성능을 높이기 위한 Knowledge Distillation (KD) 기법의 체계적인 분석과 실험적 평가를 목표로 한다. 
+본 논문은 그래프 신경망(Graph Neural Networks, GNNs)의 효율성과 성능을 높이기 위한 Knowledge Distillation (KD) 기법의 체계적인 분석과 실험적 평가를 목표로 한다.
 
 현대의 GNN은 강력한 표현 능력을 갖추고 있으나, 두 가지 주요 문제점에 직면해 있다. 첫째, GNN의 성능은 고품질의 레이블링된 데이터에 크게 의존하지만, 실제 환경에서 이러한 데이터를 확보하는 것은 매우 어렵다. 둘째, 모델의 복잡도가 증가함에 따라 계산 자원 소모가 커져 실제 배포 및 추론 단계에서 효율성이 떨어진다. 기존의 KD 연구는 주로 이미지와 같은 그리드 구조의 데이터(CNN 기반)에 집중되어 있었으며, 불규칙한 구조를 가진 그래프 데이터에 특화된 KD 연구에 대한 포괄적인 리뷰와 체계적인 분류가 부족한 상황이다.
 
@@ -31,21 +31,27 @@ Jing Liu, Tongya Zheng, Guanzheng Zhang, Qinfen Hao (2023)
 본 논문은 Graph-based KD를 세 가지 주요 파이프라인으로 정의하고 각 방법론의 수식과 절차를 설명한다.
 
 ### 1. Graph-based Knowledge Distillation for Deep Neural Networks (DKD)
+
 DNN 모델에서 샘플 간의 관계를 그래프 형태로 구성하여 지식을 전이하는 방식이다.
+
 - **핵심 아이디어**: 개별 샘플의 출력을 모방하는 대신, 교사 모델이 파악한 샘플 간의 상대적 유사도(구조적 지식)를 학생 모델이 학습하게 한다.
-- **손실 함수**: 
+- **손실 함수**:
 $$L_D = D_D(\psi_t(x^s_i, x^s_j), \psi_s(x^t_i, x^t_j))$$
 여기서 $\psi_t, \psi_s$는 각각 교사와 학생 모델의 샘플 간 유사도 함수이며, $D_D$는 두 유사도 분포 사이의 거리를 최소화하는 거리 측정 함수(MSE, KL-divergence 등)이다.
 
 ### 2. Graph-based Knowledge Distillation for Graph Neural Networks (GKD)
+
 GNN 모델 자체의 토폴로지 구조와 노드 관계 지식을 전이하는 방식이다.
+
 - **핵심 아이디어**: GNN의 메시지 패싱 과정에서 생성되는 노드 임베딩의 관계적 특성을 보존하여 학생 모델에 전달한다.
 - **손실 함수**:
 $$L_G = \sum_{l \in L} \sum_{(x, x') \in x^2} D_G(S(x^l_s, x'^l_s), S(x^l_t, x'^l_t))$$
 여기서 $S$는 노드 간 유사도 함수이며, $D_G$는 교사와 학생 모델의 노드 관계 표현 간의 차이를 줄이는 손실 함수이다.
 
 ### 3. Self-Knowledge Distillation based Graph-based KD (SKD)
+
 별도의 교사 모델 없이, 단일 모델의 깊은 층(Deep layer)이 얕은 층(Shallow layer)의 교사 역할을 수행하는 방식이다.
+
 - **핵심 아이디어**: 모델 내부의 층 간 지식 전이를 통해 학습 효율을 높이고 과적합이나 Over-smoothing 문제를 완화한다.
 - **손실 함수**:
 $$L_{Self} = \sum_{l=1, \dots, l-1} D_{Self}(G^s_l(X), G^t_{l+1}(X))$$
@@ -54,13 +60,15 @@ $$L_{Self} = \sum_{l=1, \dots, l-1} D_{Self}(G^s_l(X), G^t_{l+1}(X))$$
 ## 📊 Results
 
 ### 실험 설정
-- **데이터셋**: 
-    - DKD: CIFAR-10, CIFAR-100 (이미지 분류)
-    - GKD/SKD: Cora, Citeseer, Pubmed, Amazon-Photo, Amazon-Computers, Coauthor-Physics, Coauthor-CS (노드 분류 및 클러스터링)
+
+- **데이터셋**:
+  - DKD: CIFAR-10, CIFAR-100 (이미지 분류)
+  - GKD/SKD: Cora, Citeseer, Pubmed, Amazon-Photo, Amazon-Computers, Coauthor-Physics, Coauthor-CS (노드 분류 및 클러스터링)
 - **지표**: Accuracy, F1-Micro, F1-Macro, NMI, ARI
 - **비교 모델**: GCN, GAT, SAGE 및 대표적 KD 알고리즘(CPF, LinkDist, SAIL, SDSS 등)
 
 ### 주요 결과
+
 1. **DKD 성능**: Resnet-20 모델에서 IRG, RKD, CC 등의 방법론이 전통적인 KD보다 CIFAR-100과 같은 복잡한 데이터셋에서 더 나은 성능 향상을 보였다.
 2. **GKD 성능**:
     - **노드 분류**: 전반적으로 KD와 CPF 방식이 학생 모델의 성능을 유의미하게 향상시켰다. 특히 CPF는 GCN과 GAT 구조에서 기본 KD보다 우수한 성능을 보였다.
@@ -75,9 +83,9 @@ $$L_{Self} = \sum_{l=1, \dots, l-1} D_{Self}(G^s_l(X), G^t_{l+1}(X))$$
 - **방법론의 일관성 부족**: 동일한 KD 알고리즘이라도 GNN 모델의 종류(GCN vs GAT vs SAGE)나 수행 작업(분류 vs 클러스터링)에 따라 성능 향상 폭이 크게 다르다. 이는 범용적으로 적용 가능한 그래프 KD 프레임워크 설계가 여전히 어렵다는 것을 시사한다.
 - **SKD의 잠재력**: 별도의 교사 모델을 학습시킬 필요가 없는 SKD가 효율성과 성능 면에서 매우 유망하지만, 아직 이론적 뒷받침이 부족하며 GNN에서의 층 간 지식 전이 방향(깊은 층 $\rightarrow$ 얕은 층)에 대한 정밀한 분석이 필요하다.
 - **한계점 및 미해결 과제**:
-    - **위치 선정 문제**: 출력층, 중간층, 구성 그래프 중 어떤 위치의 지식이 가장 핵심적인지에 대한 연구가 부족하다.
-    - **손실 함수 최적화**: KL, MSE, InfoCE 등 다양한 거리 측정 함수 중 특정 태스크에 최적인 함수가 무엇인지에 대한 명확한 기준이 없다.
-    - **해석 가능성**: KD가 왜 성능을 높이는지에 대한 수학적/이론적 해석이 부족하며, 대부분 경험적인 결과에 의존하고 있다.
+  - **위치 선정 문제**: 출력층, 중간층, 구성 그래프 중 어떤 위치의 지식이 가장 핵심적인지에 대한 연구가 부족하다.
+  - **손실 함수 최적화**: KL, MSE, InfoCE 등 다양한 거리 측정 함수 중 특정 태스크에 최적인 함수가 무엇인지에 대한 명확한 기준이 없다.
+  - **해석 가능성**: KD가 왜 성능을 높이는지에 대한 수학적/이론적 해석이 부족하며, 대부분 경험적인 결과에 의존하고 있다.
 
 ## 📌 TL;DR
 

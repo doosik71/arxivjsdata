@@ -19,6 +19,7 @@ Zoltán Lőrincz, Márton Szemenyei, Róbert Moni (2022)
 ## 🛠️ Methodology
 
 ### 1. Imitation Learning 알고리즘
+
 본 연구에서는 시뮬레이션 내에서 정책을 학습하기 위해 다음과 같은 세 가지 알고리즘을 사용하였다.
 
 - **Behavioral Cloning (BC):** 전문가의 상태-행동 쌍(state-action pairs)을 독립적인 데이터로 간주하고, 지도 학습(Supervised Learning)을 통해 전문가의 정책을 그대로 복제하는 가장 단순한 형태의 IL이다.
@@ -26,9 +27,11 @@ Zoltán Lőrincz, Márton Szemenyei, Róbert Moni (2022)
 - **Generative Adversarial Imitation Learning (GAIL):** GAN 구조를 채택한 역강화학습 알고리즘이다. 정책 네트워크(Generator)와 판별자(Discriminator)로 구성되며, 판별자는 에이전트의 궤적과 전문가의 궤적을 구분하려 하고, 정책 네트워크는 판별자를 속이도록 학습함으로써 보상 함수를 내재적으로 학습한다.
 
 ### 2. 전문가 데몬스트레이터 및 데이터 전처리
+
 전문가 데이터는 수정된 Pure Pursuit PD 제어기를 통해 생성되었다. 단순한 Pure Pursuit에 직선과 곡선 구간의 속도 및 조향 이득(gain) 값을 다르게 설정하고 미분(Derivative) 항을 추가하여 성능을 높였다.
 
 입력 데이터인 RGB 이미지($480 \times 640$)는 차원 축소와 학습 속도 향상을 위해 다음과 같이 전처리되었다.
+
 - **Downscaling:** $60 \times 80$ 해상도로 축소한다.
 - **Normalization:** 픽셀 값을 $[0.0, 1.0]$ 범위로 정규화한다.
 - GAIL의 경우, 추가적으로 ImageNet으로 사전 학습된 ResNet을 특징 추출기로 사용하였다.
@@ -36,20 +39,26 @@ Zoltán Lőrincz, Márton Szemenyei, Róbert Moni (2022)
 출력 행동(Action)은 PWM 신호를 직접 예측하는 대신, 가속도(Throttle, $[0, 1]$)와 조향각(Steering angle, $[-1, 1]$)이라는 두 개의 스칼라 값을 예측하도록 설계하였으며, 이를 사후에 PWM 신호로 변환하여 로봇에 적용하였다.
 
 ### 3. Sim-to-Real 전이 방법론
+
 시뮬레이션에서 학습된 모델을 실제 환경에 적용하기 위해 두 가지 기법을 도입하였다.
+
 - **Domain Randomization (DR):** 조명 조건, 텍스처, 카메라 파라미터, 로봇 크기 및 물리적 파라미터 등을 매 리셋마다 무작위로 변경하여 학습시킨다. 이를 통해 모델이 특정 환경에 오버피팅되지 않고 일반적인 특징을 학습하게 한다.
 - **Visual Domain Adaptation (VDA-UNIT):** UNIT(Unsupervised Image-to-Image Translation) 네트워크를 사용하여 시뮬레이션 도메인 $X_{sim}$과 실제 도메인 $X_{real}$을 공통 잠재 공간(Common latent space) $Z$로 매핑한다. 이 공통 공간 $Z$에서 제어 정책을 학습함으로써, 실제 환경의 이미지가 들어와도 시뮬레이션에서 학습한 정책을 그대로 사용할 수 있게 한다.
 
 ## 📊 Results
 
 ### 1. 시뮬레이션 환경 평가
+
 시뮬레이션에서는 주행 거리(Traveled distance), 생존 시간(Survival time), 횡방향 편차(Lateral deviation), 주요 위반 횟수(Major infractions)의 4가지 지표를 사용하였다.
+
 - **BC와 DAgger**는 베이스라인 모델보다 주행 거리와 생존 시간 면에서 우수한 성능을 보였다.
 - **GAIL**은 상대적으로 낮은 성능을 보였는데, 이는 학습 절차의 복잡성과 하이퍼파라미터 최적화의 어려움 때문으로 분석된다.
 - 베이스라인 모델은 횡방향 편차가 가장 낮았으나, 이는 단순히 주행 속도가 매우 느렸기 때문인 것으로 해석된다.
 
 ### 2. 실제 환경 평가
+
 실제 환경에서는 생존 시간과 방문한 도로 타일 수(Visited road tiles)를 측정하였다.
+
 - **DR**과 **VDA-UNIT**을 적용한 모델은 모두 성공적으로 우측 차선을 따라 주행하며 Sim-to-Real 문제를 해결하였다.
 - 반면, Sim-to-Real 기법을 적용하지 않은 **DAgger** 모델은 실제 환경에서 완전히 실패하였다. 이는 시뮬레이션과 실제 환경의 시각적 차이가 매우 크다는 것을 시사한다.
 - VDA-UNIT의 경우, 시뮬레이션 이미지를 실제 이미지처럼, 혹은 그 반대로 변환하는 품질이 매우 높음을 확인하였다.

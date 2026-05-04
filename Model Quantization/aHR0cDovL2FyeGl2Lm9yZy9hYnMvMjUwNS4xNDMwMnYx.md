@@ -23,9 +23,11 @@ Mengzhao Chen, Chaoyi Zhang, Jing Liu, Yutao Zeng, Zeyue Xue, Zhiheng Liu, Yunsh
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 및 시스템 구조
+
 본 연구는 Llama3 스타일의 모델 아키텍처를 기반으로 OLMo2-Mix-1124 데이터셋을 사용하여 훈련을 진행하였다. 모델 크기 $N \in \{74\text{M}, 145\text{M}, 297\text{M}, 595\text{M}\}$와 훈련 토큰 수 $D \in \{10\text{B}, 20\text{B}, 50\text{B}, 100\text{B}\}$의 조합으로 실험을 설계하였으며, 양자화 정밀도는 W4A4를 중심으로 분석하였다.
 
 ### Proposed QAT Scaling Law
+
 본 논문은 최종 Loss를 Chinchilla loss와 저비트 QAT로 인해 발생하는 추가적인 양자화 오차($\delta_p$)의 합으로 정의한다.
 
 $$L(N,D,G) = \frac{A}{N^\alpha} + \frac{B}{D^\beta} + E + \delta_p(N,D,G)$$
@@ -35,12 +37,14 @@ $$L(N,D,G) = \frac{A}{N^\alpha} + \frac{B}{D^\beta} + E + \delta_p(N,D,G)$$
 $$\delta_p(N,D,G) = \frac{k \cdot D^{\gamma_D} \cdot (\log_2(G))^{\gamma_G}}{N^{\gamma_N}}$$
 
 각 변수의 역할은 다음과 같다:
+
 - $N$: 모델 파라미터 수. $\gamma_N$은 모델 크기에 따른 오차 감소 민감도를 나타낸다.
 - $D$: 훈련에 사용된 토큰 수. $\gamma_D$는 데이터 증가에 따른 오차 증가 민감도를 나타낸다.
 - $G$: Quantization Group Size. $\log_2(G)$를 통해 granularity가 거칠어질수록 오차가 증가하는 경향을 반영하며, $\gamma_G$는 이에 대한 민감도를 나타낸다.
 - $k$: 피팅된 상수.
 
 ### 훈련 및 양자화 설정
+
 - **Quantizer**: 가중치 양자화에는 AbsMax를 사용하였으며, 활성화 함수 양자화에는 그룹 크기가 256 미만일 때는 AbsMax를, 256 이상일 때는 LAC(Learnable Activation Clipping)를 사용하여 Outlier 대응 능력을 높였다.
 - **Precision**: Integer(INT4) 형식을 채택하였으며, 이는 FP4와 유사하거나 더 나은 성능을 보임을 확인하였다.
 - **Evaluation Metric**: 검증 손실의 편향되지 않은 추정치로 smoothed training loss를 사용하였다.
@@ -48,17 +52,22 @@ $$\delta_p(N,D,G) = \frac{k \cdot D^{\gamma_D} \cdot (\log_2(G))^{\gamma_G}}{N^{
 ## 📊 Results
 
 ### 정량적 분석 및 경향성
+
 실험 결과, $\delta_{W4A4}$는 다음과 같은 뚜렷한 경향성을 보였다.
+
 1. **모델 크기($N$)**: 모델이 커질수록 양자화 오차는 일관되게 감소한다. (74M $\rightarrow$ 594M 증가 시 평균 34% 감소)
 2. **훈련 데이터($D$)**: 훈련 토큰 수가 많아질수록 양자화 오차는 증가한다. (10B $\rightarrow$ 100B 증가 시 평균 22% 증가)
 3. **Granularity($G$)**: 그룹 크기가 작아질수록(더 세밀할수록) 오차가 감소한다.
 
 ### 오차 분해 (Weight vs Activation)
+
 $\delta_{W4A4} \approx \delta_{W4A16} + \delta_{W16A4}$ 관계가 성립함을 확인하여, 전체 오차를 가중치 오차($\delta_{W4A16}$)와 활성화 오차($\delta_{W16A4}$)로 분해하여 분석하였다.
+
 - **가중치 오차**: 모델 크기($N$)와 훈련 데이터($D$)의 변화에 훨씬 민감하게 반응한다.
 - **활성화 오차**: 양자화 granularity($G$)의 변화에 매우 민감하며, 이는 활성화 값의 Outlier 때문이다.
 
 ### FC2Proj 레이어 병목 현상
+
 Kurtosis(첨도) 분석을 통해 FC2Proj 레이어의 입력값이 다른 레이어보다 압도적으로 높은 Kurtosis를 가짐을 발견하였다. 이는 SwiGLU 모듈의 gating mechanism이 Outlier를 증폭시키기 때문이며, 결과적으로 W4A4 QAT의 주된 병목 지점이 된다. 이를 해결하기 위해 FC2Proj 입력만 8-bit로 유지하는 Mixed-precision을 적용했을 때, $G=256$ 환경에서 양자화 오차가 42.9%까지 감소하는 효과를 보였다.
 
 ## 🧠 Insights & Discussion

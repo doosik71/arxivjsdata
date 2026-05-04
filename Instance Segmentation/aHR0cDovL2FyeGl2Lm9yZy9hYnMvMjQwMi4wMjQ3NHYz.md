@@ -27,7 +27,9 @@ Farnoosh Arefi, Amir M. Mansourian, Shohreh Kasaei (2024)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 본 논문의 인스턴스 분할 프로세스는 다음과 같은 단계로 구성된다:
+
 1. DINO 백본을 통해 특징 맵 $F$를 추출한다.
 2. NCR 모듈을 통해 노이즈 채널을 제거하여 안정화된 특징 맵 $F'$를 얻고, 이를 이용해 전경-배경 분할 마스크를 생성한다.
 3. $F'$에 DCR 모듈을 적용하여 인스턴스 구분 능력이 높은 채널만 남긴 $F''$를 생성한다.
@@ -35,6 +37,7 @@ Farnoosh Arefi, Amir M. Mansourian, Shohreh Kasaei (2024)
 5. 라플라시안 행렬의 고유벡터를 이용해 픽셀들을 클러스터링함으로써 최종 인스턴스 마스크를 추출한다.
 
 ### Noise Channel Reduction (NCR)
+
 NCR은 채널의 무작위성(Randomness)을 측정하는 엔트로피를 기준으로 채널을 필터링한다. 먼저 각 채널 $c$에 대해 히스토그램을 기반으로 확률 분포 함수(PDF)를 계산한다:
 $$\text{PDF}(c) = \frac{\text{Hist}(c)}{H \times W}$$
 이후, 다음과 같이 엔트로피를 계산하여 값이 낮은(안정적인) 상위 $M$개의 채널만 유지한다:
@@ -42,11 +45,13 @@ $$\text{Entropy}(c) = -\sum_{b=1}^{B} \text{PDF}_b(c) \cdot \log_2(\text{PDF}_b(
 여기서 $B$는 빈(bin)의 개수이며 본 논문에서는 30으로 설정하였다.
 
 ### Deviation-based Channel Reduction (DCR)
+
 DCR은 인스턴스 간의 변별력을 높이기 위해 표준편차(STD)가 높은 채널을 선택한다. NCR을 거친 $F'$에서 각 채널의 표준편차를 계산한다:
 $$\text{STD}(c) = \sqrt{\frac{1}{H \times W} \sum_{x=1}^{H \times W} (x - \bar{x})^2}$$
 표준편차가 낮은 채널은 인스턴스 간의 값 차이가 적어 구분 능력이 떨어지므로, STD가 높은 상위 $N$개의 채널만을 선택하여 $F''$를 구성한다.
 
 ### Bray-curtis over Chebyshev (BoC) Metric
+
 기존의 내적 방식은 특정 픽셀의 값이 비정상적으로 높거나 낮을 때 유사도 결과가 왜곡되는 문제가 있다. 이를 해결하기 위해 분포 기반의 Bray-Curtis 유사도와 거리 기반의 Chebyshev 유사도를 결합한다.
 
 먼저, 두 특징 벡터 $U, T$ 사이의 Bray-Curtis 거리와 유사도는 다음과 같다:
@@ -60,11 +65,13 @@ $$\text{BoC} = \frac{\text{BC}_{\text{sim}}}{\text{CH}_{\text{sim}}}$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: YouTube-VIS 2019, OVIS(인스턴스 분할), PascalVOC 2012, Davis 2016(전경-배경 분할).
 - **지표**: 전경-배경 분할은 F-score를, 인스턴스 분할은 mIoU(mean Intersection over Union)를 사용한다.
 - **백본**: ViT-s16 (DINO).
 
 ### 주요 결과
+
 1. **전경-배경 분할**: NCR 모듈을 적용하여 엔트로피가 낮은 채널의 일부(약 1/3~1/5)만 유지했을 때, 모든 채널을 사용했을 때보다 F-score가 향상되었다. 이는 자가 지도 학습 모델이 생성하는 특징 맵에 실제 작업에 방해가 되는 노이즈 채널이 포함되어 있음을 입증한다.
 2. **인스턴스 분할 성능**: 제안한 BoC 지표는 YouTube-VIS 2019에서 34.41%, OVIS에서 36.14%의 mIoU를 기록하며 기존의 내적(Dot Product) 및 L1, L2, Cosine 유사도보다 우수한 성능을 보였다.
 3. **강건성 분석**:
@@ -73,6 +80,7 @@ $$\text{BoC} = \frac{\text{BC}_{\text{sim}}}{\text{CH}_{\text{sim}}}$$
    - **인스턴스 간 거리**: 인스턴스들이 서로 밀접하게 붙어 있는 상황에서 BoC의 성능 향상 폭이 더욱 두드러졌다.
 
 ### Ablation Study
+
 구성 요소별 기여도를 분석한 결과, Baseline(31.75%) $\rightarrow$ NCR 추가(32.92%) $\rightarrow$ NCR+BoC 추가(33.62%) $\rightarrow$ NCR+DCR+BoC 모두 적용(34.41%) 순으로 성능이 향상되었다. 이는 각 모듈이 상호 보완적으로 작동하여 최종 성능을 극대화함을 보여준다.
 
 ## 🧠 Insights & Discussion

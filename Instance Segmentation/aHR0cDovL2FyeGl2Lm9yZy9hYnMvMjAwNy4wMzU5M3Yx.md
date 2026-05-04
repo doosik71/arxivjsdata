@@ -12,9 +12,9 @@ Aadarsh Jha, Haichun Yang, Ruining Deng, Meghan E. Kapp, Agnes B. Fogo, and Yuan
 
 본 연구의 핵심 아이디어는 탐지(Detection)와 분할(Segmentation)을 분리하여 해상도와 정확도 사이의 트레이드오프를 해결하는 것이다. 구체적인 설계 아이디어는 다음과 같다.
 
-1.  **Coarse-to-Fine 설계**: 계산 효율성을 위해 저해상도 이미지에서 먼저 사구체를 탐지하고, 탐지된 영역에 대해서만 고해상도 이미지를 사용하여 정밀하게 분할을 수행하는 detect-then-segment 파이프라인을 제안한다.
-2.  **최적 설정 탐색**: 단순한 모델 제안을 넘어, 두 가지 세그멘테이션 백본(U-Net, DeepLabv3), 여섯 가지 입력 해상도($512^2, 256^2, 128^2, 64^2, 32^2, 28^2$), 그리고 두 가지 색 공간(RGB, LAB)을 조합하여 고해상도 WSI 분할을 위한 최적의 전략을 정량적으로 분석한다.
-3.  **프레임워크 비교 분석**: end-to-end 방식(Mask R-CNN)과 제안하는 detect-then-segment 방식의 성능을 직접 비교하여, 고해상도 의료 영상 데이터에서의 최적 접근 방식을 제시한다.
+1. **Coarse-to-Fine 설계**: 계산 효율성을 위해 저해상도 이미지에서 먼저 사구체를 탐지하고, 탐지된 영역에 대해서만 고해상도 이미지를 사용하여 정밀하게 분할을 수행하는 detect-then-segment 파이프라인을 제안한다.
+2. **최적 설정 탐색**: 단순한 모델 제안을 넘어, 두 가지 세그멘테이션 백본(U-Net, DeepLabv3), 여섯 가지 입력 해상도($512^2, 256^2, 128^2, 64^2, 32^2, 28^2$), 그리고 두 가지 색 공간(RGB, LAB)을 조합하여 고해상도 WSI 분할을 위한 최적의 전략을 정량적으로 분석한다.
+3. **프레임워크 비교 분석**: end-to-end 방식(Mask R-CNN)과 제안하는 detect-then-segment 방식의 성능을 직접 비교하여, 고해상도 의료 영상 데이터에서의 최적 접근 방식을 제시한다.
 
 ## 📎 Related Works
 
@@ -25,51 +25,56 @@ Aadarsh Jha, Haichun Yang, Ruining Deng, Meghan E. Kapp, Agnes B. Fogo, and Yuan
 ## 🛠️ Methodology
 
 ### 전체 파이프라인 구조
+
 본 논문이 제안하는 detect-then-segment 방법론은 크게 두 단계로 구성된다.
 
-1.  **Detection (탐지 단계)**: Mask R-CNN을 사용하여 저해상도 WSI 이미지에서 사구체의 바운딩 박스(Bounding Box)를 찾아낸다.
-2.  **Segmentation (분할 단계)**: 탐지된 바운딩 박스 영역을 원본 고해상도 이미지에서 크롭(Crop)한 뒤, 별도의 고해상도 세그멘테이션 네트워크(U-Net 또는 DeepLabv3)에 입력하여 픽셀 단위의 마스크를 생성한다.
+1. **Detection (탐지 단계)**: Mask R-CNN을 사용하여 저해상도 WSI 이미지에서 사구체의 바운딩 박스(Bounding Box)를 찾아낸다.
+2. **Segmentation (분할 단계)**: 탐지된 바운딩 박스 영역을 원본 고해상도 이미지에서 크롭(Crop)한 뒤, 별도의 고해상도 세그멘테이션 네트워크(U-Net 또는 DeepLabv3)에 입력하여 픽셀 단위의 마스크를 생성한다.
 
 ### 주요 구성 요소 및 학습 절차
 
--   **탐지 네트워크**: ResNet-101을 백본으로 하고 Feature Pyramid Network (FPN)를 결합한 Mask R-CNN을 사용한다. WSI 이미지를 $4\mu m/\text{pixel}$ 해상도로 다운샘플링하여 학습 및 추론을 진행한다.
--   **분할 네트워크**: 
-    -   **U-Net**: 인코더-디코더 구조의 Fully Convolutional Network (FCN)로, 다운샘플링을 통해 컨텍스트를 확보하고 빌리니어 보간법(bilinear interpolation)을 통해 원래 크기로 복원한다.
-    -   **DeepLabv3**: 인코더 단계에서 Atrous Convolution(dilated convolution)을 사용하여 더 넓은 수용 영역(receptive field)을 확보함으로써 고해상도 특징을 유지한다.
--   **입력 데이터 처리**: 
-    -   색 공간은 RGB와 LAB 두 가지를 테스트한다.
-    -   이미지 해상도는 $512 \times 512$부터 $28 \times 28$까지 6단계로 조절하여 각 모델의 성능을 평가한다.
--   **추론 및 평가 절차**: 
-    -   분할 네트워크에서 생성된 예측 마스크는 다시 원본 해상도(또는 비교 기준인 $512 \times 512$)로 업샘플링된다.
-    -   최종 성능은 정답 마스크(Ground Truth)와 비교하여 $\text{Dice Similarity Coefficient (DSC)}$를 통해 측정한다.
+- **탐지 네트워크**: ResNet-101을 백본으로 하고 Feature Pyramid Network (FPN)를 결합한 Mask R-CNN을 사용한다. WSI 이미지를 $4\mu m/\text{pixel}$ 해상도로 다운샘플링하여 학습 및 추론을 진행한다.
+- **분할 네트워크**:
+  - **U-Net**: 인코더-디코더 구조의 Fully Convolutional Network (FCN)로, 다운샘플링을 통해 컨텍스트를 확보하고 빌리니어 보간법(bilinear interpolation)을 통해 원래 크기로 복원한다.
+  - **DeepLabv3**: 인코더 단계에서 Atrous Convolution(dilated convolution)을 사용하여 더 넓은 수용 영역(receptive field)을 확보함으로써 고해상도 특징을 유지한다.
+- **입력 데이터 처리**:
+  - 색 공간은 RGB와 LAB 두 가지를 테스트한다.
+  - 이미지 해상도는 $512 \times 512$부터 $28 \times 28$까지 6단계로 조절하여 각 모델의 성능을 평가한다.
+- **추론 및 평가 절차**:
+  - 분할 네트워크에서 생성된 예측 마스크는 다시 원본 해상도(또는 비교 기준인 $512 \times 512$)로 업샘플링된다.
+  - 최종 성능은 정답 마스크(Ground Truth)와 비교하여 $\text{Dice Similarity Coefficient (DSC)}$를 통해 측정한다.
 
 ## 📊 Results
 
 ### 실험 설정
--   **데이터셋**: 신장 바늘 생검 및 신절제술 조직에서 추출한 WSI 이미지.
--   **지표**: $\text{Dice Similarity Coefficient (DSC)}$의 평균, 중앙값, 표준편차.
--   **비교 대상**: End-to-End Mask R-CNN $\leftrightarrow$ Detect-then-Segment (U-Net / DeepLabv3).
+
+- **데이터셋**: 신장 바늘 생검 및 신절제술 조직에서 추출한 WSI 이미지.
+- **지표**: $\text{Dice Similarity Coefficient (DSC)}$의 평균, 중앙값, 표준편차.
+- **비교 대상**: End-to-End Mask R-CNN $\leftrightarrow$ Detect-then-Segment (U-Net / DeepLabv3).
 
 ### 주요 결과
-1.  **프레임워크 비교 (Automatic Detection)**:
-    -   **Detect-then-Segment**: DeepLabv3 백본을 사용하고 $512 \times 512$ 해상도로 분할을 수행했을 때, **평균 $\text{DSC } 0.953$**을 기록하였다.
-    -   **End-to-End Mask R-CNN**: 동일 조건에서 **평균 $\text{DSC } 0.902$**를 기록하였다.
-    -   결과적으로 $\text{DSC}$ 관점에서 제안된 2단계 방식이 end-to-end 방식보다 통계적으로 유의미하게 우수함($p < 0.01$)을 확인하였다.
 
-2.  **해상도 및 백본 분석 (Manual Detection)**:
-    -   **해상도 영향**: $128 \times 128$과 $256 \times 256$ 해상도가 전반적으로 가장 안정적이고 높은 성능을 보였다. $64 \times 64$ 이하의 저해상도에서는 upsampling 후 $\text{DSC}$가 급격히 하락하는 현상이 관찰되었다.
-    -   **백본 특성**: DeepLabv3는 고해상도($512^2, 256^2, 128^2$)에서 U-Net보다 우수한 성능을 보였으나, 저해상도($64^2$ 이하)에서는 U-Net이 상대적으로 더 나은 결과를 냈다.
-    -   **색 공간 영향**: RGB와 LAB 색 공간 간의 성능 차이는 무시할 수 있는 수준(negligible)으로 나타났다.
+1. **프레임워크 비교 (Automatic Detection)**:
+    - **Detect-then-Segment**: DeepLabv3 백본을 사용하고 $512 \times 512$ 해상도로 분할을 수행했을 때, **평균 $\text{DSC } 0.953$**을 기록하였다.
+    - **End-to-End Mask R-CNN**: 동일 조건에서 **평균 $\text{DSC } 0.902$**를 기록하였다.
+    - 결과적으로 $\text{DSC}$ 관점에서 제안된 2단계 방식이 end-to-end 방식보다 통계적으로 유의미하게 우수함($p < 0.01$)을 확인하였다.
+
+2. **해상도 및 백본 분석 (Manual Detection)**:
+    - **해상도 영향**: $128 \times 128$과 $256 \times 256$ 해상도가 전반적으로 가장 안정적이고 높은 성능을 보였다. $64 \times 64$ 이하의 저해상도에서는 upsampling 후 $\text{DSC}$가 급격히 하락하는 현상이 관찰되었다.
+    - **백본 특성**: DeepLabv3는 고해상도($512^2, 256^2, 128^2$)에서 U-Net보다 우수한 성능을 보였으나, 저해상도($64^2$ 이하)에서는 U-Net이 상대적으로 더 나은 결과를 냈다.
+    - **색 공간 영향**: RGB와 LAB 색 공간 간의 성능 차이는 무시할 수 있는 수준(negligible)으로 나타났다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점 및 분석
+
 본 연구는 단순히 최신 모델을 적용한 것이 아니라, 고해상도 의료 영상에서 발생하는 '정보 손실'이라는 근본적인 문제에 집중하였다. 특히 end-to-end 모델이 내부적으로 수행하는 극심한 다운샘플링이 실제 분할 정확도를 떨어뜨린다는 점을 정량적으로 입증하였다. 이를 통해 고해상도 객체 분할 시에는 탐지와 분할을 분리하고, 분할 단계에서 적절한 해상도를 유지하는 것이 훨씬 유리함을 보여주었다.
 
 ### 한계 및 비판적 해석
-1.  **GPU 메모리 제약**: 연구진은 GPU 메모리 한계로 인해 최대 학습 해상도를 $512 \times 512$로 제한하였다. 실제 사구체 크기가 $1,000 \times 1,000$ 픽셀을 넘는 경우가 많으므로, 더 높은 해상도에서의 실험이 이루어졌다면 성능 향상 폭이 더 컸을 가능성이 있다.
-2.  **데이터 일반화**: 본 연구는 신장 사구체에 국한되어 진행되었다. 비록 저자들은 다른 신장 조직 객체에도 적용 가능할 것이라 주장하지만, 혈관(veins)이나 세뇨관(tubules)과 같이 형태적 특성이 다른 객체에서도 동일한 결과가 나올지는 추가 검증이 필요하다.
-3.  **계산 비용**: end-to-end 방식보다 정확도는 높지만, 두 단계의 네트워크를 거쳐야 하므로 추론 속도 및 계산 복잡도가 증가하는 트레이드오프가 존재한다.
+
+1. **GPU 메모리 제약**: 연구진은 GPU 메모리 한계로 인해 최대 학습 해상도를 $512 \times 512$로 제한하였다. 실제 사구체 크기가 $1,000 \times 1,000$ 픽셀을 넘는 경우가 많으므로, 더 높은 해상도에서의 실험이 이루어졌다면 성능 향상 폭이 더 컸을 가능성이 있다.
+2. **데이터 일반화**: 본 연구는 신장 사구체에 국한되어 진행되었다. 비록 저자들은 다른 신장 조직 객체에도 적용 가능할 것이라 주장하지만, 혈관(veins)이나 세뇨관(tubules)과 같이 형태적 특성이 다른 객체에서도 동일한 결과가 나올지는 추가 검증이 필요하다.
+3. **계산 비용**: end-to-end 방식보다 정확도는 높지만, 두 단계의 네트워크를 거쳐야 하므로 추론 속도 및 계산 복잡도가 증가하는 트레이드오프가 존재한다.
 
 ## 📌 TL;DR
 

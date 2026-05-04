@@ -32,36 +32,45 @@ Saurav Singla, Aarav Singla, Advik Gupta, Parnika Gupta (2024/2025)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 본 프레임워크는 사전 학습된 BERT-base 인코더를 특징 추출기로 사용한다. 입력 텍스트 $x$는 BERT를 통해 768차원의 벡터 $\mathbf{z} = f_\theta(x)$로 변환되며, 이후 메타 학습 알고리즘에 따라 분류 또는 거리 계산이 수행된다.
 
 ### 메타 학습 알고리즘
 
 #### 1. Model-Agnostic Meta-Learning (MAML)
+
 MAML은 새로운 태스크에 대해 몇 번의 경사 하강법(Gradient step)만으로 빠르게 최적화될 수 있는 초기 파라미터 $\theta$를 찾는 최적화 기반 접근법이다.
+
 - **내부 루프(Inner-loop)**: 소수의 서포트 셋 $\mathcal{D}_{\text{support}}$에 대해 손실 함수 $\mathcal{L}_{\text{support}}$를 계산하고 파라미터를 업데이트한다.
   $$\theta' = \theta - \alpha \nabla_\theta \mathcal{L}_{\text{support}}(\theta)$$
 - **외부 루프(Outer-loop)**: 업데이트된 $\theta'$를 쿼리 셋 $\mathcal{D}_{\text{query}}$에 적용하여 쿼리 손실 $\mathcal{L}_{\text{query}}(\theta')$를 계산하고, 이를 최소화하도록 원래의 $\theta$를 업데이트한다.
   $$\theta \leftarrow \theta - \beta \nabla_\theta \mathcal{L}_{\text{query}}(\theta')$$
 
 #### 2. Prototypical Networks (ProtoNet)
+
 ProtoNet은 각 클래스의 중심점(Prototype)을 학습하고, 쿼리 데이터와 중심점 간의 거리를 측정하는 메트릭 학습 기반 접근법이다.
+
 - **프로토타입 생성**: 서포트 셋의 정상 데이터 임베딩 평균을 $\mathbf{c}_{\text{norm}}$, 이상치 데이터 임베딩 평균을 $\mathbf{c}_{\text{anom}}$으로 정의한다.
 - **분류 결정**: 쿼리 데이터 $\mathbf{z}$와 각 프로토타입 간의 유클리드 거리 $d(\mathbf{z}, \mathbf{c})$를 계산하며, 이상치일 확률은 다음과 같이 정의된다.
   $$P(\text{anomaly}) = \sigma\big(d(\mathbf{z}, \mathbf{c}_{\text{norm}}) - d(\mathbf{z}, \mathbf{c}_{\text{anom}})\big)$$
 
 ### 교차 도메인 에피소드 샘플링 (Cross-Domain Sampling)
+
 본 논문의 핵심 제안으로, 메타 학습 과정의 일부 에피소드(약 25%)를 다음과 같이 구성한다.
+
 - **구성 방식**: 정상 데이터는 도메인 $A$에서 샘플링하고, 이상치 데이터는 도메인 $B$에서 샘플링하여 하나의 태스크로 묶는다.
 - **목적**: 예를 들어 '정상 트윗'들 사이에 '스팸 메시지'를 섞어 놓음으로써, 모델이 도메인 특유의 주제나 단어에 매몰되지 않고 "정상적인 문맥에서 벗어난 이질적인 텍스트"라는 일반적인 속성을 학습하게 한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: SMS-Spam (스팸), COVID-Fake (가짜 뉴스), HateSpeech (혐오 표현) 총 3종을 사용하였다.
 - **조건**: 학습 데이터의 이상치 비율을 약 3%로 낮게 설정하여 실제 환경의 불균형을 모사하였다.
 - **지표**: ROC-AUC, Average Precision (AP), F1-score를 사용하였다.
 
 ### 주요 결과
+
 실험 결과, 메타 학습 기반 방법론이 모든 데이터셋에서 베이스라인을 압도하였다.
 
 | Method | SMS-Spam (AUC) | COVID-Fake (AUC) | HateSpeech (AUC) |
@@ -78,9 +87,11 @@ ProtoNet은 각 클래스의 중심점(Prototype)을 학습하고, 쿼리 데이
 ## 🧠 Insights & Discussion
 
 ### 강점 및 분석
+
 본 연구는 메타 학습이 단순히 데이터 부족 문제를 해결하는 것을 넘어, 서로 다른 도메인 간의 '이상치라는 개념'을 전이(Transfer)시킬 수 있음을 보여주었다. 특히 Leave-one-out 실험(한 도메인을 완전히 제외하고 학습 후 테스트)에서도 베이스라인보다 높은 성능을 기록한 점은, 본 모델이 새로운 유형의 이상치에 대해서도 매우 강건한 사전 지식(Prior)을 가지고 있음을 입증한다.
 
 ### 한계 및 비판적 해석
+
 1. **인위적인 에피소드 구성**: 교차 도메인 샘플링에서 '트윗들 사이의 스팸'과 같은 구성은 현실적으로 발생하기 어려운 인위적인 시나리오이다. 다만, 저자들은 이러한 인위성이 오히려 모델의 결정 경계를 보수적으로 만들어 재현율(Recall)을 높이는 효과를 가져왔다고 주장한다.
 2. **오탐지(False Positive) 가능성**: 교차 도메인 학습을 통해 이상치에 민감해진 모델은, 정상 데이터임에도 불구하고 학습 데이터의 정상 분포에서 벗어난 희귀한 주제의 텍스트를 이상치로 오인할 가능성이 있다.
 3. **최소 레이블 의존성**: 여전히 적은 수(5-10개)의 레이블이 필요하므로, 완전히 레이블이 없는 zero-shot 환경에서의 성능에 대해서는 논의가 부족하다.

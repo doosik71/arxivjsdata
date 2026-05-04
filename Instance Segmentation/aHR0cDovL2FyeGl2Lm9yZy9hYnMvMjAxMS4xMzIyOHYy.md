@@ -4,7 +4,7 @@ Florin C. Walter, Sebastian Damrich, Fred A. Hamprecht (2021)
 
 ## 🧩 Problem to Solve
 
-본 논문은 생의학 이미지(biomedical images)에서 서로 겹쳐져 있는 객체들의 인스턴스 분할(instance segmentation) 문제를 해결하고자 한다. 특히 현미경 이미지 내의 세포들과 같이 객체들이 밀집되어 있고 투영 과정에서 서로 겹쳐 보일 때, 기존의 분할 방법들은 어려움을 겪는다. 
+본 논문은 생의학 이미지(biomedical images)에서 서로 겹쳐져 있는 객체들의 인스턴스 분할(instance segmentation) 문제를 해결하고자 한다. 특히 현미경 이미지 내의 세포들과 같이 객체들이 밀집되어 있고 투영 과정에서 서로 겹쳐 보일 때, 기존의 분할 방법들은 어려움을 겪는다.
 
 이 문제의 핵심적인 어려움은 두 가지이다. 첫째, 객체가 겹치는 영역에서는 해당 픽셀이 어떤 객체에 속하는지 모호하기 때문에, 객체의 형태를 정의하는 파라미터(예: Star Distances)나 객체 존재 확률(Object Probability)을 정의하기 어렵다. 둘째, 일반적인 Non-Maximum Suppression(NMS) 과정에서는 두 제안(proposal)의 IoU(Intersection over Union)가 높을 경우 하나를 제거하는데, 실제로 객체가 겹쳐 있는 경우에는 서로 다른 두 객체임에도 불구하고 IoU가 높게 측정되어 실제 객체가 삭제되는 문제가 발생한다.
 
@@ -25,6 +25,7 @@ Florin C. Walter, Sebastian Damrich, Fred A. Hamprecht (2021)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 MultiStar는 UNet 백본을 기반으로 하며, 세 개의 출력 브랜치를 통해 각각 Object Probability, Star Distances, 그리고 Overlap Probability를 예측한다. 예측된 결과들은 이후 제안 샘플링 과정과 수정된 NMS 과정을 거쳐 최종 인스턴스 마스크로 변환된다.
 
 ### 주요 구성 요소 및 절차
@@ -44,13 +45,15 @@ $$I \equiv \sum_{p \in A \cap B} (1 - P_{over}(p))$$
 이렇게 계산된 $I$를 이용하여 IoU를 구하면, 실제로 겹쳐진 객체들 사이의 IoU는 낮게 측정되어 NMS에 의해 제거되지 않고 보존된다. 반면, 겹침이 예측되지 않은 영역에서의 중복은 여전히 높은 IoU를 가져 제거된다.
 
 ### 모델 아키텍처
+
 - **Backbone**: 5개 레벨(16, 32, 64, 128, 256 채널)을 가진 generic UNet을 사용한다. 각 블록은 두 번의 $3 \times 3$ 합성곱, Batch Normalization, ReLU, 그리고 max-pooling 또는 upsampling으로 구성된다.
 - **Output Branches**:
-    - **Object Probability**: 단일 채널, Sigmoid 활성화 함수.
-    - **Overlap Probability**: 단일 채널, Sigmoid 활성화 함수.
-    - **Star Distances**: 32개 방향에 대한 32개 채널, ReLU 활성화 함수.
+  - **Object Probability**: 단일 채널, Sigmoid 활성화 함수.
+  - **Overlap Probability**: 단일 채널, Sigmoid 활성화 함수.
+  - **Star Distances**: 32개 방향에 대한 32개 채널, ReLU 활성화 함수.
 
 ### 훈련 목표 및 손실 함수
+
 네트워크 파라미터 $\theta$와 태스크별 불확실성(task uncertainties) $\sigma_i$를 함께 최적화하는 정규화된 가중 합 손실 함수를 사용한다.
 
 $$L(\theta, \sigma_i) = \frac{1}{\sigma_{over}^2} L_{over}(\theta) + \frac{1}{\sigma_{obj}^2} L_{obj}(\theta) + \frac{1}{\sigma_{dist}^2} L_{dist}(\theta) + \log(\sigma_{over} \sigma_{obj} \sigma_{dist})$$
@@ -60,16 +63,19 @@ $$L(\theta, \sigma_i) = \frac{1}{\sigma_{over}^2} L_{over}(\theta) + \frac{1}{\s
 ## 📊 Results
 
 ### 실험 설정
-- **데이터셋**: 
-    - **OSC-ISBI**: 자궁경부 세포 이미지 데이터셋.
-    - **DSB-OV**: 기존의 비겹침 데이터셋(DSB 2018)에 객체를 무작위로 복제, 회전, 이동시켜 인위적으로 겹침(최소 15% 픽셀)을 생성한 합성 데이터셋.
+
+- **데이터셋**:
+  - **OSC-ISBI**: 자궁경부 세포 이미지 데이터셋.
+  - **DSB-OV**: 기존의 비겹침 데이터셋(DSB 2018)에 객체를 무작위로 복제, 회전, 이동시켜 인위적으로 겹침(최소 15% 픽셀)을 생성한 합성 데이터셋.
 - **지표**: Dice Coefficient (DC), Pixel-based True Positive($TP_p$) / False Positive($FP_p$) rates, Object-based False Negative($FN_o$) rate, 그리고 Average Precision (AP).
 
 ### 정량적 결과
+
 - **OSC-ISBI 데이터셋**: MultiStar는 기존의 SOTA 방법들(Isoo DL, Diskmask)과 비교하여 DC, $FN_o$, $TP_p$ 측면에서 경쟁력 있는 수치를 보였다. 특히, 다른 방법들은 핵(nuclei) 어노테이션을 함께 사용했지만 MultiStar는 세포질(cytoplasm) 어노테이션만으로 학습했음에도 유사한 성능을 낸다는 점이 고무적이다.
 - **DSB-OV 데이터셋**: 다양한 $\tau$ (IoU 임계값)에서 StarDist와 비교했을 때, MultiStar가 모든 구간에서 유의미하게 높은 AP를 기록하였다. 특히 StarDist는 겹쳐진 객체들을 하나로 합쳐버리는 경향이 있는 반면, MultiStar는 이를 효과적으로 분리해냈다.
 
 ### 정성적 결과
+
 실험 결과, MultiStar는 겹쳐진 세포들의 경계를 명확히 구분하여 개별 인스턴스로 검출하는 능력이 StarDist보다 훨씬 뛰어남을 보여주었다.
 
 ## 🧠 Insights & Discussion

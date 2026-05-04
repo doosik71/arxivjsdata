@@ -25,9 +25,11 @@ Zheng Zhan, Liliang Ren, Shuohang Wang, Liyuan Liu, Yang Liu, Yeyun Gong, Yanzhi
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
-RoM은 Mamba 레이어 내의 주요 선형 투영 층인 **Convolution Projection ($\text{Conv Proj}$), Gate Projection ($\text{Gate Proj}$), 그리고 Output Projection ($\text{Out Proj}$)**을 전문가 네트워크의 집합으로 구성한다. 
+
+RoM은 Mamba 레이어 내의 주요 선형 투영 층인 **Convolution Projection ($\text{Conv Proj}$), Gate Projection ($\text{Gate Proj}$), 그리고 Output Projection ($\text{Out Proj}$)**을 전문가 네트워크의 집합으로 구성한다.
 
 ### 공유 라우팅 메커니즘 (Shared Routing Mechanism)
+
 RoM은 하나의 라우터를 통해 선택된 Top-K 전문가를 결정하고, 이 결정을 세 가지 투영 층에서 공유한다. 라우팅 가중치는 다음과 같이 계산된다:
 
 $$P(X_t) = \text{Softmax}(X_t \cdot W_r)$$
@@ -36,6 +38,7 @@ $$R_i(X_t) = P(X_t) \cdot \mathbb{1}_{i \in \text{TopK}(P)}$$
 여기서 $W_r \in \mathbb{R}^{D_m \times N}$은 학습 가능한 라우터 파라미터이며, $\mathbb{1}$은 지시 함수(Indicator function)이다.
 
 ### 상세 연산 절차 및 방정식
+
 1. **Gate Projection:** 먼저 $\text{Gate Proj}$에서 공유 라우팅을 통해 가중합을 계산한다.
    $$G = \text{SiLU}\left( \sum_{i=1}^{N} \mathbb{1}_{i \in \text{TopK}(\text{Softmax}(X_t \cdot W_r))} \cdot X_t W_{g,i} \right)$$
 
@@ -47,17 +50,20 @@ $$R_i(X_t) = P(X_t) \cdot \mathbb{1}_{i \in \text{TopK}(P)}$$
    $$E_i(Y_t, X_t) = Y_t \odot G W_{out,i}$$
 
 ### 설계 선택 (Design Choices)
+
 - **선택적 확장:** 파라미터 수가 상대적으로 적은 $x \text{ Proj}, dt \text{ Proj}, \text{Conv 1D}$ 층은 모든 전문가가 공유하는 단일 파라미터 셋을 사용한다. 이는 Multi-Query Attention에서 KV 헤드를 공유하는 방식과 유사하며, 불필요한 파라미터 증가를 막고 효율성을 높인다.
 - **부하 균형 (Load Balance):** 일반적으로 MoE 모델은 Auxiliary loss를 통해 전문가 간 부하를 균등하게 배분하지만, RoM은 별도의 부하 균형 손실 함수 없이도 자연스럽게 부하가 분산됨을 확인하였다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** SlimPajama (20B 토큰 사전 학습)
 - **평가 지표:** Perplexity (PPL) 및 다운스트림 태스크(LAMBADA, HellaSwag, PIQA, ARC-Easy, ARC-Challenge, WinoGrande)의 평균 정확도
 - **모델 규모:** 활성 파라미터(Active Params) 115M부터 1.3B까지, 총 파라미터 최대 10B 규모로 실험 수행
 
 ### 주요 결과
+
 1. **Dense Mamba 대비 효율성:** RoM은 동일한 PPL 성능을 내기 위해 Dense Mamba 모델보다 최대 $2.3\times$ 적은 활성 파라미터만으로도 충분함을 보였다. (예: RoM 1.3B 모델은 총 10B 파라미터를 가지나, 활성 파라미터는 훨씬 적음)
 2. **하이브리드 모델(Samba) 적용:** Samba 모델에 RoM을 적용했을 때, 유사한 성능을 내는 Dense 확장 모델 대비 **FLOPS를 23% 절감**하였다.
 3. **길이 외삽(Length Extrapolation) 능력:** 4K, 8K, 16K의 다양한 훈련 시퀀스 길이에서 일관된 PPL 성능을 보였으며, 훈련 시보다 더 긴 시퀀스에 대해서도 우수한 일반화 능력을 유지하였다.
@@ -66,14 +72,18 @@ $$R_i(X_t) = P(X_t) \cdot \mathbb{1}_{i \in \text{TopK}(P)}$$
 ## 🧠 Insights & Discussion
 
 ### RoM이 효과적인 이유
+
 본 논문은 RoM의 성공 요인을 **"통합 전문가 경로(Unified Expert Pathway)"** 개념으로 설명한다. Mamba의 투영 층들은 기능적으로 상호 의존적이다. 만약 각 층마다 독립적인 라우터를 둔다면, 하나의 토큰이 층마다 서로 다른 전문가를 거치게 되어 일관성 없는 표현이 생성될 위험이 크다. 반면, 공유 라우팅은 토큰 하나에 대해 최적화된 일련의 전문가 셋(Pathway)을 지정함으로써, 전문가들이 더 일관되고 전문화된 기능을 학습할 수 있게 한다.
 
 ### 아키텍처별 전략의 차이
+
 실험을 통해 SSM 종류에 따라 최적의 MoE 적용 방식이 다름을 발견하였다.
+
 - **Mamba2, Gated DeltaNet:** 구조가 더 통합적이며 단순하므로, 모든 주요 투영 층을 전문가화하는 **포괄적 전문가화(Comprehensive Expertization)**가 효과적이다.
 - **Original Mamba:** 매우 작은 특수 파라미터 층들이 존재하므로, 큰 투영 층만 전문가화하고 작은 층은 공유하는 **선택적 전문가화(Selective Expertization)**가 더 유리하다.
 
 ### 한계 및 비판적 해석
+
 본 논문은 RoM의 효율성을 강력하게 입증하였으나, 최적의 전문가 수($N$)나 Top-K 값에 대한 하이퍼파라미터 탐색 범위가 제한적이다. 또한, 빠르게 진화하는 SSM 변형 모델들 전체에 대해 일반화될 수 있는지에 대한 추가 검증이 필요하다.
 
 ## 📌 TL;DR

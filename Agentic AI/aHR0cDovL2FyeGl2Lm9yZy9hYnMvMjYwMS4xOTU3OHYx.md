@@ -18,30 +18,33 @@ Yuxuan Cai, Xinyi Lai, Peng Yuan, Weiting Liu, Huajian Li, Mingda Li, Xinghua Wa
 
 Yunque DeepResearch의 핵심 아이디어는 **전략적 계획과 세부 실행의 분리**, 그리고 **의미 단위의 동적 메모리 관리**에 있다.
 
-1.  **계층적 오케스트레이션(Hierarchical Orchestration):** 중앙의 Main Agent가 전략적 핵심 역할을 수행하며, 단순 작업은 기본 도구(Basic Tools)로, 복잡한 작업은 전문 서브 에이전트(Specialized Sub-agents)로 동적으로 라우팅하는 구조를 설계하였다.
-2.  **서브 목표 기반의 동적 컨텍스트 관리(Dynamic Context Management):** 전체 경로를 단순히 나열하는 대신, '서브 목표(Sub-goal)'를 기본 단위로 하여 완료된 작업은 구조화된 요약본으로 압축하고, 현재 진행 중인 작업만 세부 로그를 유지함으로써 정보 밀도를 극대화하였다.
-3.  **능동적 감독 및 자가 교정(Proactive Supervisor Module):** 에이전트의 궤적을 실시간 모니터링하여 이상 징후를 감지하고, 실패 시 컨텍스트를 가지치기(Pruning)하고 다시 생성하는 복구 프로토콜을 도입하여 시스템의 견고함을 높였다.
-4.  **Atomic Capability Pool 구축:** GUI 상호작용을 위한 Browser-Use GUI Agent와 데이터 처리를 위한 Data Analysis Agent를 모듈화하여, 일반적인 LLM이 가지지 못한 정밀한 실행 능력을 부여하였다.
+1. **계층적 오케스트레이션(Hierarchical Orchestration):** 중앙의 Main Agent가 전략적 핵심 역할을 수행하며, 단순 작업은 기본 도구(Basic Tools)로, 복잡한 작업은 전문 서브 에이전트(Specialized Sub-agents)로 동적으로 라우팅하는 구조를 설계하였다.
+2. **서브 목표 기반의 동적 컨텍스트 관리(Dynamic Context Management):** 전체 경로를 단순히 나열하는 대신, '서브 목표(Sub-goal)'를 기본 단위로 하여 완료된 작업은 구조화된 요약본으로 압축하고, 현재 진행 중인 작업만 세부 로그를 유지함으로써 정보 밀도를 극대화하였다.
+3. **능동적 감독 및 자가 교정(Proactive Supervisor Module):** 에이전트의 궤적을 실시간 모니터링하여 이상 징후를 감지하고, 실패 시 컨텍스트를 가지치기(Pruning)하고 다시 생성하는 복구 프로토콜을 도입하여 시스템의 견고함을 높였다.
+4. **Atomic Capability Pool 구축:** GUI 상호작용을 위한 Browser-Use GUI Agent와 데이터 처리를 위한 Data Analysis Agent를 모듈화하여, 일반적인 LLM이 가지지 못한 정밀한 실행 능력을 부여하였다.
 
 ## 📎 Related Works
 
 논문은 기존의 Deep Research 에이전트를 크게 두 가지 패러다임으로 분류하여 설명한다.
 
--   **단일 에이전트(Single-Agent) 패러다임:** OpenAI와 Gemini의 Deep Research 시스템 등이 이에 해당하며, 단일 제어 아키텍처를 통해 도구를 오케스트레이션한다. 하지만 이러한 방식은 컨텍스트 윈도우가 확장됨에 따라 인지적 포화 상태에 이르며, 장기 추론의 일관성을 유지하는 데 '신뢰성 병목 현상(reliability bottlenecks)'이 발생한다는 한계가 있다.
--   **다중 에이전트(Multi-Agent) 패러다임:** 작업을 세분화하여 플래너, 검색기, 비판자 등 서로 다른 역할을 가진 에이전트들이 협업하는 방식이다. 이는 단일 에이전트보다 오류 전파를 효과적으로 완화할 수 있다는 장점이 있다.
+- **단일 에이전트(Single-Agent) 패러다임:** OpenAI와 Gemini의 Deep Research 시스템 등이 이에 해당하며, 단일 제어 아키텍처를 통해 도구를 오케스트레이션한다. 하지만 이러한 방식은 컨텍스트 윈도우가 확장됨에 따라 인지적 포화 상태에 이르며, 장기 추론의 일관성을 유지하는 데 '신뢰성 병목 현상(reliability bottlenecks)'이 발생한다는 한계가 있다.
+- **다중 에이전트(Multi-Agent) 패러다임:** 작업을 세분화하여 플래너, 검색기, 비판자 등 서로 다른 역할을 가진 에이전트들이 협업하는 방식이다. 이는 단일 에이전트보다 오류 전파를 효과적으로 완화할 수 있다는 장점이 있다.
 
 또한, **작업 메모리 관리(Working Memory Management)** 측면에서 ReSum, MemAgent, AgentFold 등의 연구가 언급된다. 기존 방식들은 주로 컨텍스트 제한에 도달했을 때 내용을 압축하는 '콘텐츠 압축'에 집중했으나, Yunque DeepResearch는 단순 압축을 넘어 서브 목표 중심의 '구조적 합성(structured synthesis)'을 통해 정보 밀도를 높였다는 점에서 차별점을 가진다.
 
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 Yunque DeepResearch는 크게 네 가지 모듈로 구성된다:
--   **Main Agent:** 의도 인식, 동적 계획 수립 및 전체 오케스트레이션을 담당하는 중앙 집행부이다.
--   **Context Manager:** 장기 과제 수행을 위해 즉각적인 정밀도와 장기적 전략 컨텍스트 사이의 균형을 맞추는 이중 레벨 메모리 구조를 관리한다.
--   **Atomic Capability Pool:** 전문 서브 에이전트(GUI, 데이터 분석)와 기본 도구들을 보유한 실행 집합이다.
--   **Supervisor:** 실행 궤적을 감시하고 오류를 교정하여 연쇄적 실패를 방지하는 안전장치이다.
+
+- **Main Agent:** 의도 인식, 동적 계획 수립 및 전체 오케스트레이션을 담당하는 중앙 집행부이다.
+- **Context Manager:** 장기 과제 수행을 위해 즉각적인 정밀도와 장기적 전략 컨텍스트 사이의 균형을 맞추는 이중 레벨 메모리 구조를 관리한다.
+- **Atomic Capability Pool:** 전문 서브 에이전트(GUI, 데이터 분석)와 기본 도구들을 보유한 실행 집합이다.
+- **Supervisor:** 실행 궤적을 감시하고 오류를 교정하여 연쇄적 실패를 방지하는 안전장치이다.
 
 ### 2. 메모리 및 컨텍스트 관리 (Memory)
+
 본 프레임워크는 메모리 단위를 다음과 같은 4-튜플로 정의한다:
 $$m_i = (R_i, g_i, T_i, s_i)$$
 여기서 $R_i$는 해당 서브 목표에 기여한 라운드 인덱스 리스트, $g_i$는 서브 목표의 의미적 설명, $T_i$는 도구 사용 로그, $s_i$는 실행 중 추출된 핵심 정보의 증분 요약(incremental summary)이다.
@@ -49,8 +52,9 @@ $$m_i = (R_i, g_i, T_i, s_i)$$
 **동적 폴딩 및 추가 메커니즘(Dynamic Folding and Adding):**
 메모리 모델 $F_{mem}$은 현재 라운드의 응답 $a_t$, 관찰 $o_t$, 그리고 최신 메모리 유닛 $m_n$을 입력받아 이진 지표 $\delta_{fold}$와 업데이트된 유닛 $m_{out}$을 생성한다:
 $$(m_{out}, \delta_{fold}) = F_{mem}(a_t, o_t, m_n)$$
--   $\delta_{fold} = 1$인 경우: 현재 라운드가 기존 서브 목표 $g_n$과 일치한다고 판단하여 기존 메모리 유닛을 업데이트한다.
--   $\delta_{fold} = 0$인 경우: 새로운 서브 목표가 시작된 것으로 판단하여 새로운 메모리 유닛을 리스트 $M$에 추가한다.
+
+- $\delta_{fold} = 1$인 경우: 현재 라운드가 기존 서브 목표 $g_n$과 일치한다고 판단하여 기존 메모리 유닛을 업데이트한다.
+- $\delta_{fold} = 0$인 경우: 새로운 서브 목표가 시작된 것으로 판단하여 새로운 메모리 유닛을 리스트 $M$에 추가한다.
 
 **적응형 컨텍스트 구성(Adaptive Context Construction):**
 컨텍스트 $C_t$는 현재 메모리 유닛의 라운드 수 $|R_n|$에 따라 다르게 구성된다:
@@ -58,29 +62,35 @@ $$C_t = \begin{cases} C_{t-1} \oplus [r_t, o_t] & \text{if } |R_n| > 1 \\ (Q, M_
 즉, 서브 목표를 수행 중일 때는 세부적인 ReAct 트레이스를 유지하고, 새로운 서브 목표가 시작되는 시점($|R_n|=1$)에는 과거의 모든 기록을 구조화된 요약본 $M_{1:n-1}$으로 대체하여 컨텍스트를 리셋한다. 이를 통해 복잡도를 $O(t)$에서 $O(n)$(서브 목표 개수)으로 낮춘다.
 
 ### 3. Atomic Capability Pool
--   **Browser-Use GUI Agent:** 웹 브라우저 상호작용을 POMDP(Partially Observable Markov Decision Process)로 모델링한다. 관측값 $o_t$는 텍스트 컨텍스트 $c_t$, 구조화된 브라우저 상태 $b_t$, 그리고 현재 페이지의 스크린샷 $x_t$로 구성된다. 스크린샷은 멀티모달 입력으로만 사용되고 텍스트 히스토리에는 저장하지 않아 컨텍스트 폭발을 방지한다.
--   **Data Analysis Agent:** (a) 데이터 프로파일링(메타데이터, 스키마, 프리뷰 추출) $\rightarrow$ (b) 다단계 추론 및 자가 개선(Python 코드 생성 $\rightarrow$ 샌드박스 실행 $\rightarrow$ 피드백 기반 수정)의 파이프라인으로 동작한다.
+
+- **Browser-Use GUI Agent:** 웹 브라우저 상호작용을 POMDP(Partially Observable Markov Decision Process)로 모델링한다. 관측값 $o_t$는 텍스트 컨텍스트 $c_t$, 구조화된 브라우저 상태 $b_t$, 그리고 현재 페이지의 스크린샷 $x_t$로 구성된다. 스크린샷은 멀티모달 입력으로만 사용되고 텍스트 히스토리에는 저장하지 않아 컨텍스트 폭발을 방지한다.
+- **Data Analysis Agent:** (a) 데이터 프로파일링(메타데이터, 스키마, 프리뷰 추출) $\rightarrow$ (b) 다단계 추론 및 자가 개선(Python 코드 생성 $\rightarrow$ 샌드박스 실행 $\rightarrow$ 피드백 기반 수정)의 파이프라인으로 동작한다.
 
 ### 4. Supervisor 및 자가 교정 메커니즘
+
 Supervisor는 에이전트가 구문 오류나 의미적 정체(Semantic Stagnation, 예: 무한 루프)에 빠졌는지 감시한다. 이상 징후 감지 시, 시스템을 'Acting Mode'에서 'Reflective Mode'로 강제 전환하며 다음 3단계 복구 프로토콜을 수행한다:
-1.  **Anomaly Diagnosis:** 실패의 근본 원인을 분석한다.
-2.  **Trajectory Pruning:** 컨텍스트 윈도우에서 최근의 잘못된 상호작용 트레이스를 명시적으로 제거하여 메모리 오염을 막는다.
-3.  **Re-generation:** 수정된 계획이나 결론을 다시 생성하여 루프를 끊고 정상 경로로 복귀시킨다.
+
+1. **Anomaly Diagnosis:** 실패의 근본 원인을 분석한다.
+2. **Trajectory Pruning:** 컨텍스트 윈도우에서 최근의 잘못된 상호작용 트레이스를 명시적으로 제거하여 메모리 오염을 막는다.
+3. **Re-generation:** 수정된 계획이나 결론을 다시 생성하여 루프를 끊고 정상 경로로 복귀시킨다.
 
 ## 📊 Results
 
 ### 실험 설정
--   **벤치마크:** GAIA, BrowseComp, BrowseComp-ZH, Humanity’s Last Exam (HLE).
--   **평가 지표:** Pass@1 (단일 시도 성공률).
--   **기본 모델:** Gemini-3-pro를 기본 백본으로 사용하였으며, 비교군으로 GPT-5 High, OpenAI-o3, Claude-4.5-Sonnet 및 다양한 오픈소스/폐쇄형 에이전트 프레임워크를 설정하였다.
+
+- **벤치마크:** GAIA, BrowseComp, BrowseComp-ZH, Humanity’s Last Exam (HLE).
+- **평가 지표:** Pass@1 (단일 시도 성공률).
+- **기본 모델:** Gemini-3-pro를 기본 백본으로 사용하였으며, 비교군으로 GPT-5 High, OpenAI-o3, Claude-4.5-Sonnet 및 다양한 오픈소스/폐쇄형 에이전트 프레임워크를 설정하였다.
 
 ### 주요 결과
+
 Yunque DeepResearch는 BrowseComp(62.5), BrowseComp-ZH(75.9), HLE(51.7)에서 SOTA(State-of-the-art) 성능을 달성하였으며, GAIA(78.6)에서는 2위를 기록하였다. 특히 단순 ReAct 방식의 Gemini 3 Pro와 비교했을 때 BrowseComp에서 +10.0, GAIA에서 +4.8의 성능 향상을 보여, 프레임워크 설계가 모델의 잠재력을 효과적으로 끌어올렸음을 입증하였다.
 
 ### 분석 및 절제 연구(Ablation Study)
--   **메모리 모듈의 영향:** 메모리 모듈 제거 시 BrowseComp에서 -10.4의 큰 하락이 발생하였다. 이는 장기 정보 탐색 과제에서 서브 목표 기반의 메모리 관리가 노이즈 제거에 결정적임을 시사한다.
--   **Supervisor의 영향:** 제거 시 GAIA(-8.7), BrowseComp-ZH(-10.5) 등 전반적인 성능이 크게 하락하였다. 이는 오류 누적을 막고 경로를 정화하는 Supervisor의 역할이 복잡한 과제 수행의 필수 조건임을 보여준다.
--   **전문 에이전트의 영향:** GAIA 벤치마크에서 Browser-Use GUI Agent와 Data Analysis Agent를 제거했을 때 각각 -6.8, -2.9의 성능 저하가 나타났다. 이는 범용 어시스턴트의 성능이 결국 도메인 특화된 정밀한 실행 능력의 조합에서 나온다는 것을 확인시켜 준다.
+
+- **메모리 모듈의 영향:** 메모리 모듈 제거 시 BrowseComp에서 -10.4의 큰 하락이 발생하였다. 이는 장기 정보 탐색 과제에서 서브 목표 기반의 메모리 관리가 노이즈 제거에 결정적임을 시사한다.
+- **Supervisor의 영향:** 제거 시 GAIA(-8.7), BrowseComp-ZH(-10.5) 등 전반적인 성능이 크게 하락하였다. 이는 오류 누적을 막고 경로를 정화하는 Supervisor의 역할이 복잡한 과제 수행의 필수 조건임을 보여준다.
+- **전문 에이전트의 영향:** GAIA 벤치마크에서 Browser-Use GUI Agent와 Data Analysis Agent를 제거했을 때 각각 -6.8, -2.9의 성능 저하가 나타났다. 이는 범용 어시스턴트의 성능이 결국 도메인 특화된 정밀한 실행 능력의 조합에서 나온다는 것을 확인시켜 준다.
 
 ## 🧠 Insights & Discussion
 

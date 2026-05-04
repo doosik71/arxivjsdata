@@ -29,6 +29,7 @@ Ziping Xu, Ambuj Tewari (2021)
 ## 🛠️ Methodology
 
 ### 1. Unstructured Linear Regression
+
 각 태스크 $t$의 응답 변수 $Y_t$는 다음과 같이 생성된다.
 $$Y_t = X_t^T \theta^*_t + \epsilon_t$$
 여기서 $\epsilon_t$는 분산이 $\sigma^2_t$인 가우시안 노이즈이며, $\theta^*_t$는 태스크 $t$의 진정한 파라미터이다. 타겟 태스크 $T$에 대한 오차를 최소화하는 것이 목표이다.
@@ -39,6 +40,7 @@ $$R^N_T(\Theta(Q)) \gtrsim C_0 \min_t \{ Q_t^2 + \frac{d\sigma^2_t}{N} \}$$
 이는 전이 거리($Q_t$)와 노이즈 수준($\sigma^2_t$) 사이의 균형을 맞추는 최적의 태스크를 찾는 것이 핵심임을 시사한다.
 
 ### 2. Structured Linear Regression (Representation Learning)
+
 모든 태스크가 공통의 저차원 표현 행렬 $B^* \in \mathbb{R}^{d \times k}$를 공유하며, 각 태스크는 고유의 계수 $\beta^*_t \in \mathbb{R}^k$를 갖는 구조이다.
 $$f_t(x) = x^T B^* \beta^*_t$$
 
@@ -46,19 +48,23 @@ $$f_t(x) = x^T B^* \beta^*_t$$
 - **OFU Scheduler**: 학습자는 각 태스크에 대한 신뢰 집합(Confidence set) $B_{i,t}$를 구성하고, 이 집합 내에서 최소 고윳값 $\lambda_k$를 최대화할 수 있는 태스크를 낙관적으로 선택한다.
 
 ### 3. Prediction Gain driven Scheduler
+
 로컬 예측 이득 $G(A, H_{i+1}) = L_T(\theta_i) - L_T(\theta_{i+1})$을 최대화하는 태스크를 선택하는 방식이다. 논문은 이를 SGD 업데이트 식과 연결하여, 이 방법이 통계적으로 최적의 태스크 $t^*$를 선택하는 것과 일치함을 보인다.
 
 ## 📊 Results
 
 ### 1. Unstructured Setting의 결과
+
 - **Adaptive Learning의 한계**: 전이 거리를 모르는 상태에서 적응적으로 학습할 경우, $\frac{\sigma^2_T \log(T)}{N}$라는 피할 수 없는 추가 손실이 발생한다. 이는 타겟 태스크의 데이터 없이 소스 태스크만으로는 어떤 태스크가 최적인지 판별할 수 없기 때문이다.
 - **이득의 존재**: 그럼에도 불구하고, 적절한 소스 태스크를 찾았을 때의 오차는 단일 태스크 학습 시의 $d/N$ 항보다 $\log(T)/N$ 수준으로 낮아질 수 있어, 잠재적인 성능 향상 폭은 $d/\log(T)$ 배에 달한다.
 
 ### 2. Structured Setting의 결과
+
 - **적응적 다양성 확보**: 제안한 OFU 알고리즘을 통해, 태스크의 실제 파라미터를 모르더라도 적응적으로 다양한 태스크를 선택하여 Oracle에 근접한 다양성을 확보할 수 있음을 보였다.
 - **수렴 속도**: $N$이 충분히 클 때($dkT \ll N$), 적응적 스케줄링으로 인한 추가 오차는 무시할 수 있는 수준이 된다.
 
 ### 3. Prediction Gain의 결과
+
 - **정당성 입증**: 정확한 Prediction Gain을 기반으로 태스크를 선택하고 Averaging SGD를 사용할 경우, 그 결과가 Theorem 1에서 제시한 Minimax 하한선과 일치함을 보였다.
 $$G_T(\bar{\theta}_N) \approx \Delta^2_{t^*, T} + \frac{(d\sigma^2_{t^*} + C_5) \log(N)}{N}$$
 
@@ -67,10 +73,12 @@ $$G_T(\bar{\theta}_N) \approx \Delta^2_{t^*, T} + \frac{(d\sigma^2_{t^*} + C_5) 
 본 논문은 커리큘럼 러닝이 단순히 '학습의 편의성'을 위한 도구가 아니라, 데이터 할당의 최적화를 통한 '통계적 효율성' 도구임을 이론적으로 증명하였다.
 
 **강점 및 통찰**:
+
 - **Unstructured vs Structured의 대비**: 구조가 없는 문제에서는 적응적 학습의 비용이 크지만, 공유 표현이 존재하는 구조적 문제에서는 적응적 스케줄링이 매우 효율적임을 밝혀, 표현 학습에서 CL의 중요성을 강조하였다.
 - **실무 방법론의 이론적 뒷받침**: Prediction Gain 기반의 탐욕적 선택이 통계적으로 최적의 선택과 맞닿아 있음을 증명하여, 휴리스틱한 방법론에 학술적 근거를 제공하였다.
 
 **한계 및 논의사항**:
+
 - **$\sqrt{1/N}$ 의존성**: Structured setting에서 다양성 확보를 위한 하한선과 상한선 사이에 여전히 $d$ 정도의 간극이 존재하며, $\sqrt{1/N}$ 의존성이 불가피하다는 점은 향후 연구 과제로 남았다.
 - **정확한 Gain 측정의 어려움**: 이론적으로는 '정확한' Prediction Gain을 가정하지만, 실제 환경에서는 이를 추정(estimation)해야 하며 이 추정 오차가 전체 성능에 미치는 영향은 상세히 다루어지지 않았다.
 

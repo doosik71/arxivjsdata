@@ -19,9 +19,11 @@ Xiaochen Wang, Jiaqi Wang, Houping Xiao, Jinghui Chen, Fenglong Ma (2024)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 FEDKIM은 로컬 클라이언트에서 동작하는 **Knowledge Extractor**와 서버에서 동작하는 **Knowledge Injector**로 구성된다.
 
 ### 2. 클라이언트 업데이트 (Knowledge Extraction)
+
 각 클라이언트는 $M$개의 모달리티별 인코더($\text{ENC}_{n,m}$)와 $T$개의 태스크별 디코더($\text{DEC}_{n,t}$)를 가진 경량 모델 $f_n$을 학습시킨다. 학습 목표는 다음과 같은 손실 함수를 최소화하는 것이다.
 
 $$\min_{\theta^n} L^n := \frac{1}{T} \sum_{t=1}^{T} \frac{1}{|D^n_t|} \sum_{(x^t_i, y^t_i) \in D^n_t} \ell_t(f_n(x^t_i; \theta^n), y^t_i)$$
@@ -29,6 +31,7 @@ $$\min_{\theta^n} L^n := \frac{1}{T} \sum_{t=1}^{T} \frac{1}{|D^n_t|} \sum_{(x^t
 여기서 $f_n(x_i; \theta^n) = \text{DEC}_{n,t}(\text{ENC}_{n,m}(x_i; \theta^{\text{enc}}_{n,m}); \theta^{\text{dec}}_{n,t})$이며, 학습이 완료된 인코더와 디코더의 파라미터 $\theta^{\text{enc}}_n, \theta^{\text{dec}}_n$는 서버로 전송된다.
 
 ### 3. 서버 업데이트 (Knowledge Injection)
+
 서버는 전송받은 파라미터들을 FedAvg 또는 FedProx와 같은 연합 학습 알고리즘을 통해 집계하여 글로벌 인코더 $\theta_e$와 디코더 $\theta_d$를 생성한다. 이후 다음의 3단계 과정을 통해 Foundation Model $F$에 지식을 주입한다.
 
 **Step 1: Feature Alignment**
@@ -52,11 +55,13 @@ $$c^t_j = W_F h^t_j + \sum_{p=1}^{P} \alpha^t_p (B_p A_p h^t_j)$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋 및 태스크**: 6개 모달리티에 걸친 4개의 학습 태스크(COVID-19 탐지, 폐 혼탁 탐지, ECG 이상 탐지, 사망률 예측)와 7개 모달리티에 걸친 8개의 검증 태스크(Zero-shot 평가용)를 사용하였다.
 - **기준선(Baselines)**: 단순히 인코더만 통합하는 $\text{FedPlug}$, 여기에 LoRA를 추가한 $\text{FedPlug}_L$과 비교하였다.
 - **백본 모델**: 의료 전용 LLM인 $\text{MMedLM-2}$ (7B 파라미터)를 사용하였다.
 
 ### 주요 결과
+
 1. **Zero-shot 성능**: FEDKIM은 학습 시 보지 못한(unseen) 태스크에 대해 $\text{FedPlug}$ 및 $\text{FedPlug}_L$보다 월등한 성능을 보였다. 특히 Signal Noise Clarification (SNC) 태스크에서 FedAvg 기반 적용 시 $\text{FedPlug}_L$ 대비 82.36%의 성능 향상을 기록하였다.
 2. **Fine-tuning 성능**: 학습에 사용된 친숙한 태스크들에 대해서도 FEDKIM은 모든 지표(Accuracy, Precision, Recall, F1)에서 기준선 모델들을 압도하였다.
 3. **연합 알고리즘 영향**: FedAvg보다 FedProx를 백본으로 사용했을 때 전반적으로 더 높은 성능을 보였으며, 이는 지식 추출 과정에서의 정규화가 중요함을 시사한다.

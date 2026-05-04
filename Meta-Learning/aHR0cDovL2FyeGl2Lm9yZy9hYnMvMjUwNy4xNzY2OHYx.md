@@ -18,9 +18,9 @@ Alexander D. Goldie, Zilin Wang, Jakob N. Foerster, Shimon Whiteson (2025)
 
 본 논문은 다음과 같은 관련 연구들을 토대로 한다.
 
-1.  **Learned Algorithms**: Learned Policy Gradient (LPG), Learned Policy Optimisation (LPO), 그리고 Optimisation for Plasticity, Exploration and Nonstationarity (OPEN)와 같이 RL의 특정 업데이트 규칙이나 최적화 도구를 신경망으로 대체하려는 시도들이 있었다. 기존 연구들은 주로 제안된 알고리즘의 성능을 수동 설계된 베이스라인과 비교하는 데 집중했으나, 본 논문은 알고리즘을 '학습시키는 방법' 자체의 비교에 집중한다는 점에서 차별점을 가진다.
-2.  **Distillation**: 교사 모델(Teacher)의 지식을 학생 모델(Student)에게 전달하는 증류 기법이 정책(Policy)이나 데이터셋 수준에서 연구되어 왔다. 본 연구는 이를 알고리즘 수준으로 확장하여, 블랙박스 형태의 학습된 알고리즘을 더 작은 네트워크나 상징적 함수(Symbolic function)로 증류했을 때 일반화 성능이 향상되는지 분석한다.
-3.  **LLM-based Discovery**: 최근 LLM을 이용해 코드를 생성하고 알고리즘을 발견하려는 시도(예: DiscoPOP)가 증가하고 있다. 본 논문은 이러한 LLM 기반 접근법이 기존의 진화 전략이나 상징적 최적화보다 샘플 효율적인지, 그리고 실제 RL 환경에서 실용적인지를 평가한다.
+1. **Learned Algorithms**: Learned Policy Gradient (LPG), Learned Policy Optimisation (LPO), 그리고 Optimisation for Plasticity, Exploration and Nonstationarity (OPEN)와 같이 RL의 특정 업데이트 규칙이나 최적화 도구를 신경망으로 대체하려는 시도들이 있었다. 기존 연구들은 주로 제안된 알고리즘의 성능을 수동 설계된 베이스라인과 비교하는 데 집중했으나, 본 논문은 알고리즘을 '학습시키는 방법' 자체의 비교에 집중한다는 점에서 차별점을 가진다.
+2. **Distillation**: 교사 모델(Teacher)의 지식을 학생 모델(Student)에게 전달하는 증류 기법이 정책(Policy)이나 데이터셋 수준에서 연구되어 왔다. 본 연구는 이를 알고리즘 수준으로 확장하여, 블랙박스 형태의 학습된 알고리즘을 더 작은 네트워크나 상징적 함수(Symbolic function)로 증류했을 때 일반화 성능이 향상되는지 분석한다.
+3. **LLM-based Discovery**: 최근 LLM을 이용해 코드를 생성하고 알고리즘을 발견하려는 시도(예: DiscoPOP)가 증가하고 있다. 본 논문은 이러한 LLM 기반 접근법이 기존의 진화 전략이나 상징적 최적화보다 샘플 효율적인지, 그리고 실제 RL 환경에서 실용적인지를 평가한다.
 
 ## 🛠️ Methodology
 
@@ -28,21 +28,21 @@ Alexander D. Goldie, Zilin Wang, Jakob N. Foerster, Shimon Whiteson (2025)
 
 본 논문에서는 알고리즘을 학습시키기 위한 다섯 가지 접근 방식을 정의한다.
 
--   **Black-Box Meta-Learning**: 알고리즘을 신경망으로 표현한다. 학습에는 Meta-gradients(BPTT 사용) 또는 Evolution Strategies(ES)를 사용한다. ES는 적합도 함수 $F(\cdot)$를 최대화하기 위해 다음과 같은 자연 구배(Natural Gradient) 추정치를 사용하여 파라미터 $\tilde{\theta}$를 업데이트한다.
+- **Black-Box Meta-Learning**: 알고리즘을 신경망으로 표현한다. 학습에는 Meta-gradients(BPTT 사용) 또는 Evolution Strategies(ES)를 사용한다. ES는 적합도 함수 $F(\cdot)$를 최대화하기 위해 다음과 같은 자연 구배(Natural Gradient) 추정치를 사용하여 파라미터 $\tilde{\theta}$를 업데이트한다.
     $$\nabla_{\theta} \mathbb{E}_{\epsilon \sim \mathcal{N}(0,I)} [F(\theta + \sigma\epsilon)] = \frac{1}{\sigma} \mathbb{E}_{\epsilon \sim \mathcal{N}(0,I)} [\epsilon F(\theta + \sigma\epsilon)]$$
--   **Black-Box Distillation**: 학습된 블랙박스 교사 모델을 다른 신경망(학생 모델)으로 증류한다. 동일한 크기(Same-Size) 또는 더 작은 크기(Smaller)의 네트워크를 사용하며, 환경 샘플링 대신 합성 데이터를 이용한 $L^2$ 회귀(Regression)를 통해 출력을 일치시킨다.
--   **Symbolic Discovery**: 추상 구문 트리(AST)를 진화시켜 해석 가능한 수학적 함수를 직접 찾는다. 다만, RL 환경에서의 시뮬레이션 비용이 너무 커 본 논문의 경험적 분석에서는 제외하고 이론적 배경으로만 다룬다.
--   **Symbolic Distillation**: 블랙박스 알고리즘을 상징적 프로그램으로 증류한다. PySR 라이브러리를 사용하여 교사 모델의 출력과 $L^2$ 손실이 가장 낮은 함수를 탐색한다.
--   **LLM Proposal**: LLM(GPT o3-mini)에 알고리즘의 입력 정보와 이전 성능 데이터를 제공하여 코드를 제안하게 한다. DiscoPOP 프레임워크를 기반으로 하며, 기존의 수동 설계 알고리즘에서 시작하는 Warm-start 방식을 사용한다.
+- **Black-Box Distillation**: 학습된 블랙박스 교사 모델을 다른 신경망(학생 모델)으로 증류한다. 동일한 크기(Same-Size) 또는 더 작은 크기(Smaller)의 네트워크를 사용하며, 환경 샘플링 대신 합성 데이터를 이용한 $L^2$ 회귀(Regression)를 통해 출력을 일치시킨다.
+- **Symbolic Discovery**: 추상 구문 트리(AST)를 진화시켜 해석 가능한 수학적 함수를 직접 찾는다. 다만, RL 환경에서의 시뮬레이션 비용이 너무 커 본 논문의 경험적 분석에서는 제외하고 이론적 배경으로만 다룬다.
+- **Symbolic Distillation**: 블랙박스 알고리즘을 상징적 프로그램으로 증류한다. PySR 라이브러리를 사용하여 교사 모델의 출력과 $L^2$ 손실이 가장 낮은 함수를 탐색한다.
+- **LLM Proposal**: LLM(GPT o3-mini)에 알고리즘의 입력 정보와 이전 성능 데이터를 제공하여 코드를 제안하게 한다. DiscoPOP 프레임워크를 기반으로 하며, 기존의 수동 설계 알고리즘에서 시작하는 Warm-start 방식을 사용한다.
 
 ### 2. 분석 대상이 된 학습된 알고리즘 (Meta-Learned Algorithms)
 
 메타 학습 알고리즘을 적용할 대상(Target)으로 다음 네 가지를 선정하였다.
 
--   **LPO (Learned Policy Optimisation)**: PPO의 Mirror Drift 함수를 대체한다. 입력값은 정책 비율 $r$과 어드밴티지 $A$의 변형된 형태인 $\mathbf{x} = [(1-r), (1-r)^2, (1-r)A, \dots]$ 등을 사용하며, Mirror Learning 조건(비음수성, $r=1$에서 0 및 기울기 0)을 만족해야 한다.
--   **LPG (Learned Policy Gradient)**: Actor-Critic의 업데이트 규칙 자체를 학습하며, Backward-LSTM 구조를 사용하여 고정 길이의 롤아웃 데이터를 처리한다.
--   **OPEN (Optimisation for Plasticity, Exploration and Non-stationarity)**: RL 최적화의 난제인 가소성 상실(Plasticity loss), 탐색(Exploration), 비정상성(Non-stationarity)을 해결하기 위해 설계된 최적화 도구이다. 뉴런의 휴면 상태(Dormancy), 네트워크 깊이, 학습 진행도 등을 입력으로 받는다.
--   **No Features**: OPEN의 단순화 버전으로, 일반적인 최적화 도구의 입력(파라미터, 그라디언트, 모멘텀)만 사용한다.
+- **LPO (Learned Policy Optimisation)**: PPO의 Mirror Drift 함수를 대체한다. 입력값은 정책 비율 $r$과 어드밴티지 $A$의 변형된 형태인 $\mathbf{x} = [(1-r), (1-r)^2, (1-r)A, \dots]$ 등을 사용하며, Mirror Learning 조건(비음수성, $r=1$에서 0 및 기울기 0)을 만족해야 한다.
+- **LPG (Learned Policy Gradient)**: Actor-Critic의 업데이트 규칙 자체를 학습하며, Backward-LSTM 구조를 사용하여 고정 길이의 롤아웃 데이터를 처리한다.
+- **OPEN (Optimisation for Plasticity, Exploration and Non-stationarity)**: RL 최적화의 난제인 가소성 상실(Plasticity loss), 탐색(Exploration), 비정상성(Non-stationarity)을 해결하기 위해 설계된 최적화 도구이다. 뉴런의 휴면 상태(Dormancy), 네트워크 깊이, 학습 진행도 등을 입력으로 받는다.
+- **No Features**: OPEN의 단순화 버전으로, 일반적인 최적화 도구의 입력(파라미터, 그라디언트, 모멘텀)만 사용한다.
 
 ## 📊 Results
 
@@ -50,11 +50,11 @@ Alexander D. Goldie, Zilin Wang, Jakob N. Foerster, Shimon Whiteson (2025)
 
 ### 1. 알고리즘별 성능 분석
 
--   **LPO**: 모든 증류 방식이 비슷한 성능을 보였으며, 특히 Same-size distillation이 일반화 성능을 소폭 향상시켰다. LLM 제안 방식은 내부 성능은 낮았으나, OOD 일반화 성능은 가장 뛰어났다. 이는 LLM이 PPO와 유사한, 검증된 형태의 함수를 제안했기 때문으로 분석된다.
--   **No Features**: LLM 제안 방식이 내부 성능과 일반화 성능 모두에서 압도적으로 강했다. 반면, 블랙박스 학습이 실패한 경우 증류를 통한 성능 개선은 불가능했다.
--   **Feed-Forward OPEN**: 입력 변수가 많아짐에 따라 LLM과 상징적 증류가 완전히 실패하였다. LLM은 제공된 입력 특징들을 적절히 활용하는 코드를 생성하지 못했으며, 상징적 증류는 고차원 공간 탐색에 어려움을 겪어 단순한 상수 함수로 수렴하는 경향을 보였다.
--   **Recurrent LPG**: 증류(Same-size, Smaller 모두)를 적용했을 때 OOD 일반화 성능이 향상되었다. 이는 증류 과정이 일종의 정규화(Regularization) 역할을 하여 분산을 줄였기 때문으로 해석된다.
--   **Recurrent OPEN**: 긴 롤아웃(Long rollout) 특성상 증류가 매우 어려웠으며 성능이 낮게 나타났다. LLM은 Adam과 유사한 단순한 최적화 도구를 제안하여 OOD에서 좋은 성능을 냈으나, 이는 하이퍼파라미터 튜닝에 크게 의존한 결과였다.
+- **LPO**: 모든 증류 방식이 비슷한 성능을 보였으며, 특히 Same-size distillation이 일반화 성능을 소폭 향상시켰다. LLM 제안 방식은 내부 성능은 낮았으나, OOD 일반화 성능은 가장 뛰어났다. 이는 LLM이 PPO와 유사한, 검증된 형태의 함수를 제안했기 때문으로 분석된다.
+- **No Features**: LLM 제안 방식이 내부 성능과 일반화 성능 모두에서 압도적으로 강했다. 반면, 블랙박스 학습이 실패한 경우 증류를 통한 성능 개선은 불가능했다.
+- **Feed-Forward OPEN**: 입력 변수가 많아짐에 따라 LLM과 상징적 증류가 완전히 실패하였다. LLM은 제공된 입력 특징들을 적절히 활용하는 코드를 생성하지 못했으며, 상징적 증류는 고차원 공간 탐색에 어려움을 겪어 단순한 상수 함수로 수렴하는 경향을 보였다.
+- **Recurrent LPG**: 증류(Same-size, Smaller 모두)를 적용했을 때 OOD 일반화 성능이 향상되었다. 이는 증류 과정이 일종의 정규화(Regularization) 역할을 하여 분산을 줄였기 때문으로 해석된다.
+- **Recurrent OPEN**: 긴 롤아웃(Long rollout) 특성상 증류가 매우 어려웠으며 성능이 낮게 나타났다. LLM은 Adam과 유사한 단순한 최적화 도구를 제안하여 OOD에서 좋은 성능을 냈으나, 이는 하이퍼파라미터 튜닝에 크게 의존한 결과였다.
 
 ### 2. 종합 지표 비교
 

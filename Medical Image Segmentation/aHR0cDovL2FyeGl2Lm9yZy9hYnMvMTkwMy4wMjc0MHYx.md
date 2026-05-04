@@ -31,9 +31,11 @@ Zaiwang Gu, Jun Cheng, Huazhu Fu, Kang Zhou, Huaying Hao, Yitian Zhao, Tianyang 
 CE-Net은 크게 **Feature Encoder**, **Context Extractor**, **Feature Decoder**의 세 가지 모듈로 구성된다.
 
 ### 1. Feature Encoder Module
+
 기존 U-Net의 단순한 Convolution 블록 대신 ImageNet으로 사전 학습된(Pre-trained) **ResNet-34**의 처음 4개 블록을 사용한다. ResNet의 Shortcut mechanism은 그래디언트 소실(Gradient vanishing) 문제를 방지하고 네트워크의 수렴 속도를 가속화한다.
 
 ### 2. Context Extractor Module
+
 본 논문의 핵심 모듈로, DAC 블록과 RMP 블록으로 이루어져 있다.
 
 - **Dense Atrous Convolution (DAC)**:
@@ -48,9 +50,11 @@ CE-Net은 크게 **Feature Encoder**, **Context Extractor**, **Feature Decoder**
   3. 최종적으로 원본 특징 맵과 업샘플링된 특징 맵들을 Concatenation 한다.
 
 ### 3. Feature Decoder Module
+
 인코더에서 추출된 고수준 특징을 복원한다. 정보 손실을 보완하기 위해 Encoder의 특징 맵을 직접 전달하는 Skip Connection을 사용한다. 특히 단순한 업샘플링 대신 **Transposed Convolution**(Deconvolution)을 사용하여 학습 가능한 매핑을 통해 더 정밀한 세부 정보를 복원한다. 디코더 블록은 $1\times1$ Conv $\rightarrow$ $3\times3$ Transposed Conv $\rightarrow$ $1\times1$ Conv 순서로 구성된다.
 
 ### 4. Loss Function
+
 의료 영상의 특성상 배경 대비 객체가 차지하는 영역이 매우 작기 때문에, 일반적인 Cross Entropy 대신 **Dice coefficient loss**를 사용한다.
 $$L_{dice} = 1 - \frac{K \sum_{k} 2\omega_k \sum_{i} p(k,i)g(k,i)}{\sum_{i} p^2(k,i) + \sum_{i} g^2(k,i)}$$
 여기서 $p(k,i)$는 예측 확률, $g(k,i)$는 Ground Truth 라벨이다. 최종 손실 함수는 Overfitting을 방지하기 위한 정규화 항($L_{reg}$)을 포함하여 다음과 같이 정의된다.
@@ -69,6 +73,7 @@ $$L_{loss} = L_{dice} + L_{reg}$$
 | **망막 OCT 층 분할** | Topcon | Mean Absolute Error (MAE) | 전체 MAE 1.68 달성, U-Net(2.45) 대비 31.4% 오차 감소 |
 
 **Ablation Study 결과**:
+
 - **Pre-trained ResNet**: 사전 학습된 가중치를 사용했을 때 학습 손실이 훨씬 빠르게 감소하며 성능이 향상됨을 확인하였다.
 - **DAC vs Regular Conv**: Atrous Convolution을 사용한 DAC가 일반 Convolution보다 고수준 시맨틱 특징 추출에 훨씬 유리함을 입증하였다.
 - **RMP의 효과**: RMP 모듈을 추가했을 때 시신경 유두 분할의 Overlapping Error가 유의미하게 감소하였다.

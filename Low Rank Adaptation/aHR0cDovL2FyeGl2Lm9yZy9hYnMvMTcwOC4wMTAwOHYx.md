@@ -32,57 +32,68 @@ Lei Zhang, Wei Wei, Qinfeng Shi, Chunhua Shen, Anton van den Hengel, and Yanning
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 본 모델은 관측 모델 $Y_\Omega = L_\Omega + M_\Omega$에서 시작하며, 여기서 $M_\Omega$는 Gaussian white noise이다. 잠재 텐서 $L$은 다음과 같이 분해된다.
 $$L = X + E$$
 여기서 $X$는 Low-rank 구조를, $E$는 Non-low-rank 구조를 나타낸다.
 
 ### 2. Low-rank 구조 모델링 ($X$)
+
 $X$는 CP Factorization을 통해 $R$개의 rank-one 텐서의 합으로 표현된다.
 $$X = \sum_{r=1}^{R} \lambda_r u_r^{(1)} \circ \cdots \circ u_r^{(K)}$$
+
 - **Sparsity-induced Rank**: 본 논문은 $\lambda$ 벡터의 $\ell_0$ norm을 Rank로 정의한다. $\lambda$에 Two-level reweighted Laplace prior를 부여하여 $\lambda$의 sparsity를 유도함으로써 Tensor Rank를 자동으로 결정한다.
 - **Reweighted Laplace Prior**: 가중치 $\lambda$가 Gaussian 분포를 따르고, 그 분산 $\gamma$가 Gamma 분포를 따르도록 설계하여, 큰 가중치는 적게 수축시키고 작은 가중치는 강하게 수축시켜 중요한 구조를 보존한다.
 - **Factor Matrix Regularization**: 각 팩터 행렬 $U^{(k)}$의 원소들이 Gaussian 분포를 따르도록 하여 $\ell_2$ norm 제약을 부여하고, 하이퍼파라미터 $\mu^{(k)}, \tau^{(k)}$에 대해서도 공액 사전 분포(conjugate prior)를 설정하여 베이지안 추론이 가능하게 하였다.
 
 ### 3. Non-low-rank 구조 모델링 ($E$)
+
 $E$의 각 원소 $e_i$는 $D$개의 Gaussian 성분으로 구성된 혼합 모델(MOG)을 따른다.
 $$e_i \sim \sum_{d=1}^{D} \pi_d \mathcal{N}(e_i | \mu_d, \tau_d^{-1})$$
+
 - $\pi_d$는 혼합 비율이며, Dirichlet 분포를 사전 분포로 가진다.
 - $\mu_d, \tau_d$는 각 Gaussian 성분의 평균과 정밀도(precision)이며, Gaussian-gamma 분포를 따른다.
 - 이를 통해 $E$가 Sparse 하거나 Multimodal 한 경우 등 다양한 데이터 분포에 유연하게 적응할 수 있다.
 
 ### 4. 추론 절차 (Inference)
+
 본 모델은 MAP 추정 대신 MMSE 추정을 사용하며, 최종 복원 텐서 $\hat{L}$은 사후 분포의 기대값 $\mathbb{E}[L | Y_\Omega]$으로 정의된다.
 $$\hat{L} = \text{arg min}_{\tilde{L}} \int \|\tilde{L} - L\|_F^2 p(L | Y_\Omega) dL$$
 실제 계산을 위해 Gibbs Sampling을 사용하여 $\lambda, \gamma, \kappa, U, \mu, \tau, E, z, \pi$ 등의 모든 변수를 순차적으로 샘플링하고, 수집된 샘플들의 평균을 통해 최적의 $\hat{L}$을 얻는다.
 
 ### 5. 공간적 유사성 제약 (Spatial Similarity Constraint)
+
 시각적 데이터(이미지, 비디오)의 경우 인접 픽셀 간의 유사성이 높다는 점을 이용해, 팩터 행렬 $U^{(k)}$의 인접한 행들이 서로 유사하도록 하는 추가적인 Prior를 도입하여 복원 정확도를 더욱 향상시켰다.
 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: 합성 텐서(Synthetic tensor), 벤치마크 이미지 10종, 비디오('suzie', 'foreman'), CMU-PIE 얼굴 데이터셋.
 - **비교 대상**: FaLRTC, HaLRTC, RPTC, TMac, STDC, t-SVD, FBCP, BRTF 등 8가지 최신 기법.
 - **평가 지표**: Relative Reconstruction Error (RRE), PSNR, SSIM.
 
 ### 2. 주요 결과
+
 - **Rank 결정 및 PDF 피팅**: 합성 데이터 실험 결과, 제안 모델은 누락률(missing ratio)이 90%에 달하는 상황에서도 실제 Tensor Rank를 정확하게 추정하였다. 또한 MOG를 통해 $E$의 복잡한 확률 밀도 함수(PDF)를 매우 정교하게 복원함을 확인하였다.
 - **합성 데이터 복원**: 다양한 $E$ (Zero, Sparse, Mixture) 설정에서 제안 모델이 가장 낮은 RRE를 기록하며 압도적인 성능을 보였다. 특히 $E$가 복잡할수록 기존 방법론과의 성능 격차가 커졌다.
 - **실제 응용**:
-    - **Image Inpainting**: 90%의 높은 누락률에서도 세부 디테일을 가장 잘 복원하였으며, PSNR과 SSIM 지표에서 우위를 점했다.
-    - **Video Completion**: 비디오 프레임의 손상된 부분을 복원함에 있어 타 방법론보다 더 선명하고 정교한 결과를 생성하였다.
-    - **Facial Synthesis**: CMU-PIE 데이터셋에서 누락된 얼굴 이미지를 합성할 때 아티팩트가 적고 디테일이 살아있는 결과를 얻었다.
+  - **Image Inpainting**: 90%의 높은 누락률에서도 세부 디테일을 가장 잘 복원하였으며, PSNR과 SSIM 지표에서 우위를 점했다.
+  - **Video Completion**: 비디오 프레임의 손상된 부분을 복원함에 있어 타 방법론보다 더 선명하고 정교한 결과를 생성하였다.
+  - **Facial Synthesis**: CMU-PIE 데이터셋에서 누락된 얼굴 이미지를 합성할 때 아티팩트가 적고 디테일이 살아있는 결과를 얻었다.
 
 ## 🧠 Insights & Discussion
 
 본 논문은 텐서의 Low-rank 성분과 Non-low-rank 성분을 명시적으로 분리하고, 각각에 대해 적절한 확률 모델을 적용함으로써 Tensor Completion의 강건성을 높였다.
 
 **강점**:
+
 - **유연한 모델링**: MOG를 도입함으로써 실제 데이터가 가질 수 있는 임의의 분포를 수용할 수 있게 되었다. 이는 "실제 데이터는 완벽한 Low-rank가 아니다"라는 실용적인 관점을 수학적으로 잘 풀어낸 결과이다.
 - **자동화된 Rank 추정**: Sparsity-induced prior를 통해 사용자가 Rank를 수동으로 설정해야 하는 번거로움과 그로 인한 Over-fitting 위험을 제거하였다.
 - **통계적 추론**: MMSE 프레임워크와 Gibbs Sampling을 통해 점 추정의 불안정성을 극복하고 확률적인 평균값을 도출함으로써 복원 성능을 극대화하였다.
 
 **한계 및 논의**:
+
 - **계산 복잡도**: Gibbs Sampling은 반복적인 샘플링 과정이 필요하므로, 매우 거대한 텐서 데이터에 적용할 때 수렴 속도와 계산 비용 문제가 발생할 수 있다. (논문에서는 $O(RKN)$으로 선형 복잡도임을 주장하지만, 반복 횟수 $N_b, N_s$에 따른 총 시간은 상당할 수 있다.)
 - **하이퍼파라미터**: 비정보적(non-informative) 사전 분포를 사용했다고 하지만, MOG의 성분 개수 $D$나 초기 Rank $R$ 설정이 결과에 어느 정도 영향을 줄 가능성이 있다.
 

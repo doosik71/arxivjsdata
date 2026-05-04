@@ -31,17 +31,20 @@ Zhixiang (Eddie) Xuxu, Kilian Q. Weinberger, Olivier Chapelle (2013)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 SVML은 Mahalanobis 거리를 RBF 커널에 통합하여, 거리 측정 행렬 $L$을 직접 학습한다. Mahalanobis 거리는 다음과 같이 정의된다.
 $$d_M(x_i, x_j) = \sqrt{(x_i-x_j)^T M (x_i-x_j)}$$
 여기서 $M = L^T L$이며, $L \in \mathbb{R}^{r \times d}$이다. 이를 RBF 커널에 적용하면 다음과 같은 커널 행렬 $K$를 얻는다.
 $$k_L(x_i, x_j) = e^{-(x_i-x_j)^T L^T L (x_i-x_j)}$$
 
 ### 손실 함수 (Loss Function)
+
 단순한 $0/1$ loss는 미분이 불가능하므로, SVML은 검증 데이터셋 $V$에 대해 다음과 같은 부드러운 근사 손실 함수 $L_V$를 정의한다.
 $$L_V(L) = \frac{1}{|V|} \sum_{(x,y) \in V} s_a(y h(x))$$
 여기서 $h(x)$는 SVM의 예측 함수이며, $s_a(z) = \frac{1}{1 + e^{az}}$는 mirror-sigmoid 함수로 $0/1$ loss를 미분 가능하게 근사한 것이다. 파라미터 $a$는 곡선의 가파른 정도를 조절한다.
 
 ### 학습 절차 및 최적화
+
 SVML은 Gradient Descent 또는 2차 최적화 방법을 사용하여 $L$을 업데이트한다. 핵심은 체인 룰(chain rule)을 통해 $\frac{\partial L_V}{\partial L}$을 계산하는 것이다.
 
 1. **그래디언트 계산**: $h(x)$는 SVM 파라미터 $\alpha$와 $b$에 의존하며, 이들은 다시 커널 행렬 $K$(즉, $L$)에 의존한다.
@@ -54,11 +57,13 @@ SVML은 Gradient Descent 또는 2차 최적화 방법을 사용하여 $L$을 업
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: UCI Machine Learning Repository의 9개 데이터셋 (Haber, Credit, ACredit, Trans, Diabts, Mammo, CMC, Page, Gamma) 사용.
 - **비교 대상**: Euclidean distance (1, 3, 5-fold CV), ITML+SVM, NCA+SVM, LMNN+SVM.
 - **지표**: 분류 오류율(Error Rate) 및 학습 시간.
 
 ### 주요 결과
+
 1. **정량적 성능**: SVML은 9개 데이터셋 중 6개에서 최상의 성능(또는 통계적으로 동등한 성능)을 보였다. 특히, kNN 기반 metric learning 알고리즘들이 Euclidean distance보다 눈에 띄게 좋지 않은 결과를 보인 것과 달리, SVML은 일관되게 Euclidean distance보다 우수한 성능을 나타냈다.
 2. **계산 효율성**: SVML의 학습 시간은 Euclidean distance를 사용한 3~5-fold cross validation 시간과 유사한 수준으로, 실용적인 계산 비용을 가진다.
 3. **시각화 및 차원 축소**: $L$을 직사각형 행렬($r=2$ 또는 $3$)로 제한했을 때, PCA보다 훨씬 더 해석 가능하고 명확한 결정 경계를 가진 2D 시각화 결과를 얻었다.

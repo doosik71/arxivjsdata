@@ -12,9 +12,9 @@ Fei Xie, Chunyu Wang, Guangting Wang, Yue Cao, Wankou Yang, Wenjun Zeng (2022)
 
 본 논문의 핵심 아이디어는 **특징 추출 네트워크 내부에 상관관계 연산을 깊게 통합**하는 것이다. 이를 위해 **Single Branch Transformer (SBT)**라는 새로운 프레임워크를 제안한다.
 
-1.  **Target-Dependent Feature Extraction**: 기존의 독립적인 특징 추출 방식에서 벗어나, Self-Attention(SA)과 Cross-Attention(CA)을 결합한 EoC(Extract-or-Correlation) 블록을 통해 템플릿과 검색 이미지의 특징이 네트워크 층을 통과하며 지속적으로 상호작용하도록 설계하였다.
-2.  **Removal of Separate Correlation Step**: 특징 추출 과정에서 이미 깊은 수준의 상관관계 분석이 이루어지므로, 기존 추적기들이 사용하던 별도의 상관관계 연산(예: Siamese cropping, DCF 등) 단계 없이 검색 이미지의 특징만으로 즉시 타겟의 위치와 크기를 예측할 수 있다.
-3.  **Flexible Pre-training**: SBT는 구조적으로 단일 스트림(Single-stream) 처리가 가능하여, ImageNet과 같은 대규모 비쌍(unpaired) 이미지 데이터셋에서 사전 학습이 가능하며, 이는 추적 작업으로의 미세 조정(Fine-tuning) 시 빠른 수렴 속도를 제공한다.
+1. **Target-Dependent Feature Extraction**: 기존의 독립적인 특징 추출 방식에서 벗어나, Self-Attention(SA)과 Cross-Attention(CA)을 결합한 EoC(Extract-or-Correlation) 블록을 통해 템플릿과 검색 이미지의 특징이 네트워크 층을 통과하며 지속적으로 상호작용하도록 설계하였다.
+2. **Removal of Separate Correlation Step**: 특징 추출 과정에서 이미 깊은 수준의 상관관계 분석이 이루어지므로, 기존 추적기들이 사용하던 별도의 상관관계 연산(예: Siamese cropping, DCF 등) 단계 없이 검색 이미지의 특징만으로 즉시 타겟의 위치와 크기를 예측할 수 있다.
+3. **Flexible Pre-training**: SBT는 구조적으로 단일 스트림(Single-stream) 처리가 가능하여, ImageNet과 같은 대규모 비쌍(unpaired) 이미지 데이터셋에서 사전 학습이 가능하며, 이는 추적 작업으로의 미세 조정(Fine-tuning) 시 빠른 수렴 속도를 제공한다.
 
 ## 📎 Related Works
 
@@ -29,13 +29,16 @@ SBT는 이러한 기존 방식들과 달리, 특징 추출 단계부터 $\text{C
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 SBT는 **Patch Embedding $\rightarrow$ Stacked EoC Blocks $\rightarrow$ Prediction Heads**의 순서로 구성된다.
 
 ### 1. Patch Embedding (PaE)
+
 템플릿 이미지 $z$와 검색 이미지 $x$를 입력으로 받는다. 커널 크기 $7\times7$, 스트라이드 4인 합성곱 층 $\phi_p^0$과 Layer Normalization(LN)을 통해 초기 특징 맵 $f_z^0, f_x^0$를 생성한다.
 $$f_z^0, f_x^0 = \text{LN}(\phi_p^0(z)), \text{LN}(\phi_p^0(x))$$
 
 ### 2. Extract-or-Correlation (EoC) Block
+
 EoC 블록은 $\text{Self-Attention(SA)}$과 $\text{Cross-Attention(CA)}$을 모두 수행할 수 있는 핵심 단위이다. 연산 복잡도를 줄이기 위해 $\text{Spatial-Reduction Global attention (SRG)}$ 방식을 채택하여 Key($k$)와 Value($v$)의 공간 해상도를 낮춘 후 전역 어텐션을 계산한다.
 
 - **공통 연산**: 쿼리($q$), 키($k$), 밸류($v$)를 선형 투영 $\omega$를 통해 생성한다.
@@ -48,20 +51,24 @@ EoC 블록은 $\text{Self-Attention(SA)}$과 $\text{Cross-Attention(CA)}$을 모
   $$f_z := f_z + \tilde{f}_{zx}, \quad f_x := f_x + \tilde{f}_{xz}$$
 
 ### 3. Position Encoding 및 직접 예측 (Direct Prediction)
+
 위치 정보 제공을 위해 $3\times3$ depth-wise convolution을 사용하는 $\text{Conditional Position Encoding}$을 적용한다. 최종적으로 출력된 검색 이미지 특징 $\hat{f}_x$는 별도의 상관관계 연산 없이 분류 헤드($\Phi_{cls}$)와 회귀 헤드($\Phi_{reg}$)로 직접 전달되어 타겟의 위치와 크기를 예측한다. 이때 공간-채널 의존성을 동시에 모델링하는 $\text{Mix-MLP Blocks (MMB)}$가 사용된다.
 
 ### 4. 학습 절차 및 손실 함수
+
 - **사전 학습**: ImageNet 데이터셋에서 분류 작업을 통해 4단계 SBT 모델을 사전 학습한다.
 - **미세 조정**: 추적 데이터셋에서 $\text{Cross-Entropy Loss}$ (분류)와 $\text{GIoU Loss} + L_1 \text{ Loss}$ (회귀)를 사용하여 학습한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: GOT-10k, LaSOT, VOT2020, OTB100.
 - **지표**: Average Overlap (AO), Success Rate (SR), Precision, EAO 등.
 - **비교 대상**: STARK, TransT, DiMP, SiamRPN++ 등 최신 SOTA 추적기.
 
 ### 주요 결과
+
 - **성능 우위**: GOT-10k 벤치마크에서 SBT-base 및 SBT-large 버전이 STARK, TransT, DiMP 등 기존 SOTA 모델보다 높은 AO를 기록하였다.
 - **효율성**: SBT-small 및 SBT-light 버전은 모델 크기가 훨씬 작음에도 불구하고 경쟁력 있는 성능을 보였으며, 실시간 추적이 가능하다.
 - **범용성 (CAT)**: SBT의 특징 네트워크를 기존 추적기(SiamFCpp, DiMP, STARK, STM)의 백본으로 교체한 $\text{Correlation-Aware Trackers (CAT)}$들이 모두 기존 베이스라인보다 성능이 향상됨을 확인하였다. 예를 들어, $\text{SiamFCpp-CA}$는 AO 기준 $\text{SiamFCpp}$보다 5.2%p 향상된 결과를 보였다.
@@ -69,11 +76,13 @@ EoC 블록은 $\text{Self-Attention(SA)}$과 $\text{Cross-Attention(CA)}$을 모
 ## 🧠 Insights & Discussion
 
 ### 이론적 분석 및 강점
-1.  **Translation Invariance**: 기존 CNN 기반 추적기는 패딩(Padding) 문제로 인해 평행 이동 불변성(Translation Invariance)을 유지하기 위해 복잡한 크롭핑이나 샘플링 전략을 썼다. 반면 SBT는 전역 수용 영역을 가진 EoC 블록과 순열 불변성(Permutation Invariance)을 가진 토큰 구조를 사용하여 이론적으로 평행 이동 불변성을 더 쉽게 확보한다.
-2.  **Cross-Attention의 효과**: $\text{Cross-Attention}$은 수학적으로 두 개의 $\text{Dynamic Convolution (D-Conv)}$과 하나의 $\text{Softmax}$ 층으로 분해될 수 있다. 이는 기존의 depth-wise correlation 방식보다 두 배 더 효과적인 모델링 능력을 가짐을 의미한다.
-3.  **타겟 의존적 임베딩**: T-SNE 시각화 결과, 네트워크가 깊어질수록 SBT의 검색 특징은 타겟(Green)과 방해물/배경(Blue/Pink)이 명확하게 분리되는 양상을 보였다. 이는 Siamese-like 네트워크가 타겟에 무관한(Target-unaware) 특징을 추출하는 것과 대조적이다.
+
+1. **Translation Invariance**: 기존 CNN 기반 추적기는 패딩(Padding) 문제로 인해 평행 이동 불변성(Translation Invariance)을 유지하기 위해 복잡한 크롭핑이나 샘플링 전략을 썼다. 반면 SBT는 전역 수용 영역을 가진 EoC 블록과 순열 불변성(Permutation Invariance)을 가진 토큰 구조를 사용하여 이론적으로 평행 이동 불변성을 더 쉽게 확보한다.
+2. **Cross-Attention의 효과**: $\text{Cross-Attention}$은 수학적으로 두 개의 $\text{Dynamic Convolution (D-Conv)}$과 하나의 $\text{Softmax}$ 층으로 분해될 수 있다. 이는 기존의 depth-wise correlation 방식보다 두 배 더 효과적인 모델링 능력을 가짐을 의미한다.
+3. **타겟 의존적 임베딩**: T-SNE 시각화 결과, 네트워크가 깊어질수록 SBT의 검색 특징은 타겟(Green)과 방해물/배경(Blue/Pink)이 명확하게 분리되는 양상을 보였다. 이는 Siamese-like 네트워크가 타겟에 무관한(Target-unaware) 특징을 추출하는 것과 대조적이다.
 
 ### 한계 및 비판적 해석
+
 - **폐색(Occlusion) 문제**: 타겟이 방해물에 의해 완전히 가려지거나 검색 영역을 완전히 벗어나는 경우, 쌍 기반(Pairwise) 추적 파이프라인의 한계로 인해 추적에 실패하는 모습이 관찰되었다.
 - **연산 효율성**: 현대의 과학 계산 패키지들이 Transformer의 Attention 연산을 가속화하는 데 최적화되어 있지 않아, 실제 구현 상의 연산 효율성 문제가 있을 수 있음을 언급하였다.
 

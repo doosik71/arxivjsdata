@@ -25,7 +25,9 @@ Mohammad Moulaeifard, Peter H. Charlton and Nils Strodthoff (2025)
 ## 🛠️ Methodology
 
 ### 1. 데이터셋 구성
+
 학습을 위해 MIMIC-III와 VitalDB에서 추출된 대규모 데이터셋인 **PulseDB**를 사용하며, 다음과 같은 세 가지 시나리오의 서브셋을 생성하여 사용한다.
+
 - **Calib**: 각 피험자의 데이터가 학습과 테스트 세트에 모두 포함되어, 환자별 특성에 적응하는 보정 기반 접근 방식을 평가한다.
 - **CalibFree**: 학습과 테스트 세트가 피험자를 공유하지 않아, 완전히 새로운 환자에 대한 일반화 성능을 평가한다.
 - **AAMI**: AAMI(Association for the Advancement of Medical Instrumentation) 표준을 준수하여 혈압 분포의 꼬리 부분(극단값)에 더 큰 비중을 둔 엄격한 일반화 시나리오이다.
@@ -33,22 +35,27 @@ Mohammad Moulaeifard, Peter H. Charlton and Nils Strodthoff (2025)
 외부 평가를 위해서는 Sensors, UCI, BCG, PPGBP 등 성격이 다른 4개의 외부 데이터셋을 OOD 테스트 세트로 활용한다.
 
 ### 2. 모델 아키텍처
+
 본 연구에서는 다음과 같은 다양한 CNN 및 시퀀스 모델을 평가한다.
+
 - **LeNet1D**: 단순한 피드포워드 CNN 구조이다.
 - **XResNet1d (50, 101)**: Skip connection을 통해 그래디언트 흐름을 개선한 ResNet의 1차원 변형 모델이다.
 - **Inception1D**: 다양한 크기의 커널 필터를 병렬로 사용하여 광범위한 특징 패턴을 캡처하는 구조이다.
 - **S4 (Structured State Space Sequence)**: 긴 범위의 의존성(Long-range dependencies)을 효과적으로 포착할 수 있는 상태 공간 모델이다.
 
 ### 3. 학습 및 평가 절차
+
 - **학습 설정**: AdamW 옵티마이저와 Mean Squared Error(MSE) 손실 함수를 사용하며, SBP(수축기 혈압)와 DBP(이완기 혈압)를 동시에 예측하는 두 개의 출력 노드를 구성한다.
-- **성능 지표**: 
-    - **MAE (Mean Absolute Error)**: 예측값과 실제값의 평균 절대 오차를 측정한다.
+- **성능 지표**:
+  - **MAE (Mean Absolute Error)**: 예측값과 실제값의 평균 절대 오차를 측정한다.
     $$\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |\text{Predicted}_i - \text{Reference}_i|$$
-    - **MASE (Mean Absolute Scaled Error)**: 학습 세트의 혈압 중앙값(Median)을 기준으로 모델의 상대적 성능을 평가한다.
+  - **MASE (Mean Absolute Scaled Error)**: 학습 세트의 혈압 중앙값(Median)을 기준으로 모델의 상대적 성능을 평가한다.
     $$\text{MASE} = \frac{\text{MAE}}{\text{MAE}_{\text{Baseline}}}$$
 
 ### 4. 도메인 적응: Importance Weighting
+
 소스 도메인(학습)과 타겟 도메인(테스트)의 혈압 레이블 분포 차이를 줄이기 위해 샘플 가중치 방식을 도입한다.
+
 - 레이블 분포를 정규화된 히스토그램($h$)으로 표현하고, 특정 빈(bin) $i$에 속하는 샘플의 가중치 $w_i$를 다음과 같이 정의한다.
 $$w_i = \max\left(\tau, \frac{h_{\text{test},i}}{h_{\text{train},i}}\right) \quad \text{if } h_{\text{train},i} > 0, \text{ else } \tau$$
 여기서 $\tau$는 가중치가 너무 작아져 샘플이 완전히 배제되는 것을 방지하는 하이퍼파라미터이다. 이 가중치를 손실 함수에 곱하여 타겟 도메인의 분포에 더 가깝게 학습하도록 유도한다.
@@ -56,27 +63,33 @@ $$w_i = \max\left(\tau, \frac{h_{\text{test},i}}{h_{\text{train},i}}\right) \qua
 ## 📊 Results
 
 ### 1. 모델 성능 비교
+
 - **최적 모델**: 전반적으로 **XResNet1d101**이 가장 일관되게 높은 성능을 보였으며, Inception-based 모델 또한 우수한 성능을 기록하였다. 반면, S4 모델은 ECG/EEG 분야에서의 성과와 달리 PPG 혈압 추정에서는 두드러진 성능 향상을 보이지 않았다.
 - **시나리오별 차이**: Calib 시나리오에서는 모델이 특정 환자의 패턴을 기억할 수 있어 가장 낮은 MAE를 기록하였으며, AAMI 시나리오에서는 레이블 분포의 불일치로 인해 가장 높은 오차가 발생하였다.
 
 ### 2. ID vs OOD 일반화
+
 - **ID 성능의 한계**: 동일 데이터셋 내에서 평가한 ID 성능은 매우 낙관적이지만, 외부 데이터셋으로 평가했을 때 성능이 급격히 저하된다. 이는 ID 결과만으로 모델의 실제 일반화 능력을 판단할 수 없음을 시사한다.
 - **데이터셋 영향**: VitalDB 기반 모델이 MIMIC 기반 모델보다 외부 데이터셋에 대해 더 좋은 일반화 성능을 보였다. 특히 SBP 분포의 유사성(Earth Mover's Distance, EMD로 측정)과 OOD MAE 사이에 강한 상관관계가 있음이 확인되었다.
 
 ### 3. 도메인 적응의 효과
-- **성능 개선**: Importance weighting을 적용했을 때, 전체 케이스의 58%에서 OOD 성능이 향상되었다. 
+
+- **성능 개선**: Importance weighting을 적용했을 때, 전체 케이스의 58%에서 OOD 성능이 향상되었다.
 - **특이 사항**: 특히 MIMIC 기반 모델과 AAMI 시나리오에서 성능 향상 폭이 컸으며, 일부 경우(AAMI Vital 모델)에서는 외부 데이터셋에서 ID 수준의 성능에 근접하는 결과를 얻었다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. 주요 강점 및 발견
+
 본 연구는 PPG 기반 혈압 추정에서 **레이블 분포의 불일치(Label Distribution Shift)**가 도메인 간 성능 저하의 핵심 요인임을 밝혀냈다. 단순한 가중치 조절만으로도 OOD 성능을 유의미하게 개선할 수 있음을 보여주었으며, 이는 타겟 도메인의 대략적인 통계 정보(레이블 분포)만으로도 모델을 최적화할 수 있다는 실무적 가능성을 제시한다.
 
 ### 2. 한계 및 비판적 해석
+
 - **임상적 유효성 부족**: IEEE 표준에 따르면 임상적으로 사용 가능하려면 MAE가 $7\text{mmHg}$ 미만이어야 한다(Grade A-B). 하지만 본 연구의 모든 모델은 평균적으로 이 기준을 충족하지 못하는 Grade D 수준에 머물러 있어, 실제 의료 기기 적용까지는 여전히 큰 간극이 존재한다.
 - **단순한 적응 방식**: 제안된 중요도 가중치 방식은 레이블 분포만을 고려하며, 센서의 특성, 신호 품질, 피험자의 인구통계학적 특성 등 다른 중요한 도메인 차이점은 해결하지 못한다.
 
 ### 3. 향후 연구 방향
+
 저자들은 향후 연구로 사전 학습된 파운데이션 모델(Foundation Models)의 활용, 임상 메타데이터의 통합, 그리고 타겟 분포를 모르는 상태에서의 강건성을 높이기 위한 연구가 필요함을 언급하였다.
 
 ## 📌 TL;DR

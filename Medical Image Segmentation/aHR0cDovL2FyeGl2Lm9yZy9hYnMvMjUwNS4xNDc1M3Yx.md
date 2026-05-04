@@ -25,6 +25,7 @@ Mengzhu Wang, Jiao Li, Shanshan Wang, Long Lan, Huibin Tian, Liang Yang, Guoli Y
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 TransMedSeg는 Teacher-Student 네트워크 구조를 기반으로 하며, Student 네트워크 $f_{stu}$는 라벨링된 소스 데이터 $D_s$에서 학습하고, Teacher 네트워크 $f_{tea}$는 라벨링되지 않은 타겟 데이터 $D_t$에 적응한다. 전체 손실 함수는 다음과 같이 정의된다.
 
 $$L_{TransMedSeg} = L_{GraphCL} + \beta L_{tsa}$$
@@ -32,6 +33,7 @@ $$L_{TransMedSeg} = L_{GraphCL} + \beta L_{tsa}$$
 여기서 $L_{GraphCL}$은 기본 프레임워크의 손실이며, $L_{tsa}$는 제안된 전이 가능 세만틱 증강 손실이다. $\beta$는 증강의 강도를 조절하는 가중치이다.
 
 ### 2. Transferable Semantic Augmentation (TSA)
+
 TSA는 소스 도메인의 특성을 타겟 도메인의 세만틱 방향으로 변환하여 도메인 간 간극을 메우는 모듈이다.
 
 **특성 통계량 계산:**
@@ -47,6 +49,7 @@ $$z_c \sim \mathcal{N}(\Delta\mu_c, \Sigma_t^c)$$
 $$\tilde{f}_{s,i}^c = f_{s,i}^c + \delta, \quad \delta \sim \mathcal{N}(\alpha\Delta\mu_c, \alpha\Sigma_t^c)$$
 
 ### 3. 암시적 세만틱 데이터 증강 (ISDA) 및 손실 함수
+
 명시적으로 수많은 샘플을 생성하여 학습하는 것은 메모리 비용이 매우 높다. 이를 해결하기 위해 본 논문은 **Implicit Semantic Data Augmentation (ISDA)** 방식을 도입한다.
 
 수학적으로 $M \to \infty$일 때의 기대 손실을 분석하고, Jensen's inequality($\mathbb{E}[\log(X)] \le \log(\mathbb{E}[X])$)를 적용하여 계산 가능한 상한 손실 함수(Surrogate loss)를 유도하였다. 최종적으로 유도된 $L_{tsa}$는 다음과 같다.
@@ -58,17 +61,21 @@ $$L_{tsa} \approx \frac{1}{n_s} \sum_{i=1}^{n_s} \log \sum_{c=1}^{C} \mathbb{E} 
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋:** ACDC (심장 MRI), Pancreas-NIH (췌장 CT), LA (좌심방 MRI).
 - **평가 지표:** Dice Similarity Coefficient (Dice), Jaccard Index, 95% Hausdorff Distance (95HD), Average Surface Distance (ASD).
 - **비교 대상:** V-Net, UA-MT, SASSNet, DTC, URPC, MC-Net, SS-Net, BCP, GraphCL 등 최신 SSL 방법론.
 
 ### 2. 정량적 결과
+
 TransMedSeg는 모든 데이터셋에서 SOTA(State-of-the-art) 성능을 달성하였다.
+
 - **LA 데이터셋:** 라벨 데이터 10% 사용 시 Dice 89.62%, Jaccard 81.31%를 기록하며 GraphCL을 능가하였다.
 - **ACDC 데이터셋:** 10% 라벨 사용 시 Dice 89.96%, 95HD 1.61, ASD 0.64를 기록하였다. 특히 경계 지표인 95HD와 ASD에서 큰 개선을 보여, TSA가 해부학적 구조의 정밀한 묘사에 효과적임을 입증하였다.
 - **Pancreas-NIH 데이터셋:** 췌장 분할의 높은 가변성에도 불구하고 Dice 83.06%를 달성하여 가장 높은 성능을 보였다.
 
 ### 3. 분석 및 시각화
+
 - **Ablation Study:** $L_{tsa}$를 제거했을 때 모든 지표에서 성능 저하가 발생하였으며, 특히 데이터가 적은 상황(5% 라벨)에서 그 영향이 뚜렷하였다.
 - **t-SNE 시각화:** $L_{tsa}$를 적용했을 때 특성 임베딩이 도메인 간에 잘 정렬되고 클래스별로 조밀하게 군집화되는 것을 확인하였다.
 - **정성적 결과:** 시각화 결과, BCP나 GraphCL에 비해 장기의 경계면을 더 정확하게 추출하며, 특히 도메인 전이 영역에서의 오류가 현저히 적음을 확인하였다.

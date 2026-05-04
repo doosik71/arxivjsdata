@@ -7,6 +7,7 @@ Xiatao Sun, Shuo Yang, Mingyan Zhou, Kunpeng Liu, Rahul Mangharam (2024)
 본 논문은 자율 주행 시스템을 위한 모방 학습(Imitation Learning, IL)에서 기존 알고리즘들이 가진 비현실적인 가정을 해결하고자 한다. 기존의 DAgger나 HG-DAgger와 같은 상호작용형 모방 학습 방법들은 기본적으로 '단 한 명의 완벽한 전문가(one perfect expert)'가 존재한다는 가정을 전제로 한다.
 
 그러나 실제 환경에서는 다음과 같은 두 가지 주요 문제에 직면한다.
+
 1. **전문가의 불완전성(Imperfect Experts):** 인간 전문가는 실수할 가능성이 높으며, 이는 학습 데이터에 안전하지 않은(unsafe) 행동이 포함되어 novice policy(초보 정책)가 이를 학습함으로써 충돌을 야기할 수 있음을 의미한다.
 2. **다수 전문가 간의 충돌(Multiple Experts & Conflict):** 여러 명의 전문가가 존재할 경우, 운전 스타일의 차이(예: 공격적인 스타일 vs 보수적인 스타일)로 인해 동일하거나 유사한 상태에서 서로 다른 제어 명령(label)을 제공할 수 있다. 이러한 레이블의 충돌은 학습 모델의 보간(interpolation) 과정에서 간섭을 일으켜 성능을 저하시킨다.
 
@@ -29,10 +30,13 @@ Xiatao Sun, Shuo Yang, Mingyan Zhou, Kunpeng Liu, Rahul Mangharam (2024)
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인
+
 MEGA-DAgger는 HG-DAgger의 루프 구조를 계승하되, 데이터 수집 단계에서 **Data Filter**와 **Conflict Resolution** 블록을 추가하였다.
+
 - **루프 구조:** Novice policy가 제어하다가 위험 상황에서 전문가가 개입하여 제어권을 가져온다. 이때 수집된 전문가의 데이터는 필터링과 충돌 해결 과정을 거친 후 전체 학습 데이터셋 $D$에 통합된다.
 
 ### 2. 데이터 필터 (Data Filter)
+
 전문가의 시연이 안전하지 않을 수 있으므로, CBF 기반의 안전 점수 $\sigma_t$를 계산하여 데이터를 선별한다.
 먼저, 장애물과의 거리를 기반으로 한 CBF 값 $h(x, y)$를 다음과 같이 정의한다.
 $$h(x^e_t, y^e_t) = (x^e_t - x^p_t)^2 - (y^e_t - y^p_t)^2 - \alpha^2$$
@@ -41,7 +45,9 @@ $$\sigma_t = h(x^e_{t+1}, y^e_{t+1}) - (1-\gamma)h(x^e_t, y^e_t), \quad 0 < \gam
 $\sigma_t$ 값이 음수가 되면 해당 시점의 rollout은 즉시 종료되며, 위험 지역에 진입하기 전의 잘못된 행동까지 제거하기 위해 이전 $\beta$ 단계의 데이터까지 함께 삭제(truncate)한다.
 
 ### 3. 충돌 해결 (Conflict Resolution)
+
 다수 전문가의 레이블이 충돌하는 문제를 해결하기 위해 Cosine Similarity와 평가 점수 $\omega_t$를 사용한다.
+
 - **유사도 측정:** 현재 수집된 관측치 $O_j$와 기존 데이터셋의 관측치 $O$ 사이의 Cosine Similarity $\Theta$를 계산하여 임계값 $\epsilon$보다 높은 유사한 상태들을 그룹화한다.
 $$\Theta = \frac{O \cdot O_j}{\|O\| \odot \|O_j\|}$$
 - **평가 점수 산출:** 유사한 상태 그룹 내에서 각 데이터의 우수성을 평가하기 위해 정규화된 안전 점수($\sigma_t$)와 정규화된 차량 속도($v_t$, 진행도 지표)의 합으로 $\omega_t$를 계산한다.
@@ -51,12 +57,14 @@ $$\omega_t = \frac{\|\sigma_t\| - \min \|\sigma_t\|}{\max \|\sigma_t\| - \min \|
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **환경:** `f1tenth_gym` 2D 시뮬레이터 및 실제 F1TENTH 플랫폼.
 - **입력 데이터:** 1080 길이의 LiDAR 스캔 데이터를 108로 다운샘플링하여 사용.
 - **비교 대상:** HG-DAgger, DAgger, Behavior Cloning.
 - **평가 지표:** 추월 성공률(Overtakes Percentage) 및 충돌률(Collisions Percentage).
 
 ### 2. 주요 결과
+
 - **데이터 필터의 효과:** 전문가의 잘못된 행동 확률 $P(U)$가 증가함에 따라 성능이 저하되지만, 제안된 데이터 필터를 사용한 경우 단순 HG-DAgger보다 충돌률이 현저히 낮고 추월 성공률이 높았다.
 - **충돌 해결의 효과:** MEGA-DAgger는 vanilla HG-DAgger 대비 추월 및 충돌 회피 성능이 평균 약 45% 향상되었다. 특히 데이터 필터만 적용했을 때보다도 약 15%의 추가 성능 향상을 보였다.
 - **전문가 능가 (Better-than-experts):** Table III 결과에 따르면, MEGA-DAgger로 학습된 정책은 5명의 개별 전문가들보다 더 낮은 충돌률($0.212$ vs 평균 $0.348$)과 더 높은 추월 성공률($0.781$ vs 평균 $0.649$)을 기록하였다. 이는 각 전문가가 서로 다른 지점에서 실수하는 특성을 이용해, 상호 보완적인 좋은 행동만을 학습했기 때문이다.
@@ -65,9 +73,11 @@ $$\omega_t = \frac{\|\sigma_t\| - \min \|\sigma_t\|}{\max \|\sigma_t\| - \min \|
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 본 논문은 전문가가 완벽하지 않다는 현실적인 제약을 수용하고, 이를 수학적 안전 지표(CBF)와 경험적 성능 지표(속도 및 안전성)로 해결하였다. 특히 단순한 데이터 취합이 아니라, 유사 상태에서의 최적 액션을 선택하는 Conflict Resolution 과정을 통해 '전문가보다 더 나은(better-than-experts)' 정책을 생성할 수 있음을 보인 점이 고무적이다.
 
 ### 한계 및 논의
+
 - **성능 감쇠 현상:** 실험 결과, 학습 롤아웃 횟수가 약 300회 이후로 증가하면 성능이 서서히 감소하는 경향이 나타났다. 저자들은 데이터셋이 커지면서 필터를 통과한 일부 부적절한 데이터가 누적되었기 때문이라고 추측한다.
 - **휴리스틱 점수:** 현재 $\omega_t$ 계산에 사용되는 안전 점수와 속도 점수는 휴리스틱하게 설정되었다. 향후에는 전문가의 액션에 대한 신뢰도 점수(confidence score)를 모델이 자동으로 학습하게 함으로써 더 정교한 선택이 가능할 것이다.
 - **$\epsilon$ 값의 민감도:** Cosine Similarity 임계값 $\epsilon$ 설정에 따라 성능 차이가 크게 나타나는데, 이는 상태의 유사성을 판단하는 기준이 매우 정밀해야 함을 시사한다.

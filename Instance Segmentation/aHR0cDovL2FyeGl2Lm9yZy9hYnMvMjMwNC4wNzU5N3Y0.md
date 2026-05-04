@@ -25,24 +25,31 @@ Christoph Reich, Tim Prangemeier, André O. Françani, Heinz Koeppl (2023)
 ## 🛠️ Methodology
 
 ### 1. 데이터 획득 및 구성 (Data Acquisition)
-본 데이터셋은 *Saccharomyces cerevisiae*(효모)를 대상으로 하며, 두 가지 형태의 트랩 미세구조(Regular trap, L-shaped trap)가 설계된 마이크로플루이딕 칩(Microfluidic chip)에서 획득되었다. 
+
+본 데이터셋은 *Saccharomyces cerevisiae*(효모)를 대상으로 하며, 두 가지 형태의 트랩 미세구조(Regular trap, L-shaped trap)가 설계된 마이크로플루이딕 칩(Microfluidic chip)에서 획득되었다.
+
 - **이미지 사양**: 고해상도 원본 데이터에서 단일 트랩 쌍을 중심으로 $128 \times 128$ 해상도로 크롭(Crop)한 이미지 493장을 추출하였다.
 - **포함 사례**: 빈 트랩, 단일 세포(및 딸세포), 다중 세포, 그리고 제작 오류로 인한 파손된 트랩 등의 엣지 케이스(Edge cases)를 모두 포함하여 실용성을 높였다.
 
 ### 2. 데이터 어노테이션 (Data Annotation)
+
 모든 라벨링은 수작업(Manual annotation)으로 진행되었다.
+
 - **라벨 대상**: 각 픽셀을 세포, 트랩, 또는 배경(Background)으로 분류하였다. 세포와 트랩은 각각 독립된 인스턴스로 구분하여 라벨링하였다.
 - **특이 사항**: 효모의 출아(Budding) 과정에서 생성되는 딸세포의 경우, 모세포와 명확히 분리된 경우에만 별도의 인스턴스로 처리하였다.
 - **트랩 라벨링의 이유**: 세포만 라벨링하지 않고 트랩까지 라벨링한 이유는 첫째, 세포가 실제로 트랩에 갇혀 있는지 아니면 유체에 의해 씻겨 내려갈 상태인지를 판별하기 위함이며, 둘째, 트랩을 명시적으로 학습함으로써 세포와의 차이점을 더 잘 학습하도록 유도하기 위함이다.
 
 ### 3. 데이터셋 분할 (Dataset Splits)
+
 데이터셋은 Cityscapes 데이터셋의 비율을 참고하여 다음과 같이 분할되었다.
+
 - **Training set**: 296장 ($\sim 60\%$)
 - **Validation set**: 49장 ($\sim 10\%$)
 - **Test set**: 148장 ($\sim 30\%$)
 단순 무작위 분할이 아니라, 각 세트가 세포 및 트랩 구성의 다양성을 유사하게 가지도록 수동으로 큐레이션하였다.
 
 ### 4. 평가 지표 (Evaluation Metrics)
+
 본 논문은 두 가지 지표를 통해 성능을 측정할 것을 제안한다.
 
 **가. Cell class IoU (Intersection-over-Union)**
@@ -53,6 +60,7 @@ $$\text{IoU}(p_c, g_c) = \frac{|p_c \cap g_c|}{|p_c \cup g_c|}$$
 **나. Panoptic Quality (PQ)**
 인스턴스 수준의 인식 및 분할 품질을 동시에 측정하기 위해 PQ를 도입하였다. 본 데이터셋에서는 세포와 트랩을 'Things' 클래스로, 배경을 'Stuff' 클래스로 간주한다.
 $$\text{PQ} = \underbrace{\frac{\sum_{(p,g) \in TP} \text{IoU}(p, g)}{|TP|}}_{\text{SQ}} \times \underbrace{\frac{|TP|}{|TP| + \frac{1}{2}|FP| + \frac{1}{2}|FN|}}_{\text{RQ}}$$
+
 - **SQ (Segmentation Quality)**: 매칭된 인스턴스들 간의 평균 $\text{IoU}$를 통해 분할의 정확도를 측정한다.
 - **RQ (Recognition Quality)**: True Positive(TP), False Positive(FP), False Negative(FN)를 이용하여 인스턴스 탐지 및 인식 능력을 측정한다.
 - **특징**: PQ는 객체의 크기에 관계없이 각 인스턴스에 동일한 가중치를 부여하므로, 개별 세포 분할 성능을 측정하는 데 더 적합하다.
@@ -61,10 +69,10 @@ $$\text{PQ} = \underbrace{\frac{\sum_{(p,g) \in TP} \text{IoU}(p, g)}{|TP|}}_{\t
 
 본 논문은 특정 모델의 성능 수치를 제시하는 벤치마크 논문이라기보다 데이터셋의 제안과 특성을 분석하는 데 중점을 두고 있다. 따라서 정량적인 모델 성능 결과보다는 데이터셋의 통계적 결과가 주를 이룬다.
 
-- **데이터셋 통계**: 
-    - **Subset 1 (Regular)**: 398장 이미지, 702개 세포, 781개 트랩.
-    - **Subset 2 (L-shape)**: 95장 이미지, 212개 세포, 190개 트랩.
-    - **전체**: 493장 이미지, 914개 세포, 971개 트랩.
+- **데이터셋 통계**:
+  - **Subset 1 (Regular)**: 398장 이미지, 702개 세포, 781개 트랩.
+  - **Subset 2 (L-shape)**: 95장 이미지, 212개 세포, 190개 트랩.
+  - **전체**: 493장 이미지, 914개 세포, 971개 트랩.
 - **인스턴스 분포**: 대부분의 이미지에는 2개의 트랩과 최소 1개 이상의 세포가 포함되어 있으며, 가장 많은 경우는 세포 2개와 트랩 2개가 존재하는 구성(모세포와 출아 중인 딸세포)이다.
 - **크기 분포**: 세포의 크기는 정규분포를 따르는 경향이 있으며, 트랩의 크기는 제조 공정의 특성상 세포보다 변동성이 적다.
 - **위치 분포**: 세포들은 주로 트랩 쌍 내부에 위치하며, 딸세포는 주로 미세구조의 상단 부근에서 성장하는 경향을 보였다.

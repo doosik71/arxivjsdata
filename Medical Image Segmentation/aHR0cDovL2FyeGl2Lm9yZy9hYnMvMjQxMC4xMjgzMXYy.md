@@ -16,10 +16,10 @@ Longchao Da, Rui Wang, Xiaojian Xu, Parminder Bhatia, Taha Kass-Hout, Hua Wei, C
 
 본 논문의 핵심적인 기여는 다음과 같다.
 
-1.  **RAG 기반의 Free-form Text Prompt Generator**: 임상 전문가의 기록(EMR), 비전문가의 쿼리, 합성 쿼리로 구성된 도메인 말뭉치(Domain corpus)를 활용하여, 실제 의료 현장에서 사용될 법한 다양하고 현실적인 텍스트 prompt를 자동으로 생성하는 RAG(Retrieval Augmented Generation) 프레임워크를 제안한다.
-2.  **FLanS 모델 제안**: 해부학적 정보가 포함된 쿼리(Anatomy-Informed)와 해부학적 지식 없이 위치나 크기 기반으로 요청하는 쿼리(Anatomy-Agnostic)를 모두 처리할 수 있는 분할 모델을 구축하였다.
-3.  **Symmetry-aware Canonicalization Module**: 입력 영상의 방향성을 표준화된 프레임으로 변환하는 모듈을 통합하여, 영상의 회전이나 반전과 관계없이 일관된 분할 성능을 보장하는 Equivariance/Invariance 특성을 구현하였다.
-4.  **대규모 데이터셋 학습 및 검증**: 7개의 공개 데이터셋에서 추출한 10만 장 이상의 의료 영상을 통해 학습하였으며, In-domain 및 Out-of-domain 데이터셋 모두에서 기존 SOTA 모델 대비 우수한 성능을 입증하였다.
+1. **RAG 기반의 Free-form Text Prompt Generator**: 임상 전문가의 기록(EMR), 비전문가의 쿼리, 합성 쿼리로 구성된 도메인 말뭉치(Domain corpus)를 활용하여, 실제 의료 현장에서 사용될 법한 다양하고 현실적인 텍스트 prompt를 자동으로 생성하는 RAG(Retrieval Augmented Generation) 프레임워크를 제안한다.
+2. **FLanS 모델 제안**: 해부학적 정보가 포함된 쿼리(Anatomy-Informed)와 해부학적 지식 없이 위치나 크기 기반으로 요청하는 쿼리(Anatomy-Agnostic)를 모두 처리할 수 있는 분할 모델을 구축하였다.
+3. **Symmetry-aware Canonicalization Module**: 입력 영상의 방향성을 표준화된 프레임으로 변환하는 모듈을 통합하여, 영상의 회전이나 반전과 관계없이 일관된 분할 성능을 보장하는 Equivariance/Invariance 특성을 구현하였다.
+4. **대규모 데이터셋 학습 및 검증**: 7개의 공개 데이터셋에서 추출한 10만 장 이상의 의료 영상을 통해 학습하였으며, In-domain 및 Out-of-domain 데이터셋 모두에서 기존 SOTA 모델 대비 우수한 성능을 입증하였다.
 
 ## 📎 Related Works
 
@@ -32,41 +32,49 @@ Longchao Da, Rui Wang, Xiaojian Xu, Parminder Bhatia, Taha Kass-Hout, Hua Wei, C
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
+
 FLanS는 크게 **RAG 기반 쿼리 생성기**, **Text Encoder**, **Canonicalization Network**, 그리고 **Mask Decoder**로 구성된다.
 
 ### 1. Retrieval Augmented Query Generator
+
 수동 라벨링의 한계를 극복하기 위해 RAG를 사용하여 두 가지 유형의 쿼리를 생성한다.
-*   **Anatomy-Informed Query**: 전문가의 EMR 기록을 Med-BERT로 임베딩하여 저장한 뒤, LLM이 이를 참조하여 "간경변 증상이 보이므로 관련 부위를 분석하라"와 같이 간접적으로 장기를 지칭하는 전문적인 쿼리를 생성한다.
-*   **Anatomy-Agnostic Query**: 정답 마스크(GT mask)의 Bbox 정보를 통해 '가장 큰(largest)', '가장 왼쪽의(left-most)' 등 6가지 공간적 카테고리를 정의하고, 이를 RAG를 통해 자연어 문장으로 확장한다.
+
+* **Anatomy-Informed Query**: 전문가의 EMR 기록을 Med-BERT로 임베딩하여 저장한 뒤, LLM이 이를 참조하여 "간경변 증상이 보이므로 관련 부위를 분석하라"와 같이 간접적으로 장기를 지칭하는 전문적인 쿼리를 생성한다.
+* **Anatomy-Agnostic Query**: 정답 마스크(GT mask)의 Bbox 정보를 통해 '가장 큰(largest)', '가장 왼쪽의(left-most)' 등 6가지 공간적 카테고리를 정의하고, 이를 RAG를 통해 자연어 문장으로 확장한다.
 
 ### 2. Free-Form Language Segmentation
-*   **Text Encoding**: CLIP의 Text Encoder를 사용하여 텍스트 prompt $p$를 임베딩 벡터 $t_p \in \mathbb{R}^D$로 변환한다.
-*   **Intention Head**: CLIP 임베딩 위에 선형 레이어 $W_{cls} \in \mathbb{R}^{C \times D}$를 추가하여, 텍스트가 어떤 장기를 지칭하는지에 대한 의도(Intention)를 분류한다.
-*   **손실 함수**: 마스크 예측을 위한 Dice Loss($L_{Dice}$)와 의도 분류를 위한 Cross-Entropy Loss($L_{ce}$)를 결합하여 학습한다.
+
+* **Text Encoding**: CLIP의 Text Encoder를 사용하여 텍스트 prompt $p$를 임베딩 벡터 $t_p \in \mathbb{R}^D$로 변환한다.
+* **Intention Head**: CLIP 임베딩 위에 선형 레이어 $W_{cls} \in \mathbb{R}^{C \times D}$를 추가하여, 텍스트가 어떤 장기를 지칭하는지에 대한 의도(Intention)를 분류한다.
+* **손실 함수**: 마스크 예측을 위한 Dice Loss($L_{Dice}$)와 의도 분류를 위한 Cross-Entropy Loss($L_{ce}$)를 결합하여 학습한다.
 $$ \mathcal{L} = \arg \min_{W^*} \frac{1}{|X|} \sum_{x \in X} \frac{1}{|P_x|} \sum_{p \in P_x} \left[ L_{Dice}(\hat{m}_{p,x}, m_{p,x}) + L_{ce}^* \right] $$
 여기서 $L_{ce}^* = L_{ce}(\hat{m}_{p,x}, m_{p,x}) + L_{ce}(y_p, \ell_p)$이며, 두 번째 항은 텍스트 임베딩이 정답 장기 클래스와 정렬되도록 유도한다.
 
 ### 3. Semantics-Aware Canonicalization
+
 영상 방향의 가변성을 해결하기 위해 $h: X \to \mathcal{G}$라는 Canonicalization 네트워크를 도입한다. 이 네트워크는 입력 영상 $x$를 표준 프레임(Canonical frame)으로 변환하여, 이후의 분할 네트워크 $p$가 항상 일관된 방향의 영상만을 처리하게 한다.
 $$ f(x) = \psi_{out}(h(x)) p(\psi_{in}(h^{-1}(x))x, t) $$
 이 과정을 통해 모델은 "오른쪽 신장(right kidney)"이라는 텍스트를 받았을 때, 영상 상의 오른쪽이 아닌 해부학적 기준의 오른쪽을 정확히 찾아낼 수 있다.
 
 ### 4. 학습 절차
-1.  **Canonicalization 학습**: FLARE22 데이터셋에 $O(2)$ 그룹 변환을 적용하고, MSE Loss를 통해 영상을 표준 방향으로 복원하도록 사전 학습한다.
-2.  **텍스트 기반 분할 학습**: RAG로 생성된 쿼리를 사용하여 원본 영상에서 분할 성능을 학습한다.
-3.  **결합 학습 및 정렬**: 모든 영상에 랜덤한 $O(2)$ 변환을 적용하여 Canonicalization 네트워크와 분할 네트워크를 공동 최적화한다.
+
+1. **Canonicalization 학습**: FLARE22 데이터셋에 $O(2)$ 그룹 변환을 적용하고, MSE Loss를 통해 영상을 표준 방향으로 복원하도록 사전 학습한다.
+2. **텍스트 기반 분할 학습**: RAG로 생성된 쿼리를 사용하여 원본 영상에서 분할 성능을 학습한다.
+3. **결합 학습 및 정렬**: 모든 영상에 랜덤한 $O(2)$ 변환을 적용하여 Canonicalization 네트워크와 분할 네트워크를 공동 최적화한다.
 
 ## 📊 Results
 
 ### 실험 설정
-*   **데이터셋**: MSD, BTCV, WORD, AbdomenCT-1K, FLARE22, CHAOS 등 7개 데이터셋에서 24개 장기를 포함한 10만 장 이상의 영상 사용.
-*   **평가 지표**: Dice Coefficient 및 Normalized Surface Distance (NSD).
-*   **비교 대상**: BiomedParse, UniverSeg, CLIP+MedSAM, MedCLIP+MedSAM 등.
+
+* **데이터셋**: MSD, BTCV, WORD, AbdomenCT-1K, FLARE22, CHAOS 등 7개 데이터셋에서 24개 장기를 포함한 10만 장 이상의 영상 사용.
+* **평가 지표**: Dice Coefficient 및 Normalized Surface Distance (NSD).
+* **비교 대상**: BiomedParse, UniverSeg, CLIP+MedSAM, MedCLIP+MedSAM 등.
 
 ### 주요 결과
-*   **Anatomy-Informed Segmentation**: FLanS는 단순 장기 이름뿐만 아니라 자유 형식의 텍스트 쿼리에서도 모든 베이스라인을 압도하는 성능을 보였다. 특히 변환된 데이터셋(TransFLARE 등)에서도 높은 성능을 유지하여 방향 강건성을 입증하였다.
-*   **Anatomy-Agnostic Segmentation**: "가장 큰 장기"와 같은 위치/크기 기반 쿼리에서, 정답 Bbox를 직접 입력받은 MedSAM이나 SAM2와 경쟁 가능한 수준의 성능을 달성하였다. 이는 텍스트만으로 공간적 의도를 정확히 파악했음을 의미한다.
-*   **Ablation Study**: Canonicalization 모듈을 제거했을 때 변환된 데이터셋에서의 성능이 급격히 하락(Dice 기준 0.895 $\to$ 0.685)하여, 해당 모듈의 필수성이 확인되었다.
+
+* **Anatomy-Informed Segmentation**: FLanS는 단순 장기 이름뿐만 아니라 자유 형식의 텍스트 쿼리에서도 모든 베이스라인을 압도하는 성능을 보였다. 특히 변환된 데이터셋(TransFLARE 등)에서도 높은 성능을 유지하여 방향 강건성을 입증하였다.
+* **Anatomy-Agnostic Segmentation**: "가장 큰 장기"와 같은 위치/크기 기반 쿼리에서, 정답 Bbox를 직접 입력받은 MedSAM이나 SAM2와 경쟁 가능한 수준의 성능을 달성하였다. 이는 텍스트만으로 공간적 의도를 정확히 파악했음을 의미한다.
+* **Ablation Study**: Canonicalization 모듈을 제거했을 때 변환된 데이터셋에서의 성능이 급격히 하락(Dice 기준 0.895 $\to$ 0.685)하여, 해당 모듈의 필수성이 확인되었다.
 
 ## 🧠 Insights & Discussion
 

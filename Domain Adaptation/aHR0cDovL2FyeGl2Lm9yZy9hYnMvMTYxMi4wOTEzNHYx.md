@@ -10,7 +10,7 @@ Antonio M. López, Jiaolong Xu, José L. Gómez, David Vázquez, Germán Ros (20
 
 ## ✨ Key Contributions
 
-본 논문의 중심적인 기여는 가상 세계의 데이터를 활용하여 학습된 모델을 실제 세계에 적용하기 위해 **Structure-aware Adaptive Structural SVM (SA-SSVM)** 기법을 적용하고, 그 유효성을 체계적으로 분석한 점이다. 
+본 논문의 중심적인 기여는 가상 세계의 데이터를 활용하여 학습된 모델을 실제 세계에 적용하기 위해 **Structure-aware Adaptive Structural SVM (SA-SSVM)** 기법을 적용하고, 그 유효성을 체계적으로 분석한 점이다.
 
 특히, 단순히 가상 데이터를 사용하는 것을 넘어, 소량의 실제 데이터만을 사용하여 모델을 적응시키는 과정이 전체 성능을 어떻게 향상시키는지 정량적으로 보여주었다. 또한, 가상 세계의 포토 리얼리즘 수준이 어느 정도여야 유의미한 성능 향상을 가져오는지에 대한 통찰을 제공하며, 도메인 간극이 단순히 '가상 vs 실제'의 문제가 아니라 센서의 차이나 환경의 차이에서 기인하는 일반적인 문제임을 시사한다.
 
@@ -23,13 +23,16 @@ Antonio M. López, Jiaolong Xu, José L. Gómez, David Vázquez, Germán Ros (20
 ## 🛠️ Methodology
 
 ### 1. Deformable Part-based Model (DPM) 구조
-DPM은 객체의 외형을 전체적인 형태를 나타내는 **루트(Root)**와 이를 구성하는 여러 개의 **파트(Parts)**의 조합으로 인코딩한다. 
+
+DPM은 객체의 외형을 전체적인 형태를 나타내는 **루트(Root)**와 이를 구성하는 여러 개의 **파트(Parts)**의 조합으로 인코딩한다.
+
 - **Root**: 객체의 전반적인 외형을 나타내며, 상대적으로 낮은 해상도에서 학습된다.
 - **Parts**: 객체의 세부 구성 요소이며, 루트보다 두 배 높은 해상도에서 학습되어 정밀한 외형을 캡처한다.
 - **Deformations**: 파트가 루트에 대해 가질 수 있는 허용 가능한 상대적 위치 변화를 의미한다.
 - **Component**: 위 세 가지 요소(루트, 파트, 변형)의 집합을 하나의 컴포넌트라고 하며, 다양한 뷰(View)나 포즈(Pose)를 대응하기 위해 여러 컴포넌트의 혼합 모델을 사용한다.
 
 ### 2. SA-SSVM (Structure-aware Adaptive Structural SVM)
+
 가상 도메인(Source)에서 학습된 모델 $w^S$를 실제 도메인(Target)으로 적응시키기 위한 방법론이다.
 
 **학습 절차 및 방정식:**
@@ -46,17 +49,19 @@ $$\min_{w, \beta} \text{SVM Loss} + \gamma \|\beta\|^2$$
 ## 📊 Results
 
 ### 1. 실험 설정
-- **데이터셋**: 
-    - Target: KITTI-Det Test
-    - Source: KITTI-Track, Virtual KITTI, SYNTHIA, SYNTHIA-Sub, GTA
+
+- **데이터셋**:
+  - Target: KITTI-Det Test
+  - Source: KITTI-Track, Virtual KITTI, SYNTHIA, SYNTHIA-Sub, GTA
 - **평가 지표**: Miss Rate(MR)와 False Positives Per Image(FPPI) 간의 곡선을 통해 성능을 측정하며, 50% Overlap 기준을 적용한다.
 - **비교 대상**:
-    - **SRC**: 특정 소스 데이터셋으로만 학습한 경우
-    - **TAR-ALL**: 전체 실제 데이터(KITTI-Det Train)로 학습한 경우
-    - **TAR-X**: 실제 데이터의 $X\%$만 사용하여 학습한 경우
-    - **SA-SSVM**: 소스 데이터로 사전 학습 후, 실제 데이터 $X\%$로 적응시킨 경우
+  - **SRC**: 특정 소스 데이터셋으로만 학습한 경우
+  - **TAR-ALL**: 전체 실제 데이터(KITTI-Det Train)로 학습한 경우
+  - **TAR-X**: 실제 데이터의 $X\%$만 사용하여 학습한 경우
+  - **SA-SSVM**: 소스 데이터로 사전 학습 후, 실제 데이터 $X\%$로 적응시킨 경우
 
 ### 2. 주요 결과
+
 - **도메인 간극 확인**: SRC 모델과 TAR-ALL 모델 사이에는 매우 큰 성능 차이가 존재하며, 이는 가상-실제 간의 도메인 간극이 상당함을 보여준다.
 - **소스 데이터셋별 성능**: SYNTHIA와 GTA 데이터셋을 사용한 SRC 모델이 KITTI-Track이나 Virtual KITTI보다 더 좋은 초기 성능을 보였다. 이는 단순한 데이터 양의 문제가 아니라, 학습 데이터에 포함된 객체의 포즈와 배경의 다양성이 중요함을 시사한다.
 - **SA-SSVM의 효과**: 실제 데이터의 10%($X=0.1$)만 사용했을 때, SA-SSVM을 적용한 모델은 단순히 10%의 데이터로만 학습한 $\text{TAR}_{0.1}$ 모델보다 훨씬 뛰어난 성능을 보였으며, 일부 경우에는 $\text{TAR}_{0.5}$ 수준의 성능에 근접했다.
@@ -65,12 +70,15 @@ $$\min_{w, \beta} \text{SVM Loss} + \gamma \|\beta\|^2$$
 ## 🧠 Insights & Discussion
 
 ### 1. 포토 리얼리즘의 역할
+
 저자들은 가상 세계의 포토 리얼리즘이 극도로 높아야만 성능이 향상되는지에 대해 의문을 제기한다. 실험 결과, Virtual KITTI와 KITTI-Track의 성능이 비슷하게 나타났으며, 더 리얼한 GTA보다 SYNTHIA의 성능이 좋거나 유사하게 나타났다. 이는 **기본적인 수준의 포토 리얼리즘(람베르트 조명 및 단순 재질 이상)이 확보되면, 그 이상의 극단적인 리얼리즘 추구는 성능 향상에 큰 영향을 주지 않는다**는 결론에 도달한다.
 
 ### 2. 도메인 간극의 본질
+
 본 논문은 도메인 간극이 단순히 '가상 vs 실제'의 이분법적 문제가 아니라, **센서 간의 차이(Sensor-to-Sensor)** 및 **환경(배경, 조명, 객체 포즈)의 차이**에서 발생하는 일반적인 문제라고 주장한다. 실제 카메라 센서가 서로 다르거나 환경이 달라져도 동일한 도메인 간극 문제가 발생하므로, 도메인 적응 기술은 필수적이다.
 
 ### 3. 학습 전략: Fine-tuning vs Mixing
+
 데이터를 단순히 섞어서 학습하는 방식(Cool World/MIX)보다 SA-SSVM과 같은 파인튜닝(Fine-tuning) 방식이 DPM에서는 더 효율적이고 성능이 좋았다. 또한 학습 시간 면에서도 소스 데이터를 다시 방문하지 않는 파인튜닝 방식이 훨씬 유리하다. 다만, 딥러닝(CNN)의 경우에는 미니배치 구성 방식에 따라 데이터 믹싱이 더 효과적일 수 있다는 가능성을 열어두고 있다.
 
 ## 📌 TL;DR

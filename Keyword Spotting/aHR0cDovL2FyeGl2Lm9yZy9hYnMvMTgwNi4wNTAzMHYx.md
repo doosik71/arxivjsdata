@@ -23,18 +23,21 @@ Herman Kamper and Michael Roth (2018)
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 전체 시스템은 학습 단계와 테스트 단계로 나뉜다. 학습 단계에서는 이미지 $I$와 그에 대응하는 영어 음성 $X$의 쌍을 사용한다. 독일어 시각적 태거가 이미지 $I$로부터 독일어 키워드 확률 분포 $\hat{y}_{de}$를 생성하고, 음성 네트워크 $f(X)$는 영어 음성 $X$를 입력받아 이 $\hat{y}_{de}$를 예측하도록 학습된다. 테스트 단계에서는 이미지를 사용하지 않고, 영어 음성 $X$만을 입력하여 특정 독일어 키워드 $w$가 포함되었는지에 대한 점수를 출력한다.
 
 ### 주요 구성 요소 및 역할
-1. **독일어 시각적 태거(German Visual Tagger):** 
-   - 이미지에서 관련 단어(명사, 형용사, 동사)의 집합을 예측하는 다중 라벨 분류기이다. 
-   - VGG-16 모델을 기반으로 하며, Multi30k 데이터셋을 사용하여 학습되었다. 
+
+1. **독일어 시각적 태거(German Visual Tagger):**
+   - 이미지에서 관련 단어(명사, 형용사, 동사)의 집합을 예측하는 다중 라벨 분류기이다.
+   - VGG-16 모델을 기반으로 하며, Multi30k 데이터셋을 사용하여 학습되었다.
    - 출력은 어휘 사전 크기 $W$에 대한 확률 분포 $\hat{y}_{de} \in [0, 1]^W$이다.
-2. **음성 네트워크 $f(X)$ (XVISIONSPEECHCNN):** 
+2. **음성 네트워크 $f(X)$ (XVISIONSPEECHCNN):**
    - 영어 음성(MFCC 특징값)을 입력받아 독일어 키워드 존재 확률을 예측하는 CNN 모델이다.
    - 구조는 1-D ReLU Convolution $\rightarrow$ Max Pooling $\rightarrow$ 1-D ReLU Convolution $\rightarrow$ Max Pooling $\rightarrow$ 1-D ReLU Convolution $\rightarrow$ Global Max Pooling $\rightarrow$ Fully-connected ReLU $\rightarrow$ Sigmoid layer 순으로 구성된다.
 
 ### 학습 목표 및 손실 함수
+
 음성 네트워크는 시각적 태거가 생성한 소프트 타겟 $\hat{y}_{de}$를 정답으로 하여 학습한다. 이때 사용되는 손실 함수는 합산 교차 엔트로피 손실(summed cross-entropy loss)이며, 식은 다음과 같다.
 
 $$\ell(f(X), \hat{y}_{de}) = -\sum_{w=1}^{W} \{ \hat{y}_{de,w} \log f_w(X) + (1 - \hat{y}_{de,w}) \log [1 - f_w(X)] \}$$
@@ -44,19 +47,23 @@ $$\ell(f(X), \hat{y}_{de}) = -\sum_{w=1}^{W} \{ \hat{y}_{de,w} \log f_w(X) + (1 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** Flickr8k Audio Captions (영어 음성과 이미지 쌍).
 - **평가 데이터:** 영어 발화에 대한 독일어 참조 번역이 존재하는 약 1,000개의 발화.
 - **지표:** $P@10$ (상위 10개 결과의 정밀도), $P@N$ (정답 개수 $N$만큼의 상위 결과 정밀도), EER (Equal Error Rate), AP (Average Precision).
 - **비교 모델:**
-    - `DETEXTPRIOR`: 음성을 무시하고 단어의 단순 출현 빈도만 이용하는 baseline.
-    - `DEVISIONCNN`: 음성 대신 이미지의 실제 시각적 태그를 그대로 사용하는 모델.
-    - `XBOWCNN`: 실제 정답 텍스트 라벨을 사용하는 상한선(Upper bound) 모델.
+  - `DETEXTPRIOR`: 음성을 무시하고 단어의 단순 출현 빈도만 이용하는 baseline.
+  - `DEVISIONCNN`: 음성 대신 이미지의 실제 시각적 태그를 그대로 사용하는 모델.
+  - `XBOWCNN`: 실제 정답 텍스트 라벨을 사용하는 상한선(Upper bound) 모델.
 
 ### 정량적 결과
+
 실험 결과, 제안 모델인 `XVISIONSPEECHCNN`은 전사 데이터 없이도 $P@10$ 기준 $58.2\%$의 성능을 기록하였다. 이는 단순 빈도 기반 모델(`DETEXTPRIOR`, $7.2\%$)보다 월등히 높으며, 흥미롭게도 이미지 기반 모델인 `DEVISIONCNN`($41.5\%$)보다도 높은 성능을 보였다. 이는 모델이 단순히 이미지를 복제하는 것이 아니라, 음성 신호 내에 존재하는 추가적인 정보를 학습했음을 시사한다.
 
 ### 정성적 분석 및 오류 분석
+
 오류 분석 결과, 많은 잘못된 검색 결과가 실제로 의미론적으로 관련이 있는 경우였다.
+
 - **유형 (1):** 리터럴한 단어는 없으나 동의어(synonym)가 포함된 경우.
 - **유형 (2):** 키워드 자체는 없으나 의미상 밀접하게 관련된 경우 (예: '셔츠' 쿼리에 '자켓'이 포함된 음성이 검색됨).
 - **유형 (3):** 완전히 잘못된 검색 결과.

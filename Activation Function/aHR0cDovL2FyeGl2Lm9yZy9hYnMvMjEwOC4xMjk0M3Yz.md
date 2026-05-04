@@ -4,7 +4,7 @@ Mathew Mithra Noel, Arunkumar L, Advait Trivedi, Praneet Dutta (2023)
 
 ## 🧩 Problem to Solve
 
-본 논문은 딥러닝 모델, 특히 합성곱 신경망(Convolutional Neural Networks, CNNs)에서 사용되는 활성화 함수(Activation Function)의 근본적인 한계를 해결하고자 한다. 
+본 논문은 딥러닝 모델, 특히 합성곱 신경망(Convolutional Neural Networks, CNNs)에서 사용되는 활성화 함수(Activation Function)의 근본적인 한계를 해결하고자 한다.
 
 기존의 대다수 활성화 함수(ReLU, Sigmoid, Swish, Mish 등)는 단조 증가(monotonically increasing)하거나 비진동성(non-oscillatory) 특성을 가진다. 이러한 특성으로 인해 개별 뉴런은 오직 하나의 선형 결정 경계(linear decision boundary), 즉 하나의 하이퍼플레인(hyperplane)만을 생성할 수 있다. 결과적으로 XOR 문제와 같이 선형적으로 분리 불가능한 문제를 해결하기 위해서는 반드시 다층 구조의 네트워크나 여러 개의 뉴런이 필요하며, 이는 네트워크의 파라미터 수 증가와 계산 복잡도 상승으로 이어진다.
 
@@ -30,10 +30,12 @@ Mathew Mithra Noel, Arunkumar L, Advait Trivedi, Praneet Dutta (2023)
 ## 🛠️ Methodology
 
 ### 1. Growing Cosine Unit (GCU) 정의
+
 제안된 GCU 활성화 함수는 다음과 같이 정의된다.
 $$C(z) = z \cos(z)$$
 
 ### 2. 결정 경계의 확장
+
 단일 뉴런의 결정 경계 $B$는 활성화 함수 $g$의 결과가 0이 되는 지점들의 집합으로 정의된다.
 $$B = \{x \in \mathbb{R}^n : g(w^T x + b) = 0\}$$
 
@@ -42,9 +44,11 @@ $$w^T x + b = \frac{\pi}{2} + n\pi \quad (n \in \mathbb{Z})$$
 이로 인해 입력 공간은 서로 다른 클래스가 교대로 배치된 '평행한 띠(parallel strips)' 형태로 분할되며, 이를 통해 단일 뉴런만으로도 XOR와 같은 복잡한 분류 문제를 해결할 수 있다.
 
 ### 3. 계산 복잡도 분석
+
 GCU는 하나의 초월 함수(transcendental function) 호출과 한 번의 곱셈만을 사용한다. 이는 3개의 초월 함수 호출과 곱셈을 사용하는 Mish보다 계산 비용이 현저히 낮으며, Leaky ReLU보다는 약간 높지만 최신 상태의 Swish나 Mish보다는 훨씬 효율적이다.
 
 ### 4. 학습 절차
+
 - **최적화 도구**: RMSprop Optimizer 사용.
 - **손실 함수**: Categorical Cross Entropy (Softmax head).
 - **가중치 초기화**: Xavier Uniform Initializer 사용.
@@ -53,24 +57,29 @@ GCU는 하나의 초월 함수(transcendental function) 호출과 한 번의 곱
 ## 📊 Results
 
 ### 1. 정량적 성능 평가
+
 CIFAR-10, CIFAR-100, Imagenette 데이터셋에 대해 실험한 결과, GCU를 합성곱 층에 적용했을 때 가장 높은 정확도를 기록하였다.
 
 - **Imagenette (VGG-16 backbone)**: GCU 적용 모델이 모든 ReLU 기반 아키텍처보다 약 $7\%$ 더 높은 Top-1 정확도를 보였다.
 - **CIFAR-10 & CIFAR-100**: ReLU, Swish, Mish 대비 전반적으로 높은 정확도를 보였으며, 특히 학습 곡선에서 더 빠른 수렴 속도를 나타냈다.
 
 ### 2. 정성적 분석 및 시각화
+
 - **필터 시각화**: VGG-16의 각 층에서 필터 출력을 시각화한 결과, GCU는 ReLU보다 객체(예: 새)의 특징을 더 명확하고 강하게(더 큰 출력값) 검출하는 경향을 보였다.
 - **기울기 흐름(Gradient Flow)**: 각 층의 기울기 RMS(Root Mean Square) 값을 분석한 결과, ReLU와 Leaky ReLU는 기울기 값이 격하게 진동하는 반면, GCU는 진동이 훨씬 적고 안정적인 흐름을 보였다. 이는 GCU가 기울기가 0이 되는 구간이 매우 국소적인 지점에만 존재하여 Vanishing Gradient 문제를 완화하기 때문으로 분석된다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. GCU의 특성 및 강점
+
 GCU는 입력값 $z$가 작을 때 $z \cos(z) \approx z$가 되어 선형 활성화 함수처럼 동작한다. 이는 초기 가중치가 작을 때 네트워크가 선형 분류기처럼 작동하게 하여 정규화(regularizing) 효과를 주고 과적합을 방지한다. 또한, 큰 입력값에 대해서는 진동하며 무제한(unbounded) 함수로 동작하여 표현력을 높인다.
 
 ### 2. 이론적 함의
+
 본 논문은 활성화 함수의 '부호 동등성' 개념을 도입하여, 왜 기존의 비단조 함수인 Swish나 Mish조차도 단일 뉴런으로는 XOR 문제를 풀 수 없는지를 수학적으로 증명하였다. 이는 단순히 함수 형태를 조금 바꾸는 것이 아니라, '진동성'이라는 근본적인 특성을 도입해야 뉴런의 표현 능력을 획기적으로 높일 수 있음을 시사한다.
 
 ### 3. 한계 및 논의사항
+
 - GCU가 ReLU보다 계산 비용이 높기 때문에 모든 층에 적용하기보다는 합성곱 층에 선택적으로 적용하는 전략을 취했다.
 - 실험에서 사용된 데이터셋 외에 더 거대한 규모의 데이터셋이나 다른 아키텍처(예: Transformer)에서의 효과는 명시적으로 다루지 않았다.
 

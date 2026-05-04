@@ -19,6 +19,7 @@ Yuyang Miao, Harry J. Davies, Danilo P. Mandic (2024)
 ## 📎 Related Works
 
 기존의 PPG 분석 연구들은 주로 다음과 같은 접근 방식을 취했다.
+
 - **호흡률 추출:** Empirical Mode Decomposition (EMD)을 통해 신호를 분해하거나, 특정 물리적/통계적 특성을 추출하여 신경망에 입력하는 방식이 사용되었다.
 - **혈관 노화 예측:** Hilbert 변환을 통한 복조(Demodulation) 및 엔벨로프(Envelope) 추출과 같은 복잡한 전처리를 거친 후 ResNet이나 SVM을 적용하였다.
 - **혈압 예측:** 맥파 전달 시간(Pulse Transit Time, PTT)이나 Dicrotic Notch와 같은 수동 설계된 생리학적 특성을 추출하여 AdaBoost나 MLP-Mixer 등의 모델로 예측하였다.
@@ -28,6 +29,7 @@ Yuyang Miao, Harry J. Davies, Danilo P. Mandic (2024)
 ## 🛠️ Methodology
 
 ### 1. Visibility Graph (VG) 변환
+
 시계열 데이터의 각 샘플 $y_i$를 그래프의 정점(Vertex)으로 간주하고, 특정 조건을 만족하는 두 정점 사이에 에지(Edge)를 연결한다. 두 샘플 $y_a$와 $y_b$가 서로 '보인다'고 판단하여 에지를 연결하는 조건은 다음과 같다.
 
 $$y_c < y_b + (y_a - y_b) \frac{t_b - t_c}{t_b - t_a}$$
@@ -35,21 +37,26 @@ $$y_c < y_b + (y_a - y_b) \frac{t_b - t_c}{t_b - t_a}$$
 여기서 $t_a, t_b, t_c$는 각각 샘플의 시간 인덱스이며, $a$와 $b$ 사이의 모든 샘플 $y_c$가 이 식을 만족해야 한다. 즉, 두 점을 잇는 직선이 중간에 다른 점에 의해 가려지지 않아야 연결되는 구조이다. 이 방식은 신호의 절대적인 값보다 상대적인 구조를 반영하므로, 수직/수평 이동, 스케일링, 선형 추세 추가와 같은 **아핀 변환(Affine Transformation)에 불변**하는 특성을 가진다.
 
 ### 2. Graph to Image: Adjacency Matrix
+
 생성된 Visibility Graph는 인접 행렬 $A$로 변환된다. 가중치가 없는 그래프의 경우, 연결되면 1, 아니면 0으로 표시되는 $N \times N$ 크기의 이진 행렬이 생성된다. 이 행렬은 흑백 이미지로 간주될 수 있으며, 표준 2D CNN 모델의 입력으로 직접 사용할 수 있다.
 
 ### 3. RGB 채널 융합 (Information Fusion)
+
 본 논문은 RGB 3채널을 활용하여 서로 다른 정보를 통합적으로 입력한다.
+
 - **혈압 예측 태스크:**
-    - Red 채널: PPG 신호의 VG 인접 행렬
-    - Green 채널: ECG 신호의 VG 인접 행렬 (PPG와 ECG 간의 위상 차이를 통해 PTT 정보 반영)
-    - Blue 채널: PPG 신호의 1차 미분값의 VG 인접 행렬
+  - Red 채널: PPG 신호의 VG 인접 행렬
+  - Green 채널: ECG 신호의 VG 인접 행렬 (PPG와 ECG 간의 위상 차이를 통해 PTT 정보 반영)
+  - Blue 채널: PPG 신호의 1차 미분값의 VG 인접 행렬
 - **혈관 노화 예측 태스크:**
-    - Red 채널: PPG 신호의 VG 인접 행렬
-    - Green 채널: 진폭 반전(Amplitude-inverted) PPG 신호의 VG 인접 행렬
-    - Blue 채널: 진폭 반전 PPG 신호의 경사 가중치(Slope-weighted) VG 인접 행렬
+  - Red 채널: PPG 신호의 VG 인접 행렬
+  - Green 채널: 진폭 반전(Amplitude-inverted) PPG 신호의 VG 인접 행렬
+  - Blue 채널: 진폭 반전 PPG 신호의 경사 가중치(Slope-weighted) VG 인접 행렬
 
 ### 4. VGTL-net 학습 절차
+
 전체 파이프라인은 다음과 같다.
+
 1. PPG 신호를 고정 길이 윈도우 또는 고정된 펄스 수로 분할한다.
 2. 각 분할된 신호를 VG를 통해 인접 행렬 이미지로 변환한다.
 3. RGB 채널에 위 정보를 할당하여 사전 학습된 모델(VGG19, CoAtNet, ConvNeXt v2)에 입력한다.
@@ -58,26 +65,30 @@ $$y_c < y_b + (y_a - y_b) \frac{t_b - t_c}{t_b - t_a}$$
 ## 📊 Results
 
 ### 1. 혈압 추정 (Blood Pressure Estimation)
+
 - **데이터셋:** MIMIC II (UCI Machine Learning Repository).
 - **평가 지표:** 평균 절대 오차(MAE), 평균 오차(ME), 피어슨 상관계수($\rho$).
 - **결과:** CoAtNet과 ConvNeXt v2를 결합(Concatenate)한 모델이 가장 우수한 성능을 보였다.
-    - SBP MAE: $3.11 \pm 3.92 \text{ mmHg}$
-    - DBP MAE: $1.94 \pm 2.37 \text{ mmHg}$
-    - 이는 기존의 PPG+ECG 기반 최신 모델들보다 정량적으로 더 우수한 수치이다.
+  - SBP MAE: $3.11 \pm 3.92 \text{ mmHg}$
+  - DBP MAE: $1.94 \pm 2.37 \text{ mmHg}$
+  - 이는 기존의 PPG+ECG 기반 최신 모델들보다 정량적으로 더 우수한 수치이다.
 
 ### 2. 혈관 노화 예측 (Vascular Ageing)
+
 - **데이터셋:** Mendeley의 Real-World PPG Dataset (35명 대상).
 - **태스크:** 정확한 나이 예측(회귀) 및 4개 연령대 분류(분류).
 - **결과:**
-    - **분류:** 4개 클래스 분류 정확도 $97.20 \pm 0.23\%$를 달성하여, 기존 Dall’Olio et al. (87.14%) 대비 월등한 성능을 보였다. 특히 수렴 속도가 훨씬 빨랐다.
-    - **회귀:** 평균 MAE $1.41$년, 표준편차 $0.14$년의 매우 높은 정밀도로 나이를 예측하였다.
+  - **분류:** 4개 클래스 분류 정확도 $97.20 \pm 0.23\%$를 달성하여, 기존 Dall’Olio et al. (87.14%) 대비 월등한 성능을 보였다. 특히 수렴 속도가 훨씬 빨랐다.
+  - **회귀:** 평균 MAE $1.41$년, 표준편차 $0.14$년의 매우 높은 정밀도로 나이를 예측하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 VGTL-net은 시계열 데이터를 그래프-이미지로 변환함으로써, 1차원 데이터 분석의 한계를 극복하고 현대 컴퓨터 비전의 강력한 사전 학습 모델(Pre-trained Models)을 그대로 활용할 수 있게 했다. 특히 Visibility Graph의 수학적 특성 덕분에 PPG 신호의 고질적인 문제인 베이스라인 완더링(Baseline Wandering)이나 진폭 변화에 매우 강건하다는 점이 입증되었다. 또한, 복잡한 필터링이나 수동 특성 추출 없이 단순한 변환만으로 SOTA 성능을 낸 점이 고무적이다.
 
 ### 한계 및 비판적 해석
+
 본 연구는 소규모 데이터셋(특히 혈관 노화 데이터셋)에서 높은 성능을 보였으나, 실제 임상 환경의 훨씬 더 방대하고 노이즈가 심한 데이터셋에서도 동일한 일반화 능력을 유지할지는 추가 검증이 필요하다. 또한, VG 생성 과정의 시간 복잡도가 신호의 길이 $N$에 대해 $O(N^2)$ 수준이므로, 매우 긴 신호를 실시간으로 처리할 때 계산 효율성 문제가 발생할 수 있다.
 
 ## 📌 TL;DR

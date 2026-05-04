@@ -17,9 +17,11 @@ Yihao Zhao, Enhao Zhong, Cuiyun Yuan, Yang Li, Man Zhao, Chunxia Li, Jun Hu, Che
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조
-TG-LMM은 크게 네 가지 구성 요소로 이루어져 있다: **Transformer-based Image Encoder**, **BERT-based Text Encoder**, **Query-based Feature Mixer**, 그리고 **Mask Decoder**이다. 
+
+TG-LMM은 크게 네 가지 구성 요소로 이루어져 있다: **Transformer-based Image Encoder**, **BERT-based Text Encoder**, **Query-based Feature Mixer**, 그리고 **Mask Decoder**이다.
 
 ### 주요 구성 요소 및 역할
+
 1. **Image Encoder**: ViT-base 모델을 사용하여 입력 CT 영상을 768차원의 벡터 $F_{im}$으로 추출한다. 입력 영상은 $1024 \times 1024 \times 3$으로 리샘플링된 후 16배 다운샘플링되어 처리된다.
    $$F_{im} = E_{image}(I)$$
 2. **Text Encoder**: BERT 기반의 인코더를 통해 전문가의 텍스트 설명을 512차원의 벡터 $F_{text}$로 변환한다. [EOS] 토큰의 활성화 값을 특징 표현으로 사용하며, 이를 선형 투영하여 멀티모달 임베딩 공간으로 보낸다.
@@ -32,6 +34,7 @@ TG-LMM은 크게 네 가지 구성 요소로 이루어져 있다: **Transformer-
 4. **Mask Decoder**: 융합된 벡터를 픽셀 수준의 마스크로 복원한다. 두 번의 Dilated Convolution을 통해 특징 맵의 크기를 키우고, Bi-directional Transformer를 통해 텍스트 정보와 다시 융합한다. 최종적으로 두 개의 MLP를 통해 세그멘테이션 마스크와 수렴 속도를 높이기 위한 Bounding Box를 동시에 출력한다.
 
 ### 학습 절차 및 손실 함수
+
 모델의 총 파라미터는 218M개이며, 오버피팅을 방지하기 위해 Image Encoder와 Text Encoder의 가중치는 동결(Frozen)하고 Feature Mixer와 Mask Decoder(약 5.6M개 파라미터)만 학습시킨다. 손실 함수는 Binary Cross-Entropy(BCE) 손실과 Dice 손실의 단순 합으로 정의된다.
 
 - **BCE Loss**:
@@ -43,12 +46,14 @@ $$\mathcal{L}_{dice}(AGC, GT) = 1 - \frac{2 \sum y_i a_i}{\sum y_i^2 + \sum a_i^
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: FLARE, SegTHOR, MSD 데이터셋을 사용하였으며 간, 신장, 췌장, 대동맥 등 다양한 인체 장기를 대상으로 하였다.
 - **입력 텍스트**: 권위 있는 의료 교과서 및 가이드라인에서 추출한 장기의 해부학적 위치 및 인접 장기와의 관계에 대한 상세 설명을 사용하였다.
 - **평가 지표**: DSC(Dice Similarity Coefficient), $HD_{95}$(95th percentile Hausdorff Distance), ASD(Average Surface Distance)를 사용하였다.
 - **비교 대상**: nnUnet, SAM, MedSAM.
 
 ### 주요 결과
+
 - **정량적 성과**: DSC 측면에서는 MedSAM과 유사하거나 소폭 높은 성능을 보였으나, 경계선 기반 지표인 $HD_{95}$와 ASD에서 압도적인 성능 향상을 보였다. 특히 전체 데이터셋 평균에서 $HD_{95}$는 29.22 감소하였고, ASD는 9.2 감소하였다.
 - **정성적 성과**: 식도(Esophagus)나 하대정맥(Inferior Vena Cava)과 같이 크기가 작고 형태가 연속적인 장기에서 기존 모델 대비 훨씬 정밀한 분할 결과를 나타냈다.
 - **Ablation Study**: 텍스트 설명의 복잡도에 따른 실험 결과, 텍스트가 없거나 단순한 이름만 입력했을 때보다 전문가의 상세한 묘사(Complex descriptions)를 입력했을 때 경계선 정밀도($HD_{95}, ASD$)가 비약적으로 향상됨을 확인하였다.
@@ -56,9 +61,11 @@ $$\mathcal{L}_{dice}(AGC, GT) = 1 - \frac{2 \sum y_i a_i}{\sum y_i^2 + \sum a_i^
 ## 🧠 Insights & Discussion
 
 ### 강점 및 기여
+
 본 연구는 단순한 시각 정보에 의존하지 않고, 의료 전문가의 도메인 지식을 텍스트 형태로 주입함으로써 의료 영상 분할의 고질적인 문제인 '경계선 모호함'을 효과적으로 해결하였다. 특히, 파라미터의 대부분을 동결한 상태에서도 높은 성능을 낸 것은 사전 학습된 대규모 모델의 지식을 효율적으로 전이시켰음을 의미하며, 이는 데이터가 부족한 의료 분야에서 매우 실용적인 접근 방식이다.
 
 ### 한계 및 비판적 해석
+
 1. **데이터셋 규모의 한계**: 데이터셋이 상대적으로 작아 인코더를 동결해야만 했으며, 이는 의료 도메인에 특화된 최적의 특징 추출이 이루어지지 않았을 가능성을 시사한다.
 2. **텍스트 인코더의 효율성**: 일반 자연어-이미지 사전 학습 모델을 사용했기 때문에, 전문 의료 용어에 대한 이해도가 최적화되지 않았을 수 있다.
 3. **불완전한 분할**: 사용된 데이터셋들이 특정 장기만 분할하고 나머지는 비워두는 경우가 많아, 인체 전체를 통합적으로 이해하는 모델로 발전시키기에는 데이터의 한계가 있다.

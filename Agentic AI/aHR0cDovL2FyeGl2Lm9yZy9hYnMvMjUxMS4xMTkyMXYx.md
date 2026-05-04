@@ -12,10 +12,10 @@ Liudong Xing, Janet (Jing) Lin (Preprint/Accepted for publication by SpringerNat
 
 본 논문의 핵심 기여는 Agentic AI의 신뢰성을 저해하는 요소들을 다각도에서 분석하고, 이를 해결하기 위한 이론적 프레임워크와 연구 방향성을 제시한 점에 있다. 주요 설계 아이디어는 다음과 같다.
 
-1.  **Cross-Layer 신뢰성 프레임워크**: 단일 계층의 강건성(Robustness)만으로는 부족하며, 하드웨어부터 에이전트 계층에 이르는 전체 스택을 아우르는 상호 의존성 맵핑과 공유 모니터링이 필요함을 역설한다.
-2.  **통합적 실행 일관성 방법론**: Grounded Reasoning, Action-Validation Cycles, Stabilized and Shared Memory를 결합하여 에이전트의 실행 결과가 매번 달라지는 불일치 문제를 해결하는 구조를 제안한다.
-3.  **에코시스템 관점의 창발적 행동 제어**: 다중 에이전트 시스템을 하나의 복잡한 에코시스템으로 간주하고, 시스템 수준의 모니터링과 self-healing 메커니즘을 통해 예측 불가능한 상호작용 리스크를 관리해야 함을 제안한다.
-4.  **자원 인지적 신뢰성 설계**: 신뢰성 확보를 위한 중복성(Redundancy) 설계가 초래하는 막대한 계산 비용을 줄이기 위해 Adaptive Redundancy와 Carbon-Aware Scheduling 같은 최적화 방향을 제시한다.
+1. **Cross-Layer 신뢰성 프레임워크**: 단일 계층의 강건성(Robustness)만으로는 부족하며, 하드웨어부터 에이전트 계층에 이르는 전체 스택을 아우르는 상호 의존성 맵핑과 공유 모니터링이 필요함을 역설한다.
+2. **통합적 실행 일관성 방법론**: Grounded Reasoning, Action-Validation Cycles, Stabilized and Shared Memory를 결합하여 에이전트의 실행 결과가 매번 달라지는 불일치 문제를 해결하는 구조를 제안한다.
+3. **에코시스템 관점의 창발적 행동 제어**: 다중 에이전트 시스템을 하나의 복잡한 에코시스템으로 간주하고, 시스템 수준의 모니터링과 self-healing 메커니즘을 통해 예측 불가능한 상호작용 리스크를 관리해야 함을 제안한다.
+4. **자원 인지적 신뢰성 설계**: 신뢰성 확보를 위한 중복성(Redundancy) 설계가 초래하는 막대한 계산 비용을 줄이기 위해 Adaptive Redundancy와 Carbon-Aware Scheduling 같은 최적화 방향을 제시한다.
 
 ## 📎 Related Works
 
@@ -28,23 +28,29 @@ Liudong Xing, Janet (Jing) Lin (Preprint/Accepted for publication by SpringerNat
 본 논문은 특정 알고리즘의 구현보다는 신뢰성 확보를 위한 시스템적 방법론과 연구 방향을 제안하는 가이드라인 성격의 방법론을 제시한다.
 
 ### 1. 연쇄적 실패 완화를 위한 Cross-Layer 접근법
+
 시스템의 11개 계층(물리, 전력, 시스템 소프트웨어 $\rightarrow$ 모델, 데이터 $\rightarrow$ 애플리케이션, 모니터링 $\rightarrow$ 에이전트 계층) 간의 상호작용을 관리하는 다섯 가지 핵심 요소로 구성된다.
-*   **Cross-Layer Interdependency Mapping**: 계층 간의 기능적 의존성을 명시적으로 맵핑하여 잠재적인 오류 전파 경로를 식별한다.
-*   **Dynamic Feedback Mechanisms**: 상위 계층에서 하위 계층으로(예: 모델 성능 저하 시 데이터 보정 요청), 또는 하위에서 상위로 흐르는 실시간 피드백 루프를 구축한다.
-*   **Cross-Layer Shared Monitoring**: 개별 계층 모니터링으로는 발견할 수 없는 계층 간 상관관계가 있는 이상 징후를 탐지하는 공유 관측 플랫폼을 구축한다.
-*   **Cross-Layer Fault-Tolerance**: 하드웨어 및 소프트웨어의 중복성뿐만 아니라, 에이전트 계층에서 서로 다른 독립적 메커니즘을 통해 결론을 교차 검증하는 redundant reasoning을 구현한다.
-*   **Structured Checkpointing**: 결정적인 계층 간 접점에 체크포인트를 설치하여, 불확실성 임계값(Uncertainty Thresholds) 등을 통해 신뢰성이 낮은 출력이 상위 의사결정 계층으로 전파되는 것을 차단한다.
+
+* **Cross-Layer Interdependency Mapping**: 계층 간의 기능적 의존성을 명시적으로 맵핑하여 잠재적인 오류 전파 경로를 식별한다.
+* **Dynamic Feedback Mechanisms**: 상위 계층에서 하위 계층으로(예: 모델 성능 저하 시 데이터 보정 요청), 또는 하위에서 상위로 흐르는 실시간 피드백 루프를 구축한다.
+* **Cross-Layer Shared Monitoring**: 개별 계층 모니터링으로는 발견할 수 없는 계층 간 상관관계가 있는 이상 징후를 탐지하는 공유 관측 플랫폼을 구축한다.
+* **Cross-Layer Fault-Tolerance**: 하드웨어 및 소프트웨어의 중복성뿐만 아니라, 에이전트 계층에서 서로 다른 독립적 메커니즘을 통해 결론을 교차 검증하는 redundant reasoning을 구현한다.
+* **Structured Checkpointing**: 결정적인 계층 간 접점에 체크포인트를 설치하여, 불확실성 임계값(Uncertainty Thresholds) 등을 통해 신뢰성이 낮은 출력이 상위 의사결정 계층으로 전파되는 것을 차단한다.
 
 ### 2. 실행 일관성 확보를 위한 통합 방법론
+
 에이전트의 실행 결과가 반복될 때마다 달라지는 문제를 해결하기 위해 다음의 세 가지 구성 요소를 통합한다.
-*   **Grounded Reasoning**: 확률적 생성에만 의존하지 않고, 외부 지식 저장소(문서, 정책 등)에서 검증 가능한 정보를 검색하여 추론 과정에 주입함으로써 결과의 근거를 확보한다.
-*   **Action-Validation Cycles**: 한 번에 답을 내놓는 것이 아니라, 추론-행동-검토-수정의 반복적 루프를 수행하며 과거 결정과의 일치성을 검토한다.
-*   **Stabilized and Shared Memory**: 과거의 가설, 계획, 결정 사항을 저장하고 인출할 수 있는 안정적인 메모리 메커니즘을 구축하여, 여러 에이전트가 동일한 지식 기반 위에서 작업을 수행하게 함으로써 재현성을 높인다.
+
+* **Grounded Reasoning**: 확률적 생성에만 의존하지 않고, 외부 지식 저장소(문서, 정책 등)에서 검증 가능한 정보를 검색하여 추론 과정에 주입함으로써 결과의 근거를 확보한다.
+* **Action-Validation Cycles**: 한 번에 답을 내놓는 것이 아니라, 추론-행동-검토-수정의 반복적 루프를 수행하며 과거 결정과의 일치성을 검토한다.
+* **Stabilized and Shared Memory**: 과거의 가설, 계획, 결정 사항을 저장하고 인출할 수 있는 안정적인 메모리 메커니즘을 구축하여, 여러 에이전트가 동일한 지식 기반 위에서 작업을 수행하게 함으로써 재현성을 높인다.
 
 ### 3. 창발적 행동 관리를 위한 시스템 설계
+
 개별 에이전트는 정상 작동하더라도 상호작용 결과로 발생하는 예측 불가능한 시스템 수준의 위험을 관리한다.
-*   **System-Level Monitoring**: 개별 에이전트가 아닌 집단적 행동 패턴을 관찰하고, 이상 탐지 시 로컬 자율성을 오버라이드(Override)하여 시스템을 중단시키거나 롤백하는 인터럽트 신호를 설계한다.
-*   **Redundancy & Self-Healing**: 결함 발생 시 기능을 복구하는 능동적 중복 설계와, 오류 상태를 유발한 최근 행동을 되돌리는 self-correction 및 롤백 전략을 수립한다.
+
+* **System-Level Monitoring**: 개별 에이전트가 아닌 집단적 행동 패턴을 관찰하고, 이상 탐지 시 로컬 자율성을 오버라이드(Override)하여 시스템을 중단시키거나 롤백하는 인터럽트 신호를 설계한다.
+* **Redundancy & Self-Healing**: 결함 발생 시 기능을 복구하는 능동적 중복 설계와, 오류 상태를 유발한 최근 행동을 되돌리는 self-correction 및 롤백 전략을 수립한다.
 
 ## 📊 Results
 

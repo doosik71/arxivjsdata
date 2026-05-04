@@ -32,6 +32,7 @@ Bo Li, Peng Qi, Bo Liu, Shuai Di, Jingen Liu, Jiquan Pei, Jinfeng Yi, and Bowen 
 본 논문은 신뢰할 수 있는 AI를 구축하기 위해 AI 시스템의 생애주기를 5단계로 나누고, 각 단계에서 적용 가능한 기술 및 관리 방안을 제시한다.
 
 ### 1. AI 신뢰성의 핵심 요소 정의
+
 - **Robustness**: 오류나 예기치 못한 입력에도 시스템이 정상 작동하는 능력.
 - **Generalization**: 학습 데이터 외의 미지의 데이터에서도 정확한 예측을 수행하는 능력.
 - **Explainability & Transparency**: 모델의 결정 근거를 이해할 수 있게 하는 능력(Explainability)과 시스템 생애주기 전반의 정보를 공개하는 것(Transparency).
@@ -41,31 +42,33 @@ Bo Li, Peng Qi, Bo Liu, Shuai Di, Jingen Liu, Jiquan Pei, Jinfeng Yi, and Bowen 
 - **Accountability**: 위의 모든 요구사항을 준수하고 정당화할 수 있는 책임성.
 
 ### 2. 생애주기별 상세 방법론
+
 시스템 구축 단계에 따라 다음과 같은 구체적인 조치들이 제안된다.
 
-- **데이터 준비(Data Preparation)**: 
-    - 편향 완화를 위한 $\text{Debias Sampling}$ 및 $\text{Debias Annotation}$ 수행.
-    - $\text{Differential Privacy (DP)}$ 및 데이터 익명화(Anonymization)를 통한 프라이버시 보호.
-    - $\text{Data Provenance}$ 기록을 통한 투명성 및 책임성 확보.
+- **데이터 준비(Data Preparation)**:
+  - 편향 완화를 위한 $\text{Debias Sampling}$ 및 $\text{Debias Annotation}$ 수행.
+  - $\text{Differential Privacy (DP)}$ 및 데이터 익명화(Anonymization)를 통한 프라이버시 보호.
+  - $\text{Data Provenance}$ 기록을 통한 투명성 및 책임성 확보.
 - **알고리즘 설계(Algorithm Design)**:
-    - 적대적 훈련($\text{Adversarial Training}$) 및 인증된 강건성($\text{Certified Robustness}$) 확보.
-    - $\text{Post-hoc}$ 설명 모델(LIME, SHAP 등) 또는 설계 단계부터 설명 가능한 모델(Self-explainable models) 적용.
-    - $\text{SMPC (Secure Multi-party Computation)}$ 및 $\text{Federated Learning}$을 통한 프라이버시 보존 학습.
+  - 적대적 훈련($\text{Adversarial Training}$) 및 인증된 강건성($\text{Certified Robustness}$) 확보.
+  - $\text{Post-hoc}$ 설명 모델(LIME, SHAP 등) 또는 설계 단계부터 설명 가능한 모델(Self-explainable models) 적용.
+  - $\text{SMPC (Secure Multi-party Computation)}$ 및 $\text{Federated Learning}$을 통한 프라이버시 보존 학습.
 - **개발(Development)**:
-    - $\text{Neuron Coverage}$와 같은 새로운 테스트 기준을 적용한 기능 테스트.
-    - $\text{Hardware-in-the-loop (HIL)}$ 시뮬레이션을 통한 실제 환경 검증.
-    - 정량적 벤치마킹을 통한 강건성 및 공정성 평가.
+  - $\text{Neuron Coverage}$와 같은 새로운 테스트 기준을 적용한 기능 테스트.
+  - $\text{Hardware-in-the-loop (HIL)}$ 시뮬레이션을 통한 실제 환경 검증.
+  - 정량적 벤치마킹을 통한 강건성 및 공정성 평가.
 - **배포(Deployment)**:
-    - $\text{Data Drift}$ 및 적대적 공격을 감지하는 이상 징후 모니터링.
-    - 사용자 인터페이스(UI)를 통한 설명 가능성 전달 및 인간 개입($\text{Human-in-the-loop}$) 설계.
-    - 시스템 실패 시 피해를 최소화하는 $\text{Fail-safe}$ 메커니즘 구축.
-    - $\text{TEE (Trusted Execution Environment)}$와 같은 하드웨어 보안 적용.
+  - $\text{Data Drift}$ 및 적대적 공격을 감지하는 이상 징후 모니터링.
+  - 사용자 인터페이스(UI)를 통한 설명 가능성 전달 및 인간 개입($\text{Human-in-the-loop}$) 설계.
+  - 시스템 실패 시 피해를 최소화하는 $\text{Fail-safe}$ 메커니즘 구축.
+  - $\text{TEE (Trusted Execution Environment)}$와 같은 하드웨어 보안 적용.
 - **관리(Management)**:
-    - $\text{Model Cards}$ 및 $\text{Datasheets}$ 작성을 통한 문서화.
-    - 내/외부 전문가에 의한 알고리즘 감사($\text{Algorithmic Auditing}$).
-    - 산업 간 협력 및 사고 사례 공유($\text{Incident Sharing}$).
+  - $\text{Model Cards}$ 및 $\text{Datasheets}$ 작성을 통한 문서화.
+  - 내/외부 전문가에 의한 알고리즘 감사($\text{Algorithmic Auditing}$).
+  - 산업 간 협력 및 사고 사례 공유($\text{Incident Sharing}$).
 
 ### 3. TrustAIOps 워크플로우
+
 단일 조치가 아닌, 위 5단계를 지속적으로 반복하고 피드백을 주고받는 $\text{TrustAIOps}$ 체계를 제안한다. 이는 다학제적 역할자(연구자, 엔지니어, 법률 전문가 등) 간의 긴밀한 협업과 지속적인 아티팩트 관리를 핵심으로 한다.
 
 ## 📊 Results
@@ -74,24 +77,28 @@ Bo Li, Peng Qi, Bo Liu, Shuai Di, Jingen Liu, Jiquan Pei, Jinfeng Yi, and Bowen 
 
 - **신뢰성 매핑 테이블**: 각 생애주기 단계에서 어떤 기술이 어떤 신뢰성 요소(Robustness, Fairness 등)를 해결하는지 정리한 종합 룩업 테이블을 통해 실무자가 즉시 적용 가능한 가이드를 제공한다.
 - **산업 사례 분석(Case Studies)**:
-    - **얼굴 인식**: 적대적 패치 공격에 대한 취약성과 인종/성별 편향성 문제를 분석하고, 이에 대한 Liveness Detection 및 Debias 알고리즘 적용 사례를 제시한다.
-    - **자율주행**: 안전 필수 시스템으로서의 특성을 분석하고, $\text{HIL}$ 시뮬레이션과 $\text{Fallback Plan}$의 중요성을 강조한다.
-    - **NLP**: 기계 번역에서의 성별 고정관념 편향과 챗봇의 윤리적 정렬(Value Alignment) 문제를 분석한다.
+  - **얼굴 인식**: 적대적 패치 공격에 대한 취약성과 인종/성별 편향성 문제를 분석하고, 이에 대한 Liveness Detection 및 Debias 알고리즘 적용 사례를 제시한다.
+  - **자율주행**: 안전 필수 시스템으로서의 특성을 분석하고, $\text{HIL}$ 시뮬레이션과 $\text{Fallback Plan}$의 중요성을 강조한다.
+  - **NLP**: 기계 번역에서의 성별 고정관념 편향과 챗봇의 윤리적 정렬(Value Alignment) 문제를 분석한다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. 신뢰성 요소 간의 트레이드오프(Trade-off)
+
 논문은 신뢰성의 각 요소가 서로 충돌할 수 있음을 경고한다.
+
 - **투명성 vs 프라이버시**: 너무 상세한 정보 공개는 오히려 개인 정보 유출이나 타겟 해킹의 위험을 높일 수 있다.
 - **강건성 vs 정확도**: 적대적 훈련을 통해 강건성을 높이면 일반적인 테스트 데이터에 대한 정확도가 하락하는 경향이 있다.
 - **강건성 vs 공정성**: 일부 연구에 따르면 강건성을 높이는 과정이 특정 집단에 대한 공정성을 해칠 수 있다.
 
 ### 2. 현재 기술의 한계 및 미결 과제
+
 - **설명 가능성의 취약성**: 현재의 XAI 기법들은 입력의 작은 변화에도 설명이 크게 변하는 취약성(Fragility)을 보이며, 인간의 직관과 일치하지 않는 경우가 많다.
 - **정량적 평가 지표 부족**: Robustness는 벤치마크가 존재하지만, Transparency나 Accountability와 같은 요소는 여전히 정성적 평가에 의존하고 있어 객관적인 비교가 어렵다.
 - **거대 사전학습 모델(LLM)의 위험**: 모델의 크기가 커짐에 따라 학습 과정의 재현성(Reproducibility)이 낮아지고, 학습 데이터 내의 편향이나 개인 정보가 출력물로 유출되는 새로운 문제가 발생하고 있다.
 
 ### 3. 비판적 해석
+
 본 논문은 매우 포괄적인 프레임워크를 제시하지만, 실제 기업 환경에서 이를 모두 적용하기에는 막대한 비용과 시간이 소요된다는 점을 인정한다. 따라서 "성능 중심 AI"에서 "신뢰 중심 AI"로의 패러다임 전환이 필요하며, 이는 단기적인 개발 속도 저하를 감수하더라도 장기적인 사회적 수용성을 위해 필수적이라는 관점을 유지한다.
 
 ## 📌 TL;DR

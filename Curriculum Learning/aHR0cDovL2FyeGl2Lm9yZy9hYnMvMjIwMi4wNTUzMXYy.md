@@ -10,13 +10,14 @@ H. Toprak Kesgin, M. Fatih Amasyali (2022)
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 학습 과정에서 사용되는 데이터셋의 크기를 주기적으로 변화시키는 **Cyclical Curriculum Learning (CCL)**을 제안하는 것이다. 
+본 논문의 핵심 아이디어는 학습 과정에서 사용되는 데이터셋의 크기를 주기적으로 변화시키는 **Cyclical Curriculum Learning (CCL)**을 제안하는 것이다.
 
 단순히 Vanilla method(전체 데이터 사용)나 기존의 CL(부분 데이터에서 전체 데이터로 확장) 중 하나만 선택하는 것이 아니라, 이 두 가지 방식을 주기적으로 교차 적용함으로써 더 나은 최적화 결과를 얻을 수 있다는 직관에 기반한다. 또한, 모델 스스로가 샘플의 난이도를 측정하게 하는 Self-thought 방식과 확률적 샘플 선택(Probabilistic Selection) 메커니즘을 결합하여 구현하였다.
 
 ## 📎 Related Works
 
 논문에서는 다음과 같은 기존 연구들을 소개한다:
+
 - **Curriculum Learning (CL):** 데이터를 쉬운 것부터 어려운 순으로 학습시켜 일반화 성능을 높이고 비볼록 최적화(non-convex optimization)의 속도를 향상시킨다.
 - **Self-Paced Learning (SPL):** 고정된 커리큘럼 대신 학습 과정에서 동적으로 샘플의 난이도를 결정하고 임계값을 조정하며 데이터셋 크기를 늘려간다.
 - **Dynamic Instance Hardness (DIH):** 최종 손실 값뿐만 아니라 학습 과정 중의 손실 변화량을 고려하여 데이터셋 크기를 조절한다.
@@ -27,7 +28,9 @@ H. Toprak Kesgin, M. Fatih Amasyali (2022)
 ## 🛠️ Methodology
 
 ### 1. 주기적 학습 데이터셋 크기 결정 (Cyclical Training Dataset Sizes)
+
 CCL은 매 에포크마다 전체 데이터셋의 일부인 서브셋(subset)만을 사용한다. 서브셋의 크기는 다음과 같은 하이퍼파라미터에 의해 결정된다:
+
 - $sp$: 시작 지점의 데이터 비율 (initial percentage)
 - $ep$: 최대 지점의 데이터 비율 (final percentage)
 - $\alpha$: 사이클의 변화 속도 (speed of cycle)
@@ -36,9 +39,11 @@ CCL은 매 에포크마다 전체 데이터셋의 일부인 서브셋(subset)만
 알고리즘은 $sp$에서 시작하여 $\alpha$의 속도로 $ep$까지 증가한 후, 다시 $sp$까지 감소하는 과정을 주기적으로 반복한다.
 
 ### 2. 샘플 선택 및 스코어링 (Selecting Samples & Determining Scores)
+
 단순히 상위 $n$개의 쉬운 샘플을 선택하는 Greedy 방식보다 확률적 선택(Probabilistic Selection)이 더 효과적임을 확인하였다.
 
 **스코어 계산 과정:**
+
 1. 먼저 스코어링 모델 $M_1$을 전체 데이터로 사전 학습시킨다.
 2. 각 샘플 $i$에 대해 손실 함수 $l$을 통해 손실 값을 계산한다.
 3. 손실 값이 작을수록 '쉬운 샘플'이므로, 역수를 취해 스코어 $k_i$를 생성한다:
@@ -48,10 +53,11 @@ CCL은 매 에포크마다 전체 데이터셋의 일부인 서브셋(subset)만
 5. 이 확률 분포 $r_i$에 따라 복원 없이(without replacement) 지정된 크기의 서브셋을 샘플링한다.
 
 ### 3. 전체 학습 절차 (Training Pipeline)
+
 1. **Scoring Model 학습:** 전체 데이터 $D$를 사용하여 $M_1$을 학습시킨다.
 2. **사이클 설정:** `GET_SIZES` 함수를 통해 에포크별 데이터셋 비율 리스트 $S$를 생성한다.
 3. **스코어 생성:** $M_1$을 이용해 각 샘플의 선택 확률 $r$을 계산한다.
-4. **주기적 학습:** 
+4. **주기적 학습:**
    - $S[t] = 1$인 경우: 전체 데이터를 사용하는 Vanilla method를 적용한다.
    - $S[t] < 1$인 경우: 스코어 기반의 서브셋을 선택하여 CL을 적용한다.
    - 이 과정을 $T$ 에포크 동안 반복하며 모델 $M_2$를 학습시킨다.
@@ -59,30 +65,35 @@ CCL은 매 에포크마다 전체 데이터셋의 일부인 서브셋(subset)만
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋:** 이미지 분류(CIFAR-10, CIFAR-100, Fashion MNIST, STL-10) 및 텍스트 분류(20news, Sarcasm, Reuters 등 총 14종) 등 총 18개 데이터셋 사용.
 - **모델:** 이미지는 기본 CNN 구조를 사용하였으며, 텍스트는 각 데이터셋 소스에서 제공하는 다양한 딥러닝 모델을 사용하였다.
 - **평가 지표:** Top-1 Accuracy의 최대값(Maximum Accuracy)을 측정하였으며, 결과의 신뢰성을 위해 서로 다른 시작점에서 5회 반복 실험 후 평균값을 산출하였다.
 - **비교 대상:** Vanilla, CL, Anti-CL, Random-CL, SPL 및 CCL의 변형 모델들(Anti-CCL, Rand-CCL).
 
 ### 주요 결과
+
 - **정량적 성과:** 18개 데이터셋 중 10개에서 CCL이 Vanilla method보다 통계적으로 유의미하게 높은 성능을 보였으며, 성능이 하락한 데이터셋은 단 1개에 불과했다.
 - **성능 특성:** CCL은 테스트 데이터셋의 정확도가 넓은 범위에서 진동(Oscillating)하는 경향을 보였는데, 이러한 '정확도 사이클링'이 결과적으로 더 낮은 최솟값(더 좋은 성능)에 도달하게 하는 원동력이 됨을 확인하였다.
 
 ## 🧠 Insights & Discussion
 
 ### 이론적 배경: 왜 CCL이 작동하는가?
+
 논문은 SGD(Stochastic Gradient Descent)와 ESG(Exponential Distributed SG)의 오차 분석을 통해 CCL의 정당성을 증명한다.
 
 - **Theorem 1:** 샘플의 손실 값이 정규분포 $N(\mu, \sigma^2)$를 따를 때, SGD의 기대 오차가 ESG보다 작다. (즉, Vanilla가 유리함)
 - **Theorem 2:** 샘플의 손실 값이 반정규분포(Half-normal distribution)를 따르고 $\sigma\lambda < \pi$일 때, ESG의 기대 오차가 SGD보다 작다. (즉, CL이 유리함)
 
 **결론적인 추론 과정:**
+
 1. 학습 초기에는 손실 값이 **정규분포**를 따르므로 SGD(Vanilla)가 효율적이다.
 2. SGD 학습이 진행되면 손실 분포가 **반정규분포**로 변한다.
 3. 이때 ESG(CL)를 적용하면 오차를 줄일 수 있으며, 분포를 다시 **정규분포** 형태로 되돌린다.
 4. 따라서 Vanilla와 CL을 주기적으로 교체하는 CCL은 각 상황에 맞는 최적의 알고리즘을 선택적으로 사용하는 효과를 내어 전체 MSE(Mean Square Error)를 낮춘다.
 
 ### 비판적 해석 및 한계
+
 - **하이퍼파라미터 의존성:** $sp, ep, \alpha$와 같은 사이클 관련 하이퍼파라미터가 성능에 영향을 미치며, 본 논문에서는 고정된 값을 사용했으나 데이터셋마다 최적화가 필요하다는 점을 명시하고 있다.
 - **동적 결정 가능성:** 현재는 사이클을 미리 정해놓고 학습하지만, 실제 손실 분포를 실시간으로 모니터링하여 동적으로 크기를 결정한다면 더 높은 최적화 가능성이 있다.
 

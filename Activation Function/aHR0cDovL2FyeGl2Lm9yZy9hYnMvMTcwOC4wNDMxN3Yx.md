@@ -28,6 +28,7 @@ Tianyang Wang, Zhengrui Qin, and Michelle Zhu (2017)
 ## 🛠️ Methodology
 
 ### 1. Exponential Linear Unit (ELU)
+
 본 논문에서는 활성화 함수로 ELU를 채택한다. ELU는 다음과 같이 정의된다.
 
 $$f(x) = \begin{cases} x & \text{if } x > 0 \\ \alpha(e^x - 1) & \text{if } x \le 0 \end{cases}$$
@@ -35,6 +36,7 @@ $$f(x) = \begin{cases} x & \text{if } x > 0 \\ \alpha(e^x - 1) & \text{if } x \l
 여기서 $\alpha$는 음수 입력에 대한 포화 수준을 조절하는 파라미터이다. ELU는 ReLU와 달리 음수 값을 완전히 0으로 만들지 않으므로, 유닛 활성화의 평균값이 0에 가깝게 유지된다. 이는 학습 속도를 높이고 노이즈에 대한 시스템의 강건성(Robustness)을 향상시킨다.
 
 ### 2. ELU 사용의 동기: ASM 분석
+
 연구진은 ASM(Angular Second Moment)을 통해 ELU의 효율성을 분석하였다. ASM은 다음과 같이 계산된다.
 
 $$\text{ASM} = \sum_{i,j=0}^{N-1} P_{i,j}^2$$
@@ -42,6 +44,7 @@ $$\text{ASM} = \sum_{i,j=0}^{N-1} P_{i,j}^2$$
 여기서 $P_{i,j}$는 노이즈 매핑의 회색조 동시 발생 행렬(GLCM)의 원소이다. 일반적으로 노이즈가 많은 이미지일수록 ASM 값이 낮다. 잔차 학습의 목표는 최대한 많은 노이즈를 포함하는 노이즈 매핑 $v$를 학습하는 것이므로, ASM 값이 낮은 활성화 함수를 선택하는 것이 유리하다. 실험 결과, ELU를 사용했을 때 ReLU보다 더 낮은 ASM 값을 가질 확률이 높았으며, 이는 ELU가 더 효과적으로 노이즈를 제거할 수 있음을 시사한다.
 
 ### 3. TV Regularized $L_2$ Loss
+
 이미지 디노이징에서 TV 최소화는 널리 사용되는 기법이다. 본 논문은 이를 학습 단계에 도입하여 다음과 같은 손실 함수를 정의하였다.
 
 $$L = \frac{1}{2N} \sum_{i=1}^{N} ||R - (y_i - x_i)||^2 + \beta \text{TV}(y_i - R)$$
@@ -53,6 +56,7 @@ $$\text{TV}(u) \approx \sum_{i,j} \sqrt{(\nabla_x u)_{i,j}^2 + (\nabla_y u)_{i,j
 첫 번째 항($L_2$ loss)이 노이즈 매핑을 학습한다면, 두 번째 항($\text{TV}$)은 결과 이미지의 평활도를 조절하여 추가적인 디노이징 효과를 부여한다. $\beta$ 값은 학습 에포크에 따라 가변적으로 업데이트하여 최적의 결과를 얻었다.
 
 ### 4. 네트워크 아키텍처
+
 전체 구조는 VGG-19 네트워크를 기반으로 하며, Fully Connected 레이어와 Pooling 레이어는 제외되었다.
 
 - **기본 블록**: 'Conv $\rightarrow$ ELU $\rightarrow$ Conv $\rightarrow$ BN' 순서로 구성된 블록이 15회 반복된다.
@@ -62,18 +66,20 @@ $$\text{TV}(u) \approx \sum_{i,j} \sqrt{(\nabla_x u)_{i,j}^2 + (\nabla_y u)_{i,j
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: BSD500(학습), BSD68 및 Set12(테스트).
 - **노이즈 레벨**: $\sigma = 15, 25, 50$의 특정 레벨 및 $[0, 55]$ 범위의 랜덤 레벨(Blind denoising).
 - **지표**: PSNR(Peak Signal-to-Noise Ratio)을 사용하여 성능을 평가하였다.
 - **비교 대상**: BM3D, MLP, EPLL, LSSC, CSF, WNNM, DGCRF, TNRD, NLNet, DnCNN 등.
 
 ### 주요 결과
-- **정량적 결과**: 
-    - 그레이스케일 이미지 및 컬러 이미지 모두에서 DnCNN보다 약 $0.1\text{dB}$ 정도 높은 PSNR을 기록하며 가장 우수한 성능을 보였다.
-    - 특히 $\sigma = 50$인 고노이즈 상황에서 BM3D 대비 $0.7\text{dB}$ 향상된 결과를 보였다.
-- **정성적 결과**: 
-    - 시각적 비교 결과, DnCNN에 비해 이미지의 세부 디테일(Detail)을 더 잘 보존하는 것으로 나타났다.
-    - 또한 TV 정규화를 사용했음에도 불구하고 배경이 과도하게 뭉개지는 오버-스무딩(Over-smoothing) 현상이 완화되었다.
+
+- **정량적 결과**:
+  - 그레이스케일 이미지 및 컬러 이미지 모두에서 DnCNN보다 약 $0.1\text{dB}$ 정도 높은 PSNR을 기록하며 가장 우수한 성능을 보였다.
+  - 특히 $\sigma = 50$인 고노이즈 상황에서 BM3D 대비 $0.7\text{dB}$ 향상된 결과를 보였다.
+- **정성적 결과**:
+  - 시각적 비교 결과, DnCNN에 비해 이미지의 세부 디테일(Detail)을 더 잘 보존하는 것으로 나타났다.
+  - 또한 TV 정규화를 사용했음에도 불구하고 배경이 과도하게 뭉개지는 오버-스무딩(Over-smoothing) 현상이 완화되었다.
 
 ## 🧠 Insights & Discussion
 

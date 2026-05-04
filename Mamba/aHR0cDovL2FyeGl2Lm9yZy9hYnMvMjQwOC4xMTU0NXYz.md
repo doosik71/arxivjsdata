@@ -12,9 +12,9 @@ Enze Zhu, Zhan Chen, Dingkai Wang, Hanru Shi, Xiaoxuan Liu, and Lei Wang (2024)
 
 본 논문의 핵심 아이디어는 Mamba의 효율적인 전역 모델링 능력을 디코더에 배치하고, Mamba가 놓치기 쉬운 국소적 세부 정보를 보완하기 위해 훈련 단계에서만 작동하는 가벼운 CNN 기반 감독 모듈을 추가하는 것이다. 구체적인 기여 사항은 다음과 같다.
 
-1.  **Mamba Segmentation Decoder (MSD) 설계**: VMamba의 Visual State Space (VSS) 블록을 디코더 측에 적용하여, 파라미터 수를 줄이면서도 전역 수용 영역(Global Receptive Field) 내에서 복잡한 정보를 효율적으로 디코딩할 수 있는 플러그 앤 플레이 방식의 디코더를 구현하였다.
-2.  **Local Supervision Module (LSM) 도입**: Mamba의 넓은 수용 영역으로 인해 발생할 수 있는 국소적 세부 정보 손실 문제를 해결하기 위해 CNN 기반의 LSM을 제안하였다. 이는 훈련 단계에서만 사용되는 Train-only 설계로, 추론 시의 비용 증가 없이 국소적 시맨틱 정보에 대한 인지 능력을 향상시킨다.
-3.  **UNetMamba 프레임워크 구축**: ResT 백본의 인코더, MSD, LSM을 결합한 UNet 형태의 구조를 통해 경량화와 낮은 계산 비용을 유지하면서도, 주요 원격 탐사 데이터셋에서 SOTA(State-of-the-Art) 성능을 달성하였다.
+1. **Mamba Segmentation Decoder (MSD) 설계**: VMamba의 Visual State Space (VSS) 블록을 디코더 측에 적용하여, 파라미터 수를 줄이면서도 전역 수용 영역(Global Receptive Field) 내에서 복잡한 정보를 효율적으로 디코딩할 수 있는 플러그 앤 플레이 방식의 디코더를 구현하였다.
+2. **Local Supervision Module (LSM) 도입**: Mamba의 넓은 수용 영역으로 인해 발생할 수 있는 국소적 세부 정보 손실 문제를 해결하기 위해 CNN 기반의 LSM을 제안하였다. 이는 훈련 단계에서만 사용되는 Train-only 설계로, 추론 시의 비용 증가 없이 국소적 시맨틱 정보에 대한 인지 능력을 향상시킨다.
+3. **UNetMamba 프레임워크 구축**: ResT 백본의 인코더, MSD, LSM을 결합한 UNet 형태의 구조를 통해 경량화와 낮은 계산 비용을 유지하면서도, 주요 원격 탐사 데이터셋에서 SOTA(State-of-the-Art) 성능을 달성하였다.
 
 ## 📎 Related Works
 
@@ -25,12 +25,15 @@ Enze Zhu, Zhan Chen, Dingkai Wang, Hanru Shi, Xiaoxuan Liu, and Lei Wang (2024)
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 UNetMamba는 U-shape 프레임워크를 따르며, 크게 세 가지 구성 요소로 이루어져 있다.
+
 - **Encoder**: 사전 학습된 ResT 백본을 사용하여 다중 스케일 특징 맵을 추출한다.
 - **Decoder (MSD)**: Mamba 기반의 디코더로, 인코더에서 추출된 특징을 효율적으로 복원하고 전역적 문맥을 반영한다.
 - **Local Supervision Module (LSM)**: 훈련 과정에서 MSD의 국소적 인지 능력을 강화하는 보조 모듈이다.
 
 ### 2. ResT Encoder
+
 ResT 인코더는 Efficient Transformer Block (ETB)을 핵심으로 하며 4단계의 스테이지로 구성된다. 계산 비용을 줄이기 위해 Efficient Multi-head Self-Attention (EMSA)를 사용하며, 수식은 다음과 같다.
 
 $$\text{EMSA}(Q, K, V) = \text{IN}\left(\text{Softmax}\left(\frac{\text{Conv}(QK^T)}{\sqrt{d_k}}\right)V\right)$$
@@ -38,6 +41,7 @@ $$\text{EMSA}(Q, K, V) = \text{IN}\left(\text{Softmax}\left(\frac{\text{Conv}(QK
 여기서 $\text{IN}(\cdot)$은 Instance Normalization이며, $1 \times 1$ Convolution을 도입하여 효율성을 높였다.
 
 ### 3. Mamba Segmentation Decoder (MSD)
+
 MSD는 VMamba의 기본 단위인 VSS 블록을 사용한다. 입력 특징 맵 $F$는 Patch Expansion을 거쳐 다음과 같은 과정을 수행한다.
 
 - **선형 임베딩**: $F' = \text{LinearEmbed}(\text{LayerNorm}(\text{PatchExp}(F)))$
@@ -51,13 +55,16 @@ MSD는 VMamba의 기본 단위인 VSS 블록을 사용한다. 입력 특징 맵 
 최종 출력 $F_{\text{MSD}}$는 잔차 연결(Residual Connection)과 Linear 레이어를 통해 생성되며, 4단계의 스테이지를 거쳐 최종적으로 $1 \times 1$ Convolution 헤드를 통해 세그멘테이션 결과를 출력한다.
 
 ### 4. Local Supervision Module (LSM)
+
 MSD의 넓은 수용 영역이 국소적 세부 정보를 간과하는 문제를 해결하기 위해 CNN 기반의 LSM이 도입되었다.
+
 - **병렬 컨볼루션**: 커널 크기가 1과 3인 두 개의 병렬 브랜치를 사용하며, 각각 $\text{BatchNorm}$과 $\text{ReLU6}$를 거친다.
   $$\tilde{F}'_i = \text{ReLU6}(\text{BatchNorm}(\text{Conv}_i(F_{\text{MSD}}))), \quad i \in \{1, 3\}$$
 - **결합 및 업샘플링**: 두 브랜치를 합산($\tilde{F}' = \tilde{F}'_1 \oplus \tilde{F}'_3$)한 후, $\text{Dropout} \rightarrow 1 \times 1 \text{Conv} \rightarrow \text{Upsample}$ 과정을 거쳐 최종 결과 $\tilde{F}$를 얻는다.
 이 모듈은 훈련 시에만 디코더의 스테이지 2~4에 추가되어 보조 손실 함수를 계산하는 데 사용된다.
 
 ### 5. Loss Function
+
 전체 손실 함수 $L$은 주 손실(Principal Loss) $L_p$와 보조 손실(Auxiliary Loss) $L_a$의 가중 합으로 정의된다.
 
 $$L = L_p + \alpha L_a = (L_{\text{dice}} + L_{\text{ce}}) + \alpha L_{\text{ce}}$$
@@ -67,15 +74,18 @@ $$L = L_p + \alpha L_a = (L_{\text{dice}} + L_{\text{ce}}) + \alpha L_{\text{ce}
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋**: LoveDA (5,987장, 7개 클래스), ISPRS Vaihingen (33장, 6개 클래스).
 - **평가 지표**: mIoU, mF1, OA (정확도), Param, Memo, FLOPs (효율성).
 - **환경**: NVIDIA RTX 4090 GPU, AdamW 옵티마이저.
 
 ### 2. 정량적 결과
+
 - **LoveDA**: UNetMamba는 mIoU $53.35\%$를 기록하며 기존 SOTA 대비 $0.87\%$ 향상되었다. 특히 배경(Background)과 농경지(Agriculture) 클래스에서 각각 $1.48\%$, $2.39\%$의 큰 격차로 우위를 점했다.
 - **ISPRS Vaihingen**: mF1 $90.95\%$, mIoU $83.47\%$, OA $92.51\%$를 달성하여 기존 모델들을 앞섰다. 특히 모델 파라미터 수($14.76\text{M}$)와 계산 비용($100.52\text{G FLOPs}$) 측면에서 매우 경쟁력 있는 효율성을 보여주었다.
 
 ### 3. 절제 연구 (Ablation Study)
+
 - **MSD의 효과**: ResT-Lite 백본을 기반으로 MSD를 적용했을 때, 파라미터 수와 FLOPs가 크게 감소하면서도 mIoU 하락은 매우 적었다. 이는 MSD가 복잡한 정보를 매우 효율적으로 디코딩함을 증명한다.
 - **LSM의 효과**: LSM을 추가했을 때 LoveDA에서는 $0.74\%$, Vaihingen에서는 $0.29\%$의 mIoU 상승이 나타났다. 파라미터 증가는 $0.87\text{M}$으로 매우 적었으며, 추론 시에는 사용되지 않으므로 실질적인 비용 증가가 없었다.
 

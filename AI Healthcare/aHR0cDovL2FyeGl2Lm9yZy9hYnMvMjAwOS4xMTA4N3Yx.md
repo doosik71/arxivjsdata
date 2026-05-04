@@ -13,6 +13,7 @@ Irene Y. Chen, Shalmali Joshi, Marzyeh Ghassemi, and Rajesh Ranganath (2021)
 본 논문의 핵심 아이디어는 헬스케어의 모든 데이터 생성 과정을 확률 분포(Data generating distribution)의 관점에서 바라보는 것이다. 단순한 함수 매핑이 아니라 확률 분포 $p(y|x)$를 학습함으로써, 평균값뿐만 아니라 분산 및 다른 통계적 특성을 함께 파악하여 보다 통합적인 의료 뷰를 제공할 수 있다는 점을 강조한다.
 
 중심적인 설계 직관은 다음과 같다.
+
 1. **예측 파이프라인의 안정성 확보**: 결측치 처리, 검열 데이터 분석, 모델 보정(Calibration) 및 불확실성 추정을 통해 임상적으로 신뢰 가능한 예측치를 생성한다.
 2. **잠재 변수를 통한 표현형 발견**: 관찰 가능한 데이터 뒤에 숨겨진 잠재 변수(Latent variable)를 모델링하여 새로운 질병의 하위 유형(Subtype)을 발견한다.
 3. **데이터 부족 및 프라이버시 해결**: 생성 모델을 통해 합성 데이터를 생성함으로써 데이터 부족 문제를 해결하고 개인정보 보호를 강화한다.
@@ -29,6 +30,7 @@ Irene Y. Chen, Shalmali Joshi, Marzyeh Ghassemi, and Rajesh Ranganath (2021)
 ## 🛠️ Methodology
 
 ### 1. 결정론적 모델 vs 확률론적 모델
+
 결정론적 모델 $g_\theta(x)$는 특징 $x$에 대해 반응 변수 $y$의 기댓값을 예측하며, 주로 평균 제곱 오차(Squared error)를 최소화하도록 학습된다.
 $$\mathbb{E}_{x,y \sim F}[(g_\theta(x)-y)^2]$$
 
@@ -37,24 +39,28 @@ $$\mathbb{E}_{x,y \sim F}[\log p_\theta(y|x)]$$
 이를 통해 기댓값뿐만 아니라 조건부 분산과 같은 통계량을 함께 얻을 수 있다.
 
 ### 2. 예측 모델 구축의 주요 방법론
+
 - **결측치 처리(Missing Values)**: 데이터가 완전히 무작위로 누락된 경우(MCAR)나 관측된 데이터에 의존해 누락된 경우(MAR)를 구분하여 처리한다. 다중 대체법(Multiple Imputation) 등을 통해 사후 예측 분포를 기반으로 결측치를 채운다.
 - **검열 데이터 처리(Censoring)**: 생존 분석에서 이벤트 발생 전 관찰이 중단된 경우, 생존 함수(Survival function)를 사용한다. 검열이 무작위로 일어난다는 가정하에, 가능도를 다음과 같이 적분으로 계산한다.
 $$\int_{c}^{\infty} p(a|x)da$$
 (여기서 $c$는 검열 시간이다.)
 - **모델 보정(Calibration)**: 예측된 확률 $\hat{p}$가 실제 발생 빈도와 일치하도록 만든다. Platt's scaling과 같은 사후 처리 기법을 통해 결정론적 모델의 출력을 확률적으로 변환한다.
-- **불확실성 추정(Uncertainty)**: 
-    - **Aleatoric Uncertainty**: 데이터 자체의 노이즈로 인한 불확실성.
-    - **Epistemic Uncertainty**: 모델의 파라미터 $\theta$에 대한 불확실성.
-    - Bayesian 프레임워크에서는 이를 다음과 같이 통합하여 예측 분포를 계산한다.
+- **불확실성 추정(Uncertainty)**:
+  - **Aleatoric Uncertainty**: 데이터 자체의 노이즈로 인한 불확실성.
+  - **Epistemic Uncertainty**: 모델의 파라미터 $\theta$에 대한 불확실성.
+  - Bayesian 프레임워크에서는 이를 다음과 같이 통합하여 예측 분포를 계산한다.
     $$p(y|x) = \int_{\theta} p(y|x, \theta) p(\theta|D) d\theta$$
 - **데이터 시프트 대응**: 특징 분포가 변하는 Covariate shift와 특징-라벨 관계가 변하는 Label shift를 구분한다. 중요도 샘플링(Importance sampling) 등을 통해 소스 도메인 데이터를 타겟 도메인에 맞게 재가중치화(Reweight)한다.
 
 ### 3. 표현형 분석(Phenotyping) 및 생성 모델
+
 - **Latent Variable Models**: 관측 데이터 $x$를 설명하는 잠재 변수 $z$를 도입하여 $p_\theta(z, x)$를 모델링한다. 특히 Variational Autoencoders(VAEs)를 사용하여 저차원 잠재 공간에서 환자의 특성을 파악한다.
 - **Generative Models**: GAN(Generative Adversarial Networks)이나 Normalizing Flows를 사용하여 실제 데이터 분포 $p(x)$를 학습하고, 이를 통해 합성 의료 데이터를 생성하여 데이터 증강(Augmentation)에 활용한다.
 
 ### 4. 치료 계획을 위한 강화학습(RL)
+
 환자의 상태(State), 의료진의 개입(Action), 결과(Reward)를 MDP(Markov Decision Process)로 정의한다.
+
 - **Model-based RL**: 환자의 상태 전이 역학(Transition dynamics)을 명시적으로 모델링하여 데이터 효율성을 높인다.
 - **POMDP(Partially Observable MDP)**: 환자의 모든 상태를 관찰할 수 없는 경우, 관측 함수 $p(o|s)$를 도입하여 잠재된 상태 $s$에 대한 사후 확률 $p(s|\cdot)$을 추론한다.
 
@@ -70,9 +76,11 @@ $$\int_{c}^{\infty} p(a|x)da$$
 ## 🧠 Insights & Discussion
 
 ### 강점 및 가치
+
 확률론적 접근 방식은 단순히 "무엇이 일어날 것인가"를 넘어 "얼마나 확신할 수 있는가"를 제공한다. 이는 의료 분야에서 매우 중요한데, 불확실성이 높은 예측에 대해 의료진이 추가 검사를 수행하거나 더 신중한 결정을 내릴 수 있게 하기 때문이다. 특히 데이터 시프트나 결측치와 같은 현실적인 제약 조건을 통계적 프레임워크 내에서 공식화하여 해결하려 한 점이 돋보인다.
 
 ### 한계 및 논의사항
+
 1. **계산 복잡도**: 확률론적 모델, 특히 베이지안 신경망(BNNs)이나 복잡한 잠재 변수 모델은 결정론적 모델보다 훨씬 더 많은 계산 자원과 메모리를 요구한다.
 2. **사전 분포(Prior) 설정의 어려움**: 베이지안 모델링에서 적절한 사전 분포를 설정하는 것은 매우 까다로우며, 잘못 설정된 Prior는 오히려 신뢰할 수 없는 불확실성 추정치로 이어질 수 있다.
 3. **데이터 의존성**: 생성 모델을 통한 데이터 증강이 모델의 정규화에는 도움이 될 수 있으나, 근본적으로 새로운 정보(Information)를 추가하는 것은 아니라는 점을 명심해야 한다.

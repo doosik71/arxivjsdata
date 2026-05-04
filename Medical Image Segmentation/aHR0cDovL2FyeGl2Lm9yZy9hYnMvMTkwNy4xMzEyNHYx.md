@@ -21,6 +21,7 @@ Utku Ozbulak, Arnout Van Messem, Wesley De Neve (2019)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 표기법
+
 신경망의 순전파 과정을 함수 $g$로 정의하며, 가중치와 파라미터를 $\theta$라고 한다. 입력 이미지 $X$의 크기는 $C \times H \times W$이며, 모델의 출력 $g(\theta, X)$는 $M \times H \times W$ 크기의 예측값을 가진다. 최종 예측 마스크 $Y$는 각 픽셀에서 가장 높은 확률을 가진 클래스를 선택하는 $\text{arg max}$ 연산을 통해 얻어진다.
 
 ### ASMA 알고리즘의 세부 구성 요소
@@ -28,6 +29,7 @@ Utku Ozbulak, Arnout Van Messem, Wesley De Neve (2019)
 본 알고리즘은 원본 이미지 $X$에 아주 작은 섭동(Perturbation) $P$를 더해, 모델이 공격자가 의도한 타겟 마스크 $Y_A$를 예측하게 만들면서 $L_2$ 거리를 최소화하는 것을 목표로 한다.
 
 #### 1. Static Segmentation Mask (SSM)
+
 가장 기본적인 단계로, 타겟 마스크 $Y_A$에서 전경(Foreground)으로 지정된 픽셀의 확률은 높이고, 배경(Background)으로 지정된 픽셀의 확률은 낮추는 방향으로 섭동 $P_n$을 계산한다.
 
 $$P_n = \sum_{c=0}^{M-1} \nabla_x (g(\theta, X_n)_c \odot 1_{\{Y_A=c\}})$$
@@ -35,11 +37,13 @@ $$P_n = \sum_{c=0}^{M-1} \nabla_x (g(\theta, X_n)_c \odot 1_{\{Y_A=c\}})$$
 여기서 $\odot$는 Hadamard product(원소별 곱)를 의미하며, $1_{\{Y_A=c\}}$는 타겟 마스크의 클래스가 $c$인 경우에만 1이 되는 지시 함수이다.
 
 #### 2. Adaptive Segmentation Mask (ASM)
+
 SSM 방식은 매 반복마다 모든 타겟 픽셀을 최적화하려 하지만, 일부 픽셀은 이미 최적화가 완료되어 타겟과 일치할 수 있다. ASM은 현재 예측이 타겟 마스크와 다른 픽셀에서만 그래디언트를 추출하여 최적화 효율을 높인다.
 
 $$P_n = \sum_{c=0}^{M-1} \nabla_x (g(\theta, X_n)_c \odot 1_{\{Y_A=c\}} \odot 1_{\{\arg \max_M (g(\theta, X_n)) \neq c\}})$$
 
 #### 3. Dynamic Perturbation Multiplier (DPM)
+
 ASM을 사용하면 최적화 대상이 되는 픽셀 수가 점차 줄어든다. 이때 고정된 학습률 $\alpha$를 사용하면 최적화가 너무 일찍 멈추거나 섭동이 너무 커지는 문제가 발생한다. 이를 해결하기 위해 타겟 마스크와 현재 예측 간의 IoU 점수에 따라 $\alpha$를 동적으로 변경한다.
 
 $$\alpha_n = \beta \times \text{IoU}(Y_A, Y_n) + \tau$$
@@ -49,19 +53,21 @@ $$\alpha_n = \beta \times \text{IoU}(Y_A, Y_n) + \tau$$
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Glaucoma Optic Disc Segmentation(녹내장 시신경 유두 세그멘테이션) 및 ISIC Skin Lesion Segmentation(피부 병변 세그멘테이션).
 - **모델**: 의료 영상 세그멘테이션에서 널리 쓰이는 U-Net 구조를 사용하였다.
-- **평가 지표**: 
-    - 이미지 변형 정도: $L_2$ 거리 및 $L_\infty$ 거리.
-    - 마스크 정확도: Intersection-over-Union (IoU) 및 Pixel Accuracy (PA).
+- **평가 지표**:
+  - 이미지 변형 정도: $L_2$ 거리 및 $L_\infty$ 거리.
+  - 마스크 정확도: Intersection-over-Union (IoU) 및 Pixel Accuracy (PA).
 - **실험 방법**: 1,000개의 적대적 예제를 생성하였으며, 타겟 마스크는 데이터셋 내의 다른 샘플에서 무작위로 선택하여 현실성을 높였다.
 
 ### 주요 결과
+
 실험 결과, 제안된 ASMA 방식이 SSM 및 ASM 단독 사용보다 월등한 성능을 보였다.
 
 - **정량적 결과**:
-    - Glaucoma 데이터셋에서 ASMA는 타겟 마스크와 **97%의 IoU**를 달성하였으며, $L_2$ 거리는 2.47로 매우 낮았다.
-    - ISIC 피부 병변 데이터셋에서는 **89%의 IoU**를 달성하였고, $L_2$ 거리는 3.88이었다.
+  - Glaucoma 데이터셋에서 ASMA는 타겟 마스크와 **97%의 IoU**를 달성하였으며, $L_2$ 거리는 2.47로 매우 낮았다.
+  - ISIC 피부 병변 데이터셋에서는 **89%의 IoU**를 달성하였고, $L_2$ 거리는 3.88이었다.
 - **정성적 결과**: 생성된 적대적 예제는 원본 이미지와 시각적으로 거의 구분이 불가능하지만, 모델의 예측 결과는 공격자가 설정한 타겟 마스크와 거의 동일하게 변하는 것이 확인되었다.
 
 ## 🧠 Insights & Discussion

@@ -25,9 +25,11 @@ Yingtian Zou, Jiashi Feng (2019)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 파이프라인
+
 HML은 가용 가능한 학습 Task 집합 $\mathcal{T}$를 계층적 구조 $\hat{\mathcal{T}} = \{T_1, T_2, \dots, T_H\}$로 재구성한다. 여기서 각 $T_h$는 서로 다른 구조를 가진 Task 집합이며, $T_1 \subset T_2 \subset \dots \subset T_H$의 관계를 가진다. 예를 들어, $N$-way 분류 문제에서 2-way, 3-way, ..., $N$-way 분류 Task를 순차적으로 생성하여 계층을 형성한다.
 
 ### 학습 목표 및 손실 함수
+
 HML의 전체 목적 함수는 유사 Task에 대한 빠른 적응과 이질적 Task 간의 일반화 능력을 동시에 극대화하는 방향으로 설계되었다.
 
 $$ \min_{\theta} \sum_{T \in \mathcal{T}} \ell(f_{\theta - \alpha \nabla_{\theta} L_T(f_{\theta})}(x_t), y_t) + \sum_{h=1}^{H-1} \sum_{T_h \in \mathcal{T}_h} L_{\theta}^{T_h \to T_{h+1}} $$
@@ -39,6 +41,7 @@ $$ L_{\theta}^{T_h \to T_{h+1}} = \sum_{T' \in \mathcal{T}_{h+1}} \ell(f_{\theta
 이 식은 $T_h$ 구조의 Task로 학습된 모델이 구조가 다른 $T_{h+1}$ Task에 적용되었을 때의 성능을 최적화함으로써, 모델이 특정 구조에 매몰되지 않고 광범위하게 적용 가능한 메타 지식을 학습하게 한다.
 
 ### 메타 모델 변환 함수 ($\omega$)
+
 Task 구조가 바뀌면 출력 레이어($\phi$)의 크기가 달라져 기존 파라미터 $\theta$를 그대로 사용할 수 없다. 이를 해결하기 위해 $\theta$와 $\phi$ 사이에 변환 함수 $\omega$를 삽입한다. $\omega$는 다음과 같은 목적 함수를 통해 학습된다.
 
 1. 메타 모델 $\theta$를 특정 Task $T_h$에 적응시켜 $\theta^h$를 얻는다: $\theta^h \leftarrow \theta - \nabla_{\theta} L_{T_h}(f_{\theta}, \phi^h)$
@@ -50,22 +53,24 @@ $\omega$를 학습할 때는 다른 파라미터 $\theta$와 $\phi$를 고정하
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Omniglot, miniImageNet, SUN2012 (Few-shot Classification), 그리고 Multivariate Linear Regression.
 - **평가 프로토콜**: 모든 모델은 5-way Task로 학습되었으며, 테스트 시에는 $N' \ge 5$인 $N'$-way Task(Omniglot의 경우 최대 50-way)에 적용하여 일반화 성능을 측정하였다.
 - **비교 대상**: 단순 Fine-tuning, MAML, Meta-SGD.
 
 ### 주요 결과
-1. **Few-shot Classification**: 
+
+1. **Few-shot Classification**:
    - Omniglot 데이터셋에서 $N'=20, 50$인 경우, HML은 MAML 대비 각각 5.5%, 14.4% 높은 정확도를 보였다. $N'$가 커질수록 HML과 기존 방법론 간의 성능 격차가 벌어지며, 이는 HML의 강력한 일반화 능력을 입증한다.
    - miniImageNet과 SUN2012에서도 MAML보다 훨씬 완만한 성능 저하 곡선을 보이며 우수한 성능을 기록하였다.
 2. **Few-shot Regression**:
    - 출력 차원 $d_y$가 5에서 20으로 증가하는 환경에서, HML은 MAML 및 Fine-tuning보다 더 빠른 적응 속도와 낮은 에러 감소율(Error Reduction Rate)을 보였다.
-3. **정성적 분석**: 
+3. **정성적 분석**:
    - t-SNE 시각화 결과, HML로 학습된 모델의 데이터 표현(Representation)이 MAML보다 클래스 내 응집도(Intra-class compactness)가 높고 클래스 간 분리도(Inter-class separability)가 뛰어남이 확인되었다.
 
 ## 🧠 Insights & Discussion
 
-본 논문은 메타 학습에서 'Task 구조의 동일성'이라는 암묵적인 가정을 깨고, 이질적인 Task 간의 전이를 가능하게 했다는 점에서 학술적 가치가 크다. 
+본 논문은 메타 학습에서 'Task 구조의 동일성'이라는 암묵적인 가정을 깨고, 이질적인 Task 간의 전이를 가능하게 했다는 점에서 학술적 가치가 크다.
 
 특히 t-SNE 결과에서 나타나듯, HML은 단순히 파라미터를 잘 초기화하는 것을 넘어, 다양한 구조의 Task에 범용적으로 적용될 수 있는 '강건한 특징 표현(Robust Representation)'을 학습하도록 유도한다. 이는 계층적으로 구성된 Task 분포를 통해 모델이 점진적으로 복잡한 구조에 노출되면서 일반화 규칙을 습득했기 때문으로 해석된다.
 

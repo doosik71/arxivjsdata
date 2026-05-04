@@ -16,30 +16,35 @@ S. Maryam Hosseini, Milad Sikaroudi, Morteza Babaei, and H.R. Tizhoosh (2022)
 
 논문에서는 프라이버시 보존형 FL을 위한 세 가지 주요 전략을 소개하고 각각의 한계를 설명한다.
 
-1.  **Differential Privacy (DP)**: 학습 결과에 노이즈를 추가하여 프라이버시를 보호하지만, 노이즈로 인해 모델의 정확도가 저하되는 Trade-off가 발생한다.
-2.  **Secure Multi-Party Computation (SMC)**: 실제 가중치 값을 드러내지 않고 함수를 공동으로 계산한다. 정확도 손실은 없으나 참여자 간의 통신 오버헤드가 크다는 단점이 있다. 특히 기존의 Chained SMC 방식은 모든 참여자가 순차적으로 통신해야 하므로 지연 시간이 매우 길고 확장성이 낮다.
-3.  **Homomorphic Encryption (HE)**: 암호화된 상태에서 연산을 수행한다. 통신 비용은 효율적일 수 있으나 연산 비용(computational expense)이 매우 높다.
+1. **Differential Privacy (DP)**: 학습 결과에 노이즈를 추가하여 프라이버시를 보호하지만, 노이즈로 인해 모델의 정확도가 저하되는 Trade-off가 발생한다.
+2. **Secure Multi-Party Computation (SMC)**: 실제 가중치 값을 드러내지 않고 함수를 공동으로 계산한다. 정확도 손실은 없으나 참여자 간의 통신 오버헤드가 크다는 단점이 있다. 특히 기존의 Chained SMC 방식은 모든 참여자가 순차적으로 통신해야 하므로 지연 시간이 매우 길고 확장성이 낮다.
+3. **Homomorphic Encryption (HE)**: 암호화된 상태에서 연산을 수행한다. 통신 비용은 효율적일 수 있으나 연산 비용(computational expense)이 매우 높다.
 
 본 연구는 이러한 기존 방식들과 달리, 클러스터링을 통해 SMC의 통신 지연 문제를 완화하고, DP와 달리 노이즈를 추가하지 않으므로 모델 정확도를 유지한다는 점에서 차별점을 가진다.
 
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 본 시스템은 $K$개의 병원을 $M$개의 클러스터로 나누며, 각 클러스터의 크기는 $N = K/M$이다. 전체 학습 과정은 크게 세 단계로 구성된다.
 
 ### 1. Local Training (로컬 학습)
+
 각 병원 $k$는 자신의 로컬 데이터셋을 사용하여 모델을 학습시키고 가중치 $w_k$를 업데이트한다. 이때 학습은 다음과 같은 표준적인 경사 하강법(Gradient Descent) 절차를 따른다.
 $$\text{update: } w \leftarrow w_t - \eta \nabla F_k(w_t; b)$$
 여기서 $\eta$는 학습률, $F_k$는 로컬 손실 함수, $b$는 데이터 배치이다.
 
 ### 2. Secure Multi-Party Computation (SMC)
+
 이 단계에서는 클러스터 내의 병원들이 서로의 가중치를 직접 알 수 없도록 가중치를 분할하여 교환한다.
+
 - 각 병원 $H_k^c$는 합이 1이 되는 $N$개의 무작위 수 $\{\beta_{k,j}^c \mid 0 < \beta_{k,j}^c < 1, j \in n_c\}$를 생성한다. 즉, $\sum_{j \in n_c} \beta_{k,j}^c = 1$을 만족한다.
 - 병원 $k$는 자신의 로컬 가중치 $w_k$에 이 무작위 수를 곱한 분할 값 $\beta_{k,j}^c w_k$를 클러스터 내의 다른 병원 $j$에게 전송한다.
 - 결과적으로 각 병원 $k$는 자신의 분할 값과 이웃들로부터 받은 분할 값들의 합인 $R_k^c$를 계산하게 된다.
 $$R_k^c = \sum_{i \in n_c} \beta_{i,k}^c w_i$$
 
 ### 3. Aggregation (집계)
+
 모든 병원이 계산한 $R_k^c$ 값을 중앙 서버로 전송하면, 서버는 모든 클러스터와 모든 병원의 $R_k^c$ 값을 평균 낸다.
 $$w = \frac{1}{K} \sum_{c=1}^M \sum_{k \in n_c} R_k^c = \frac{1}{K} \sum_{c=1}^M \sum_{k \in n_c} \sum_{i \in n_c} \beta_{i,k}^c w_i$$
 위 식에서 시그마의 순서를 바꾸면 $\sum_{k \in n_c} \beta_{i,k}^c = 1$이 되므로, 최종 결과는 다음과 같이 단순 평균과 동일해진다.
@@ -49,14 +54,16 @@ $$w = \frac{1}{K} \sum_{c=1}^M \sum_{i \in n_c} w_i = \frac{1}{K} \sum_{i=1}^K w
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: The Cancer Genome Atlas (TCGA)의 비소세포폐암(NSCLC) 데이터셋을 사용하였다. 하위 유형인 LUAD(선암)와 LUSC(편평세포암)를 분류하는 태스크를 수행하였다. 총 6개의 병원 데이터가 사용되었으며, 이를 2개의 클러스터(각 크기 3)로 나누었다.
-- **모델 아키텍처**: 
+- **모델 아키텍처**:
     1. Pretrained DenseNet121를 사용하여 각 패치(patch)에서 1024 차원의 특징을 추출한다.
     2. Attention-gated Multiple Instance Learning (MIL)을 적용하여 WSI(Whole Slide Image) 수준의 레이블을 예측한다. MIL은 WSI 내의 수많은 패치 중 중요한 패치에 높은 가중치를 부여하여 최종 분류를 수행한다.
 - **비교 대상**: 프라이버시 보호 장치가 없는 $\text{FedAvg}$와 가우시안 노이즈를 추가한 $\text{Differential Privacy (DP)}$ 방식을 기준선으로 설정하였다.
 - **평가 지표**: Accuracy 및 F1-Score를 사용하였다.
 
 ### 실험 결과
+
 - **정량적 결과**: 제안 방법은 모든 병원에서 FedAvg와 매우 유사한 성능을 보였으며, DP 방식보다 월등히 높은 정확도와 F1-Score를 기록하였다. 평균 성능의 경우, 제안 방법의 Accuracy는 $76.16\%$, F1-Score는 $79.84\%$로, DP($\text{Acc: } 70.33\%, \text{F1: } 71.16\%$)보다 높고 FedAvg($\text{Acc: } 76.65\%, \text{F1: } 80.48\%$)에 근접하였다.
 - **학습 곡선**: 300 라운드 동안의 테스트 정확도와 학습 손실(loss) 분석 결과, 제안 방법은 FedAvg의 추세를 거의 그대로 따라가며 DP의 성능 저하 문제를 완전히 해결했음을 보여주었다.
 

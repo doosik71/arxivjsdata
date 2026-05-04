@@ -25,6 +25,7 @@ Cross-Modal Knowledge Distillation (CMKD) 분야에서는 최근 Contrastive Lea
 MST-Distill 프레임워크는 크게 세 가지 단계인 **Collaborative Initialization (S1)**, **Specialized Teacher Adaptation (S2)**, 그리고 **Dynamic Knowledge Distillation (S3)** 순으로 진행된다.
 
 ### 1. Collaborative Initialization (S1)
+
 먼저 타겟 학생 모달리티를 미리 정하지 않고, 모든 모달리티별 모델($f_{m_i}$)들을 동등한 구성원으로 취급하여 공동 학습시킨다. 학습 목표는 정답 라벨을 이용한 태스크 손실 $\ell_{task}$와 모든 모달리티 쌍 간의 예측 일관성을 유지하기 위한 정렬 손실 $\ell_{align}$의 합으로 정의된다.
 
 $$ \ell_{task} = \sum_{i=0}^{M} CE(f_{m_i}(x_i; \theta_{m_i}), y) $$
@@ -33,6 +34,7 @@ $$ \ell_{align} = \sum_{0 \le i < j \le M} [KL(P_{m_i} \| P_{m_j}) + KL(P_{m_j} 
 여기서 $P_{m_i}$는 온도 $\tau$가 적용된 소프트맥스 출력 분포이다. 특이한 점은 교사 모델의 출력에 Gradient Detachment를 적용하지 않아 모든 멤버 간에 상호 그래디언트 전파가 가능하게 하여 초기 정렬을 강화한다는 것이다.
 
 ### 2. MaskNet-Driven Specialized Teacher Adaptation (S2)
+
 Knowledge Drift를 해결하기 위해, 교사 모델의 중간 레이어에 학습 가능한 **MaskNet** 모듈을 삽입한다. MaskNet은 다음과 같은 과정을 통해 소프트 마스크를 생성하고 특징 맵을 재구성한다.
 
 1. **Projector**: 중간 특징 $z_l$을 잠재 공간으로 투영한다.
@@ -45,6 +47,7 @@ $$ z^*_l = \text{MaskNet}(z_l; \theta_{MN}) = \sigma(\text{Linear}(\text{MHSA}(\
 이 단계에서는 교사 모델의 기본 파라미터는 동결시키고 MaskNet의 파라미터만 학습시킨다. 학습 목표는 특성화된 교사의 출력 분포와 타겟 학생 모델의 출력 분포 사이의 KL 발산(KL Divergence)을 최소화하여 두 모델의 행동을 정렬하는 것이다.
 
 ### 3. Dynamic Knowledge Distillation (S3)
+
 마지막으로, 인스턴스별로 최적의 교사를 선택하여 지식을 전수한다. 학생 모델의 로짓($z_{out}$)을 입력으로 받는 **GateNet**(MLP 구조)이 각 특성화된 교사들에 대한 신뢰도 점수 $C$를 생성한다.
 
 $$ C = \text{softmax}(\text{GateNet}(z_{out}; \theta_{GN})) $$
@@ -56,11 +59,13 @@ $$ L_{S3} = \frac{1}{B} \sum_{b=1}^{B} (\ell_{ce}^{(b)} + \mu_1 \cdot \ell_{dist
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: AV-MNIST(숫자 인식), RAVDESS(감정 인식), VGGSound-50k(장면 분류), CrisisMMD-V2(재난 분류)의 분류 작업과 NYU-Depth-V2의 시맨틱 세그멘테이션 작업을 수행하였다.
 - **비교 대상**: response-based KD, MLLD, FitNets, OFA, RKD, CRD, DML, 그리고 최신 CMKD 방법론인 MGDFR, $C^2KD$와 비교하였다.
 - **평가 지표**: 분류 작업에서는 Accuracy를, 세그멘테이션 작업에서는 OA, AA, mIoU를 사용하였다.
 
 ### 주요 결과
+
 1. **분류 성능**: Table 1에 따르면, MST-Distill은 모든 데이터셋에서 최상위 또는 차상위 성능을 기록하였다. 특히 모달리티 불균형이 심한 AV-MNIST와 VGGSound-50k에서 기존 방법론 대비 뚜렷한 성능 향상을 보였다.
 2. **세그멘테이션 성능**: NYU-Depth-V2 데이터셋에서 RGB와 Depth 모달리티 모두에 대해 대부분의 지표에서 1위를 차지하였으며, 특히 mIoU에서 가장 높은 성능을 보여 정밀한 구조적 지식 전수 능력을 입증하였다.
 3. **Ablation Study**: S1(초기화), S2(특성화), S3(동적 증류) 세 단계가 모두 포함되었을 때 최적의 성능이 나타났으며, 특히 Multimodal 교사와 Cross-modal 교사를 함께 사용할 때(CM+MM) 가장 안정적이고 높은 성능 향상이 관찰되었다.

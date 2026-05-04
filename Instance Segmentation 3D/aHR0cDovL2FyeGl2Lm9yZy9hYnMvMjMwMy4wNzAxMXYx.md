@@ -22,21 +22,27 @@ Chuan Tang, Xi Yang (2023)
 ## 📎 Related Works
 
 ### 3D Instance Segmentation
+
 기존 연구는 크게 Proposal-based와 Cluster-based로 나뉜다. PointGroup, SoftGroup, HAIS 등은 클러스터링 전략을 통해 성능을 높였으나, 하이퍼파라미터 의존성과 느린 추론 속도가 한계로 지적되었다. 특히 OccuSeg나 SSTNet은 Super-voxel 전처리를 사용하지만, 이 과정 자체가 매우 많은 시간을 소모한다.
 
 ### Dynamic Convolution
+
 SOLO v2, CondInst 등의 2D 인스턴스 분할 모델들은 마스크 예측을 동적 커널과 컨볼루션 특징으로 분리하여 빠르게 처리했다. 3D 분야에서는 DyCo3D가 동적 컨볼루션을 처음 도입했으나, 여전히 클러스터링 과정에 의존하여 완전한 One-stage 추론을 달성하지 못했다.
 
 ### Bipartite Matching
+
 객체 검출 및 분할 모델에서 예측값과 GT를 매칭하기 위해 Hungarian 알고리즘과 같은 이분 매칭(Bipartite Matching)을 사용하는 추세이다. 이는 추론 시 중복 예측을 줄이는 효과가 있으며, 본 논문은 이를 3D 인스턴스 분할 학습에 적용하여 NMS 의존성을 제거했다.
 
 ## 🛠️ Methodology
 
 ### 전체 파이프라인
+
 OSIS는 크게 **Point-wise Feature Extraction** 모듈과 **Instance Decoder** 모듈로 구성된다.
 
 ### 1. Point-wise Feature Extraction
+
 입력 포인트 클라우드를 Voxel 형태로 변환한 뒤, Sparse Convolution 기반의 U-Net 백본을 통해 특징을 추출한다. 이후 다음의 네 가지 병렬 브랜치로 출력된다:
+
 - **Offset branch**: 각 포인트에서 해당 인스턴스 중심점까지의 상대적 거리 $o_i$를 회귀한다.
 - **Feature branch**: 포인트별 특징 $f_i^{origin}$을 생성한다.
 - **Mask branch**: $k$개의 초기 인스턴스 마스크 $m_j^{origin}$을 생성한다.
@@ -46,6 +52,7 @@ OSIS는 크게 **Point-wise Feature Extraction** 모듈과 **Instance Decoder** 
 $$f_i = f_i^{origin} + PE(p_i + o_i)$$
 
 ### 2. Instance Decoder
+
 인스턴스 디코더는 **Mask-to-Feature**와 **Feature-to-Instance** 단계로 이루어진다.
 
 - **Mask-to-Feature**: 초기 마스크 $m_j^{origin}$에 Sigmoid 활성화 함수와 임계값 $\tau$를 적용하여 $\hat{m}_j$를 얻고, 이를 가중치로 사용하여 포인트별 특징 $f_i$로부터 인스턴스 특징 $f_j^{ins}$를 추출한다.
@@ -54,6 +61,7 @@ $$f_j^{ins} = \frac{\sum_{i=1}^{N} \hat{m}_j^T \cdot f_i}{N}$$
 - **Feature-to-Instance**: 추출된 $f_j^{ins}$를 $1 \times 1$ Dynamic Convolution의 커널 파라미터로 사용하여 최종 인스턴스 마스크 $m_j$를 생성한다. 또한, Max pooling을 통한 전역 특징 융합 후 선형 레이어를 통해 인스턴스의 시맨틱 카테고리를 예측한다.
 
 ### 3. Bipartite Matching 및 학습
+
 학습 시 예측된 후보 인스턴스와 GT 인스턴스 간의 유사도 $Q(i, j)$를 계산하여 Hungarian 알고리즘으로 일대일 매칭을 수행한다.
 $$Q(i, j) = \hat{s}_{i,j} + \alpha \text{Dice}(m_i, m_{j}^{gt})$$
 여기서 $\text{Dice}$ 계수는 다음과 같이 정의된다:
@@ -63,20 +71,24 @@ $$\text{Dice}(m_i, m_j^{gt}) = \frac{2m_i^T \cdot m_j^{gt}}{m_i^T \cdot m_i + m_
 $$L = L_{mask} + L_{cls} + L_{point}$$
 
 ### 추론 절차
+
 Voxel화된 데이터를 네트워크에 입력하여 후보 인스턴스들을 얻는다. 배경 클래스와 낮은 신뢰도의 인스턴스를 제거하는 것만으로 최종 결과를 도출하며, NMS나 클러스터링 같은 복잡한 후처리를 완전히 생략한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: ScanNet v2 (실내 장면 데이터셋)
 - **지표**: Average Precision (AP), $AP_{50}$
 - **구현**: PyTorch, spconv 라이브러리 사용, Adam 옵티마이저 적용
 
 ### 정량적 결과
+
 - **추론 속도**: OSIS의 평균 추론 속도는 장면당 **138ms**로, 기존 SOTA 모델인 SoftGroup 대비 약 150% 이상의 속도 향상을 보였다. (Table I 참조)
 - **분할 정확도**: ScanNet v2 테스트 셋에서 3D-MPA 대비 AP가 각각 검증셋과 테스트셋에서 4.5, 3.7 증가하였다. 특히 대부분의 카테고리에서 경쟁력 있는 성능을 보여주었다. (Table II, III 참조)
 
 ### 정성적 결과 및 분석
+
 - **과분할 및 과소분할 해결**: SoftGroup과 같은 클러스터링 기반 방식은 커튼이나 긴 책상처럼 연결되지 않은 부분들로 구성된 객체를 여러 개로 쪼개어 예측(과분할)하는 경향이 있다. 반면, OSIS는 이를 하나의 인스턴스로 정확하게 묶어내는 능력이 뛰어남을 확인하였다. (Fig 3 참조)
 - **NMS 영향도**: Ablation Study 결과, NMS를 적용했을 때와 적용하지 않았을 때의 성능 차이가 거의 없음을 확인하여, Bipartite Matching을 통한 학습이 중복 예측 제거에 효과적임을 입증하였다.
 

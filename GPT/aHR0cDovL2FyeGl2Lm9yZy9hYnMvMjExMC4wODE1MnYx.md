@@ -10,9 +10,10 @@ Ali Edalati, Marzieh Tahaei, Ahmad Rashid, Vahid Partovi Nia, James J. Clark, Me
 
 ## ✨ Key Contributions
 
-본 논문의 핵심 아이디어는 거대한 가중치 행렬을 두 개의 훨씬 작은 행렬의 Kronecker Product로 분해하여 표현함으로써 파라미터 수와 계산 복잡도를 획기적으로 줄이는 것이다. 
+본 논문의 핵심 아이디어는 거대한 가중치 행렬을 두 개의 훨씬 작은 행렬의 Kronecker Product로 분해하여 표현함으로써 파라미터 수와 계산 복잡도를 획기적으로 줄이는 것이다.
 
 주요 기여 사항은 다음과 같다:
+
 1. **GPT 모델 압축에 Kronecker Decomposition 최초 적용**: 기존에 BERT 압축 등에 사용되었던 기법을 GPT-2 모델의 Embedding 레이어와 Transformer 레이어(MHA, FFN)에 적용하여 모델 크기를 줄였다.
 2. **학습 효율성 증대**: DistilGPT2와 같은 기존 모델이 방대한 데이터로 여러 에포크를 학습해야 했던 것과 달리, 본 연구에서는 분해 후 손실된 정보를 복구하기 위해 전체 데이터의 10%만을 사용하여 단 1 에포크의 가벼운 사전 학습(Light Pre-training)을 수행한다.
 3. **Intermediate Layer Knowledge Distillation (ILKD) 도입**: 단순한 출력값의 모방이 아니라 Embedding, Attention distribution, Hidden state 등 중간 레이어의 지식을 전수함으로써 압축으로 인한 성능 저하를 최소화하였다.
@@ -21,19 +22,21 @@ Ali Edalati, Marzieh Tahaei, Ahmad Rashid, Vahid Partovi Nia, James J. Clark, Me
 
 논문에서는 모델 압축을 위한 기존의 네 가지 주요 방향성인 저비트 양자화(Low-bit Quantization), 가지치기(Pruning), 지식 증류(Knowledge Distillation), 행렬 분해(Matrix Decomposition)를 언급한다.
 
-Kronecker Decomposition과 관련하여, 과거에는 주로 Fully-connected network나 소규모 CNN, IoT용 언어 모델 등에 적용되었으며, 최근에는 BERT 모델을 압축한 KroneckerBERT 연구가 수행되었다. 하지만 GPT-2와 같은 대규모 Auto-regressive 모델에 이를 적용한 사례는 본 연구가 처음임을 명시하고 있다. 
+Kronecker Decomposition과 관련하여, 과거에는 주로 Fully-connected network나 소규모 CNN, IoT용 언어 모델 등에 적용되었으며, 최근에는 BERT 모델을 압축한 KroneckerBERT 연구가 수행되었다. 하지만 GPT-2와 같은 대규모 Auto-regressive 모델에 이를 적용한 사례는 본 연구가 처음임을 명시하고 있다.
 
 비교 대상으로 설정된 DistilGPT2는 Knowledge Distillation을 통해 GPT-2 Small(124M)을 82M 파라미터 규모로 줄인 모델이다. 그러나 DistilGPT2는 학습에 소요되는 시간과 데이터 양이 매우 많다는 한계가 있다.
 
 ## 🛠️ Methodology
 
 ### 1. Kronecker Product 및 분해 원리
+
 Kronecker Product($\otimes$)는 두 행렬 $A \in \mathbb{R}^{m_1 \times n_1}$와 $B \in \mathbb{R}^{m_2 \times n_2}$를 입력받아 $m=m_1m_2, n=n_1n_2$ 크기의 블록 행렬을 생성하는 연산이다.
 $$A \otimes B = \begin{bmatrix} a_{11}B & \cdots & a_{1n_1}B \\ \vdots & \ddots & \vdots \\ a_{m_11}B & \cdots & a_{m_1n_1}B \end{bmatrix}$$
 
 이를 통해 가중치 행렬 $W \in \mathbb{R}^{m \times n}$를 $W \approx A \otimes B$로 근사하면, 저장해야 할 파라미터 수가 $mn$개에서 $m_1n_1 + m_2n_2$개로 크게 감소한다.
 
 ### 2. GPT-2 모델의 압축 적용
+
 본 논문은 GPT-2의 주요 선형 매핑 레이어들에 Kronecker 분해를 적용한다.
 
 - **Embedding Layer**: $W^E \in \mathbb{R}^{v \times d}$ (여기서 $v$는 vocabulary size, $d$는 embedding dimension)를 $A^E \in \mathbb{R}^{v \times d/f}$와 $B^E \in \mathbb{R}^{1 \times f}$로 분해한다. 이를 통해 각 단어 임베딩 $E_i$는 $A^E_i \otimes B$로 계산되며 계산 복잡도는 $O(d)$로 유지된다.
@@ -44,6 +47,7 @@ $$(\hat{A}, \hat{B}) = \text{argmin}_{(A,B)} \|W - A \otimes B\|_F^2$$
 이 문제는 $W$를 적절히 reshape한 후 Rank-1 SVD(Singular Value Decomposition) 근사를 통해 해결한다.
 
 ### 3. Intermediate Layer Knowledge Distillation (ILKD)
+
 분해 직후의 모델은 성능이 크게 저하되므로, Teacher 모델(GPT-2)의 지식을 Student 모델(KnGPT2)에 전달하는 ILKD를 수행한다.
 
 - **Embedding Loss**: Teacher와 Student 임베딩 간의 MSE를 사용한다.
@@ -59,19 +63,22 @@ $$\text{Loss}(x, y) = \alpha_1 L_{\text{Embedding}}(x) + \alpha_2 L_{\text{Atten
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **대상 모델**: GPT-2 Small (124M parameters)
 - **비교 모델**: DistilGPT2 (82M parameters)
 - **압축 설정**: KnGPT2의 파라미터 수를 약 83M으로 맞추기 위해 Embedding 레이어와 Transformer 레이어 중 홀수 번째 레이어들을 factor 2로 압축하였다.
 - **평가 지표**: WikiText-103 (Perplexity), GLUE benchmark (Average Score)
 
 ### 2. 주요 결과
+
 - **Language Modeling (LM)**: WikiText-103 데이터셋에서 KnGPT2는 Perplexity $20.5$를 기록하여, 더 많은 데이터로 더 오래 학습된 DistilGPT2($23.7$)보다 우수한 성능을 보였다.
 - **GLUE Benchmark**:
-    - **Dev Set**: KnGPT2 + ILKD는 평균 $79.25$를 기록하여 DistilGPT2($76.8$) 및 DistilGPT2 + KD($76.73$)보다 월등히 높았으며, 원본 GPT-2 Small($79.81$)에 근접하였다.
-    - **Test Set**: KnGPT2 + ILKD는 평균 $77.42$를 기록하여 DistilGPT2($74.52$) 대비 성능 향상이 뚜렷했으며, 원본 GPT-2 Small($77.56$)과 거의 동일한 수준의 성능을 달성하였다.
+  - **Dev Set**: KnGPT2 + ILKD는 평균 $79.25$를 기록하여 DistilGPT2($76.8$) 및 DistilGPT2 + KD($76.73$)보다 월등히 높았으며, 원본 GPT-2 Small($79.81$)에 근접하였다.
+  - **Test Set**: KnGPT2 + ILKD는 평균 $77.42$를 기록하여 DistilGPT2($74.52$) 대비 성능 향상이 뚜렷했으며, 원본 GPT-2 Small($77.56$)과 거의 동일한 수준의 성능을 달성하였다.
 - **학습 효율성**: KnGPT2는 DistilGPT2가 사용한 데이터의 $1/10$만 사용하여 단 1 에포크만 학습하였으며, 학습 시간 또한 $6.5$시간으로 매우 짧았다 (DistilGPT2는 $\sim 90$시간 이상 소요).
 
 ### 3. Ablation Study
+
 사전 학습의 효과를 분석한 결과, 단순 LM 사전 학습보다 KD를 결합한 사전 학습이 downstream task(MNLI 등)에서 더 좋은 성능을 보였다. 다만, LM에서의 Perplexity 감소가 항상 downstream task의 성능 향상으로 직접 연결되지는 않는다는 점이 관찰되었다.
 
 ## 🧠 Insights & Discussion

@@ -31,6 +31,7 @@ Janghoon Choi, Junseok Kwon, and Kyoung Mu Lee (2020)
 TACT 프레임워크는 크게 **Region Proposal Stage**와 **Classification Stage**의 두 단계로 구성된다.
 
 ### 1. Region Proposal with Scale Adaptive TridentAlign
+
 이 단계에서는 TridentAlign 모듈을 통해 타겟의 크기 변화에 강인한 후보 영역(RoI)을 생성한다.
 
 - **특징 피라미드 생성**: 쿼리 이미지의 특징 맵 $z$에 대해 서로 다른 공간 차원 $s_i \in \{3, 5, 9\}$로 ROIAlign을 수행하여 특징 피라미드 $Z = \{z_1, z_2, \dots, z_K\}$를 생성한다.
@@ -42,36 +43,39 @@ TACT 프레임워크는 크게 **Region Proposal Stage**와 **Classification Sta
   여기서 $L_{cls}$는 Focal Loss를, $L_{reg}$는 Linear IoU Loss를 사용한다.
 
 ### 2. Classification with Context-Embedded Features
+
 RPN에서 제안된 후보 RoI들을 전역 문맥 정보를 활용하여 최종적으로 분류하고 정제한다.
 
 - **전역 문맥 생성**: 후보 특징 집합 $X = \{x_1, x_2, \dots, x_N\}$에 대해 요소별 최대값(Max-pooling)과 평균값(Average-pooling)을 계산하여 결합한 $x_{cxt} \in \mathbb{R}^{s \times s \times 2c}$를 생성한다.
-- **문맥 임베딩 과정**: 
+- **문맥 임베딩 과정**:
     1. **Context Generator $g_1(\cdot)$**: $x_{cxt}$로부터 전역 문맥 정보를 생성한다.
     2. **Context Embedder $g_2(\cdot)$**: 후보 특징 $x_i$와 생성된 문맥 정보를 결합하여 문맥 임베딩 특징 $\tilde{x}_i$를 생성한다.
-    - 본 논문에서는 여러 변형(Simple concat, Simple add, CBAM, FILM)을 실험했으며, **FILM(Feature-wise Linear Modulation)** 방식이 가장 우수함을 확인하였다. FILM은 다음과 같은 아핀 변환(Affine Transformation)을 통해 특징을 변조한다.
+  - 본 논문에서는 여러 변형(Simple concat, Simple add, CBAM, FILM)을 실험했으며, **FILM(Feature-wise Linear Modulation)** 방식이 가장 우수함을 확인하였다. FILM은 다음과 같은 아핀 변환(Affine Transformation)을 통해 특징을 변조한다.
       $$\text{Output} = \gamma \otimes x_i + \beta$$
 - **최종 분류**: 문맥 임베딩된 후보 특징 $\tilde{x}_i$와 타겟 특징 $\tilde{z}_0$를 요소별 곱셈($\tilde{x}_i \otimes \tilde{z}_0$)하여 비교한 후, 이진 분류와 박스 정제를 수행한다. 손실 함수 $L_{det}$는 $L_{rpn}$과 동일한 구조의 분류 및 회귀 손실을 사용한다.
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: LaSOT, OxUvA (장기 트래킹), TrackingNet, GOT-10k (단기/대규모 트래킹)
 - **백본 네트워크**: ResNet-18, ResNet-50
 - **지표**: AUC, Precision, MaxGM (OxUvA), Success Rate (SR), Average Overlap (AO)
 
 ### 주요 결과
+
 - **정량적 성능**: LaSOT 데이터셋에서 TACT-50은 AUC 0.575를 기록하며 GlobalTrack, ATOM, SiamRPN++ 등의 최신 트래커보다 우수한 성능을 보였다. 특히 OxUvA의 MaxGM 및 TPR 지표에서 다른 장기 트래커들을 큰 차이로 앞질렀다.
 - **실시간 속도**: ResNet-18 백본 사용 시 57 fps, ResNet-50 사용 시 42 fps로 동작하며, 배치 사이즈를 늘릴 경우 최대 101 fps까지 가속 가능하다. 이는 GlobalTrack 대비 약 9배 빠른 속도이다.
 - **속성별 분석**: LaSOT의 챌린지 속성 분석 결과, TridentAlign 덕분에 **크기 변화(Scale Variation)**와 **변형(Deformation)**에 매우 강인한 모습을 보였으며, Context Embedding 덕분에 **배경 혼잡(Background Clutter)** 상황에서도 높은 성능을 유지하였다.
-- **절제 실험(Ablation Study)**: 
-    - TridentAlign과 Context Embedding을 각각 추가할 때마다 성능이 지속적으로 향상됨을 확인하였다.
-    - 문맥 임베딩 방식 중에서는 FILM 기반 모듈이 가장 높은 성능 이득을 주었으며, 이는 원본 특징 공간의 변별력을 해치지 않으면서 적절한 조건 정보를 제공하기 때문으로 분석된다.
+- **절제 실험(Ablation Study)**:
+  - TridentAlign과 Context Embedding을 각각 추가할 때마다 성능이 지속적으로 향상됨을 확인하였다.
+  - 문맥 임베딩 방식 중에서는 FILM 기반 모듈이 가장 높은 성능 이득을 주었으며, 이는 원본 특징 공간의 변별력을 해치지 않으면서 적절한 조건 정보를 제공하기 때문으로 분석된다.
 
 ## 🧠 Insights & Discussion
 
-본 논문은 Siamese 네트워크의 고질적인 문제인 '스케일 적응력'과 '방해 객체 식별력'을 각각 TridentAlign과 Context Embedding이라는 효율적인 모듈로 해결하였다. 
+본 논문은 Siamese 네트워크의 고질적인 문제인 '스케일 적응력'과 '방해 객체 식별력'을 각각 TridentAlign과 Context Embedding이라는 효율적인 모듈로 해결하였다.
 
-특히 주목할 점은 **전체 프레임 탐색(Full-frame Search)**을 수행함에도 불구하고 실시간 속도를 달성했다는 점이다. 이는 무거운 백본 네트워크에 의존하기보다, 특징 피라미드와 전역 문맥 임베딩이라는 구조적 개선을 통해 효율성을 확보했기에 가능했다. 
+특히 주목할 점은 **전체 프레임 탐색(Full-frame Search)**을 수행함에도 불구하고 실시간 속도를 달성했다는 점이다. 이는 무거운 백본 네트워크에 의존하기보다, 특징 피라미드와 전역 문맥 임베딩이라는 구조적 개선을 통해 효율성을 확보했기에 가능했다.
 
 비판적 관점에서 보면, 본 연구는 전역 문맥을 위해 후보 RoI들의 Max/Avg 풀링 값을 사용하는데, 이는 후보 RoI의 개수($N=64$)나 품질에 따라 전역 문맥의 대표성이 결정될 수 있다는 가정을 내포하고 있다. 하지만 실험 결과는 이러한 단순한 접근 방식이 실제 성능 향상에 충분히 기여함을 입증하고 있다.
 

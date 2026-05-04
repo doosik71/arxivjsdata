@@ -32,6 +32,7 @@ Xiaolong Liu, Zhidong Deng, Yuhan Yang (2018)
 본 논문은 리뷰 논문으로서 특정 알고리즘을 제안하기보다, 기존의 핵심 방법론들을 기술적으로 설명한다.
 
 ### 1. 성능 평가 지표 (Evaluation Metrics)
+
 세그멘테이션 성능을 측정하기 위해 다음과 같은 네 가지 지표를 정의한다. 여기서 $n_{ij}$는 클래스 $i$의 픽셀을 클래스 $j$로 잘못 예측한 수, $t_i$는 클래스 $i$의 실제 픽셀 수, $n_{cl}$은 전체 클래스 수를 의미한다.
 
 - **Pixel Accuracy ($P_{acc}$)**: 전체 픽셀 중 정확히 예측된 픽셀의 비율이다.
@@ -52,6 +53,7 @@ $$FW_{IU} = \frac{1}{\sum_{k} t_k} \sum_{i} \frac{t_i n_{ii}}{t_i + \sum_{j} n_{
 FCN의 핵심 아이디어는 기존 CNN의 Fully Connected(FC) 레이어를 Convolution 레이어로 대체하는 것이다. 이를 통해 임의의 크기의 입력 이미지를 처리할 수 있으며, Interpolation 레이어를 통해 출력 크기를 입력 크기와 동일하게 복원하여 픽셀 단위의 예측을 수행한다.
 
 **Up-sampling 방식**
+
 - **Bilinear Interpolation**: 계산 효율성이 높으며 원래 이미지의 크기를 복구하는 데 널리 사용된다.
 - **Deconvolution**: Convolution의 역연산으로, 학습 가능한 파라미터를 통해 특징 맵의 크기를 복구한다.
 
@@ -59,6 +61,7 @@ FCN의 핵심 아이디어는 기존 CNN의 Fully Connected(FC) 레이어를 Con
 필터 요소 사이에 간격을 두어 수용 영역(Receptive Field)을 확장하는 기법이다. 이는 풀링(Pooling) 연산으로 인해 발생하는 해상도 저하 없이도 넓은 문맥(Context) 정보를 수집할 수 있게 한다.
 
 **Pyramid 방법론**
+
 - **Image Pyramid**: 입력 이미지를 다양한 크기로 리사이징하여 입력하는 방식이다.
 - **ASPP (Atrous Spatial Pyramid Pooling)**: 서로 다른 샘플링 비율을 가진 Dilated Convolution 필터들을 병렬로 배치하여 다중 스케일의 특징을 동시에 캡처한다.
 - **PSPNet (Pyramid Scene Parsing Network)**: 다양한 크기의 Pooling 영역을 통해 전역 문맥 정보를 집계하여 정밀도를 높인다.
@@ -71,20 +74,20 @@ FCN의 핵심 아이디어는 기존 CNN의 Fully Connected(FC) 레이어를 Con
 본 논문은 개별 실험 결과보다는 주요 벤치마크 데이터셋과 기존 모델들의 성과를 정리하여 제시한다.
 
 - **사용된 데이터셋**:
-    - **PASCAL VOC**: 20개 클래스를 포함하는 가장 일반적인 벤치마크이다.
-    - **MS COCO**: 91개 객체 타입을 포함하며 대규모 라벨링 데이터를 제공한다.
-    - **ADE20K**: 150개의 객체 및 배경 클래스를 포함하며, 부분(part) 세그멘테이션 마스크를 제공한다.
-    - **Cityscapes**: 자율주행을 위한 도시 거리 장면 데이터셋으로 30개 클래스를 포함한다.
-    - **KITTI**: 자율주행 관련 도로 검출 및 3D 객체 탐지 데이터셋이다.
+  - **PASCAL VOC**: 20개 클래스를 포함하는 가장 일반적인 벤치마크이다.
+  - **MS COCO**: 91개 객체 타입을 포함하며 대규모 라벨링 데이터를 제공한다.
+  - **ADE20K**: 150개의 객체 및 배경 클래스를 포함하며, 부분(part) 세그멘테이션 마스크를 제공한다.
+  - **Cityscapes**: 자율주행을 위한 도시 거리 장면 데이터셋으로 30개 클래스를 포함한다.
+  - **KITTI**: 자율주행 관련 도로 검출 및 3D 객체 탐지 데이터셋이다.
 
 - **주요 성과**:
-    - FCN은 PASCAL VOC 2012에서 기존 방식 대비 약 20%의 상대적 성능 향상을 보였다.
-    - PSPNet은 Pyramid Pooling Module을 통해 PASCAL VOC 2012에서 $mIoU$ 85.4%, Cityscapes에서 80.2%라는 기록적인 성과를 달성하였다.
-    - DeepLab 시리즈는 Dense CRF를 결합하여 PASCAL VOC-2012 테스트 세트에서 71.6%의 $IoU$ 정확도를 달성하였다.
+  - FCN은 PASCAL VOC 2012에서 기존 방식 대비 약 20%의 상대적 성능 향상을 보였다.
+  - PSPNet은 Pyramid Pooling Module을 통해 PASCAL VOC 2012에서 $mIoU$ 85.4%, Cityscapes에서 80.2%라는 기록적인 성과를 달성하였다.
+  - DeepLab 시리즈는 Dense CRF를 결합하여 PASCAL VOC-2012 테스트 세트에서 71.6%의 $IoU$ 정확도를 달성하였다.
 
 ## 🧠 Insights & Discussion
 
-본 논문을 통해 분석한 Semantic Image Segmentation의 핵심 통찰은 **'해상도 유지'와 '문맥 파악' 사이의 트레이드-오프(Trade-off) 해결**이다. 
+본 논문을 통해 분석한 Semantic Image Segmentation의 핵심 통찰은 **'해상도 유지'와 '문맥 파악' 사이의 트레이드-오프(Trade-off) 해결**이다.
 
 전통적인 CNN은 풀링 연산을 통해 수용 영역을 넓히지만, 이 과정에서 공간 해상도가 손실되어 경계선 예측이 부정확해지는 문제가 발생한다. 이를 해결하기 위해 FCN의 Skip connection, DeepLab의 Dilated Convolution, 그리고 PSPNet의 Pyramid Pooling과 같은 기법들이 등장하였다. 특히, 얕은 층의 정밀한 위치 정보(Localization)와 깊은 층의 풍부한 의미 정보(Semantics)를 어떻게 효과적으로 결합하느냐가 성능 향상의 핵심이다.
 

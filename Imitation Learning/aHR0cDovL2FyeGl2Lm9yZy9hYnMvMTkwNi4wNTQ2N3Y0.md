@@ -14,26 +14,28 @@ Shixiang Zhu, Shuang Li, Zhigang Peng, Yao Xie (2021)
 
 본 논문의 핵심 기여는 딥러닝의 유연성과 전통적인 포인트 프로세스의 해석력을 결합한 NEST 모델과 이를 안정적으로 학습시키기 위한 모방 학습(Imitation Learning) 프레임워크를 제안한 것이다.
 
-1.  **NEST 모델 설계**: 위치에 따라 형태가 변하는 '이질적 가우시안 확산 커널(Heterogeneous Gaussian diffusion kernels)'의 혼합 모델을 제안하였다. 각 커널의 파라미터(평균, 공분산 등)를 신경망(Neural Network)이 출력하도록 설계하여, 공간적 비등방성과 비균질성을 유연하게 학습하면서도 가우시안 파라미터 맵을 통해 결과를 해석할 수 있게 하였다.
-2.  **모방 학습(Imitation Learning) 기반 적합**: 최대 가능도 추정(Maximum Likelihood Estimation, MLE)의 취약점을 보완하기 위해, 학습 데이터와 모델 생성 데이터 간의 분포 차이를 직접 측정하는 MMD(Maximum Mean Discrepancy) 기반의 모방 학습 방식을 도입하여 모델의 강건성(Robustness)을 높였다.
-3.  **효율적인 샘플링 알고리즘**: 시공간 포인트 프로세스의 샘플링 효율을 높이기 위해, 이전 반복 단계의 강도 함수를 제안 분포로 사용하는 효율적인 Thinning 알고리즘을 제안하였다.
+1. **NEST 모델 설계**: 위치에 따라 형태가 변하는 '이질적 가우시안 확산 커널(Heterogeneous Gaussian diffusion kernels)'의 혼합 모델을 제안하였다. 각 커널의 파라미터(평균, 공분산 등)를 신경망(Neural Network)이 출력하도록 설계하여, 공간적 비등방성과 비균질성을 유연하게 학습하면서도 가우시안 파라미터 맵을 통해 결과를 해석할 수 있게 하였다.
+2. **모방 학습(Imitation Learning) 기반 적합**: 최대 가능도 추정(Maximum Likelihood Estimation, MLE)의 취약점을 보완하기 위해, 학습 데이터와 모델 생성 데이터 간의 분포 차이를 직접 측정하는 MMD(Maximum Mean Discrepancy) 기반의 모방 학습 방식을 도입하여 모델의 강건성(Robustness)을 높였다.
+3. **효율적인 샘플링 알고리즘**: 시공간 포인트 프로세스의 샘플링 효율을 높이기 위해, 이전 반복 단계의 강도 함수를 제안 분포로 사용하는 효율적인 Thinning 알고리즘을 제안하였다.
 
 ## 📎 Related Works
 
 논문에서 언급하는 관련 연구와 그 한계는 다음과 같다.
 
--   **전통적 STPP 모델 (ETAS 등)**: 지진 모델링에서 널리 쓰이며 지수적 감쇠 커널을 사용한다. 하지만 공간적 영향력이 모든 곳에서 동일하다고 가정하므로, 복잡한 지질 구조나 도시 구조와 같은 비등방성 패턴을 포착하지 못한다.
--   **딥러닝 기반 포인트 프로세스**: 최근 시간적 포인트 프로세스(Temporal Point Process) 모델링에서 큰 성과를 거두었으나, 이를 시공간 영역으로 확장하는 것은 훨씬 더 복잡한 의존성으로 인해 어려운 문제로 남아 있다. 또한, 전체를 신경망으로 구현할 경우 통계적 해석력이 떨어진다는 단점이 있다.
--   **이산화 접근법 (Discretized Spatial Structure)**: 공간을 격자로 나누어 다변량 포인트 프로세스로 처리하는 방식이 있으나, 이는 연속적인 공간의 특성을 완전히 반영하지 못한다.
+- **전통적 STPP 모델 (ETAS 등)**: 지진 모델링에서 널리 쓰이며 지수적 감쇠 커널을 사용한다. 하지만 공간적 영향력이 모든 곳에서 동일하다고 가정하므로, 복잡한 지질 구조나 도시 구조와 같은 비등방성 패턴을 포착하지 못한다.
+- **딥러닝 기반 포인트 프로세스**: 최근 시간적 포인트 프로세스(Temporal Point Process) 모델링에서 큰 성과를 거두었으나, 이를 시공간 영역으로 확장하는 것은 훨씬 더 복잡한 의존성으로 인해 어려운 문제로 남아 있다. 또한, 전체를 신경망으로 구현할 경우 통계적 해석력이 떨어진다는 단점이 있다.
+- **이산화 접근법 (Discretized Spatial Structure)**: 공간을 격자로 나누어 다변량 포인트 프로세스로 처리하는 방식이 있으나, 이는 연속적인 공간의 특성을 완전히 반영하지 못한다.
 
 NEST는 가우시안 커널이라는 통계적 구조를 유지하면서 그 파라미터를 신경망으로 학습시킴으로써, 기존 모델의 해석력과 딥러닝의 유연성 사이의 타협점을 찾았다.
 
 ## 🛠️ Methodology
 
 ### 1. 전체 파이프라인 및 시스템 구조
+
 NEST 모델은 과거의 이벤트 이력이 현재의 이벤트 발생 확률(조건부 강도 함수)에 영향을 주는 self-exciting 구조를 가진다. 전체 구조는 `공간 위치 $\to$ 잠재 임베딩(Latent Embedding) $\to$ 가우시안 커널 파라미터 $\to$ 조건부 강도 함수` 순으로 이어진다.
 
 ### 2. 조건부 강도 함수 (Conditional Intensity Function)
+
 시공간 포인트 프로세스의 핵심인 조건부 강도 함수 $\lambda^*(t, s)$는 다음과 같이 정의된다.
 
 $$\lambda^*(t, s) = \lambda_0 + \sum_{j:t_j < t} \nu(t, t_j, s, s_j)$$
@@ -41,6 +43,7 @@ $$\lambda^*(t, s) = \lambda_0 + \sum_{j:t_j < t} \nu(t, t_j, s, s_j)$$
 여기서 $\lambda_0$는 배경 강도(Background rate)이며, $\nu$는 과거 이벤트 $j$가 현재 $(t, s)$에 주는 영향력을 나타내는 커널 함수이다.
 
 ### 3. 이질적 가우시안 확산 커널 (Heterogeneous Gaussian Diffusion Kernel)
+
 본 논문은 공간적 표현력을 높이기 위해 $K$개의 가우시안 커널의 혼합(Mixture)을 사용한다.
 
 $$\nu(t, t', s, s') = \sum_{k=1}^{K} \phi^{(k)}_{s'} \cdot g(t, t', s, s' | \Sigma^{(k)}_{s'}, \mu^{(k)}_{s'})$$
@@ -49,44 +52,48 @@ $$\nu(t, t', s, s') = \sum_{k=1}^{K} \phi^{(k)}_{s'} \cdot g(t, t', s, s' | \Sig
 
 $$g(t, t', s, s' | \Sigma_{s'}, \mu_{s'}) = \frac{C e^{-\beta(t-t')}}{2\pi \sqrt{|\Sigma_{s'}|}(t-t')} \cdot \exp \left\{ -\frac{(s-s'-\mu_{s'})^T \Sigma_{s'}^{-1} (s-s'-\mu_{s'})}{2(t-t')} \right\}$$
 
--   **$\beta$**: 시간적 감쇠율을 결정한다.
--   **$\mu_{s'}$**: 확산 중심의 오프셋(Shift)을 결정한다.
--   **$\Sigma_{s'}$**: 확산의 모양(회전, 신축 등)을 결정하는 공분산 행렬이며, $\sigma_x, \sigma_y, \rho$ (상관관계) 파라미터로 구성된다.
--   **$\phi^{(k)}_{s'}$**: 각 성분의 가중치이다.
+- **$\beta$**: 시간적 감쇠율을 결정한다.
+- **$\mu_{s'}$**: 확산 중심의 오프셋(Shift)을 결정한다.
+- **$\Sigma_{s'}$**: 확산의 모양(회전, 신축 등)을 결정하는 공분산 행렬이며, $\sigma_x, \sigma_y, \rho$ (상관관계) 파라미터로 구성된다.
+- **$\phi^{(k)}_{s'}$**: 각 성분의 가중치이다.
 
 ### 4. 신경망 표현 (Neural Network Representation)
+
 위의 커널 파라미터($\mu_{s'}, \sigma_{x, s'}, \sigma_{y, s'}, \rho_{s'}$)들은 위치 $s$에 따라 연속적으로 변해야 하므로, 이를 신경망을 통해 매핑한다.
 
-1.  **Latent Embedding**: 위치 $s$를 입력받아 $d$차원의 벡터 $h(s)$를 생성하는 다층 퍼셉트론(MLP) $\psi(s|\theta_h)$를 사용한다.
-2.  **Parameter Mapping**: $h(s)$를 입력으로 하여 최종 파라미터를 출력하는 선형 층을 둔다.
-    -   $\mu_x(s), \mu_y(s)$: Sigmoid 함수를 사용하여 일정 범위 내의 값으로 제한한다.
-    -   $\sigma_x(s), \sigma_y(s)$: Softplus 함수를 사용하여 항상 양수 값을 갖게 한다.
-    -   $\rho(s)$: Sigmoid 결과에 2를 곱하고 1을 빼서 $(-1, 1)$ 범위로 매핑한다.
-    -   $\phi^{(k)}_s$: Softmax 함수를 통해 모든 가중치의 합이 1이 되도록 한다.
+1. **Latent Embedding**: 위치 $s$를 입력받아 $d$차원의 벡터 $h(s)$를 생성하는 다층 퍼셉트론(MLP) $\psi(s|\theta_h)$를 사용한다.
+2. **Parameter Mapping**: $h(s)$를 입력으로 하여 최종 파라미터를 출력하는 선형 층을 둔다.
+    - $\mu_x(s), \mu_y(s)$: Sigmoid 함수를 사용하여 일정 범위 내의 값으로 제한한다.
+    - $\sigma_x(s), \sigma_y(s)$: Softplus 함수를 사용하여 항상 양수 값을 갖게 한다.
+    - $\rho(s)$: Sigmoid 결과에 2를 곱하고 1을 빼서 $(-1, 1)$ 범위로 매핑한다.
+    - $\phi^{(k)}_s$: Softmax 함수를 통해 모든 가중치의 합이 1이 되도록 한다.
 
 ### 5. 학습 절차: 모방 학습 (Imitation Learning)
+
 MLE 방식 외에, 데이터 기반의 모방 학습 프레임워크를 제안한다.
 
--   **정책(Policy) 정의**: 모델의 조건부 강도 함수 $\lambda_\theta^*$로부터 다음 이벤트가 발생할 확률 밀도 함수 $\pi_\theta(t, s)$를 유도한다.
+- **정책(Policy) 정의**: 모델의 조건부 강도 함수 $\lambda_\theta^*$로부터 다음 이벤트가 발생할 확률 밀도 함수 $\pi_\theta(t, s)$를 유도한다.
     $$\pi_\theta(t, s) = \lambda^*_\theta(t, s) \cdot \exp \left\{ -\int_{t_n}^t \int_S \lambda^*_\theta(\tau, r) dr d\tau \right\}$$
--   **보상 함수 (Reward Function)**: 전문가(실제 데이터)의 분포와 학습자의 분포 사이의 MMD(Maximum Mean Discrepancy)를 최소화하는 방향으로 보상 함수 $\hat{r}(a)$를 설정한다. 이는 RKHS(Reproducing Kernel Hilbert Space) 내의 가우시안 커널을 통해 계산된다.
--   **최적화**: Policy Gradient 방법을 사용하여 기대 보상을 최대화하는 파라미터 $\theta$를 학습한다.
+- **보상 함수 (Reward Function)**: 전문가(실제 데이터)의 분포와 학습자의 분포 사이의 MMD(Maximum Mean Discrepancy)를 최소화하는 방향으로 보상 함수 $\hat{r}(a)$를 설정한다. 이는 RKHS(Reproducing Kernel Hilbert Space) 내의 가우시안 커널을 통해 계산된다.
+- **최적화**: Policy Gradient 방법을 사용하여 기대 보상을 최대화하는 파라미터 $\theta$를 학습한다.
 
 ## 📊 Results
 
 ### 1. 실험 설정
--   **데이터셋**: 합성 데이터 2종, 실제 데이터 2종(애틀랜타 911 강도 사건, 북캘리포니아 지진 데이터)을 사용하였다.
--   **비교 대상**: Random, ETAS, RLPP(시간 전용), NEST+MLE, NEST+IL.
--   **평가 지표**: 한 단계 앞 예측의 평균 제곱 오차(MSE), 실제 데이터와 생성 데이터 간의 MMD 거리, 로그 가능도(Log-likelihood).
+
+- **데이터셋**: 합성 데이터 2종, 실제 데이터 2종(애틀랜타 911 강도 사건, 북캘리포니아 지진 데이터)을 사용하였다.
+- **비교 대상**: Random, ETAS, RLPP(시간 전용), NEST+MLE, NEST+IL.
+- **평가 지표**: 한 단계 앞 예측의 평균 제곱 오차(MSE), 실제 데이터와 생성 데이터 간의 MMD 거리, 로그 가능도(Log-likelihood).
 
 ### 2. 주요 결과
--   **정량적 결과**: 
-    -   합성 데이터에서 NEST+IL과 NEST+MLE 모두 ETAS보다 현저히 낮은 MSE를 기록하며 우수성을 입증하였다.
-    -   실제 데이터셋에서도 NEST 모델이 ETAS보다 더 높은 로그 가능도와 더 낮은 MMD/MSE 수치를 보였다.
-    -   가우시안 성분 수 $K$가 증가함에 따라 성능이 향상되나, $K \ge 5$부터는 성능 향상 폭이 둔화되는 경향을 보였다.
--   **정성적 결과**: 
-    -   시각화 결과, ETAS는 단순히 원형의 확산 패턴을 보인 반면, NEST는 지진의 단층선(Fault lines)이나 도시의 도로망을 따라 길쭉하게 뻗은 비등방성 확산 패턴을 정확하게 포착하였다.
--   **학습 효율성**: NEST+MLE가 NEST+IL보다 학습 속도는 빠르지만, NEST+IL이 분포 매칭 관점에서 더 강건한 성능을 보였다.
+
+- **정량적 결과**:
+  - 합성 데이터에서 NEST+IL과 NEST+MLE 모두 ETAS보다 현저히 낮은 MSE를 기록하며 우수성을 입증하였다.
+  - 실제 데이터셋에서도 NEST 모델이 ETAS보다 더 높은 로그 가능도와 더 낮은 MMD/MSE 수치를 보였다.
+  - 가우시안 성분 수 $K$가 증가함에 따라 성능이 향상되나, $K \ge 5$부터는 성능 향상 폭이 둔화되는 경향을 보였다.
+- **정성적 결과**:
+  - 시각화 결과, ETAS는 단순히 원형의 확산 패턴을 보인 반면, NEST는 지진의 단층선(Fault lines)이나 도시의 도로망을 따라 길쭉하게 뻗은 비등방성 확산 패턴을 정확하게 포착하였다.
+- **학습 효율성**: NEST+MLE가 NEST+IL보다 학습 속도는 빠르지만, NEST+IL이 분포 매칭 관점에서 더 강건한 성능을 보였다.
 
 ## 🧠 Insights & Discussion
 

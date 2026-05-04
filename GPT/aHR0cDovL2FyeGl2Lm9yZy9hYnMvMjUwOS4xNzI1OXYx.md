@@ -29,17 +29,22 @@ Ilham Wicaksono, Zekun Wu, Rahul Patel, Theo King, Adriano Koshiyama, Philip Tre
 ## 🛠️ Methodology
 
 ### AgentSeer Observability Framework
+
 에이전트 시스템의 불투명성을 해결하기 위해 제안된 `AgentSeer`는 에이전트의 실행 로그를 분석하여 시스템을 액션(Action)과 컴포넌트(Component) 단위로 해체한다.
+
 - **작동 원리**: MLFlow를 통해 생성된 스팬(Span) 데이터를 캡처하고, 이를 기반으로 LLM 호출 하나하나를 '액션'으로 정의한다.
 - **구조**: 지식 그래프(Knowledge Graph) 형태로 저장하며, 노드는 에이전트, 도구, 단기/장기 메모리를 나타내고, 엣지는 액션 간의 정보 흐름을 나타낸다.
 - **시각화**: ReactFlow를 사용하여 액션 그래프와 컴포넌트 그래프를 웹 인터페이스로 제공함으로써 보안 분석가가 리스크 전파 경로를 추적할 수 있게 한다.
 
 ### Agentic AI Testbed
+
 실험을 위해 LangGraph를 사용하여 계층적 구조의 6-에이전트 시스템을 구축하였다.
+
 - **구성**: 사용자 인터페이스를 담당하는 Main Agent, 최종 보고서를 작성하는 Manager Agent, 그리고 4명의 전문 분석 에이전트(Revenue, Product Performance, Strategic, Order Analyst)로 구성된다.
 - **기능**: Python 코드 인터프리터, 웹 검색, RAG 기반 지식 베이스 검색 도구 및 단기/장기 메모리를 포함한다.
 
 ### Red Teaming 절차
+
 - **대상 모델**: GPT-OSS-20B (Low reasoning effort 설정).
 - **데이터셋**: HarmBench에서 무작위로 추출한 50개 목표 중, 모델이 기본적으로 거부하는 38개 목표를 선정하였다.
 - **공격 방법**: 반복적 정제(Iterative Refinement) 방식을 사용하며, GPT-4o-mini를 공격자 및 판별자(Judge) 모델로 활용하였다.
@@ -50,18 +55,23 @@ Ilham Wicaksono, Zekun Wu, Rahul Patel, Theo King, Adriano Koshiyama, Philip Tre
 ## 📊 Results
 
 ### 모델 수준 반복 공격 결과
+
 - **결과**: 38개 목표 중 15개 성공, 공격 성공률(ASR)은 $39.47\%$를 기록하였다.
 - **전략 분석**: 성공한 공격의 $60\%$는 역할극(Roleplay), $40\%$는 권위 기반(Authority) 전략이었으며, 논리 기반 전략은 완전히 실패하였다.
 
 ### 에이전트 수준 직접 공격 결과
+
 모델 수준에서 성공한 프롬프트를 에이전트 액션에 주입한 결과, 주입 경로에 따라 ASR의 차이가 뚜렷하게 나타났다.
+
 - **Human Message Injection**: 평균 ASR $\approx 57\%$로 가장 효과적이었다.
 - **AI Message Injection**: 평균 ASR $42\%$.
 - **Tool Message Injection**: 평균 ASR $40\%$.
 - 특정 액션(action_14)에서는 최대 $87\%$의 높은 성공률을 보인 반면, 일부 액션(action_22)에서는 $13\%$에 그쳐, 에이전트의 컨텍스트가 취약성에 결정적인 영향을 미침을 확인하였다.
 
 ### 에이전트 수준 반복 공격 및 특이사항
+
 모델 수준에서 실패했던 15개 목표를 대상으로 에이전트 컨텍스트를 반영한 반복 공격을 수행한 결과는 다음과 같다.
+
 - **Agentic-only Vulnerabilities**: 모델 수준에서는 불가능했던 공격이 에이전트 환경에서는 성공하는 사례가 발견되었다.
 - **도구 영향도**: 도구 호출 컨텍스트가 포함된 액션의 ASR($46\%$)이 비도구 액션($37\%$)보다 $24\%$ 더 높았다.
 - **도구별 위험도**: 에이전트 전환(Agent Transfer) 작업이 가장 위험($67\%$)했으며, 이어서 코드 실행(Python Code, $51\%$), 지식 검색(Knowledge Retrieval, $27\%$) 순으로 나타났다.
@@ -70,12 +80,15 @@ Ilham Wicaksono, Zekun Wu, Rahul Patel, Theo King, Adriano Koshiyama, Philip Tre
 ## 🧠 Insights & Discussion
 
 ### 모델 중심 안전성 평가의 한계
+
 본 연구는 모델 수준의 안전성 검사가 에이전트 시스템의 실제 위험을 완전히 포착하지 못함을 입증하였다. 특히 '에이전트 전용 취약점'의 발견은 모델이 개별적으로 안전하더라도, 도구 및 메모리와 결합된 시스템 전체에서는 새로운 취약점이 발현될 수 있음을 의미한다.
 
 ### 취약성의 세만틱(Semantic) 특성
+
 분석 결과, 입력 토큰의 길이(2,000 ~ 5,500 tokens)와 공격 성공률 사이에는 선형적인 상관관계가 없었다. 이는 에이전트의 취약성이 단순히 컨텍스트가 길어져 모델이 혼란을 느끼는 구문적(Syntactic) 문제가 아니라, 도구 상호작용이나 에이전트 간 통신과 같은 특정 '의미적(Semantic)' 구조와 관계에서 기인한다는 점을 보여준다.
 
 ### 보안 설계에 대한 시사점
+
 에이전트 시스템 설계 시, 모든 컴포넌트에 동일한 보안 정책을 적용하기보다 위험도가 높은 특정 도구(예: 에이전트 전환, 코드 실행)에 대해 강화된 보호 조치를 적용하는 맞춤형 전략이 필요하다.
 
 ## 📌 TL;DR

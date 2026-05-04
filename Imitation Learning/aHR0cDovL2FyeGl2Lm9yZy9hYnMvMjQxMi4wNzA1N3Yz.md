@@ -19,6 +19,7 @@ Yichen Li, Chicheng Zhang (2025)
 ## 📎 Related Works
 
 기존의 모방 학습은 크게 두 가지 흐름으로 나뉜다.
+
 - **Offline IL (Behavior Cloning)**: 전문가의 궤적 데이터를 지도 학습(supervised learning) 방식으로 학습한다. 단순하지만 앞서 언급한 compounding error에 취약하다.
 - **Interactive IL (DAgger 등)**: 학습자가 환경과 상호작용하며 전문가에게 실시간으로 정답을 묻는 방식이다. DAgger는 이 분야의 대표적인 알고리즘으로, 전문가의 corrective feedback을 통해 데이터 분포의 불일치를 해소한다.
 
@@ -27,6 +28,7 @@ Yichen Li, Chicheng Zhang (2025)
 ## 🛠️ Methodology
 
 ### 1. STAGGER (State-wise DAgger)
+
 STAGGER는 DAgger의 변형으로, 매 반복(iteration)마다 단 하나의 상태에 대해서만 전문가의 주석을 요청한다.
 
 - **절차**:
@@ -41,6 +43,7 @@ $$J(\pi_E) - J(\hat{\pi}) \le \frac{\mu H (\log B + 2 \log(1/\delta))}{N_{\text{
 여기서 $\mu$는 회복 비용, $H$는 에피소드 길이, $N_{\text{int}}$는 대화형 주석 횟수이다.
 
 ### 2. WARM-STAGGER (Hybrid IL)
+
 오프라인 데이터 $D_{\text{off}}$와 대화형 오라클 $O_{\text{State}}$를 모두 활용하는 방법이다.
 
 - **절차**:
@@ -53,14 +56,17 @@ $$J(\pi_E) - J(\hat{\pi}) \le O \left( \min \left[ \frac{R \log(\tilde{B}/\delta
 ## 📊 Results
 
 ### 1. MuJoCo 연속 제어 실험
+
 - **환경**: Ant, Hopper, HalfCheetah, Walker2D
 - **설정**: $H=1000$, MLP 전문가 정책 사용. 대화형 주석 비용 $C$를 오프라인 주석 비용의 배수로 설정 ($C=1$ 또는 $C=2$).
-- **결과**: 
-    - $C=1$일 때, STAGGER는 BC보다 훨씬 적은 수의 주석(약 50% 수준)만으로도 대등하거나 더 높은 성능을 보였다.
-    - $C=2$인 비용 민감 설정에서 WARM-STAGGER는 적절한 오프라인 데이터 양을 확보했을 때 BC와 STAGGER 모두를 능가하는 효율성을 보였다.
+- **결과**:
+  - $C=1$일 때, STAGGER는 BC보다 훨씬 적은 수의 주석(약 50% 수준)만으로도 대등하거나 더 높은 성능을 보였다.
+  - $C=2$인 비용 민감 설정에서 WARM-STAGGER는 적절한 오프라인 데이터 양을 확보했을 때 BC와 STAGGER 모두를 능가하는 효율성을 보였다.
 
 ### 2. 합성 MDP 실험 (Theoretical Example)
+
 특정 MDP 구조(이상적 상태 $E$, 회복 가능 상태 $E'$, 실패 상태 $B$, 리셋 상태 $B'$)를 통해 다음을 증명하였다.
+
 - **BC**: $E'$에 대한 커버리지가 낮아 compounding error로 인해 $B'$에 갇히며 성능이 저하된다.
 - **STAGGER**: 초기 정책이 매우 불안정하여 $E$를 효율적으로 탐색하지 못하는 **cold-start** 문제로 인해 학습 속도가 매우 느리다.
 - **WARM-STAGGER**: 오프라인 데이터로 $E$를 먼저 학습하여 cold-start를 방지하고, 소수의 대화형 쿼리로 $B'$에서의 회복 방법을 배워 최적 성능에 빠르게 도달한다.
@@ -70,10 +76,12 @@ $$J(\pi_E) - J(\hat{\pi}) \le O \left( \min \left[ \frac{R \log(\tilde{B}/\delta
 본 논문은 모방 학습의 효율성 분석에서 '비용'을 어떻게 정의하느냐에 따라 결론이 완전히 달라질 수 있음을 보여주었다. 궤적 단위의 비용 측정은 대화형 학습의 가치를 과소평가하게 만들지만, 상태 단위의 비용 측정은 대화형 및 하이브리드 접근법의 강력한 이점을 드러낸다.
 
 **강점**:
+
 - 이론적 증명과 실제 시뮬레이션, 그리고 연속 제어 벤치마크 실험을 통해 일관된 결론을 제시하였다.
 - 특히 하이브리드 학습이 단순히 두 방법의 합이 아니라, 서로의 단점(cold-start vs compounding error)을 상쇄하는 시너지 효과가 있음을 논리적으로 설명하였다.
 
 **한계 및 논의**:
+
 - 본 논문의 이론적 보장은 **결정론적 실현 가능성(deterministic realizability)**과 **$\mu$-recoverability**라는 강한 가정을 전제로 한다. 실제 환경에서 전문가가 확률적(stochastic)이거나 회복 비용이 매우 높을 때의 보장은 추가적인 연구가 필요하다.
 - 이론적 분석은 이산 액션 공간을 기준으로 했으나, 실험은 연속 제어 환경에서 수행되었다. 이 간극을 메우기 위한 이론적 확장이 필요하다.
 

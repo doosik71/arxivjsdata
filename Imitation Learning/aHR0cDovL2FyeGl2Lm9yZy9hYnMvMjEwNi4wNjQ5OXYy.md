@@ -26,6 +26,7 @@ Zaynah Javed, Daniel S. Brown, Satvik Sharma, Jerry Zhu, Ashwin Balakrishna, Mar
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조 및 목적 함수
+
 PG-BROIL은 보상 함수의 분포 $P(R)$이 주어졌을 때, 다음과 같은 **Soft-Robust 목적 함수**를 최대화하는 정책 $\pi_\theta$를 학습한다.
 
 $$\max_{\pi_\theta} \lambda \cdot \mathbb{E}_{P(R)}[\psi(\pi_\theta, R)] + (1-\lambda) \cdot \text{CVaR}_\alpha[\psi(\pi_\theta, R)]$$
@@ -33,6 +34,7 @@ $$\max_{\pi_\theta} \lambda \cdot \mathbb{E}_{P(R)}[\psi(\pi_\theta, R)] + (1-\l
 여기서 $\psi(\pi_\theta, R)$는 성능 지표(예: 기대 리턴 $v(\pi, R)$)이며, $\lambda \in [0, 1]$는 기대 성능과 위험 회피 사이의 가중치를 조절하는 하이퍼파라미터이다. $\alpha$는 CVaR에서 고려할 하위 꼬리 부분(tail)의 크기를 결정한다.
 
 ### 2. 주요 구성 요소 및 수식 설명
+
 - **$\text{CVaR}_\alpha$ (Conditional Value at Risk)**: 분포의 하위 $(1-\alpha)$ 영역의 평균값을 의미한다. 즉, 발생 가능한 최악의 시나리오들의 평균 성능을 최적화함으로써 꼬리 위험(tail risk)을 최소화한다. 본 논문은 이를 위해 다음과 같은 최적화 형태를 사용한다.
   $$\text{CVaR}_\alpha[X] = \max_\sigma \left( \sigma - \frac{1}{1-\alpha} \mathbb{E}[(\sigma - X)^+] \right)$$
   여기서 $\sigma$는 Value at Risk ($\text{VaR}_\alpha$)에 해당하며, $(\cdot)^+$는 $\max(0, \cdot)$를 의미한다.
@@ -45,6 +47,7 @@ $$\max_{\pi_\theta} \lambda \cdot \mathbb{E}_{P(R)}[\psi(\pi_\theta, R)] + (1-\l
   - $\mathbb{1}_{\sigma^* \ge v(\pi, r_i)}$는 현재 정책이 보상 함수 $r_i$에서 저조한 성능을 보일 때(즉, 최악의 시나리오에 해당할 때) 가중치를 부여하는 지시 함수이다.
 
 ### 3. 학습 절차
+
 1. 현재 정책 $\pi_{\theta^k}$를 통해 궤적 세트 $T$를 수집한다.
 2. 샘플링된 $N$개의 보상 함수 가설 $\{r_i\}$ 각각에 대해 기대 리턴 $v(\pi, r_i)$를 추정한다.
 3. 선형 탐색(line search)을 통해 $\sigma^*$를 계산한다.
@@ -53,11 +56,13 @@ $$\max_{\pi_\theta} \lambda \cdot \mathbb{E}_{P(R)}[\psi(\pi_\theta, R)] + (1-\l
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **데이터셋 및 환경**: CartPole, Pointmass Navigation, Reacher, TrashBot, Atari Boxing.
 - **비교 대상 (Baselines)**: BC, GAIL, RAIL, PBRL, Bayesian REX.
 - **지표**: 기대 리턴, 특정 위험 구역(gray/red region) 진입 횟수, 게임 스코어 등.
 
 ### 2. 주요 결과
+
 - **위험-성능 트레이드오프**: $\lambda$ 값을 낮출수록(위험 회피 성향을 높일수록) 에이전트는 기대 리턴은 다소 낮아지더라도 최악의 경우를 피하는 안전한 행동을 보였다. 예를 들어, Pointmass Navigation에서 $\lambda$가 낮을수록 불확실한 비용이 발생하는 회색 구역을 완전히 우회하는 경향이 나타났다.
 - **모호한 시연에서의 성능 (TrashBot)**: 매우 적은 수의 선호도(preferences) 데이터만 주어진 상황에서, PG-BROIL은 다른 모든 baseline보다 훨씬 많은 쓰레기를 수집하면서도 회색 구역 진입을 최소화했다.
   - **PBRL/Bayesian REX**: 단일 보상 함수나 평균 보상 함수에 과적합되어 보상 해킹(예: 단순히 흰색 구역에 머무는 행동)에 빠지거나 위험 구역에 진입하는 문제가 발생했다.
@@ -67,9 +72,11 @@ $$\max_{\pi_\theta} \lambda \cdot \mathbb{E}_{P(R)}[\psi(\pi_\theta, R)] + (1-\l
 ## 🧠 Insights & Discussion
 
 ### 1. 강점
+
 본 논문은 보상 함수에 대한 **인식론적 불확실성(Epistemic Uncertainty)**을 정책 최적화 단계에서 직접적으로 다루었다는 점에서 큰 의의가 있다. 특히, 단순한 최악 상황 가정(maxmin)이 유발하는 지나친 비관주의(overly pessimistic)를 $\lambda$ 파라미터를 통해 조절할 수 있게 하여, 실용적인 수준의 강건함을 확보했다.
 
 ### 2. 한계 및 비판적 해석
+
 - **수치적 불안정성**: $\lambda$ 값이 0에 매우 가까울 때, CVaR의 지시 함수($\mathbb{1}$)로 인해 정책 최적화가 불안정해지는 현상이 관찰되었다. 이는 불연속적인 가중치 업데이트가 그래디언트의 분산을 높이기 때문으로 분석된다.
 - **계산 비용**: 매 업데이트마다 $N$개의 보상 함수 가설에 대해 리턴을 계산해야 하므로, 계산량이 표준 정책 경사법보다 $N$배 증가한다. 다만, 저자들은 데이터 수집 단계가 병목이 되는 RL 특성상 이는 수용 가능한 수준이라고 주장한다.
 - **보상 함수 샘플링 의존성**: Bayesian REX 등을 통해 보상 함수의 사후 분포를 샘플링하여 사용하므로, 초기 샘플링 품질이 전체 정책의 강건성에 영향을 미칠 가능성이 크다.

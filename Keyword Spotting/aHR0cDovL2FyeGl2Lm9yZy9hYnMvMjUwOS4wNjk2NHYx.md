@@ -29,23 +29,28 @@ Huihong Liang, Dongxuan Jia, Youquan Wang, Longtao Huang, Shida Zhong, Luping Xi
 ## 🛠️ Methodology
 
 ### 전체 시스템 파이프라인
+
 본 SoC는 음성 입력부터 키워드 인식까지 다음과 같은 단계를 거친다:
 $$\text{Speech Input} \rightarrow \text{MFCC (특징 추출)} \rightarrow \text{VQ (벡터 양자화)} \rightarrow \text{DTW (템플릿 매칭)} \rightarrow \text{Keyword Recognition}$$
 
 ### 주요 구성 요소 및 역할
 
 #### 1. 알고리즘 최적화
+
 - **MFCC (Mel Frequency Cepstral Coefficient):** 음성 신호에서 특징을 추출하는 파이프라인이다.
 - **VQ (Vector Quantization):** 학습된 코드북을 사용하여 여러 키워드를 효율적으로 표현한다.
 - **DTW (Dynamic Time Warping):** 입력된 특징 벡터와 저장된 템플릿 간의 유사도를 측정하여 키워드를 판별한다.
 - **최적화 전략:** 데이터 다운샘플링과 알고리즘 단순화를 통해 메모리 사용량과 연산량을 줄였다.
 
 #### 2. KWS 가속기 (Hardware Accelerator)
+
 가속기는 크게 두 개의 유닛으로 구성된다:
+
 - **Feature Extraction Unit (FEU):** MFCC 알고리즘을 수행한다. 128-포인트 FFT의 계산 병목을 해결하기 위해 7단계 파이프라인을 적용하였으며, 희소성(Sparsity) 기반의 Mel 필터 최적화와 DCT 단계의 데이터 흐름 개선을 통해 효율을 높였다.
 - **Template Classification Unit (TCU):** DTW 알고리즘을 수행한다. 특히 기존의 복잡한 DTW 계산을 **고정 대각선 거리 계산(Fixed Diagonal Distance Computation)** 방식으로 단순화하여, 하드웨어 면적을 $99.2\%$, 전력 소모를 $84.2\%$ 절감하였다.
 
 #### 3. Audio SoC 구조
+
 - **RISC-V Core (Nuclei E203):** 전체 시스템의 제어, 스케줄링 및 데이터 전처리를 담당하는 메인 컨트롤러이다.
 - **KWS Accelerator:** RISC-V 코어의 코프로세서(Coprocessor)로서 동작하며, 높은 병렬성을 통해 음성 처리 작업을 수행한다.
 - **Custom Audio Module:** 아날로그 프론트엔드(AFE)를 구동하여 음성 입출력을 처리한다.
@@ -54,16 +59,18 @@ $$\text{Speech Input} \rightarrow \text{MFCC (특징 추출)} \rightarrow \text{
 ## 📊 Results
 
 ### 하드웨어 구현 사양 및 정량적 결과
+
 - **제조 공정:** $40\text{nm}$ CMOS 공정 기반
 - **동작 속도:** SoC 메인 코어 $50\text{MHz}$, KWS 가속기 $400\text{kHz}$
 - **전력 소모:** SoC 전체 $12.4\text{mW}$, KWS 가속기 단독 $28.3\mu\text{W}$
-- **면적 및 지연 시간:** 
-    - KWS 가속기 면적: $0.28\text{mm}^2$ (DNN 기반 연구 $[2]$ 대비 $1/6$ 수준)
-    - SoC 전체 코어 면적: $1.34\text{mm}^2$
-    - 프레임 지연 시간(Frame Latency): $2.98\text{ms}$ (연구 $[1]$ 대비 $10\times$ 속도 향상)
+- **면적 및 지연 시간:**
+  - KWS 가속기 면적: $0.28\text{mm}^2$ (DNN 기반 연구 $[2]$ 대비 $1/6$ 수준)
+  - SoC 전체 코어 면적: $1.34\text{mm}^2$
+  - 프레임 지연 시간(Frame Latency): $2.98\text{ms}$ (연구 $[1]$ 대비 $10\times$ 속도 향상)
 - **전력 효율:** 기존 IoT 오디오 SoC $[3]$ 대비 전력 소모가 $47.7\%$ 수준에 불과하다.
 
 ### FPGA 프로토타입 및 실시간 검증
+
 - **인식 정확도:** 300개 이상의 1초 길이 테스트 케이스에 대해 최대 $89\%$의 인식률을 보였다.
 - **처리 시간:** KWS 처리 시간은 평균 $0.4\text{ms}$, SoC 전체 처리 시간은 $0.5\text{s}$로 측정되었다.
 - **실제 적용:** 영어 및 중국어 명령어를 통한 시스템 깨우기, 가전 제어, 로봇 핸드 동작 제어 등의 실시간 인터랙션을 성공적으로 시연하였다.

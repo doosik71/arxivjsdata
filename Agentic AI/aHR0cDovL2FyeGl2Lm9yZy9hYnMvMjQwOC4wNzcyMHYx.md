@@ -28,6 +28,7 @@ Alessandro Berti, Mayssa Maatallah, Urszula Jessen, Michal Sroka, Sonia Ayachi G
 $$\text{AgWf} = (F, T, \text{tools}, \text{selector}, \text{prec}, t_1, t_f)$$
 
 각 구성 요소의 역할은 다음과 같다.
+
 - $F \subseteq (\Sigma^\cup \to \Sigma^\cup)$: 문자열을 입력받아 문자열로 출력하는 결정론적 도구(Tools)의 집합이다.
 - $T \subseteq (\Sigma^\cup \rightsquigarrow \Sigma^\cup)$: 비결정론적인 AI 기반 작업(Tasks)의 집합이다. 여기서 $\rightsquigarrow$ 기호는 동일한 입력에 대해 서로 다른 출력이 가능함을 의미한다.
 - $\text{tools}: T \to \mathcal{P}(F)$: 특정 작업 $T$에 할당된 도구들의 집합을 매핑하는 함수이다.
@@ -50,6 +51,7 @@ $$\text{AgWf} = (F, T, \text{tools}, \text{selector}, \text{prec}, t_1, t_f)$$
 ### AI 기반 작업의 유형
 
 효과적인 PM 파이프라인 구축을 위해 다음과 같은 작업 유형을 제안한다.
+
 - **Prompt Optimizers**: 사용자의 모호한 질의를 AI 에이전트가 이해하기 쉬운 최적의 언어로 변환한다.
 - **Ensembles**: 여러 작업에서 도출된 다양한 관점의 통찰들을 취합하여 하나의 일관된 보고서로 요약한다.
 - **Routers**: 질의의 성격에 따라 세만틱 분석(LLM 직접 처리)으로 보낼지, 데이터 계산(코드 생성 및 실행)으로 보낼지 경로를 결정한다.
@@ -61,13 +63,17 @@ $$\text{AgWf} = (F, T, \text{tools}, \text{selector}, \text{prec}, t_1, t_f)$$
 본 논문은 정량적인 벤치마크 결과보다는 CrewAI 프레임워크를 이용한 구현 사례를 통해 AgWf의 효용성을 입증한다.
 
 ### 1. 편향 탐지 (Bias Detection) 워크플로우
+
 작성자는 세 가지 구현 수준을 비교한다.
+
 - **단일 작업 방식**: 하나의 LLM 작업이 모든 도구를 사용하여 결과를 내는 방식이나, 복잡한 파이프라인(집단 분리 $\to$ 비교 $\to$ 분석)을 수행하지 못해 효과가 가장 낮다.
 - **단순 분해 방식**: 집단 식별과 비교 작업을 분리하였으나, 도구 선택 과정에서 누락이 발생할 수 있다.
 - **다중 관점 분해 방식**: 보호 집단 식별 후, DFG(Directly-Follows Graph) 관점과 Process Variants 관점에서 각각 비교 분석을 수행하고 이를 Ensemble 작업으로 통합한다. 이 방식이 가장 정교한 불공정성 통찰을 제공함을 확인하였다.
 
 ### 2. 루트 코즈 분석 (Root Cause Analysis) 워크플로우
+
 다음의 단계로 구성된 파이프라인을 구현하였다.
+
 - **T1 (Analysis)**: DFG 추상화를 바탕으로 잠재적 근본 원인 목록을 생성한다.
 - **T2 (Grading)**: 각 인사이트에 대해 $1.0 \sim 10.0$ 사이의 신뢰도 점수를 부여한다.
 - **T3 (Reasoning)**: 가장 점수가 높은 인사이트에 대해 Chain-of-Thought(CoT)를 적용하여 상세 추론 과정을 제시한다.
@@ -77,9 +83,11 @@ $$\text{AgWf} = (F, T, \text{tools}, \text{selector}, \text{prec}, t_1, t_f)$$
 ## 🧠 Insights & Discussion
 
 ### 강점 및 의의
+
 본 연구는 LLM을 단순한 챗봇이 아닌, 전문 도구를 사용하는 '에이전트'들의 협업 체계로 재정의하였다. 특히 PM 분야에서 LLM의 고질적인 문제인 '환각(Hallucination)'과 '복잡한 계산 능력 부족'을 결정론적 도구(pm4py 등)와의 결합을 통해 해결하려 한 점이 돋보인다.
 
 ### 한계 및 향후 과제
+
 - **워크플로우 설계의 수동성**: 현재 AgWf의 구조는 인간이 직접 설계한다. 이를 자동화하는 '오케스트레이팅 LLM'의 도입이 필요하다.
 - **인간 참여(Human-in-the-Loop)**: 매우 일반적인 질의의 경우 AI가 스스로 최적화하기 어렵기 때문에, 중간 단계에서 사용자에게 명확한 의도를 묻는 메커니즘이 보완되어야 한다.
 - **평가 프레임워크**: LLM-as-a-Judge 방식을 도입하여 각 개별 에이전트의 성능을 정밀하게 측정하고, 에이전트 간의 협업 효율성을 평가하는 연구가 필요하다.

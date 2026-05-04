@@ -7,6 +7,7 @@ AMAP AI Agent LLM Team (2026)
 본 논문은 복잡한 시공간적 이해(Spatio-temporal understanding)가 필요한 작업, 예를 들어 제약 조건이 있는 관심 지점(POI) 탐색 및 여정 계획(Itinerary planning)과 같은 과제를 해결하기 위한 에이전틱 대규모 언어 모델(Agentic LLM)인 **STAgent**를 제안한다.
 
 현실 세계의 시공간 추론 작업은 단순히 빠른 응답을 내놓는 System 1 방식이 아니라, 광범위하고 복잡한 심의가 필요한 **System 2** 시나리오에 해당한다. 이러한 작업들은 다음과 같은 세 가지 핵심 난제를 가지고 있다:
+
 1. **유연하고 안정적인 추론 환경 구축**: 대규모의 동시 툴 호출 요청을 처리할 수 있는 환경과 툴 호출-궤적 롤아웃(Trajectory rollout) 간의 효율적인 동기화가 필요하다.
 2. **고품질 학습 데이터 큐레이션**: 수천만 건의 실제 사용자 로그는 비지도(Unsupervised) 상태이며 노이즈가 많아, 모델이 최적화 방향을 잡을 수 있도록 돕는 고품질의 정제된 데이터셋 구축이 어렵다.
 3. **실전 TIR(Tool-Integrated Reasoning) 학습 레시피**: 현실 세계의 불확실한 환경과 다양한 작업 특성에 맞춘 특화된 학습 방법론이 부족하다.
@@ -24,6 +25,7 @@ STAgent의 핵심 아이디어는 **'안정적인 인프라 $\rightarrow$ 정밀
 ## 📎 Related Works
 
 논문은 기존의 Tool-Integrated Reasoning(TIR) 연구들이 주로 수학적 추론이나 코드 테스트와 같은 정형화된 시나리오에 집중되어 있음을 지적한다. 반면, 실제 세계의 시공간 추론은 다음과 같은 차별점을 가진다:
+
 - **비정형 제약 조건**: 단순한 정답 찾기가 아니라 '조용하고 저렴하며 20분 거리 내에 있는 호텔'과 같은 다중 제약 조건을 동시에 최적화해야 한다.
 - **동적 환경**: 실시간 교통 정보, 날씨, 예약 가능 여부 등 외부 API의 피드백에 따라 계획을 동적으로 수정해야 하는 특성이 있다.
 
@@ -32,21 +34,27 @@ STAgent의 핵심 아이디어는 **'안정적인 인프라 $\rightarrow$ 정밀
 ## 🛠️ Methodology
 
 ### 1. 환경 구축 (Environment Construction)
+
 STAgent는 FastMCP 기반의 샌드박스 환경에서 10개의 전문 도구를 사용한다.
+
 - **도구 구성**: 지도 및 내비게이션(POI 검색, 경로 계산, 경로 주변 검색 등), 여행(항공권, 기차 조회), 날씨(실시간, 예보), 정보 검색(웹 검색)의 4개 카테고리로 구성된다.
 - **최적화**: 대규모 RL 학습 시 API 지연과 비용을 줄이기 위해 매개변수 정규화가 적용된 **LRU 캐싱 메커니즘**을 구현하였다.
 
 ### 2. 프롬프트 큐레이션 (Prompt Curation)
+
 방대한 로그 데이터에서 고품질 데이터를 추출하기 위해 다음과 같은 과정을 거친다:
+
 - **Seed-Driven Taxonomy Evolution**: 전문가가 정의한 시드 프롬프트를 바탕으로 LLM이 계층적 의도 분류 체계(Intent Taxonomy)를 구축하고, 이를 반복적으로 정제하여 30개의 세부 리프 노드로 구성된 분류 체계를 완성한다.
-- **Funnel Filtering**: 
-    - **어휘적 중복 제거**: LSH(Locality-Sensitive Hashing)를 통해 유사 문자열 제거.
-    - **의미적 중복 제거**: Faiss를 이용한 임베딩 기반 유사도 검색으로 중복 의미 제거.
-    - **기하학적 중복 제거**: K-Center-Greedy 알고리즘을 통해 임베딩 공간에서 가장 대표성 있는 샘플을 선택하여 롱테일 케이스를 보존한다.
+- **Funnel Filtering**:
+  - **어휘적 중복 제거**: LSH(Locality-Sensitive Hashing)를 통해 유사 문자열 제거.
+  - **의미적 중복 제거**: Faiss를 이용한 임베딩 기반 유사도 검색으로 중복 의미 제거.
+  - **기하학적 중복 제거**: K-Center-Greedy 알고리즘을 통해 임베딩 공간에서 가장 대표성 있는 샘플을 선택하여 롱테일 케이스를 보존한다.
 - **난이도 측정**: 도구 선택의 인지 부하, 실행 체인의 깊이, 제약 조건의 복잡성을 기준으로 $-1$부터 $5$까지의 점수를 부여한다.
 
 ### 3. 보상 설계 (Reward Design)
+
 'Rubrics-as-reward' 방식을 채택하여 세 가지 차원($s_{reas}, s_{info}, s_{pres}$)에서 점수를 매긴다:
+
 - **추론 및 선제적 계획($s_{reas}$)**: 효율적인 계획 수립 및 사용자 오류의 선제적 수정 능력.
 - **정보 충실도 및 통합($s_{info}$)**: 툴 출력값의 정확한 추출 및 합성 능력.
 - **제시 및 서비스 루프($s_{pres}$)**: 구조적이고 실행 가능한 최종 응답 제공 능력.
@@ -56,16 +64,18 @@ $$R = \mathbb{1}_{H=0} \times \sum_{k \in \{reas, info, pres\}} w_k \cdot s_k$$
 여기서 $\mathbb{1}_{H=0}$은 환각이 없을 때만 1이 되는 지시 함수이다.
 
 ### 4. Supervised Fine-Tuning (SFT)
+
 - **데이터 구성**: DeepSeek-R1과 같은 강력한 LLM을 통해 생성된 궤적 중 Verifier(Gemini-3-Pro)가 만점을 준 데이터만 사용하며, 부족한 롱테일 데이터는 ICL을 통해 합성 생성한다.
 - **학습 목표**: 다음의 음의 로그 가능도(NLL)를 최소화하는 것을 목표로 한다:
 $$\mathcal{L}_{SFT}(o_i | \theta) = \frac{1}{C} \sum_{t=1}^{|o_i|} I(o_{i,t}) \log \pi_\theta(o_{i,t} | q_i)$$
 여기서 $I(o_{i,t})$는 툴 관찰값(observation) 부분을 마스킹하여 모델이 생성한 토큰에 대해서만 손실을 계산하게 하는 지시 함수이다.
 
 - **동적 능력 인식 커리큘럼 (Dynamic Capability-Aware Curriculum)**:
-    - 모델의 현재 상태에서 '학습 가능한(Learnable)' 영역의 데이터를 선택한다.
-    - **Learnability Potential Score** $S_i = \hat{\sigma}_i^2 \cdot \hat{\mu}_i$를 도입하여, 보상의 평균($\hat{\mu}_i$)이 0이 아니면서 분산($\hat{\sigma}_i^2$)이 큰(즉, 불확실하지만 해결 가능성이 있는) 샘플에 높은 가중치를 두어 학습시킨다.
+  - 모델의 현재 상태에서 '학습 가능한(Learnable)' 영역의 데이터를 선택한다.
+  - **Learnability Potential Score** $S_i = \hat{\sigma}_i^2 \cdot \hat{\mu}_i$를 도입하여, 보상의 평균($\hat{\mu}_i$)이 0이 아니면서 분산($\hat{\sigma}_i^2$)이 큰(즉, 불확실하지만 해결 가능성이 있는) 샘플에 높은 가중치를 두어 학습시킨다.
 
 ### 5. Reinforcement Learning (RL)
+
 STAgent는 GRPO(Group Relative Policy Optimization)를 기반으로 하되, 학습 안정성을 위해 **GSPO(Group Sequence Policy Optimization)**를 적용하였다. GSPO는 토큰 단위가 아닌 궤적 전체의 기하평균을 이용해 중요도 비율(Importance ratio)을 계산한다:
 $$s_i(\theta) = \exp \left( \frac{1}{|o_i|} \sum_{t=1}^{|o_i|} \log \frac{\pi_\theta(o_{i,t} | q, o_{i,<t})}{\pi_{\theta_{old}}(o_{i,t} | q, o_{i,<t})} \right)$$
 이를 통해 전체 시퀀스 수준의 최적화를 수행하여 학습의 변동성을 줄였다.
@@ -73,10 +83,12 @@ $$s_i(\theta) = \exp \left( \frac{1}{|o_i|} \sum_{t=1}^{|o_i|} \log \frac{\pi_\t
 ## 📊 Results
 
 ### 1. 실험 설정
+
 - **In-domain 평가**: 1,000개의 고품질 쿼리를 이용한 온라인 평가 및 TravelBench를 이용한 오프라인 평가를 수행하였다.
 - **General 평가**: ACEBench, $\tau^2$-Bench, BFCL v3(도구 사용), AIME 24/25(수학), LiveCodeBench(코딩), MMLU-Pro, C-Eval, ArenaHard-v2.0 등 광범위한 벤치마크를 사용하였다.
 
 ### 2. 주요 결과
+
 - **도메인 특화 성능**: TravelBench에서 STAgent는 **Overall Score 70.3**을 기록하며, 파라미터 수가 훨씬 많은 DeepSeek R1(64.7)과 Qwen3-235B-Instruct(69.9)를 능가하였다. 특히 Multi-turn 작업(66.6)에서 가장 높은 성능을 보였다.
 - **온라인 벤치마크**: Qwen3-30B-Thinking-2507 대비 요약/추출(승률 81.9%) 및 내용 제시(승률 73.7%) 영역에서 압도적인 우위를 보였다.
 - **일반 능력 유지**: 도메인 특화 학습 이후에도 수학, 코딩, 일반 지식 벤치마크에서 성능 저하가 거의 없었으며, 오히려 BFCL v3와 같은 도구 활용 벤치마크에서는 성능 향상이 관찰되었다. 이는 특정 도메인의 에이전트 학습이 일반적인 도구 호출 능력의 전이 학습(Transfer learning) 효과를 가져왔음을 시사한다.

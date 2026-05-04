@@ -34,25 +34,27 @@ Sébastien M. R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner, and Kons
 `learn2learn`은 PyTorch를 기반으로 하며, 성능이 필요한 데이터 처리 부분에는 Cython을 사용한다. 시스템은 크게 프로토타이핑 도구와 재현성 도구의 두 가지 축으로 구성된다.
 
 ### 1. Prototyping Tools
+
 연구자가 새로운 알고리즘과 도메인을 빠르게 설계할 수 있도록 돕는 도구들이다.
 
-*   **Differentiable Optimization (`learn2learn.optim`)**: 최적화 알고리즘의 그래디언트를 계산하는 복잡한 과정을 단순화한다. `ParameterUpdate` 클래스를 통해 그래디언트 변환(Gradient transform)을 정의하고, `update_module`을 통해 모델 파라미터를 미분 가능한 상태로 업데이트할 수 있다. 이를 통해 MAML, Hypergradient descent 등의 알고리즘을 훨씬 적은 양의 코드로 구현할 수 있다.
-*   **Few-shot Data Pipeline (`learn2learn.data`)**: `TaskDataset`과 `TaskTransforms` 클래스를 제공한다. `TaskTransforms`를 통해 N-way K-shot과 같은 태스크 구성 조건을 함수 형태로 간단히 정의할 수 있으며, 이를 통해 임의의 PyTorch 데이터셋에서 메타 러닝용 태스크를 쉽게 샘플링할 수 있다.
-*   **Meta-RL Environments (`learn2learn.gym`)**: `MetaEnv` 인터페이스를 통해 OpenAI Gym 환경을 확장한다. 특히 `AsyncVectorEnv` 래퍼를 제공하여 여러 프로세스에서 에피소드 수집을 병렬화함으로써 학습 속도를 높인다.
+* **Differentiable Optimization (`learn2learn.optim`)**: 최적화 알고리즘의 그래디언트를 계산하는 복잡한 과정을 단순화한다. `ParameterUpdate` 클래스를 통해 그래디언트 변환(Gradient transform)을 정의하고, `update_module`을 통해 모델 파라미터를 미분 가능한 상태로 업데이트할 수 있다. 이를 통해 MAML, Hypergradient descent 등의 알고리즘을 훨씬 적은 양의 코드로 구현할 수 있다.
+* **Few-shot Data Pipeline (`learn2learn.data`)**: `TaskDataset`과 `TaskTransforms` 클래스를 제공한다. `TaskTransforms`를 통해 N-way K-shot과 같은 태스크 구성 조건을 함수 형태로 간단히 정의할 수 있으며, 이를 통해 임의의 PyTorch 데이터셋에서 메타 러닝용 태스크를 쉽게 샘플링할 수 있다.
+* **Meta-RL Environments (`learn2learn.gym`)**: `MetaEnv` 인터페이스를 통해 OpenAI Gym 환경을 확장한다. 특히 `AsyncVectorEnv` 래퍼를 제공하여 여러 프로세스에서 에피소드 수집을 병렬화함으로써 학습 속도를 높인다.
 
 ### 2. Reproducibility Tools
+
 기존 연구의 결과를 정확하게 재현하고 비교하기 위한 도구들이다.
 
-*   **Algorithm Implementations**: 저수준 루틴을 기반으로 검증된 고수준 알고리즘 구현체를 제공한다. `GBML` (Gradient-Based Meta-Learning) 래퍼를 통해 Meta-SGD, Meta-Curvature, Meta-KFO와 같은 알고리즘들을 일관된 인터페이스로 사용할 수 있다.
-*   **Standardized Benchmarks**: `learn2learn.vision`을 통해 mini-ImageNet, Omniglot, CIFAR-FS, FC100 등 표준 데이터셋의 전처리 및 태스크 정의(예: 5-way 1-shot)를 제공한다. 또한 `learn2learn.gym`에서는 MetaWorld와 같은 로봇 조작 태스크 벤치마크를 제공하여 방법론 간의 공정한 비교를 가능하게 한다.
+* **Algorithm Implementations**: 저수준 루틴을 기반으로 검증된 고수준 알고리즘 구현체를 제공한다. `GBML` (Gradient-Based Meta-Learning) 래퍼를 통해 Meta-SGD, Meta-Curvature, Meta-KFO와 같은 알고리즘들을 일관된 인터페이스로 사용할 수 있다.
+* **Standardized Benchmarks**: `learn2learn.vision`을 통해 mini-ImageNet, Omniglot, CIFAR-FS, FC100 등 표준 데이터셋의 전처리 및 태스크 정의(예: 5-way 1-shot)를 제공한다. 또한 `learn2learn.gym`에서는 MetaWorld와 같은 로봇 조작 태스크 벤치마크를 제공하여 방법론 간의 공정한 비교를 가능하게 한다.
 
 ## 📊 Results
 
 본 논문은 특정 알고리즘의 성능 향상을 주장하는 논문이 아니라 소프트웨어 라이브러리를 제안하는 논문이므로, 전통적인 성능 지표(Accuracy 등)의 비교 테이블보다는 라이브러리의 **기능적 유효성**과 **재현 가능성**을 중심으로 결과를 제시한다.
 
-*   **정성적 결과 및 구현 효율성**: 미분 가능한 최적화 루틴을 사용할 경우, vanilla PyTorch로 구현했을 때보다 코드 길이를 약 10배 정도 줄일 수 있음을 코드 스니펫을 통해 보여준다.
-*   **재현 사례**: 라이브러리에서 제공하는 표준 벤치마크와 알고리즘 구현체를 사용하여 ANIL(Rapid Learning or Feature Reuse?)과 같은 기존 논문의 실험을 정확하게 재현할 수 있음을 확인하였다.
-*   **확장성 확인**: 표준화된 인터페이스 덕분에 기존 연구(Omniglot, mini-ImageNet 기반)의 방법론을 새로운 데이터셋(CIFAR-FS, FC100)에 매우 쉽게 적용하여 추가 실험을 수행할 수 있음을 입증하였다.
+* **정성적 결과 및 구현 효율성**: 미분 가능한 최적화 루틴을 사용할 경우, vanilla PyTorch로 구현했을 때보다 코드 길이를 약 10배 정도 줄일 수 있음을 코드 스니펫을 통해 보여준다.
+* **재현 사례**: 라이브러리에서 제공하는 표준 벤치마크와 알고리즘 구현체를 사용하여 ANIL(Rapid Learning or Feature Reuse?)과 같은 기존 논문의 실험을 정확하게 재현할 수 있음을 확인하였다.
+* **확장성 확인**: 표준화된 인터페이스 덕분에 기존 연구(Omniglot, mini-ImageNet 기반)의 방법론을 새로운 데이터셋(CIFAR-FS, FC100)에 매우 쉽게 적용하여 추가 실험을 수행할 수 있음을 입증하였다.
 
 ## 🧠 Insights & Discussion
 

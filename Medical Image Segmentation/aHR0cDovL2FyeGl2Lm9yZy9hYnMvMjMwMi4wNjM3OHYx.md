@@ -14,8 +14,8 @@ Gabriela Csurka, Riccardo Volpi and Boris Chidlovskii (2023)
 
 본 논문의 주요 기여는 다음과 같이 두 가지 핵심 축으로 요약된다.
 
-1.  **SiS 연구의 포괄적 리뷰**: 초기 역사적 방법론부터 최신 딥러닝 기반 방법론, 그리고 최근의 트렌드인 Transformer 기반 모델까지 20년 간의 기술적 진화를 체계적으로 정리하였다. 특히 인코더/디코더 구조, 어텐션 메커니즘, 풀링 레이어 등의 특성에 따라 모델을 분류한 상세 표(Table 1.1)를 제공한다.
-2.  **DASiS 분야의 심층 분석**: 최근 5년간 급성장한 DASiS 분야를 집중 분석하였다. 합성-실제(Sim-to-Real) 적응을 중심으로 이미지 수준, 특징 수준, 출력 수준에서의 도메인 정렬(Domain Alignment) 기법을 분류하고, 이를 보완하는 다양한 기계학습 전략(Self-training, Entropy minimization 등)을 정리하였다. 또한, 다중 소스/타겟, 소스-프리(Source-free), 도메인 일반화(Domain Generalization)와 같은 확장된 시나리오를 다룬다.
+1. **SiS 연구의 포괄적 리뷰**: 초기 역사적 방법론부터 최신 딥러닝 기반 방법론, 그리고 최근의 트렌드인 Transformer 기반 모델까지 20년 간의 기술적 진화를 체계적으로 정리하였다. 특히 인코더/디코더 구조, 어텐션 메커니즘, 풀링 레이어 등의 특성에 따라 모델을 분류한 상세 표(Table 1.1)를 제공한다.
+2. **DASiS 분야의 심층 분석**: 최근 5년간 급성장한 DASiS 분야를 집중 분석하였다. 합성-실제(Sim-to-Real) 적응을 중심으로 이미지 수준, 특징 수준, 출력 수준에서의 도메인 정렬(Domain Alignment) 기법을 분류하고, 이를 보완하는 다양한 기계학습 전략(Self-training, Entropy minimization 등)을 정리하였다. 또한, 다중 소스/타겟, 소스-프리(Source-free), 도메인 일반화(Domain Generalization)와 같은 확장된 시나리오를 다룬다.
 
 ## 📎 Related Works
 
@@ -31,12 +31,15 @@ Gabriela Csurka, Riccardo Volpi and Boris Chidlovskii (2023)
 ### 1. Semantic Image Segmentation (SiS) 방법론
 
 #### 1.1 역사적 방법론 (Pre-Deep Learning)
+
 딥러닝 이전의 방법론은 크게 세 가지 방향에 집중하였다.
+
 - **지역 외관 모델링 (Local Appearance)**: SIFT, Textons, Fisher Vectors 등을 사용하여 픽셀 또는 패치 수준의 특징을 추출하였다.
 - **일관성 강화 (Consistency)**: Markov Random Field (MRF) 또는 Conditional Random Field (CRF)를 사용하여 인접 픽셀 간의 레이블 일관성을 보장하였다.
 - **사전 지식 활용 (Prior Knowledge)**: 이미지 수준의 분류 결과나 객체 형상 사전 지식을 활용하여 세그멘테이션 품질을 높였다.
 
 #### 1.2 딥러닝 기반 방법론
+
 - **FCN (Fully Convolutional Networks)**: 전결합층을 컨볼루션 층으로 대체하여 임의의 크기의 입력 이미지에 대해 밀집한 예측 맵을 생성한다.
 - **Encoder-Decoder 구조**: 인코더가 특징을 압축하고 디코더가 이를 다시 업샘플링하여 해상도를 복원한다. UNet, SegNet, DeConvNet 등이 대표적이며, Skip-connection을 통해 세부 공간 정보를 보존한다.
 - **Pyramidal Architectures**: PSPNet과 같이 다양한 스케일의 컨텍스트 정보를 수집하는 피라미드 풀링 모듈을 사용하여 지역적 모호성을 제거한다.
@@ -44,6 +47,7 @@ Gabriela Csurka, Riccardo Volpi and Boris Chidlovskii (2023)
 - **Attention & Transformers**: 전역적 컨텍스트를 캡처하기 위해 Self-attention 및 Vision Transformer (ViT) 기반 모델(예: SegFormer, Swin Transformer)이 도입되었다.
 
 #### 1.3 SiS 손실 함수
+
 가장 일반적인 손실 함수는 픽셀 단위의 Cross-Entropy Loss이다.
 $$L_{ce} = -\mathbb{E}_{(X,Y)} \left[ \sum_{h,w} y^{(h,w)} \cdot \log(p(F(x^{(h,w)}))) \right]$$
 여기서 $F$는 모델, $p$는 클래스 확률 벡터, $y$는 정답 원-핫 벡터이다. 클래스 불균형 문제를 해결하기 위해 가중치 기반 학습이나 IoU(Intersection over Union)를 직접 최적화하는 손실 함수가 사용된다.
@@ -51,14 +55,17 @@ $$L_{ce} = -\mathbb{E}_{(X,Y)} \left[ \sum_{h,w} y^{(h,w)} \cdot \log(p(F(x^{(h,
 ### 2. Domain Adaptation for SiS (DASiS) 방법론
 
 #### 2.1 기본 원리
+
 소스 도메인($D_S$, 레이블 있음)과 타겟 도메인($D_T$, 레이블 없음) 간의 분포 차이(Domain Shift)를 줄이는 것이 목표이다.
 
 #### 2.2 도메인 정렬 레벨 (Alignment Levels)
+
 - **이미지 수준 (Image-level)**: GAN 기반의 스타일 전이(Style Transfer)를 통해 소스 이미지의 외관을 타겟과 유사하게 변환한다. Cycle-consistency loss 등을 사용하여 구조적 특징을 보존한다.
 - **특징 수준 (Feature-level)**: 잠재 공간(Latent Space)에서 분포 간의 거리(MMD 등)를 최소화하거나, 도메인 판별자(Discriminator)를 속이는 적대적 학습(Adversarial Training)을 통해 도메인 불변 특징(Domain-invariant features)을 학습한다.
 - **출력 수준 (Output-level)**: 최종 예측 맵(Class-likelihood maps)의 분포를 정렬하여 도메인 간의 격차를 줄인다.
 
 #### 2.3 보완 기법 (Complementary Techniques)
+
 - **Self-training**: 타겟 데이터에 대해 신뢰도가 높은 예측값을 의사 레이블(Pseudo-labels)로 사용하여 모델을 재학습시킨다.
 - **Entropy Minimization**: 타겟 예측의 엔트로피를 최소화하여 예측 결과가 더 확신을 갖도록 유도한다.
 - **Co-training**: 서로 다른 두 모델의 예측 일치성을 높여 판별력을 강화한다.
@@ -68,29 +75,35 @@ $$L_{ce} = -\mathbb{E}_{(X,Y)} \left[ \sum_{h,w} y^{(h,w)} \cdot \log(p(F(x^{(h,
 본 논문은 특정 모델의 성능을 측정하는 실험 논문이 아니라 서베이 논문이므로, 기존 연구들에서 사용된 데이터셋과 평가지표를 정리하여 제시한다.
 
 ### 1. 주요 데이터셋
+
 - **Object Segmentation**: PASCAL VOC, MS COCO
 - **Image Parsing**: ADE20K
 - **Autonomous Driving (AD)**: Cityscapes (실제), GTA-5 (합성), SYNTHIA (합성), BDD100K, ACDC (다양한 기상 조건)
 
 ### 2. 평가 지표
+
 - **mIoU (mean Intersection over Union)**: 각 클래스별 IoU의 평균으로, SiS의 표준 지표이다.
 - **Pixel Accuracy**: 전체 픽셀 중 정답을 맞춘 비율이다.
 - **BCM Score**: 경계선 세그멘테이션의 품질을 측정하는 지표이다.
 
 ### 3. DASiS 벤치마크
+
 가장 널리 사용되는 설정은 **GTA-5 $\rightarrow$ Cityscapes** (Sim-to-Real) 적응 작업이다. 최근에는 실제 환경의 다양한 기상 조건을 포함한 ACDC 데이터셋 등이 중요하게 다뤄지고 있다.
 
 ## 🧠 Insights & Discussion
 
 ### 1. 강점 및 기술적 흐름
+
 본 보고서는 SiS 기술이 **'지역적 특징 추출 $\rightarrow$ 전역적 컨텍스트 통합 $\rightarrow$ 도메인 간 일반화'** 순으로 발전해 왔음을 명확히 보여준다. 특히 CNN의 수용 영역 한계를 극복하기 위해 Dilated Convolution에서 시작하여, 최종적으로 Transformer의 전역 어텐션으로 이행한 흐름이 인상적이다.
 
 ### 2. 한계 및 미해결 과제
+
 - **데이터 의존성**: 딥러닝 모델은 여전히 대량의 데이터에 의존하며, DASiS 기술이 발전했음에도 불구하고 합성 데이터와 실제 데이터 사이의 근본적인 '현실성 격차(Reality Gap)'를 완벽히 메우는 것은 여전히 어렵다.
 - **계산 효율성**: Transformer 기반 모델은 높은 정확도를 보이지만, 픽셀 단위의 밀집 예측 작업 특성상 계산 복잡도가 매우 높아 실시간 자율주행 시스템에 적용하기 위한 경량화 연구가 필수적이다.
 - **OOD(Out-of-Distribution) 문제**: 훈련 단계에서 보지 못한 새로운 클래스가 등장했을 때 이를 탐지하고 처리하는 능력(Unknown class detection)은 여전히 도전적인 과제이다.
 
 ### 3. 비판적 해석
+
 논문은 광범위한 방법론을 체계적으로 분류하여 훌륭한 가이드를 제공하지만, 개별 방법론들의 정량적 성능 비교(Benchmark Table)보다는 분류(Taxonomy)에 치중되어 있다. 향후 연구에서는 각 분류군별 대표 모델들의 성능 지표를 통합 비교함으로써, 어떤 아키텍처가 특정 도메인 적응 시나리오에서 가장 효율적인지를 제시할 필요가 있다.
 
 ## 📌 TL;DR

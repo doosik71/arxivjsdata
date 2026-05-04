@@ -4,7 +4,7 @@ Qiuhao Zeng, Tianze Luo, Boyu Wang (2022)
 
 ## 🧩 Problem to Solve
 
-본 논문은 비지도 도메인 적응(Unsupervised Domain Adaptation, UDA)에서 발생하는 **도메인 간의 큰 격차(Large Domain Discrepancies)** 문제를 해결하고자 한다. 
+본 논문은 비지도 도메인 적응(Unsupervised Domain Adaptation, UDA)에서 발생하는 **도메인 간의 큰 격차(Large Domain Discrepancies)** 문제를 해결하고자 한다.
 
 일반적으로 UDA는 라벨이 있는 소스 도메인(Source Domain)의 지식을 라벨이 없는 타겟 도메인(Target Domain)으로 전이하는 것을 목표로 한다. 기존의 많은 연구들은 소스 도메인과 타겟 도메인의 분포를 직접적으로 일치시키려 시도한다. 그러나 두 도메인 사이의 간극이 매우 클 경우, 다음과 같은 심각한 문제들이 발생한다.
 
@@ -24,19 +24,23 @@ Qiuhao Zeng, Tianze Luo, Boyu Wang (2022)
 ## 📎 Related Works
 
 ### 기존 연구 및 한계
+
 - **분포 정렬 기반 UDA**: MMD(Maximum Mean Discrepancy)나 Wasserstein 거리 등을 사용하여 두 도메인의 표현 분포를 명시적으로 최소화하는 방식이 있다.
 - **적대적 학습 기반 UDA**: DANN과 같이 도메인 판별자(Domain Discriminator)를 속이는 방식으로 도메인 불변 표현(Domain-invariant representation)을 학습한다.
 - **데이터 증강 기반 UDA**: MixMatch, GAN 기반 증강, TSA(Transferable Semantic Augmentation) 등이 존재한다.
 
 ### DADA의 차별점
+
 기존의 증강 기법들이 주로 입력 이미지 수준의 변형이나 단순한 특징 혼합(mix-up)에 의존했다면, DADA는 **학습 가능한 도메인 생성기(Learnable Domain Generator)**를 사용하여 소스 도메인을 기반으로 새로운 의사 도메인들을 생성한다. 특히, 타겟 도메인과의 거리(MMD)를 예측하고 이를 기반으로 최적의 도메인을 선택하여 정렬한다는 점에서 기존의 직접적인 정렬 방식과 차별화된다.
 
 ## 🛠️ Methodology
 
 ### 1. 전체 시스템 구조
+
 DADA의 파이프라인은 크게 특징 추출기(Feature Extractor), 의사 도메인 생성기(Pseudo Domain Generator), 도메인 격차 추정기(Domain Discrepancy Estimator), 그리고 분류기로 구성된다.
 
 ### 2. 의사 도메인 생성 (Pseudo Domain Generation)
+
 - **도메인 사전(Domain Prior)**: $\gamma_j \in [-0.5, 0.5]$ 범위의 균등 분포에서 샘플링된 $m$개의 스칼라 값이다.
 - **생성 과정**: 특징 추출기에서 나온 소스 특징 $Z_s$와 도메인 사전 $\gamma_j$를 결합(concatenate)하여 MLP 기반의 생성기 $f_g$에 입력한다. 결과적으로 $m$개의 의사 도메인 $\{Z_j\}_{j=1}^m$이 생성된다.
 - **도메인 일관성 손실(Domain Consistency Loss, $\ell_c$)**: 생성된 의사 도메인의 샘플이 원래 소스 샘플의 정체성을 유지하도록 대조 학습(Contrastive Learning)을 적용한다. 동일 샘플 쌍은 가깝게, 다른 라벨의 샘플 쌍은 멀게 배치한다.
@@ -44,6 +48,7 @@ $$\ell_c^j = -\sum_{i=1}^N \frac{\text{sim}(z_i, \hat{z}_j^i)}{\text{sim}(z_i, \
 여기서 $\text{sim}$은 bilinear 함수를 통해 계산된다.
 
 ### 3. 도메인 격차 추정 및 최소화
+
 - **격차 추정 ($\ell_{dde}$)**: MLP 기반의 예측기 $\delta$가 도메인 사전 $\gamma$를 입력받아 타겟 도메인과의 MMD 값을 예측하도록 학습한다.
 $$\ell_{dde}(\gamma, Z_t) = (\text{MMD}(Z_\gamma, Z_t) - \delta(\gamma))^2$$
 - **의사 도메인 간 격차 최대화 ($\ell_{ddm}$)**: 생성된 의사 도메인들이 서로 중복되지 않고 타겟 주변의 넓은 공간을 커버하도록 의사 도메인 간의 MMD를 최대화한다.
@@ -52,29 +57,34 @@ $$\ell_{ddm} = \sum_{i,j \in m, i \neq j} -\text{MMD}(Z_{\gamma_i}, Z_{\gamma_j}
 $$\ell_D = \sum_{j=1}^m w_j \text{MMD}(Z_t, Z_j)$$
 
 ### 4. 의사 라벨링 및 손실 함수
+
 - **역방향 의사 라벨링**: 타겟 데이터를 의사 도메인으로 투영하기 위해, 두 도메인의 평균(mean) 차이를 타겟 데이터에 더해주는 단순 이동 방식을 사용한다.
 $$\hat{Z}_{\gamma_j} = Z_t + \left( \frac{1}{n} \sum_{i=1}^n z_{\gamma_j}^i - \frac{1}{n} \sum_{i=1}^n z_t^i \right)$$
 이후 여러 의사 도메인 분류기의 예측 확률을 평균 내어 최종 의사 라벨 $\hat{y}_t$를 결정한다.
 - **손실 함수**:
-    - **타겟 자기지도 손실 ($\ell_{t\_sup}$)**: 의사 라벨을 이용한 교차 엔트로피 손실과 상호 정보량(Mutual Information, $\ell_{MI}$) 규제 항을 합산한다.
-    - **소스/의사 도메인 지도 손실 ($\ell_{s\_sup}$)**: 소스 데이터와 생성된 모든 의사 도메인 데이터에 대해 지도 학습을 수행한다.
+  - **타겟 자기지도 손실 ($\ell_{t\_sup}$)**: 의사 라벨을 이용한 교차 엔트로피 손실과 상호 정보량(Mutual Information, $\ell_{MI}$) 규제 항을 합산한다.
+  - **소스/의사 도메인 지도 손실 ($\ell_{s\_sup}$)**: 소스 데이터와 생성된 모든 의사 도메인 데이터에 대해 지도 학습을 수행한다.
 
 ### 5. 최종 통합 손실 함수
+
 $$L = \ell_{s\_sup} + \lambda_1 \ell_{t\_sup} + \lambda_2 \ell_c + \lambda_3 \ell_D + \lambda_4 \ell_{ddm} + \lambda_5 \ell_{dde}$$
 
 ## 📊 Results
 
 ### 실험 설정
+
 - **데이터셋**: Office-Home, Office-31, VisDA-2017, Digital datasets (MNIST, USPS, SVHN).
 - **백본**: ResNet-50 (Office-Home/31), ResNet-101 (VisDA-2017).
 - **비교 대상**: JAN, TAT, TPN, GSP, GVB-GD, TSA 등 최신 UDA 방법론.
 
 ### 주요 결과
+
 1. **정량적 성능**: 모든 벤치마크 데이터셋에서 전반적으로 SOTA 수준의 성능을 달성하였다. 특히 Office-Home에서 평균 72.0%의 정확도를 기록하여 기존 TSA(71.2%)보다 향상된 결과를 보였다.
 2. **도메인 특성별 성능**: 합성 데이터 $\to$ 실제 데이터(예: Cl $\to$ Rw, Pr $\to$ Rw) 전이 작업에서 매우 강한 성능을 보였는데, 이는 의사 도메인이 실제 데이터의 높은 분산을 효과적으로 커버했기 때문으로 분석된다.
 3. **VisDA-2017**: 도메인 격차가 매우 큰 대규모 데이터셋에서도 특히 truck, skate board, knife 클래스에서 괄목할 만한 성능 향상을 보였다.
 
 ### 소거 연구 (Ablation Study)
+
 - **의사 도메인 효과**: 의사 도메인 생성만 추가했을 때 평균 정확도가 82.2% $\to$ 85.5%로 약 3% 향상되었다.
 - **도메인 분리 ($\ell_{ddm}$)**: 의사 도메인들이 서로 멀어지게 함으로써 타겟 주변 공간을 더 잘 표현하게 되었고, 정확도가 87.0% $\to$ 88.6%로 상승하였다.
 - **매핑 기법**: 제안된 역방향 의사 라벨링 매핑을 적용했을 때 단순 예측값 사용 시보다 성능이 88.6% $\to$ 89.3%로 향상되었다.
@@ -83,10 +93,12 @@ $$L = \ell_{s\_sup} + \lambda_1 \ell_{t\_sup} + \lambda_2 \ell_c + \lambda_3 \el
 ## 🧠 Insights & Discussion
 
 ### 강점
+
 - **완충 지대 형성**: 소스와 타겟을 직접 맞추는 대신, 학습 가능한 의사 도메인을 통해 "징검다리"를 놓음으로써 급격한 도메인 시프트로 인한 부작용(클래스 불일치 등)을 효과적으로 완화하였다.
 - **유연한 적응**: 고정된 증강이 아니라 타겟 도메인의 분포에 맞춰 적응적으로 생성되는 의사 도메인을 활용하므로 범용성이 높다.
 
 ### 한계 및 논의
+
 - **학습 시간 증가**: 여러 개의 의사 도메인을 생성하고 학습해야 하므로 연산량이 증가한다. 하지만 논문의 효율성 분석에 따르면, $m=4$일 때 추가 연산 시간이 약 8.1%에 불과하여 실용적인 수준임을 입증하였다.
 - **가정 사항**: 도메인 사전 $\gamma$를 $[-0.5, 0.5]$ 범위의 균등 분포에서 샘플링하는데, 이 범위가 모든 도메인 적응 문제에서 최적인지에 대한 추가 논의가 필요하다.
 

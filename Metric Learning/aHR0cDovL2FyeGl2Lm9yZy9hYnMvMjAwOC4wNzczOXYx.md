@@ -23,16 +23,19 @@ Lifeng Gu (2020)
 ## 🛠️ Methodology
 
 ### 전체 시스템 구조 및 목적 함수
+
 본 논문은 특성 공간에서의 샘플 관계를 다음과 같이 정의한다.
 $$f(x_i, x_j, M, b) = (x_i - x_j)^T M (x_i - x_j) + b = \langle M, T_{ij} \rangle + b$$
 여기서 $T_{ij} = (x_i - x_j)(x_i - x_j)^T$는 샘플 쌍의 scaled second sample moment이며, $\langle \cdot, \cdot \rangle$는 Frobenius 내적을 의미한다. 학습의 목표는 이 함수값이 결정 공간의 관계 함수 $g(y_i, y_j)$와 최대한 일치하도록 하는 것이다.
 
 ### 1. RAML-PCSVR
+
 RAML-PCSVR은 기존 RAML의 듀얼 최적화 문제에 직접적인 제약 조건을 추가하는 방식이다. 거리 행렬 $M$의 해가 다음과 같이 표현될 때:
 $$M = \sum_{i=1}^n (a_i - a_i^*) T_i$$
 여기서 $a_i, a_i^*$는 라그랑주 승수이다. 본 논문은 $a_i \ge a_i^*$라는 제약 조건을 추가함으로써 $M$이 항상 PSD가 됨을 증명하였다. 임의의 벡터 $\mu$에 대해 $\mu^T M \mu = \sum (a_i - a_i^*) (\mu^T (x_{i1} - x_{i2}))^2 \ge 0$이 성립하기 때문이다.
 
 ### 2. RAML-NCSVR
+
 RAML-NCSVR은 듀얼 문제의 수정이 아닌, primal formulation 단계에서 $M$을 다음과 같이 정의하여 PSD를 보장한다.
 $$M = \sum_{i=1}^n \mu_i T_i, \quad \text{where } \mu_i \ge 0$$
 이를 위해 다음과 같은 최적화 문제를 푼다.
@@ -40,6 +43,7 @@ $$\min_{\mu, \xi, \xi^*} \frac{1}{2} \sum_{i,j=1}^n \mu_i \mu_j \langle T_i, T_j
 제약 조건은 $\epsilon$-insensitive loss 함수를 따르며, $\mu_i \ge 0$ 조건을 포함한다. 이 문제는 직접 풀기 어렵기 때문에 보조 변수 $\rho$를 도입하고, $\alpha, \alpha^*$와 $\rho$를 번갈아 업데이트하는 교대 최적화(Alternative Optimization) 방식을 통해 해결한다.
 
 ### 학습 절차 (Algorithm 1)
+
 1. 학습 데이터에서 샘플 쌍 $(x_{i1}, x_{i2})$을 생성하고 결정 공간의 관계 $g(x_{i1}, x_{i2})$를 계산한다.
 2. **RAML-PCSVR**의 경우: QP(Quadratic Programming)를 통해 제약 조건 $a_i \ge a_i^*$를 만족하는 해를 구한다.
 3. **RAML-NCSVR**의 경우: $\alpha, \alpha^*$를 업데이트한 후 $\rho$를 업데이트하고, 최종적으로 $\mu$를 결정할 때까지 반복한다.
@@ -48,14 +52,16 @@ $$\min_{\mu, \xi, \xi^*} \frac{1}{2} \sum_{i,j=1}^n \mu_i \mu_j \langle T_i, T_j
 ## 📊 Results
 
 ### 실험 설정
-- **작업 및 데이터셋**: 
-    - 단일 라벨 분류: Binalpha, Caltech101, MnistDat, Mpeg7, News20, TDT20, USPST
-    - 멀티 라벨 분류: Emotion, Flags, Corel800
-    - 라벨 분포 학습: Nature Scene (2,000장 이미지, 9개 라벨)
+
+- **작업 및 데이터셋**:
+  - 단일 라벨 분류: Binalpha, Caltech101, MnistDat, Mpeg7, News20, TDT20, USPST
+  - 멀티 라벨 분류: Emotion, Flags, Corel800
+  - 라벨 분포 학습: Nature Scene (2,000장 이미지, 9개 라벨)
 - **비교 대상**: ITML, LMNN, DML, DSVM, GMML 및 기존 RAML-SVR, MLKNN, AAKNN 등
 - **평가 지표**: 정확도(Accuracy), Hamming loss, Ranking loss, Average Precision, 그리고 라벨 분포 학습을 위한 Chebyshev, Clark distance 등
 
 ### 주요 결과
+
 - **단일 라벨 분류**: 대부분의 데이터셋에서 RAML-PCSVR와 RAML-NCSVR가 기존 RAML-SVR 및 다른 baseline들보다 우수한 정확도를 보였다. 특히 SVD를 통한 근사치를 사용한 RAML-SVR보다 성능이 향상되었는데, 이는 PSD 조건을 직접 학습함으로써 거리 행렬의 변별력이 유지되었기 때문이다.
 - **멀티 라벨 분류**: MLKNN 대비 모든 지표(Hamming Loss $\downarrow$, Average Precision $\uparrow$ 등)에서 우수한 성능을 보였으며, 특히 RAML-NCSVR가 가장 좋은 성능을 기록하였다.
 - **라벨 분포 학습**: AAKNN 대비 예측 분포와 실제 분포 사이의 거리가 더 가깝게 학습됨을 확인하였다.

@@ -7,6 +7,7 @@ Yang Wu, Shilong Wang, Hao Yang, Tian Zheng, Hongbo Zhang, Yanyan Zhao, Bing Qin
 본 논문은 최근 공개된 멀티모달 거대언어모델(MLLM)인 GPT-4V의 능력을 정량적으로 평가하는 것을 목표로 한다. GPT-4V가 다양한 시각적, 언어적 작업에서 뛰어난 성능을 보인다는 보고는 있었으나, 구체적으로 어떤 한계가 있으며 어떤 영역에서 강점을 보이는지에 대한 정밀한 정량적 분석은 부족한 상태였다.
 
 따라서 저자들은 다음과 같은 핵심 질문들에 답하고자 한다.
+
 - 시각 중심 벤치마크(Image Captioning, VQA)에서 현재의 SOTA 모델(예: Qwen-VL-Chat)을 능가하는가?
 - 시각 인지 능력이 추가된 후에도 기존 GPT-4의 언어 이해 능력이 유지되는가? 혹은 시각적 상식 및 물리 지식을 더 잘 포착하는가?
 - Few-shot prompting(소수 예시 제공)이 성능 향상에 기여하는가?
@@ -29,9 +30,11 @@ Yang Wu, Shilong Wang, Hao Yang, Tian Zheng, Hongbo Zhang, Yanyan Zhao, Bing Qin
 ## 🛠️ Methodology
 
 ### 전체 평가 파이프라인
+
 연구진은 656개의 테스트 사례를 다섯 가지 영역(시각 이해, 언어 이해, 시각 퍼즐, 타 모달리티 인식, 프롬프팅 영향)으로 나누어 평가를 진행하였다.
 
 ### 주요 구성 요소 및 절차
+
 1. **시각 이해(Visual Understanding)**:
    - **데이터셋**: Nocaps, Flickr30K(캡셔닝), VQAv2, OKVQA, GQA, ScienceQA, Vizwiz VQA(VQA).
    - **프롬프팅**: Zero-shot과 Few-shot(3-shot) 방식을 적용하였다. Few-shot의 경우, GPT-4V가 이미지 업로드 순서를 인식할 수 있다는 점을 이용하여 이미지와 질문-답변 쌍을 순서대로 배치하였다.
@@ -55,20 +58,24 @@ Yang Wu, Shilong Wang, Hao Yang, Tian Zheng, Hongbo Zhang, Yanyan Zhao, Bing Qin
 ## 📊 Results
 
 ### 1. 시각 이해 (Visual Understanding)
+
 - **인간 평가 결과**: 대부분의 벤치마크에서 GPT-4V가 Qwen-VL-Chat보다 우수한 성능을 보였다. 특히 OCR-VQA에서는 $100\%$의 정확도를 기록하였다.
 - **자동 지표의 한계**: GPT-4V의 답변이 너무 상세하여 정답지(Ground Truth)와 문자열 일치도가 낮아, EM Accuracy나 CIDEr 점수는 매우 낮게 측정되었다. (예: GQA에서 GPT-4V의 EM Accuracy는 $10.0$으로 낮았으나, 실제 내용은 정답인 경우가 많았다.)
 - **Few-shot 효과**: VQA 작업에서 Few-shot 프롬프팅을 적용했을 때 성능이 향상되어 In-context Learning 능력이 있음을 확인하였다.
 
 ### 2. 언어 이해 (Language Understanding)
+
 - **GPT-4 API와의 비교**: Zero-shot 환경에서 GPT-4V는 MMLU, HellaSwag 등에서 GPT-4 API보다 약간 낮은 성능을 보였다.
 - **시각적 상식 및 물리 지식**: ViComTe에서는 두 모델 모두 우수했으나, UTOPIA(물리 지식)에서는 GPT-4V가 GPT-4 API보다 특별히 우위에 있지 않았다.
 
 ### 3. 시각적 퍼즐 해결 (Visual Puzzle Solving)
+
 - **Spot the Difference**: 두 이미지 간의 미세한 차이를 포착하는 데 어려움을 겪었으며, 환각(Hallucination) 현상이 관찰되었다.
 - **Draw & Guess**: 전반적으로 양호한 성능을 보였으나, 일부 복잡한 객체(예: 인형 뽑기 기계를 세탁기로 인식)에서 오류가 발생하였다.
 - **Math Picture Puzzle**: 10문제 중 단 1문제만 맞추는 매우 낮은 성능을 보였다. 이는 이미지 내 수식 인식 단계에서 오류가 발생하여 연쇄적인 계산 실수로 이어졌기 때문이다.
 
 ### 4. 타 모달리티 인식 (Other Modalities)
+
 - **Depth**: 20문제 중 4문제 정답.
 - **Thermal**: 20문제 중 9문제 정답 (보행자 탐지 능력이 어느 정도 존재함).
 - **Video**: 20문제 중 6문제 정답 (프레임 수 제한으로 인해 전체 흐름 파악에 어려움이 있음).
@@ -77,13 +84,15 @@ Yang Wu, Shilong Wang, Hao Yang, Tian Zheng, Hongbo Zhang, Yanyan Zhao, Bing Qin
 ## 🧠 Insights & Discussion
 
 ### 강점 및 한계
+
 - **강점**: 영어 기반의 시각-언어 통합 이해 능력과 상세한 묘사 능력이 매우 뛰어나다.
 - **한계**:
-    - **언어적 편향**: 영어 OCR은 완벽에 가깝지만, 중국어 인식은 전혀 되지 않는다. 이는 학습 데이터의 불균형 가능성을 시사한다.
-    - **추론의 괴리**: 텍스트 기반 수학 능력과 시각 기반 수학 능력 사이에 큰 간극이 존재한다. 이는 모델이 시각적 정보를 수학적 기호로 변환하는 과정(Visual-to-Symbolic translation)에서 병목 현상이 발생함을 의미한다.
-    - **안전 가드레일의 오작동**: 민감한 특성에 대한 거부 행동이 일관되지 않다. 예를 들어 "남자가 어디에 있는가?"는 거부하면서 "여성 보행자가 어느 쪽에 있는가?"는 수용하는 등의 모순적인 태도를 보인다.
+  - **언어적 편향**: 영어 OCR은 완벽에 가깝지만, 중국어 인식은 전혀 되지 않는다. 이는 학습 데이터의 불균형 가능성을 시사한다.
+  - **추론의 괴리**: 텍스트 기반 수학 능력과 시각 기반 수학 능력 사이에 큰 간극이 존재한다. 이는 모델이 시각적 정보를 수학적 기호로 변환하는 과정(Visual-to-Symbolic translation)에서 병목 현상이 발생함을 의미한다.
+  - **안전 가드레일의 오작동**: 민감한 특성에 대한 거부 행동이 일관되지 않다. 예를 들어 "남자가 어디에 있는가?"는 거부하면서 "여성 보행자가 어느 쪽에 있는가?"는 수용하는 등의 모순적인 태도를 보인다.
 
 ### 비판적 해석
+
 GPT-4V는 강력한 General-purpose 모델임에도 불구하고, '정밀한 차이 탐색'이나 '특수 모달리티 인식'과 같은 전문적인 영역에서는 여전히 한계가 명확하다. 특히 자동 평가 지표가 모델의 실제 능력을 과소평가하게 만드는 현상은, 향후 MLLM 평가 체계가 단순히 텍스트 일치도를 넘어 의미적 유사성을 측정하는 방향으로 전환되어야 함을 시사한다.
 
 ## 📌 TL;DR

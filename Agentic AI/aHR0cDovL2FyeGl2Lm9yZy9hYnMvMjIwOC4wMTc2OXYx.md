@@ -7,6 +7,7 @@ Ibrahim H. Ahmed, Cillian Brewitt, Ignacio Carlucho, Filippos Christianos, Mhair
 본 논문은 에든버러 대학교의 Autonomous Agents Research Group에서 수행한 연구 포트폴리오를 정리한 보고서 형식의 논문이다. 주된 해결 과제는 복잡한 환경에서 다른 에이전트와 상호작용하며 주어진 과업을 완수할 수 있는 자율 에이전트(Autonomous Agents)를 개발하는 것이다.
 
 구체적으로는 다음과 같은 세부 문제들을 해결하고자 한다.
+
 - **Multi-Agent Reinforcement Learning (MARL)의 확장성 문제**: 에이전트 수가 증가함에 따라 공동 결정 공간(joint decision space)이 기하급수적으로 커지는 문제를 해결하고, 효율적인 협력 정책 및 통신 방법을 학습시키는 것이 목표이다.
 - **Ad Hoc Teamwork의 적응성**: 사전 협의나 공동 훈련 없이도 동적으로 구성된 팀에서 즉각적으로 협력해야 하는 상황에서, 제한된 관측 정보만으로 타 에이전트의 행동과 목표를 추론하고 적응하는 능력을 확보하고자 한다.
 - **단일 에이전트 RL의 샘플 효율성**: 환경과의 상호작용을 최소화하면서도 최적의 정책을 학습할 수 있도록 intrinsic motivation, curriculum learning 등을 통한 효율적인 학습 방법을 연구한다.
@@ -34,24 +35,29 @@ Ibrahim H. Ahmed, Cillian Brewitt, Ignacio Carlucho, Filippos Christianos, Mhair
 본 논문은 여러 연구를 포함하고 있으므로, 핵심 방법론들을 체계적으로 설명한다.
 
 ### 1. Multi-Agent Reinforcement Learning
+
 - **SEAC (Shared Experience Actor-Critic)**: 서로 다른 에이전트가 생성한 경험을 결합하여 학습 그래디언트를 생성한다. 이때 off-policy correction을 위해 importance weighting을 사용한다.
 - **SePS (Selective Parameter Sharing)**: 모든 에이전트가 파라미터를 공유하는 대신, encoder-decoder 구조로 에이전트 ID를 임베딩하고 비지도 클러스터링을 통해 공유 그룹을 자동으로 결정한다.
 - **Emergent Language Expressivity**: 통신 채널의 표현력(expressivity)을 단순한 상호 정보량(mutual information)이 아닌, 과업 간 일반화 성능의 부분 순서(partial ordering)로 측정하는 방법을 제안한다.
 
 ### 2. Ad Hoc Teamwork
+
 - **GPL (Graph-based Policy Learning)**: GNN을 사용하여 동적인 팀 구성에 대응한다. coordination graph를 기반으로 joint action value 모델을 학습하며, 팀원의 행동 예측 모듈을 추가하여 불확실성을 모델링한다.
 - **LIAM (Local Information Agent Modelling)**: 에이전트의 국소적 궤적과 모델링 대상 에이전트의 궤적을 연결하는 표현력을 학습하는 encoder-decoder 모델이다. 훈련은 centralized 방식으로 수행하지만, 실행은 decentralized 방식으로 이루어진다.
 
 ### 3. Single-Agent RL
+
 - **DeRL (Decoupled RL)**: 탐색(exploration)과 활용(exploitation)을 위한 정책을 분리하여 훈련한다.
   - 탐색 정책: $\text{intrinsic reward} + \text{extrinsic reward}$로 학습.
   - 활용 정책: $\text{extrinsic reward}$로만 학습하며, 탐색 정책이 수집한 데이터를 사용한다.
 
 ### 4. Autonomous Driving
+
 - **IGP2**: 합리적 역계획을 통해 타 차량의 목표 확률을 추론하고, 이를 MCTS(Monte Carlo Tree Search) 기반 모션 플래너에 입력하여 최적의 경로를 생성한다.
 - **GRIT**: 차량 궤적 데이터로부터 결정 트리를 구축하여 목표를 인식한다. 이는 명제 논리로 변환하여 SMT(satisfiability modulo theories) 솔버를 통해 정형 검증이 가능하다.
 
 ### 5. Secure Authentication (AMI)
+
 - **AMI**: 마스터 키로 사용되는 private agent model을 기반으로 상호작용 전사(interaction transcript)를 생성한다.
 - **Optimization**: PPO 알고리즘을 사용하여 서버의 행동 모델을 학습시킨다. 목적 함수는 통계적 가설 검정에서 공격자를 가장 빠르게 기각($p\text{-value}$를 낮춤)할 수 있는 쿼리를 생성하는 것이다.
 
