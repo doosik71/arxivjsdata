@@ -92,7 +92,7 @@ $$\eta_i(x, y) = \lambda C + (1-\lambda) S(R(p(x, y)), R^t_i)$$
 
 ### 주요 결과
 
-1. **Motion Model의 중요성**: 실험 결과 $\text{Tracktor} < \text{Flow} < \text{IMM} < \text{EMM}$ 순으로 성능이 향상됨을 확인하였다. 특히 빠른 움직임이 특징인 CRP 데이터셋에서 SiamMOT는 Tracktor + Flow 대비 MOTA가 35, IDF1이 25 포인트 상승하는 비약적인 성능 향상을 보였다.
+1. **Motion Model의 중요성**: 실험 결과 Tracktor &lt; Flow < IMM &lt; EMM 순으로 성능이 향상됨을 확인하였다. 특히 빠른 움직임이 특징인 CRP 데이터셋에서 SiamMOT는 Tracktor + Flow 대비 MOTA가 35, IDF1이 25 포인트 상승하는 비약적인 성능 향상을 보였다.
 2. **정량적 성능 (MOT17)**: EMM을 사용한 SiamMOT는 65.9 MOTA / 63.3 IDF1를 달성하여, CenterTrack(61.5 MOTA)을 포함한 기존 SOTA 모델들을 압도하였다.
 3. **정량적 성능 (TAO-person)**: Tracktor++(36.7 TAP) 대비 41.1 TAP를 기록하며 성능을 크게 향상시켰으며, Re-ID 모델과 결합했을 때 더욱 높은 성능을 보였다.
 4. **HiEve 챌린지**: DLA-169 백본을 사용한 모델이 이전 챌린지 우승자들의 성능을 모두 경신하였다.
