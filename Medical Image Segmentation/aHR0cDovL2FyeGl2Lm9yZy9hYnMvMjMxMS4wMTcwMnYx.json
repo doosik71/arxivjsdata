@@ -1,8 +1,0 @@
-{
-  "title": "Medical Image Segmentation with Domain Adaptation: A Survey",
-  "authors": "Yuemeng Li, Yong Fan",
-  "year": 2023,
-  "url": "http://arxiv.org/abs/2311.01702v1",
-  "abstract": "Deep learning (DL) has shown remarkable success in various medical imaging data analysis applications. However, it remains challenging for DL models to achieve good generalization, especially when the training and testing datasets are collected at sites with different scanners, due to domain shift caused by differences in data distributions. Domain adaptation has emerged as an effective means to address this challenge by mitigating domain gaps in medical imaging applications. In this review, we specifically focus on domain adaptation approaches for DL-based medical image segmentation. We first present the motivation and background knowledge underlying domain adaptations, then provide a comprehensive review of domain adaptation applications in medical image segmentations, and finally discuss the challenges, limitations, and future research trends in the field to promote the methodology development of domain adaptation in the context of medical image segmentation. Our goal was to provide researchers with up-to-date references on the applications of domain adaptation in medical image segmentation studies.",
-  "citation": 6
-}

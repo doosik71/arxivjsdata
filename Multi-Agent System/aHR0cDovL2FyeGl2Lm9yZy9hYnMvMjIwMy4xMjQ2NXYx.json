@@ -1,8 +1,0 @@
-{
-  "title": "Multi-agent Searching System for Medical Information",
-  "authors": "Mariya Evtimova-Gardair",
-  "year": 2022,
-  "url": "http://arxiv.org/abs/2203.12465v1",
-  "abstract": "In the paper is proposed a model of multi-agent security system for searching a medical information in Internet. The advantages when using mobile agent are described, so that to perform searching in Internet. Nowadays, multi-agent systems found their application into distribution of decisions. For modeling the proposed multi-agent medical system is used JADE. Finally, the results when using mobile agent are generated that could reflect performance when working with BIG DATA. The proposed system is having also relatively high precision 96%.",
-  "citation": 0
-}

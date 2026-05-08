@@ -1,8 +1,0 @@
-{
-  "title": "Swin Deformable Attention Hybrid U-Net for Medical Image Segmentation",
-  "authors": "Lichao Wang, Jiahao Huang, Xiaodan Xing, Guang Yang",
-  "year": 2023,
-  "url": "http://arxiv.org/abs/2302.14450v2",
-  "abstract": "Medical image segmentation is a crucial task in the field of medical image analysis. Harmonizing the convolution and multi-head self-attention mechanism is a recent research focus in this field, with various combination methods proposed. However, the lack of interpretability of these hybrid models remains a common pitfall, limiting their practical application in clinical scenarios. To address this issue, we propose to incorporate the Shifted Window (Swin) Deformable Attention into a hybrid architecture to improve segmentation performance while ensuring explainability. Our proposed Swin Deformable Attention Hybrid UNet (SDAH-UNet) demonstrates state-of-the-art performance on both anatomical and lesion segmentation tasks. Moreover, we provide a direct and visual explanation of the model focalization and how the model forms it, enabling clinicians to better understand and trust the decision of the model. Our approach could be a promising solution to the challenge of developing accurate and interpretable medical image segmentation models.",
-  "citation": 3
-}

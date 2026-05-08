@@ -1,7 +1,0 @@
-{
-  "title": "Mixing Data Augmentation with Preserving Foreground Regions in Medical Image Segmentation",
-  "authors": "Xiaoqing Liu, Kenji Ono, Ryoma Bise",
-  "year": 2023,
-  "url": "http://arxiv.org/abs/2304.13490v1",
-  "abstract": "The development of medical image segmentation using deep learning can significantly support doctors' diagnoses. Deep learning needs large amounts of data for training, which also requires data augmentation to extend diversity for preventing overfitting. However, the existing methods for data augmentation of medical image segmentation are mainly based on models which need to update parameters and cost extra computing resources. We proposed data augmentation methods designed to train a high accuracy deep learning network for medical image segmentation. The proposed data augmentation approaches are called KeepMask and KeepMix, which can create medical images by better identifying the boundary of the organ with no more parameters. Our methods achieved better performance and obtained more precise boundaries for medical image segmentation on datasets. The dice coefficient of our methods achieved 94.15% (3.04% higher than baseline) on CHAOS and 74.70% (5.25% higher than baseline) on MSD spleen with Unet."
-}

@@ -1,8 +1,0 @@
-{
-  "title": "Distillation Learning Guided by Image Reconstruction for One-Shot Medical Image Segmentation",
-  "authors": "Feng Zhou, Yanjie Zhou, Longjie Wang, Yun Peng, David E. Carlson, Liyun Tu",
-  "year": 2024,
-  "url": "http://arxiv.org/abs/2408.03616v2",
-  "abstract": "Traditional one-shot medical image segmentation (MIS) methods use registration networks to propagate labels from a reference atlas or rely on comprehensive sampling strategies to generate synthetic labeled data for training. However, these methods often struggle with registration errors and low-quality synthetic images, leading to poor performance and generalization. To overcome this, we introduce a novel one-shot MIS framework based on knowledge distillation, which allows the network to directly 'see' real images through a distillation process guided by image reconstruction. It focuses on anatomical structures in a single labeled image and a few unlabeled ones. A registration-based data augmentation network creates realistic, labeled samples, while a feature distillation module helps the student network learn segmentation from these samples, guided by the teacher network. During inference, the streamlined student network accurately segments new images. Evaluations on three public datasets (OASIS for T1 brain MRI, BCV for abdomen CT, and VerSe for vertebrae CT) show superior segmentation performance and generalization across different medical image datasets and modalities compared to leading methods. Our code is available at https://github.com/NoviceFodder/OS-MedSeg.",
-  "citation": 2
-}

@@ -1,8 +1,0 @@
-{
-  "title": "Self Pre-training with Masked Autoencoders for Medical Image Classification and Segmentation",
-  "authors": "Lei Zhou, Huidong Liu, Joseph Bae, Junjun He, Dimitris Samaras, Prateek Prasanna",
-  "year": 2022,
-  "url": "http://arxiv.org/abs/2203.05573v2",
-  "abstract": "Masked Autoencoder (MAE) has recently been shown to be effective in pre-training Vision Transformers (ViT) for natural image analysis. By reconstructing full images from partially masked inputs, a ViT encoder aggregates contextual information to infer masked image regions. We believe that this context aggregation ability is particularly essential to the medical image domain where each anatomical structure is functionally and mechanically connected to other structures and regions. Because there is no ImageNet-scale medical image dataset for pre-training, we investigate a self pre-training paradigm with MAE for medical image analysis tasks. Our method pre-trains a ViT on the training set of the target data instead of another dataset. Thus, self pre-training can benefit more scenarios where pre-training data is hard to acquire. Our experimental results show that MAE self pre-training markedly improves diverse medical image tasks including chest X-ray disease classification, abdominal CT multi-organ segmentation, and MRI brain tumor segmentation. Code is available at https://github.com/cvlab-stonybrook/SelfMedMAE",
-  "citation": 67
-}

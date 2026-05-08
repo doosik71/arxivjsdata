@@ -1,8 +1,0 @@
-{
-  "title": "Agent WARPP: Workflow Adherence via Runtime Parallel Personalization",
-  "authors": "Maria Emilia Mazzolenis, Ruirui Zhang",
-  "year": 2025,
-  "url": "http://arxiv.org/abs/2507.19543v1",
-  "abstract": "Large language models (LLMs) are increasingly applied in task-oriented dialogue (TOD) systems but often struggle with long, conditional workflows that involve external tool calls and depend on user-specific information. We present Workflow Adherence via Runtime Parallel Personalization, or WARPP, a training-free, modular framework that combines multi-agent orchestration with runtime personalization to improve workflow adherence in LLM-based systems. By dynamically pruning conditional branches based on user attributes, the framework reduces reasoning overhead and narrows tool selection at runtime. WARPP deploys a parallelized architecture where a dedicated Personalizer agent operates alongside modular, domain-specific agents to dynamically tailor execution paths in real time. The framework is evaluated across five representative user intents of varying complexity within three domains: banking, flights, and healthcare. Our evaluation leverages synthetic datasets and LLM-powered simulated users to test scenarios with conditional dependencies. Our results demonstrate that WARPP outperforms both the non-personalized method and the ReAct baseline, achieving increasingly larger gains in parameter fidelity and tool accuracy as intent complexity grows, while also reducing average token usage, without any additional training.",
-  "citation": 0
-}

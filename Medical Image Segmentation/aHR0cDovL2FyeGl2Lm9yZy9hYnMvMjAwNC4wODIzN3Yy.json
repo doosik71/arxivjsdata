@@ -1,7 +1,0 @@
-{
-  "title": "CAggNet: Crossing Aggregation Network for Medical Image Segmentation",
-  "authors": "Xu Cao, Yanghao Lin",
-  "year": 2020,
-  "url": "http://arxiv.org/abs/2004.08237v2",
-  "abstract": "In this paper, we present Crossing Aggregation Network (CAggNet), a novel densely connected semantic segmentation approach for medical image analysis. The crossing aggregation network improves the idea from deep layer aggregation and makes significant innovations in semantic and spatial information fusion. In CAggNet, the simple skip connection structure of general U-Net is replaced by aggregations of multi-level down-sampling and up-sampling layers, which is a new form of nested skip connection. This aggregation architecture enables the network to fuse both coarse and fine features interactively in semantic segmentation. It also introduces weighted aggregation module to up-sample multi-scale output at the end of the network. We have evaluated and compared our CAggNet with several advanced U-Net based methods in two public medical image datasets, including the 2018 Data Science Bowl nuclei detection dataset and the 2015 MICCAI gland segmentation competition dataset. Experimental results indicate that CAggNet improves medical object recognition and achieves a more accurate and efficient segmentation compared to existing improved U-Net and UNet++ structure."
-}

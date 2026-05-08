@@ -1,8 +1,0 @@
-{
-  "title": "Multi-Prompt Fine-Tuning of Foundation Models for Enhanced Medical Image Segmentation",
-  "authors": "Xiangru Li, Yifei Zhang, Liang Zhao",
-  "year": 2023,
-  "url": "http://arxiv.org/abs/2310.02381v1",
-  "abstract": "The Segment Anything Model (SAM) is a powerful foundation model that introduced revolutionary advancements in natural image segmentation. However, its performance remains sub-optimal when delineating the intricate structure of biomedical images, where multiple organs and tissues intertwine in a single image. In this study, we introduce a novel fine-tuning framework that leverages SAM's ability to bundle and process multiple prompts per image and seeks to improve SAM's performance in medical images. We first curated a medical image dataset that consists of CT scans of lesions in various organs, each with two annotations for organs and lesions respectively. Then, we fine-tuned SAM's mask decoder within our framework by batching both bounding boxes generated from ground truth masks as reference. The batched prompt strategy we introduced not only addresses the inherent complexity and ambiguity often found in medical images but also substantially enhances performance metrics when applied onto a wide range of segmentation tasks.",
-  "citation": 4
-}

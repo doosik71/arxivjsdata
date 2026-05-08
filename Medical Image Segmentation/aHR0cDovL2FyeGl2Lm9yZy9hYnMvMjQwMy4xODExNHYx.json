@@ -1,7 +1,0 @@
-{
-  "title": "Segment Any Medical Model Extended",
-  "authors": "Yihao Liu, Jiaming Zhang, Andres Diaz-Pinto, Haowei Li, Alejandro Martin-Gomez, Amir Kheradmand, Mehran Armand",
-  "year": 2024,
-  "url": "http://arxiv.org/abs/2403.18114v1",
-  "abstract": "The Segment Anything Model (SAM) has drawn significant attention from researchers who work on medical image segmentation because of its generalizability. However, researchers have found that SAM may have limited performance on medical images compared to state-of-the-art non-foundation models. Regardless, the community sees potential in extending, fine-tuning, modifying, and evaluating SAM for analysis of medical imaging. An increasing number of works have been published focusing on the mentioned four directions, where variants of SAM are proposed. To this end, a unified platform helps push the boundary of the foundation model for medical images, facilitating the use, modification, and validation of SAM and its variants in medical image segmentation. In this work, we introduce SAMM Extended (SAMME), a platform that integrates new SAM variant models, adopts faster communication protocols, accommodates new interactive modes, and allows for fine-tuning of subcomponents of the models. These features can expand the potential of foundation models like SAM, and the results can be translated to applications such as image-guided therapy, mixed reality interaction, robotic navigation, and data augmentation."
-}

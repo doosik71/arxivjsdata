@@ -1,8 +1,0 @@
-{
-  "title": "Evaluating the Explainability of Vision Transformers in Medical Imaging",
-  "authors": "Leili Barekatain, Ben Glocker",
-  "year": 2025,
-  "url": "http://arxiv.org/abs/2510.12021v1",
-  "abstract": "Understanding model decisions is crucial in medical imaging, where interpretability directly impacts clinical trust and adoption. Vision Transformers (ViTs) have demonstrated state-of-the-art performance in diagnostic imaging; however, their complex attention mechanisms pose challenges to explainability. This study evaluates the explainability of different Vision Transformer architectures and pre-training strategies - ViT, DeiT, DINO, and Swin Transformer - using Gradient Attention Rollout and Grad-CAM. We conduct both quantitative and qualitative analyses on two medical imaging tasks: peripheral blood cell classification and breast ultrasound image classification. Our findings indicate that DINO combined with Grad-CAM offers the most faithful and localized explanations across datasets. Grad-CAM consistently produces class-discriminative and spatially precise heatmaps, while Gradient Attention Rollout yields more scattered activations. Even in misclassification cases, DINO with Grad-CAM highlights clinically relevant morphological features that appear to have misled the model. By improving model transparency, this research supports the reliable and explainable integration of ViTs into critical medical diagnostic workflows.",
-  "citation": 2
-}

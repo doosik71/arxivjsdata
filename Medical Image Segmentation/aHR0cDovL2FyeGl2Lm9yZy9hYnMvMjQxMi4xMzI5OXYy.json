@@ -1,8 +1,0 @@
-{
-  "title": "In-context learning for medical image segmentation",
-  "authors": "Eichi Takaya, Shinnosuke Yamamoto",
-  "year": 2024,
-  "url": "http://arxiv.org/abs/2412.13299v2",
-  "abstract": "Annotation of medical images, such as MRI and CT scans, is crucial for evaluating treatment efficacy and planning radiotherapy. However, the extensive workload of medical professionals limits their ability to annotate large image datasets, posing a bottleneck for AI applications in medical imaging. To address this, we propose In-context Cascade Segmentation (ICS), a novel method that minimizes annotation requirements while achieving high segmentation accuracy for sequential medical images. ICS builds on the UniverSeg framework, which performs few-shot segmentation using support images without additional training. By iteratively adding the inference results of each slice to the support set, ICS propagates information forward and backward through the sequence, ensuring inter-slice consistency. We evaluate the proposed method on the HVSMR dataset, which includes segmentation tasks for eight cardiac regions. Experimental results demonstrate that ICS significantly improves segmentation performance in complex anatomical regions, particularly in maintaining boundary consistency across slices, compared to baseline methods. The study also highlights the impact of the number and position of initial support slices on segmentation accuracy. ICS offers a promising solution for reducing annotation burdens while delivering robust segmentation results, paving the way for its broader adoption in clinical and research applications.",
-  "citation": 2
-}

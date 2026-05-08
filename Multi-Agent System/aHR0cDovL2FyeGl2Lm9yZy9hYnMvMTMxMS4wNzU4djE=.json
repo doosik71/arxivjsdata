@@ -1,7 +1,0 @@
-{
-  "title": "Observation of large-scale multi-agent based simulations",
-  "authors": "Gildas Morvan, Alexandre Veremme, Daniel Dupont",
-  "year": 2013,
-  "url": "http://arxiv.org/abs/1311.0758v1",
-  "abstract": "The computational cost of large-scale multi-agent based simulations (MABS) can be extremely important, especially if simulations have to be monitored for validation purposes. In this paper, two methods, based on self-observation and statistical survey theory, are introduced in order to optimize the computation of observations in MABS. An empirical comparison of the computational cost of these methods is performed on a toy problem."
-}

@@ -1,8 +1,0 @@
-{
-  "title": "Annotator Consensus Prediction for Medical Image Segmentation with Diffusion Models",
-  "authors": "Tomer Amit, Shmuel Shichrur, Tal Shaharabany, Lior Wolf",
-  "year": 2023,
-  "url": "http://arxiv.org/abs/2306.09004v1",
-  "abstract": "A major challenge in the segmentation of medical images is the large inter- and intra-observer variability in annotations provided by multiple experts. To address this challenge, we propose a novel method for multi-expert prediction using diffusion models. Our method leverages the diffusion-based approach to incorporate information from multiple annotations and fuse it into a unified segmentation map that reflects the consensus of multiple experts. We evaluate the performance of our method on several datasets of medical segmentation annotated by multiple experts and compare it with state-of-the-art methods. Our results demonstrate the effectiveness and robustness of the proposed method. Our code is publicly available at https://github.com/tomeramit/Annotator-Consensus-Prediction.",
-  "citation": 17
-}

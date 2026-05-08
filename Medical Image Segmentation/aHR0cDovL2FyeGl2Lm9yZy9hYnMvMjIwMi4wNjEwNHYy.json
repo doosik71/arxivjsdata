@@ -1,7 +1,0 @@
-{
-  "title": "Semi-supervised Medical Image Segmentation via Geometry-aware Consistency Training",
-  "authors": "Zihang Liu, Chunhui Zhao",
-  "year": 2022,
-  "url": "http://arxiv.org/abs/2202.06104v2",
-  "abstract": "The performance of supervised deep learning methods for medical image segmentation is often limited by the scarcity of labeled data. As a promising research direction, semi-supervised learning addresses this dilemma by leveraging unlabeled data information to assist the learning process. In this paper, a novel geometry-aware semi-supervised learning framework is proposed for medical image segmentation, which is a consistency-based method. Considering that the hard-to-segment regions are mainly located around the object boundary, we introduce an auxiliary prediction task to learn the global geometric information. Based on the geometric constraint, the ambiguous boundary regions are emphasized through an exponentially weighted strategy for the model training to better exploit both labeled and unlabeled data. In addition, a dual-view network is designed to perform segmentation from different perspectives and reduce the prediction uncertainty. The proposed method is evaluated on the public left atrium benchmark dataset and improves fully supervised method by 8.7% in Dice with 10% labeled images, while 4.3% with 20% labeled images. Meanwhile, our framework outperforms six state-of-the-art semi-supervised segmentation methods."
-}

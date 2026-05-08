@@ -1,8 +1,0 @@
-{
-  "title": "FMG-Net and W-Net: Multigrid Inspired Deep Learning Architectures For Medical Imaging Segmentation",
-  "authors": "Adrian Celaya, Beatrice Riviere, David Fuentes",
-  "year": 2023,
-  "url": "http://arxiv.org/abs/2304.02725v3",
-  "abstract": "Accurate medical imaging segmentation is critical for precise and effective medical interventions. However, despite the success of convolutional neural networks (CNNs) in medical image segmentation, they still face challenges in handling fine-scale features and variations in image scales. These challenges are particularly evident in complex and challenging segmentation tasks, such as the BraTS multi-label brain tumor segmentation challenge. In this task, accurately segmenting the various tumor sub-components, which vary significantly in size and shape, remains a significant challenge, with even state-of-the-art methods producing substantial errors. Therefore, we propose two architectures, FMG-Net and W-Net, that incorporate the principles of geometric multigrid methods for solving linear systems of equations into CNNs to address these challenges. Our experiments on the BraTS 2020 dataset demonstrate that both FMG-Net and W-Net outperform the widely used U-Net architecture regarding tumor subcomponent segmentation accuracy and training efficiency. These findings highlight the potential of incorporating the principles of multigrid methods into CNNs to improve the accuracy and efficiency of medical imaging segmentation.",
-  "citation": 6
-}

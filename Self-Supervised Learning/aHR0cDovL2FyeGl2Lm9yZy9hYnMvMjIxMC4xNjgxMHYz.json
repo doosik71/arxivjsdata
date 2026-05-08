@@ -1,8 +1,0 @@
-{
-  "title": "SL3D: Self-supervised-Self-labeled 3D Recognition",
-  "authors": "Fernando Julio Cendra, Lan Ma, Jiajun Shen, Xiaojuan Qi",
-  "year": 2022,
-  "url": "http://arxiv.org/abs/2210.16810v3",
-  "abstract": "Deep learning has attained remarkable success in many 3D visual recognition tasks, including shape classification, object detection, and semantic segmentation. However, many of these results rely on manually collecting densely annotated real-world 3D data, which is highly time-consuming and expensive to obtain, limiting the scalability of 3D recognition tasks. Thus, we study unsupervised 3D recognition and propose a Self-supervised-Self-Labeled 3D Recognition (SL3D) framework. SL3D simultaneously solves two coupled objectives, i.e., clustering and learning feature representation to generate pseudo-labeled data for unsupervised 3D recognition. SL3D is a generic framework and can be applied to solve different 3D recognition tasks, including classification, object detection, and semantic segmentation. Extensive experiments demonstrate its effectiveness. Code is available at https://github.com/fcendra/sl3d.",
-  "citation": 4
-}

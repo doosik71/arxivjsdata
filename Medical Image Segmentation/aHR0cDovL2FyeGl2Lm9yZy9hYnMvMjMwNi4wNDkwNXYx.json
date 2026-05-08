@@ -1,8 +1,0 @@
-{
-  "title": "ViG-UNet: Vision Graph Neural Networks for Medical Image Segmentation",
-  "authors": "Juntao Jiang, Xiyu Chen, Guanzhong Tian, Yong Liu",
-  "year": 2023,
-  "url": "http://arxiv.org/abs/2306.04905v1",
-  "abstract": "Deep neural networks have been widely used in medical image analysis and medical image segmentation is one of the most important tasks. U-shaped neural networks with encoder-decoder are prevailing and have succeeded greatly in various segmentation tasks. While CNNs treat an image as a grid of pixels in Euclidean space and Transformers recognize an image as a sequence of patches, graph-based representation is more generalized and can construct connections for each part of an image. In this paper, we propose a novel ViG-UNet, a graph neural network-based U-shaped architecture with the encoder, the decoder, the bottleneck, and skip connections. The downsampling and upsampling modules are also carefully designed. The experimental results on ISIC 2016, ISIC 2017 and Kvasir-SEG datasets demonstrate that our proposed architecture outperforms most existing classic and state-of-the-art U-shaped networks.",
-  "citation": 25
-}

@@ -1,8 +1,0 @@
-{
-  "title": "CUTS: A Deep Learning and Topological Framework for Multigranular Unsupervised Medical Image Segmentation",
-  "authors": "Chen Liu, Matthew Amodio, Liangbo L. Shen, Feng Gao, Arman Avesta, Sanjay Aneja, Jay C. Wang, Lucian V. Del Priore, Smita Krishnaswamy",
-  "year": 2022,
-  "url": "http://arxiv.org/abs/2209.11359v7",
-  "abstract": "Segmenting medical images is critical to facilitating both patient diagnoses and quantitative research. A major limiting factor is the lack of labeled data, as obtaining expert annotations for each new set of imaging data and task can be labor intensive and inconsistent among annotators. We present CUTS, an unsupervised deep learning framework for medical image segmentation. CUTS operates in two stages. For each image, it produces an embedding map via intra-image contrastive learning and local patch reconstruction. Then, these embeddings are partitioned at dynamic granularity levels that correspond to the data topology. CUTS yields a series of coarse-to-fine-grained segmentations that highlight features at various granularities. We applied CUTS to retinal fundus images and two types of brain MRI images to delineate structures and patterns at different scales. When evaluated against predefined anatomical masks, CUTS improved the dice coefficient and Hausdorff distance by at least 10% compared to existing unsupervised methods. Finally, CUTS showed performance on par with Segment Anything Models (SAM, MedSAM, SAM-Med2D) pre-trained on gigantic labeled datasets.",
-  "citation": 2
-}

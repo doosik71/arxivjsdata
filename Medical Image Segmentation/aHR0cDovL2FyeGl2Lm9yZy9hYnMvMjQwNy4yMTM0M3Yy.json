@@ -1,8 +1,0 @@
-{
-  "title": "MIST: A Simple and Scalable End-To-End 3D Medical Imaging Segmentation Framework",
-  "authors": "Adrian Celaya, Evan Lim, Rachel Glenn, Brayden Mi, Alex Balsells, Dawid Schellingerhout, Tucker Netherton, Caroline Chung, Beatrice Riviere, David Fuentes",
-  "year": 2024,
-  "url": "http://arxiv.org/abs/2407.21343v2",
-  "abstract": "Medical imaging segmentation is a highly active area of research, with deep learning-based methods achieving state-of-the-art results in several benchmarks. However, the lack of standardized tools for training, testing, and evaluating new methods makes the comparison of methods difficult. To address this, we introduce the Medical Imaging Segmentation Toolkit (MIST), a simple, modular, and end-to-end medical imaging segmentation framework designed to facilitate consistent training, testing, and evaluation of deep learning-based medical imaging segmentation methods. MIST standardizes data analysis, preprocessing, and evaluation pipelines, accommodating multiple architectures and loss functions. This standardization ensures reproducible and fair comparisons across different methods. We detail MIST's data format requirements, pipelines, and auxiliary features and demonstrate its efficacy using the BraTS Adult Glioma Post-Treatment Challenge dataset. Our results highlight MIST's ability to produce accurate segmentation masks and its scalability across multiple GPUs, showcasing its potential as a powerful tool for future medical imaging research and development.",
-  "citation": 9
-}

@@ -1,8 +1,0 @@
-{
-  "title": "Transformer Utilization in Medical Image Segmentation Networks",
-  "authors": "Saikat Roy, Gregor Koehler, Michael Baumgartner, Constantin Ulrich, Jens Petersen, Fabian Isensee, Klaus Maier-Hein",
-  "year": 2023,
-  "url": "http://arxiv.org/abs/2304.04225v1",
-  "abstract": "Owing to success in the data-rich domain of natural images, Transformers have recently become popular in medical image segmentation. However, the pairing of Transformers with convolutional blocks in varying architectural permutations leaves their relative effectiveness to open interpretation. We introduce Transformer Ablations that replace the Transformer blocks with plain linear operators to quantify this effectiveness. With experiments on 8 models on 2 medical image segmentation tasks, we explore -- 1) the replaceable nature of Transformer-learnt representations, 2) Transformer capacity alone cannot prevent representational replaceability and works in tandem with effective design, 3) The mere existence of explicit feature hierarchies in transformer blocks is more beneficial than accompanying self-attention modules, 4) Major spatial downsampling before Transformer modules should be used with caution.",
-  "citation": 2
-}

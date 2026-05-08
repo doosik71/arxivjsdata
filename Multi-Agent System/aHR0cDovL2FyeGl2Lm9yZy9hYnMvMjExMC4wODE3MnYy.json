@@ -1,8 +1,0 @@
-{
-  "title": "MLFC: From 10 to 50 Planners in the Multi-Agent Programming Contest",
-  "authors": "Rafael C. Cardoso, Angelo Ferrando, Fabio Papacchini, Matt Luckcuck, Sven Linker, Terry R. Payne",
-  "year": 2021,
-  "url": "http://arxiv.org/abs/2110.08172v2",
-  "abstract": "In this paper, we describe the strategies used by our team, MLFC, that led us to achieve the 2nd place in the 15th edition of the Multi-Agent Programming Contest. The scenario used in the contest is an extension of the previous edition (14th) \"Agents Assemble\" wherein two teams of agents move around a 2D grid and compete to assemble complex block structures. We discuss the languages and tools used during the development of our team. Then, we summarise the main strategies that were carried over from our previous participation in the 14th edition and list the limitations (if any) of using these strategies in the latest contest edition. We also developed new strategies that were made specifically for the extended scenario: cartography (determining the size of the map); formal verification of the map merging protocol (to provide assurances that it works when increasing the number of agents); plan cache (efficiently scaling the number of planners); task achievement (forming groups of agents to achieve tasks); and bullies (agents that focus on stopping agents from the opposing team). Finally, we give a brief overview of our performance in the contest and discuss what we believe were our shortcomings.",
-  "citation": 0
-}

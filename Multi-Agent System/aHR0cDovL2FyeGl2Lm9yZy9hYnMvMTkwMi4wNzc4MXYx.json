@@ -1,8 +1,0 @@
-{
-  "title": "Empathic Autonomous Agents",
-  "authors": "Timotheus Kampik, Juan Carlos Nieves, Helena Lindgren",
-  "year": 2019,
-  "url": "http://arxiv.org/abs/1902.07781v1",
-  "abstract": "Identifying and resolving conflicts of interests is a key challenge when designing autonomous agents. For example, such conflicts often occur when complex information systems interact persuasively with humans and are in the future likely to arise in non-human agent-to-agent interaction. We introduce a theoretical framework for an empathic autonomous agent that proactively identifies potential conflicts of interests in interactions with other agents (and humans) by considering their utility functions and comparing them with its own preferences using a system of shared values to find a solution all agents consider acceptable. To illustrate how empathic autonomous agents work, we provide running examples and a simple prototype implementation in a general-purpose programing language. To give a high-level overview of our work, we propose a reasoning-loop architecture for our empathic agent.",
-  "citation": 9
-}

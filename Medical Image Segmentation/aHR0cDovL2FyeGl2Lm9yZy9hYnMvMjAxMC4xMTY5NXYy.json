@@ -1,8 +1,0 @@
-{
-  "title": "Automatic Data Augmentation for 3D Medical Image Segmentation",
-  "authors": "Ju Xu, Mengzhang Li, Zhanxing Zhu",
-  "year": 2020,
-  "url": "http://arxiv.org/abs/2010.11695v2",
-  "abstract": "Data augmentation is an effective and universal technique for improving generalization performance of deep neural networks. It could enrich diversity of training samples that is essential in medical image segmentation tasks because 1) the scale of medical image dataset is typically smaller, which may increase the risk of overfitting; 2) the shape and modality of different objects such as organs or tumors are unique, thus requiring customized data augmentation policy. However, most data augmentation implementations are hand-crafted and suboptimal in medical image processing. To fully exploit the potential of data augmentation, we propose an efficient algorithm to automatically search for the optimal augmentation strategies. We formulate the coupled optimization w.r.t. network weights and augmentation parameters into a differentiable form by means of stochastic relaxation. This formulation allows us to apply alternative gradient-based methods to solve it, i.e. stochastic natural gradient method with adaptive step-size. To the best of our knowledge, it is the first time that differentiable automatic data augmentation is employed in medical image segmentation tasks. Our numerical experiments demonstrate that the proposed approach significantly outperforms existing build-in data augmentation of state-of-the-art models.",
-  "citation": 78
-}

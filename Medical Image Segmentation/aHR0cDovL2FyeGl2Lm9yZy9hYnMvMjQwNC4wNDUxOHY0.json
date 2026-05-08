@@ -1,8 +1,0 @@
-{
-  "title": "MedIAnomaly: A comparative study of anomaly detection in medical images",
-  "authors": "Yu Cai, Weiwen Zhang, Hao Chen, Kwang-Ting Cheng",
-  "year": 2024,
-  "url": "http://arxiv.org/abs/2404.04518v4",
-  "abstract": "Anomaly detection (AD) aims at detecting abnormal samples that deviate from the expected normal patterns. Generally, it can be trained merely on normal data, without a requirement for abnormal samples, and thereby plays an important role in rare disease recognition and health screening in the medical domain. Despite the emergence of numerous methods for medical AD, the lack of a fair and comprehensive evaluation causes ambiguous conclusions and hinders the development of this field. To address this problem, this paper builds a benchmark with unified comparison. Seven medical datasets with five image modalities, including chest X-rays, brain MRIs, retinal fundus images, dermatoscopic images, and histopathology images, are curated for extensive evaluation. Thirty typical AD methods, including reconstruction and self-supervised learning-based methods, are involved in comparison of image-level anomaly classification and pixel-level anomaly segmentation. Furthermore, for the first time, we systematically investigate the effect of key components in existing methods, revealing unresolved challenges and potential future directions. The datasets and code are available at https://github.com/caiyu6666/MedIAnomaly.",
-  "citation": 41
-}

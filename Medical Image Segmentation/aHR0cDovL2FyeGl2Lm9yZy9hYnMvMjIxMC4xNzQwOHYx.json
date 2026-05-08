@@ -1,7 +1,0 @@
-{
-  "title": "Accelerating Diffusion Models via Pre-segmentation Diffusion Sampling for Medical Image Segmentation",
-  "authors": "Xutao Guo, Yanwu Yang, Chenfei Ye, Shang Lu, Yang Xiang, Ting Ma",
-  "year": 2022,
-  "url": "http://arxiv.org/abs/2210.17408v1",
-  "abstract": "Based on the Denoising Diffusion Probabilistic Model (DDPM), medical image segmentation can be described as a conditional image generation task, which allows to compute pixel-wise uncertainty maps of the segmentation and allows an implicit ensemble of segmentations to boost the segmentation performance. However, DDPM requires many iterative denoising steps to generate segmentations from Gaussian noise, resulting in extremely inefficient inference. To mitigate the issue, we propose a principled acceleration strategy, called pre-segmentation diffusion sampling DDPM (PD-DDPM), which is specially used for medical image segmentation. The key idea is to obtain pre-segmentation results based on a separately trained segmentation network, and construct noise predictions (non-Gaussian distribution) according to the forward diffusion rule. We can then start with noisy predictions and use fewer reverse steps to generate segmentation results. Experiments show that PD-DDPM yields better segmentation results over representative baseline methods even if the number of reverse steps is significantly reduced. Moreover, PD-DDPM is orthogonal to existing advanced segmentation models, which can be combined to further improve the segmentation performance."
-}

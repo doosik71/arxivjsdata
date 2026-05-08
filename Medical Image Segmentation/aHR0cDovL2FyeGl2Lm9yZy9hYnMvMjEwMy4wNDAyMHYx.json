@@ -1,8 +1,0 @@
-{
-  "title": "NeRD: Neural Representation of Distribution for Medical Image Segmentation",
-  "authors": "Hang Zhang, Rongguang Wang, Jinwei Zhang, Chao Li, Gufeng Yang, Pascal Spincemaille, Thanh Nguyen, Yi Wang",
-  "year": 2021,
-  "url": "http://arxiv.org/abs/2103.04020v1",
-  "abstract": "We introduce Neural Representation of Distribution (NeRD) technique, a module for convolutional neural networks (CNNs) that can estimate the feature distribution by optimizing an underlying function mapping image coordinates to the feature distribution. Using NeRD, we propose an end-to-end deep learning model for medical image segmentation that can compensate the negative impact of feature distribution shifting issue caused by commonly used network operations such as padding and pooling. An implicit function is used to represent the parameter space of the feature distribution by querying the image coordinate. With NeRD, the impact of issues such as over-segmenting and missing have been reduced, and experimental results on the challenging white matter lesion segmentation and left atrial segmentation verify the effectiveness of the proposed method. The code is available via https://github.com/tinymilky/NeRD.",
-  "citation": 16
-}

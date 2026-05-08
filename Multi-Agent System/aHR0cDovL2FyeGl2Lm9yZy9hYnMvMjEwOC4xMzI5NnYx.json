@@ -1,8 +1,0 @@
-{
-  "title": "Multi-Agent Simulation for AI Behaviour Discovery in Operations Research",
-  "authors": "Michael Papasimeon, Lyndon Benke",
-  "year": 2021,
-  "url": "http://arxiv.org/abs/2108.13296v1",
-  "abstract": "We describe ACE0, a lightweight platform for evaluating the suitability and viability of AI methods for behaviour discovery in multiagent simulations. Specifically, ACE0 was designed to explore AI methods for multi-agent simulations used in operations research studies related to new technologies such as autonomous aircraft. Simulation environments used in production are often high-fidelity, complex, require significant domain knowledge and as a result have high R&D costs. Minimal and lightweight simulation environments can help researchers and engineers evaluate the viability of new AI technologies for behaviour discovery in a more agile and potentially cost effective manner. In this paper we describe the motivation for the development of ACE0.We provide a technical overview of the system architecture, describe a case study of behaviour discovery in the aerospace domain, and provide a qualitative evaluation of the system. The evaluation includes a brief description of collaborative research projects with academic partners, exploring different AI behaviour discovery methods.",
-  "citation": 2
-}

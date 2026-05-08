@@ -1,8 +1,0 @@
-{
-  "title": "Foundation AI Model for Medical Image Segmentation",
-  "authors": "Rina Bao, Erfan Darzi, Sheng He, Chuan-Heng Hsiao, Mohammad Arafat Hussain, Jingpeng Li, Atle Bjornerud, Ellen Grant, Yangming Ou",
-  "year": 2024,
-  "url": "http://arxiv.org/abs/2411.02745v1",
-  "abstract": "Foundation models refer to artificial intelligence (AI) models that are trained on massive amounts of data and demonstrate broad generalizability across various tasks with high accuracy. These models offer versatile, one-for-many or one-for-all solutions, eliminating the need for developing task-specific AI models. Examples of such foundation models include the Chat Generative Pre-trained Transformer (ChatGPT) and the Segment Anything Model (SAM). These models have been trained on millions to billions of samples and have shown wide-ranging and accurate applications in numerous tasks such as text processing (using ChatGPT) and natural image segmentation (using SAM). In medical image segmentation - finding target regions in medical images - there is a growing need for these one-for-many or one-for-all foundation models. Such models could obviate the need to develop thousands of task-specific AI models, which is currently standard practice in the field. They can also be adapted to tasks with datasets too small for effective training. We discuss two paths to achieve foundation models for medical image segmentation and comment on progress, challenges, and opportunities. One path is to adapt or fine-tune existing models, originally developed for natural images, for use with medical images. The second path entails building models from scratch, exclusively training on medical images.",
-  "citation": 2
-}

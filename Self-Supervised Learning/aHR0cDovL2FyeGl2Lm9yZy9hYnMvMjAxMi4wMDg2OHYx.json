@@ -1,8 +1,0 @@
-{
-  "title": "Towards Good Practices in Self-supervised Representation Learning",
-  "authors": "Srikar Appalaraju, Yi Zhu, Yusheng Xie, István Fehérvári",
-  "year": 2020,
-  "url": "http://arxiv.org/abs/2012.00868v1",
-  "abstract": "Self-supervised representation learning has seen remarkable progress in the last few years. More recently, contrastive instance learning has shown impressive results compared to its supervised learning counterparts. However, even with the ever increased interest in contrastive instance learning, it is still largely unclear why these methods work so well. In this paper, we aim to unravel some of the mysteries behind their success, which are the good practices. Through an extensive empirical analysis, we hope to not only provide insights but also lay out a set of best practices that led to the success of recent work in self-supervised representation learning.",
-  "citation": 25
-}

@@ -1,7 +1,0 @@
-{
-  "title": "Assessing the Role of Random Forests in Medical Image Segmentation",
-  "authors": "Dennis Hartmann, Dominik Müller, Iñaki Soto-Rey, Frank Kramer",
-  "year": 2021,
-  "url": "http://arxiv.org/abs/2103.16492v1",
-  "abstract": "Neural networks represent a field of research that can quickly achieve very good results in the field of medical image segmentation using a GPU. A possible way to achieve good results without GPUs are random forests. For this purpose, two random forest approaches were compared with a state-of-the-art deep convolutional neural network. To make the comparison the PhC-C2DH-U373 and the retinal imaging datasets were used. The evaluation showed that the deep convolutional neutral network achieved the best results. However, one of the random forest approaches also achieved a similar high performance. Our results indicate that random forest approaches are a good alternative to deep convolutional neural networks and, thus, allow the usage of medical image segmentation without a GPU."
-}

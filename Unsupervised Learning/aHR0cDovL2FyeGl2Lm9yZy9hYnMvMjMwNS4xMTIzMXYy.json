@@ -1,8 +1,0 @@
-{
-  "title": "Recent Trends in Unsupervised Summarization",
-  "authors": "Mohammad Khosravani, Amine Trabelsi",
-  "year": 2023,
-  "url": "http://arxiv.org/abs/2305.11231v2",
-  "abstract": "Unsupervised summarization is a powerful technique that enables training summarizing models without requiring labeled datasets. This survey covers different recent techniques and models used for unsupervised summarization. We cover extractive, abstractive, and hybrid models and strategies used to achieve unsupervised summarization. While the main focus of this survey is on recent research, we also cover some of the important previous research. We additionally introduce a taxonomy, classifying different research based on their approach to unsupervised training. Finally, we discuss the current approaches and mention some datasets and evaluation methods.",
-  "citation": 0
-}

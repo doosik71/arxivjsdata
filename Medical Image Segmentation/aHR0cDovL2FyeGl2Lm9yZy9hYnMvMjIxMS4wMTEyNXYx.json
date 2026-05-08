@@ -1,8 +1,0 @@
-{
-  "title": "Style Augmentation improves Medical Image Segmentation",
-  "authors": "Kevin Ginsburger",
-  "year": 2022,
-  "url": "http://arxiv.org/abs/2211.01125v1",
-  "abstract": "Due to the limitation of available labeled data, medical image segmentation is a challenging task for deep learning. Traditional data augmentation techniques have been shown to improve segmentation network performances by optimizing the usage of few training examples. However, current augmentation approaches for segmentation do not tackle the strong texture bias of convolutional neural networks, observed in several studies. This work shows on the MoNuSeg dataset that style augmentation, which is already used in classification tasks, helps reducing texture over-fitting and improves segmentation performance.",
-  "citation": 0
-}

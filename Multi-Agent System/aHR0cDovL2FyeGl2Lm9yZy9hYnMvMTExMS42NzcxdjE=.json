@@ -1,8 +1,0 @@
-{
-  "title": "Autonomic Management for Multi-agent Systems",
-  "authors": "Nadir K. Salih, Tianyi Zang, PG. K. Viju, Abdelmotalib A. Mohamed",
-  "year": 2011,
-  "url": "http://arxiv.org/abs/1111.6771v1",
-  "abstract": "Autonomic computing is a computing system that can manage itself by self-configuration, self-healing, self-optimizing and self-protection. Researchers have been emphasizing the strong role that multi agent systems can play progressively towards the design and implementation of complex autonomic systems. The important of autonomic computing is to create computing systems capable of managing themselves to a far greater extent than they do today. With the nature of autonomy, reactivity, sociality and pro-activity, software agents are promising to make autonomic computing system a reality. This paper mixed multi-agent system with autonomic feature that completely hides its complexity from users/services. Mentioned Java Application Development Framework as platform example of this environment, could applied to web services as front end to users. With multi agent support it also provides adaptability, intelligence, collaboration, goal oriented interactions, flexibility, mobility and persistence in software systems",
-  "citation": 18
-}
