@@ -1,0 +1,8 @@
+{
+  "title": "Semantic Borrowing for Generalized Zero-Shot Learning",
+  "authors": "Xiaowei Chen",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2102.04969v2",
+  "abstract": "Generalized zero-shot learning (GZSL) is one of the most realistic but\nchallenging problems due to the partiality of the classifier to supervised\nclasses, especially under the class-inductive instance-inductive (CIII)\ntraining setting, where testing data are not available. Instance-borrowing\nmethods and synthesizing methods solve it to some extent with the help of\ntesting semantics, but therefore neither can be used under CIII. Besides, the\nlatter require the training process of a classifier after generating examples.\nIn contrast, a novel non-transductive regularization under CIII called Semantic\nBorrowing (SB) for improving GZSL methods with compatibility metric learning is\nproposed in this paper, which not only can be used for training linear models,\nbut also nonlinear ones such as artificial neural networks. This regularization\nitem in the loss function borrows similar semantics in the training set, so\nthat the classifier can model the relationship between the semantics of\nzero-shot and supervised classes more accurately during training. In practice,\nthe information of semantics of unknown classes would not be available for\ntraining while this approach does NOT need it. Extensive experiments on GZSL\nbenchmark datasets show that SB can reduce the partiality of the classifier to\nsupervised classes and improve the performance of generalized zero-shot\nclassification, surpassing inductive GZSL state of the arts.",
+  "citation": 1
+}

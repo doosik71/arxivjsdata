@@ -1,0 +1,8 @@
+{
+  "title": "Style Content Decomposition-based Data Augmentation for Domain Generalizable Medical Image Segmentation",
+  "authors": "Zhiqiang Shen, Peng Cao, Jinzhu Yang, Osmar R. Zaiane, Zhaolin Chen",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.20619v3",
+  "abstract": "Due to domain shifts across diverse medical imaging modalities, learned segmentation models often suffer significant performance degradation during deployment. We posit that these domain shifts can generally be categorized into two main components: 1) \"style\" shifts, referring to global disparities in image properties such as illumination, contrast, and color; and 2) \"content\" shifts, which involve local discrepancies in anatomical structures. To address the domain shifts in medical image segmentation, we first factorize an image into style codes and content maps, explicitly modeling the \"style\" and \"content\" components. Building on this, we introduce a Style-Content decomposition-based data augmentation algorithm (StyCona), which performs augmentation on both the global style and local content of source-domain images, enabling the training of a well-generalized model for domain generalizable medical image segmentation. StyCona is a simple yet effective plug-and-play module that substantially improves model generalization without requiring additional training parameters or modifications to segmentation model architectures. Experiments on cardiac magnetic resonance imaging and fundus photography segmentation tasks, with single and multiple target domains respectively, demonstrate the effectiveness of StyCona and its superiority over state-of-the-art domain generalization methods. The code is available at https://github.com/Senyh/StyCona.",
+  "citation": 1
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Channel prior convolutional attention for medical image segmentation",
+  "authors": "Hejun Huang, Zuguo Chen, Ying Zou, Ming Lu, Chaoyang Chen",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.05196v1",
+  "abstract": "Characteristics such as low contrast and significant organ shape variations are often exhibited in medical images. The improvement of segmentation performance in medical imaging is limited by the generally insufficient adaptive capabilities of existing attention mechanisms. An efficient Channel Prior Convolutional Attention (CPCA) method is proposed in this paper, supporting the dynamic distribution of attention weights in both channel and spatial dimensions. Spatial relationships are effectively extracted while preserving the channel prior by employing a multi-scale depth-wise convolutional module. The ability to focus on informative channels and important regions is possessed by CPCA. A segmentation network called CPCANet for medical image segmentation is proposed based on CPCA. CPCANet is validated on two publicly available datasets. Improved segmentation performance is achieved by CPCANet while requiring fewer computational resources through comparisons with state-of-the-art algorithms. Our code is publicly available at \\url{https://github.com/Cuthbert-Huang/CPCANet}.",
+  "citation": 260
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Improving End-to-End Speech Recognition with Policy Learning",
+  "authors": "Yingbo Zhou, Caiming Xiong, Richard Socher",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1712.07101v1",
+  "abstract": "Connectionist temporal classification (CTC) is widely used for maximum\nlikelihood learning in end-to-end speech recognition models. However, there is\nusually a disparity between the negative maximum likelihood and the performance\nmetric used in speech recognition, e.g., word error rate (WER). This results in\na mismatch between the objective function and metric during training. We show\nthat the above problem can be mitigated by jointly training with maximum\nlikelihood and policy gradient. In particular, with policy learning we are able\nto directly optimize on the (otherwise non-differentiable) performance metric.\nWe show that joint training improves relative performance by 4% to 13% for our\nend-to-end model as compared to the same model learned through maximum\nlikelihood. The model achieves 5.53% WER on Wall Street Journal dataset, and\n5.42% and 14.70% on Librispeech test-clean and test-other set, respectively.",
+  "citation": 47
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/quant-ph/9809016v2",
+  "title": "An Introduction to Quantum Computing for Non-Physicists",
+  "authors": "Eleanor G. Rieffel, Wolfgang Polak",
+  "year": 1998,
+  "abstract": "Richard Feynman's observation that quantum mechanical effects could not be\nsimulated efficiently on a computer led to speculation that computation in\ngeneral could be done more efficiently if it used quantum effects. This\nspeculation appeared justified when Peter Shor described a polynomial time\nquantum algorithm for factoring integers.\n  In quantum systems, the computational space increases exponentially with the\nsize of the system which enables exponential parallelism. This parallelism\ncould lead to exponentially faster quantum algorithms than possible\nclassically. The catch is that accessing the results, which requires\nmeasurement, proves tricky and requires new non-traditional programming\ntechniques.\n  The aim of this paper is to guide computer scientists and other\nnon-physicists through the conceptual and notational barriers that separate\nquantum computing from conventional computing. We introduce basic principles of\nquantum mechanics to explain where the power of quantum computers comes from\nand why it is difficult to harness. We describe quantum cryptography,\nteleportation, and dense coding. Various approaches to harnessing the power of\nquantum parallelism are explained, including Shor's algorithm, Grover's\nalgorithm, and Hogg's algorithms. We conclude with a discussion of quantum\nerror correction."
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Fast Deep Mixtures of Gaussian Process Experts",
+  "authors": "Clement Etienam, Kody Law, Sara Wade, Vitaly Zankin",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2006.13309v4",
+  "abstract": "Mixtures of experts have become an indispensable tool for flexible modelling in a supervised learning context, allowing not only the mean function but the entire density of the output to change with the inputs. Sparse Gaussian processes (GP) have shown promise as a leading candidate for the experts in such models, and in this article, we propose to design the gating network for selecting the experts from such mixtures of sparse GPs using a deep neural network (DNN). Furthermore, a fast one pass algorithm called Cluster-Classify-Regress (CCR) is leveraged to approximate the maximum a posteriori (MAP) estimator extremely quickly. This powerful combination of model and algorithm together delivers a novel method which is flexible, robust, and extremely efficient. In particular, the method is able to outperform competing methods in terms of accuracy and uncertainty quantification. The cost is competitive on low-dimensional and small data sets, but is significantly lower for higher-dimensional and big data sets. Iteratively maximizing the distribution of experts given allocations and allocations given experts does not provide significant improvement, which indicates that the algorithm achieves a good approximation to the local MAP estimator very fast. This insight can be useful also in the context of other mixture of experts models.",
+  "citation": 5
+}

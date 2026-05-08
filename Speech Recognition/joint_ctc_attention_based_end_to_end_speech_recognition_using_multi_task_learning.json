@@ -1,0 +1,8 @@
+{
+  "title": "Joint CTC-Attention based End-to-End Speech Recognition using Multi-task\n  Learning",
+  "authors": "Suyoun Kim, Takaaki Hori, Shinji Watanabe",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1609.06773v2",
+  "abstract": "Recently, there has been an increasing interest in end-to-end speech\nrecognition that directly transcribes speech to text without any predefined\nalignments. One approach is the attention-based encoder-decoder framework that\nlearns a mapping between variable-length input and output sequences in one step\nusing a purely data-driven method. The attention model has often been shown to\nimprove the performance over another end-to-end approach, the Connectionist\nTemporal Classification (CTC), mainly because it explicitly uses the history of\nthe target character without any conditional independence assumptions. However,\nwe observed that the performance of the attention has shown poor results in\nnoisy condition and is hard to learn in the initial training stage with long\ninput sequences. This is because the attention model is too flexible to predict\nproper alignments in such cases due to the lack of left-to-right constraints as\nused in CTC. This paper presents a novel method for end-to-end speech\nrecognition to improve robustness and achieve fast convergence by using a joint\nCTC-attention model within the multi-task learning framework, thereby\nmitigating the alignment issue. An experiment on the WSJ and CHiME-4 tasks\ndemonstrates its advantages over both the CTC and attention-based\nencoder-decoder baselines, showing 5.4-14.6% relative improvements in Character\nError Rate (CER).",
+  "citation": 1179
+}

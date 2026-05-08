@@ -1,0 +1,7 @@
+{
+  "title": "Quantum Algorithm for Generalized Deutsch-Jozsa Problem",
+  "authors": "Dong Pyo Chi, Jinsoo Kim, Soojoon Lee",
+  "year": 2000,
+  "url": "http://arxiv.org/abs/quant-ph/0005059v1",
+  "abstract": "We generalize the Deutsch-Jozsa problem and present a quantum algorithm that\ncan solve the generalized Deutsch-Jozsa problem by a single evaluation of a\ngiven function. We discuss the initialization of an auxiliary register and\npresent a generalized Deutsch-Jozsa algorithm that requires no initialization\nof an auxiliary register."
+}

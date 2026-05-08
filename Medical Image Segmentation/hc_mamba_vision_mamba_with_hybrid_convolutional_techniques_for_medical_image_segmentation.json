@@ -1,0 +1,8 @@
+{
+  "title": "HC-Mamba: Vision MAMBA with Hybrid Convolutional Techniques for Medical Image Segmentation",
+  "authors": "Jiashu Xu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.05007v4",
+  "abstract": "Automatic medical image segmentation technology has the potential to expedite pathological diagnoses, thereby enhancing the efficiency of patient care. However, medical images often have complex textures and structures, and the models often face the problem of reduced image resolution and information loss due to downsampling. To address this issue, we propose HC-Mamba, a new medical image segmentation model based on the modern state space model Mamba. Specifically, we introduce the technique of dilated convolution in the HC-Mamba model to capture a more extensive range of contextual information without increasing the computational cost by extending the perceptual field of the convolution kernel. In addition, the HC-Mamba model employs depthwise separable convolutions, significantly reducing the number of parameters and the computational power of the model. By combining dilated convolution and depthwise separable convolutions, HC-Mamba is able to process large-scale medical image data at a much lower computational cost while maintaining a high level of performance. We conduct comprehensive experiments on segmentation tasks including organ segmentation and skin lesion, and conduct extensive experiments on Synapse, ISIC17 and ISIC18 to demonstrate the potential of the HC-Mamba model in medical image segmentation. The experimental results show that HC-Mamba exhibits competitive performance on all these datasets, thereby proving its effectiveness and usefulness in medical image segmentation.",
+  "citation": 33
+}

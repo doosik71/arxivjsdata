@@ -1,0 +1,8 @@
+{
+  "title": "Pixel Recurrent Neural Networks",
+  "authors": "Aaron van den Oord, Nal Kalchbrenner, Koray Kavukcuoglu",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1601.06759v3",
+  "abstract": "Modeling the distribution of natural images is a landmark problem in\nunsupervised learning. This task requires an image model that is at once\nexpressive, tractable and scalable. We present a deep neural network that\nsequentially predicts the pixels in an image along the two spatial dimensions.\nOur method models the discrete probability of the raw pixel values and encodes\nthe complete set of dependencies in the image. Architectural novelties include\nfast two-dimensional recurrent layers and an effective use of residual\nconnections in deep recurrent networks. We achieve log-likelihood scores on\nnatural images that are considerably better than the previous state of the art.\nOur main results also provide benchmarks on the diverse ImageNet dataset.\nSamples generated from the model appear crisp, varied and globally coherent.",
+  "citation": 2846
+}

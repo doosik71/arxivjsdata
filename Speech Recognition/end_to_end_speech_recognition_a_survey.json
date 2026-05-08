@@ -1,0 +1,8 @@
+{
+  "title": "End-to-End Speech Recognition: A Survey",
+  "authors": "Rohit Prabhavalkar, Takaaki Hori, Tara N. Sainath, Ralf Schlüter, Shinji Watanabe",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2303.03329v1",
+  "abstract": "In the last decade of automatic speech recognition (ASR) research, the\nintroduction of deep learning brought considerable reductions in word error\nrate of more than 50% relative, compared to modeling without deep learning. In\nthe wake of this transition, a number of all-neural ASR architectures were\nintroduced. These so-called end-to-end (E2E) models provide highly integrated,\ncompletely neural ASR models, which rely strongly on general machine learning\nknowledge, learn more consistently from data, while depending less on ASR\ndomain-specific experience. The success and enthusiastic adoption of deep\nlearning accompanied by more generic model architectures lead to E2E models now\nbecoming the prominent ASR approach. The goal of this survey is to provide a\ntaxonomy of E2E ASR models and corresponding improvements, and to discuss their\nproperties and their relation to the classical hidden Markov model (HMM) based\nASR architecture. All relevant aspects of E2E ASR are covered in this work:\nmodeling, training, decoding, and external language model integration,\naccompanied by discussions of performance and deployment opportunities, as well\nas an outlook into potential future developments.",
+  "citation": 301
+}

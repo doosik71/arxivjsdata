@@ -1,0 +1,8 @@
+{
+  "title": "Attribute-Guided Network for Cross-Modal Zero-Shot Hashing",
+  "authors": "Zhong Ji, Yuxin Sun, Yunlong Yu, Yanwei Pang, Jungong Han",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1802.01943v1",
+  "abstract": "Zero-Shot Hashing aims at learning a hashing model that is trained only by\ninstances from seen categories but can generate well to those of unseen\ncategories. Typically, it is achieved by utilizing a semantic embedding space\nto transfer knowledge from seen domain to unseen domain. Existing efforts\nmainly focus on single-modal retrieval task, especially Image-Based Image\nRetrieval (IBIR). However, as a highlighted research topic in the field of\nhashing, cross-modal retrieval is more common in real world applications. To\naddress the Cross-Modal Zero-Shot Hashing (CMZSH) retrieval task, we propose a\nnovel Attribute-Guided Network (AgNet), which can perform not only IBIR, but\nalso Text-Based Image Retrieval (TBIR). In particular, AgNet aligns different\nmodal data into a semantically rich attribute space, which bridges the gap\ncaused by modality heterogeneity and zero-shot setting. We also design an\neffective strategy that exploits the attribute to guide the generation of hash\ncodes for image and text within the same network. Extensive experimental\nresults on three benchmark datasets (AwA, SUN, and ImageNet) demonstrate the\nsuperiority of AgNet on both cross-modal and single-modal zero-shot image\nretrieval tasks.",
+  "citation": 105
+}

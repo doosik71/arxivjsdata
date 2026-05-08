@@ -1,0 +1,8 @@
+{
+  "title": "Unsupervised speech representation learning using WaveNet autoencoders",
+  "authors": "Jan Chorowski, Ron J. Weiss, Samy Bengio, Aäron van den Oord",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1901.08810v2",
+  "abstract": "We consider the task of unsupervised extraction of meaningful latent\nrepresentations of speech by applying autoencoding neural networks to speech\nwaveforms. The goal is to learn a representation able to capture high level\nsemantic content from the signal, e.g.\\ phoneme identities, while being\ninvariant to confounding low level details in the signal such as the underlying\npitch contour or background noise. Since the learned representation is tuned to\ncontain only phonetic content, we resort to using a high capacity WaveNet\ndecoder to infer information discarded by the encoder from previous samples.\nMoreover, the behavior of autoencoder models depends on the kind of constraint\nthat is applied to the latent representation. We compare three variants: a\nsimple dimensionality reduction bottleneck, a Gaussian Variational Autoencoder\n(VAE), and a discrete Vector Quantized VAE (VQ-VAE). We analyze the quality of\nlearned representations in terms of speaker independence, the ability to\npredict phonetic content, and the ability to accurately reconstruct individual\nspectrogram frames. Moreover, for discrete encodings extracted using the\nVQ-VAE, we measure the ease of mapping them to phonemes. We introduce a\nregularization scheme that forces the representations to focus on the phonetic\ncontent of the utterance and report performance comparable with the top entries\nin the ZeroSpeech 2017 unsupervised acoustic unit discovery task.",
+  "citation": 441
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Lifelong Metric Learning",
+  "authors": "Gan Sun, Yang Cong, Ji Liu, Xiaowei Xu",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1705.01209v2",
+  "abstract": "The state-of-the-art online learning approaches are only capable of learning\nthe metric for predefined tasks. In this paper, we consider lifelong learning\nproblem to mimic \"human learning\", i.e., endowing a new capability to the\nlearned metric for a new task from new online samples and incorporating\nprevious experiences and knowledge. Therefore, we propose a new metric learning\nframework: lifelong metric learning (LML), which only utilizes the data of the\nnew task to train the metric model while preserving the original capabilities.\nMore specifically, the proposed LML maintains a common subspace for all learned\nmetrics, named lifelong dictionary, transfers knowledge from the common\nsubspace to each new metric task with task-specific idiosyncrasy, and redefines\nthe common subspace over time to maximize performance across all metric tasks.\nFor model optimization, we apply online passive aggressive optimization\nalgorithm to solve the proposed LML framework, where the lifelong dictionary\nand task-specific partition are optimized alternatively and consecutively.\nFinally, we evaluate our approach by analyzing several multi-task metric\nlearning datasets. Extensive experimental results demonstrate effectiveness and\nefficiency of the proposed framework.",
+  "citation": 31
+}

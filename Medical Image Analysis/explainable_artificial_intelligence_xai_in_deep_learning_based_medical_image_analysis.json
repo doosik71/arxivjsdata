@@ -1,0 +1,8 @@
+{
+  "title": "Explainable artificial intelligence (XAI) in deep learning-based medical image analysis",
+  "authors": "Bas H. M. van der Velden, Hugo J. Kuijf, Kenneth G. A. Gilhuijs, Max A. Viergever",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2107.10912v1",
+  "abstract": "With an increase in deep learning-based methods, the call for explainability of such methods grows, especially in high-stakes decision making areas such as medical image analysis. This survey presents an overview of eXplainable Artificial Intelligence (XAI) used in deep learning-based medical image analysis. A framework of XAI criteria is introduced to classify deep learning-based medical image analysis methods. Papers on XAI techniques in medical image analysis are then surveyed and categorized according to the framework and according to anatomical location. The paper concludes with an outlook of future opportunities for XAI in medical image analysis.",
+  "citation": 1305
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Forecasting with time series imaging",
+  "authors": "Xixi Li, Yanfei Kang, Feng Li",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1904.08064v3",
+  "abstract": "Feature-based time series representations have attracted substantial\nattention in a wide range of time series analysis methods. Recently, the use of\ntime series features for forecast model averaging has been an emerging research\nfocus in the forecasting community. Nonetheless, most of the existing\napproaches depend on the manual choice of an appropriate set of features.\nExploiting machine learning methods to extract features from time series\nautomatically becomes crucial in state-of-the-art time series analysis. In this\npaper, we introduce an automated approach to extract time series features based\non time series imaging. We first transform time series into recurrence plots,\nfrom which local features can be extracted using computer vision algorithms.\nThe extracted features are used for forecast model averaging. Our experiments\nshow that forecasting based on automatically extracted features, with less\nhuman intervention and a more comprehensive view of the raw time series data,\nyields highly comparable performances with the best methods in the largest\nforecasting competition dataset (M4) and outperforms the top methods in the\nTourism forecasting competition dataset.",
+  "citation": 123
+}

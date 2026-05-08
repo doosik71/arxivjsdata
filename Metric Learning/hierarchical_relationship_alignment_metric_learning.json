@@ -1,0 +1,8 @@
+{
+  "title": "Hierarchical Relationship Alignment Metric Learning",
+  "authors": "Lifeng Gu",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2103.15107v1",
+  "abstract": "Most existing metric learning methods focus on learning a similarity or\ndistance measure relying on similar and dissimilar relations between sample\npairs. However, pairs of samples cannot be simply identified as similar or\ndissimilar in many real-world applications, e.g., multi-label learning, label\ndistribution learning. To this end, relation alignment metric learning (RAML)\nframework is proposed to handle the metric learning problem in those scenarios.\nBut RAML learn a linear metric, which can't model complex datasets. Combining\nwith deep learning and RAML framework, we propose a hierarchical relationship\nalignment metric leaning model HRAML, which uses the concept of relationship\nalignment to model metric learning problems under multiple learning tasks, and\nmakes full use of the consistency between the sample pair relationship in the\nfeature space and the sample pair relationship in the label space. Further we\norganize several experiment divided by learning tasks, and verified the better\nperformance of HRAML against many popular methods and RAML framework.",
+  "citation": 0
+}

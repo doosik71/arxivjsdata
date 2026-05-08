@@ -1,0 +1,8 @@
+{
+  "title": "Any-Shot Object Detection",
+  "authors": "Shafin Rahman, Salman Khan, Nick Barnes, Fahad Shahbaz Khan",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2003.07003v1",
+  "abstract": "Previous work on novel object detection considers zero or few-shot settings\nwhere none or few examples of each category are available for training. In real\nworld scenarios, it is less practical to expect that 'all' the novel classes\nare either unseen or {have} few-examples. Here, we propose a more realistic\nsetting termed 'Any-shot detection', where totally unseen and few-shot\ncategories can simultaneously co-occur during inference. Any-shot detection\noffers unique challenges compared to conventional novel object detection such\nas, a high imbalance between unseen, few-shot and seen object classes,\nsusceptibility to forget base-training while learning novel classes and\ndistinguishing novel classes from the background. To address these challenges,\nwe propose a unified any-shot detection model, that can concurrently learn to\ndetect both zero-shot and few-shot object classes. Our core idea is to use\nclass semantics as prototypes for object detection, a formulation that\nnaturally minimizes knowledge forgetting and mitigates the class-imbalance in\nthe label space. Besides, we propose a rebalanced loss function that emphasizes\ndifficult few-shot cases but avoids overfitting on the novel classes to allow\ndetection of totally unseen classes. Without bells and whistles, our framework\ncan also be used solely for Zero-shot detection and Few-shot detection tasks.\nWe report extensive experiments on Pascal VOC and MS-COCO datasets where our\napproach is shown to provide significant improvements.",
+  "citation": 25
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Streaming automatic speech recognition with the transformer model",
+  "authors": "Niko Moritz, Takaaki Hori, Jonathan Le Roux",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2001.02674v5",
+  "abstract": "Encoder-decoder based sequence-to-sequence models have demonstrated\nstate-of-the-art results in end-to-end automatic speech recognition (ASR).\nRecently, the transformer architecture, which uses self-attention to model\ntemporal context information, has been shown to achieve significantly lower\nword error rates (WERs) compared to recurrent neural network (RNN) based system\narchitectures. Despite its success, the practical usage is limited to offline\nASR tasks, since encoder-decoder architectures typically require an entire\nspeech utterance as input. In this work, we propose a transformer based\nend-to-end ASR system for streaming ASR, where an output must be generated\nshortly after each spoken word. To achieve this, we apply time-restricted\nself-attention for the encoder and triggered attention for the encoder-decoder\nattention mechanism. Our proposed streaming transformer architecture achieves\n2.8% and 7.2% WER for the \"clean\" and \"other\" test data of LibriSpeech, which\nto our knowledge is the best published streaming end-to-end ASR result for this\ntask.",
+  "citation": 251
+}

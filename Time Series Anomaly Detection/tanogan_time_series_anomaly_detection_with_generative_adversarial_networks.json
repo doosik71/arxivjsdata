@@ -1,0 +1,8 @@
+{
+  "title": "TAnoGAN: Time Series Anomaly Detection with Generative Adversarial\n  Networks",
+  "authors": "Md Abul Bashar, Richi Nayak",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.09567v2",
+  "abstract": "Anomaly detection in time series data is a significant problem faced in many\napplication areas such as manufacturing, medical imaging and cyber-security.\nRecently, Generative Adversarial Networks (GAN) have gained attention for\ngeneration and anomaly detection in image domain. In this paper, we propose a\nnovel GAN-based unsupervised method called TAnoGan for detecting anomalies in\ntime series when a small number of data points are available. We evaluate\nTAnoGan with 46 real-world time series datasets that cover a variety of\ndomains. Extensive experimental results show that TAnoGan performs better than\ntraditional and neural network models.",
+  "citation": 221
+}

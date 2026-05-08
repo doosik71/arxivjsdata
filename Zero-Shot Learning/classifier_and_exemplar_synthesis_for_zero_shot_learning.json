@@ -1,0 +1,8 @@
+{
+  "title": "Classifier and Exemplar Synthesis for Zero-Shot Learning",
+  "authors": "Soravit Changpinyo, Wei-Lun Chao, Boqing Gong, Fei Sha",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1812.06423v2",
+  "abstract": "Zero-shot learning (ZSL) enables solving a task without the need to see its\nexamples. In this paper, we propose two ZSL frameworks that learn to synthesize\nparameters for novel unseen classes. First, we propose to cast the problem of\nZSL as learning manifold embeddings from graphs composed of object classes,\nleading to a flexible approach that synthesizes \"classifiers\" for the unseen\nclasses. Then, we define an auxiliary task of synthesizing \"exemplars\" for the\nunseen classes to be used as an automatic denoising mechanism for any existing\nZSL approaches or as an effective ZSL model by itself. On five visual\nrecognition benchmark datasets, we demonstrate the superior performances of our\nproposed frameworks in various scenarios of both conventional and generalized\nZSL. Finally, we provide valuable insights through a series of empirical\nanalyses, among which are a comparison of semantic representations on the full\nImageNet benchmark as well as a comparison of metrics used in generalized ZSL.\nOur code and data are publicly available at\nhttps://github.com/pujols/Zero-shot-learning-journal",
+  "citation": 58
+}

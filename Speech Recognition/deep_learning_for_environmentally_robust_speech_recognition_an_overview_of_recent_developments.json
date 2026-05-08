@@ -1,0 +1,8 @@
+{
+  "title": "Deep Learning for Environmentally Robust Speech Recognition: An Overview\n  of Recent Developments",
+  "authors": "Zixing Zhang, Jürgen Geiger, Jouni Pohjalainen, Amr El-Desoky Mousa, Wenyu Jin, Björn Schuller",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1705.10874v3",
+  "abstract": "Eliminating the negative effect of non-stationary environmental noise is a\nlong-standing research topic for automatic speech recognition that stills\nremains an important challenge. Data-driven supervised approaches, including\nones based on deep neural networks, have recently emerged as potential\nalternatives to traditional unsupervised approaches and with sufficient\ntraining, can alleviate the shortcomings of the unsupervised methods in various\nreal-life acoustic environments. In this light, we review recently developed,\nrepresentative deep learning approaches for tackling non-stationary additive\nand convolutional degradation of speech with the aim of providing guidelines\nfor those involved in the development of environmentally robust speech\nrecognition systems. We separately discuss single- and multi-channel techniques\ndeveloped for the front-end and back-end of speech recognition systems, as well\nas joint front-end and back-end training frameworks.",
+  "citation": 451
+}

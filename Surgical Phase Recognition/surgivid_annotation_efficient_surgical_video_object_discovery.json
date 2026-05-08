@@ -1,0 +1,7 @@
+{
+  "title": "SURGIVID: Annotation-Efficient Surgical Video Object Discovery",
+  "authors": "Çağhan Köksal, Ghazal Ghazaei, Nassir Navab",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.07801v1",
+  "abstract": "Surgical scenes convey crucial information about the quality of surgery.\nPixel-wise localization of tools and anatomical structures is the first task\ntowards deeper surgical analysis for microscopic or endoscopic surgical views.\nThis is typically done via fully-supervised methods which are annotation greedy\nand in several cases, demanding medical expertise. Considering the profusion of\nsurgical videos obtained through standardized surgical workflows, we propose an\nannotation-efficient framework for the semantic segmentation of surgical\nscenes. We employ image-based self-supervised object discovery to identify the\nmost salient tools and anatomical structures in surgical videos. These\nproposals are further refined within a minimally supervised fine-tuning step.\nOur unsupervised setup reinforced with only 36 annotation labels indicates\ncomparable localization performance with fully-supervised segmentation models.\nFurther, leveraging surgical phase labels as weak labels can better guide model\nattention towards surgical tools, leading to $\\sim 2\\%$ improvement in tool\nlocalization. Extensive ablation studies on the CaDIS dataset validate the\neffectiveness of our proposed solution in discovering relevant surgical objects\nwith minimal or no supervision."
+}

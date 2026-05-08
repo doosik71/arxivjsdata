@@ -1,0 +1,8 @@
+{
+  "title": "Conv-Transformer Transducer: Low Latency, Low Frame Rate, Streamable\n  End-to-End Speech Recognition",
+  "authors": "Wenyong Huang, Wenchao Hu, Yu Ting Yeung, Xiao Chen",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.05750v1",
+  "abstract": "Transformer has achieved competitive performance against state-of-the-art\nend-to-end models in automatic speech recognition (ASR), and requires\nsignificantly less training time than RNN-based models. The original\nTransformer, with encoder-decoder architecture, is only suitable for offline\nASR. It relies on an attention mechanism to learn alignments, and encodes input\naudio bidirectionally. The high computation cost of Transformer decoding also\nlimits its use in production streaming systems. To make Transformer suitable\nfor streaming ASR, we explore Transducer framework as a streamable way to learn\nalignments. For audio encoding, we apply unidirectional Transformer with\ninterleaved convolution layers. The interleaved convolution layers are used for\nmodeling future context which is important to performance. To reduce\ncomputation cost, we gradually downsample acoustic input, also with the\ninterleaved convolution layers. Moreover, we limit the length of history\ncontext in self-attention to maintain constant computation cost for each\ndecoding step. We show that this architecture, named Conv-Transformer\nTransducer, achieves competitive performance on LibriSpeech dataset (3.6\\% WER\non test-clean) without external language models. The performance is comparable\nto previously published streamable Transformer Transducer and strong hybrid\nstreaming ASR systems, and is achieved with smaller look-ahead window (140~ms),\nfewer parameters and lower frame rate.",
+  "citation": 59
+}

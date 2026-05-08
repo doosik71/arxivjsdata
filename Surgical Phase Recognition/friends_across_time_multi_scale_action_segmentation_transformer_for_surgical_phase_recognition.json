@@ -1,0 +1,7 @@
+{
+  "title": "Friends Across Time: Multi-Scale Action Segmentation Transformer for\n  Surgical Phase Recognition",
+  "authors": "Bokai Zhang, Jiayuan Meng, Bin Cheng, Dean Biskup, Svetlana Petculescu, Angela Chapman",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2401.11644v1",
+  "abstract": "Automatic surgical phase recognition is a core technology for modern\noperating rooms and online surgical video assessment platforms. Current\nstate-of-the-art methods use both spatial and temporal information to tackle\nthe surgical phase recognition task. Building on this idea, we propose the\nMulti-Scale Action Segmentation Transformer (MS-AST) for offline surgical phase\nrecognition and the Multi-Scale Action Segmentation Causal Transformer\n(MS-ASCT) for online surgical phase recognition. We use ResNet50 or\nEfficientNetV2-M for spatial feature extraction. Our MS-AST and MS-ASCT can\nmodel temporal information at different scales with multi-scale temporal\nself-attention and multi-scale temporal cross-attention, which enhances the\ncapture of temporal relationships between frames and segments. We demonstrate\nthat our method can achieve 95.26% and 96.15% accuracy on the Cholec80 dataset\nfor online and offline surgical phase recognition, respectively, which achieves\nnew state-of-the-art results. Our method can also achieve state-of-the-art\nresults on non-medical datasets in the video action segmentation domain."
+}

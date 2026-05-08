@@ -1,0 +1,8 @@
+{
+  "title": "Precursor-of-Anomaly Detection for Irregular Time Series",
+  "authors": "Sheo Yon Jhin, Jaehoon Lee, Noseong Park",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.15489v3",
+  "abstract": "Anomaly detection is an important field that aims to identify unexpected\npatterns or data points, and it is closely related to many real-world problems,\nparticularly to applications in finance, manufacturing, cyber security, and so\non. While anomaly detection has been studied extensively in various fields,\ndetecting future anomalies before they occur remains an unexplored territory.\nIn this paper, we present a novel type of anomaly detection, called\nPrecursor-of-Anomaly (PoA) detection. Unlike conventional anomaly detection,\nwhich focuses on determining whether a given time series observation is an\nanomaly or not, PoA detection aims to detect future anomalies before they\nhappen. To solve both problems at the same time, we present a neural controlled\ndifferential equation-based neural network and its multi-task learning\nalgorithm. We conduct experiments using 17 baselines and 3 datasets, including\nregular and irregular time series, and demonstrate that our presented method\noutperforms the baselines in almost all cases. Our ablation studies also\nindicate that the multitasking training method significantly enhances the\noverall performance for both anomaly and PoA detection.",
+  "citation": 25
+}

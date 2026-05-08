@@ -1,0 +1,8 @@
+{
+  "title": "Zero-Shot Learning for Semantic Utterance Classification",
+  "authors": "Yann N. Dauphin, Gokhan Tur, Dilek Hakkani-Tur, Larry Heck",
+  "year": 2013,
+  "url": "http://arxiv.org/abs/1401.0509v3",
+  "abstract": "We propose a novel zero-shot learning method for semantic utterance\nclassification (SUC). It learns a classifier $f: X \\to Y$ for problems where\nnone of the semantic categories $Y$ are present in the training set. The\nframework uncovers the link between categories and utterances using a semantic\nspace. We show that this semantic space can be learned by deep neural networks\ntrained on large amounts of search engine query log data. More precisely, we\npropose a novel method that can learn discriminative semantic features without\nsupervision. It uses the zero-shot learning framework to guide the learning of\nthe semantic features. We demonstrate the effectiveness of the zero-shot\nsemantic learning algorithm on the SUC dataset collected by (Tur, 2012).\nFurthermore, we achieve state-of-the-art results by combining the semantic\nfeatures with a supervised method.",
+  "citation": 86
+}

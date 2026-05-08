@@ -1,0 +1,8 @@
+{
+  "title": "Classification of sleep stages from EEG, EOG and EMG signals by SSNet",
+  "authors": "Haifa Almutairi, Ghulam Mubashar Hassan, Amitava Datta",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2307.05373v1",
+  "abstract": "Classification of sleep stages plays an essential role in diagnosing\nsleep-related diseases including Sleep Disorder Breathing (SDB) disease. In\nthis study, we propose an end-to-end deep learning architecture, named SSNet,\nwhich comprises of two deep learning networks based on Convolutional Neuron\nNetworks (CNN) and Long Short Term Memory (LSTM). Both deep learning networks\nextract features from the combination of Electrooculogram (EOG),\nElectroencephalogram (EEG), and Electromyogram (EMG) signals, as each signal\nhas distinct features that help in the classification of sleep stages. The\nfeatures produced by the two-deep learning networks are concatenated to pass to\nthe fully connected layer for the classification. The performance of our\nproposed model is evaluated by using two public datasets Sleep-EDF Expanded\ndataset and ISRUC-Sleep dataset. The accuracy and Kappa coefficient are 96.36%\nand 93.40% respectively, for classifying three classes of sleep stages using\nSleep-EDF Expanded dataset. Whereas, the accuracy and Kappa coefficient are\n96.57% and 83.05% respectively for five classes of sleep stages using Sleep-EDF\nExpanded dataset. Our model achieves the best performance in classifying sleep\nstages when compared with the state-of-the-art techniques.",
+  "citation": 11
+}

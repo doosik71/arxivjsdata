@@ -1,0 +1,8 @@
+{
+  "title": "Grouped Convolutional Neural Networks for Multivariate Time Series",
+  "authors": "Subin Yi, Janghoon Ju, Man-Ki Yoon, Jaesik Choi",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1703.09938v4",
+  "abstract": "Analyzing multivariate time series data is important for many applications\nsuch as automated control, fault diagnosis and anomaly detection. One of the\nkey challenges is to learn latent features automatically from dynamically\nchanging multivariate input. In visual recognition tasks, convolutional neural\nnetworks (CNNs) have been successful to learn generalized feature extractors\nwith shared parameters over the spatial domain. However, when high-dimensional\nmultivariate time series is given, designing an appropriate CNN model structure\nbecomes challenging because the kernels may need to be extended through the\nfull dimension of the input volume. To address this issue, we present two\nstructure learning algorithms for deep CNN models. Our algorithms exploit the\ncovariance structure over multiple time series to partition input volume into\ngroups. The first algorithm learns the group CNN structures explicitly by\nclustering individual input sequences. The second algorithm learns the group\nCNN structures implicitly from the error backpropagation. In experiments with\ntwo real-world datasets, we demonstrate that our group CNNs outperform existing\nCNN based regression methods.",
+  "citation": 53
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Preference VLM: Leveraging VLMs for Scalable Preference-Based\n  Reinforcement Learning",
+  "authors": "Udita Ghosh, Dripta S. Raychaudhuri, Jiachen Li, Konstantinos Karydis, Amit Roy-Chowdhury",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.01616v1",
+  "abstract": "Preference-based reinforcement learning (RL) offers a promising approach for\naligning policies with human intent but is often constrained by the high cost\nof human feedback. In this work, we introduce PrefVLM, a framework that\nintegrates Vision-Language Models (VLMs) with selective human feedback to\nsignificantly reduce annotation requirements while maintaining performance. Our\nmethod leverages VLMs to generate initial preference labels, which are then\nfiltered to identify uncertain cases for targeted human annotation.\nAdditionally, we adapt VLMs using a self-supervised inverse dynamics loss to\nimprove alignment with evolving policies. Experiments on Meta-World\nmanipulation tasks demonstrate that PrefVLM achieves comparable or superior\nsuccess rates to state-of-the-art methods while using up to 2 x fewer human\nannotations. Furthermore, we show that adapted VLMs enable efficient knowledge\ntransfer across tasks, further minimizing feedback needs. Our results highlight\nthe potential of combining VLMs with selective human supervision to make\npreference-based RL more scalable and practical."
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Neural Contextual Anomaly Detection for Time Series",
+  "authors": "Chris U. Carmona, François-Xavier Aubet, Valentin Flunkert, Jan Gasthaus",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2107.07702v1",
+  "abstract": "We introduce Neural Contextual Anomaly Detection (NCAD), a framework for\nanomaly detection on time series that scales seamlessly from the unsupervised\nto supervised setting, and is applicable to both univariate and multivariate\ntime series. This is achieved by effectively combining recent developments in\nrepresentation learning for multivariate time series, with techniques for deep\nanomaly detection originally developed for computer vision that we tailor to\nthe time series setting. Our window-based approach facilitates learning the\nboundary between normal and anomalous classes by injecting generic synthetic\nanomalies into the available data. Moreover, our method can effectively take\nadvantage of all the available information, be it as domain knowledge, or as\ntraining labels in the semi-supervised setting. We demonstrate empirically on\nstandard benchmark datasets that our approach obtains a state-of-the-art\nperformance in these settings.",
+  "citation": 111
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Self-Supervised Learning for Large-Scale Unsupervised Image Clustering",
+  "authors": "Evgenii Zheltonozhskii, Chaim Baskin, Alex M. Bronstein, Avi Mendelson",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.10312v2",
+  "abstract": "Unsupervised learning has always been appealing to machine learning researchers and practitioners, allowing them to avoid an expensive and complicated process of labeling the data. However, unsupervised learning of complex data is challenging, and even the best approaches show much weaker performance than their supervised counterparts. Self-supervised deep learning has become a strong instrument for representation learning in computer vision. However, those methods have not been evaluated in a fully unsupervised setting. In this paper, we propose a simple scheme for unsupervised classification based on self-supervised representations. We evaluate the proposed approach with several recent self-supervised methods showing that it achieves competitive results for ImageNet classification (39% accuracy on ImageNet with 1000 clusters and 46% with overclustering). We suggest adding the unsupervised evaluation to a set of standard benchmarks for self-supervised learning. The code is available at https://github.com/Randl/kmeans_selfsuper",
+  "citation": 12
+}

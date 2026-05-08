@@ -1,0 +1,8 @@
+{
+  "title": "PyTorch Metric Learning",
+  "authors": "Kevin Musgrave, Serge Belongie, Ser-Nam Lim",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.09164v1",
+  "abstract": "Deep metric learning algorithms have a wide variety of applications, but\nimplementing these algorithms can be tedious and time consuming. PyTorch Metric\nLearning is an open source library that aims to remove this barrier for both\nresearchers and practitioners. The modular and flexible design allows users to\neasily try out different combinations of algorithms in their existing code. It\nalso comes with complete train/test workflows, for users who want results fast.\nCode and documentation is available at\nhttps://www.github.com/KevinMusgrave/pytorch-metric-learning.",
+  "citation": 159
+}

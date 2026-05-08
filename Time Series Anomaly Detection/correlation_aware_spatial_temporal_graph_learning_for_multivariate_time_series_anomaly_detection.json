@@ -1,0 +1,8 @@
+{
+  "title": "Correlation-aware Spatial-Temporal Graph Learning for Multivariate\n  Time-series Anomaly Detection",
+  "authors": "Yu Zheng, Huan Yee Koh, Ming Jin, Lianhua Chi, Khoa T. Phan, Shirui Pan, Yi-Ping Phoebe Chen, Wei Xiang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2307.08390v2",
+  "abstract": "Multivariate time-series anomaly detection is critically important in many\napplications, including retail, transportation, power grid, and water treatment\nplants. Existing approaches for this problem mostly employ either statistical\nmodels which cannot capture the non-linear relations well or conventional deep\nlearning models (e.g., CNN and LSTM) that do not explicitly learn the pairwise\ncorrelations among variables. To overcome these limitations, we propose a novel\nmethod, correlation-aware spatial-temporal graph learning (termed CST-GL), for\ntime series anomaly detection. CST-GL explicitly captures the pairwise\ncorrelations via a multivariate time series correlation learning module based\non which a spatial-temporal graph neural network (STGNN) can be developed.\nThen, by employing a graph convolution network that exploits one- and multi-hop\nneighbor information, our STGNN component can encode rich spatial information\nfrom complex pairwise dependencies between variables. With a temporal module\nthat consists of dilated convolutional functions, the STGNN can further capture\nlong-range dependence over time. A novel anomaly scoring component is further\nintegrated into CST-GL to estimate the degree of an anomaly in a purely\nunsupervised manner. Experimental results demonstrate that CST-GL can detect\nanomalies effectively in general settings as well as enable early detection\nacross different time delays.",
+  "citation": 81
+}

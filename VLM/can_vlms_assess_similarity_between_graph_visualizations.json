@@ -1,0 +1,7 @@
+{
+  "title": "Can VLMs Assess Similarity Between Graph Visualizations?",
+  "authors": "Seokweon Jung, Hyeon Jeon, Jeongmin Rhee, Jinwook Seo",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2504.09859v1",
+  "abstract": "Graph visualizations have been studied for tasks such as clustering and\ntemporal analysis, but how these visual similarities relate to established\ngraph similarity measures remains unclear. In this paper, we explore the\npotential of Vision Language Models (VLMs) to approximate human-like perception\nof graph similarity. We generate graph datasets of various sizes and densities\nand compare VLM-derived visual similarity scores with feature-based measures.\nOur findings indicate VLMs can assess graph similarity in a manner similar to\nfeature-based measures, even though differences among the measures exist. In\nfuture work, we plan to extend our research by conducting experiments on human\nvisual graph perception."
+}

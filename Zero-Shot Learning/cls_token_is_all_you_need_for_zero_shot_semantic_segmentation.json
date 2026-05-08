@@ -1,0 +1,8 @@
+{
+  "title": "[CLS] Token is All You Need for Zero-Shot Semantic Segmentation",
+  "authors": "Letian Wu, Wenyao Zhang, Tengping Jiang, Wankou Yang, Xin Jin, Wenjun Zeng",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.06212v1",
+  "abstract": "In this paper, we propose an embarrassingly simple yet highly effective\nzero-shot semantic segmentation (ZS3) method, based on the pre-trained\nvision-language model CLIP. First, our study provides a couple of key\ndiscoveries: (i) the global tokens (a.k.a [CLS] tokens in Transformer) of the\ntext branch in CLIP provide a powerful representation of semantic information\nand (ii) these text-side [CLS] tokens can be regarded as category priors to\nguide CLIP visual encoder pay more attention on the corresponding region of\ninterest. Based on that, we build upon the CLIP model as a backbone which we\nextend with a One-Way [CLS] token navigation from text to the visual branch\nthat enables zero-shot dense prediction, dubbed \\textbf{ClsCLIP}. Specifically,\nwe use the [CLS] token output from the text branch, as an auxiliary semantic\nprompt, to replace the [CLS] token in shallow layers of the ViT-based visual\nencoder. This one-way navigation embeds such global category prior earlier and\nthus promotes semantic segmentation. Furthermore, to better segment tiny\nobjects in ZS3, we further enhance ClsCLIP with a local zoom-in strategy, which\nemploys a region proposal pre-processing and we get ClsCLIP+. Extensive\nexperiments demonstrate that our proposed ZS3 method achieves a SOTA\nperformance, and it is even comparable with those few-shot semantic\nsegmentation methods.",
+  "citation": 3
+}

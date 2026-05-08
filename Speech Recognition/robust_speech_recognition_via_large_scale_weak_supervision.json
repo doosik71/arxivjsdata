@@ -1,0 +1,8 @@
+{
+  "title": "Robust Speech Recognition via Large-Scale Weak Supervision",
+  "authors": "Alec Radford, Jong Wook Kim, Tao Xu, Greg Brockman, Christine McLeavey, Ilya Sutskever",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2212.04356v1",
+  "abstract": "We study the capabilities of speech processing systems trained simply to\npredict large amounts of transcripts of audio on the internet. When scaled to\n680,000 hours of multilingual and multitask supervision, the resulting models\ngeneralize well to standard benchmarks and are often competitive with prior\nfully supervised results but in a zero-shot transfer setting without the need\nfor any fine-tuning. When compared to humans, the models approach their\naccuracy and robustness. We are releasing models and inference code to serve as\na foundation for further work on robust speech processing.",
+  "citation": 6350
+}

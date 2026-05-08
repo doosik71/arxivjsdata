@@ -1,0 +1,8 @@
+{
+  "title": "Multi-task WaveNet: A Multi-task Generative Model for Statistical\n  Parametric Speech Synthesis without Fundamental Frequency Conditions",
+  "authors": "Yu Gu, Yongguo Kang",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1806.08619v1",
+  "abstract": "This paper introduces an improved generative model for statistical parametric\nspeech synthesis (SPSS) based on WaveNet under a multi-task learning framework.\nDifferent from the original WaveNet model, the proposed Multi-task WaveNet\nemploys the frame-level acoustic feature prediction as the secondary task and\nthe external fundamental frequency prediction model for the original WaveNet\ncan be removed. Therefore the improved WaveNet can generate high-quality speech\nwaveforms only conditioned on linguistic features. Multi-task WaveNet can\nproduce more natural and expressive speech by addressing the pitch prediction\nerror accumulation issue and possesses more succinct inference procedures than\nthe original WaveNet. Experimental results prove that the SPSS method proposed\nin this paper can achieve better performance than the state-of-the-art approach\nutilizing the original WaveNet in both objective and subjective preference\ntests.",
+  "citation": 22
+}

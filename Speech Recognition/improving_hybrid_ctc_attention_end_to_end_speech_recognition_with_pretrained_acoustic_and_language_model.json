@@ -1,0 +1,8 @@
+{
+  "title": "Improving Hybrid CTC/Attention End-to-end Speech Recognition with\n  Pretrained Acoustic and Language Model",
+  "authors": "Keqi Deng, Songjun Cao, Yike Zhang, Long Ma",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2112.07254v1",
+  "abstract": "Recently, self-supervised pretraining has achieved impressive results in\nend-to-end (E2E) automatic speech recognition (ASR). However, the dominant\nsequence-to-sequence (S2S) E2E model is still hard to fully utilize the\nself-supervised pre-training methods because its decoder is conditioned on\nacoustic representation thus cannot be pretrained separately. In this paper, we\npropose a pretrained Transformer (Preformer) S2S ASR architecture based on\nhybrid CTC/attention E2E models to fully utilize the pretrained acoustic models\n(AMs) and language models (LMs). In our framework, the encoder is initialized\nwith a pretrained AM (wav2vec2.0). The Preformer leverages CTC as an auxiliary\ntask during training and inference. Furthermore, we design a one-cross decoder\n(OCD), which relaxes the dependence on acoustic representations so that it can\nbe initialized with pretrained LM (DistilGPT2). Experiments are conducted on\nthe AISHELL-1 corpus and achieve a $4.6\\%$ character error rate (CER) on the\ntest set. Compared with our vanilla hybrid CTC/attention Transformer baseline,\nour proposed CTC/attention-based Preformer yields $27\\%$ relative CER\nreduction. To the best of our knowledge, this is the first work to utilize both\npretrained AM and LM in a S2S ASR system.",
+  "citation": 38
+}

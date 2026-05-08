@@ -1,0 +1,8 @@
+{
+  "title": "SAM3D: Zero-Shot 3D Object Detection via Segment Anything Model",
+  "authors": "Dingyuan Zhang, Dingkang Liang, Hongcheng Yang, Zhikang Zou, Xiaoqing Ye, Zhe Liu, Xiang Bai",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.02245v2",
+  "abstract": "With the development of large language models, many remarkable linguistic\nsystems like ChatGPT have thrived and achieved astonishing success on many\ntasks, showing the incredible power of foundation models. In the spirit of\nunleashing the capability of foundation models on vision tasks, the Segment\nAnything Model (SAM), a vision foundation model for image segmentation, has\nbeen proposed recently and presents strong zero-shot ability on many downstream\n2D tasks. However, whether SAM can be adapted to 3D vision tasks has yet to be\nexplored, especially 3D object detection. With this inspiration, we explore\nadapting the zero-shot ability of SAM to 3D object detection in this paper. We\npropose a SAM-powered BEV processing pipeline to detect objects and get\npromising results on the large-scale Waymo open dataset. As an early attempt,\nour method takes a step toward 3D object detection with vision foundation\nmodels and presents the opportunity to unleash their power on 3D vision tasks.\nThe code is released at https://github.com/DYZhang09/SAM3D.",
+  "citation": 52
+}

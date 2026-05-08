@@ -1,0 +1,8 @@
+{
+  "title": "Zero-Shot Anomaly Detection with Pre-trained Segmentation Models",
+  "authors": "Matthew Baugh, James Batten, Johanna P. Müller, Bernhard Kainz",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.09269v1",
+  "abstract": "This technical report outlines our submission to the zero-shot track of the\nVisual Anomaly and Novelty Detection (VAND) 2023 Challenge. Building on the\nperformance of the WINCLIP framework, we aim to enhance the system's\nlocalization capabilities by integrating zero-shot segmentation models. In\naddition, we perform foreground instance segmentation which enables the model\nto focus on the relevant parts of the image, thus allowing the models to better\nidentify small or subtle deviations. Our pipeline requires no external data or\ninformation, allowing for it to be directly applied to new datasets. Our team\n(Variance Vigilance Vanguard) ranked third in the zero-shot track of the VAND\nchallenge, and achieve an average F1-max score of 81.5/24.2 at a sample/pixel\nlevel on the VisA dataset.",
+  "citation": 14
+}

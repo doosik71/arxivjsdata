@@ -1,0 +1,7 @@
+{
+  "title": "The Evolution of RWKV: Advancements in Efficient Language Modeling",
+  "authors": "Akul Datta",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.02795v1",
+  "abstract": "This paper reviews the development of the Receptance Weighted Key Value\n(RWKV) architecture, emphasizing its advancements in efficient language\nmodeling. RWKV combines the training efficiency of Transformers with the\ninference efficiency of RNNs through a novel linear attention mechanism. We\nexamine its core innovations, adaptations across various domains, and\nperformance advantages over traditional models. The paper also discusses\nchallenges and future directions for RWKV as a versatile architecture in deep\nlearning."
+}

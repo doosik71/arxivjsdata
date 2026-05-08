@@ -1,0 +1,8 @@
+{
+  "title": "Deep Transfer Learning for Automatic Speech Recognition: Towards Better\n  Generalization",
+  "authors": "Hamza Kheddar, Yassine Himeur, Somaya Al-Maadeed, Abbes Amira, Faycal Bensaali",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.14535v2",
+  "abstract": "Automatic speech recognition (ASR) has recently become an important challenge\nwhen using deep learning (DL). It requires large-scale training datasets and\nhigh computational and storage resources. Moreover, DL techniques and machine\nlearning (ML) approaches in general, hypothesize that training and testing data\ncome from the same domain, with the same input feature space and data\ndistribution characteristics. This assumption, however, is not applicable in\nsome real-world artificial intelligence (AI) applications. Moreover, there are\nsituations where gathering real data is challenging, expensive, or rarely\noccurring, which can not meet the data requirements of DL models. deep transfer\nlearning (DTL) has been introduced to overcome these issues, which helps\ndevelop high-performing models using real datasets that are small or slightly\ndifferent but related to the training data. This paper presents a comprehensive\nsurvey of DTL-based ASR frameworks to shed light on the latest developments and\nhelps academics and professionals understand current challenges. Specifically,\nafter presenting the DTL background, a well-designed taxonomy is adopted to\ninform the state-of-the-art. A critical analysis is then conducted to identify\nthe limitations and advantages of each framework. Moving on, a comparative\nstudy is introduced to highlight the current challenges before deriving\nopportunities for future research.",
+  "citation": 125
+}

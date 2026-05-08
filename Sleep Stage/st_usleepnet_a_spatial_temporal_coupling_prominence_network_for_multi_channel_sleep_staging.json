@@ -1,0 +1,8 @@
+{
+  "title": "ST-USleepNet: A Spatial-Temporal Coupling Prominence Network for\n  Multi-Channel Sleep Staging",
+  "authors": "Jingying Ma, Qika Lin, Ziyu Jia, Mengling Feng",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2408.11884v3",
+  "abstract": "Sleep staging is critical to assess sleep quality and diagnose disorders.\nDespite advancements in artificial intelligence enabling automated sleep\nstaging, significant challenges remain: (1) Simultaneously extracting prominent\ntemporal and spatial sleep features from multi-channel raw signals, including\ncharacteristic sleep waveforms and salient spatial brain networks. (2)\nCapturing the spatial-temporal coupling patterns essential for accurate sleep\nstaging. To address these challenges, we propose a novel framework named\nST-USleepNet, comprising a spatial-temporal graph construction module (ST) and\na U-shaped sleep network (USleepNet). The ST module converts raw signals into a\nspatial-temporal graph based on signal similarity, temporal, and spatial\nrelationships to model spatial-temporal coupling patterns. The USleepNet\nemploys a U-shaped structure for both the temporal and spatial streams,\nmirroring its original use in image segmentation to isolate significant\ntargets. Applied to raw sleep signals and graph data from the ST module,\nUSleepNet effectively segments these inputs, simultaneously extracting\nprominent temporal and spatial sleep features. Testing on three datasets\ndemonstrates that ST-USleepNet outperforms existing baselines, and model\nvisualizations confirm its efficacy in extracting prominent sleep features and\ntemporal-spatial coupling patterns across various sleep stages. The code is\navailable at https://github.com/Majy-Yuji/ST-USleepNet.",
+  "citation": 5
+}

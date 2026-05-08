@@ -1,0 +1,8 @@
+{
+  "title": "Learning Neighborhoods for Metric Learning",
+  "authors": "Jun Wang, Adam Woznica, Alexandros Kalousis",
+  "year": 2012,
+  "url": "http://arxiv.org/abs/1206.6883v1",
+  "abstract": "Metric learning methods have been shown to perform well on different learning\ntasks. Many of them rely on target neighborhood relationships that are computed\nin the original feature space and remain fixed throughout learning. As a\nresult, the learned metric reflects the original neighborhood relations. We\npropose a novel formulation of the metric learning problem in which, in\naddition to the metric, the target neighborhood relations are also learned in a\ntwo-step iterative approach. The new formulation can be seen as a\ngeneralization of many existing metric learning methods. The formulation\nincludes a target neighbor assignment rule that assigns different numbers of\nneighbors to instances according to their quality; `high quality' instances get\nmore neighbors. We experiment with two of its instantiations that correspond to\nthe metric learning algorithms LMNN and MCML and compare it to other metric\nlearning methods on a number of datasets. The experimental results show\nstate-of-the-art performance and provide evidence that learning the\nneighborhood relations does improve predictive performance.",
+  "citation": 23
+}

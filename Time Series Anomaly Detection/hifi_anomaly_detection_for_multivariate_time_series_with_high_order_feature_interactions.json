@@ -1,0 +1,8 @@
+{
+  "title": "HIFI: Anomaly Detection for Multivariate Time Series with High-order\n  Feature Interactions",
+  "authors": "Liwei Deng, Xuanhao Chen, Yan Zhao, Kai Zheng",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2106.06167v1",
+  "abstract": "Monitoring complex systems results in massive multivariate time series data,\nand anomaly detection of these data is very important to maintain the normal\noperation of the systems. Despite the recent emergence of a large number of\nanomaly detection algorithms for multivariate time series, most of them ignore\nthe correlation modeling among multivariate, which can often lead to poor\nanomaly detection results. In this work, we propose a novel anomaly detection\nmodel for multivariate time series with \\underline{HI}gh-order\n\\underline{F}eature \\underline{I}nteractions (HIFI). More specifically, HIFI\nbuilds multivariate feature interaction graph automatically and uses the graph\nconvolutional neural network to achieve high-order feature interactions, in\nwhich the long-term temporal dependencies are modeled by attention mechanisms\nand a variational encoding technique is utilized to improve the model\nperformance and robustness. Extensive experiments on three publicly available\ndatasets demonstrate the superiority of our framework compared with\nstate-of-the-art approaches.",
+  "citation": 14
+}

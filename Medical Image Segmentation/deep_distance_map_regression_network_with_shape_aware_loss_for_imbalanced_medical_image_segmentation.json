@@ -1,0 +1,8 @@
+{
+  "title": "Deep Distance Map Regression Network with Shape-aware Loss for Imbalanced Medical Image Segmentation",
+  "authors": "Huiyu Li, Xiabi Liu, Said Boumaraf, Xiaopeng Gong, Donghai Liao, Xiaohong Ma",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2501.09116v1",
+  "abstract": "Small object segmentation, like tumor segmentation, is a difficult and critical task in the field of medical image analysis. Although deep learning based methods have achieved promising performance, they are restricted to the use of binary segmentation mask. Inspired by the rigorous mapping between binary segmentation mask and distance map, we adopt distance map as a novel ground truth and employ a network to fulfill the computation of distance map. Specially, we propose a new segmentation framework that incorporates the existing binary segmentation network and a light weight regression network (dubbed as LR-Net). Thus, the LR-Net can convert the distance map computation into a regression task and leverage the rich information of distance maps. Additionally, we derive a shape-aware loss by employing distance maps as penalty map to infer the complete shape of an object. We evaluated our approach on MICCAI 2017 Liver Tumor Segmentation (LiTS) Challenge dataset and a clinical dataset. Experimental results show that our approach outperforms the classification-based methods as well as other existing state-of-the-arts.",
+  "citation": 0
+}

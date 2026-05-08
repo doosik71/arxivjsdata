@@ -1,0 +1,7 @@
+{
+  "title": "TimeMachine: A Time Series is Worth 4 Mambas for Long-term Forecasting",
+  "authors": "Md Atik Ahamed, Qiang Cheng",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.09898v2",
+  "abstract": "Long-term time-series forecasting remains challenging due to the difficulty\nin capturing long-term dependencies, achieving linear scalability, and\nmaintaining computational efficiency. We introduce TimeMachine, an innovative\nmodel that leverages Mamba, a state-space model, to capture long-term\ndependencies in multivariate time series data while maintaining linear\nscalability and small memory footprints. TimeMachine exploits the unique\nproperties of time series data to produce salient contextual cues at\nmulti-scales and leverage an innovative integrated quadruple-Mamba architecture\nto unify the handling of channel-mixing and channel-independence situations,\nthus enabling effective selection of contents for prediction against global and\nlocal contexts at different scales. Experimentally, TimeMachine achieves\nsuperior performance in prediction accuracy, scalability, and memory\nefficiency, as extensively validated using benchmark datasets. Code\navailability: https://github.com/Atik-Ahamed/TimeMachine"
+}

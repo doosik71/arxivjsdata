@@ -1,0 +1,8 @@
+{
+  "title": "Skipformer: A Skip-and-Recover Strategy for Efficient Speech Recognition",
+  "authors": "Wenjing Zhu, Sining Sun, Changhao Shan, Peng Fan, Qing Yang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.08258v2",
+  "abstract": "Conformer-based attention models have become the de facto backbone model for\nAutomatic Speech Recognition tasks. A blank symbol is usually introduced to\nalign the input and output sequences for CTC or RNN-T models. Unfortunately,\nthe long input length overloads computational budget and memory consumption\nquadratically by attention mechanism. In this work, we propose a\n\"Skip-and-Recover\" Conformer architecture, named Skipformer, to squeeze\nsequence input length dynamically and inhomogeneously. Skipformer uses an\nintermediate CTC output as criteria to split frames into three groups: crucial,\nskipping and ignoring. The crucial group feeds into next conformer blocks and\nits output joint with skipping group by original temporal order as the final\nencoder output. Experiments show that our model reduces the input sequence\nlength by 31 times on Aishell-1 and 22 times on Librispeech corpus. Meanwhile,\nthe model can achieve better recognition accuracy and faster inference speed\nthan recent baseline models. Our code is open-sourced and available online.",
+  "citation": 1
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Anomaly Detection in Time Series Data Using Reinforcement Learning,\n  Variational Autoencoder, and Active Learning",
+  "authors": "Bahareh Golchin, Banafsheh Rekabdar",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2504.02999v1",
+  "abstract": "A novel approach to detecting anomalies in time series data is presented in\nthis paper. This approach is pivotal in domains such as data centers, sensor\nnetworks, and finance. Traditional methods often struggle with manual parameter\ntuning and cannot adapt to new anomaly types. Our method overcomes these\nlimitations by integrating Deep Reinforcement Learning (DRL) with a Variational\nAutoencoder (VAE) and Active Learning. By incorporating a Long Short-Term\nMemory (LSTM) network, our approach models sequential data and its dependencies\neffectively, allowing for the detection of new anomaly classes with minimal\nlabeled data. Our innovative DRL- VAE and Active Learning combination\nsignificantly improves existing methods, as shown by our evaluations on\nreal-world datasets, enhancing anomaly detection techniques and advancing time\nseries analysis.",
+  "citation": 11
+}

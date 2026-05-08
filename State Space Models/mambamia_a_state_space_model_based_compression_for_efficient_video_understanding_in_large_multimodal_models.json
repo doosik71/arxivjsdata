@@ -1,0 +1,7 @@
+{
+  "title": "MambaMia: A State-Space-Model-Based Compression for Efficient Video\n  Understanding in Large Multimodal Models",
+  "authors": "Geewook Kim, Minjoon Seo",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.13564v1",
+  "abstract": "We propose an efficient framework to compress multiple video-frame features\nbefore feeding them into large multimodal models, thereby mitigating the severe\ntoken explosion arising from long or dense videos. Our design leverages a\nbidirectional state-space-based block equipped with a gated skip connection and\na learnable weighted-average pooling mechanism applied to periodically inserted\nlearned queries. This structure enables hierarchical downsampling across both\nspatial and temporal dimensions, preserving performance in a cost-effective\nmanner. Across challenging long and dense video understanding tasks, our\napproach demonstrates competitive results against state-of-the-art models,\nwhile significantly reducing overall token budget. Notably, replacing our\nproposed state-space block with a conventional Transformer results in\nsubstantial performance degradation, highlighting the advantages of state-space\nmodeling for effectively compressing multi-frame video data. Our framework\nemphasizes resource-conscious efficiency, making it practical for real-world\ndeployments. We validate its scalability and generality across multiple\nbenchmarks, achieving the dual objectives of efficient resource usage and\ncomprehensive video understanding."
+}

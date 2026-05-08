@@ -1,0 +1,8 @@
+{
+  "title": "KEDformer:Knowledge Extraction Seasonal Trend Decomposition for\n  Long-term Sequence Prediction",
+  "authors": "Zhenkai Qin, Baozhong Wei, Caifeng Gao, Jianyuan Ni",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.05421v1",
+  "abstract": "Time series forecasting is a critical task in domains such as energy,\nfinance, and meteorology, where accurate long-term predictions are essential.\nWhile Transformer-based models have shown promise in capturing temporal\ndependencies, their application to extended sequences is limited by\ncomputational inefficiencies and limited generalization. In this study, we\npropose KEDformer, a knowledge extraction-driven framework that integrates\nseasonal-trend decomposition to address these challenges. KEDformer leverages\nknowledge extraction methods that focus on the most informative weights within\nthe self-attention mechanism to reduce computational overhead. Additionally,\nthe proposed KEDformer framework decouples time series into seasonal and trend\ncomponents. This decomposition enhances the model's ability to capture both\nshort-term fluctuations and long-term patterns. Extensive experiments on five\npublic datasets from energy, transportation, and weather domains demonstrate\nthe effectiveness and competitiveness of KEDformer, providing an efficient\nsolution for long-term time series forecasting.",
+  "citation": 1
+}

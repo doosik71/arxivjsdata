@@ -1,0 +1,7 @@
+{
+  "title": "Question-Instructed Visual Descriptions for Zero-Shot Video Question\n  Answering",
+  "authors": "David Romero, Thamar Solorio",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2402.10698v2",
+  "abstract": "We present Q-ViD, a simple approach for video question answering (video QA),\nthat unlike prior methods, which are based on complex architectures,\ncomputationally expensive pipelines or use closed models like GPTs, Q-ViD\nrelies on a single instruction-aware open vision-language model (InstructBLIP)\nto tackle videoQA using frame descriptions. Specifically, we create captioning\ninstruction prompts that rely on the target questions about the videos and\nleverage InstructBLIP to obtain video frame captions that are useful to the\ntask at hand. Subsequently, we form descriptions of the whole video using the\nquestion-dependent frame captions, and feed that information, along with a\nquestion-answering prompt, to a large language model (LLM). The LLM is our\nreasoning module, and performs the final step of multiple-choice QA. Our simple\nQ-ViD framework achieves competitive or even higher performances than current\nstate of the art models on a diverse range of videoQA benchmarks, including\nNExT-QA, STAR, How2QA, TVQA and IntentQA."
+}

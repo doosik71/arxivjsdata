@@ -1,0 +1,8 @@
+{
+  "title": "A Zero-shot Learning Method Based on Large Language Models for\n  Multi-modal Knowledge Graph Embedding",
+  "authors": "Bingchen Liu, Jingchen Li, Yuanyuan Fang, Xin Li",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.07202v2",
+  "abstract": "Zero-shot learning (ZL) is crucial for tasks involving unseen categories,\nsuch as natural language processing, image classification, and cross-lingual\ntransfer.Current applications often fail to accurately infer and handle new\nrelations orentities involving unseen categories, severely limiting their\nscalability and prac-ticality in open-domain scenarios. ZL learning faces the\nchallenge of effectivelytransferring semantic information of unseen categories\nin multi-modal knowledgegraph (MMKG) embedding representation learning. In this\npaper, we proposeZSLLM, a framework for zero-shot embedding learning of MMKGs\nusing largelanguage models (LLMs). We leverage textual modality information of\nunseencategories as prompts to fully utilize the reasoning capabilities of\nLLMs, enablingsemantic information transfer across different modalities for\nunseen categories.Through model-based learning, the embedding representation of\nunseen cate-gories in MMKG is enhanced. Extensive experiments conducted on\nmultiplereal-world datasets demonstrate the superiority of our approach\ncompared tostate-of-the-art methods.",
+  "citation": 0
+}

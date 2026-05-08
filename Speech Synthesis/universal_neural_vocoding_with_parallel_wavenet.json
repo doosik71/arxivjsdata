@@ -1,0 +1,8 @@
+{
+  "title": "Universal Neural Vocoding with Parallel WaveNet",
+  "authors": "Yunlong Jiao, Adam Gabrys, Georgi Tinchev, Bartosz Putrycz, Daniel Korzekwa, Viacheslav Klimkov",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2102.01106v2",
+  "abstract": "We present a universal neural vocoder based on Parallel WaveNet, with an\nadditional conditioning network called Audio Encoder. Our universal vocoder\noffers real-time high-quality speech synthesis on a wide range of use cases. We\ntested it on 43 internal speakers of diverse age and gender, speaking 20\nlanguages in 17 unique styles, of which 7 voices and 5 styles were not exposed\nduring training. We show that the proposed universal vocoder significantly\noutperforms speaker-dependent vocoders overall. We also show that the proposed\nvocoder outperforms several existing neural vocoder architectures in terms of\nnaturalness and universality. These findings are consistent when we further\ntest on more than 300 open-source voices.",
+  "citation": 58
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Anomaly Detection for Non-stationary Time Series using Recurrent Wavelet\n  Probabilistic Neural Network",
+  "authors": "Pu Yang, J. A. Barria",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.11321v1",
+  "abstract": "In this paper, an unsupervised Recurrent Wavelet Probabilistic Neural Network\n(RWPNN) is proposed, which aims at detecting anomalies in non-stationary\nenvironments by modelling the temporal features using a nonparametric density\nestimation network. The novel framework consists of two components, a Stacked\nRecurrent Encoder-Decoder (SREnc-Dec) module that captures temporal features in\na latent space, and a Multi-Receptive-field Wavelet Probabilistic Network\n(MRWPN) that creates an ensemble probabilistic model to characterise the latent\nspace. This formulation extends the standard wavelet probabilistic networks to\nwavelet deep probabilistic networks, which can handle higher data\ndimensionality. The MRWPN module can adapt to different rates of data variation\nin different datasets without imposing strong distribution assumptions,\nresulting in a more robust and accurate detection for Time Series Anomaly\nDetection (TSAD) tasks in the non-stationary environment. We carry out the\nassessment on 45 real-world time series datasets from various domains, verify\nthe performance of RWPNN in TSAD tasks with several constraints, and show its\nability to provide early warnings for anomalous events.",
+  "citation": 0
+}

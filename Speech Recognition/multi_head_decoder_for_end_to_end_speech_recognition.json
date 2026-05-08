@@ -1,0 +1,8 @@
+{
+  "title": "Multi-Head Decoder for End-to-End Speech Recognition",
+  "authors": "Tomoki Hayashi, Shinji Watanabe, Tomoki Toda, Kazuya Takeda",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1804.08050v2",
+  "abstract": "This paper presents a new network architecture called multi-head decoder for\nend-to-end speech recognition as an extension of a multi-head attention model.\nIn the multi-head attention model, multiple attentions are calculated, and\nthen, they are integrated into a single attention. On the other hand, instead\nof the integration in the attention level, our proposed method uses multiple\ndecoders for each attention and integrates their outputs to generate a final\noutput. Furthermore, in order to make each head to capture the different\nmodalities, different attention functions are used for each head, leading to\nthe improvement of the recognition performance with an ensemble effect. To\nevaluate the effectiveness of our proposed method, we conduct an experimental\nevaluation using Corpus of Spontaneous Japanese. Experimental results\ndemonstrate that our proposed method outperforms the conventional methods such\nas location-based and multi-head attention models, and that it can capture\ndifferent speech/linguistic contexts within the attention-based encoder-decoder\nframework.",
+  "citation": 27
+}

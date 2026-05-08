@@ -1,0 +1,8 @@
+{
+  "title": "Learning Semantic Ambiguities for Zero-Shot Learning",
+  "authors": "Celina Hanouti, Hervé Le Borgne",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2201.01823v3",
+  "abstract": "Zero-shot learning (ZSL) aims at recognizing classes for which no visual\nsample is available at training time. To address this issue, one can rely on a\nsemantic description of each class. A typical ZSL model learns a mapping\nbetween the visual samples of seen classes and the corresponding semantic\ndescriptions, in order to do the same on unseen classes at test time. State of\nthe art approaches rely on generative models that synthesize visual features\nfrom the prototype of a class, such that a classifier can then be learned in a\nsupervised manner. However, these approaches are usually biased towards seen\nclasses whose visual instances are the only one that can be matched to a given\nclass prototype. We propose a regularization method that can be applied to any\nconditional generative-based ZSL method, by leveraging only the semantic class\nprototypes. It learns to synthesize discriminative features for possible\nsemantic description that are not available at training time, that is the\nunseen ones. The approach is evaluated for ZSL and GZSL on four datasets\ncommonly used in the literature, either in inductive and transductive settings,\nwith results on-par or above state of the art approaches.",
+  "citation": 9
+}

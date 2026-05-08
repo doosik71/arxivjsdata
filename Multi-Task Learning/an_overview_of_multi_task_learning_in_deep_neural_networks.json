@@ -1,0 +1,7 @@
+{
+  "title": "An Overview of Multi-Task Learning in Deep Neural Networks",
+  "authors": "Sebastian Ruder",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1706.05098v1",
+  "abstract": "Multi-task learning (MTL) has led to successes in many applications of\nmachine learning, from natural language processing and speech recognition to\ncomputer vision and drug discovery. This article aims to give a general\noverview of MTL, particularly in deep neural networks. It introduces the two\nmost common methods for MTL in Deep Learning, gives an overview of the\nliterature, and discusses recent advances. In particular, it seeks to help ML\npractitioners apply MTL by shedding light on how MTL works and providing\nguidelines for choosing appropriate auxiliary tasks."
+}

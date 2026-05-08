@@ -1,0 +1,8 @@
+{
+  "title": "Invertible Zero-Shot Recognition Flows",
+  "authors": "Yuming Shen, Jie Qin, Lei Huang",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.04873v1",
+  "abstract": "Deep generative models have been successfully applied to Zero-Shot Learning\n(ZSL) recently. However, the underlying drawbacks of GANs and VAEs (e.g., the\nhardness of training with ZSL-oriented regularizers and the limited generation\nquality) hinder the existing generative ZSL models from fully bypassing the\nseen-unseen bias. To tackle the above limitations, for the first time, this\nwork incorporates a new family of generative models (i.e., flow-based models)\ninto ZSL. The proposed Invertible Zero-shot Flow (IZF) learns factorized data\nembeddings (i.e., the semantic factors and the non-semantic ones) with the\nforward pass of an invertible flow network, while the reverse pass generates\ndata samples. This procedure theoretically extends conventional generative\nflows to a factorized conditional scheme. To explicitly solve the bias problem,\nour model enlarges the seen-unseen distributional discrepancy based on negative\nsample-based distance measurement. Notably, IZF works flexibly with either a\nnaive Bayesian classifier or a held-out trainable one for zero-shot\nrecognition. Experiments on widely-adopted ZSL benchmarks demonstrate the\nsignificant performance gain of IZF over existing methods, in both classic and\ngeneralized settings.",
+  "citation": 149
+}

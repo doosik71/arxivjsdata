@@ -1,0 +1,8 @@
+{
+  "title": "A Review on Riemannian Metric Learning: Closer to You than You Imagine",
+  "authors": "Samuel Gruffaz, Josua Sassen",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.05321v2",
+  "abstract": "Riemannian metric learning is an emerging field in machine learning,\nunlocking new ways to encode complex data structures beyond traditional\ndistance metric learning. While classical approaches rely on global distances\nin Euclidean space, they often fall short in capturing intrinsic data geometry.\nEnter Riemannian metric learning: a powerful generalization that leverages\ndifferential geometry to model the data according to their underlying\nRiemannian manifold. This approach has demonstrated remarkable success across\ndiverse domains, from causal inference and optimal transport to generative\nmodeling and representation learning. In this review, we bridge the gap between\nclassical metric learning and Riemannian geometry, providing a structured and\naccessible overview of key methods, applications, and recent advances. We argue\nthat Riemannian metric learning is not merely a technical refinement but a\nfundamental shift in how we think about data representations. Thus, this review\nshould serve as a valuable resource for researchers and practitioners\ninterested in exploring Riemannian metric learning and convince them that it is\ncloser to them than they might imagine-both in theory and in practice.",
+  "citation": 1
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Quantum Robot: Structure, Algorithms and Applications",
+  "authors": "Dao-Yi Dong, Chun-Lin Chen, Chen-Bin Zhang, Zong-Hai Chen",
+  "year": 2005,
+  "url": "http://arxiv.org/abs/quant-ph/0506155v1",
+  "abstract": "A kind of brand-new robot, quantum robot, is proposed through fusing quantum\ntheory with robot technology. Quantum robot is essentially a complex quantum\nsystem and it is generally composed of three fundamental parts: MQCU (multi\nquantum computing units), quantum controller/actuator, and information\nacquisition units. Corresponding to the system structure, several learning\ncontrol algorithms including quantum searching algorithm and quantum\nreinforcement learning are presented for quantum robot. The theoretic results\nshow that quantum robot can reduce the complexity of O(N^2) in traditional\nrobot to O(N^(3/2)) using quantum searching algorithm, and the simulation\nresults demonstrate that quantum robot is also superior to traditional robot in\nefficient learning by novel quantum reinforcement learning algorithm.\nConsidering the advantages of quantum robot, its some potential important\napplications are also analyzed and prospected."
+}

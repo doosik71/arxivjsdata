@@ -1,0 +1,8 @@
+{
+  "title": "Parametric Local Metric Learning for Nearest Neighbor Classification",
+  "authors": "Jun Wang, Adam Woznica, Alexandros Kalousis",
+  "year": 2012,
+  "url": "http://arxiv.org/abs/1209.3056v1",
+  "abstract": "We study the problem of learning local metrics for nearest neighbor\nclassification. Most previous works on local metric learning learn a number of\nlocal unrelated metrics. While this \"independence\" approach delivers an\nincreased flexibility its downside is the considerable risk of overfitting. We\npresent a new parametric local metric learning method in which we learn a\nsmooth metric matrix function over the data manifold. Using an approximation\nerror bound of the metric matrix function we learn local metrics as linear\ncombinations of basis metrics defined on anchor points over different regions\nof the instance space. We constrain the metric matrix function by imposing on\nthe linear combinations manifold regularization which makes the learned metric\nmatrix function vary smoothly along the geodesics of the data manifold. Our\nmetric learning method has excellent performance both in terms of predictive\npower and scalability. We experimented with several large-scale classification\nproblems, tens of thousands of instances, and compared it with several state of\nthe art metric learning methods, both global and local, as well as to SVM with\nautomatic kernel selection, all of which it outperforms in a significant\nmanner.",
+  "citation": 157
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Deep Learning based HEp-2 Image Classification: A Comprehensive Review",
+  "authors": "Saimunur Rahman, Lei Wang, Changming Sun, Luping Zhou",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1911.08916v2",
+  "abstract": "Classification of HEp-2 cell patterns plays a significant role in the indirect immunofluorescence test for identifying autoimmune diseases in the human body. Many automatic HEp-2 cell classification methods have been proposed in recent years, amongst which deep learning based methods have shown impressive performance. This paper provides a comprehensive review of the existing deep learning based HEp-2 cell image classification methods. These methods perform HEp-2 image classification at two levels, namely, cell-level and specimen-level. Both levels are covered in this review. At each level, the methods are organized with a deep network usage based taxonomy. The core idea, notable achievements, and key strengths and weaknesses of each method are critically analyzed. Furthermore, a concise review of the existing HEp-2 datasets that are commonly used in the literature is given. The paper ends with a discussion on novel opportunities and future research directions in this field. It is hoped that this paper would provide readers with a thorough reference of this novel, challenging, and thriving field.",
+  "citation": 57
+}

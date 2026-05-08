@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/quant-ph/0010040v2",
+  "title": "Grover's quantum search algorithm",
+  "authors": "Samuel J. Lomonaco Jr",
+  "year": 2000,
+  "abstract": "This paper is a written version of a one hour lecture given on Lov Grover's\ndatabase search algorithm.\n  Table Of Contents\n  1 ... Problem Definition\n  2 ... The quantum mechanical perspective\n  3 ... Properties of the inversion I_|psi>\n  4 ... The method in Lov's \"madness\"\n  5 ... Summary of Grover's algorithm\n  6 ... An example of Grover's algorithm\n  References"
+}

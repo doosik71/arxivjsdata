@@ -1,0 +1,7 @@
+{
+  "title": "Sa2VA: Marrying SAM2 with LLaVA for Dense Grounded Understanding of\n  Images and Videos",
+  "authors": "Haobo Yuan, Xiangtai Li, Tao Zhang, Zilong Huang, Shilin Xu, Shunping Ji, Yunhai Tong, Lu Qi, Jiashi Feng, Ming-Hsuan Yang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2501.04001v2",
+  "abstract": "This work presents Sa2VA, the first unified model for dense grounded\nunderstanding of both images and videos. Unlike existing multi-modal large\nlanguage models, which are often limited to specific modalities and tasks,\nSa2VA supports a wide range of image and video tasks, including referring\nsegmentation and conversation, with minimal one-shot instruction tuning. Sa2VA\ncombines SAM-2, a foundation video segmentation model, with LLaVA, an advanced\nvision-language model, and unifies text, image, and video into a shared LLM\ntoken space. Using the LLM, Sa2VA generates instruction tokens that guide SAM-2\nin producing precise masks, enabling a grounded, multi-modal understanding of\nboth static and dynamic visual content. Additionally, we introduce Ref-SAV, an\nauto-labeled dataset containing over 72k object expressions in complex video\nscenes, designed to boost model performance. We also manually validate 2k video\nobjects in the Ref-SAV datasets to benchmark referring video object\nsegmentation in complex environments. Experiments show that Sa2VA achieves\nstate-of-the-art across multiple tasks, particularly in referring video object\nsegmentation, highlighting its potential for complex real-world applications."
+}

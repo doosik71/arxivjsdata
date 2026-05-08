@@ -1,0 +1,8 @@
+{
+  "title": "DAE : Discriminatory Auto-Encoder for multivariate time-series anomaly\n  detection in air transportation",
+  "authors": "Antoine Chevrot, Alexandre Vernotte, Bruno Legeard",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.04247v1",
+  "abstract": "The Automatic Dependent Surveillance Broadcast protocol is one of the latest\ncompulsory advances in air surveillance. While it supports the tracking of the\never-growing number of aircraft in the air, it also introduces cybersecurity\nissues that must be mitigated e.g., false data injection attacks where an\nattacker emits fake surveillance information. The recent data sources and tools\navailable to obtain flight tracking records allow the researchers to create\ndatasets and develop Machine Learning models capable of detecting such\nanomalies in En-Route trajectories. In this context, we propose a novel\nmultivariate anomaly detection model called Discriminatory Auto-Encoder (DAE).\nIt uses the baseline of a regular LSTM-based auto-encoder but with several\ndecoders, each getting data of a specific flight phase (e.g. climbing, cruising\nor descending) during its training.To illustrate the DAE's efficiency, an\nevaluation dataset was created using real-life anomalies as well as\nrealistically crafted ones, with which the DAE as well as three anomaly\ndetection models from the literature were evaluated. Results show that the DAE\nachieves better results in both accuracy and speed of detection. The dataset,\nthe models implementations and the evaluation results are available in an\nonline repository, thereby enabling replicability and facilitating future\nexperiments.",
+  "citation": 80
+}

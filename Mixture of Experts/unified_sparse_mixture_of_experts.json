@@ -1,0 +1,8 @@
+{
+  "title": "Unified Sparse Mixture of Experts",
+  "authors": "Giang Do, Hung Le, Truyen Tran",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.22996v2",
+  "abstract": "Sparse Mixture of Experts (SMoEs) models scale the capacity of models while maintaining constant computational overhead. Early designs typically relied on a fixed value of $k$, where $k$ represents either the number of experts selected per token or the number of tokens assigned per expert. However, these approaches encounter three key limitations: they may fail to route to important experts or tokens, may assign irrelevant ones, and often suffer from representation collapse among experts. This paper reexamines SMoEs through the lens of \\textit{Linear Programming}, and proposes a Unified Sparse Mixture of Experts (USMoE) framework that addresses these limitations. Specifically, our approach introduces a unified mechanism that integrates information from both the expert and token dimensions, and a unified scoring function that linearly combines similarity scores between experts and tokens. We provide both theoretical justification and empirical evidence demonstrating USMoE's effectiveness in overcoming the limitations of traditional routing methods. Through comprehensive evaluations on both clean and corrupted settings for large language models and vision tasks, under both training-free and training scenarios, USMoE achieves up to a 10\\% performance improvement over standard approaches or reduces inference costs by up to 14\\%, while maintaining competitive accuracy.",
+  "citation": 1
+}

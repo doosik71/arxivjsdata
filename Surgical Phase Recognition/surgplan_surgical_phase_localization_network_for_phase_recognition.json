@@ -1,0 +1,7 @@
+{
+  "title": "SurgPLAN: Surgical Phase Localization Network for Phase Recognition",
+  "authors": "Xingjian Luo, You Pang, Zhen Chen, Jinlin Wu, Zongmin Zhang, Zhen Lei, Hongbin Liu",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.09965v1",
+  "abstract": "Surgical phase recognition is crucial to providing surgery understanding in\nsmart operating rooms. Despite great progress in automatic surgical phase\nrecognition, most existing methods are still restricted by two problems. First,\nthese methods cannot capture discriminative visual features for each frame and\nmotion information with simple 2D networks. Second, the frame-by-frame\nrecognition paradigm degrades the performance due to unstable predictions\nwithin each phase, termed as phase shaking. To address these two challenges, we\npropose a Surgical Phase LocAlization Network, named SurgPLAN, to facilitate a\nmore accurate and stable surgical phase recognition with the principle of\ntemporal detection. Specifically, we first devise a Pyramid SlowFast (PSF)\narchitecture to serve as the visual backbone to capture multi-scale spatial and\ntemporal features by two branches with different frame sampling rates.\nMoreover, we propose a Temporal Phase Localization (TPL) module to generate the\nphase prediction based on temporal region proposals, which ensures accurate and\nconsistent predictions within each surgical phase. Extensive experiments\nconfirm the significant advantages of our SurgPLAN over frame-by-frame\napproaches in terms of both accuracy and stability."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "A Brief Survey of Deep Reinforcement Learning",
+  "authors": "Kai Arulkumaran, Marc Peter Deisenroth, Miles Brundage, Anil Anthony Bharath",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1708.05866v2",
+  "abstract": "Deep reinforcement learning is poised to revolutionise the field of AI and\nrepresents a step towards building autonomous systems with a higher level\nunderstanding of the visual world. Currently, deep learning is enabling\nreinforcement learning to scale to problems that were previously intractable,\nsuch as learning to play video games directly from pixels. Deep reinforcement\nlearning algorithms are also applied to robotics, allowing control policies for\nrobots to be learned directly from camera inputs in the real world. In this\nsurvey, we begin with an introduction to the general field of reinforcement\nlearning, then progress to the main streams of value-based and policy-based\nmethods. Our survey will cover central algorithms in deep reinforcement\nlearning, including the deep $Q$-network, trust region policy optimisation, and\nasynchronous advantage actor-critic. In parallel, we highlight the unique\nadvantages of deep neural networks, focusing on visual understanding via\nreinforcement learning. To conclude, we describe several current areas of\nresearch within the field."
+}

@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/1707.03080v1",
+  "title": "Robot Autonomy for Surgery",
+  "authors": "Michael Yip, Nikhil Das",
+  "year": 2017,
+  "abstract": "Autonomous surgery involves having surgical tasks performed by a robot\noperating under its own will, with partial or no human involvement. There are\nseveral important advantages of automation in surgery, which include increasing\nprecision of care due to sub-millimeter robot control, real-time utilization of\nbiosignals for interventional care, improvements to surgical efficiency and\nexecution, and computer-aided guidance under various medical imaging and\nsensing modalities. While these methods may displace some tasks of surgical\nteams and individual surgeons, they also present new capabilities in\ninterventions that are too difficult or go beyond the skills of a human. In\nthis chapter, we provide an overview of robot autonomy in commercial use and in\nresearch, and present some of the challenges faced in developing autonomous\nsurgical robots."
+}

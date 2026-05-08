@@ -1,0 +1,7 @@
+{
+  "title": "MGFI-Net: A Multi-Grained Feature Integration Network for Enhanced Medical Image Segmentation",
+  "authors": "Yucheng Zeng",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.13808v1",
+  "abstract": "Medical image segmentation plays a crucial role in various clinical applications. A major challenge in medical image segmentation is achieving accurate delineation of regions of interest in the presence of noise, low contrast, or complex anatomical structures. Existing segmentation models often neglect the integration of multi-grained information and fail to preserve edge details, which are critical for precise segmentation. To address these challenges, we propose a novel image semantic segmentation model called the Multi-Grained Feature Integration Network (MGFI-Net). Our MGFI-Net is designed with two dedicated modules to tackle these issues. First, to enhance segmentation accuracy, we introduce a Multi-Grained Feature Extraction Module, which leverages hierarchical relationships between different feature scales to selectively focus on the most relevant information. Second, to preserve edge details, we incorporate an Edge Enhancement Module that effectively retains and integrates boundary information to refine segmentation results. Extensive experiments demonstrate that MGFI-Net not only outperforms state-of-the-art methods in terms of segmentation accuracy but also achieves superior time efficiency, establishing it as a leading solution for real-time medical image segmentation."
+}

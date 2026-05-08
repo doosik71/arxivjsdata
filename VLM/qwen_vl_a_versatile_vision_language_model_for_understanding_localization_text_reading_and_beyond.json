@@ -1,0 +1,7 @@
+{
+  "title": "Qwen-VL: A Versatile Vision-Language Model for Understanding,\n  Localization, Text Reading, and Beyond",
+  "authors": "Jinze Bai, Shuai Bai, Shusheng Yang, Shijie Wang, Sinan Tan, Peng Wang, Junyang Lin, Chang Zhou, Jingren Zhou",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2308.12966v3",
+  "abstract": "In this work, we introduce the Qwen-VL series, a set of large-scale\nvision-language models (LVLMs) designed to perceive and understand both texts\nand images. Starting from the Qwen-LM as a foundation, we endow it with visual\ncapacity by the meticulously designed (i) visual receptor, (ii) input-output\ninterface, (iii) 3-stage training pipeline, and (iv) multilingual multimodal\ncleaned corpus. Beyond the conventional image description and\nquestion-answering, we implement the grounding and text-reading ability of\nQwen-VLs by aligning image-caption-box tuples. The resulting models, including\nQwen-VL and Qwen-VL-Chat, set new records for generalist models under similar\nmodel scales on a broad range of visual-centric benchmarks (e.g., image\ncaptioning, question answering, visual grounding) and different settings (e.g.,\nzero-shot, few-shot). Moreover, on real-world dialog benchmarks, our\ninstruction-tuned Qwen-VL-Chat also demonstrates superiority compared to\nexisting vision-language chatbots. Code, demo and models are available at\nhttps://github.com/QwenLM/Qwen-VL."
+}

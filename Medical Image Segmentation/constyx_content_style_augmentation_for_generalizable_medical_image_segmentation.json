@@ -1,0 +1,8 @@
+{
+  "title": "ConStyX: Content Style Augmentation for Generalizable Medical Image Segmentation",
+  "authors": "Xi Chen, Zhiqiang Shen, Peng Cao, Jinzhu Yang, Osmar R. Zaiane",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.10675v1",
+  "abstract": "Medical images are usually collected from multiple domains, leading to domain shifts that impair the performance of medical image segmentation models. Domain Generalization (DG) aims to address this issue by training a robust model with strong generalizability. Recently, numerous domain randomization-based DG methods have been proposed. However, these methods suffer from the following limitations: 1) constrained efficiency of domain randomization due to their exclusive dependence on image style perturbation, and 2) neglect of the adverse effects of over-augmented images on model training. To address these issues, we propose a novel domain randomization-based DG method, called content style augmentation (ConStyX), for generalizable medical image segmentation. Specifically, ConStyX 1) augments the content and style of training data, allowing the augmented training data to better cover a wider range of data domains, and 2) leverages well-augmented features while mitigating the negative effects of over-augmented features during model training. Extensive experiments across multiple domains demonstrate that our ConStyX achieves superior generalization performance. The code is available at https://github.com/jwxsp1/ConStyX.",
+  "citation": 1
+}

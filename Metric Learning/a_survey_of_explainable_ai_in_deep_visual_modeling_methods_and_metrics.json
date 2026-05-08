@@ -1,0 +1,8 @@
+{
+  "title": "A Survey of Explainable AI in Deep Visual Modeling: Methods and Metrics",
+  "authors": "Naveed Akhtar",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2301.13445v1",
+  "abstract": "Deep visual models have widespread applications in high-stake domains. Hence,\ntheir black-box nature is currently attracting a large interest of the research\ncommunity. We present the first survey in Explainable AI that focuses on the\nmethods and metrics for interpreting deep visual models. Covering the landmark\ncontributions along the state-of-the-art, we not only provide a taxonomic\norganization of the existing techniques, but also excavate a range of\nevaluation metrics and collate them as measures of different properties of\nmodel explanations. Along the insightful discussion on the current trends, we\nalso discuss the challenges and future avenues for this research direction.",
+  "citation": 14
+}

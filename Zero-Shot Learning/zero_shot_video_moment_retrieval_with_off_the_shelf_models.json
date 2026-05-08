@@ -1,0 +1,8 @@
+{
+  "title": "Zero-shot Video Moment Retrieval With Off-the-Shelf Models",
+  "authors": "Anuj Diwan, Puyuan Peng, Raymond J. Mooney",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.02178v1",
+  "abstract": "For the majority of the machine learning community, the expensive nature of\ncollecting high-quality human-annotated data and the inability to efficiently\nfinetune very large state-of-the-art pretrained models on limited compute are\nmajor bottlenecks for building models for new tasks. We propose a zero-shot\nsimple approach for one such task, Video Moment Retrieval (VMR), that does not\nperform any additional finetuning and simply repurposes off-the-shelf models\ntrained on other tasks. Our three-step approach consists of moment proposal,\nmoment-query matching and postprocessing, all using only off-the-shelf models.\nOn the QVHighlights benchmark for VMR, we vastly improve performance of\nprevious zero-shot approaches by at least 2.5x on all metrics and reduce the\ngap between zero-shot and state-of-the-art supervised by over 74%. Further, we\nalso show that our zero-shot approach beats non-pretrained supervised models on\nthe Recall metrics and comes very close on mAP metrics; and that it also\nperforms better than the best pretrained supervised model on shorter moments.\nFinally, we ablate and analyze our results and propose interesting future\ndirections.",
+  "citation": 11
+}

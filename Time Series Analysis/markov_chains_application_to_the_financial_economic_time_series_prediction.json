@@ -1,0 +1,8 @@
+{
+  "title": "Markov Chains application to the financial-economic time series\n  prediction",
+  "authors": "Vladimir Soloviev, Vladimir Saptsin, Dmitry Chabanenko",
+  "year": 2011,
+  "url": "http://arxiv.org/abs/1111.5254v1",
+  "abstract": "In this research the technology of complex Markov chains is applied to\npredict financial time series. The main distinction of complex or high-order\nMarkov Chains and simple first-order ones is the existing of aftereffect or\nmemory. The technology proposes prediction with the hierarchy of time\ndiscretization intervals and splicing procedure for the prediction results at\nthe different frequency levels to the single prediction output time series. The\nhierarchy of time discretizations gives a possibility to use fractal properties\nof the given time series to make prediction on the different frequencies of the\nseries. The prediction results for world's stock market indices is presented.",
+  "citation": 20
+}

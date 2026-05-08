@@ -1,0 +1,8 @@
+{
+  "title": "Nominality Score Conditioned Time Series Anomaly Detection by\n  Point/Sequential Reconstruction",
+  "authors": "Chih-Yu Lai, Fan-Keng Sun, Zhengqi Gao, Jeffrey H. Lang, Duane S. Boning",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2310.15416v1",
+  "abstract": "Time series anomaly detection is challenging due to the complexity and\nvariety of patterns that can occur. One major difficulty arises from modeling\ntime-dependent relationships to find contextual anomalies while maintaining\ndetection accuracy for point anomalies. In this paper, we propose a framework\nfor unsupervised time series anomaly detection that utilizes point-based and\nsequence-based reconstruction models. The point-based model attempts to\nquantify point anomalies, and the sequence-based model attempts to quantify\nboth point and contextual anomalies. Under the formulation that the observed\ntime point is a two-stage deviated value from a nominal time point, we\nintroduce a nominality score calculated from the ratio of a combined value of\nthe reconstruction errors. We derive an induced anomaly score by further\nintegrating the nominality score and anomaly score, then theoretically prove\nthe superiority of the induced anomaly score over the original anomaly score\nunder certain conditions. Extensive studies conducted on several public\ndatasets show that the proposed framework outperforms most state-of-the-art\nbaselines for time series anomaly detection.",
+  "citation": 48
+}

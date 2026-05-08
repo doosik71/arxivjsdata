@@ -1,0 +1,7 @@
+{
+  "title": "The Solovay-Kitaev algorithm",
+  "authors": "Christopher M. Dawson, Michael A. Nielsen",
+  "year": 2005,
+  "url": "http://arxiv.org/abs/quant-ph/0505030v2",
+  "abstract": "This pedagogical review presents the proof of the Solovay-Kitaev theorem in\nthe form of an efficient classical algorithm for compiling an arbitrary\nsingle-qubit gate into a sequence of gates from a fixed and finite set. The\nalgorithm can be used, for example, to compile Shor's algorithm, which uses\nrotations of $\\pi / 2^k$, into an efficient fault-tolerant form using only\nHadamard, controlled-{\\sc not}, and $\\pi / 8$ gates. The algorithm runs in\n$O(\\log^{2.71}(1/\\epsilon))$ time, and produces as output a sequence of\n$O(\\log^{3.97}(1/\\epsilon))$ quantum gates which is guaranteed to approximate\nthe desired quantum gate to an accuracy within $\\epsilon > 0$. We also explain\nhow the algorithm can be generalized to apply to multi-qubit gates and to gates\nfrom $SU(d)$."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "The Hidden Attention of Mamba Models",
+  "authors": "Ameen Ali, Itamar Zimerman, Lior Wolf",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.01590v2",
+  "abstract": "The Mamba layer offers an efficient selective state space model (SSM) that is\nhighly effective in modeling multiple domains, including NLP, long-range\nsequence processing, and computer vision. Selective SSMs are viewed as dual\nmodels, in which one trains in parallel on the entire sequence via an IO-aware\nparallel scan, and deploys in an autoregressive manner. We add a third view and\nshow that such models can be viewed as attention-driven models. This new\nperspective enables us to empirically and theoretically compare the underlying\nmechanisms to that of the self-attention layers in transformers and allows us\nto peer inside the inner workings of the Mamba model with explainability\nmethods. Our code is publicly available."
+}

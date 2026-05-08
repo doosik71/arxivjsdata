@@ -1,0 +1,8 @@
+{
+  "title": "Practical Aspects of Zero-Shot Learning",
+  "authors": "Elie Saad, Marcin Paprzycki, Maria Ganzha",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2203.15158v1",
+  "abstract": "One of important areas of machine learning research is zero-shot learning. It\nis applied when properly labeled training data set is not available. A number\nof zero-shot algorithms have been proposed and experimented with. However, none\nof them seems to be the \"overall winner\". In situations like this, it may be\npossible to develop a meta-classifier that would combine \"best aspects\" of\nindividual classifiers and outperform all of them. In this context, the goal of\nthis contribution is twofold. First, multiple state-of-the-art zero-shot\nlearning methods are compared for standard benchmark datasets. Second, multiple\nmeta-classifiers are suggested and experimentally compared (for the same\ndatasets).",
+  "citation": 4
+}

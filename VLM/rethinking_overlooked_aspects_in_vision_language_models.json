@@ -1,0 +1,7 @@
+{
+  "title": "Rethinking Overlooked Aspects in Vision-Language Models",
+  "authors": "Yuan Liu, Le Tian, Xiao Zhou, Jie Zhou",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.11850v1",
+  "abstract": "Recent advancements in large vision-language models (LVLMs), such as GPT4-V\nand LLaVA, have been substantial. LLaVA's modular architecture, in particular,\noffers a blend of simplicity and efficiency. Recent works mainly focus on\nintroducing more pre-training and instruction tuning data to improve model's\nperformance. This paper delves into the often-neglected aspects of data\nefficiency during pre-training and the selection process for instruction tuning\ndatasets. Our research indicates that merely increasing the size of\npre-training data does not guarantee improved performance and may, in fact,\nlead to its degradation. Furthermore, we have established a pipeline to\npinpoint the most efficient instruction tuning (SFT) dataset, implying that not\nall SFT data utilized in existing studies are necessary. The primary objective\nof this paper is not to introduce a state-of-the-art model, but rather to serve\nas a roadmap for future research, aiming to optimize data usage during\npre-training and fine-tuning processes to enhance the performance of\nvision-language models."
+}

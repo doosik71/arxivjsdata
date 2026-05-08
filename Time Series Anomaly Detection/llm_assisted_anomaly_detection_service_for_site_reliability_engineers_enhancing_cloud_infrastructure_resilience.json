@@ -1,0 +1,8 @@
+{
+  "title": "LLM Assisted Anomaly Detection Service for Site Reliability Engineers:\n  Enhancing Cloud Infrastructure Resilience",
+  "authors": "Nimesh Jha, Shuxin Lin, Srideepika Jayaraman, Kyle Frohling, Christodoulos Constantinides, Dhaval Patel",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2501.16744v1",
+  "abstract": "This paper introduces a scalable Anomaly Detection Service with a\ngeneralizable API tailored for industrial time-series data, designed to assist\nSite Reliability Engineers (SREs) in managing cloud infrastructure. The service\nenables efficient anomaly detection in complex data streams, supporting\nproactive identification and resolution of issues. Furthermore, it presents an\ninnovative approach to anomaly modeling in cloud infrastructure by utilizing\nLarge Language Models (LLMs) to understand key components, their failure modes,\nand behaviors. A suite of algorithms for detecting anomalies is offered in\nunivariate and multivariate time series data, including regression-based,\nmixture-model-based, and semi-supervised approaches. We provide insights into\nthe usage patterns of the service, with over 500 users and 200,000 API calls in\na year. The service has been successfully applied in various industrial\nsettings, including IoT-based AI applications. We have also evaluated our\nsystem on public anomaly benchmarks to show its effectiveness. By leveraging\nit, SREs can proactively identify potential issues before they escalate,\nreducing downtime and improving response times to incidents, ultimately\nenhancing the overall customer experience. We plan to extend the system to\ninclude time series foundation models, enabling zero-shot anomaly detection\ncapabilities.",
+  "citation": 2
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Improving CTC-based speech recognition via knowledge transferring from\n  pre-trained language models",
+  "authors": "Keqi Deng, Songjun Cao, Yike Zhang, Long Ma, Gaofeng Cheng, Ji Xu, Pengyuan Zhang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2203.03582v1",
+  "abstract": "Recently, end-to-end automatic speech recognition models based on\nconnectionist temporal classification (CTC) have achieved impressive results,\nespecially when fine-tuned from wav2vec2.0 models. Due to the conditional\nindependence assumption, CTC-based models are always weaker than\nattention-based encoder-decoder models and require the assistance of external\nlanguage models (LMs). To solve this issue, we propose two knowledge\ntransferring methods that leverage pre-trained LMs, such as BERT and GPT2, to\nimprove CTC-based models. The first method is based on representation learning,\nin which the CTC-based models use the representation produced by BERT as an\nauxiliary learning target. The second method is based on joint classification\nlearning, which combines GPT2 for text modeling with a hybrid CTC/attention\narchitecture. Experiment on AISHELL-1 corpus yields a character error rate\n(CER) of 4.2% on the test set. When compared to the vanilla CTC-based models\nfine-tuned from the wav2vec2.0 models, our knowledge transferring method\nreduces CER by 16.1% relatively without external LMs.",
+  "citation": 38
+}

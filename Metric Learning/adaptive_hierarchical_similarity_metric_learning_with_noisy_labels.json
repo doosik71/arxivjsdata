@@ -1,0 +1,8 @@
+{
+  "title": "Adaptive Hierarchical Similarity Metric Learning with Noisy Labels",
+  "authors": "Jiexi Yan, Lei Luo, Cheng Deng, Heng Huang",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2111.00006v1",
+  "abstract": "Deep Metric Learning (DML) plays a critical role in various machine learning\ntasks. However, most existing deep metric learning methods with binary\nsimilarity are sensitive to noisy labels, which are widely present in\nreal-world data. Since these noisy labels often cause severe performance\ndegradation, it is crucial to enhance the robustness and generalization ability\nof DML. In this paper, we propose an Adaptive Hierarchical Similarity Metric\nLearning method. It considers two noise-insensitive information, \\textit{i.e.},\nclass-wise divergence and sample-wise consistency. Specifically, class-wise\ndivergence can effectively excavate richer similarity information beyond binary\nin modeling by taking advantage of Hyperbolic metric learning, while\nsample-wise consistency can further improve the generalization ability of the\nmodel using contrastive augmentation. More importantly, we design an adaptive\nstrategy to integrate this information in a unified view. It is noteworthy that\nthe new method can be extended to any pair-based metric loss. Extensive\nexperimental results on benchmark datasets demonstrate that our method achieves\nstate-of-the-art performance compared with current deep metric learning\napproaches.",
+  "citation": 37
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Zero-Shot Surgical Tool Segmentation in Monocular Video Using Segment Anything Model 2",
+  "authors": "Ange Lou, Yamin Li, Yike Zhang, Robert F. Labadie, Jack Noble",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2408.01648v1",
+  "abstract": "The Segment Anything Model 2 (SAM 2) is the latest generation foundation model for image and video segmentation. Trained on the expansive Segment Anything Video (SA-V) dataset, which comprises 35.5 million masks across 50.9K videos, SAM 2 advances its predecessor's capabilities by supporting zero-shot segmentation through various prompts (e.g., points, boxes, and masks). Its robust zero-shot performance and efficient memory usage make SAM 2 particularly appealing for surgical tool segmentation in videos, especially given the scarcity of labeled data and the diversity of surgical procedures. In this study, we evaluate the zero-shot video segmentation performance of the SAM 2 model across different types of surgeries, including endoscopy and microscopy. We also assess its performance on videos featuring single and multiple tools of varying lengths to demonstrate SAM 2's applicability and effectiveness in the surgical domain. We found that: 1) SAM 2 demonstrates a strong capability for segmenting various surgical videos; 2) When new tools enter the scene, additional prompts are necessary to maintain segmentation accuracy; and 3) Specific challenges inherent to surgical videos can impact the robustness of SAM 2.",
+  "citation": 19
+}

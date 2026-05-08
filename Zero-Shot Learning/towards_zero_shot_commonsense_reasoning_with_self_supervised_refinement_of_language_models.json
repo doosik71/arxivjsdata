@@ -1,0 +1,8 @@
+{
+  "title": "Towards Zero-shot Commonsense Reasoning with Self-supervised Refinement\n  of Language Models",
+  "authors": "Tassilo Klein, Moin Nabi",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2109.05105v1",
+  "abstract": "Can we get existing language models and refine them for zero-shot commonsense\nreasoning? This paper presents an initial study exploring the feasibility of\nzero-shot commonsense reasoning for the Winograd Schema Challenge by\nformulating the task as self-supervised refinement of a pre-trained language\nmodel. In contrast to previous studies that rely on fine-tuning annotated\ndatasets, we seek to boost conceptualization via loss landscape refinement. To\nthis end, we propose a novel self-supervised learning approach that refines the\nlanguage model utilizing a set of linguistic perturbations of similar concept\nrelationships. Empirical analysis of our conceptually simple framework\ndemonstrates the viability of zero-shot commonsense reasoning on multiple\nbenchmarks.",
+  "citation": 9
+}

@@ -1,0 +1,8 @@
+{
+  "title": "RobustSTL: A Robust Seasonal-Trend Decomposition Algorithm for Long Time\n  Series",
+  "authors": "Qingsong Wen, Jingkun Gao, Xiaomin Song, Liang Sun, Huan Xu, Shenghuo Zhu",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1812.01767v1",
+  "abstract": "Decomposing complex time series into trend, seasonality, and remainder\ncomponents is an important task to facilitate time series anomaly detection and\nforecasting. Although numerous methods have been proposed, there are still many\ntime series characteristics exhibiting in real-world data which are not\naddressed properly, including 1) ability to handle seasonality fluctuation and\nshift, and abrupt change in trend and reminder; 2) robustness on data with\nanomalies; 3) applicability on time series with long seasonality period. In the\npaper, we propose a novel and generic time series decomposition algorithm to\naddress these challenges. Specifically, we extract the trend component robustly\nby solving a regression problem using the least absolute deviations loss with\nsparse regularization. Based on the extracted trend, we apply the the non-local\nseasonal filtering to extract the seasonality component. This process is\nrepeated until accurate decomposition is obtained. Experiments on different\nsynthetic and real-world time series datasets demonstrate that our method\noutperforms existing solutions.",
+  "citation": 299
+}

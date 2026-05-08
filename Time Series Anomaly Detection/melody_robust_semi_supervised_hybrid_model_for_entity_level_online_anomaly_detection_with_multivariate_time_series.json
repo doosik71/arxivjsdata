@@ -1,0 +1,8 @@
+{
+  "title": "MELODY: Robust Semi-Supervised Hybrid Model for Entity-Level Online\n  Anomaly Detection with Multivariate Time Series",
+  "authors": "Jingchao Ni, Gauthier Guinet, Peihong Jiang, Laurent Callot, Andrey Kan",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2401.10338v2",
+  "abstract": "In large IT systems, software deployment is a crucial process in online\nservices as their code is regularly updated. However, a faulty code change may\ndegrade the target service's performance and cause cascading outages in\ndownstream services. Thus, software deployments should be comprehensively\nmonitored, and their anomalies should be detected timely. In this paper, we\nstudy the problem of anomaly detection for deployments. We begin by identifying\nthe challenges unique to this anomaly detection problem, which is at\nentity-level (e.g., deployments), relative to the more typical problem of\nanomaly detection in multivariate time series (MTS). The unique challenges\ninclude the heterogeneity of deployments, the low latency tolerance, the\nambiguous anomaly definition, and the limited supervision. To address them, we\npropose a novel framework, semi-supervised hybrid Model for Entity-Level Online\nDetection of anomalY (MELODY). MELODY first transforms the MTS of different\nentities to the same feature space by an online feature extractor, then uses a\nnewly proposed semi-supervised deep one-class model for detecting anomalous\nentities. We evaluated MELODY on real data of cloud services with 1.2M+ time\nseries. The relative F1 score improvement of MELODY over the state-of-the-art\nmethods ranges from 7.6% to 56.5%. The user evaluation suggests MELODY is\nsuitable for monitoring deployments in large online systems.",
+  "citation": 2
+}

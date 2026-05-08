@@ -1,0 +1,7 @@
+{
+  "title": "Quantum Computing and Shor`s Factoring Algorithm",
+  "authors": "Igor V. Volovich",
+  "year": 2001,
+  "url": "http://arxiv.org/abs/quant-ph/0109004v1",
+  "abstract": "Lectures on quantum computing. Contents: Algorithms. Quantum circuits.\nQuantum Fourier transform. Elements of number theory. Modular exponentiation.\nShor`s algorithm for finding the order. Computational complexity of Schor`s\nalgorithm. Factoring integers. NP-complete problems."
+}

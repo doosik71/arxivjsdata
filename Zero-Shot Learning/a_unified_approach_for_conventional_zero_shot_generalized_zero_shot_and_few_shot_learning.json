@@ -1,0 +1,8 @@
+{
+  "title": "A Unified approach for Conventional Zero-shot, Generalized Zero-shot and\n  Few-shot Learning",
+  "authors": "Shafin Rahman, Salman H. Khan, Fatih Porikli",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1706.08653v2",
+  "abstract": "Prevalent techniques in zero-shot learning do not generalize well to other\nrelated problem scenarios. Here, we present a unified approach for conventional\nzero-shot, generalized zero-shot and few-shot learning problems. Our approach\nis based on a novel Class Adapting Principal Directions (CAPD) concept that\nallows multiple embeddings of image features into a semantic space. Given an\nimage, our method produces one principal direction for each seen class. Then,\nit learns how to combine these directions to obtain the principal direction for\neach unseen class such that the CAPD of the test image is aligned with the\nsemantic embedding of the true class, and opposite to the other classes. This\nallows efficient and class-adaptive information transfer from seen to unseen\nclasses. In addition, we propose an automatic process for selection of the most\nuseful seen classes for each unseen class to achieve robustness in zero-shot\nlearning. Our method can update the unseen CAPD taking the advantages of few\nunseen images to work in a few-shot learning scenario. Furthermore, our method\ncan generalize the seen CAPDs by estimating seen-unseen diversity that\nsignificantly improves the performance of generalized zero-shot learning. Our\nextensive evaluations demonstrate that the proposed approach consistently\nachieves superior performance in zero-shot, generalized zero-shot and\nfew/one-shot learning problems.",
+  "citation": 245
+}

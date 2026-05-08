@@ -1,0 +1,8 @@
+{
+  "title": "SleepFM: Multi-modal Representation Learning for Sleep Across Brain\n  Activity, ECG and Respiratory Signals",
+  "authors": "Rahul Thapa, Bryan He, Magnus Ruud Kjaer, Hyatt Moore, Gauri Ganjoo, Emmanuel Mignot, James Zou",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2405.17766v1",
+  "abstract": "Sleep is a complex physiological process evaluated through various modalities\nrecording electrical brain, cardiac, and respiratory activities. We curate a\nlarge polysomnography dataset from over 14,000 participants comprising over\n100,000 hours of multi-modal sleep recordings. Leveraging this extensive\ndataset, we developed SleepFM, the first multi-modal foundation model for sleep\nanalysis. We show that a novel leave-one-out approach for contrastive learning\nsignificantly improves downstream task performance compared to representations\nfrom standard pairwise contrastive learning. A logistic regression model\ntrained on SleepFM's learned embeddings outperforms an end-to-end trained\nconvolutional neural network (CNN) on sleep stage classification (macro AUROC\n0.88 vs 0.72 and macro AUPRC 0.72 vs 0.48) and sleep disordered breathing\ndetection (AUROC 0.85 vs 0.69 and AUPRC 0.77 vs 0.61). Notably, the learned\nembeddings achieve 48% top-1 average accuracy in retrieving the corresponding\nrecording clips of other modalities from 90,000 candidates. This work\ndemonstrates the value of holistic multi-modal sleep modeling to fully capture\nthe richness of sleep recordings. SleepFM is open source and available at\nhttps://github.com/rthapa84/sleepfm-codebase.",
+  "citation": 27
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Feedforward Neural Network for Time Series Anomaly Detection",
+  "authors": "Zhang Rong, Dong Shandong, Nie Xin, Xiao Shiguang",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1812.08389v2",
+  "abstract": "Time series anomaly detection is usually formulated as finding outlier data\npoints relative to some usual data, which is also an important problem in\nindustry and academia. To ensure systems working stably, internet companies,\nbanks and other companies need to monitor time series, which is called KPI (Key\nPerformance Indicators), such as CPU used, number of orders, number of online\nusers and so on. However, millions of time series have several shapes (e.g.\nseasonal KPIs, KPIs of timed tasks and KPIs of CPU used), so that it is very\ndifficult to use a simple statistical model to detect anomaly for all kinds of\ntime series. Although some anomaly detectors have developed many years and some\nsupervised models are also available in this field, we find many methods have\ntheir own disadvantages. In this paper, we present our system, which is based\non deep feedforward neural network and detect anomaly points of time series.\nThe main difference between our system and other systems based on supervised\nmodels is that we do not need feature engineering of time series to train deep\nfeedforward neural network in our system, which is essentially an end-to-end\nsystem.",
+  "citation": 8
+}

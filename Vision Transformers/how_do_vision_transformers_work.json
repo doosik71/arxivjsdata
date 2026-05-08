@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2202.06709v4",
+  "title": "How Do Vision Transformers Work?",
+  "authors": "Namuk Park, Songkuk Kim",
+  "year": 2022,
+  "abstract": "The success of multi-head self-attentions (MSAs) for computer vision is now\nindisputable. However, little is known about how MSAs work. We present\nfundamental explanations to help better understand the nature of MSAs. In\nparticular, we demonstrate the following properties of MSAs and Vision\nTransformers (ViTs): (1) MSAs improve not only accuracy but also generalization\nby flattening the loss landscapes. Such improvement is primarily attributable\nto their data specificity, not long-range dependency. On the other hand, ViTs\nsuffer from non-convex losses. Large datasets and loss landscape smoothing\nmethods alleviate this problem; (2) MSAs and Convs exhibit opposite behaviors.\nFor example, MSAs are low-pass filters, but Convs are high-pass filters.\nTherefore, MSAs and Convs are complementary; (3) Multi-stage neural networks\nbehave like a series connection of small individual models. In addition, MSAs\nat the end of a stage play a key role in prediction. Based on these insights,\nwe propose AlterNet, a model in which Conv blocks at the end of a stage are\nreplaced with MSA blocks. AlterNet outperforms CNNs not only in large data\nregimes but also in small data regimes. The code is available at\nhttps://github.com/xxxnell/how-do-vits-work."
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Real-time Instance Segmentation of Surgical Instruments using Attention and Multi-scale Feature Fusion",
+  "authors": "Juan Carlos Angeles-Ceron, Gilberto Ochoa-Ruiz, Leonardo Chang, Sharib Ali",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2111.04911v2",
+  "abstract": "Precise instrument segmentation aid surgeons to navigate the body more easily and increase patient safety. While accurate tracking of surgical instruments in real-time plays a crucial role in minimally invasive computer-assisted surgeries, it is a challenging task to achieve, mainly due to 1) complex surgical environment, and 2) model design with both optimal accuracy and speed. Deep learning gives us the opportunity to learn complex environment from large surgery scene environments and placements of these instruments in real world scenarios. The Robust Medical Instrument Segmentation 2019 challenge (ROBUST-MIS) provides more than 10,000 frames with surgical tools in different clinical settings. In this paper, we use a light-weight single stage instance segmentation model complemented with a convolutional block attention module for achieving both faster and accurate inference. We further improve accuracy through data augmentation and optimal anchor localisation strategies. To our knowledge, this is the first work that explicitly focuses on both real-time performance and improved accuracy. Our approach out-performed top team performances in the ROBUST-MIS challenge with over 44% improvement on both area-based metric MI_DSC and distance-based metric MI_NSD. We also demonstrate real-time performance (> 60 frames-per-second) with different but competitive variants of our final approach.",
+  "citation": 48
+}

@@ -1,0 +1,7 @@
+{
+  "title": "A Generalized Surface Loss for Reducing the Hausdorff Distance in Medical Imaging Segmentation",
+  "authors": "Adrian Celaya, Beatrice Riviere, David Fuentes",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.03868v3",
+  "abstract": "Within medical imaging segmentation, the Dice coefficient and Hausdorff-based metrics are standard measures of success for deep learning models. However, modern loss functions for medical image segmentation often only consider the Dice coefficient or similar region-based metrics during training. As a result, segmentation architectures trained over such loss functions run the risk of achieving high accuracy for the Dice coefficient but low accuracy for Hausdorff-based metrics. Low accuracy on Hausdorff-based metrics can be problematic for applications such as tumor segmentation, where such benchmarks are crucial. For example, high Dice scores accompanied by significant Hausdorff errors could indicate that the predictions fail to detect small tumors. We propose the Generalized Surface Loss function, a novel loss function to minimize Hausdorff-based metrics with more desirable numerical properties than current methods and with weighting terms for class imbalance. Our loss function outperforms other losses when tested on the LiTS and BraTS datasets using the state-of-the-art nnUNet architecture. These results suggest we can improve medical imaging segmentation accuracy with our novel loss function."
+}

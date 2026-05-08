@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2108.10257v1",
+  "title": "SwinIR: Image Restoration Using Swin Transformer",
+  "authors": "Jingyun Liang, Jiezhang Cao, Guolei Sun, Kai Zhang, Luc Van Gool, Radu Timofte",
+  "year": 2021,
+  "abstract": "Image restoration is a long-standing low-level vision problem that aims to\nrestore high-quality images from low-quality images (e.g., downscaled, noisy\nand compressed images). While state-of-the-art image restoration methods are\nbased on convolutional neural networks, few attempts have been made with\nTransformers which show impressive performance on high-level vision tasks. In\nthis paper, we propose a strong baseline model SwinIR for image restoration\nbased on the Swin Transformer. SwinIR consists of three parts: shallow feature\nextraction, deep feature extraction and high-quality image reconstruction. In\nparticular, the deep feature extraction module is composed of several residual\nSwin Transformer blocks (RSTB), each of which has several Swin Transformer\nlayers together with a residual connection. We conduct experiments on three\nrepresentative tasks: image super-resolution (including classical, lightweight\nand real-world image super-resolution), image denoising (including grayscale\nand color image denoising) and JPEG compression artifact reduction.\nExperimental results demonstrate that SwinIR outperforms state-of-the-art\nmethods on different tasks by $\\textbf{up to 0.14$\\sim$0.45dB}$, while the\ntotal number of parameters can be reduced by $\\textbf{up to 67%}$."
+}

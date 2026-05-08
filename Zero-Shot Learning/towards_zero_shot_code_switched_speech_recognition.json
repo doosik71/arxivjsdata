@@ -1,0 +1,8 @@
+{
+  "title": "Towards Zero-Shot Code-Switched Speech Recognition",
+  "authors": "Brian Yan, Matthew Wiesner, Ondrej Klejch, Preethi Jyothi, Shinji Watanabe",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2211.01458v2",
+  "abstract": "In this work, we seek to build effective code-switched (CS) automatic speech\nrecognition systems (ASR) under the zero-shot setting where no transcribed CS\nspeech data is available for training. Previously proposed frameworks which\nconditionally factorize the bilingual task into its constituent monolingual\nparts are a promising starting point for leveraging monolingual data\nefficiently. However, these methods require the monolingual modules to perform\nlanguage segmentation. That is, each monolingual module has to simultaneously\ndetect CS points and transcribe speech segments of one language while ignoring\nthose of other languages -- not a trivial task. We propose to simplify each\nmonolingual module by allowing them to transcribe all speech segments\nindiscriminately with a monolingual script (i.e. transliteration). This simple\nmodification passes the responsibility of CS point detection to subsequent\nbilingual modules which determine the final output by considering multiple\nmonolingual transliterations along with external language model information. We\napply this transliteration-based approach in an end-to-end differentiable\nneural network and demonstrate its efficacy for zero-shot CS ASR on\nMandarin-English SEAME test sets.",
+  "citation": 23
+}

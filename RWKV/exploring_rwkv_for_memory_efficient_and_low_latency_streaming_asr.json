@@ -1,0 +1,7 @@
+{
+  "title": "Exploring RWKV for Memory Efficient and Low Latency Streaming ASR",
+  "authors": "Keyu An, Shiliang Zhang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.14758v1",
+  "abstract": "Recently, self-attention-based transformers and conformers have been\nintroduced as alternatives to RNNs for ASR acoustic modeling. Nevertheless, the\nfull-sequence attention mechanism is non-streamable and computationally\nexpensive, thus requiring modifications, such as chunking and caching, for\nefficient streaming ASR. In this paper, we propose to apply RWKV, a variant of\nlinear attention transformer, to streaming ASR. RWKV combines the superior\nperformance of transformers and the inference efficiency of RNNs, which is\nwell-suited for streaming ASR scenarios where the budget for latency and memory\nis restricted. Experiments on varying scales (100h - 10000h) demonstrate that\nRWKV-Transducer and RWKV-Boundary-Aware-Transducer achieve comparable to or\neven better accuracy compared with chunk conformer transducer, with minimal\nlatency and inference memory cost."
+}

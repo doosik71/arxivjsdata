@@ -1,0 +1,7 @@
+{
+  "title": "Analyzing Modular Approaches for Visual Question Decomposition",
+  "authors": "Apoorv Khandelwal, Ellie Pavlick, Chen Sun",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.06411v1",
+  "abstract": "Modular neural networks without additional training have recently been shown\nto surpass end-to-end neural networks on challenging vision-language tasks. The\nlatest such methods simultaneously introduce LLM-based code generation to build\nprograms and a number of skill-specific, task-oriented modules to execute them.\nIn this paper, we focus on ViperGPT and ask where its additional performance\ncomes from and how much is due to the (state-of-art, end-to-end) BLIP-2 model\nit subsumes vs. additional symbolic components. To do so, we conduct a\ncontrolled study (comparing end-to-end, modular, and prompting-based methods\nacross several VQA benchmarks). We find that ViperGPT's reported gains over\nBLIP-2 can be attributed to its selection of task-specific modules, and when we\nrun ViperGPT using a more task-agnostic selection of modules, these gains go\naway. Additionally, ViperGPT retains much of its performance if we make\nprominent alterations to its selection of modules: e.g. removing or retaining\nonly BLIP-2. Finally, we compare ViperGPT against a prompting-based\ndecomposition strategy and find that, on some benchmarks, modular approaches\nsignificantly benefit by representing subtasks with natural language, instead\nof code."
+}

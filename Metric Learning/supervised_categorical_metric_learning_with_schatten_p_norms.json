@@ -1,0 +1,8 @@
+{
+  "title": "Supervised Categorical Metric Learning with Schatten p-Norms",
+  "authors": "Xuhui Fan, Eric Gaussier",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2002.11246v1",
+  "abstract": "Metric learning has been successful in learning new metrics adapted to\nnumerical datasets. However, its development on categorical data still needs\nfurther exploration. In this paper, we propose a method, called CPML for\n\\emph{categorical projected metric learning}, that tries to efficiently~(i.e.\nless computational time and better prediction accuracy) address the problem of\nmetric learning in categorical data. We make use of the Value Distance Metric\nto represent our data and propose new distances based on this representation.\nWe then show how to efficiently learn new metrics. We also generalize several\nprevious regularizers through the Schatten $p$-norm and provides a\ngeneralization bound for it that complements the standard generalization bound\nfor metric learning. Experimental results show that our method provides",
+  "citation": 4
+}

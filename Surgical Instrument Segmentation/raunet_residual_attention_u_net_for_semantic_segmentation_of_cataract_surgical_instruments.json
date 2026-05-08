@@ -1,0 +1,8 @@
+{
+  "title": "RAUNet: Residual Attention U-Net for Semantic Segmentation of Cataract Surgical Instruments",
+  "authors": "Zhen-Liang Ni, Gui-Bin Bian, Xiao-Hu Zhou, Zeng-Guang Hou, Xiao-Liang Xie, Chen Wang, Yan-Jie Zhou, Rui-Qi Li, Zhen Li",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1909.10360v3",
+  "abstract": "Semantic segmentation of surgical instruments plays a crucial role in robot-assisted surgery. However, accurate segmentation of cataract surgical instruments is still a challenge due to specular reflection and class imbalance issues. In this paper, an attention-guided network is proposed to segment the cataract surgical instrument. A new attention module is designed to learn discriminative features and address the specular reflection issue. It captures global context and encodes semantic dependencies to emphasize key semantic features, boosting the feature representation. This attention module has very few parameters, which helps to save memory. Thus, it can be flexibly plugged into other networks. Besides, a hybrid loss is introduced to train our network for addressing the class imbalance issue, which merges cross entropy and logarithms of Dice loss. A new dataset named Cata7 is constructed to evaluate our network. To the best of our knowledge, this is the first cataract surgical instrument dataset for semantic segmentation. Based on this dataset, RAUNet achieves state-of-the-art performance 97.71% mean Dice and 95.62% mean IOU.",
+  "citation": 136
+}

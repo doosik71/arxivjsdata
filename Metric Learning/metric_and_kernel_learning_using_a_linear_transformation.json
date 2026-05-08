@@ -1,0 +1,8 @@
+{
+  "title": "Metric and Kernel Learning using a Linear Transformation",
+  "authors": "Prateek Jain, Brian Kulis, Jason V. Davis, Inderjit S. Dhillon",
+  "year": 2009,
+  "url": "http://arxiv.org/abs/0910.5932v1",
+  "abstract": "Metric and kernel learning are important in several machine learning\napplications. However, most existing metric learning algorithms are limited to\nlearning metrics over low-dimensional data, while existing kernel learning\nalgorithms are often limited to the transductive setting and do not generalize\nto new data points. In this paper, we study metric learning as a problem of\nlearning a linear transformation of the input data. We show that for\nhigh-dimensional data, a particular framework for learning a linear\ntransformation of the data based on the LogDet divergence can be efficiently\nkernelized to learn a metric (or equivalently, a kernel function) over an\narbitrarily high dimensional space. We further demonstrate that a wide class of\nconvex loss functions for learning linear transformations can similarly be\nkernelized, thereby considerably expanding the potential applications of metric\nlearning. We demonstrate our learning approach by applying it to large-scale\nreal world problems in computer vision and text mining.",
+  "citation": 236
+}

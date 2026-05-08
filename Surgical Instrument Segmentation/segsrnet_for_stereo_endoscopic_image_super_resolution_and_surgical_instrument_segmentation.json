@@ -1,0 +1,8 @@
+{
+  "title": "SEGSRNet for Stereo-Endoscopic Image Super-Resolution and Surgical Instrument Segmentation",
+  "authors": "Mansoor Hayat, Supavadee Aramvith, Titipat Achakulvisut",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.13330v2",
+  "abstract": "SEGSRNet addresses the challenge of precisely identifying surgical instruments in low-resolution stereo endoscopic images, a common issue in medical imaging and robotic surgery. Our innovative framework enhances image clarity and segmentation accuracy by applying state-of-the-art super-resolution techniques before segmentation. This ensures higher-quality inputs for more precise segmentation. SEGSRNet combines advanced feature extraction and attention mechanisms with spatial processing to sharpen image details, which is significant for accurate tool identification in medical images. Our proposed model outperforms current models including Dice, IoU, PSNR, and SSIM, SEGSRNet where it produces clearer and more accurate images for stereo endoscopic surgical imaging. SEGSRNet can provide image resolution and precise segmentation which can significantly enhance surgical accuracy and patient care outcomes.",
+  "citation": 5
+}

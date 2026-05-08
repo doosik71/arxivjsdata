@@ -1,0 +1,8 @@
+{
+  "title": "Semantic segmentation with reward",
+  "authors": "Xie Ting, Ye Huang, Zhilin Liu, Lixin Duan",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.17905v1",
+  "abstract": "In real-world scenarios, pixel-level labeling is not always available. Sometimes, we need a semantic segmentation network, and even a visual encoder can have a high compatibility, and can be trained using various types of feedback beyond traditional labels, such as feedback that indicates the quality of the parsing results. To tackle this issue, we proposed RSS (Reward in Semantic Segmentation), the first practical application of reward-based reinforcement learning on pure semantic segmentation offered in two granular levels (pixel-level and image-level). RSS incorporates various novel technologies, such as progressive scale rewards (PSR) and pair-wise spatial difference (PSD), to ensure that the reward facilitates the convergence of the semantic segmentation network, especially under image-level rewards. Experiments and visualizations on benchmark datasets demonstrate that the proposed RSS can successfully ensure the convergence of the semantic segmentation network on two levels of rewards. Additionally, the RSS, which utilizes an image-level reward, outperforms existing weakly supervised methods that also rely solely on image-level signals during training.",
+  "citation": 0
+}

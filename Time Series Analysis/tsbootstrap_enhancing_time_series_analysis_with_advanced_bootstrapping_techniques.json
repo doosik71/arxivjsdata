@@ -1,0 +1,8 @@
+{
+  "title": "tsbootstrap: Enhancing Time Series Analysis with Advanced Bootstrapping\n  Techniques",
+  "authors": "Sankalp Gilda, Benedikt Heidrich, Franz Kiraly",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.15227v1",
+  "abstract": "In time series analysis, traditional bootstrapping methods often fall short\ndue to their assumption of data independence, a condition rarely met in\ntime-dependent data. This paper introduces tsbootstrap, a python package\ndesigned specifically to address this challenge. It offers a comprehensive\nsuite of bootstrapping techniques, including Block, Residual, and advanced\nmethods like Markov and Sieve Bootstraps, each tailored to respect the temporal\ndependencies in time series data. This framework not only enhances the accuracy\nof uncertainty estimation in time series analysis but also integrates\nseamlessly with the existing python data science ecosystem, making it an\ninvaluable asset for researchers and practitioners in various fields.",
+  "citation": 6
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Monte Carlo EM for Deep Time Series Anomaly Detection",
+  "authors": "François-Xavier Aubet, Daniel Zügner, Jan Gasthaus",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2112.14436v1",
+  "abstract": "Time series data are often corrupted by outliers or other kinds of anomalies.\nIdentifying the anomalous points can be a goal on its own (anomaly detection),\nor a means to improving performance of other time series tasks (e.g.\nforecasting). Recent deep-learning-based approaches to anomaly detection and\nforecasting commonly assume that the proportion of anomalies in the training\ndata is small enough to ignore, and treat the unlabeled data as coming from the\nnominal data distribution. We present a simple yet effective technique for\naugmenting existing time series models so that they explicitly account for\nanomalies in the training data. By augmenting the training data with a latent\nanomaly indicator variable whose distribution is inferred while training the\nunderlying model using Monte Carlo EM, our method simultaneously infers\nanomalous points while improving model performance on nominal data. We\ndemonstrate the effectiveness of the approach by combining it with a simple\nfeed-forward forecasting model. We investigate how anomalies in the train set\naffect the training of forecasting models, which are commonly used for time\nseries anomaly detection, and show that our method improves the training of the\nmodel.",
+  "citation": 11
+}

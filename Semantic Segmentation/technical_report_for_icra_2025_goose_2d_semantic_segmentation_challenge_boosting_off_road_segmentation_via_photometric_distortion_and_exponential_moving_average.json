@@ -1,0 +1,8 @@
+{
+  "title": "Technical Report for ICRA 2025 GOOSE 2D Semantic Segmentation Challenge: Boosting Off-Road Segmentation via Photometric Distortion and Exponential Moving Average",
+  "authors": "Wonjune Kim, Lae-kyoung Lee, Su-Yong An",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2505.11769v1",
+  "abstract": "We report on the application of a high-capacity semantic segmentation pipeline to the GOOSE 2D Semantic Segmentation Challenge for unstructured off-road environments. Using a FlashInternImage-B backbone together with a UPerNet decoder, we adapt established techniques, rather than designing new ones, to the distinctive conditions of off-road scenes. Our training recipe couples strong photometric distortion augmentation (to emulate the wide lighting variations of outdoor terrain) with an Exponential Moving Average (EMA) of weights for better generalization. Using only the GOOSE training dataset, we achieve 88.8\\% mIoU on the validation set.",
+  "citation": 0
+}

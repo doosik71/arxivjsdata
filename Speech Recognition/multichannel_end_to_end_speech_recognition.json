@@ -1,0 +1,8 @@
+{
+  "title": "Multichannel End-to-end Speech Recognition",
+  "authors": "Tsubasa Ochiai, Shinji Watanabe, Takaaki Hori, John R. Hershey",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1703.04783v1",
+  "abstract": "The field of speech recognition is in the midst of a paradigm shift:\nend-to-end neural networks are challenging the dominance of hidden Markov\nmodels as a core technology. Using an attention mechanism in a recurrent\nencoder-decoder architecture solves the dynamic time alignment problem,\nallowing joint end-to-end training of the acoustic and language modeling\ncomponents. In this paper we extend the end-to-end framework to encompass\nmicrophone array signal processing for noise suppression and speech enhancement\nwithin the acoustic encoding network. This allows the beamforming components to\nbe optimized jointly within the recognition architecture to improve the\nend-to-end speech recognition objective. Experiments on the noisy speech\nbenchmarks (CHiME-4 and AMI) show that our multichannel end-to-end system\noutperformed the attention-based baseline with input from a conventional\nadaptive beamformer.",
+  "citation": 131
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Segment Anything for Histopathology",
+  "authors": "Titus Griebel, Anwai Archit, Constantin Pape",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.00408v2",
+  "abstract": "Nucleus segmentation is an important analysis task in digital pathology. However, methods for automatic segmentation often struggle with new data from a different distribution, requiring users to manually annotate nuclei and retrain data-specific models. Vision foundation models (VFMs), such as the Segment Anything Model (SAM), offer a more robust alternative for automatic and interactive segmentation. Despite their success in natural images, a foundation model for nucleus segmentation in histopathology is still missing. Initial efforts to adapt SAM have shown some success, but did not yet introduce a comprehensive model for diverse segmentation tasks. To close this gap, we introduce PathoSAM, a VFM for nucleus segmentation, based on training SAM on a diverse dataset. Our extensive experiments show that it is the new state-of-the-art model for automatic and interactive nucleus instance segmentation in histopathology. We also demonstrate how it can be adapted for other segmentation tasks, including semantic nucleus segmentation. For this task, we show that it yields results better than popular methods, while not yet beating the state-of-the-art, CellViT. Our models are open-source and compatible with popular tools for data annotation. We also provide scripts for whole-slide image segmentation. Our code and models are publicly available at https://github.com/computational-cell-analytics/patho-sam.",
+  "citation": 4
+}

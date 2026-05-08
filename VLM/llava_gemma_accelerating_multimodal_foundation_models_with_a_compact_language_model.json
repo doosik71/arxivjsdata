@@ -1,0 +1,7 @@
+{
+  "title": "LLaVA-Gemma: Accelerating Multimodal Foundation Models with a Compact\n  Language Model",
+  "authors": "Musashi Hinck, Matthew L. Olson, David Cobbley, Shao-Yen Tseng, Vasudev Lal",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.01331v2",
+  "abstract": "We train a suite of multimodal foundation models (MMFM) using the popular\nLLaVA framework with the recently released Gemma family of large language\nmodels (LLMs). Of particular interest is the 2B parameter Gemma model, which\nprovides opportunities to construct capable small-scale MMFMs. In line with\nfindings from other papers in this space, we test the effect of ablating three\ndesign features: pretraining the connector, utilizing a more powerful image\nbackbone, and increasing the size of the language backbone. The resulting\nmodels, which we call LLaVA-Gemma, exhibit moderate performance on an array of\nevaluations, but fail to improve past the current comparably sized SOTA models.\nCloser analysis of performance shows mixed effects; skipping pretraining tends\nto reduce performance, larger vision models sometimes improve performance, and\nincreasing language model size has inconsistent effects. We publicly release\ntraining recipes, code and weights for our models for the LLaVA-Gemma models."
+}

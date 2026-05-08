@@ -1,0 +1,8 @@
+{
+  "title": "Fast and Accurate Recurrent Neural Network Acoustic Models for Speech\n  Recognition",
+  "authors": "Haşim Sak, Andrew Senior, Kanishka Rao, Françoise Beaufays",
+  "year": 2015,
+  "url": "http://arxiv.org/abs/1507.06947v1",
+  "abstract": "We have recently shown that deep Long Short-Term Memory (LSTM) recurrent\nneural networks (RNNs) outperform feed forward deep neural networks (DNNs) as\nacoustic models for speech recognition. More recently, we have shown that the\nperformance of sequence trained context dependent (CD) hidden Markov model\n(HMM) acoustic models using such LSTM RNNs can be equaled by sequence trained\nphone models initialized with connectionist temporal classification (CTC). In\nthis paper, we present techniques that further improve performance of LSTM RNN\nacoustic models for large vocabulary speech recognition. We show that frame\nstacking and reduced frame rate lead to more accurate models and faster\ndecoding. CD phone modeling leads to further improvements. We also present\ninitial results for LSTM RNN models outputting words directly.",
+  "citation": 576
+}

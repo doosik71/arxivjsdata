@@ -1,0 +1,7 @@
+{
+  "title": "Exploring RWKV for Sentence Embeddings: Layer-wise Analysis and Baseline\n  Comparison for Semantic Similarity",
+  "authors": "Xinghan Pan",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.14620v1",
+  "abstract": "This paper investigates the efficacy of RWKV, a novel language model\narchitecture known for its linear attention mechanism, for generating sentence\nembeddings in a zero-shot setting. I conduct a layer-wise analysis to evaluate\nthe semantic similarity captured by embeddings from different hidden layers of\na pre-trained RWKV model. The performance is assessed on the Microsoft Research\nParaphrase Corpus (MRPC) dataset using Spearman correlation and compared\nagainst a GloVe-based baseline. My results indicate that while RWKV embeddings\ncapture some semantic relatedness, they underperform compared to the GloVe\nbaseline in terms of Spearman correlation. I also analyze the inference time\nand GPU memory usage, highlighting the computational trade-offs associated with\nRWKV embeddings. The findings suggest that while RWKV offers potential\nadvantages in terms of linear scaling, its zero-shot sentence embedding quality\nfor semantic similarity tasks requires further investigation and potential\ntask-specific fine-tuning to match or exceed simpler baselines."
+}

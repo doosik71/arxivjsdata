@@ -1,0 +1,7 @@
+{
+  "title": "Foundational Patterns for Efficient Quantum Computing",
+  "authors": "Austin Gilliam, Charlene Venci, Sreraman Muralidharan, Vitaliy Dorum, Eric May, Rajesh Narasimhan, Constantin Gonciulea",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1907.11513v3",
+  "abstract": "We present a number of quantum computing patterns that build on top of\nfundamental algorithms, that can be applied to solving concrete, NP-hard\nproblems. In particular, we introduce the concept of a quantum dictionary as a\nsummation of multiple patterns and algorithms, and show how it can be applied\nin the context of Quadratic Unconstrained Binary Optimization (QUBO) problems.\nWe start by presenting a visual approach to quantum computing, which avoids a\nheavy-reliance on quantum mechanics, linear algebra, or complex mathematical\nnotation, and favors geometrical intuition and computing paradigms. We also\nprovide insights on the fundamental quantum computing algorithms (Fourier\nTransforms, Phase Estimation, Grover, Quantum Counting, and Amplitude\nEstimation)."
+}

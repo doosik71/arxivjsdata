@@ -1,0 +1,8 @@
+{
+  "title": "A Nested U-Structure for Instrument Segmentation in Robotic Surgery",
+  "authors": "Yanjie Xia, Shaochen Wang, Zhen Kan",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2307.08630v1",
+  "abstract": "Robot-assisted surgery has made great progress with the development of medical imaging and robotics technology. Medical scene understanding can greatly improve surgical performance while the semantic segmentation of the robotic instrument is a key enabling technology for robot-assisted surgery. However, how to locate an instrument's position and estimate their pose in complex surgical environments is still a challenging fundamental problem. In this paper, pixel-wise instrument segmentation is investigated. The contributions of the paper are twofold: 1) We proposed a two-level nested U-structure model, which is an encoder-decoder architecture with skip-connections and each layer of the network structure adopts a U-structure instead of a simple superposition of convolutional layers. The model can capture more context information from multiple scales and better fuse the local and global information to achieve high-quality segmentation. 2) Experiments have been conducted to qualitatively and quantitatively show the performance of our approach on three segmentation tasks: the binary segmentation, the parts segmentation, and the type segmentation, respectively.",
+  "citation": 10
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Segment Anything in Defect Detection",
+  "authors": "Bozhen Hu, Bin Gao, Cheng Tan, Tongle Wu, Stan Z. Li",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.10245v1",
+  "abstract": "Defect detection plays a crucial role in infrared non-destructive testing systems, offering non-contact, safe, and efficient inspection capabilities. However, challenges such as low resolution, high noise, and uneven heating in infrared thermal images hinder comprehensive and accurate defect detection. In this study, we propose DefectSAM, a novel approach for segmenting defects on highly noisy thermal images based on the widely adopted model, Segment Anything (SAM)\\cite{kirillov2023segany}. Harnessing the power of a meticulously curated dataset generated through labor-intensive lab experiments and valuable prompts from experienced experts, DefectSAM surpasses existing state-of-the-art segmentation algorithms and achieves significant improvements in defect detection rates. Notably, DefectSAM excels in detecting weaker and smaller defects on complex and irregular surfaces, reducing the occurrence of missed detections and providing more accurate defect size estimations. Experimental studies conducted on various materials have validated the effectiveness of our solutions in defect detection, which hold significant potential to expedite the evolution of defect detection tools, enabling enhanced inspection capabilities and accuracy in defect identification.",
+  "citation": 8
+}

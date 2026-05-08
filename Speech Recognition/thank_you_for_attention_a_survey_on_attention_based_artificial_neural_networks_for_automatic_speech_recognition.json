@@ -1,0 +1,8 @@
+{
+  "title": "Thank you for Attention: A survey on Attention-based Artificial Neural\n  Networks for Automatic Speech Recognition",
+  "authors": "Priyabrata Karmakar, Shyh Wei Teng, Guojun Lu",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2102.07259v1",
+  "abstract": "Attention is a very popular and effective mechanism in artificial neural\nnetwork-based sequence-to-sequence models. In this survey paper, a\ncomprehensive review of the different attention models used in developing\nautomatic speech recognition systems is provided. The paper focuses on the\ndevelopment and evolution of attention models for offline and streaming speech\nrecognition within recurrent neural network- and Transformer- based\narchitectures.",
+  "citation": 45
+}

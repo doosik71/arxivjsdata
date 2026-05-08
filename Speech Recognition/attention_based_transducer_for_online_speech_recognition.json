@@ -1,0 +1,8 @@
+{
+  "title": "Attention-based Transducer for Online Speech Recognition",
+  "authors": "Bin Wang, Yan Yin, Hui Lin",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2005.08497v1",
+  "abstract": "Recent studies reveal the potential of recurrent neural network transducer\n(RNN-T) for end-to-end (E2E) speech recognition. Among some most popular E2E\nsystems including RNN-T, Attention Encoder-Decoder (AED), and Connectionist\nTemporal Classification (CTC), RNN-T has some clear advantages given that it\nsupports streaming recognition and does not have frame-independency assumption.\nAlthough significant progresses have been made for RNN-T research, it is still\nfacing performance challenges in terms of training speed and accuracy. We\npropose attention-based transducer with modification over RNN-T in two aspects.\nFirst, we introduce chunk-wise attention in the joint network. Second,\nself-attention is introduced in the encoder. Our proposed model outperforms\nRNN-T for both training speed and accuracy. For training, we achieves over 1.7x\nspeedup. With 500 hours LAIX non-native English training data, attention-based\ntransducer yields ~10.6% WER reduction over baseline RNN-T. Trained with full\nset of over 10K hours data, our final system achieves ~5.5% WER reduction over\nthat trained with the best Kaldi TDNN-f recipe. After 8-bit weight quantization\nwithout WER degradation, RTF and latency drop to 0.34~0.36 and 268~409\nmilliseconds respectively on a single CPU core of a production server.",
+  "citation": 10
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Multivariate Time-series Anomaly Detection via Graph Attention Network",
+  "authors": "Hang Zhao, Yujing Wang, Juanyong Duan, Congrui Huang, Defu Cao, Yunhai Tong, Bixiong Xu, Jing Bai, Jie Tong, Qi Zhang",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2009.02040v1",
+  "abstract": "Anomaly detection on multivariate time-series is of great importance in both\ndata mining research and industrial applications. Recent approaches have\nachieved significant progress in this topic, but there is remaining\nlimitations. One major limitation is that they do not capture the relationships\nbetween different time-series explicitly, resulting in inevitable false alarms.\nIn this paper, we propose a novel self-supervised framework for multivariate\ntime-series anomaly detection to address this issue. Our framework considers\neach univariate time-series as an individual feature and includes two graph\nattention layers in parallel to learn the complex dependencies of multivariate\ntime-series in both temporal and feature dimensions. In addition, our approach\njointly optimizes a forecasting-based model and are construction-based model,\nobtaining better time-series representations through a combination of\nsingle-timestamp prediction and reconstruction of the entire time-series. We\ndemonstrate the efficacy of our model through extensive experiments. The\nproposed method outperforms other state-of-the-art models on three real-world\ndatasets. Further analysis shows that our method has good interpretability and\nis useful for anomaly diagnosis.",
+  "citation": 904
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Audio Adversarial Examples for Robust Hybrid CTC/Attention Speech\n  Recognition",
+  "authors": "Ludwig Kürzinger, Edgar Ricardo Chavez Rosas, Lujun Li, Tobias Watzel, Gerhard Rigoll",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.10723v1",
+  "abstract": "Recent advances in Automatic Speech Recognition (ASR) demonstrated how\nend-to-end systems are able to achieve state-of-the-art performance. There is a\ntrend towards deeper neural networks, however those ASR models are also more\ncomplex and prone against specially crafted noisy data. Those Audio Adversarial\nExamples (AAE) were previously demonstrated on ASR systems that use\nConnectionist Temporal Classification (CTC), as well as attention-based\nencoder-decoder architectures. Following the idea of the hybrid CTC/attention\nASR system, this work proposes algorithms to generate AAEs to combine both\napproaches into a joint CTC-attention gradient method. Evaluation is performed\nusing a hybrid CTC/attention end-to-end ASR model on two reference sentences as\ncase study, as well as the TEDlium v2 speech recognition task. We then\ndemonstrate the application of this algorithm for adversarial training to\nobtain a more robust ASR model.",
+  "citation": 5
+}

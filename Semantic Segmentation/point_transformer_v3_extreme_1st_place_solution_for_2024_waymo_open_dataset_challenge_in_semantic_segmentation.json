@@ -1,0 +1,8 @@
+{
+  "title": "Point Transformer V3 Extreme: 1st Place Solution for 2024 Waymo Open Dataset Challenge in Semantic Segmentation",
+  "authors": "Xiaoyang Wu, Xiang Xu, Lingdong Kong, Liang Pan, Ziwei Liu, Tong He, Wanli Ouyang, Hengshuang Zhao",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2407.15282v1",
+  "abstract": "In this technical report, we detail our first-place solution for the 2024 Waymo Open Dataset Challenge's semantic segmentation track. We significantly enhanced the performance of Point Transformer V3 on the Waymo benchmark by implementing cutting-edge, plug-and-play training and inference technologies. Notably, our advanced version, Point Transformer V3 Extreme, leverages multi-frame training and a no-clipping-point policy, achieving substantial gains over the original PTv3 performance. Additionally, employing a straightforward model ensemble strategy further boosted our results. This approach secured us the top position on the Waymo Open Dataset semantic segmentation leaderboard, markedly outperforming other entries.",
+  "citation": 0
+}

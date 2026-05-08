@@ -1,0 +1,8 @@
+{
+  "title": "Your time series is worth a binary image: machine vision assisted deep\n  framework for time series forecasting",
+  "authors": "Luoxiao Yang, Xinqi Fan, Zijun Zhang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.14390v1",
+  "abstract": "Time series forecasting (TSF) has been a challenging research area, and\nvarious models have been developed to address this task. However, almost all\nthese models are trained with numerical time series data, which is not as\neffectively processed by the neural system as visual information. To address\nthis challenge, this paper proposes a novel machine vision assisted deep time\nseries analysis (MV-DTSA) framework. The MV-DTSA framework operates by\nanalyzing time series data in a novel binary machine vision time series metric\nspace, which includes a mapping and an inverse mapping function from the\nnumerical time series space to the binary machine vision space, and a deep\nmachine vision model designed to address the TSF task in the binary space. A\ncomprehensive computational analysis demonstrates that the proposed MV-DTSA\nframework outperforms state-of-the-art deep TSF models, without requiring\nsophisticated data decomposition or model customization. The code for our\nframework is accessible at https://github.com/IkeYang/\nmachine-vision-assisted-deep-time-series-analysis-MV-DTSA-.",
+  "citation": 7
+}

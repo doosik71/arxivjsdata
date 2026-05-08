@@ -1,0 +1,7 @@
+{
+  "title": "Vision-QRWKV: Exploring Quantum-Enhanced RWKV Models for Image\n  Classification",
+  "authors": "Chi-Sheng Chen",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.06633v2",
+  "abstract": "Recent advancements in quantum machine learning have shown promise in\nenhancing classical neural network architectures, particularly in domains\ninvolving complex, high-dimensional data. Building upon prior work in temporal\nsequence modeling, this paper introduces Vision-QRWKV, a hybrid\nquantum-classical extension of the Receptance Weighted Key Value (RWKV)\narchitecture, applied for the first time to image classification tasks. By\nintegrating a variational quantum circuit (VQC) into the channel mixing\ncomponent of RWKV, our model aims to improve nonlinear feature transformation\nand enhance the expressive capacity of visual representations.\n  We evaluate both classical and quantum RWKV models on a diverse collection of\n14 medical and standard image classification benchmarks, including MedMNIST\ndatasets, MNIST, and FashionMNIST. Our results demonstrate that the\nquantum-enhanced model outperforms its classical counterpart on a majority of\ndatasets, particularly those with subtle or noisy class distinctions (e.g.,\nChestMNIST, RetinaMNIST, BloodMNIST). This study represents the first\nsystematic application of quantum-enhanced RWKV in the visual domain, offering\ninsights into the architectural trade-offs and future potential of quantum\nmodels for lightweight and efficient vision tasks."
+}

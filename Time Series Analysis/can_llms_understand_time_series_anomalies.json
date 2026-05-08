@@ -1,0 +1,8 @@
+{
+  "title": "Can LLMs Understand Time Series Anomalies?",
+  "authors": "Zihao Zhou, Rose Yu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.05440v3",
+  "abstract": "Large Language Models (LLMs) have gained popularity in time series\nforecasting, but their potential for anomaly detection remains largely\nunexplored. Our study investigates whether LLMs can understand and detect\nanomalies in time series data, focusing on zero-shot and few-shot scenarios.\nInspired by conjectures about LLMs' behavior from time series forecasting\nresearch, we formulate key hypotheses about LLMs' capabilities in time series\nanomaly detection. We design and conduct principled experiments to test each of\nthese hypotheses. Our investigation reveals several surprising findings about\nLLMs for time series: (1) LLMs understand time series better as images rather\nthan as text, (2) LLMs do not demonstrate enhanced performance when prompted to\nengage in explicit reasoning about time series analysis. (3) Contrary to common\nbeliefs, LLMs' understanding of time series does not stem from their repetition\nbiases or arithmetic abilities. (4) LLMs' behaviors and performance in time\nseries analysis vary significantly across different models. This study provides\nthe first comprehensive analysis of contemporary LLM capabilities in time\nseries anomaly detection. Our results suggest that while LLMs can understand\ntrivial time series anomalies, we have no evidence that they can understand\nmore subtle real-world anomalies. Many common conjectures based on their\nreasoning capabilities do not hold. All synthetic dataset generators, final\nprompts, and evaluation scripts have been made available in\nhttps://github.com/rose-stl-lab/anomllm.",
+  "citation": 40
+}

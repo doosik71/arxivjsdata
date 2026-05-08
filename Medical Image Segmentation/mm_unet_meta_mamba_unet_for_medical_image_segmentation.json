@@ -1,0 +1,8 @@
+{
+  "title": "MM-UNet: Meta Mamba UNet for Medical Image Segmentation",
+  "authors": "Bin Xie, Yan Yan, Gady Agam",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.17540v1",
+  "abstract": "State Space Models (SSMs) have recently demonstrated outstanding performance in long-sequence modeling, particularly in natural language processing. However, their direct application to medical image segmentation poses several challenges. SSMs, originally designed for 1D sequences, struggle with 3D spatial structures in medical images due to discontinuities introduced by flattening. Additionally, SSMs have difficulty fitting high-variance data, which is common in medical imaging.\n  In this paper, we analyze the intrinsic limitations of SSMs in medical image segmentation and propose a unified U-shaped encoder-decoder architecture, Meta Mamba UNet (MM-UNet), designed to leverage the advantages of SSMs while mitigating their drawbacks. MM-UNet incorporates hybrid modules that integrate SSMs within residual connections, reducing variance and improving performance. Furthermore, we introduce a novel bi-directional scan order strategy to alleviate discontinuities when processing medical images.\n  Extensive experiments on the AMOS2022 and Synapse datasets demonstrate the superiority of MM-UNet over state-of-the-art methods. MM-UNet achieves a Dice score of 91.0% on AMOS2022, surpassing nnUNet by 3.2%, and a Dice score of 87.1% on Synapse. These results confirm the effectiveness of integrating SSMs in medical image segmentation through architectural design optimizations.",
+  "citation": 0
+}

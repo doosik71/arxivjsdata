@@ -1,0 +1,7 @@
+{
+  "title": "Sigma: Siamese Mamba Network for Multi-Modal Semantic Segmentation",
+  "authors": "Zifu Wan, Pingping Zhang, Yuhao Wang, Silong Yong, Simon Stepputtis, Katia Sycara, Yaqi Xie",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.04256v2",
+  "abstract": "Multi-modal semantic segmentation significantly enhances AI agents'\nperception and scene understanding, especially under adverse conditions like\nlow-light or overexposed environments. Leveraging additional modalities\n(X-modality) like thermal and depth alongside traditional RGB provides\ncomplementary information, enabling more robust and reliable prediction. In\nthis work, we introduce Sigma, a Siamese Mamba network for multi-modal semantic\nsegmentation utilizing the advanced Mamba. Unlike conventional methods that\nrely on CNNs, with their limited local receptive fields, or Vision Transformers\n(ViTs), which offer global receptive fields at the cost of quadratic\ncomplexity, our model achieves global receptive fields with linear complexity.\nBy employing a Siamese encoder and innovating a Mamba-based fusion mechanism,\nwe effectively select essential information from different modalities. A\ndecoder is then developed to enhance the channel-wise modeling ability of the\nmodel. Our proposed method is rigorously evaluated on both RGB-Thermal and\nRGB-Depth semantic segmentation tasks, demonstrating its superiority and\nmarking the first successful application of State Space Models (SSMs) in\nmulti-modal perception tasks. Code is available at\nhttps://github.com/zifuwan/Sigma."
+}

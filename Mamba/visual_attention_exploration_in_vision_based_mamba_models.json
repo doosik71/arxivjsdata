@@ -1,0 +1,7 @@
+{
+  "title": "Visual Attention Exploration in Vision-Based Mamba Models",
+  "authors": "Junpeng Wang, Chin-Chia Michael Yeh, Uday Singh Saini, Mahashweta Das",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.20764v1",
+  "abstract": "State space models (SSMs) have emerged as an efficient alternative to\ntransformer-based models, offering linear complexity that scales better than\ntransformers. One of the latest advances in SSMs, Mamba, introduces a selective\nscan mechanism that assigns trainable weights to input tokens, effectively\nmimicking the attention mechanism. Mamba has also been successfully extended to\nthe vision domain by decomposing 2D images into smaller patches and arranging\nthem as 1D sequences. However, it remains unclear how these patches interact\nwith (or attend to) each other in relation to their original 2D spatial\nlocation. Additionally, the order used to arrange the patches into a sequence\nalso significantly impacts their attention distribution. To better understand\nthe attention between patches and explore the attention patterns, we introduce\na visual analytics tool specifically designed for vision-based Mamba models.\nThis tool enables a deeper understanding of how attention is distributed across\npatches in different Mamba blocks and how it evolves throughout a Mamba model.\nUsing the tool, we also investigate the impact of different patch-ordering\nstrategies on the learned attention, offering further insights into the model's\nbehavior."
+}

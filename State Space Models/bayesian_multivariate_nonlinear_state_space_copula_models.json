@@ -1,0 +1,7 @@
+{
+  "title": "Bayesian Multivariate Nonlinear State Space Copula Models",
+  "authors": "Alexander Kreuzer, Luciana Dalla Valle, Claudia Czado",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1911.00448v1",
+  "abstract": "In this paper we propose a flexible class of multivariate nonlinear\nnon-Gaussian state space models, based on copulas. More precisely, we assume\nthat the observation equation and the state equation are defined by copula\nfamilies that are not necessarily equal. For each time point, the resulting\nmodel can be described by a C-vine copula truncated after the first tree, where\nthe root node is represented by the latent state. Inference is performed within\nthe Bayesian framework, using the Hamiltonian Monte Carlo method, where a\nfurther D-vine truncated after the first tree is used as prior distribution to\ncapture the temporal dependence in the latent states. Simulation studies show\nthat the proposed copula-based approach is extremely flexible, since it is able\nto describe a wide range of dependence structures and, at the same time, allows\nus to deal with missing data. The application to atmospheric pollutant\nmeasurement data shows that our approach is suitable for accurate modeling and\nprediction of data dynamics in the presence of missing values. Comparison to a\nGaussian linear state space model and to Bayesian additive regression trees\nshows the superior performance of the proposed model with respect to predictive\naccuracy."
+}

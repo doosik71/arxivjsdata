@@ -1,0 +1,8 @@
+{
+  "title": "Generalized Zero-Shot Learning via Synthesized Examples",
+  "authors": "Vinay Kumar Verma, Gundeep Arora, Ashish Mishra, Piyush Rai",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1712.03878v5",
+  "abstract": "We present a generative framework for generalized zero-shot learning where\nthe training and test classes are not necessarily disjoint. Built upon a\nvariational autoencoder based architecture, consisting of a probabilistic\nencoder and a probabilistic conditional decoder, our model can generate novel\nexemplars from seen/unseen classes, given their respective class attributes.\nThese exemplars can subsequently be used to train any off-the-shelf\nclassification model. One of the key aspects of our encoder-decoder\narchitecture is a feedback-driven mechanism in which a discriminator (a\nmultivariate regressor) learns to map the generated exemplars to the\ncorresponding class attribute vectors, leading to an improved generator. Our\nmodel's ability to generate and leverage examples from unseen classes to train\nthe classification model naturally helps to mitigate the bias towards\npredicting seen classes in generalized zero-shot learning settings. Through a\ncomprehensive set of experiments, we show that our model outperforms several\nstate-of-the-art methods, on several benchmark datasets, for both standard as\nwell as generalized zero-shot learning.",
+  "citation": 585
+}

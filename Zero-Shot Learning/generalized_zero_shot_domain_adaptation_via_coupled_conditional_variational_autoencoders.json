@@ -1,0 +1,8 @@
+{
+  "title": "Generalized Zero-Shot Domain Adaptation via Coupled Conditional\n  Variational Autoencoders",
+  "authors": "Qian Wang, Toby P. Breckon",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.01214v1",
+  "abstract": "Domain adaptation approaches aim to exploit useful information from the\nsource domain where supervised learning examples are easier to obtain to\naddress a learning problem in the target domain where there is no or limited\navailability of such examples. In classification problems, domain adaptation\nhas been studied under varying supervised, unsupervised and semi-supervised\nconditions. However, a common situation when the labelled samples are available\nfor a subset of target domain classes has been overlooked. In this paper, we\nformulate this particular domain adaptation problem within a generalized\nzero-shot learning framework by treating the labelled source domain samples as\nsemantic representations for zero-shot learning. For this particular problem,\nneither conventional domain adaptation approaches nor zero-shot learning\nalgorithms directly apply. To address this generalized zero-shot domain\nadaptation problem, we present a novel Coupled Conditional Variational\nAutoencoder (CCVAE) which can generate synthetic target domain features for\nunseen classes from their source domain counterparts. Extensive experiments\nhave been conducted on three domain adaptation datasets including a bespoke\nX-ray security checkpoint dataset to simulate a real-world application in\naviation security. The results demonstrate the effectiveness of our proposed\napproach both against established benchmarks and in terms of real-world\napplicability.",
+  "citation": 31
+}

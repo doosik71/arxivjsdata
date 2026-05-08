@@ -1,0 +1,8 @@
+{
+  "title": "Efficient conformer-based speech recognition with linear attention",
+  "authors": "Shengqiang Li, Menglong Xu, Xiao-Lei Zhang",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2104.06865v2",
+  "abstract": "Recently, conformer-based end-to-end automatic speech recognition, which\noutperforms recurrent neural network based ones, has received much attention.\nAlthough the parallel computing of conformer is more efficient than recurrent\nneural networks, the computational complexity of its dot-product self-attention\nis quadratic with respect to the length of the input feature. To reduce the\ncomputational complexity of the self-attention layer, we propose multi-head\nlinear self-attention for the self-attention layer, which reduces its\ncomputational complexity to linear order. In addition, we propose to factorize\nthe feed forward module of the conformer by low-rank matrix factorization,\nwhich successfully reduces the number of the parameters by approximate 50% with\nlittle performance loss. The proposed model, named linear attention based\nconformer (LAC), can be trained and inferenced jointly with the connectionist\ntemporal classification objective, which further improves the performance of\nLAC. To evaluate the effectiveness of LAC, we conduct experiments on the\nAISHELL-1 and LibriSpeech corpora. Results show that the proposed LAC achieves\nbetter performance than 7 recently proposed speech recognition models, and is\ncompetitive with the state-of-the-art conformer. Meanwhile, the proposed LAC\nhas a number of parameters of only 50% over the conformer with faster training\nspeed than the latter.",
+  "citation": 34
+}

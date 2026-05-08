@@ -1,0 +1,8 @@
+{
+  "title": "Anomaly Detection of Time Series with Smoothness-Inducing Sequential\n  Variational Auto-Encoder",
+  "authors": "Longyuan Li, Junchi Yan, Haiyang Wang, Yaohui Jin",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2102.01331v1",
+  "abstract": "Deep generative models have demonstrated their effectiveness in learning\nlatent representation and modeling complex dependencies of time series. In this\npaper, we present a Smoothness-Inducing Sequential Variational Auto-Encoder\n(SISVAE) model for robust estimation and anomaly detection of multi-dimensional\ntime series. Our model is based on Variational Auto-Encoder (VAE), and its\nbackbone is fulfilled by a Recurrent Neural Network to capture latent temporal\nstructures of time series for both generative model and inference model.\nSpecifically, our model parameterizes mean and variance for each time-stamp\nwith flexible neural networks, resulting in a non-stationary model that can\nwork without the assumption of constant noise as commonly made by existing\nMarkov models. However, such a flexibility may cause the model fragile to\nanomalies. To achieve robust density estimation which can also benefit\ndetection tasks, we propose a smoothness-inducing prior over possible\nestimations. The proposed prior works as a regularizer that places penalty at\nnon-smooth reconstructions. Our model is learned efficiently with a novel\nstochastic gradient variational Bayes estimator. In particular, we study two\ndecision criteria for anomaly detection: reconstruction probability and\nreconstruction error. We show the effectiveness of our model on both synthetic\ndatasets and public real-world benchmarks.",
+  "citation": 235
+}

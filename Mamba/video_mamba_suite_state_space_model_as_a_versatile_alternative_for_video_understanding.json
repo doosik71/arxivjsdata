@@ -1,0 +1,7 @@
+{
+  "title": "Video Mamba Suite: State Space Model as a Versatile Alternative for\n  Video Understanding",
+  "authors": "Guo Chen, Yifei Huang, Jilan Xu, Baoqi Pei, Zhe Chen, Zhiqi Li, Jiahao Wang, Kunchang Li, Tong Lu, Limin Wang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.09626v1",
+  "abstract": "Understanding videos is one of the fundamental directions in computer vision\nresearch, with extensive efforts dedicated to exploring various architectures\nsuch as RNN, 3D CNN, and Transformers. The newly proposed architecture of state\nspace model, e.g., Mamba, shows promising traits to extend its success in long\nsequence modeling to video modeling. To assess whether Mamba can be a viable\nalternative to Transformers in the video understanding domain, in this work, we\nconduct a comprehensive set of studies, probing different roles Mamba can play\nin modeling videos, while investigating diverse tasks where Mamba could exhibit\nsuperiority. We categorize Mamba into four roles for modeling videos, deriving\na Video Mamba Suite composed of 14 models/modules, and evaluating them on 12\nvideo understanding tasks. Our extensive experiments reveal the strong\npotential of Mamba on both video-only and video-language tasks while showing\npromising efficiency-performance trade-offs. We hope this work could provide\nvaluable data points and insights for future research on video understanding.\nCode is public: https://github.com/OpenGVLab/video-mamba-suite."
+}

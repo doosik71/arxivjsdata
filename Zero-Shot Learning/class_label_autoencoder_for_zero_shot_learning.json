@@ -1,0 +1,8 @@
+{
+  "title": "Class label autoencoder for zero-shot learning",
+  "authors": "Guangfeng Lin, Caixia Fan, Wanjun Chen, Yajun Chen, Fan Zhao",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1801.08301v1",
+  "abstract": "Existing zero-shot learning (ZSL) methods usually learn a projection function\nbetween a feature space and a semantic embedding space(text or attribute space)\nin the training seen classes or testing unseen classes. However, the projection\nfunction cannot be used between the feature space and multi-semantic embedding\nspaces, which have the diversity characteristic for describing the different\nsemantic information of the same class. To deal with this issue, we present a\nnovel method to ZSL based on learning class label autoencoder (CLA). CLA can\nnot only build a uniform framework for adapting to multi-semantic embedding\nspaces, but also construct the encoder-decoder mechanism for constraining the\nbidirectional projection between the feature space and the class label space.\nMoreover, CLA can jointly consider the relationship of feature classes and the\nrelevance of the semantic classes for improving zero-shot classification. The\nCLA solution can provide both unseen class labels and the relation of the\ndifferent classes representation(feature or semantic information) that can\nencode the intrinsic structure of classes. Extensive experiments demonstrate\nthe CLA outperforms state-of-art methods on four benchmark datasets, which are\nAwA, CUB, Dogs and ImNet-2.",
+  "citation": 5
+}

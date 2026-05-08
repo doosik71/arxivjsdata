@@ -1,0 +1,7 @@
+{
+  "title": "DeepPhase: Surgical Phase Recognition in CATARACTS Videos",
+  "authors": "Odysseas Zisimopoulos, Evangello Flouty, Imanol Luengo, Petros Giataganas, Jean Nehme, Andre Chow, Danail Stoyanov",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1807.10565v1",
+  "abstract": "Automated surgical workflow analysis and understanding can assist surgeons to\nstandardize procedures and enhance post-surgical assessment and indexing, as\nwell as, interventional monitoring. Computer-assisted interventional (CAI)\nsystems based on video can perform workflow estimation through surgical\ninstruments' recognition while linking them to an ontology of procedural\nphases. In this work, we adopt a deep learning paradigm to detect surgical\ninstruments in cataract surgery videos which in turn feed a surgical phase\ninference recurrent network that encodes temporal aspects of phase steps within\nthe phase classification. Our models present comparable to state-of-the-art\nresults for surgical tool detection and phase recognition with accuracies of 99\nand 78% respectively."
+}

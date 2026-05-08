@@ -1,0 +1,7 @@
+{
+  "title": "Towards Neuro-Symbolic Video Understanding",
+  "authors": "Minkyu Choi, Harsh Goel, Mohammad Omama, Yunhao Yang, Sahil Shah, Sandeep Chinchali",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.11021v3",
+  "abstract": "The unprecedented surge in video data production in recent years necessitates\nefficient tools to extract meaningful frames from videos for downstream tasks.\nLong-term temporal reasoning is a key desideratum for frame retrieval systems.\nWhile state-of-the-art foundation models, like VideoLLaMA and ViCLIP, are\nproficient in short-term semantic understanding, they surprisingly fail at\nlong-term reasoning across frames. A key reason for this failure is that they\nintertwine per-frame perception and temporal reasoning into a single deep\nnetwork. Hence, decoupling but co-designing semantic understanding and temporal\nreasoning is essential for efficient scene identification. We propose a system\nthat leverages vision-language models for semantic understanding of individual\nframes but effectively reasons about the long-term evolution of events using\nstate machines and temporal logic (TL) formulae that inherently capture memory.\nOur TL-based reasoning improves the F1 score of complex event identification by\n9-15% compared to benchmarks that use GPT4 for reasoning on state-of-the-art\nself-driving datasets such as Waymo and NuScenes."
+}

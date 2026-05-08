@@ -1,0 +1,8 @@
+{
+  "title": "A Novel Convolutional-Free Method for 3D Medical Imaging Segmentation",
+  "authors": "Canxuan Gang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2502.05396v1",
+  "abstract": "Segmentation of 3D medical images is a critical task for accurate diagnosis and treatment planning. Convolutional neural networks (CNNs) have dominated the field, achieving significant success in 3D medical image segmentation. However, CNNs struggle with capturing long-range dependencies and global context, limiting their performance, particularly for fine and complex structures. Recent transformer-based models, such as TransUNet and nnFormer, have demonstrated promise in addressing these limitations, though they still rely on hybrid CNN-transformer architectures. This paper introduces a novel, fully convolutional-free model based on transformer architecture and self-attention mechanisms for 3D medical image segmentation. Our approach focuses on improving multi-semantic segmentation accuracy and addressing domain adaptation challenges between thick and thin slice CT images. We propose a joint loss function that facilitates effective segmentation of thin slices based on thick slice annotations, overcoming limitations in dataset availability. Furthermore, we present a benchmark dataset for multi-semantic segmentation on thin slices, addressing a gap in current medical imaging research. Our experiments demonstrate the superiority of the proposed model over traditional and hybrid architectures, offering new insights into the future of convolution-free medical image segmentation.",
+  "citation": 2
+}

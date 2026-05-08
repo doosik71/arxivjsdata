@@ -1,0 +1,8 @@
+{
+  "title": "Large-Kernel Attention for 3D Medical Image Segmentation",
+  "authors": "Hao Li, Yang Nan, Javier Del Ser, Guang Yang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2207.11225v1",
+  "abstract": "Automatic segmentation of multiple organs and tumors from 3D medical images such as magnetic resonance imaging (MRI) and computed tomography (CT) scans using deep learning methods can aid in diagnosing and treating cancer. However, organs often overlap and are complexly connected, characterized by extensive anatomical variation and low contrast. In addition, the diversity of tumor shape, location, and appearance, coupled with the dominance of background voxels, makes accurate 3D medical image segmentation difficult. In this paper, a novel large-kernel (LK) attention module is proposed to address these problems to achieve accurate multi-organ segmentation and tumor segmentation. The advantages of convolution and self-attention are combined in the proposed LK attention module, including local contextual information, long-range dependence, and channel adaptation. The module also decomposes the LK convolution to optimize the computational cost and can be easily incorporated into FCNs such as U-Net. Comprehensive ablation experiments demonstrated the feasibility of convolutional decomposition and explored the most efficient and effective network design. Among them, the best Mid-type LK attention-based U-Net network was evaluated on CT-ORG and BraTS 2020 datasets, achieving state-of-the-art segmentation performance. The performance improvement due to the proposed LK attention module was also statistically validated.",
+  "citation": 44
+}

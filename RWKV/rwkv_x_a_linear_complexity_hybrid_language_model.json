@@ -1,0 +1,7 @@
+{
+  "title": "RWKV-X: A Linear Complexity Hybrid Language Model",
+  "authors": "Haowen Hou, Zhiyi Huang, Kaifeng Tan, Rongchang Lu, Fei Richard Yu",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2504.21463v2",
+  "abstract": "In this paper, we introduce RWKV-X, a novel hybrid architecture that combines\nthe efficiency of RWKV for short-range modeling with a sparse attention\nmechanism designed to capture long-range context. Unlike previous hybrid\napproaches that rely on full attention layers and retain quadratic complexity,\nRWKV-X achieves linear-time complexity in training and constant-time complexity\nin inference decoding. We demonstrate that RWKV-X, when continually pretrained\non 64K-token sequences, achieves near-perfect accuracy on the 64K passkey\nretrieval benchmark. It consistently outperforms prior RWKV-7 models on\nlong-context benchmarks, while maintaining strong performance on short-context\ntasks. These results highlight RWKV-X as a scalable and efficient backbone for\ngeneral-purpose language modeling, capable of decoding sequences up to 1\nmillion tokens with stable speed and memory usage. To facilitate further\nresearch and analysis, we have made the checkpoints and the associated code\npublicly accessible at: https://github.com/howard-hou/RWKV-X."
+}

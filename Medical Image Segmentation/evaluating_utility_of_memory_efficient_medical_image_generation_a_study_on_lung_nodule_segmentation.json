@@ -1,0 +1,8 @@
+{
+  "title": "Evaluating Utility of Memory Efficient Medical Image Generation: A Study on Lung Nodule Segmentation",
+  "authors": "Kathrin Khadra, Utku Türkbey",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.12542v1",
+  "abstract": "The scarcity of publicly available medical imaging data limits the development of effective AI models. This work proposes a memory-efficient patch-wise denoising diffusion probabilistic model (DDPM) for generating synthetic medical images, focusing on CT scans with lung nodules. Our approach generates high-utility synthetic images with nodule segmentation while efficiently managing memory constraints, enabling the creation of training datasets. We evaluate the method in two scenarios: training a segmentation model exclusively on synthetic data, and augmenting real-world training data with synthetic images. In the first case, models trained solely on synthetic data achieve Dice scores comparable to those trained on real-world data benchmarks. In the second case, augmenting real-world data with synthetic images significantly improves segmentation performance. The generated images demonstrate their potential to enhance medical image datasets in scenarios with limited real-world data.",
+  "citation": 1
+}

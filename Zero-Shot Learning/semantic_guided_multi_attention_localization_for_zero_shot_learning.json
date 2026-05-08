@@ -1,0 +1,8 @@
+{
+  "title": "Semantic-Guided Multi-Attention Localization for Zero-Shot Learning",
+  "authors": "Yizhe Zhu, Jianwen Xie, Zhiqiang Tang, Xi Peng, Ahmed Elgammal",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1903.00502v2",
+  "abstract": "Zero-shot learning extends the conventional object classification to the\nunseen class recognition by introducing semantic representations of classes.\nExisting approaches predominantly focus on learning the proper mapping function\nfor visual-semantic embedding, while neglecting the effect of learning\ndiscriminative visual features. In this paper, we study the significance of the\ndiscriminative region localization. We propose a semantic-guided\nmulti-attention localization model, which automatically discovers the most\ndiscriminative parts of objects for zero-shot learning without any human\nannotations. Our model jointly learns cooperative global and local features\nfrom the whole object as well as the detected parts to categorize objects based\non semantic descriptions. Moreover, with the joint supervision of embedding\nsoftmax loss and class-center triplet loss, the model is encouraged to learn\nfeatures with high inter-class dispersion and intra-class compactness. Through\ncomprehensive experiments on three widely used zero-shot learning benchmarks,\nwe show the efficacy of the multi-attention localization and our proposed\napproach improves the state-of-the-art results by a considerable margin.",
+  "citation": 188
+}

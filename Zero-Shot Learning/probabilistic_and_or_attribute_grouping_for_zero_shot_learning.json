@@ -1,0 +1,8 @@
+{
+  "title": "Probabilistic AND-OR Attribute Grouping for Zero-Shot Learning",
+  "authors": "Yuval Atzmon, Gal Chechik",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1806.02664v2",
+  "abstract": "In zero-shot learning (ZSL), a classifier is trained to recognize visual\nclasses without any image samples. Instead, it is given semantic information\nabout the class, like a textual description or a set of attributes. Learning\nfrom attributes could benefit from explicitly modeling structure of the\nattribute space. Unfortunately, learning of general structure from empirical\nsamples is hard with typical dataset sizes.\n  Here we describe LAGO, a probabilistic model designed to capture natural soft\nand-or relations across groups of attributes. We show how this model can be\nlearned end-to-end with a deep attribute-detection model. The soft group\nstructure can be learned from data jointly as part of the model, and can also\nreadily incorporate prior knowledge about groups if available. The soft and-or\nstructure succeeds to capture meaningful and predictive structures, improving\nthe accuracy of zero-shot learning on two of three benchmarks.\n  Finally, LAGO reveals a unified formulation over two ZSL approaches: DAP\n(Lampert et al., 2009) and ESZSL (Romera-Paredes & Torr, 2015). Interestingly,\ntaking only one singleton group for each attribute, introduces a new\nsoft-relaxation of DAP, that outperforms DAP by ~40.",
+  "citation": 38
+}

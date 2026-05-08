@@ -1,0 +1,8 @@
+{
+  "title": "A Formal Approach For Modelling And Analysing Surgical Procedures (Extended Version)",
+  "authors": "Ioana Sandu, Rita Borgo, Prokar Dasgupta, Ramesh Thurairaja, Luca Viganò",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2408.05001v1",
+  "abstract": "Surgical procedures are often not \"standardised\" (i.e., defined in a unique and unambiguous way), but rather exist as implicit knowledge in the minds of the surgeon and the surgical team. This reliance extends to pre-surgery planning and effective communication during the procedure. We introduce a novel approach for the formal and automated analysis of surgical procedures, which we model as security ceremonies, leveraging well-established techniques developed for the analysis of such ceremonies. Mutations of a procedure are used to model variants and mistakes that members of the surgical team might make. Our approach allows us to automatically identify violations of the intended properties of a surgical procedure.",
+  "citation": 0
+}

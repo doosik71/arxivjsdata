@@ -1,0 +1,8 @@
+{
+  "title": "A deep learning architecture to detect events in EEG signals during\n  sleep",
+  "authors": "Stanislas Chambon, Valentin Thorey, Pierrick J. Arnal, Emmanuel Mignot, Alexandre Gramfort",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1807.05981v1",
+  "abstract": "Electroencephalography (EEG) during sleep is used by clinicians to evaluate\nvarious neurological disorders. In sleep medicine, it is relevant to detect\nmacro-events (> 10s) such as sleep stages, and micro-events (<2s) such as\nspindles and K-complexes. Annotations of such events require a trained sleep\nexpert, a time consuming and tedious process with a large inter-scorer\nvariability. Automatic algorithms have been developed to detect various types\nof events but these are event-specific. We propose a deep learning method that\njointly predicts locations, durations and types of events in EEG time series.\nIt relies on a convolutional neural network that builds a feature\nrepresentation from raw EEG signals. Numerical experiments demonstrate\nefficiency of this new approach on various event detection tasks compared to\ncurrent state-of-the-art, event specific, algorithms.",
+  "citation": 55
+}

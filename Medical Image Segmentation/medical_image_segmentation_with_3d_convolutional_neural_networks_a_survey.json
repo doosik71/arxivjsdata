@@ -1,0 +1,7 @@
+{
+  "title": "Medical Image Segmentation with 3D Convolutional Neural Networks: A Survey",
+  "authors": "S Niyas, S J Pawan, M Anand Kumar, Jeny Rajan",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2108.08467v3",
+  "abstract": "Computer-aided medical image analysis plays a significant role in assisting medical practitioners for expert clinical diagnosis and deciding the optimal treatment plan. At present, convolutional neural networks (CNN) are the preferred choice for medical image analysis. In addition, with the rapid advancements in three-dimensional (3D) imaging systems and the availability of excellent hardware and software support to process large volumes of data, 3D deep learning methods are gaining popularity in medical image analysis. Here, we present an extensive review of the recently evolved 3D deep learning methods in medical image segmentation. Furthermore, the research gaps and future directions in 3D medical image segmentation are discussed."
+}

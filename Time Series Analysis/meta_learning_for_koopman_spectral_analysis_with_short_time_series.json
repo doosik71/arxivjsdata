@@ -1,0 +1,8 @@
+{
+  "title": "Meta-Learning for Koopman Spectral Analysis with Short Time-series",
+  "authors": "Tomoharu Iwata, Yoshinobu Kawahara",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2102.04683v1",
+  "abstract": "Koopman spectral analysis has attracted attention for nonlinear dynamical\nsystems since we can analyze nonlinear dynamics with a linear regime by\nembedding data into a Koopman space by a nonlinear function. For the analysis,\nwe need to find appropriate embedding functions. Although several neural\nnetwork-based methods have been proposed for learning embedding functions,\nexisting methods require long time-series for training neural networks. This\nlimitation prohibits performing Koopman spectral analysis in applications where\nonly short time-series are available. In this paper, we propose a meta-learning\nmethod for estimating embedding functions from unseen short time-series by\nexploiting knowledge learned from related but different time-series. With the\nproposed method, a representation of a given short time-series is obtained by a\nbidirectional LSTM for extracting its properties. The embedding function of the\nshort time-series is modeled by a neural network that depends on the\ntime-series representation. By sharing the LSTM and neural networks across\nmultiple time-series, we can learn common knowledge from different time-series\nwhile modeling time-series-specific embedding functions with the time-series\nrepresentation. Our model is trained such that the expected test prediction\nerror is minimized with the episodic training framework. We experimentally\ndemonstrate that the proposed method achieves better performance in terms of\neigenvalue estimation and future prediction than existing methods.",
+  "citation": 0
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Semantic Autoencoder for Zero-Shot Learning",
+  "authors": "Elyor Kodirov, Tao Xiang, Shaogang Gong",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1704.08345v1",
+  "abstract": "Existing zero-shot learning (ZSL) models typically learn a projection\nfunction from a feature space to a semantic embedding space (e.g.~attribute\nspace). However, such a projection function is only concerned with predicting\nthe training seen class semantic representation (e.g.~attribute prediction) or\nclassification. When applied to test data, which in the context of ZSL contains\ndifferent (unseen) classes without training data, a ZSL model typically suffers\nfrom the project domain shift problem. In this work, we present a novel\nsolution to ZSL based on learning a Semantic AutoEncoder (SAE). Taking the\nencoder-decoder paradigm, an encoder aims to project a visual feature vector\ninto the semantic space as in the existing ZSL models. However, the decoder\nexerts an additional constraint, that is, the projection/code must be able to\nreconstruct the original visual feature. We show that with this additional\nreconstruction constraint, the learned projection function from the seen\nclasses is able to generalise better to the new unseen classes. Importantly,\nthe encoder and decoder are linear and symmetric which enable us to develop an\nextremely efficient learning algorithm. Extensive experiments on six benchmark\ndatasets demonstrate that the proposed SAE outperforms significantly the\nexisting ZSL models with the additional benefit of lower computational cost.\nFurthermore, when the SAE is applied to supervised clustering problem, it also\nbeats the state-of-the-art.",
+  "citation": 1136
+}

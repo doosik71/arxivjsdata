@@ -1,0 +1,8 @@
+{
+  "title": "Bounded-Distortion Metric Learning",
+  "authors": "Renjie Liao, Jianping Shi, Ziyang Ma, Jun Zhu, Jiaya Jia",
+  "year": 2015,
+  "url": "http://arxiv.org/abs/1505.02377v1",
+  "abstract": "Metric learning aims to embed one metric space into another to benefit tasks\nlike classification and clustering. Although a greatly distorted metric space\nhas a high degree of freedom to fit training data, it is prone to overfitting\nand numerical inaccuracy. This paper presents {\\it bounded-distortion metric\nlearning} (BDML), a new metric learning framework which amounts to finding an\noptimal Mahalanobis metric space with a bounded-distortion constraint. An\nefficient solver based on the multiplicative weights update method is proposed.\nMoreover, we generalize BDML to pseudo-metric learning and devise the\nsemidefinite relaxation and a randomized algorithm to approximately solve it.\nWe further provide theoretical analysis to show that distortion is a key\ningredient for stability and generalization ability of our BDML algorithm.\nExtensive experiments on several benchmark datasets yield promising results.",
+  "citation": 0
+}

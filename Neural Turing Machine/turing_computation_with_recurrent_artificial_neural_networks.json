@@ -1,0 +1,8 @@
+{
+  "title": "Turing Computation with Recurrent Artificial Neural Networks",
+  "authors": "Giovanni S Carmantini, Peter beim Graben, Mathieu Desroches, Serafim Rodrigues",
+  "year": 2015,
+  "url": "http://arxiv.org/abs/1511.01427v1",
+  "abstract": "We improve the results by Siegelmann & Sontag (1995) by providing a novel and\nparsimonious constructive mapping between Turing Machines and Recurrent\nArtificial Neural Networks, based on recent developments of Nonlinear Dynamical\nAutomata. The architecture of the resulting R-ANNs is simple and elegant,\nstemming from its transparent relation with the underlying NDAs. These\ncharacteristics yield promise for developments in machine learning methods and\nsymbolic computation with continuous time dynamical systems. A framework is\nprovided to directly program the R-ANNs from Turing Machine descriptions, in\nabsence of network training. At the same time, the network can potentially be\ntrained to perform algorithmic tasks, with exciting possibilities in the\nintegration of approaches akin to Google DeepMind's Neural Turing Machines.",
+  "citation": 7
+}

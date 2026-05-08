@@ -1,0 +1,8 @@
+{
+  "title": "Comparing Contrastive and Triplet Loss: Variance Analysis and\n  Optimization Behavior",
+  "authors": "Donghuo Zeng",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2510.02161v2",
+  "abstract": "Contrastive loss and triplet loss are widely used objectives in deep metric\nlearning, yet their effects on representation quality remain insufficiently\nunderstood. We present a theoretical and empirical comparison of these losses,\nfocusing on intra- and inter-class variance and optimization behavior (e.g.,\ngreedy updates). Through task-specific experiments with consistent settings on\nsynthetic data and real datasets-MNIST, CIFAR-10-it is shown that triplet loss\npreserves greater variance within and across classes, supporting finer-grained\ndistinctions in the learned representations. In contrast, contrastive loss\ntends to compact intra-class embeddings, which may obscure subtle semantic\ndifferences. To better understand their optimization dynamics, By examining\nloss-decay rate, active ratio, and gradient norm, we find that contrastive loss\ndrives many small updates early on, while triplet loss produces fewer but\nstronger updates that sustain learning on hard examples. Finally, across both\nclassification and retrieval tasks on MNIST, CIFAR-10, CUB-200, and CARS196\ndatasets, our results consistently show that triplet loss yields superior\nperformance, which suggests using triplet loss for detail retention and\nhard-sample focus, and contrastive loss for smoother, broad-based embedding\nrefinement.",
+  "citation": 0
+}

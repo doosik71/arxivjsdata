@@ -1,0 +1,7 @@
+{
+  "title": "Mamba in Vision: A Comprehensive Survey of Techniques and Applications",
+  "authors": "Md Maklachur Rahman, Abdullah Aman Tutul, Ankur Nath, Lamyanba Laishram, Soon Ki Jung, Tracy Hammond",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.03105v1",
+  "abstract": "Mamba is emerging as a novel approach to overcome the challenges faced by\nConvolutional Neural Networks (CNNs) and Vision Transformers (ViTs) in computer\nvision. While CNNs excel at extracting local features, they often struggle to\ncapture long-range dependencies without complex architectural modifications. In\ncontrast, ViTs effectively model global relationships but suffer from high\ncomputational costs due to the quadratic complexity of their self-attention\nmechanisms. Mamba addresses these limitations by leveraging Selective\nStructured State Space Models to effectively capture long-range dependencies\nwith linear computational complexity. This survey analyzes the unique\ncontributions, computational benefits, and applications of Mamba models while\nalso identifying challenges and potential future research directions. We\nprovide a foundational resource for advancing the understanding and growth of\nMamba models in computer vision. An overview of this work is available at\nhttps://github.com/maklachur/Mamba-in-Computer-Vision."
+}

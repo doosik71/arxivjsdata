@@ -1,0 +1,8 @@
+{
+  "title": "A deep cut into Split Federated Self-supervised Learning",
+  "authors": "Marcin Przewięźlikowski, Marcin Osial, Bartosz Zieliński, Marek Śmieja",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.08267v2",
+  "abstract": "Collaborative self-supervised learning has recently become feasible in highly distributed environments by dividing the network layers between client devices and a central server. However, state-of-the-art methods, such as MocoSFL, are optimized for network division at the initial layers, which decreases the protection of the client data and increases communication overhead. In this paper, we demonstrate that splitting depth is crucial for maintaining privacy and communication efficiency in distributed training. We also show that MocoSFL suffers from a catastrophic quality deterioration for the minimal communication overhead. As a remedy, we introduce Momentum-Aligned contrastive Split Federated Learning (MonAcoSFL), which aligns online and momentum client models during training procedure. Consequently, we achieve state-of-the-art accuracy while significantly reducing the communication overhead, making MonAcoSFL more practical in real-world scenarios.",
+  "citation": 2
+}

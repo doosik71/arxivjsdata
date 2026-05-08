@@ -1,0 +1,8 @@
+{
+  "title": "AnomalyBERT: Self-Supervised Transformer for Time Series Anomaly\n  Detection using Data Degradation Scheme",
+  "authors": "Yungi Jeong, Eunseok Yang, Jung Hyun Ryu, Imseong Park, Myungjoo Kang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.04468v1",
+  "abstract": "Mechanical defects in real situations affect observation values and cause\nabnormalities in multivariate time series, such as sensor values or network\ndata. To perceive abnormalities in such data, it is crucial to understand the\ntemporal context and interrelation between variables simultaneously. The\nanomaly detection task for time series, especially for unlabeled data, has been\na challenging problem, and we address it by applying a suitable data\ndegradation scheme to self-supervised model training. We define four types of\nsynthetic outliers and propose the degradation scheme in which a portion of\ninput data is replaced with one of the synthetic outliers. Inspired by the\nself-attention mechanism, we design a Transformer-based architecture to\nrecognize the temporal context and detect unnatural sequences with high\nefficiency. Our model converts multivariate data points into temporal\nrepresentations with relative position bias and yields anomaly scores from\nthese representations. Our method, AnomalyBERT, shows a great capability of\ndetecting anomalies contained in complex time series and surpasses previous\nstate-of-the-art methods on five real-world benchmarks. Our code is available\nat https://github.com/Jhryu30/AnomalyBERT.",
+  "citation": 86
+}

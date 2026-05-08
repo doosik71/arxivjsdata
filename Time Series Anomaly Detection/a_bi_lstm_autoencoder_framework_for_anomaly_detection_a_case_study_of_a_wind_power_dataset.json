@@ -1,0 +1,8 @@
+{
+  "title": "A Bi-LSTM Autoencoder Framework for Anomaly Detection -- A Case Study of\n  a Wind Power Dataset",
+  "authors": "Ahmed Shoyeb Raihan, Imtiaz Ahmed",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2303.09703v1",
+  "abstract": "Anomalies refer to data points or events that deviate from normal and\nhomogeneous events, which can include fraudulent activities, network\ninfiltrations, equipment malfunctions, process changes, or other significant\nbut infrequent events. Prompt detection of such events can prevent potential\nlosses in terms of finances, information, and human resources. With the\nadvancement of computational capabilities and the availability of large\ndatasets, anomaly detection has become a major area of research. Among these,\nanomaly detection in time series has gained more attention recently due to the\nadded complexity imposed by the time dimension. This study presents a novel\nframework for time series anomaly detection using a combination of\nBidirectional Long Short Term Memory (Bi-LSTM) architecture and Autoencoder.\nThe Bi-LSTM network, which comprises two unidirectional LSTM networks, can\nanalyze the time series data from both directions and thus effectively discover\nthe long-term dependencies hidden in the sequential data. Meanwhile, the\nAutoencoder mechanism helps to establish the optimal threshold beyond which an\nevent can be classified as an anomaly. To demonstrate the effectiveness of the\nproposed framework, it is applied to a real-world multivariate time series\ndataset collected from a wind farm. The Bi-LSTM Autoencoder model achieved a\nclassification accuracy of 96.79% and outperformed more commonly used LSTM\nAutoencoder models.",
+  "citation": 29
+}

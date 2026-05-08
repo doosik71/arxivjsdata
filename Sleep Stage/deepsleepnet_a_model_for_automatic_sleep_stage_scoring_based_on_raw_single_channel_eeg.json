@@ -1,0 +1,8 @@
+{
+  "title": "DeepSleepNet: a Model for Automatic Sleep Stage Scoring based on Raw\n  Single-Channel EEG",
+  "authors": "Akara Supratak, Hao Dong, Chao Wu, Yike Guo",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1703.04046v2",
+  "abstract": "The present study proposes a deep learning model, named DeepSleepNet, for\nautomatic sleep stage scoring based on raw single-channel EEG. Most of the\nexisting methods rely on hand-engineered features which require prior knowledge\nof sleep analysis. Only a few of them encode the temporal information such as\ntransition rules, which is important for identifying the next sleep stages,\ninto the extracted features. In the proposed model, we utilize Convolutional\nNeural Networks to extract time-invariant features, and bidirectional-Long\nShort-Term Memory to learn transition rules among sleep stages automatically\nfrom EEG epochs. We implement a two-step training algorithm to train our model\nefficiently. We evaluated our model using different single-channel EEGs\n(F4-EOG(Left), Fpz-Cz and Pz-Oz) from two public sleep datasets, that have\ndifferent properties (e.g., sampling rate) and scoring standards (AASM and\nR&K). The results showed that our model achieved similar overall accuracy and\nmacro F1-score (MASS: 86.2%-81.7, Sleep-EDF: 82.0%-76.9) compared to the\nstate-of-the-art methods (MASS: 85.9%-80.5, Sleep-EDF: 78.9%-73.7) on both\ndatasets. This demonstrated that, without changing the model architecture and\nthe training algorithm, our model could automatically learn features for sleep\nstage scoring from different raw single-channel EEGs from different datasets\nwithout utilizing any hand-engineered features.",
+  "citation": 1412
+}

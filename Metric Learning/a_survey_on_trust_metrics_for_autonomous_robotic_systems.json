@@ -1,0 +1,8 @@
+{
+  "title": "A Survey on Trust Metrics for Autonomous Robotic Systems",
+  "authors": "Vincenzo DiLuoffo, William R. Michalson",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2106.15015v2",
+  "abstract": "This paper surveys the area of Trust Metrics related to security for\nautonomous robotic systems. As the robotics industry undergoes a transformation\nfrom programmed, task oriented, systems to Artificial Intelligence-enabled\nlearning, these autonomous systems become vulnerable to several security risks,\nmaking a security assessment of these systems of critical importance.\nTherefore, our focus is on a holistic approach for assessing system trust which\nrequires incorporating system, hardware, software, cognitive robustness, and\nsupplier level trust metrics into a unified model of trust. We set out to\ndetermine if there were already trust metrics that defined such a holistic\nsystem approach. While there are extensive writings related to various aspects\nof robotic systems such as, risk management, safety, security assurance and so\non, each source only covered subsets of an overall system and did not\nconsistently incorporate the relevant costs in their metrics. This paper\nattempts to put this prior work into perspective, and to show how it might be\nextended to develop useful system-level trust metrics for evaluating complex\nrobotic (and other) systems.",
+  "citation": 4
+}

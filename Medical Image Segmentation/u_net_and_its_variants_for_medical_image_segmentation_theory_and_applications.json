@@ -1,0 +1,7 @@
+{
+  "title": "U-Net and its variants for medical image segmentation: theory and applications",
+  "authors": "Nahian Siddique, Paheding Sidike, Colin Elkin, Vijay Devabhaktuni",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2011.01118v1",
+  "abstract": "U-net is an image segmentation technique developed primarily for medical image analysis that can precisely segment images using a scarce amount of training data. These traits provide U-net with a very high utility within the medical imaging community and have resulted in extensive adoption of U-net as the primary tool for segmentation tasks in medical imaging. The success of U-net is evident in its widespread use in all major image modalities from CT scans and MRI to X-rays and microscopy. Furthermore, while U-net is largely a segmentation tool, there have been instances of the use of U-net in other applications. As the potential of U-net is still increasing, in this review we look at the various developments that have been made in the U-net architecture and provide observations on recent trends. We examine the various innovations that have been made in deep learning and discuss how these tools facilitate U-net. Furthermore, we look at image modalities and application areas where U-net has been applied."
+}

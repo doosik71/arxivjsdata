@@ -1,0 +1,7 @@
+{
+  "title": "Lecture Notes on Quantum Algorithms for Scientific Computation",
+  "authors": "Lin Lin",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2201.08309v1",
+  "abstract": "This is a set of lecture notes used in a graduate topic class in applied\nmathematics called ``Quantum Algorithms for Scientific Computation'' at the\nDepartment of Mathematics, UC Berkeley during the fall semester of 2021. These\nlecture notes focus only on quantum algorithms closely related to scientific\ncomputation, and in particular, matrix computation. The main purpose of the\nlecture notes is to introduce quantum phase estimation (QPE) and ``post-QPE''\nmethods such as block encoding, quantum signal processing, and quantum singular\nvalue transformation, and to demonstrate their applications in solving\neigenvalue problems, linear systems of equations, and differential equations.\nThe intended audience is the broad computational science and engineering (CSE)\ncommunity interested in using fault-tolerant quantum computers to solve\nchallenging scientific computing problems."
+}

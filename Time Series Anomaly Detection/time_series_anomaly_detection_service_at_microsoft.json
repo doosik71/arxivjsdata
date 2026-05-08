@@ -1,0 +1,8 @@
+{
+  "title": "Time-Series Anomaly Detection Service at Microsoft",
+  "authors": "Hansheng Ren, Bixiong Xu, Yujing Wang, Chao Yi, Congrui Huang, Xiaoyu Kou, Tony Xing, Mao Yang, Jie Tong, Qi Zhang",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1906.03821v1",
+  "abstract": "Large companies need to monitor various metrics (for example, Page Views and\nRevenue) of their applications and services in real time. At Microsoft, we\ndevelop a time-series anomaly detection service which helps customers to\nmonitor the time-series continuously and alert for potential incidents on time.\nIn this paper, we introduce the pipeline and algorithm of our anomaly detection\nservice, which is designed to be accurate, efficient and general. The pipeline\nconsists of three major modules, including data ingestion, experimentation\nplatform and online compute. To tackle the problem of time-series anomaly\ndetection, we propose a novel algorithm based on Spectral Residual (SR) and\nConvolutional Neural Network (CNN). Our work is the first attempt to borrow the\nSR model from visual saliency detection domain to time-series anomaly\ndetection. Moreover, we innovatively combine SR and CNN together to improve the\nperformance of SR model. Our approach achieves superior experimental results\ncompared with state-of-the-art baselines on both public datasets and Microsoft\nproduction data.",
+  "citation": 800
+}

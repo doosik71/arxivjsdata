@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2503.16726v1",
+  "title": "EDiT: Efficient Diffusion Transformers with Linear Compressed Attention",
+  "authors": "Philipp Becker, Abhinav Mehrotra, Ruchika Chavhan, Malcolm Chadwick, Luca Morreale, Mehdi Noroozi, Alberto Gil Ramos, Sourav Bhattacharya",
+  "year": 2025,
+  "abstract": "Diffusion Transformers (DiTs) have emerged as a leading architecture for\ntext-to-image synthesis, producing high-quality and photorealistic images.\nHowever, the quadratic scaling properties of the attention in DiTs hinder image\ngeneration with higher resolution or on devices with limited resources. This\nwork introduces an efficient diffusion transformer (EDiT) to alleviate these\nefficiency bottlenecks in conventional DiTs and Multimodal DiTs (MM-DiTs).\nFirst, we present a novel linear compressed attention method that uses a\nmulti-layer convolutional network to modulate queries with local information\nwhile keys and values are spatially aggregated. Second, we formulate a hybrid\nattention scheme for multi-modal inputs that combines linear attention for\nimage-to-image interactions and standard scaled dot-product attention for\ninteractions involving prompts. Merging these two approaches leads to an\nexpressive, linear-time Multimodal Efficient Diffusion Transformer (MM-EDiT).\nWe demonstrate the effectiveness of the EDiT and MM-EDiT architectures by\nintegrating them into PixArt-Sigma(conventional DiT) and Stable Diffusion\n3.5-Medium (MM-DiT), achieving up to 2.2x speedup with comparable image quality\nafter distillation."
+}

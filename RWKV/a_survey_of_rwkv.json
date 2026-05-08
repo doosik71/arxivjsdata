@@ -1,0 +1,7 @@
+{
+  "title": "A Survey of RWKV",
+  "authors": "Zhiyuan Li, Tingyu Xia, Yi Chang, Yuan Wu",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.14847v2",
+  "abstract": "The Receptance Weighted Key Value (RWKV) model offers a novel alternative to\nthe Transformer architecture, merging the benefits of recurrent and\nattention-based systems. Unlike conventional Transformers, which depend heavily\non self-attention, RWKV adeptly captures long-range dependencies with minimal\ncomputational demands. By utilizing a recurrent framework, RWKV addresses some\ncomputational inefficiencies found in Transformers, particularly in tasks with\nlong sequences. RWKV has recently drawn considerable attention for its robust\nperformance across multiple domains. Despite its growing popularity, no\nsystematic review of the RWKV model exists. This paper seeks to fill this gap\nas the first comprehensive review of the RWKV architecture, its core\nprinciples, and its varied applications, such as natural language generation,\nnatural language understanding, and computer vision. We assess how RWKV\ncompares to traditional Transformer models, highlighting its capability to\nmanage long sequences efficiently and lower computational costs. Furthermore,\nwe explore the challenges RWKV encounters and propose potential directions for\nfuture research and advancement. We consistently maintain the related\nopen-source materials at: https://github.com/MLGroupJLU/RWKV-Survey."
+}

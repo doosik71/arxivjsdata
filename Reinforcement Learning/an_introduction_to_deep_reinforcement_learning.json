@@ -1,0 +1,7 @@
+{
+  "title": "An Introduction to Deep Reinforcement Learning",
+  "authors": "Vincent Francois-Lavet, Peter Henderson, Riashat Islam, Marc G. Bellemare, Joelle Pineau",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1811.12560v2",
+  "abstract": "Deep reinforcement learning is the combination of reinforcement learning (RL)\nand deep learning. This field of research has been able to solve a wide range\nof complex decision-making tasks that were previously out of reach for a\nmachine. Thus, deep RL opens up many new applications in domains such as\nhealthcare, robotics, smart grids, finance, and many more. This manuscript\nprovides an introduction to deep reinforcement learning models, algorithms and\ntechniques. Particular focus is on the aspects related to generalization and\nhow deep RL can be used for practical applications. We assume the reader is\nfamiliar with basic machine learning concepts."
+}

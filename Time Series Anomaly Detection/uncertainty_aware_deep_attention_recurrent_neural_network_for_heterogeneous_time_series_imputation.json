@@ -1,0 +1,8 @@
+{
+  "title": "Uncertainty-Aware Deep Attention Recurrent Neural Network for\n  Heterogeneous Time Series Imputation",
+  "authors": "Linglong Qian, Zina Ibrahim, Richard Dobson",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2401.02258v1",
+  "abstract": "Missingness is ubiquitous in multivariate time series and poses an obstacle\nto reliable downstream analysis. Although recurrent network imputation achieved\nthe SOTA, existing models do not scale to deep architectures that can\npotentially alleviate issues arising in complex data. Moreover, imputation\ncarries the risk of biased estimations of the ground truth. Yet, confidence in\nthe imputed values is always unmeasured or computed post hoc from model output.\nWe propose DEep Attention Recurrent Imputation (DEARI), which jointly estimates\nmissing values and their associated uncertainty in heterogeneous multivariate\ntime series. By jointly representing feature-wise correlations and temporal\ndynamics, we adopt a self attention mechanism, along with an effective residual\ncomponent, to achieve a deep recurrent neural network with good imputation\nperformance and stable convergence. We also leverage self-supervised metric\nlearning to boost performance by optimizing sample similarity. Finally, we\ntransform DEARI into a Bayesian neural network through a novel Bayesian\nmarginalization strategy to produce stochastic DEARI, which outperforms its\ndeterministic equivalent. Experiments show that DEARI surpasses the SOTA in\ndiverse imputation tasks using real-world datasets, namely air quality control,\nhealthcare and traffic.",
+  "citation": 7
+}

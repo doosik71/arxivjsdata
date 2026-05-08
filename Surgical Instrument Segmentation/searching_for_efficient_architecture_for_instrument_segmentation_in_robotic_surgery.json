@@ -1,0 +1,8 @@
+{
+  "title": "Searching for Efficient Architecture for Instrument Segmentation in Robotic Surgery",
+  "authors": "Daniil Pakhomov, Nassir Navab",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.04449v1",
+  "abstract": "Segmentation of surgical instruments is an important problem in robot-assisted surgery: it is a crucial step towards full instrument pose estimation and is directly used for masking of augmented reality overlays during surgical procedures. Most applications rely on accurate real-time segmentation of high-resolution surgical images. While previous research focused primarily on methods that deliver high accuracy segmentation masks, majority of them can not be used for real-time applications due to their computational cost. In this work, we design a light-weight and highly-efficient deep residual architecture which is tuned to perform real-time inference of high-resolution images. To account for reduced accuracy of the discovered light-weight deep residual network and avoid adding any additional computational burden, we perform a differentiable search over dilation rates for residual units of our network. We test our discovered architecture on the EndoVis 2017 Robotic Instruments dataset and verify that our model is the state-of-the-art in terms of speed and accuracy tradeoff with a speed of up to 125 FPS on high resolution images.",
+  "citation": 15
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Sleep-wake classification via quantifying heart rate variability by\n  convolutional neural network",
+  "authors": "John Malik, Yu-Lun Lo, Hau-tieng Wu",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1808.00142v1",
+  "abstract": "Fluctuations in heart rate are intimately tied to changes in the\nphysiological state of the organism. We examine and exploit this relationship\nby classifying a human subject's wake/sleep status using his instantaneous\nheart rate (IHR) series. We use a convolutional neural network (CNN) to build\nfeatures from the IHR series extracted from a whole-night electrocardiogram\n(ECG) and predict every 30 seconds whether the subject is awake or asleep. Our\ntraining database consists of 56 normal subjects, and we consider three\ndifferent databases for validation; one is private, and two are public with\ndifferent races and apnea severities. On our private database of 27 subjects,\nour accuracy, sensitivity, specificity, and AUC values for predicting the wake\nstage are 83.1%, 52.4%, 89.4%, and 0.83, respectively. Validation performance\nis similar on our two public databases. When we use the photoplethysmography\ninstead of the ECG to obtain the IHR series, the performance is also\ncomparable. A robustness check is carried out to confirm the obtained\nperformance statistics. This result advocates for an effective and scalable\nmethod for recognizing changes in physiological state using non-invasive heart\nrate monitoring. The CNN model adaptively quantifies IHR fluctuation as well as\nits location in time and is suitable for differentiating between the wake and\nsleep stages.",
+  "citation": 107
+}

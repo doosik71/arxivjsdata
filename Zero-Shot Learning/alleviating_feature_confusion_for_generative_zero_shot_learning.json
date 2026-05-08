@@ -1,0 +1,8 @@
+{
+  "title": "Alleviating Feature Confusion for Generative Zero-shot Learning",
+  "authors": "Jingjing Li, Mengmeng Jing, Ke Lu, Lei Zhu, Yang Yang, Zi Huang",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1909.07615v1",
+  "abstract": "Lately, generative adversarial networks (GANs) have been successfully applied\nto zero-shot learning (ZSL) and achieved state-of-the-art performance. By\nsynthesizing virtual unseen visual features, GAN-based methods convert the\nchallenging ZSL task into a supervised learning problem. However, GAN-based ZSL\nmethods have to train the generator on the seen categories and further apply it\nto unseen instances. An inevitable issue of such a paradigm is that the\nsynthesized unseen features are prone to seen references and incapable to\nreflect the novelty and diversity of real unseen instances. In a nutshell, the\nsynthesized features are confusing. One cannot tell unseen categories from seen\nones using the synthesized features. As a result, the synthesized features are\ntoo subtle to be classified in generalized zero-shot learning (GZSL) which\ninvolves both seen and unseen categories at the test stage. In this paper, we\nfirst introduce the feature confusion issue. Then, we propose a new feature\ngenerating network, named alleviating feature confusion GAN (AFC-GAN), to\nchallenge the issue. Specifically, we present a boundary loss which maximizes\nthe decision boundary of seen categories and unseen ones. Furthermore, a novel\nmetric named feature confusion score (FCS) is proposed to quantify the feature\nconfusion. Extensive experiments on five widely used datasets verify that our\nmethod is able to outperform previous state-of-the-arts under both ZSL and GZSL\nprotocols.",
+  "citation": 79
+}

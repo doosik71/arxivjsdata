@@ -1,0 +1,8 @@
+{
+  "title": "Pretraining Neural Architecture Search Controllers with Locality-based Self-Supervised Learning",
+  "authors": "Kwanghee Choi, Minyoung Choe, Hyelee Lee",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2103.08157v1",
+  "abstract": "Neural architecture search (NAS) has fostered various fields of machine learning. Despite its prominent dedications, many have criticized the intrinsic limitations of high computational cost. We aim to ameliorate this by proposing a pretraining scheme that can be generally applied to controller-based NAS. Our method, locality-based self-supervised classification task, leverages the structural similarity of network architectures to obtain good architecture representations. We incorporate our method into neural architecture optimization (NAO) to analyze the pretrained embeddings and its effectiveness and highlight that adding metric learning loss brings a favorable impact on NAS. Our code is available at \\url{https://github.com/Multi-Objective-NAS/self-supervised-nas}.",
+  "citation": 5
+}

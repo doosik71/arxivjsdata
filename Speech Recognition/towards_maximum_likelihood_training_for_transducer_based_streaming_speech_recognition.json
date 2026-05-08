@@ -1,0 +1,7 @@
+{
+  "title": "Towards Maximum Likelihood Training for Transducer-based Streaming\n  Speech Recognition",
+  "authors": "Hyeonseung Lee, Ji Won Yoon, Sungsoo Kim, Nam Soo Kim",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.17537v1",
+  "abstract": "Transducer neural networks have emerged as the mainstream approach for\nstreaming automatic speech recognition (ASR), offering state-of-the-art\nperformance in balancing accuracy and latency. In the conventional framework,\nstreaming transducer models are trained to maximize the likelihood function\nbased on non-streaming recursion rules. However, this approach leads to a\nmismatch between training and inference, resulting in the issue of deformed\nlikelihood and consequently suboptimal ASR accuracy. We introduce a\nmathematical quantification of the gap between the actual likelihood and the\ndeformed likelihood, namely forward variable causal compensation (FoCC). We\nalso present its estimator, FoCCE, as a solution to estimate the exact\nlikelihood. Through experiments on the LibriSpeech dataset, we show that FoCCE\ntraining improves the accuracy of the streaming transducers."
+}

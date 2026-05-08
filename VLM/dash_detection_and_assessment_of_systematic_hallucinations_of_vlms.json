@@ -1,0 +1,7 @@
+{
+  "title": "DASH: Detection and Assessment of Systematic Hallucinations of VLMs",
+  "authors": "Maximilian Augustin, Yannic Neuhaus, Matthias Hein",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2503.23573v1",
+  "abstract": "Vision-language models (VLMs) are prone to object hallucinations, where they\nerroneously indicate the presenceof certain objects in an image. Existing\nbenchmarks quantify hallucinations using relatively small, labeled datasets.\nHowever, this approach is i) insufficient to assess hallucinations that arise\nin open-world settings, where VLMs are widely used, and ii) inadequate for\ndetecting systematic errors in VLMs. We propose DASH (Detection and Assessment\nof Systematic Hallucinations), an automatic, large-scale pipeline designed to\nidentify systematic hallucinations of VLMs on real-world images in an\nopen-world setting. A key component is DASH-OPT for image-based retrieval,\nwhere we optimize over the ''natural image manifold'' to generate images that\nmislead the VLM. The output of DASH consists of clusters of real and\nsemantically similar images for which the VLM hallucinates an object. We apply\nDASH to PaliGemma and two LLaVA-NeXT models across 380 object classes and, in\ntotal, find more than 19k clusters with 950k images. We study the transfer of\nthe identified systematic hallucinations to other VLMs and show that\nfine-tuning PaliGemma with the model-specific images obtained with DASH\nmitigates object hallucinations. Code and data are available at\nhttps://YanNeu.github.io/DASH."
+}

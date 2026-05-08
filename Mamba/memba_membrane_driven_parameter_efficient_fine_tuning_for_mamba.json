@@ -1,0 +1,7 @@
+{
+  "title": "Memba: Membrane-driven Parameter-Efficient Fine-Tuning for Mamba",
+  "authors": "Donghyun Lee, Yuhang Li, Ruokai Yin, Shiting Xiao, Priyadarshini Panda",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.18184v1",
+  "abstract": "State Space Models (SSMs) have emerged as powerful alternatives to\nattention-based Transformers, with Mamba demonstrating impressive efficiency\nand scalability. As these models grow increasingly larger, the need for\nParameter-Efficient Fine-Tuning (PEFT) methods becomes critical to adapt\npre-trained Mamba to downstream tasks without prohibitive computational costs.\nHowever, previous approaches simply apply traditional Transformer-tailored PEFT\nmethods without addressing the unique temporal processing dynamics of SSMs. To\naddress this limitation, we propose Memba, a membrane-driven PEFT approach\nspecifically designed for Mamba. Memba introduces Leaky Integrate Membrane\n(LIM) neurons as bio-inspired gating mechanisms that naturally accumulate\nmembrane potentials over time, enhancing selective information retention. By\nstrategically combining LIM neurons with Low-Rank Adaptations (LoRA) and\ncross-layer membrane transfer, our approach significantly improves Mamba's\ntemporal modeling capabilities. Extensive experiments across language and\nvision tasks demonstrate that Memba achieves substantial improvements over\nexisting PEFT methods. The code is available at\nhttps://github.com/Intelligent-Computing-Lab-Yale/Memba."
+}

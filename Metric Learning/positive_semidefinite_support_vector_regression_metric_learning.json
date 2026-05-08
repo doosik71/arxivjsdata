@@ -1,0 +1,8 @@
+{
+  "title": "Positive semidefinite support vector regression metric learning",
+  "authors": "Lifeng Gu",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.07739v1",
+  "abstract": "Most existing metric learning methods focus on learning a similarity or\ndistance measure relying on similar and dissimilar relations between sample\npairs. However, pairs of samples cannot be simply identified as similar or\ndissimilar in many real-world applications, e.g., multi-label learning, label\ndistribution learning. To this end, relation alignment metric learning (RAML)\nframework is proposed to handle the metric learning problem in those scenarios.\nBut RAML framework uses SVR solvers for optimization. It can't learn positive\nsemidefinite distance metric which is necessary in metric learning. In this\npaper, we propose two methds to overcame the weakness. Further, We carry out\nseveral experiments on the single-label classification, multi-label\nclassification, label distribution learning to demonstrate the new methods\nachieves favorable performance against RAML framework.",
+  "citation": 0
+}

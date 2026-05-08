@@ -1,0 +1,7 @@
+{
+  "title": "Efficient Universal Quantum Compilation: An Inverse-free Solovay-Kitaev\n  Algorithm",
+  "authors": "Adam Bouland, Tudor Giurgica-Tiron",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2112.02040v1",
+  "abstract": "The Solovay-Kitaev algorithm is a fundamental result in quantum computation.\nIt gives an algorithm for efficiently compiling arbitrary unitaries using\nuniversal gate sets: any unitary can be approximated by short gates sequences,\nwhose length scales merely poly-logarithmically with accuracy. As a\nconsequence, the choice of gate set is typically unimportant in quantum\ncomputing. However, the Solovay-Kitaev algorithm requires the gate set to be\ninverse-closed. It has been a longstanding open question if efficient\nalgorithmic compilation is possible without this condition. In this work, we\nprovide the first inverse-free Solovay-Kitaev algorithm, which makes no\nassumption on the structure within a gate set beyond universality, answering\nthis problem in the affirmative, and providing an efficient compilation\nalgorithm in the absence of inverses for both $\\text{SU}(d)$ and $\\text{SL}(d,\n\\mathbb{C})$. The algorithm works by showing that approximate gate\nimplementations of the generalized Pauli group can self-correct their errors."
+}

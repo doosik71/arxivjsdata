@@ -1,0 +1,8 @@
+{
+  "title": "Model Selection for Generalized Zero-shot Learning",
+  "authors": "Hongguang Zhang, Piotr Koniusz",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1811.03252v1",
+  "abstract": "In the problem of generalized zero-shot learning, the datapoints from unknown\nclasses are not available during training. The main challenge for generalized\nzero-shot learning is the unbalanced data distribution which makes it hard for\nthe classifier to distinguish if a given testing sample comes from a seen or\nunseen class. However, using Generative Adversarial Network (GAN) to generate\nauxiliary datapoints by the semantic embeddings of unseen classes alleviates\nthe above problem. Current approaches combine the auxiliary datapoints and\noriginal training data to train the generalized zero-shot learning model and\nobtain state-of-the-art results. Inspired by such models, we propose to feed\nthe generated data via a model selection mechanism. Specifically, we leverage\ntwo sources of datapoints (observed and auxiliary) to train some classifier to\nrecognize which test datapoints come from seen and which from unseen classes.\nThis way, generalized zero-shot learning can be divided into two disjoint\nclassification tasks, thus reducing the negative influence of the unbalanced\ndata distribution. Our evaluations on four publicly available datasets for\ngeneralized zero-shot learning show that our model obtains state-of-the-art\nresults.",
+  "citation": 26
+}

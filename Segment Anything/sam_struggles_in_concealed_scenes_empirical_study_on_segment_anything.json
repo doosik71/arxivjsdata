@@ -1,0 +1,8 @@
+{
+  "title": "SAM Struggles in Concealed Scenes -- Empirical Study on Segment Anything",
+  "authors": "Ge-Peng Ji, Deng-Ping Fan, Peng Xu, Ming-Ming Cheng, Bowen Zhou, Luc Van Gool",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.06022v4",
+  "abstract": "Segmenting anything is a ground-breaking step toward artificial general intelligence, and the Segment Anything Model (SAM) greatly fosters the foundation models for computer vision. We could not be more excited to probe the performance traits of SAM. In particular, exploring situations in which SAM does not perform well is interesting. In this report, we choose three concealed scenes, i.e., camouflaged animals, industrial defects, and medical lesions, to evaluate SAM under unprompted settings. Our main observation is that SAM looks unskilled in concealed scenes.",
+  "citation": 119
+}

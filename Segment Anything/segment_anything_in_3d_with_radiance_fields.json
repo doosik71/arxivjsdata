@@ -1,0 +1,8 @@
+{
+  "title": "Segment Anything in 3D with Radiance Fields",
+  "authors": "Jiazhong Cen, Jiemin Fang, Zanwei Zhou, Chen Yang, Lingxi Xie, Xiaopeng Zhang, Wei Shen, Qi Tian",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2304.12308v5",
+  "abstract": "The Segment Anything Model (SAM) emerges as a powerful vision foundation model to generate high-quality 2D segmentation results. This paper aims to generalize SAM to segment 3D objects. Rather than replicating the data acquisition and annotation procedure which is costly in 3D, we design an efficient solution, leveraging the radiance field as a cheap and off-the-shelf prior that connects multi-view 2D images to the 3D space. We refer to the proposed solution as SA3D, short for Segment Anything in 3D. With SA3D, the user is only required to provide a 2D segmentation prompt (e.g., rough points) for the target object in a single view, which is used to generate its corresponding 2D mask with SAM. Next, SA3D alternately performs mask inverse rendering and cross-view self-prompting across various views to iteratively refine the 3D mask of the target object. For one view, mask inverse rendering projects the 2D mask obtained by SAM into the 3D space with guidance of the density distribution learned by the radiance field for 3D mask refinement; Then, cross-view self-prompting extracts reliable prompts automatically as the input to SAM from the rendered 2D mask of the inaccurate 3D mask for a new view. We show in experiments that SA3D adapts to various scenes and achieves 3D segmentation within seconds. Our research reveals a potential methodology to lift the ability of a 2D segmentation model to 3D. Our code is available at https://github.com/Jumpat/SegmentAnythingin3D.",
+  "citation": 186
+}

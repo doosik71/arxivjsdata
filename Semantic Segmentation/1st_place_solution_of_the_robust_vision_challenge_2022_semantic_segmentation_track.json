@@ -1,0 +1,8 @@
+{
+  "title": "1st Place Solution of The Robust Vision Challenge 2022 Semantic Segmentation Track",
+  "authors": "Junfei Xiao, Zhichao Xu, Shiyi Lan, Zhiding Yu, Alan Yuille, Anima Anandkumar",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2210.12852v3",
+  "abstract": "This report describes the winning solution to the Robust Vision Challenge (RVC) semantic segmentation track at ECCV 2022. Our method adopts the FAN-B-Hybrid model as the encoder and uses SegFormer as the segmentation framework. The model is trained on a composite dataset consisting of images from 9 datasets (ADE20K, Cityscapes, Mapillary Vistas, ScanNet, VIPER, WildDash 2, IDD, BDD, and COCO) with a simple dataset balancing strategy. All the original labels are projected to a 256-class unified label space, and the model is trained using a cross-entropy loss. Without significant hyperparameter tuning or any specific loss weighting, our solution ranks the first place on all the testing semantic segmentation benchmarks from multiple domains (ADE20K, Cityscapes, Mapillary Vistas, ScanNet, VIPER, and WildDash 2). The proposed method can serve as a strong baseline for the multi-domain segmentation task and benefit future works. Code will be available at https://github.com/lambert-x/RVC_Segmentation.",
+  "citation": 5
+}

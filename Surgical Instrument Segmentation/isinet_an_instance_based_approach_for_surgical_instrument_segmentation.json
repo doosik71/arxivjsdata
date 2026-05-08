@@ -1,0 +1,8 @@
+{
+  "title": "ISINet: An Instance-Based Approach for Surgical Instrument Segmentation",
+  "authors": "Cristina González, Laura Bravo-Sánchez, Pablo Arbelaez",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.05533v1",
+  "abstract": "We study the task of semantic segmentation of surgical instruments in robotic-assisted surgery scenes. We propose the Instance-based Surgical Instrument Segmentation Network (ISINet), a method that addresses this task from an instance-based segmentation perspective. Our method includes a temporal consistency module that takes into account the previously overlooked and inherent temporal information of the problem. We validate our approach on the existing benchmark for the task, the Endoscopic Vision 2017 Robotic Instrument Segmentation Dataset, and on the 2018 version of the dataset, whose annotations we extended for the fine-grained version of instrument segmentation. Our results show that ISINet significantly outperforms state-of-the-art methods, with our baseline version duplicating the Intersection over Union (IoU) of previous methods and our complete model triplicating the IoU.",
+  "citation": 117
+}

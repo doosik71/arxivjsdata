@@ -1,0 +1,8 @@
+{
+  "title": "Time Series Language Model for Descriptive Caption Generation",
+  "authors": "Mohamed Trabelsi, Aidan Boyd, Jin Cao, Huseyin Uzunalioglu",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2501.01832v1",
+  "abstract": "The automatic generation of representative natural language descriptions for\nobservable patterns in time series data enhances interpretability, simplifies\nanalysis and increases cross-domain utility of temporal data. While pre-trained\nfoundation models have made considerable progress in natural language\nprocessing (NLP) and computer vision (CV), their application to time series\nanalysis has been hindered by data scarcity. Although several large language\nmodel (LLM)-based methods have been proposed for time series forecasting, time\nseries captioning is under-explored in the context of LLMs. In this paper, we\nintroduce TSLM, a novel time series language model designed specifically for\ntime series captioning. TSLM operates as an encoder-decoder model, leveraging\nboth text prompts and time series data representations to capture subtle\ntemporal patterns across multiple phases and generate precise textual\ndescriptions of time series inputs. TSLM addresses the data scarcity problem in\ntime series captioning by first leveraging an in-context prompting synthetic\ndata generation, and second denoising the generated data via a novel\ncross-modal dense retrieval scoring applied to time series-caption pairs.\nExperimental findings on various time series captioning datasets demonstrate\nthat TSLM outperforms existing state-of-the-art approaches from multiple data\nmodalities by a significant margin.",
+  "citation": 5
+}

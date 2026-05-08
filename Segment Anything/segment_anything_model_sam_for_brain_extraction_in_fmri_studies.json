@@ -1,0 +1,8 @@
+{
+  "title": "Segment anything model (SAM) for brain extraction in fMRI studies",
+  "authors": "Dwith Chenna, Suyash Bhogawar",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2401.04740v1",
+  "abstract": "Brain extraction and removal of skull artifacts from magnetic resonance images (MRI) is an important preprocessing step in neuroimaging analysis. There are many tools developed to handle human fMRI images, which could involve manual steps for verifying results from brain segmentation that makes it time consuming and inefficient. In this study, we will use the segment anything model (SAM), a freely available neural network released by Meta[4], which has shown promising results in many generic segmentation applications. We will analyze the efficiency of SAM for neuroimaging brain segmentation by removing skull artifacts. The results of the experiments showed promising results that explore using automated segmentation algorithms for neuroimaging without the need to train on custom medical imaging dataset.",
+  "citation": 2
+}

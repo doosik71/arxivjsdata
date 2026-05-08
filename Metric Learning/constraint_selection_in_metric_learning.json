@@ -1,0 +1,8 @@
+{
+  "title": "Constraint Selection in Metric Learning",
+  "authors": "Hoel Le Capitaine",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1612.04853v1",
+  "abstract": "A number of machine learning algorithms are using a metric, or a distance, in\norder to compare individuals. The Euclidean distance is usually employed, but\nit may be more efficient to learn a parametric distance such as Mahalanobis\nmetric. Learning such a metric is a hot topic since more than ten years now,\nand a number of methods have been proposed to efficiently learn it. However,\nthe nature of the problem makes it quite difficult for large scale data, as\nwell as data for which classes overlap. This paper presents a simple way of\nimproving accuracy and scalability of any iterative metric learning algorithm,\nwhere constraints are obtained prior to the algorithm. The proposed approach\nrelies on a loss-dependent weighted selection of constraints that are used for\nlearning the metric. Using the corresponding dedicated loss function, the\nmethod clearly allows to obtain better results than state-of-the-art methods,\nboth in terms of accuracy and time complexity. Some experimental results on\nreal world, and potentially large, datasets are demonstrating the effectiveness\nof our proposition.",
+  "citation": 26
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Metric Learning in an RKHS",
+  "authors": "Gokcan Tatli, Yi Chen, Blake Mason, Robert Nowak, Ramya Korlakai Vinayak",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2508.04476v1",
+  "abstract": "Metric learning from a set of triplet comparisons in the form of \"Do you\nthink item h is more similar to item i or item j?\", indicating similarity and\ndifferences between items, plays a key role in various applications including\nimage retrieval, recommendation systems, and cognitive psychology. The goal is\nto learn a metric in the RKHS that reflects the comparisons. Nonlinear metric\nlearning using kernel methods and neural networks have shown great empirical\npromise. While previous works have addressed certain aspects of this problem,\nthere is little or no theoretical understanding of such methods. The exception\nis the special (linear) case in which the RKHS is the standard Euclidean space\n$\\mathbb{R}^d$; there is a comprehensive theory for metric learning in\n$\\mathbb{R}^d$. This paper develops a general RKHS framework for metric\nlearning and provides novel generalization guarantees and sample complexity\nbounds. We validate our findings through a set of simulations and experiments\non real datasets. Our code is publicly available at\nhttps://github.com/RamyaLab/metric-learning-RKHS.",
+  "citation": 0
+}

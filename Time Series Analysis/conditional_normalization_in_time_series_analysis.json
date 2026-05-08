@@ -1,0 +1,8 @@
+{
+  "title": "Conditional normalization in time series analysis",
+  "authors": "Puwasala Gamakumara, Edgar Santos-Fernandez, Priyanga Dilini Talagala, Rob J. Hyndman, Kerrie Mengersen, Catherine Leigh",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.12651v1",
+  "abstract": "Time series often reflect variation associated with other related variables.\nControlling for the effect of these variables is useful when modeling or\nanalysing the time series. We introduce a novel approach to normalize time\nseries data conditional on a set of covariates. We do this by modeling the\nconditional mean and the conditional variance of the time series with\ngeneralized additive models using a set of covariates. The conditional mean and\nvariance are then used to normalize the time series. We illustrate the use of\nconditionally normalized series using two applications involving river network\ndata. First, we show how these normalized time series can be used to impute\nmissing values in the data. Second, we show how the normalized series can be\nused to estimate the conditional autocorrelation function and conditional\ncross-correlation functions via additive models. Finally we use the conditional\ncross-correlations to estimate the time it takes water to flow between two\nlocations in a river network.",
+  "citation": 3
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Coarse-to-fine Surgical Instrument Detection for Cataract Surgery Monitoring",
+  "authors": "Hassan Al Hajj, Gwenolé Quellec, Mathieu Lamard, Guy Cazuguel, Béatrice Cochener",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1609.05619v1",
+  "abstract": "The amount of surgical data, recorded during video-monitored surgeries, has extremely increased. This paper aims at improving existing solutions for the automated analysis of cataract surgeries in real time. Through the analysis of a video recording the operating table, it is possible to know which instruments exit or enter the operating table, and therefore which ones are likely being used by the surgeon. Combining these observations with observations from the microscope video should enhance the overall performance of the systems. To this end, the proposed solution is divided into two main parts: one to detect the instruments at the beginning of the surgery and one to update the list of instruments every time a change is detected in the scene. In the first part, the goal is to separate the instruments from the background and from irrelevant objects. For the second, we are interested in detecting the instruments that appear and disappear whenever the surgeon interacts with the table. Experiments on a dataset of 36 cataract surgeries validate the good performance of the proposed solution.",
+  "citation": 4
+}

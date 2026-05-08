@@ -1,0 +1,7 @@
+{
+  "title": "Spectral State Space Models",
+  "authors": "Naman Agarwal, Daniel Suo, Xinyi Chen, Elad Hazan",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.06837v4",
+  "abstract": "This paper studies sequence modeling for prediction tasks with long range\ndependencies. We propose a new formulation for state space models (SSMs) based\non learning linear dynamical systems with the spectral filtering algorithm\n(Hazan et al. (2017)). This gives rise to a novel sequence prediction\narchitecture we call a spectral state space model.\n  Spectral state space models have two primary advantages. First, they have\nprovable robustness properties as their performance depends on neither the\nspectrum of the underlying dynamics nor the dimensionality of the problem.\nSecond, these models are constructed with fixed convolutional filters that do\nnot require learning while still outperforming SSMs in both theory and\npractice.\n  The resulting models are evaluated on synthetic dynamical systems and\nlong-range prediction tasks of various modalities. These evaluations support\nthe theoretical benefits of spectral filtering for tasks requiring very long\nrange memory."
+}

@@ -1,0 +1,8 @@
+{
+  "title": "QCNeXt: A Next-Generation Framework For Joint Multi-Agent Trajectory Prediction",
+  "authors": "Zikang Zhou, Zihao Wen, Jianping Wang, Yung-Hui Li, Yu-Kai Huang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2306.10508v1",
+  "abstract": "Estimating the joint distribution of on-road agents' future trajectories is essential for autonomous driving. In this technical report, we propose a next-generation framework for joint multi-agent trajectory prediction called QCNeXt. First, we adopt the query-centric encoding paradigm for the task of joint multi-agent trajectory prediction. Powered by this encoding scheme, our scene encoder is equipped with permutation equivariance on the set elements, roto-translation invariance in the space dimension, and translation invariance in the time dimension. These invariance properties not only enable accurate multi-agent forecasting fundamentally but also empower the encoder with the capability of streaming processing. Second, we propose a multi-agent DETR-like decoder, which facilitates joint multi-agent trajectory prediction by modeling agents' interactions at future time steps. For the first time, we show that a joint prediction model can outperform marginal prediction models even on the marginal metrics, which opens up new research opportunities in trajectory prediction. Our approach ranks 1st on the Argoverse 2 multi-agent motion forecasting benchmark, winning the championship of the Argoverse Challenge at the CVPR 2023 Workshop on Autonomous Driving.",
+  "citation": 50
+}

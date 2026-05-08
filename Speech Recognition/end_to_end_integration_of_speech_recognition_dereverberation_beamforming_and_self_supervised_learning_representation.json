@@ -1,0 +1,8 @@
+{
+  "title": "End-to-End Integration of Speech Recognition, Dereverberation,\n  Beamforming, and Self-Supervised Learning Representation",
+  "authors": "Yoshiki Masuyama, Xuankai Chang, Samuele Cornell, Shinji Watanabe, Nobutaka Ono",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2210.10742v1",
+  "abstract": "Self-supervised learning representation (SSLR) has demonstrated its\nsignificant effectiveness in automatic speech recognition (ASR), mainly with\nclean speech. Recent work pointed out the strength of integrating SSLR with\nsingle-channel speech enhancement for ASR in noisy environments. This paper\nfurther advances this integration by dealing with multi-channel input. We\npropose a novel end-to-end architecture by integrating dereverberation,\nbeamforming, SSLR, and ASR within a single neural network. Our system achieves\nthe best performance reported in the literature on the CHiME-4 6-channel track\nwith a word error rate (WER) of 1.77%. While the WavLM-based strong SSLR\ndemonstrates promising results by itself, the end-to-end integration with the\nweighted power minimization distortionless response beamformer, which\nsimultaneously performs dereverberation and denoising, improves WER\nsignificantly. Its effectiveness is also validated on the REVERB dataset.",
+  "citation": 27
+}

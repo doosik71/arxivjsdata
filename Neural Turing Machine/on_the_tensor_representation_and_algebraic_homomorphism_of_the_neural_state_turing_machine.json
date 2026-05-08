@@ -1,0 +1,8 @@
+{
+  "title": "On the Tensor Representation and Algebraic Homomorphism of the Neural\n  State Turing Machine",
+  "authors": "Ankur Mali, Alexander Ororbia, Daniel Kifer, Lee Giles",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.14690v1",
+  "abstract": "Recurrent neural networks (RNNs) and transformers have been shown to be\nTuring-complete, but this result assumes infinite precision in their hidden\nrepresentations, positional encodings for transformers, and unbounded\ncomputation time in general. In practical applications, however, it is crucial\nto have real-time models that can recognize Turing complete grammars in a\nsingle pass. To address this issue and to better understand the true\ncomputational power of artificial neural networks (ANNs), we introduce a new\nclass of recurrent models called the neural state Turing machine (NSTM). The\nNSTM has bounded weights and finite-precision connections and can simulate any\nTuring Machine in real-time. In contrast to prior work that assumes unbounded\ntime and precision in weights, to demonstrate equivalence with TMs, we prove\nthat a $13$-neuron bounded tensor RNN, coupled with third-order synapses, can\nmodel any TM class in real-time. Furthermore, under the Markov assumption, we\nprovide a new theoretical bound for a non-recurrent network augmented with\nmemory, showing that a tensor feedforward network with $25$th-order finite\nprecision weights is equivalent to a universal TM.",
+  "citation": 1
+}

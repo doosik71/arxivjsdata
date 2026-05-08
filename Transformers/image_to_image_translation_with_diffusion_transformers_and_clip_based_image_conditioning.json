@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2505.16001v1",
+  "title": "Image-to-Image Translation with Diffusion Transformers and CLIP-Based\n  Image Conditioning",
+  "authors": "Qiang Zhu, Kuan Lu, Menghao Huo, Yuxiao Li",
+  "year": 2025,
+  "abstract": "Image-to-image translation aims to learn a mapping between a source and a\ntarget domain, enabling tasks such as style transfer, appearance\ntransformation, and domain adaptation. In this work, we explore a\ndiffusion-based framework for image-to-image translation by adapting Diffusion\nTransformers (DiT), which combine the denoising capabilities of diffusion\nmodels with the global modeling power of transformers. To guide the translation\nprocess, we condition the model on image embeddings extracted from a\npre-trained CLIP encoder, allowing for fine-grained and structurally consistent\ntranslations without relying on text or class labels. We incorporate both a\nCLIP similarity loss to enforce semantic consistency and an LPIPS perceptual\nloss to enhance visual fidelity during training. We validate our approach on\ntwo benchmark datasets: face2comics, which translates real human faces to\ncomic-style illustrations, and edges2shoes, which translates edge maps to\nrealistic shoe images. Experimental results demonstrate that DiT, combined with\nCLIP-based conditioning and perceptual similarity objectives, achieves\nhigh-quality, semantically faithful translations, offering a promising\nalternative to GAN-based models for paired image-to-image translation tasks."
+}

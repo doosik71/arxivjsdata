@@ -1,0 +1,8 @@
+{
+  "title": "Multi Agent System for Machine Learning Under Uncertainty in Cyber Physical Manufacturing System",
+  "authors": "Bang Xiang Yong, Alexandra Brintrup",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2107.13252v1",
+  "abstract": "Recent advancements in predictive machine learning has led to its application in various use cases in manufacturing. Most research focused on maximising predictive accuracy without addressing the uncertainty associated with it. While accuracy is important, focusing primarily on it poses an overfitting danger, exposing manufacturers to risk, ultimately hindering the adoption of these techniques. In this paper, we determine the sources of uncertainty in machine learning and establish the success criteria of a machine learning system to function well under uncertainty in a cyber-physical manufacturing system (CPMS) scenario. Then, we propose a multi-agent system architecture which leverages probabilistic machine learning as a means of achieving such criteria. We propose possible scenarios for which our proposed architecture is useful and discuss future work. Experimentally, we implement Bayesian Neural Networks for multi-tasks classification on a public dataset for the real-time condition monitoring of a hydraulic system and demonstrate the usefulness of the system by evaluating the probability of a prediction being accurate given its uncertainty. We deploy these models using our proposed agent-based framework and integrate web visualisation to demonstrate its real-time feasibility.",
+  "citation": 37
+}

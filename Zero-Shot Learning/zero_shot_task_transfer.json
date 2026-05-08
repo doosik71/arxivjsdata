@@ -1,0 +1,8 @@
+{
+  "title": "Zero-Shot Task Transfer",
+  "authors": "Arghya Pal, Vineeth N Balasubramanian",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1903.01092v1",
+  "abstract": "In this work, we present a novel meta-learning algorithm, i.e. TTNet, that\nregresses model parameters for novel tasks for which no ground truth is\navailable (zero-shot tasks). In order to adapt to novel zero-shot tasks, our\nmeta-learner learns from the model parameters of known tasks (with ground\ntruth) and the correlation of known tasks to zero-shot tasks. Such intuition\nfinds its foothold in cognitive science, where a subject (human baby) can adapt\nto a novel-concept (depth understanding) by correlating it with old concepts\n(hand movement or self-motion), without receiving explicit supervision. We\nevaluated our model on the Taskonomy dataset, with four tasks as zero-shot:\nsurface-normal, room layout, depth, and camera pose estimation. These tasks\nwere chosen based on the data acquisition complexity and the complexity\nassociated with the learning process using a deep network. Our proposed\nmethodology out-performs state-of-the-art models (which use ground truth)on\neach of our zero-shot tasks, showing promise on zero-shot task transfer. We\nalso conducted extensive experiments to study the various choices of our\nmethodology, as well as showed how the proposed method can also be used in\ntransfer learning. To the best of our knowledge, this is the firstsuch effort\non zero-shot learning in the task space.",
+  "citation": 48
+}

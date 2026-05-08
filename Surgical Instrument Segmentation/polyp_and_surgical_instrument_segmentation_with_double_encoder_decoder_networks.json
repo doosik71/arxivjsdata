@@ -1,0 +1,8 @@
+{
+  "title": "Polyp and Surgical Instrument Segmentation with Double Encoder-Decoder Networks",
+  "authors": "Adrian Galdran",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.03901v1",
+  "abstract": "This paper describes a solution for the MedAI competition, in which participants were required to segment both polyps and surgical instruments from endoscopic images. Our approach relies on a double encoder-decoder neural network which we have previously applied for polyp segmentation, but with a series of enhancements: a more powerful encoder architecture, an improved optimization procedure, and the post-processing of segmentations based on tempered model ensembling. Experimental results show that our method produces segmentations that show a good agreement with manual delineations provided by medical experts.",
+  "citation": 4
+}

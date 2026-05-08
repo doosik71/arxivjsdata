@@ -1,0 +1,7 @@
+{
+  "title": "Bottleneck Supervised U-Net for Pixel-wise Liver and Tumor Segmentation",
+  "authors": "Song Li, Geoffrey Kwok Fai Tso",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1810.10331v2",
+  "abstract": "In this paper, we propose a bottleneck supervised (BS) U-Net model for liver\nand tumor segmentation. Our main contributions are: first, we propose a\nvariation of the original U-Net that incorporates dense modules, inception\nmodules and dilated convolution in the encoding path; second, we propose a\nbottleneck supervised (BS) U-Net that contains an encoding U-Net and a\nsegmentation U-Net. To train the BS U-Net, the encoding U-Net is first trained\nto get encodings of the label maps that contain the anatomical information\n(shape and location). Subsequently, this information is used to guide the\ntraining of the segmentation U-Net so as to reserve the anatomical features of\nthe target objects. More specifically, the loss function for segmentation U-Net\nis set to be the weighted average of the dice loss and the MSE loss between the\nencodings and the bottleneck feature vectors. The model is applied to a public\nliver and tumor CT scan dataset. Experimental results show that besides\nachieving excellent overall segmentation performance, BS U-Net also works great\nin controlling shape distortion, reducing false positive and false negative\ncases."
+}

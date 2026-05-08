@@ -1,0 +1,8 @@
+{
+  "title": "Evaluation of Segment Anything Model 2: The Role of SAM2 in the Underwater Environment",
+  "authors": "Shijie Lian, Hua Li",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2408.02924v1",
+  "abstract": "With breakthroughs in large-scale modeling, the Segment Anything Model (SAM) and its extensions have been attempted for applications in various underwater visualization tasks in marine sciences, and have had a significant impact on the academic community. Recently, Meta has further developed the Segment Anything Model 2 (SAM2), which significantly improves running speed and segmentation accuracy compared to its predecessor. This report aims to explore the potential of SAM2 in marine science by evaluating it on the underwater instance segmentation benchmark datasets UIIS and USIS10K. The experiments show that the performance of SAM2 is extremely dependent on the type of user-provided prompts. When using the ground truth bounding box as prompt, SAM2 performed excellently in the underwater instance segmentation domain. However, when running in automatic mode, SAM2's ability with point prompts to sense and segment underwater instances is significantly degraded. It is hoped that this paper will inspire researchers to further explore the SAM model family in the underwater domain. The results and evaluation codes in this paper are available at https://github.com/LiamLian0727/UnderwaterSAM2Eval.",
+  "citation": 11
+}

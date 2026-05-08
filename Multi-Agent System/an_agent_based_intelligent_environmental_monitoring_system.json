@@ -1,0 +1,8 @@
+{
+  "title": "An agent-based intelligent environmental monitoring system",
+  "authors": "Ioannis N Athanasiadis, Pericles A Mitkas",
+  "year": 2004,
+  "url": "http://arxiv.org/abs/cs/0407024v1",
+  "abstract": "Fairly rapid environmental changes call for continuous surveillance and on-line decision making. There are two main areas where IT technologies can be valuable. In this paper we present a multi-agent system for monitoring and assessing air-quality attributes, which uses data coming from a meteorological station. A community of software agents is assigned to monitor and validate measurements coming from several sensors, to assess air-quality, and, finally, to fire alarms to appropriate recipients, when needed. Data mining techniques have been used for adding data-driven, customized intelligence into agents. The architecture of the developed system, its domain ontology, and typical agent interactions are presented. Finally, the deployment of a real-world test case is demonstrated.",
+  "citation": 138
+}

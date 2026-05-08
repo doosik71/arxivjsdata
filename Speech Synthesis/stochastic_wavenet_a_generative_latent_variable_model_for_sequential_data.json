@@ -1,0 +1,8 @@
+{
+  "title": "Stochastic WaveNet: A Generative Latent Variable Model for Sequential\n  Data",
+  "authors": "Guokun Lai, Bohan Li, Guoqing Zheng, Yiming Yang",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1806.06116v1",
+  "abstract": "How to model distribution of sequential data, including but not limited to\nspeech and human motions, is an important ongoing research problem. It has been\ndemonstrated that model capacity can be significantly enhanced by introducing\nstochastic latent variables in the hidden states of recurrent neural networks.\nSimultaneously, WaveNet, equipped with dilated convolutions, achieves\nastonishing empirical performance in natural speech generation task. In this\npaper, we combine the ideas from both stochastic latent variables and dilated\nconvolutions, and propose a new architecture to model sequential data, termed\nas Stochastic WaveNet, where stochastic latent variables are injected into the\nWaveNet structure. We argue that Stochastic WaveNet enjoys powerful\ndistribution modeling capacity and the advantage of parallel training from\ndilated convolutions. In order to efficiently infer the posterior distribution\nof the latent variables, a novel inference network structure is designed based\non the characteristics of WaveNet architecture. State-of-the-art performances\non benchmark datasets are obtained by Stochastic WaveNet on natural speech\nmodeling and high quality human handwriting samples can be generated as well.",
+  "citation": 36
+}

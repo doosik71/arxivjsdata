@@ -1,0 +1,7 @@
+{
+  "title": "Verification of quantum computation: An overview of existing approaches",
+  "authors": "Alexandru Gheorghiu, Theodoros Kapourniotis, Elham Kashefi",
+  "year": 2017,
+  "url": "http://arxiv.org/abs/1709.06984v2",
+  "abstract": "Quantum computers promise to efficiently solve not only problems believed to\nbe intractable for classical computers, but also problems for which verifying\nthe solution is also considered intractable. This raises the question of how\none can check whether quantum computers are indeed producing correct results.\nThis task, known as quantum verification, has been highlighted as a significant\nchallenge on the road to scalable quantum computing technology. We review the\nmost significant approaches to quantum verification and compare them in terms\nof structure, complexity and required resources. We also comment on the use of\ncryptographic techniques which, for many of the presented protocols, has proven\nextremely useful in performing verification. Finally, we discuss issues related\nto fault tolerance, experimental implementations and the outlook for future\nprotocols."
+}

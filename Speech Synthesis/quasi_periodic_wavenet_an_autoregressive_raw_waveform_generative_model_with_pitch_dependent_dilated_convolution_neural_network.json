@@ -1,0 +1,8 @@
+{
+  "title": "Quasi-Periodic WaveNet: An Autoregressive Raw Waveform Generative Model\n  with Pitch-dependent Dilated Convolution Neural Network",
+  "authors": "Yi-Chiao Wu, Tomoki Hayashi, Patrick Lumban Tobing, Kazuhiro Kobayashi, Tomoki Toda",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2007.05663v3",
+  "abstract": "In this paper, a pitch-adaptive waveform generative model named\nQuasi-Periodic WaveNet (QPNet) is proposed to improve the limited pitch\ncontrollability of vanilla WaveNet (WN) using pitch-dependent dilated\nconvolution neural networks (PDCNNs). Specifically, as a probabilistic\nautoregressive generation model with stacked dilated convolution layers, WN\nachieves high-fidelity audio waveform generation. However, the pure-data-driven\nnature and the lack of prior knowledge of audio signals degrade the pitch\ncontrollability of WN. For instance, it is difficult for WN to precisely\ngenerate the periodic components of audio signals when the given auxiliary\nfundamental frequency ($F_{0}$) features are outside the $F_{0}$ range observed\nin the training data. To address this problem, QPNet with two novel designs is\nproposed. First, the PDCNN component is applied to dynamically change the\nnetwork architecture of WN according to the given auxiliary $F_{0}$ features.\nSecond, a cascaded network structure is utilized to simultaneously model the\nlong- and short-term dependencies of quasi-periodic signals such as speech. The\nperformances of single-tone sinusoid and speech generations are evaluated. The\nexperimental results show the effectiveness of the PDCNNs for unseen auxiliary\n$F_{0}$ features and the effectiveness of the cascaded structure for speech\ngeneration.",
+  "citation": 30
+}

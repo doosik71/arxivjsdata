@@ -1,0 +1,8 @@
+{
+  "title": "Visualisation of financial time series by linear principal component\n  analysis and nonlinear principal component analysis",
+  "authors": "Hao-Che Chen",
+  "year": 2014,
+  "url": "http://arxiv.org/abs/1410.7961v1",
+  "abstract": "In this dissertation, the main goal is visualisation of financial time\nseries. We expect that visualisation of financial time series will be a useful\nauxiliary for technical analysis. Firstly, we review the technical analysis\nmethods and test our trading rules, which are built by the essential concepts\nof technical analysis. Next, we compare the quality of linear principal\ncomponent analysis and nonlinear principal component analysis in financial\nmarket visualisation. We compare different methods of data preprocessing for\nvisualisation purposes. Using visualisation, we demonstrate the difference\nbetween normal and crisis time period. Thus, the visualisation of financial\nmarket can be a tool to support technical analysis.",
+  "citation": 4
+}

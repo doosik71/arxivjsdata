@@ -1,0 +1,8 @@
+{
+  "title": "Chunked Attention-based Encoder-Decoder Model for Streaming Speech\n  Recognition",
+  "authors": "Mohammad Zeineldeen, Albert Zeyer, Ralf Schlüter, Hermann Ney",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.08436v2",
+  "abstract": "We study a streamable attention-based encoder-decoder model in which either\nthe decoder, or both the encoder and decoder, operate on pre-defined,\nfixed-size windows called chunks. A special end-of-chunk (EOC) symbol advances\nfrom one chunk to the next chunk, effectively replacing the conventional\nend-of-sequence symbol. This modification, while minor, situates our model as\nequivalent to a transducer model that operates on chunks instead of frames,\nwhere EOC corresponds to the blank symbol. We further explore the remaining\ndifferences between a standard transducer and our model. Additionally, we\nexamine relevant aspects such as long-form speech generalization, beam size,\nand length normalization. Through experiments on Librispeech and TED-LIUM-v2,\nand by concatenating consecutive sequences for long-form trials, we find that\nour streamable model maintains competitive performance compared to the\nnon-streamable variant and generalizes very well to long-form speech.",
+  "citation": 6
+}

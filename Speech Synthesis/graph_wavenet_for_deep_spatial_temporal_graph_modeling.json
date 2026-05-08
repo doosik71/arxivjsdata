@@ -1,0 +1,8 @@
+{
+  "title": "Graph WaveNet for Deep Spatial-Temporal Graph Modeling",
+  "authors": "Zonghan Wu, Shirui Pan, Guodong Long, Jing Jiang, Chengqi Zhang",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1906.00121v1",
+  "abstract": "Spatial-temporal graph modeling is an important task to analyze the spatial\nrelations and temporal trends of components in a system. Existing approaches\nmostly capture the spatial dependency on a fixed graph structure, assuming that\nthe underlying relation between entities is pre-determined. However, the\nexplicit graph structure (relation) does not necessarily reflect the true\ndependency and genuine relation may be missing due to the incomplete\nconnections in the data. Furthermore, existing methods are ineffective to\ncapture the temporal trends as the RNNs or CNNs employed in these methods\ncannot capture long-range temporal sequences. To overcome these limitations, we\npropose in this paper a novel graph neural network architecture, Graph WaveNet,\nfor spatial-temporal graph modeling. By developing a novel adaptive dependency\nmatrix and learn it through node embedding, our model can precisely capture the\nhidden spatial dependency in the data. With a stacked dilated 1D convolution\ncomponent whose receptive field grows exponentially as the number of layers\nincreases, Graph WaveNet is able to handle very long sequences. These two\ncomponents are integrated seamlessly in a unified framework and the whole\nframework is learned in an end-to-end manner. Experimental results on two\npublic traffic network datasets, METR-LA and PEMS-BAY, demonstrate the superior\nperformance of our algorithm.",
+  "citation": 3225
+}

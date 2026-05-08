@@ -1,0 +1,8 @@
+{
+  "title": "Improving Generalized Zero-Shot Learning by Semantic Discriminator",
+  "authors": "Xinpeng Li",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2005.13956v2",
+  "abstract": "It is a recognized fact that the classification accuracy of unseen classes in\nthe setting of Generalized Zero-Shot Learning (GZSL) is much lower than that of\ntraditional Zero-Shot Leaning (ZSL). One of the reasons is that an instance is\nalways misclassified to the wrong domain. Here we refer to the seen and unseen\nclasses as two domains respectively. We propose a new approach to distinguish\nwhether the instances come from the seen or unseen classes. First the visual\nfeature of instance is projected into the semantic space. Then the absolute\nnorm difference between the projected semantic vector and the class semantic\nembedding vector, and the minimum distance between the projected semantic\nvectors and the semantic embedding vectors of the seen classes are used as\ndiscrimination basis. This approach is termed as SD (Semantic Discriminator)\nbecause domain judgement of instance is performed in the semantic space. Our\napproach can be combined with any existing ZSL method and fully supervision\nclassification model to form a new GZSL method. Furthermore, our approach is\nvery simple and does not need any fixed parameters.",
+  "citation": 11
+}

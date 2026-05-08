@@ -1,0 +1,8 @@
+{
+  "title": "Memory-Augmented SAM2 for Training-Free Surgical Video Segmentation",
+  "authors": "Ming Yin, Fu Wang, Xujiong Ye, Yanda Meng, Zeyu Fu",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2507.09577v2",
+  "abstract": "Surgical video segmentation is a critical task in computer-assisted surgery, essential for enhancing surgical quality and patient outcomes. Recently, the Segment Anything Model 2 (SAM2) framework has demonstrated remarkable advancements in both image and video segmentation. However, the inherent limitations of SAM2's greedy selection memory design are amplified by the unique properties of surgical videos-rapid instrument movement, frequent occlusion, and complex instrument-tissue interaction-resulting in diminished performance in the segmentation of complex, long videos. To address these challenges, we introduce Memory Augmented (MA)-SAM2, a training-free video object segmentation strategy, featuring novel context-aware and occlusion-resilient memory models. MA-SAM2 exhibits strong robustness against occlusions and interactions arising from complex instrument movements while maintaining accuracy in segmenting objects throughout videos. Employing a multi-target, single-loop, one-prompt inference further enhances the efficiency of the tracking process in multi-instrument videos. Without introducing any additional parameters or requiring further training, MA-SAM2 achieved performance improvements of 4.36% and 6.1% over SAM2 on the EndoVis2017 and EndoVis2018 datasets, respectively, demonstrating its potential for practical surgical applications.",
+  "citation": 3
+}

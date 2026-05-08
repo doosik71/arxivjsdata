@@ -1,0 +1,7 @@
+{
+  "title": "LLaMA-VID: An Image is Worth 2 Tokens in Large Language Models",
+  "authors": "Yanwei Li, Chengyao Wang, Jiaya Jia",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2311.17043v1",
+  "abstract": "In this work, we present a novel method to tackle the token generation\nchallenge in Vision Language Models (VLMs) for video and image understanding,\ncalled LLaMA-VID. Current VLMs, while proficient in tasks like image captioning\nand visual question answering, face computational burdens when processing long\nvideos due to the excessive visual tokens. LLaMA-VID addresses this issue by\nrepresenting each frame with two distinct tokens, namely context token and\ncontent token. The context token encodes the overall image context based on\nuser input, whereas the content token encapsulates visual cues in each frame.\nThis dual-token strategy significantly reduces the overload of long videos\nwhile preserving critical information. Generally, LLaMA-VID empowers existing\nframeworks to support hour-long videos and pushes their upper limit with an\nextra context token. It is proved to surpass previous methods on most of video-\nor image-based benchmarks. Code is available\nhttps://github.com/dvlab-research/LLaMA-VID}{https://github.com/dvlab-research/LLaMA-VID"
+}

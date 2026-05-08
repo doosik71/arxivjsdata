@@ -1,0 +1,8 @@
+{
+  "title": "SQA-SAM: Segmentation Quality Assessment for Medical Images Utilizing the Segment Anything Model",
+  "authors": "Yizhe Zhang, Shuo Wang, Tao Zhou, Qi Dou, Danny Z. Chen",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2312.09899v1",
+  "abstract": "Segmentation quality assessment (SQA) plays a critical role in the deployment of a medical image based AI system. Users need to be informed/alerted whenever an AI system generates unreliable/incorrect predictions. With the introduction of the Segment Anything Model (SAM), a general foundation segmentation model, new research opportunities emerged in how one can utilize SAM for medical image segmentation. In this paper, we propose a novel SQA method, called SQA-SAM, which exploits SAM to enhance the accuracy of quality assessment for medical image segmentation. When a medical image segmentation model (MedSeg) produces predictions for a test image, we generate visual prompts based on the predictions, and SAM is utilized to generate segmentation maps corresponding to the visual prompts. How well MedSeg's segmentation aligns with SAM's segmentation indicates how well MedSeg's segmentation aligns with the general perception of objectness and image region partition. We develop a score measure for such alignment. In experiments, we find that the generated scores exhibit moderate to strong positive correlation (in Pearson correlation and Spearman correlation) with Dice coefficient scores reflecting the true segmentation quality.",
+  "citation": 3
+}

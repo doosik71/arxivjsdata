@@ -1,0 +1,8 @@
+{
+  "title": "Online Continual Learning of End-to-End Speech Recognition Models",
+  "authors": "Muqiao Yang, Ian Lane, Shinji Watanabe",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2207.05071v1",
+  "abstract": "Continual Learning, also known as Lifelong Learning, aims to continually\nlearn from new data as it becomes available. While prior research on continual\nlearning in automatic speech recognition has focused on the adaptation of\nmodels across multiple different speech recognition tasks, in this paper we\npropose an experimental setting for \\textit{online continual learning} for\nautomatic speech recognition of a single task. Specifically focusing on the\ncase where additional training data for the same task becomes available\nincrementally over time, we demonstrate the effectiveness of performing\nincremental model updates to end-to-end speech recognition models with an\nonline Gradient Episodic Memory (GEM) method. Moreover, we show that with\nonline continual learning and a selective sampling strategy, we can maintain an\naccuracy that is similar to retraining a model from scratch while requiring\nsignificantly lower computation costs. We have also verified our method with\nself-supervised learning (SSL) features.",
+  "citation": 33
+}

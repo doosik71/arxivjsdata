@@ -1,0 +1,7 @@
+{
+  "title": "Quantum Finance: a tutorial on quantum computing applied to the\n  financial market",
+  "authors": "Askery Canabarro, Taysa M. Mendonça, Ranieri Nery, George Moreno, Anton S. Albino, Gleydson F. de Jesus, Rafael Chaves",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2208.04382v2",
+  "abstract": "Previously only considered a frontier area of Physics, nowadays quantum\ncomputing is one of the fastest growing research field, precisely because of\nits technological applications in optimization problems, machine learning,\ninformation security and simulations. The goal of this article is to introduce\nthe fundamentals of quantum computing, focusing on a promising quantum\nalgorithm and its application to a financial market problem. More specifically,\nwe discuss the portfolio optimization problem using the \\textit{Quantum\nApproximate Optimization Algorithm} (QAOA). We not only describe the main\nconcepts involved but also consider simple practical examples, involving\nfinancial assets available on the Brazilian stock exchange, with codes, both\nclassic and quantum, freely available as a Jupyter Notebook. We also analyze in\ndetails the quality of the combinatorial portfolio optimization solutions\nthrough QAOA using SENAI/CIMATEC's ATOS QLM quantum simulator."
+}

@@ -1,0 +1,7 @@
+{
+  "title": "Mamba Meets Financial Markets: A Graph-Mamba Approach for Stock Price\n  Prediction",
+  "authors": "Ali Mehrabian, Ehsan Hoseinzade, Mahdi Mazloum, Xiaohong Chen",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.03707v2",
+  "abstract": "Stock markets play an important role in the global economy, where accurate\nstock price predictions can lead to significant financial returns. While\nexisting transformer-based models have outperformed long short-term memory\nnetworks and convolutional neural networks in financial time series prediction,\ntheir high computational complexity and memory requirements limit their\npracticality for real-time trading and long-sequence data processing. To\naddress these challenges, we propose SAMBA, an innovative framework for stock\nreturn prediction that builds on the Mamba architecture and integrates graph\nneural networks. SAMBA achieves near-linear computational complexity by\nutilizing a bidirectional Mamba block to capture long-term dependencies in\nhistorical price data and employing adaptive graph convolution to model\ndependencies between daily stock features. Our experimental results demonstrate\nthat SAMBA significantly outperforms state-of-the-art baseline models in\nprediction accuracy, maintaining low computational complexity. The code and\ndatasets are available at github.com/Ali-Meh619/SAMBA."
+}

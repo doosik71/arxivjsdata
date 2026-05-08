@@ -1,0 +1,8 @@
+{
+  "title": "Kolmogorov Space in Time Series Data",
+  "authors": "K. Kanjamapornkul, R. Pinčák",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1606.03901v1",
+  "abstract": "We provide the proof that the space of time series data is a Kolmogorov space\nwith $T_{0}$-separation axiom using the loop space of time series data. In our\napproach we define a cyclic coordinate of intrinsic time scale of time series\ndata after empirical mode decomposition. A spinor field of time series data\ncomes from the rotation of data around price and time axis by defining a new\nextradimension to time series data. We show that there exist hidden eight\ndimensions in Kolmogorov space for time series data. Our concept is realized as\nthe algorithm of empirical mode decomposition and intrinsic time scale\ndecomposition and it is subsequently used for preliminary analysis on the real\ntime series data.",
+  "citation": 28
+}

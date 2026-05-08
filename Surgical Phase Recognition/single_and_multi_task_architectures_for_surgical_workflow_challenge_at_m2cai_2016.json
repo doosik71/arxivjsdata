@@ -1,0 +1,7 @@
+{
+  "title": "Single- and Multi-Task Architectures for Surgical Workflow Challenge at\n  M2CAI 2016",
+  "authors": "Andru P. Twinanda, Didier Mutter, Jacques Marescaux, Michel de Mathelin, Nicolas Padoy",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1610.08844v2",
+  "abstract": "The surgical workflow challenge at M2CAI 2016 consists of identifying 8\nsurgical phases in cholecystectomy procedures. Here, we propose to use deep\narchitectures that are based on our previous work where we presented several\narchitectures to perform multiple recognition tasks on laparoscopic videos. In\nthis technical report, we present the phase recognition results using two\narchitectures: (1) a single-task architecture designed to perform solely the\nsurgical phase recognition task and (2) a multi-task architecture designed to\nperform jointly phase recognition and tool presence detection. On top of these\narchitectures we propose to use two different approaches to enforce the\ntemporal constraints of the surgical workflow: (1) HMM-based and (2) LSTM-based\npipelines. The results show that the LSTM-based approach is able to outperform\nthe HMM-based approach and also to properly enforce the temporal constraints\ninto the recognition process."
+}

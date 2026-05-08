@@ -1,0 +1,7 @@
+{
+  "title": "ACT-Net: Asymmetric Co-Teacher Network for Semi-supervised Memory-efficient Medical Image Segmentation",
+  "authors": "Ziyuan Zhao, Andong Zhu, Zeng Zeng, Bharadwaj Veeravalli, Cuntai Guan",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2207.01900v1",
+  "abstract": "While deep models have shown promising performance in medical image segmentation, they heavily rely on a large amount of well-annotated data, which is difficult to access, especially in clinical practice. On the other hand, high-accuracy deep models usually come in large model sizes, limiting their employment in real scenarios. In this work, we propose a novel asymmetric co-teacher framework, ACT-Net, to alleviate the burden on both expensive annotations and computational costs for semi-supervised knowledge distillation. We advance teacher-student learning with a co-teacher network to facilitate asymmetric knowledge distillation from large models to small ones by alternating student and teacher roles, obtaining tiny but accurate models for clinical employment. To verify the effectiveness of our ACT-Net, we employ the ACDC dataset for cardiac substructure segmentation in our experiments. Extensive experimental results demonstrate that ACT-Net outperforms other knowledge distillation methods and achieves lossless segmentation performance with 250x fewer parameters."
+}

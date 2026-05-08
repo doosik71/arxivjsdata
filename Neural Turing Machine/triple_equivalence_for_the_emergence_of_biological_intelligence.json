@@ -1,0 +1,8 @@
+{
+  "title": "Triple equivalence for the emergence of biological intelligence",
+  "authors": "Takuya Isomura",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2409.04928v3",
+  "abstract": "Characterising the intelligence of biological organisms is challenging. This\nwork considers intelligent algorithms developed evolutionarily within neural\nsystems. Mathematical analyses unveil a natural equivalence between canonical\nneural networks, variational Bayesian inference under a class of partially\nobservable Markov decision processes, and differentiable Turing machines, by\nshowing that they minimise the shared Helmholtz energy. Consequently, canonical\nneural networks can biologically plausibly equip Turing machines and conduct\nvariational Bayesian inferences of external Turing machines in the environment.\nApplying Helmholtz energy minimisation at the species level facilitates\nderiving active Bayesian model selection inherent in natural selection,\nresulting in the emergence of adaptive algorithms. In particular, canonical\nneural networks with two mental actions can separately memorise transition\nmappings of multiple external Turing machines to form a universal machine.\nThese propositions were corroborated by numerical simulations of algorithm\nimplementation and neural network evolution. These notions offer a universal\ncharacterisation of biological intelligence emerging from evolution in terms of\nBayesian model selection and belief updating.",
+  "citation": 4
+}

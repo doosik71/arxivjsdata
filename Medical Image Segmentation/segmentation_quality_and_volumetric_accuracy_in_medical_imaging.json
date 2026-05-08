@@ -1,0 +1,8 @@
+{
+  "title": "Segmentation Quality and Volumetric Accuracy in Medical Imaging",
+  "authors": "Zheyuan Zhang, Ulas Bagci",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2404.17742v2",
+  "abstract": "Current medical image segmentation relies on the region-based (Dice, F1-score) and boundary-based (Hausdorff distance, surface distance) metrics as the de-facto standard. While these metrics are widely used, they lack a unified interpretation, particularly regarding volume agreement. Clinicians often lack clear benchmarks to gauge the \"goodness\" of segmentation results based on these metrics. Recognizing the clinical relevance of volumetry, we utilize relative volume prediction error (vpe) to directly assess the accuracy of volume predictions derived from segmentation tasks. Our work integrates theoretical analysis and empirical validation across diverse datasets. We delve into the often-ambiguous relationship between segmentation quality (measured by Dice) and volumetric accuracy in clinical practice. Our findings highlight the critical role of incorporating volumetric prediction accuracy into segmentation evaluation. This approach empowers clinicians with a more nuanced understanding of segmentation performance, ultimately improving the interpretation and utility of these metrics in real-world healthcare settings.",
+  "citation": 0
+}

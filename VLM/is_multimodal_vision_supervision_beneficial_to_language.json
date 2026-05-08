@@ -1,0 +1,7 @@
+{
+  "title": "Is Multimodal Vision Supervision Beneficial to Language?",
+  "authors": "Avinash Madasu, Vasudev Lal",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2302.05016v2",
+  "abstract": "Vision (image and video) - Language (VL) pre-training is the recent popular\nparadigm that achieved state-of-the-art results on multi-modal tasks like\nimage-retrieval, video-retrieval, visual question answering etc. These models\nare trained in an unsupervised way and greatly benefit from the complementary\nmodality supervision. In this paper, we explore if the language representations\ntrained using vision supervision perform better than vanilla language\nrepresentations on Natural Language Understanding and commonsense reasoning\nbenchmarks. We experiment with a diverse set of image-text models such as\nALBEF, BLIP, METER and video-text models like ALPRO, Frozen-in-Time (FiT),\nVIOLET. We compare the performance of language representations of stand-alone\ntext encoders of these models to the language representations of text encoders\nlearnt through vision supervision. Our experiments suggest that vanilla\nlanguage representations show superior performance on most of the tasks. These\nresults shed light on the current drawbacks of the vision-language models."
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Temporal Feature Selection on Networked Time Series",
+  "authors": "Haishuai Wang, Jia Wu, Peng Zhang, Chengqi Zhang",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1612.06856v2",
+  "abstract": "This paper formulates the problem of learning discriminative features\n(\\textit{i.e.,} segments) from networked time series data considering the\nlinked information among time series. For example, social network users are\nconsidered to be social sensors that continuously generate social signals\n(tweets) represented as a time series. The discriminative segments are often\nreferred to as \\emph{shapelets} in a time series. Extracting shapelets for time\nseries classification has been widely studied. However, existing works on\nshapelet selection assume that the time series are independent and identically\ndistributed (i.i.d.). This assumption restricts their applications to social\nnetworked time series analysis, since a user's actions can be correlated to\nhis/her social affiliations. In this paper we propose a new Network Regularized\nLeast Squares (NetRLS) feature selection model that combines typical time\nseries data and user network data for analysis. Experiments on real-world\nnetworked time series Twitter and DBLP data demonstrate the performance of the\nproposed method. NetRLS performs better than LTS, the state-of-the-art time\nseries feature selection approach, on real-world data.",
+  "citation": 5
+}

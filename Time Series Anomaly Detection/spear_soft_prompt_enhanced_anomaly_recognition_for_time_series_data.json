@@ -1,0 +1,8 @@
+{
+  "title": "SPEAR: Soft Prompt Enhanced Anomaly Recognition for Time Series Data",
+  "authors": "Hanzhe Wei, Jiajun Wu, Jialin Yang, Henry Leung, Steve Drew",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2510.03962v1",
+  "abstract": "Time series anomaly detection plays a crucial role in a wide range of fields,\nsuch as healthcare and internet traffic monitoring. The emergence of large\nlanguage models (LLMs) offers new opportunities for detecting anomalies in the\nubiquitous time series data. Traditional approaches struggle with\nvariable-length time series sequences and context-based anomalies. We propose\nSoft Prompt Enhanced Anomaly Recognition (SPEAR), a novel approach to leverage\nLLMs for anomaly detection with soft prompts and quantization. Our methodology\ninvolves quantizing and transforming the time series data into input embeddings\nand combining them with learnable soft prompt embeddings. These combined\nembeddings are then fed into a frozen LLM. The soft prompts are updated\niteratively based on a cross-entropy loss, allowing the model to adapt to time\nseries anomaly detection. The use of soft prompts helps adapt LLMs effectively\nto time series tasks, while quantization ensures optimal handling of sequences,\nas LLMs are designed to handle discrete sequences. Our experimental results\ndemonstrate that soft prompts effectively increase LLMs' performance in\ndownstream tasks regarding time series anomaly detection.",
+  "citation": 1
+}

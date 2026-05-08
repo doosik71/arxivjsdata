@@ -1,0 +1,8 @@
+{
+  "title": "Classification of Anomalies in Telecommunication Network KPI Time Series",
+  "authors": "Korantin Bordeau-Aubert, Justin Whatley, Sylvain Nadeau, Tristan Glatard, Brigitte Jaumard",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2308.16279v1",
+  "abstract": "The increasing complexity and scale of telecommunication networks have led to\na growing interest in automated anomaly detection systems. However, the\nclassification of anomalies detected on network Key Performance Indicators\n(KPI) has received less attention, resulting in a lack of information about\nanomaly characteristics and classification processes. To address this gap, this\npaper proposes a modular anomaly classification framework. The framework\nassumes separate entities for the anomaly classifier and the detector, allowing\nfor a distinct treatment of anomaly detection and classification tasks on time\nseries. The objectives of this study are (1) to develop a time series simulator\nthat generates synthetic time series resembling real-world network KPI\nbehavior, (2) to build a detection model to identify anomalies in the time\nseries, (3) to build classification models that accurately categorize detected\nanomalies into predefined classes (4) to evaluate the classification framework\nperformance on simulated and real-world network KPI time series. This study has\ndemonstrated the good performance of the anomaly classification models trained\non simulated anomalies when applied to real-world network time series data.",
+  "citation": 1
+}

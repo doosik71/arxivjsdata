@@ -1,0 +1,8 @@
+{
+  "title": "Context-aware Feature Generation for Zero-shot Semantic Segmentation",
+  "authors": "Zhangxuan Gu, Siyuan Zhou, Li Niu, Zihan Zhao, Liqing Zhang",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.06893v1",
+  "abstract": "Existing semantic segmentation models heavily rely on dense pixel-wise\nannotations. To reduce the annotation pressure, we focus on a challenging task\nnamed zero-shot semantic segmentation, which aims to segment unseen objects\nwith zero annotations. This task can be accomplished by transferring knowledge\nacross categories via semantic word embeddings. In this paper, we propose a\nnovel context-aware feature generation method for zero-shot segmentation named\nCaGNet. In particular, with the observation that a pixel-wise feature highly\ndepends on its contextual information, we insert a contextual module in a\nsegmentation network to capture the pixel-wise contextual information, which\nguides the process of generating more diverse and context-aware features from\nsemantic word embeddings. Our method achieves state-of-the-art results on three\nbenchmark datasets for zero-shot segmentation. Codes are available at:\nhttps://github.com/bcmi/CaGNet-Zero-Shot-Semantic-Segmentation.",
+  "citation": 163
+}

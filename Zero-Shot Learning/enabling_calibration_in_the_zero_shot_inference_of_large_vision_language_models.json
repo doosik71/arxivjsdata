@@ -1,0 +1,8 @@
+{
+  "title": "Enabling Calibration In The Zero-Shot Inference of Large Vision-Language\n  Models",
+  "authors": "Will LeVine, Benjamin Pikus, Pranav Raja, Fernando Amat Gil",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2303.12748v4",
+  "abstract": "Calibration of deep learning models is crucial to their trustworthiness and\nsafe usage, and as such, has been extensively studied in supervised\nclassification models, with methods crafted to decrease miscalibration.\nHowever, there has yet to be a comprehensive study of the calibration of\nvision-language models that are used for zero-shot inference, like CLIP. We\nmeasure calibration across relevant variables like prompt, dataset, and\narchitecture, and find that zero-shot inference with CLIP is miscalibrated.\nFurthermore, we propose a modified version of temperature scaling that is\naligned with the common use cases of CLIP as a zero-shot inference model, and\nshow that a single learned temperature generalizes for each specific CLIP model\n(defined by a chosen pre-training dataset and architecture) across inference\ndataset and prompt choice.",
+  "citation": 22
+}

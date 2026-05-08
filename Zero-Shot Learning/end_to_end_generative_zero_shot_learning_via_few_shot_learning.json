@@ -1,0 +1,8 @@
+{
+  "title": "End-to-end Generative Zero-shot Learning via Few-shot Learning",
+  "authors": "Georgios Chochlakis, Efthymios Georgiou, Alexandros Potamianos",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2102.04379v1",
+  "abstract": "Contemporary state-of-the-art approaches to Zero-Shot Learning (ZSL) train\ngenerative nets to synthesize examples conditioned on the provided metadata.\nThereafter, classifiers are trained on these synthetic data in a supervised\nmanner. In this work, we introduce Z2FSL, an end-to-end generative ZSL\nframework that uses such an approach as a backbone and feeds its synthesized\noutput to a Few-Shot Learning (FSL) algorithm. The two modules are trained\njointly. Z2FSL solves the ZSL problem with a FSL algorithm, reducing, in\neffect, ZSL to FSL. A wide class of algorithms can be integrated within our\nframework. Our experimental results show consistent improvement over several\nbaselines. The proposed method, evaluated across standard benchmarks, shows\nstate-of-the-art or competitive performance in ZSL and Generalized ZSL tasks.",
+  "citation": 1
+}

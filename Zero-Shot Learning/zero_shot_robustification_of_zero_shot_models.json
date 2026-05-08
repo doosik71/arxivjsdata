@@ -1,0 +1,8 @@
+{
+  "title": "Zero-Shot Robustification of Zero-Shot Models",
+  "authors": "Dyah Adila, Changho Shin, Linrong Cai, Frederic Sala",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.04344v2",
+  "abstract": "Zero-shot inference is a powerful paradigm that enables the use of large\npretrained models for downstream classification tasks without further training.\nHowever, these models are vulnerable to inherited biases that can impact their\nperformance. The traditional solution is fine-tuning, but this undermines the\nkey advantage of pretrained models, which is their ability to be used\nout-of-the-box. We propose RoboShot, a method that improves the robustness of\npretrained model embeddings in a fully zero-shot fashion. First, we use\nlanguage models (LMs) to obtain useful insights from task descriptions. These\ninsights are embedded and used to remove harmful and boost useful components in\nembeddings -- without any supervision. Theoretically, we provide a simple and\ntractable model for biases in zero-shot embeddings and give a result\ncharacterizing under what conditions our approach can boost performance.\nEmpirically, we evaluate RoboShot on nine image and NLP classification tasks\nand show an average improvement of 15.98% on worst group accuracy, with trivial\ndecrease in overall accuracy over several zero-shot baselines. Additionally, we\ndemonstrate that RoboShot is compatible with a variety of pretrained and\nlanguage models and propose a way to further boost performance with a zero-shot\nadaptation variant.",
+  "citation": 32
+}

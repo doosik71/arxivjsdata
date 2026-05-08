@@ -1,0 +1,8 @@
+{
+  "title": "SurgPIS: Surgical-instrument-level Instances and Part-level Semantics for Weakly-supervised Part-aware Instance Segmentation",
+  "authors": "Meng Wei, Charlie Budd, Oluwatosin Alabi, Miaojing Shi, Tom Vercauteren",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2507.19592v1",
+  "abstract": "Consistent surgical instrument segmentation is critical for automation in robot-assisted surgery. Yet, existing methods only treat instrument-level instance segmentation (IIS) or part-level semantic segmentation (PSS) separately, without interaction between these tasks. In this work, we formulate a surgical tool segmentation as a unified part-aware instance segmentation (PIS) problem and introduce SurgPIS, the first PIS model for surgical instruments. Our method adopts a transformer-based mask classification approach and introduces part-specific queries derived from instrument-level object queries, explicitly linking parts to their parent instrument instances. In order to address the lack of large-scale datasets with both instance- and part-level labels, we propose a weakly-supervised learning strategy for SurgPIS to learn from disjoint datasets labelled for either IIS or PSS purposes. During training, we aggregate our PIS predictions into IIS or PSS masks, thereby allowing us to compute a loss against partially labelled datasets. A student-teacher approach is developed to maintain prediction consistency for missing PIS information in the partially labelled data, e.g., parts of the IIS labelled data. Extensive experiments across multiple datasets validate the effectiveness of SurgPIS, achieving state-of-the-art performance in PIS as well as IIS, PSS, and instrument-level semantic segmentation.",
+  "citation": 0
+}

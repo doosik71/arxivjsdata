@@ -1,0 +1,8 @@
+{
+  "title": "Cross-modal Representation Learning for Zero-shot Action Recognition",
+  "authors": "Chung-Ching Lin, Kevin Lin, Linjie Li, Lijuan Wang, Zicheng Liu",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2205.01657v1",
+  "abstract": "We present a cross-modal Transformer-based framework, which jointly encodes\nvideo data and text labels for zero-shot action recognition (ZSAR). Our model\nemploys a conceptually new pipeline by which visual representations are learned\nin conjunction with visual-semantic associations in an end-to-end manner. The\nmodel design provides a natural mechanism for visual and semantic\nrepresentations to be learned in a shared knowledge space, whereby it\nencourages the learned visual embedding to be discriminative and more\nsemantically consistent. In zero-shot inference, we devise a simple semantic\ntransfer scheme that embeds semantic relatedness information between seen and\nunseen classes to composite unseen visual prototypes. Accordingly, the\ndiscriminative features in the visual structure could be preserved and\nexploited to alleviate the typical zero-shot issues of information loss,\nsemantic gap, and the hubness problem. Under a rigorous zero-shot setting of\nnot pre-training on additional datasets, the experiment results show our model\nconsiderably improves upon the state of the arts in ZSAR, reaching encouraging\ntop-1 accuracy on UCF101, HMDB51, and ActivityNet benchmark datasets. Code will\nbe made available.",
+  "citation": 64
+}

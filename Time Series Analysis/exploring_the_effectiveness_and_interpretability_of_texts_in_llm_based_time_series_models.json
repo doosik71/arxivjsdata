@@ -1,0 +1,8 @@
+{
+  "title": "Exploring the Effectiveness and Interpretability of Texts in LLM-based\n  Time Series Models",
+  "authors": "Zhengke Sun, Hangwei Qian, Ivor Tsang",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2504.08808v1",
+  "abstract": "Large Language Models (LLMs) have been applied to time series forecasting\ntasks, leveraging pre-trained language models as the backbone and incorporating\ntextual data to purportedly enhance the comprehensive capabilities of LLMs for\ntime series. However, are these texts really helpful for interpretation? This\nstudy seeks to investigate the actual efficacy and interpretability of such\ntextual incorporations. Through a series of empirical experiments on textual\nprompts and textual prototypes, our findings reveal that the misalignment\nbetween two modalities exists, and the textual information does not\nsignificantly improve time series forecasting performance in many cases.\nFurthermore, visualization analysis indicates that the textual representations\nlearned by existing frameworks lack sufficient interpretability when applied to\ntime series data. We further propose a novel metric named Semantic Matching\nIndex (SMI) to better evaluate the matching degree between time series and\ntexts during our post hoc interpretability investigation. Our analysis reveals\nthe misalignment and limited interpretability of texts in current time-series\nLLMs, and we hope this study can raise awareness of the interpretability of\ntexts for time series. The code is available at\nhttps://github.com/zachysun/TS-Lang-Exp.",
+  "citation": 0
+}

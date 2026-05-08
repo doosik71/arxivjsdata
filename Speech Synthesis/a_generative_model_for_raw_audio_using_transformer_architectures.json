@@ -1,0 +1,8 @@
+{
+  "title": "A Generative Model for Raw Audio Using Transformer Architectures",
+  "authors": "Prateek Verma, Chris Chafe",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2106.16036v3",
+  "abstract": "This paper proposes a novel way of doing audio synthesis at the waveform\nlevel using Transformer architectures. We propose a deep neural network for\ngenerating waveforms, similar to wavenet. This is fully probabilistic,\nauto-regressive, and causal, i.e. each sample generated depends only on the\npreviously observed samples. Our approach outperforms a widely used wavenet\narchitecture by up to 9% on a similar dataset for predicting the next step.\nUsing the attention mechanism, we enable the architecture to learn which audio\nsamples are important for the prediction of the future sample. We show how\ncausal transformer generative models can be used for raw waveform synthesis. We\nalso show that this performance can be improved by another 2% by conditioning\nsamples over a wider context. The flexibility of the current model to\nsynthesize audio from latent representations suggests a large number of\npotential applications. The novel approach of using generative transformer\narchitectures for raw audio synthesis is, however, still far away from\ngenerating any meaningful music, without using latent codes/meta-data to aid\nthe generation process.",
+  "citation": 58
+}

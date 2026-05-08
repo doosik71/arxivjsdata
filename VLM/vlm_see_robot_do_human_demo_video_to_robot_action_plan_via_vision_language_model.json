@@ -1,0 +1,7 @@
+{
+  "title": "VLM See, Robot Do: Human Demo Video to Robot Action Plan via Vision\n  Language Model",
+  "authors": "Beichen Wang, Juexiao Zhang, Shuwen Dong, Irving Fang, Chen Feng",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2410.08792v1",
+  "abstract": "Vision Language Models (VLMs) have recently been adopted in robotics for\ntheir capability in common sense reasoning and generalizability. Existing work\nhas applied VLMs to generate task and motion planning from natural language\ninstructions and simulate training data for robot learning. In this work, we\nexplore using VLM to interpret human demonstration videos and generate robot\ntask planning. Our method integrates keyframe selection, visual perception, and\nVLM reasoning into a pipeline. We named it SeeDo because it enables the VLM to\n''see'' human demonstrations and explain the corresponding plans to the robot\nfor it to ''do''. To validate our approach, we collected a set of long-horizon\nhuman videos demonstrating pick-and-place tasks in three diverse categories and\ndesigned a set of metrics to comprehensively benchmark SeeDo against several\nbaselines, including state-of-the-art video-input VLMs. The experiments\ndemonstrate SeeDo's superior performance. We further deployed the generated\ntask plans in both a simulation environment and on a real robot arm."
+}

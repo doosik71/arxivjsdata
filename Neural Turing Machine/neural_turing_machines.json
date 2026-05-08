@@ -1,0 +1,8 @@
+{
+  "title": "Neural Turing Machines",
+  "authors": "Alex Graves, Greg Wayne, Ivo Danihelka",
+  "year": 2014,
+  "url": "http://arxiv.org/abs/1410.5401v2",
+  "abstract": "We extend the capabilities of neural networks by coupling them to external\nmemory resources, which they can interact with by attentional processes. The\ncombined system is analogous to a Turing Machine or Von Neumann architecture\nbut is differentiable end-to-end, allowing it to be efficiently trained with\ngradient descent. Preliminary results demonstrate that Neural Turing Machines\ncan infer simple algorithms such as copying, sorting, and associative recall\nfrom input and output examples.",
+  "citation": 3409
+}

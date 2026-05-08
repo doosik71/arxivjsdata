@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2212.09748v2",
+  "title": "Scalable Diffusion Models with Transformers",
+  "authors": "William Peebles, Saining Xie",
+  "year": 2022,
+  "abstract": "We explore a new class of diffusion models based on the transformer\narchitecture. We train latent diffusion models of images, replacing the\ncommonly-used U-Net backbone with a transformer that operates on latent\npatches. We analyze the scalability of our Diffusion Transformers (DiTs)\nthrough the lens of forward pass complexity as measured by Gflops. We find that\nDiTs with higher Gflops -- through increased transformer depth/width or\nincreased number of input tokens -- consistently have lower FID. In addition to\npossessing good scalability properties, our largest DiT-XL/2 models outperform\nall prior diffusion models on the class-conditional ImageNet 512x512 and\n256x256 benchmarks, achieving a state-of-the-art FID of 2.27 on the latter."
+}

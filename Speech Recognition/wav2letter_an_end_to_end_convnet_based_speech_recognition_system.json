@@ -1,0 +1,8 @@
+{
+  "title": "Wav2Letter: an End-to-End ConvNet-based Speech Recognition System",
+  "authors": "Ronan Collobert, Christian Puhrsch, Gabriel Synnaeve",
+  "year": 2016,
+  "url": "http://arxiv.org/abs/1609.03193v2",
+  "abstract": "This paper presents a simple end-to-end model for speech recognition,\ncombining a convolutional network based acoustic model and a graph decoding. It\nis trained to output letters, with transcribed speech, without the need for\nforce alignment of phonemes. We introduce an automatic segmentation criterion\nfor training from sequence annotation without alignment that is on par with CTC\nwhile being simpler. We show competitive results in word error rate on the\nLibrispeech corpus with MFCC features, and promising results from raw waveform.",
+  "citation": 388
+}

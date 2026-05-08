@@ -1,0 +1,7 @@
+{
+  "title": "RWKV-CLIP: A Robust Vision-Language Representation Learner",
+  "authors": "Tiancheng Gu, Kaicheng Yang, Xiang An, Ziyong Feng, Dongnan Liu, Weidong Cai, Jiankang Deng",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.06973v2",
+  "abstract": "Contrastive Language-Image Pre-training (CLIP) has significantly improved\nperformance in various vision-language tasks by expanding the dataset with\nimage-text pairs obtained from websites. This paper further explores CLIP from\nthe perspectives of data and model architecture. To address the prevalence of\nnoisy data and enhance the quality of large-scale image-text data crawled from\nthe internet, we introduce a diverse description generation framework that can\nleverage Large Language Models (LLMs) to synthesize and refine content from\nweb-based texts, synthetic captions, and detection tags. Furthermore, we\npropose RWKV-CLIP, the first RWKV-driven vision-language representation\nlearning model that combines the effective parallel training of transformers\nwith the efficient inference of RNNs. Comprehensive experiments across various\nmodel scales and pre-training datasets demonstrate that RWKV-CLIP is a robust\nand efficient vision-language representation learner, it achieves\nstate-of-the-art performance in several downstream tasks, including linear\nprobe, zero-shot classification, and zero-shot image-text retrieval. To\nfacilitate future research, the code and pre-trained models are released at\nhttps://github.com/deepglint/RWKV-CLIP"
+}

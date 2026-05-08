@@ -1,0 +1,8 @@
+{
+  "title": "Segment Anything Model for Brain Tumor Segmentation",
+  "authors": "Peng Zhang, Yaping Wang",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2309.08434v2",
+  "abstract": "Glioma is a prevalent brain tumor that poses a significant health risk to individuals. Accurate segmentation of brain tumor is essential for clinical diagnosis and treatment. The Segment Anything Model(SAM), released by Meta AI, is a fundamental model in image segmentation and has excellent zero-sample generalization capabilities. Thus, it is interesting to apply SAM to the task of brain tumor segmentation. In this study, we evaluated the performance of SAM on brain tumor segmentation and found that without any model fine-tuning, there is still a gap between SAM and the current state-of-the-art(SOTA) model.",
+  "citation": 9
+}

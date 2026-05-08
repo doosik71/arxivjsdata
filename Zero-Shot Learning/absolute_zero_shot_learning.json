@@ -1,0 +1,8 @@
+{
+  "title": "Absolute Zero-Shot Learning",
+  "authors": "Rui Gao, Fan Wan, Daniel Organisciak, Jiyao Pu, Junyan Wang, Haoran Duan, Peng Zhang, Xingsong Hou, Yang Long",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2202.11319v1",
+  "abstract": "Considering the increasing concerns about data copyright and privacy issues,\nwe present a novel Absolute Zero-Shot Learning (AZSL) paradigm, i.e., training\na classifier with zero real data. The key innovation is to involve a teacher\nmodel as the data safeguard to guide the AZSL model training without data\nleaking. The AZSL model consists of a generator and student network, which can\nachieve date-free knowledge transfer while maintaining the performance of the\nteacher network. We investigate `black-box' and `white-box' scenarios in AZSL\ntask as different levels of model security. Besides, we also provide discussion\nof teacher model in both inductive and transductive settings. Despite\nembarrassingly simple implementations and data-missing disadvantages, our AZSL\nframework can retain state-of-the-art ZSL and GZSL performance under the\n`white-box' scenario. Extensive qualitative and quantitative analysis also\ndemonstrates promising results when deploying the model under `black-box'\nscenario.",
+  "citation": 4
+}

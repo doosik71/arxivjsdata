@@ -1,0 +1,7 @@
+{
+  "title": "State-Space Large Audio Language Models",
+  "authors": "Saurabhchand Bhati, Yuan Gong, Leonid Karlinsky, Hilde Kuehne, Rogerio Feris, James Glass",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2411.15685v1",
+  "abstract": "Large Audio Language Models (LALM) combine the audio perception models and\nthe Large Language Models (LLM) and show a remarkable ability to reason about\nthe input audio, infer the meaning, and understand the intent. However, these\nsystems rely on Transformers which scale quadratically with the input sequence\nlengths which poses computational challenges in deploying these systems in\nmemory and time-constrained scenarios. Recently, the state-space models (SSMs)\nhave emerged as an alternative to transformer networks.\n  While there have been successful attempts to replace transformer-based audio\nperception models with state-space ones, state-space-based LALMs remain\nunexplored. First, we begin by replacing the transformer-based audio perception\nmodule and then replace the transformer-based LLM and propose the first\nstate-space-based LALM. Experimental results demonstrate that space-based LALM\ndespite having a significantly lower number of parameters performs\ncompetitively with transformer-based LALMs on close-ended tasks on a variety of\ndatasets."
+}

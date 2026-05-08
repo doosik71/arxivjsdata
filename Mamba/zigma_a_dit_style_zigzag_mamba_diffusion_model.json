@@ -1,0 +1,7 @@
+{
+  "title": "ZigMa: A DiT-style Zigzag Mamba Diffusion Model",
+  "authors": "Vincent Tao Hu, Stefan Andreas Baumann, Ming Gui, Olga Grebenkova, Pingchuan Ma, Johannes Schusterbauer, Björn Ommer",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2403.13802v3",
+  "abstract": "The diffusion model has long been plagued by scalability and quadratic\ncomplexity issues, especially within transformer-based structures. In this\nstudy, we aim to leverage the long sequence modeling capability of a\nState-Space Model called Mamba to extend its applicability to visual data\ngeneration. Firstly, we identify a critical oversight in most current\nMamba-based vision methods, namely the lack of consideration for spatial\ncontinuity in the scan scheme of Mamba. Secondly, building upon this insight,\nwe introduce a simple, plug-and-play, zero-parameter method named Zigzag Mamba,\nwhich outperforms Mamba-based baselines and demonstrates improved speed and\nmemory utilization compared to transformer-based baselines. Lastly, we\nintegrate Zigzag Mamba with the Stochastic Interpolant framework to investigate\nthe scalability of the model on large-resolution visual datasets, such as\nFacesHQ $1024\\times 1024$ and UCF101, MultiModal-CelebA-HQ, and MS COCO\n$256\\times 256$ . Code will be released at https://taohu.me/zigma/"
+}

@@ -1,0 +1,8 @@
+{
+  "title": "SR2CNN: Zero-Shot Learning for Signal Recognition",
+  "authors": "Yihong Dong, Xiaohan Jiang, Huaji Zhou, Yun Lin, Qingjiang Shi",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2004.04892v7",
+  "abstract": "Signal recognition is one of significant and challenging tasks in the signal\nprocessing and communications field. It is often a common situation that\nthere's no training data accessible for some signal classes to perform a\nrecognition task. Hence, as widely-used in image processing field, zero-shot\nlearning (ZSL) is also very important for signal recognition. Unfortunately,\nZSL regarding this field has hardly been studied due to inexplicable signal\nsemantics. This paper proposes a ZSL framework, signal recognition and\nreconstruction convolutional neural networks (SR2CNN), to address relevant\nproblems in this situation. The key idea behind SR2CNN is to learn the\nrepresentation of signal semantic feature space by introducing a proper\ncombination of cross entropy loss, center loss and autoencoder loss, as well as\nadopting a suitable distance metric space such that semantic features have\ngreater minimal inter-class distance than maximal intra-class distance. The\nproposed SR2CNN can discriminate signals even if no training data is available\nfor some signal class. Moreover, SR2CNN can gradually improve itself in the aid\nof signal detection, because of constantly refined class center vectors in\nsemantic feature space. These merits are all verified by extensive experiments.",
+  "citation": 135
+}

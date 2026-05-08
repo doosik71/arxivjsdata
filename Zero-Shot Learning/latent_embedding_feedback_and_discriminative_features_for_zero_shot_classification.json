@@ -1,0 +1,8 @@
+{
+  "title": "Latent Embedding Feedback and Discriminative Features for Zero-Shot\n  Classification",
+  "authors": "Sanath Narayan, Akshita Gupta, Fahad Shahbaz Khan, Cees G. M. Snoek, Ling Shao",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2003.07833v2",
+  "abstract": "Zero-shot learning strives to classify unseen categories for which no data is\navailable during training. In the generalized variant, the test samples can\nfurther belong to seen or unseen categories. The state-of-the-art relies on\nGenerative Adversarial Networks that synthesize unseen class features by\nleveraging class-specific semantic embeddings. During training, they generate\nsemantically consistent features, but discard this constraint during feature\nsynthesis and classification. We propose to enforce semantic consistency at all\nstages of (generalized) zero-shot learning: training, feature synthesis and\nclassification. We first introduce a feedback loop, from a semantic embedding\ndecoder, that iteratively refines the generated features during both the\ntraining and feature synthesis stages. The synthesized features together with\ntheir corresponding latent embeddings from the decoder are then transformed\ninto discriminative features and utilized during classification to reduce\nambiguities among categories. Experiments on (generalized) zero-shot object and\naction classification reveal the benefit of semantic consistency and iterative\nfeedback, outperforming existing methods on six zero-shot learning benchmarks.\nSource code at https://github.com/akshitac8/tfvaegan.",
+  "citation": 331
+}

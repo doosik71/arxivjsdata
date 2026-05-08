@@ -1,0 +1,8 @@
+{
+  "title": "Fractal Analysis of Electrical Power Time Series",
+  "authors": "J. R. Sanchez, C. M. Arizmendi",
+  "year": 1999,
+  "url": "http://arxiv.org/abs/cond-mat/9912112v1",
+  "abstract": "Fractal time series has been shown to be self-affine and are characterized by\na roughness exponent H. The exponent H is a measure of the persistence of the\nfluctuations associated with the time series. We use a recently introduced\nmethod for measuring the roughness exponent, the mobile averages analysis, to\ncompare electrical power demand of two different places, a touristic city and a\nwhole country.",
+  "citation": 4
+}

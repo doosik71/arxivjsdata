@@ -1,0 +1,7 @@
+{
+  "title": "QU-net++: Image Quality Detection Framework for Segmentation of Medical 3D Image Stacks",
+  "authors": "Sohini Roychowdhury",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2110.14181v4",
+  "abstract": "Automated segmentation of pathological regions of interest aids medical image diagnostics and follow-up care. However, accurate pathological segmentations require high quality of annotated data that can be both cost and time intensive to generate. In this work, we propose an automated two-step method that detects a minimal image subset required to train segmentation models by evaluating the quality of medical images from 3D image stacks using a U-net++ model. These images that represent a lack of quality training can then be annotated and used to fully train a U-net-based segmentation model. The proposed QU-net++ model detects this lack of quality training based on the disagreement in segmentations produced from the final two output layers. The proposed model isolates around 10% of the slices per 3D image stack and can scale across imaging modalities to segment cysts in OCT images and ground glass opacity (GGO) in lung CT images with Dice scores in the range 0.56-0.72. Thus, the proposed method can be applied for cost effective multi-modal pathology segmentation tasks."
+}

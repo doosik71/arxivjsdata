@@ -1,0 +1,8 @@
+{
+  "title": "Speech Recognition by Machine, A Review",
+  "authors": "M. A. Anusuya, S. K. Katti",
+  "year": 2010,
+  "url": "http://arxiv.org/abs/1001.2267v1",
+  "abstract": "This paper presents a brief survey on Automatic Speech Recognition and\ndiscusses the major themes and advances made in the past 60 years of research,\nso as to provide a technological perspective and an appreciation of the\nfundamental progress that has been accomplished in this important area of\nspeech communication. After years of research and development the accuracy of\nautomatic speech recognition remains one of the important research challenges\n(e.g., variations of the context, speakers, and environment).The design of\nSpeech Recognition system requires careful attentions to the following issues:\nDefinition of various types of speech classes, speech representation, feature\nextraction techniques, speech classifiers, database and performance evaluation.\nThe problems that are existing in ASR and the various techniques to solve these\nproblems constructed by various research workers have been presented in a\nchronological order. Hence authors hope that this work shall be a contribution\nin the area of speech recognition. The objective of this review paper is to\nsummarize and compare some of the well known methods used in various stages of\nspeech recognition system and identify research topic and applications which\nare at the forefront of this exciting and challenging field.",
+  "citation": 763
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Benchmarking Unsupervised Strategies for Anomaly Detection in\n  Multivariate Time Series",
+  "authors": "Laura Boggia, Rafael Teixeira de Lima, Bogdan Malaescu",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2506.20574v1",
+  "abstract": "Anomaly detection in multivariate time series is an important problem across\nvarious fields such as healthcare, financial services, manufacturing or physics\ndetector monitoring. Accurately identifying when unexpected errors or faults\noccur is essential, yet challenging, due to the unknown nature of anomalies and\nthe complex interdependencies between time series dimensions. In this paper, we\ninvestigate transformer-based approaches for time series anomaly detection,\nfocusing on the recently proposed iTransformer architecture. Our contributions\nare fourfold: (i) we explore the application of the iTransformer to time series\nanomaly detection, and analyse the influence of key parameters such as window\nsize, step size, and model dimensions on performance; (ii) we examine methods\nfor extracting anomaly labels from multidimensional anomaly scores and discuss\nappropriate evaluation metrics for such labels; (iii) we study the impact of\nanomalous data present during training and assess the effectiveness of\nalternative loss functions in mitigating their influence; and (iv) we present a\ncomprehensive comparison of several transformer-based models across a diverse\nset of datasets for time series anomaly detection.",
+  "citation": 1
+}

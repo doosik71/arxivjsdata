@@ -1,0 +1,7 @@
+{
+  "title": "Quantum computing: principles and applications",
+  "authors": "Guanru Feng, Dawei Lu, Jun Li, Tao Xin, Bei Zeng",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2310.09386v1",
+  "abstract": "People are witnessing quantum computing revolutions nowadays. Progress in the\nnumber of qubits, coherence times and gate fidelities are happening. Although\nquantum error correction era has not arrived, the research and development of\nquantum computing have inspired insights and breakthroughs in quantum\ntechnologies, both in theories and in experiments. In this review, we introduce\nthe basic principles of quantum computing and the multilayer architecture for a\nquantum computer. There are different experimental platforms for implementing\nquantum computing. In this review, based on a mature experimental platform, the\nNuclear Magnetic Resonance (NMR) platform, we introduce the basic steps to\nexperimentally implement quantum computing, as well as common challenges and\ntechniques."
+}

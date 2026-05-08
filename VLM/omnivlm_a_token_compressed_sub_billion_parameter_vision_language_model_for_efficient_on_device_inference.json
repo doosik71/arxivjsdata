@@ -1,0 +1,7 @@
+{
+  "title": "OmniVLM: A Token-Compressed, Sub-Billion-Parameter Vision-Language Model\n  for Efficient On-Device Inference",
+  "authors": "Wei Chen, Zhiyuan Li, Shuo Xin",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2412.11475v2",
+  "abstract": "We present OmniVLM, a sub-billion-parameter vision-language model for\nefficient on-device inference. OmniVLM introduces a token compression mechanism\nthat reduces visual token sequence length from 729 to 81 tokens, significantly\nreducing computational overhead while preserving visual-semantic fidelity.\nThrough a multi-stage training pipeline of pretraining, supervised fine-tuning,\nand minimal-edit Direct Preference Optimization (DPO), OmniVLM matches the\nperformance of larger models. On multiple benchmarks including ScienceQA, POPE,\nand MMMU, OmniVLM outperforms existing baselines like nanoLLAVA within a\n968M-parameter footprint. Empirical results on the same laptop demonstrate 9.1x\nfaster time-to-first-token (0.75s vs 6.82s) and 1.5x higher decoding speed\n(29.41 vs 19.20 tokens/s) compared to nanoLLAVA, enabling efficient deployment\non edge devices. The model weights can be accessed on huggingface:\n\\url{https://huggingface.co/NexaAIDev/OmniVLM-968M}, and the inference examples\ncan be find in Appendix B."
+}

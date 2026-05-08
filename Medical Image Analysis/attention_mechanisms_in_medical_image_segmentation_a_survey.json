@@ -1,0 +1,8 @@
+{
+  "title": "Attention Mechanisms in Medical Image Segmentation: A Survey",
+  "authors": "Yutong Xie, Bing Yang, Qingbiao Guan, Jianpeng Zhang, Qi Wu, Yong Xia",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2305.17937v1",
+  "abstract": "Medical image segmentation plays an important role in computer-aided diagnosis. Attention mechanisms that distinguish important parts from irrelevant parts have been widely used in medical image segmentation tasks. This paper systematically reviews the basic principles of attention mechanisms and their applications in medical image segmentation. First, we review the basic concepts of attention mechanism and formulation. Second, we surveyed over 300 articles related to medical image segmentation, and divided them into two groups based on their attention mechanisms, non-Transformer attention and Transformer attention. In each group, we deeply analyze the attention mechanisms from three aspects based on the current literature work, i.e., the principle of the mechanism (what to use), implementation methods (how to use), and application tasks (where to use). We also thoroughly analyzed the advantages and limitations of their applications to different tasks. Finally, we summarize the current state of research and shortcomings in the field, and discuss the potential challenges in the future, including task specificity, robustness, standard evaluation, etc. We hope that this review can showcase the overall research context of traditional and Transformer attention methods, provide a clear reference for subsequent research, and inspire more advanced attention research, not only in medical image segmentation, but also in other image analysis scenarios.",
+  "citation": 61
+}

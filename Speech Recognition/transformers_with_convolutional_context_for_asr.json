@@ -1,0 +1,8 @@
+{
+  "title": "Transformers with convolutional context for ASR",
+  "authors": "Abdelrahman Mohamed, Dmytro Okhonko, Luke Zettlemoyer",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1904.11660v2",
+  "abstract": "The recent success of transformer networks for neural machine translation and\nother NLP tasks has led to a surge in research work trying to apply it for\nspeech recognition. Recent efforts studied key research questions around ways\nof combining positional embedding with speech features, and stability of\noptimization for large scale learning of transformer networks. In this paper,\nwe propose replacing the sinusoidal positional embedding for transformers with\nconvolutionally learned input representations. These contextual representations\nprovide subsequent transformer blocks with relative positional information\nneeded for discovering long-range relationships between local concepts. The\nproposed system has favorable optimization characteristics where our reported\nresults are produced with fixed learning rate of 1.0 and no warmup steps. The\nproposed model achieves a competitive 4.7% and 12.9% WER on the Librispeech\n``test clean'' and ``test other'' subsets when no extra LM text is provided.",
+  "citation": 199
+}

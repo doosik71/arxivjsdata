@@ -1,0 +1,8 @@
+{
+  "title": "LP-WaveNet: Linear Prediction-based WaveNet Speech Synthesis",
+  "authors": "Min-Jae Hwang, Frank Soong, Eunwoo Song, Xi Wang, Hyeonjoo Kang, Hong-Goo Kang",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1811.11913v2",
+  "abstract": "We propose a linear prediction (LP)-based waveform generation method via\nWaveNet vocoding framework. A WaveNet-based neural vocoder has significantly\nimproved the quality of parametric text-to-speech (TTS) systems. However, it is\nchallenging to effectively train the neural vocoder when the target database\ncontains massive amount of acoustical information such as prosody, style or\nexpressiveness. As a solution, the approaches that only generate the vocal\nsource component by a neural vocoder have been proposed. However, they tend to\ngenerate synthetic noise because the vocal source component is independently\nhandled without considering the entire speech production process; where it is\ninevitable to come up with a mismatch between vocal source and vocal tract\nfilter. To address this problem, we propose an LP-WaveNet vocoder, where the\ncomplicated interactions between vocal source and vocal tract components are\njointly trained within a mixture density network-based WaveNet model. The\nexperimental results verify that the proposed system outperforms the\nconventional WaveNet vocoders both objectively and subjectively. In particular,\nthe proposed method achieves 4.47 MOS within the TTS framework.",
+  "citation": 32
+}

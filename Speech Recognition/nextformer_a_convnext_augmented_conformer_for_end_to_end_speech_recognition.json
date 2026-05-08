@@ -1,0 +1,8 @@
+{
+  "title": "Nextformer: A ConvNeXt Augmented Conformer For End-To-End Speech\n  Recognition",
+  "authors": "Yongjun Jiang, Jian Yu, Wenwen Yang, Bihong Zhang, Yanfeng Wang",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2206.14747v2",
+  "abstract": "Conformer models have achieved state-of-the-art(SOTA) results in end-to-end\nspeech recognition. However Conformer mainly focuses on temporal modeling while\npays less attention on time-frequency property of speech feature. In this paper\nwe augment Conformer with ConvNeXt and propose Nextformer structure. We use\nstacks of ConvNeXt block to replace the commonly used subsampling module in\nConformer for utilizing the information contained in time-frequency speech\nfeature. Besides, we insert an additional downsampling module in middle of\nConformer layers to make our model more efficient and accurate. We conduct\nexperiments on two opening datasets, AISHELL-1 and WenetSpeech. On AISHELL-1,\ncompared to Conformer baselines, Nextformer obtains 7.3% and 6.3% relative CER\nreduction in non-streaming and streaming mode respectively, and on a much\nlarger WenetSpeech dataset, Nextformer gives 5.0%~6.5% and 7.5%~14.6% relative\nCER reduction in non-streaming and streaming mode, while keep the computational\ncost FLOPs comparable to Conformer. To the best of our knowledge, the proposed\nNextformer model achieves SOTA results on AISHELL-1(CER 4.06%) and\nWenetSpeech(CER 7.56%/11.29%).",
+  "citation": 13
+}

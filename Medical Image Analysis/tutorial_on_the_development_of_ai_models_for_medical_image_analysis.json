@@ -1,0 +1,8 @@
+{
+  "title": "Tutorial on the development of AI models for medical image analysis",
+  "authors": "Thijs Kooi",
+  "year": 2022,
+  "url": "http://arxiv.org/abs/2208.00766v1",
+  "abstract": "The idea of using computers to read medical scans was introduced as early as 1966. However, limits to machine learning technology meant progress was slow initially. The Alexnet breakthrough in 2012 sparked new interest in the topic, which resulted in the release of 100s of medical AI solutions on the market. In spite of success for some diseases and modalities, many challenges remain. Research typically focuses on the development of specific applications or techniques, clinical evaluation, or meta analysis of clinical studies or techniques through surveys or challenges. However, limited attention has been given to the development process of improving real world performance. In this tutorial, we address the latter and discuss some techniques to conduct the development process in order to make this as efficient as possible.",
+  "citation": 1
+}

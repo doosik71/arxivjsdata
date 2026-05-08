@@ -1,0 +1,8 @@
+{
+  "title": "Segment Anything in Medical Images and Videos: Benchmark and Deployment",
+  "authors": "Jun Ma, Sumin Kim, Feifei Li, Mohammed Baharoon, Reza Asakereh, Hongwei Lyu, Bo Wang",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2408.03322v1",
+  "abstract": "Recent advances in segmentation foundation models have enabled accurate and efficient segmentation across a wide range of natural images and videos, but their utility to medical data remains unclear. In this work, we first present a comprehensive benchmarking of the Segment Anything Model 2 (SAM2) across 11 medical image modalities and videos and point out its strengths and weaknesses by comparing it to SAM1 and MedSAM. Then, we develop a transfer learning pipeline and demonstrate SAM2 can be quickly adapted to medical domain by fine-tuning. Furthermore, we implement SAM2 as a 3D slicer plugin and Gradio API for efficient 3D image and video segmentation. The code has been made publicly available at \\url{https://github.com/bowang-lab/MedSAM}.",
+  "citation": 60
+}

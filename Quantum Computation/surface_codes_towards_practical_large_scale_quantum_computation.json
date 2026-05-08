@@ -1,0 +1,7 @@
+{
+  "title": "Surface codes: Towards practical large-scale quantum computation",
+  "authors": "Austin G. Fowler, Matteo Mariantoni, John M. Martinis, Andrew N. Cleland",
+  "year": 2012,
+  "url": "http://arxiv.org/abs/1208.0928v2",
+  "abstract": "This article provides an introduction to surface code quantum computing. We\nfirst estimate the size and speed of a surface code quantum computer. We then\nintroduce the concept of the stabilizer, using two qubits, and extend this\nconcept to stabilizers acting on a two-dimensional array of physical qubits, on\nwhich we implement the surface code. We next describe how logical qubits are\nformed in the surface code array and give numerical estimates of their\nfault-tolerance. We outline how logical qubits are physically moved on the\narray, how qubit braid transformations are constructed, and how a braid between\ntwo logical qubits is equivalent to a controlled-NOT. We then describe the\nsingle-qubit Hadamard, S and T operators, completing the set of required gates\nfor a universal quantum computer. We conclude by briefly discussing physical\nimplementations of the surface code. We include a number of appendices in which\nwe provide supplementary information to the main text."
+}

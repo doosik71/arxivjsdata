@@ -1,0 +1,8 @@
+{
+  "title": "Semantic-Guided Zero-Shot Learning for Low-Light Image/Video Enhancement",
+  "authors": "Shen Zheng, Gaurav Gupta",
+  "year": 2021,
+  "url": "http://arxiv.org/abs/2110.00970v4",
+  "abstract": "Low-light images challenge both human perceptions and computer vision\nalgorithms. It is crucial to make algorithms robust to enlighten low-light\nimages for computational photography and computer vision applications such as\nreal-time detection and segmentation. This paper proposes a semantic-guided\nzero-shot low-light enhancement network (SGZ) which is trained in the absence\nof paired images, unpaired datasets, and segmentation annotation. Firstly, we\ndesign an enhancement factor extraction network using depthwise separable\nconvolution for an efficient estimate of the pixel-wise light deficiency of an\nlow-light image. Secondly, we propose a recurrent image enhancement network to\nprogressively enhance the low-light image with affordable model size. Finally,\nwe introduce an unsupervised semantic segmentation network for preserving the\nsemantic information during intensive enhancement. Extensive experiments on\nbenchmark datasets and a low-light video demonstrate that our model outperforms\nthe previous state-of-the-art. We further discuss the benefits of the proposed\nmethod for low-light detection and segmentation. Code is available at\nhttps://github.com/ShenZheng2000/Semantic-Guided-Low-Light-Image-Enhancement",
+  "citation": 177
+}

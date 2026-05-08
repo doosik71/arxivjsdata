@@ -1,0 +1,8 @@
+{
+  "title": "Composition Vision-Language Understanding via Segment and Depth Anything Model",
+  "authors": "Mingxiao Huo, Pengliang Ji, Haotian Lin, Junchen Liu, Yixiao Wang, Yijun Chen",
+  "year": 2024,
+  "url": "http://arxiv.org/abs/2406.18591v1",
+  "abstract": "We introduce a pioneering unified library that leverages depth anything, segment anything models to augment neural comprehension in language-vision model zero-shot understanding. This library synergizes the capabilities of the Depth Anything Model (DAM), Segment Anything Model (SAM), and GPT-4V, enhancing multimodal tasks such as vision-question-answering (VQA) and composition reasoning. Through the fusion of segmentation and depth analysis at the symbolic instance level, our library provides nuanced inputs for language models, significantly advancing image interpretation. Validated across a spectrum of in-the-wild real-world images, our findings showcase progress in vision-language models through neural-symbolic integration. This novel approach melds visual and language analysis in an unprecedented manner. Overall, our library opens new directions for future research aimed at decoding the complexities of the real world through advanced multimodal technologies and our code is available at \\url{https://github.com/AnthonyHuo/SAM-DAM-for-Compositional-Reasoning}.",
+  "citation": 2
+}

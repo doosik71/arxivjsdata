@@ -1,0 +1,7 @@
+{
+  "title": "Spatial-Temporal Graph Mamba for Music-Guided Dance Video Synthesis",
+  "authors": "Hao Tang, Ling Shao, Zhenyu Zhang, Luc Van Gool, Nicu Sebe",
+  "year": 2025,
+  "url": "http://arxiv.org/abs/2507.06689v1",
+  "abstract": "We propose a novel spatial-temporal graph Mamba (STG-Mamba) for the\nmusic-guided dance video synthesis task, i.e., to translate the input music to\na dance video. STG-Mamba consists of two translation mappings:\nmusic-to-skeleton translation and skeleton-to-video translation. In the\nmusic-to-skeleton translation, we introduce a novel spatial-temporal graph\nMamba (STGM) block to effectively construct skeleton sequences from the input\nmusic, capturing dependencies between joints in both the spatial and temporal\ndimensions. For the skeleton-to-video translation, we propose a novel\nself-supervised regularization network to translate the generated skeletons,\nalong with a conditional image, into a dance video. Lastly, we collect a new\nskeleton-to-video translation dataset from the Internet, containing 54,944\nvideo clips. Extensive experiments demonstrate that STG-Mamba achieves\nsignificantly better results than existing methods."
+}

@@ -1,0 +1,8 @@
+{
+  "title": "A comprehensive survey on deep active learning in medical image analysis",
+  "authors": "Haoran Wang, Qiuye Jin, Shiman Li, Siyu Liu, Manning Wang, Zhijian Song",
+  "year": 2023,
+  "url": "http://arxiv.org/abs/2310.14230v3",
+  "abstract": "Deep learning has achieved widespread success in medical image analysis, leading to an increasing demand for large-scale expert-annotated medical image datasets. Yet, the high cost of annotating medical images severely hampers the development of deep learning in this field. To reduce annotation costs, active learning aims to select the most informative samples for annotation and train high-performance models with as few labeled samples as possible. In this survey, we review the core methods of active learning, including the evaluation of informativeness and sampling strategy. For the first time, we provide a detailed summary of the integration of active learning with other label-efficient techniques, such as semi-supervised, self-supervised learning, and so on. We also summarize active learning works that are specifically tailored to medical image analysis. Additionally, we conduct a thorough comparative analysis of the performance of different AL methods in medical image analysis with experiments. In the end, we offer our perspectives on the future trends and challenges of active learning and its applications in medical image analysis.",
+  "citation": 97
+}

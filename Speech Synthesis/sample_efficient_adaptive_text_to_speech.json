@@ -1,0 +1,8 @@
+{
+  "title": "Sample Efficient Adaptive Text-to-Speech",
+  "authors": "Yutian Chen, Yannis Assael, Brendan Shillingford, David Budden, Scott Reed, Heiga Zen, Quan Wang, Luis C. Cobo, Andrew Trask, Ben Laurie, Caglar Gulcehre, Aäron van den Oord, Oriol Vinyals, Nando de Freitas",
+  "year": 2018,
+  "url": "http://arxiv.org/abs/1809.10460v3",
+  "abstract": "We present a meta-learning approach for adaptive text-to-speech (TTS) with\nfew data. During training, we learn a multi-speaker model using a shared\nconditional WaveNet core and independent learned embeddings for each speaker.\nThe aim of training is not to produce a neural network with fixed weights,\nwhich is then deployed as a TTS system. Instead, the aim is to produce a\nnetwork that requires few data at deployment time to rapidly adapt to new\nspeakers. We introduce and benchmark three strategies: (i) learning the speaker\nembedding while keeping the WaveNet core fixed, (ii) fine-tuning the entire\narchitecture with stochastic gradient descent, and (iii) predicting the speaker\nembedding with a trained neural network encoder. The experiments show that\nthese approaches are successful at adapting the multi-speaker neural network to\nnew speakers, obtaining state-of-the-art results in both sample naturalness and\nvoice similarity with merely a few minutes of audio data from new speakers.",
+  "citation": 184
+}

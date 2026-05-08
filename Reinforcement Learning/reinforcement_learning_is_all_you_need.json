@@ -1,0 +1,7 @@
+{
+  "url": "http://arxiv.org/abs/2503.09512v1",
+  "title": "Reinforcement Learning is all You Need",
+  "authors": "Yongsheng Lian",
+  "year": 2025,
+  "abstract": "Inspired by the success of DeepSeek R1 in reasoning via reinforcement\nlearning without human feedback, we train a 3B language model using the\nCountdown Game with pure reinforcement learning. Our model outperforms\nbaselines on four of five benchmarks, demonstrating improved generalization\nbeyond its training data. Notably, response length does not correlate with\nreasoning quality, and while \"aha moments\" emerge, they do not always yield\ncorrect answers. These findings highlight the potential of RL-only training for\nreasoning enhancement and suggest future work on refining reward structures to\nbridge emergent insights with accuracy."
+}

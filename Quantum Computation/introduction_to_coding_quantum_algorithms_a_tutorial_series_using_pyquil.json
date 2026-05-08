@@ -1,0 +1,7 @@
+{
+  "title": "Introduction to Coding Quantum Algorithms: A Tutorial Series Using\n  Pyquil",
+  "authors": "Daniel Koch, Laura Wessing, Paul M. Alsing",
+  "year": 2019,
+  "url": "http://arxiv.org/abs/1903.05195v1",
+  "abstract": "As the field of Quantum Computing continues to grow, so too has the general\npublic's interest in testing some of the publicly available quantum computers.\nHowever, many might find learning all of the supplementary information that\ngoes into quantum algorithms to be a daunting task, and become discouraged.\nThis tutorial is a series of lessons, aimed to teach the basics of quantum\nalgorithms to those who may have little to no background in quantum physics\nand/or minimal knowledge of coding in python. Each lesson covers select\nphysics/coding topics needed for writing quantum algorithms, eventually\nbuilding up a toolset for tackling more and more challenging quantum\nalgorithms. This tutorial series is designed to provide readers from any\nbackground with two services: 1) A concise and thorough understanding of some\nof the most popular/academically important quantum algorithms. 2) A fluent\nunderstanding of how to write code for quantum algorithms, using Rigetti's\npublicly available Pyquil."
+}

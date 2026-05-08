@@ -1,0 +1,8 @@
+{
+  "title": "Attribute Prototype Network for Zero-Shot Learning",
+  "authors": "Wenjia Xu, Yongqin Xian, Jiuniu Wang, Bernt Schiele, Zeynep Akata",
+  "year": 2020,
+  "url": "http://arxiv.org/abs/2008.08290v4",
+  "abstract": "From the beginning of zero-shot learning research, visual attributes have\nbeen shown to play an important role. In order to better transfer\nattribute-based knowledge from known to unknown classes, we argue that an image\nrepresentation with integrated attribute localization ability would be\nbeneficial for zero-shot learning. To this end, we propose a novel zero-shot\nrepresentation learning framework that jointly learns discriminative global and\nlocal features using only class-level attributes. While a visual-semantic\nembedding layer learns global features, local features are learned through an\nattribute prototype network that simultaneously regresses and decorrelates\nattributes from intermediate features. We show that our locality augmented\nimage representations achieve a new state-of-the-art on three zero-shot\nlearning benchmarks. As an additional benefit, our model points to the visual\nevidence of the attributes in an image, e.g. for the CUB dataset, confirming\nthe improved attribute localization ability of our image representation.",
+  "citation": 414
+}
