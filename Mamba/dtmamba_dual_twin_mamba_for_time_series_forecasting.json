@@ -3,5 +3,6 @@
   "authors": "Zexue Wu, Yifeng Gong, Aoqian Zhang",
   "year": 2024,
   "url": "http://arxiv.org/abs/2405.07022v1",
-  "abstract": "We utilized the Mamba model for time series data prediction tasks, and the\nexperimental results indicate that our model performs well."
+  "abstract": "We utilized the Mamba model for time series data prediction tasks, and the\nexperimental results indicate that our model performs well.",
+  "citation": 2
 }
