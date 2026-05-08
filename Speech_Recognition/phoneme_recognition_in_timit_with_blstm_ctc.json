@@ -3,6 +3,6 @@
   "authors": "Santiago Fernández, Alex Graves, Juergen Schmidhuber",
   "year": 2008,
   "url": "http://arxiv.org/abs/0804.3269v1",
-  "abstract": "We compare the performance of a recurrent neural network with the best\nresults published so far on phoneme recognition in the TIMIT database. These\npublished results have been obtained with a combination of classifiers.\nHowever, in this paper we apply a single recurrent neural network to the same\ntask. Our recurrent neural network attains an error rate of 24.6%. This result\nis not significantly different from that obtained by the other best methods,\nbut they rely on a combination of classifiers for achieving comparable\nperformance.",
+  "abstract": "We compare the performance of a recurrent neural network with the best results published so far on phoneme recognition in the TIMIT database. These published results have been obtained with a combination of classifiers. However, in this paper we apply a single recurrent neural network to the same task. Our recurrent neural network attains an error rate of 24.6%. This result is not significantly different from that obtained by the other best methods, but they rely on a combination of classifiers for achieving comparable performance.",
   "citation": 64
 }

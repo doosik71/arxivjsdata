@@ -1,8 +1,8 @@
 {
   "url": "http://arxiv.org/abs/2405.21060v1",
-  "title": "Transformers are SSMs: Generalized Models and Efficient Algorithms\n  Through Structured State Space Duality",
+  "title": "Transformers are SSMs: Generalized Models and Efficient Algorithms Through Structured State Space Duality",
   "authors": "Tri Dao, Albert Gu",
   "year": 2024,
-  "abstract": "While Transformers have been the main architecture behind deep learning's\nsuccess in language modeling, state-space models (SSMs) such as Mamba have\nrecently been shown to match or outperform Transformers at small to medium\nscale. We show that these families of models are actually quite closely\nrelated, and develop a rich framework of theoretical connections between SSMs\nand variants of attention, connected through various decompositions of a\nwell-studied class of structured semiseparable matrices. Our state space\nduality (SSD) framework allows us to design a new architecture (Mamba-2) whose\ncore layer is an a refinement of Mamba's selective SSM that is 2-8X faster,\nwhile continuing to be competitive with Transformers on language modeling.",
+  "abstract": "While Transformers have been the main architecture behind deep learning's success in language modeling, state-space models (SSMs) such as Mamba have recently been shown to match or outperform Transformers at small to medium scale. We show that these families of models are actually quite closely related, and develop a rich framework of theoretical connections between SSMs and variants of attention, connected through various decompositions of a well-studied class of structured semiseparable matrices. Our state space duality (SSD) framework allows us to design a new architecture (Mamba-2) whose core layer is an a refinement of Mamba's selective SSM that is 2-8X faster, while continuing to be competitive with Transformers on language modeling.",
   "citation": 66
 }

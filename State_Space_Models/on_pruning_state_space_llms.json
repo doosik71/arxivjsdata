@@ -3,6 +3,6 @@
   "authors": "Tamer Ghattas, Michael Hassid, Roy Schwartz",
   "year": 2025,
   "url": "http://arxiv.org/abs/2502.18886v1",
-  "abstract": "Recent work proposed state-space models (SSMs) as an efficient alternative to\ntransformer-based LLMs. Can these models be pruned to further reduce their\ncomputation costs? We adapt several pruning methods to the SSM structure, and\napply them to four SSM-based LLMs across multiple tasks. We find that such\nmodels are quite robust to some pruning methods (e.g. WANDA), while using other\nmethods lead to fast performance degradation.",
+  "abstract": "Recent work proposed state-space models (SSMs) as an efficient alternative to transformer-based LLMs. Can these models be pruned to further reduce their computation costs? We adapt several pruning methods to the SSM structure, and apply them to four SSM-based LLMs across multiple tasks. We find that such models are quite robust to some pruning methods (e.g. WANDA), while using other methods lead to fast performance degradation.",
   "citation": 0
 }

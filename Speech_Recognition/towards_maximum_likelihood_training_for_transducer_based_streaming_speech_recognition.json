@@ -1,8 +1,8 @@
 {
-  "title": "Towards Maximum Likelihood Training for Transducer-based Streaming\n  Speech Recognition",
+  "title": "Towards Maximum Likelihood Training for Transducer-based Streaming Speech Recognition",
   "authors": "Hyeonseung Lee, Ji Won Yoon, Sungsoo Kim, Nam Soo Kim",
   "year": 2024,
   "url": "http://arxiv.org/abs/2411.17537v1",
-  "abstract": "Transducer neural networks have emerged as the mainstream approach for\nstreaming automatic speech recognition (ASR), offering state-of-the-art\nperformance in balancing accuracy and latency. In the conventional framework,\nstreaming transducer models are trained to maximize the likelihood function\nbased on non-streaming recursion rules. However, this approach leads to a\nmismatch between training and inference, resulting in the issue of deformed\nlikelihood and consequently suboptimal ASR accuracy. We introduce a\nmathematical quantification of the gap between the actual likelihood and the\ndeformed likelihood, namely forward variable causal compensation (FoCC). We\nalso present its estimator, FoCCE, as a solution to estimate the exact\nlikelihood. Through experiments on the LibriSpeech dataset, we show that FoCCE\ntraining improves the accuracy of the streaming transducers.",
+  "abstract": "Transducer neural networks have emerged as the mainstream approach for streaming automatic speech recognition (ASR), offering state-of-the-art performance in balancing accuracy and latency. In the conventional framework, streaming transducer models are trained to maximize the likelihood function based on non-streaming recursion rules. However, this approach leads to a mismatch between training and inference, resulting in the issue of deformed likelihood and consequently suboptimal ASR accuracy. We introduce a mathematical quantification of the gap between the actual likelihood and the deformed likelihood, namely forward variable causal compensation (FoCC). We also present its estimator, FoCCE, as a solution to estimate the exact likelihood. Through experiments on the LibriSpeech dataset, we show that FoCCE training improves the accuracy of the streaming transducers.",
   "citation": 1
 }

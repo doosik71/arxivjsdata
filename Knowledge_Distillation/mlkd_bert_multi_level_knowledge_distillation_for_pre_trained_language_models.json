@@ -1,8 +1,8 @@
 {
-  "title": "MLKD-BERT: Multi-level Knowledge Distillation for Pre-trained Language\n  Models",
+  "title": "MLKD-BERT: Multi-level Knowledge Distillation for Pre-trained Language Models",
   "authors": "Ying Zhang, Ziheng Yang, Shufan Ji",
   "year": 2024,
   "url": "http://arxiv.org/abs/2407.02775v1",
-  "abstract": "Knowledge distillation is an effective technique for pre-trained language\nmodel compression. Although existing knowledge distillation methods perform\nwell for the most typical model BERT, they could be further improved in two\naspects: the relation-level knowledge could be further explored to improve\nmodel performance; and the setting of student attention head number could be\nmore flexible to decrease inference time. Therefore, we are motivated to\npropose a novel knowledge distillation method MLKD-BERT to distill multi-level\nknowledge in teacher-student framework. Extensive experiments on GLUE benchmark\nand extractive question answering tasks demonstrate that our method outperforms\nstate-of-the-art knowledge distillation methods on BERT. In addition, MLKD-BERT\ncan flexibly set student attention head number, allowing for substantial\ninference time decrease with little performance drop.",
+  "abstract": "Knowledge distillation is an effective technique for pre-trained language model compression. Although existing knowledge distillation methods perform well for the most typical model BERT, they could be further improved in two aspects: the relation-level knowledge could be further explored to improve model performance; and the setting of student attention head number could be more flexible to decrease inference time. Therefore, we are motivated to propose a novel knowledge distillation method MLKD-BERT to distill multi-level knowledge in teacher-student framework. Extensive experiments on GLUE benchmark and extractive question answering tasks demonstrate that our method outperforms state-of-the-art knowledge distillation methods on BERT. In addition, MLKD-BERT can flexibly set student attention head number, allowing for substantial inference time decrease with little performance drop.",
   "citation": 2
 }
