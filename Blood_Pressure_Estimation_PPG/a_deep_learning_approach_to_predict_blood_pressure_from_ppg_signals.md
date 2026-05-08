@@ -30,60 +30,66 @@ Ali Tazarv, Marco Levorato
 
 ## 🛠️ Methodology
 
+![Figure 2:Overview of the proposed method to estimate BP from single channel PPG signal](https://ar5iv.labs.arxiv.org/html/2108.00099/assets/x2.png)
+
 제안된 방법은 각 피험자에 대해 BP 추정에 최적화된 특징을 자동으로 추출하고, 고급 신경망 아키텍처를 사용하여 데이터의 시간적 종속성을 포착합니다.
 
 1. **신호 전처리 (Signal Pre-processing)**:
-   - **필터링**: PPG 신호에 $0.1$~$8 \text{Hz}$ 대역 통과 필터를 적용하여 고주파 노이즈와 DC 오프셋을 제거합니다. 대동맥 압력(ABP) 신호에는 $5 \text{Hz}$ 저역 통과 필터를 적용하여 급격한 피크를 제거합니다.
-   - **윈도우 분할**: PPG 및 ABP 신호를 $8 \text{s}$ 길이의 윈도우로 분할하며, $2 \text{s}$ 간격으로 이동하여 $6 \text{s}$의 오버랩을 생성합니다.
-   - **정규화**: 각 PPG 윈도우 신호를 평균 $0$, 단위 분산으로 스케일링하여 모델 입력으로 사용합니다.
+   - **필터링**: PPG 신호에 0.1~8Hz 대역 통과 필터를 적용하여 고주파 노이즈와 DC 오프셋을 제거합니다. 대동맥 압력(ABP) 신호에는 5Hz 저역 통과 필터를 적용하여 급격한 피크를 제거합니다.
+   - **윈도우 분할**: PPG 및 ABP 신호를 8s 길이의 윈도우로 분할하며, 2s 간격으로 이동하여 6s의 오버랩을 생성합니다.
+   - **정규화**: 각 PPG 윈도우 신호를 평균 0, 단위 분산으로 스케일링하여 모델 입력으로 사용합니다.
    - **BP 값 추출**: 각 ABP 윈도우에서 최대값을 SBP, 최소값을 DBP로 해석합니다.
 2. **딥러닝 모델 (Deep Learning Model)**: Convolutional Neural Network (CNN), Long-Short Term Memory (LSTM) 네트워크, Multi-Layer Perceptron (MLP)으로 구성된 3계층 심층 신경망을 사용합니다.
    - **CNN 계층 (자동 특징 추출)**:
-     - 필터 크기 $15$의 1-D 필터링 작업으로 시작합니다.
+     - 필터 크기 15의 1-D 필터링 작업으로 시작합니다.
      - 활성화 함수로 Rectified Linear Unit (RELU)을 사용합니다.
      - 배치 정규화(Batch Normalization) 계층을 거칩니다.
      - 풀링 크기 $s_P = 4$인 Max-Pooling 계층을 통해 특징을 압축하고 과적합을 방지합니다.
-     - $0.1$의 드롭아웃(Dropout) 비율을 가진 드롭아웃 계층을 적용하여 과적합을 추가로 방지합니다. 이 계층은 BP 추정에 가장 유익한 특징을 학습하고 추출하는 역할을 합니다.
+     - 0.1의 드롭아웃(Dropout) 비율을 가진 드롭아웃 계층을 적용하여 과적합을 추가로 방지합니다. 이 계층은 BP 추정에 가장 유익한 특징을 학습하고 추출하는 역할을 합니다.
    - **LSTM 계층 (시계열 분석)**:
      - 두 개의 동일한 LSTM 모듈을 직렬로 연결하여 구성됩니다.
-     - 각 LSTM 모듈은 $64$개의 유닛($n_U$)을 가집니다.
-     - 은닉 상태 및 출력 데이터에는 $tanh$를, 망각, 입력, 출력 게이트에는 $hard\text{-}sigmoid$를 활성화 함수로 사용합니다. 이 계층은 입력 데이터의 장기적인 시간 의존성을 학습하고 기울기 소실 문제를 해결합니다.
+     - 각 LSTM 모듈은 64개의 유닛($n_U$)을 가집니다.
+     - 은닉 상태 및 출력 데이터에는 tanh를, 망각, 입력, 출력 게이트에는 hard-sigmoid를 활성화 함수로 사용합니다. 이 계층은 입력 데이터의 장기적인 시간 의존성을 학습하고 기울기 소실 문제를 해결합니다.
    - **MLP 계층 (최종 예측)**: LSTM 계층의 출력을 받아 SBP 및 DBP 값을 예측하는 데 사용됩니다.
 3. **훈련 및 평가**:
    - **구현**: Keras 2.2.4와 Tensorflow 1.3.1 백엔드를 사용하여 Python 3.6.3 환경에서 구현되었습니다.
-   - **최적화**: Adam 옵티마이저를 사용하며, 배치 크기는 $20$으로 설정합니다. 모든 하이퍼파라미터는 그리드 탐색(grid search)을 통해 최적화되었습니다.
-   - **검증 전략**: Leave-one-window-out 검증 방식을 사용합니다. $8 \text{s}$ 시간 윈도우 하나를 테스트 샘플로 사용하고, 나머지 데이터로 모델을 훈련합니다. $6 \text{s}$의 윈도우 오버랩을 고려하여 테스트 세트 양쪽의 세 시간 윈도우는 훈련에 사용하지 않아 훈련 데이터와 테스트 데이터의 완전한 분리를 보장합니다.
+   - **최적화**: Adam 옵티마이저를 사용하며, 배치 크기는 20으로 설정합니다. 모든 하이퍼파라미터는 그리드 탐색(grid search)을 통해 최적화되었습니다.
+   - **검증 전략**: Leave-one-window-out 검증 방식을 사용합니다. 8s 시간 윈도우 하나를 테스트 샘플로 사용하고, 나머지 데이터로 모델을 훈련합니다. 6s의 윈도우 오버랩을 고려하여 테스트 세트 양쪽의 세 시간 윈도우는 훈련에 사용하지 않아 훈련 데이터와 테스트 데이터의 완전한 분리를 보장합니다.
    - **개인화된 모델**: 각 피험자에 대해 모델을 독립적으로 훈련하고 테스트하여 개인화된 예측을 수행합니다.
+
+![Figure 3:Scaled raw PPG and ABP signals in the same time interval, from MIMIC-II dataset.](https://ar5iv.labs.arxiv.org/html/2108.00099/assets/x3.png)
 
 ## 📊 Results
 
 제안된 모델은 MIMIC-II 및 UQVSD 두 가지 데이터셋에서 이전 연구들을 능가하는 뛰어난 성능을 입증했습니다.
 
 1. **평균 절대 오차 (MAE) 및 절대 오차 표준 편차 (SDAE)**:
-
    - **MIMIC-II 데이터셋 (20명)**:
-     - SBP: $\text{MAE} = 3.70 \text{mmHg}$, $\text{SDAE} = 3.07 \text{mmHg}$
-     - DBP: $\text{MAE} = 2.02 \text{mmHg}$, $\text{SDAE} = 1.76 \text{mmHg}$
+     - SBP: MAE = 3.70mmHg, SDAE = 3.07mmHg
+     - DBP: MAE = 2.02mmHg, SDAE = 1.76mmHg
    - **UQVSD 데이터셋 (49개 측정)**:
-     - SBP: $\text{MAE} = 3.91 \text{mmHg}$, $\text{SDAE} = 4.78 \text{mmHg}$
-     - DBP: $\text{MAE} = 1.99 \text{mmHg}$, $\text{SDAE} = 2.45 \text{mmHg}$
+     - SBP: MAE = 3.91mmHg, SDAE = 4.78mmHg
+     - DBP: MAE = 1.99mmHg, SDAE = 2.45mmHg
    - 이러한 결과는 비슷한 데이터셋을 사용한 기존 방법들보다 우수합니다.
-
 2. **BHS (British Hypertension Society) 표준**:
-
    - 제안된 모델은 SBP와 DBP 모두에서 **Grade A**를 획득했습니다. 이는 PPG 신호만을 사용하여 BP를 예측하는 방법 중 최초로 두 지표 모두에서 Grade A를 달성한 것으로, [9] (DBP Grade A, SBP Grade C 미만) 및 [24] (DBP Grade A, SBP Grade B) 등 이전 연구를 능가합니다.
-   - **MIMIC-II**: SBP ($\le 5 \text{mmHg} - 77\%(\text{A})$, $\le 10 \text{mmHg} - 92\%(\text{A})$, $\le 15 \text{mmHg} - 96\%(\text{A})$), DBP ($\le 5 \text{mmHg} - 93\%(\text{A})$, $\le 10 \text{mmHg} - 97\%(\text{A})$, $\le 15 \text{mmHg} - 99\%(\text{A})$)
-   - **UQVSD**: SBP ($\le 5 \text{mmHg} - 75\%(\text{A})$, $\le 10 \text{mmHg} - 92\%(\text{A})$, $\le 15 \text{mmHg} - 96\%(\text{A})$), DBP ($\le 5 \text{mmHg} - 92\%(\text{A})$, $\le 10 \text{mmHg} - 98\%(\text{A})$, $\le 15 \text{mmHg} - 99\%(\text{A})$)
-
+   - **MIMIC-II**:
+     - SBP: ≤ 5 mmHg - 77% (A), ≤ 10 mmHg - 92% (A), ≤ 15 mmHg - 96% (A)
+     - DBP: ≤ 5 mmHg - 93% (A), ≤ 10 mmHg - 97% (A), ≤ 15 mmHg - 99% (A)
+   - **UQVSD**:
+     - SBP: ≤ 5 mmHg - 75% (A), ≤ 10 mmHg - 92% (A), ≤ 15 mmHg - 96% (A)
+     - DBP: ≤ 5 mmHg - 92% (A), ≤ 10 mmHg - 98% (A), ≤ 15 mmHg - 99% (A)
 3. **AAMI (Association for the Advancement of Medical Instrumentation) 표준**:
-
-   - 평균 오차(ME)는 $5 \text{mmHg}$ 미만, 오차 표준 편차(SD)는 $8 \text{mmHg}$ 미만이어야 하는 AAMI 표준 기준을 SBP와 DBP 모두에서 충족합니다.
-   - **MIMIC-II**: SBP ($\text{ME}=0.21$, $\sigma=6.27$), DBP ($\text{ME}=0.24$, $\sigma=3.40$)
-   - **UQVSD**: SBP ($\text{ME}=0.52$, $\sigma=6.16$), DBP ($\text{ME}=0.20$, $\sigma=3.15$)
-   - UQVSD 데이터에서 [24]와 비교하여 더 나은 오차 값(더 낮은 평균 및 $\sigma$)을 보입니다.
-
+   - 평균 오차(ME)는 5 mmHg 미만, 오차 표준 편차(SD)는 8 mmHg 미만이어야 하는 AAMI 표준 기준을 SBP와 DBP 모두에서 충족합니다.
+   - **MIMIC-II**:
+     - SBP: ME = 0.21, SD = 6.27
+     - DBP: ME = 0.24, SD = 3.40
+   - **UQVSD**:
+     - SBP: ME = 0.52, SD = 6.16
+     - DBP: ME = 0.20, SD = 3.15
+   - UQVSD 데이터에서 [24]와 비교하여 더 나은 오차 값(더 낮은 평균 및 SD)을 보입니다.
 4. **오차 분포 및 Bland-Altman 플롯**:
-   - 예측 오차는 대부분 작았으며, SBP의 경우 $20 \text{mmHg}$ 이상 벗어나는 경우는 $1\%$ 미만이었습니다. DBP의 경우 이러한 극단적인 오차는 발생하지 않았습니다.
+   - 예측 오차는 대부분 작았으며, SBP의 경우 20mmHg 이상 벗어나는 경우는 1% 미만이었습니다. DBP의 경우 이러한 극단적인 오차는 발생하지 않았습니다.
    - Bland-Altman 플롯은 BP 값이 낮을수록(덜 활동적일 때) 예측의 신뢰도가 더 높음을 보여주며, 이는 PPG 신호의 노이즈가 적을 때 더 정확하다는 점을 시사합니다.
 
 ## 🧠 Insights & Discussion
